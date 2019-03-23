@@ -12,10 +12,10 @@ describe('parser()', function () {
     });
   });
 
-  describe('parser()', function () {
-    it('should parse json', function () {
-        const jsonDoc = fs.readFileSync(path.resolve(__dirname, "./async.json"), 'utf8');
-        var result = parser(jsonDoc);
-        expect(result.hasErrors).to.equal(false);
-    });
-  });
+//   describe('parser()', function () {
+//     it('should parse json', function () {
+//         const jsonDoc = fs.readFileSync(path.resolve(__dirname, "./async.json"), 'utf8');
+//         var result = parser(jsonDoc);
+//         expect(result.hasErrors).to.equal(false);
+//     });
+//   });

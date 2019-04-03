@@ -10,12 +10,12 @@ const outputJSON = '{"x-parser-messages":[{"message":{"payload":{"properties":{"
 
 describe('parse()', function () {
   it('should parse yaml', function () {
-    const result = parser(inputYAML);
+    const result = parser.parse(inputYAML);
     expect(JSON.stringify(result)).to.equal(outputJSON);
   });
   
   it('should throw error if document is invalid YAML', function () {
-    const testFn = () => parser(invalidYAML);
+    const testFn = () => parser.parse(invalidYAML);
     expect(testFn)
       .to.throw(ParserError, '[Invalid AsyncAPI document] Check out err.errors for more information.')
       .with.property('errors').to.have.members([

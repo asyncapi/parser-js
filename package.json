@@ -2,9 +2,12 @@
   "name": "parser-nodejs",
   "version": "0.1.0",
   "description": "Node.js version of the AsyncAPI parser.",
-  "main": "parser.js",
+  "main": "lib/parser.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
@@ -13,5 +16,9 @@
     "ref": "^1.3.5",
     "ref-array": "^1.2.0",
     "ref-struct": "^1.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2"
   }
 }

@@ -6,7 +6,7 @@ const { ParserError } = require('../lib/errors');
 
 const invalidYAML = 'invalid'
 const inputYAML = fs.readFileSync(path.resolve(__dirname, "./asyncapi.yaml"), 'utf8');
-const outputJSON = '{"x-parser-messages":[{"message":{"payload":{"properties":{"name":{"type":"strin"}},"type":"object"}},"channelName":"mychannel","operationName":"publish"}],"asyncapi":"2.0.0","channels":{"mychannel":{"publish":{"message":{"payload":{"properties":{"name":{"type":"strin"}},"type":"object"}}}}},"id":"myapi","info":{"title":"My API","version":"1.0.0"}}';
+const outputJSON = '{"asyncapi":"2.0.0-rc1","channels":{"mychannel":{"publish":{"message":{"payload":{"properties":{"name":{"type":"strin"}},"type":"object"}}}}},"id":"urn:myapi","info":{"title":"My API","version":"1.0.0"}}';
 
 describe('parse()', function () {
   it('should parse yaml', function () {

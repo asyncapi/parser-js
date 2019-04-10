@@ -1,6 +1,6 @@
 {
-	"asyncapi": "2.0.0",
-	"id": "myapi",
+	"asyncapi": "2.0.0-rc1",
+	"id": "urn:myapi",
 	"info": {
 		"title": "My API",
 		"version": "1.0.0"

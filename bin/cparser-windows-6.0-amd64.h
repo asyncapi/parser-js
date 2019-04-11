@@ -24,7 +24,7 @@ typedef struct { const char *p; ptrdiff_t n; } _GoString_;
   char *result;
   char **err;
   int  errCount;
-  _Bool hasErrors;
+  bool hasErrors;
  } _ParseResult_;
 
 #line 1 "cgo-generated-wrapper"

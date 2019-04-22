@@ -10,6 +10,8 @@
 
 Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js application.
 
+> This package doesn't support AsyncAPI 1.x.
+
 ### Install
 
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "parser-nodejs",
+  "name": "asyncapi-parser",
   "version": "0.1.0",
   "description": "Node.js version of the AsyncAPI parser.",
   "main": "lib/parser.js",

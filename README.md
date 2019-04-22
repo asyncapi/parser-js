@@ -27,7 +27,7 @@ The `parse` method will take care of parsing and validating the AsyncAPI documen
 ```js
 const parser = require('asyncapi-parser');
 
-parser.parse(`
+const doc = parser.parse(`
   asyncapi: '2.0.0'
   id: 'urn:com.application.example'
   info:
@@ -48,6 +48,9 @@ parser.parse(`
                 type: string
                 format: date-time
 `);
+
+console.log(doc.info.title);
+// => Example
 ```
 
 ### Implementation details

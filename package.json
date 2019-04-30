@@ -1,6 +1,6 @@
 {
   "name": "asyncapi-parser",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Node.js version of the AsyncAPI parser.",
   "main": "lib/parser.js",
   "directories": {

@@ -7,8 +7,17 @@ channels:
   mychannel:
     publish:
       message:
-        payload:
-          type: object
-          properties:
-            name:
-              type: string
+        $ref: '#/components/messages/testMessage'
+
+components:
+  messages:
+    testMessage:
+      payload:
+        $ref: '#/components/schemas/testSchema'
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          

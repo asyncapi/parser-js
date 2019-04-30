@@ -6,7 +6,7 @@ const { ParserError } = require('../lib/errors');
 
 const invalidYAML = 'invalid'
 const inputYAML = fs.readFileSync(path.resolve(__dirname, "./asyncapi.yaml"), 'utf8');
-const outputJSON = '{"asyncapi":"2.0.0-rc1","channels":{"mychannel":{"publish":{"message":{"payload":{"properties":{"name":{"type":"strin"}},"type":"object"}}}}},"id":"urn:myapi","info":{"title":"My API","version":"1.0.0"}}';
+const outputJSON = '{"asyncapi":"2.0.0-rc1","channels":{"mychannel":{"publish":{"message":{"payload":{"properties":{"name":{"type":"string"}},"type":"object"}}}}},"components":{"messages":{"testMessage":{"payload":{"properties":{"name":{"type":"string"}},"type":"object"}}},"schemas":{"testSchema":{"properties":{"name":{"type":"string"}},"type":"object"}}},"id":"urn:myapi","info":{"title":"My API","version":"1.0.0"}}';
 
 describe('parse()', function () {
   it('should parse yaml', function () {
@@ -17,7 +17,7 @@ describe('parse()', function () {
   it('should throw error if document is invalid YAML', function () {
     const testFn = () => parser.parse(invalidYAML);
     expect(testFn)
-      .to.throw(ParserError, '[Invalid AsyncAPI document] Check out err.errors for more information.')
+      .to.throw(ParserError, '[Invalid AsyncAPI document]\n\n(root): Invalid type. Expected: object, given: string')
       .with.property('errors').to.have.members([
         '(root): Invalid type. Expected: object, given: string'
       ]);

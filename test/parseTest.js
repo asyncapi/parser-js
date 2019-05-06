@@ -22,4 +22,11 @@ describe('parse()', function () {
         '(root): Invalid type. Expected: object, given: string'
       ]);
   });
+
+  it('should not crash if string is empty', function () {
+    const testFn = () => parser.parse('');
+    expect(testFn)
+      .to.throw(ParserError, '[Invalid AsyncAPI document] Document is empty.')
+      .with.property('errors').to.be.undefined;
+  });
 });

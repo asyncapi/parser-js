@@ -80,7 +80,7 @@ extern "C" {
 
 //Parse is the C-friendly version of the parser.Parse method.
 
-extern _ParseResult_ Parse(GoString p0);
+extern _ParseResult_ Parse(GoString p0, GoUint8 p1);
 
 #ifdef __cplusplus
 }

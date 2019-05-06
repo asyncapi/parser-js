@@ -1,6 +1,6 @@
 {
   "name": "asyncapi-parser",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Node.js version of the AsyncAPI parser.",
   "main": "lib/parser.js",
   "directories": {
@@ -19,6 +19,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.0.2"
+    "mocha": "^6.1.4"
   }
 }

@@ -6,6 +6,7 @@ const { ParserError } = require('../lib/errors');
 
 const invalidYAML = 'invalid'
 const inputYAML = fs.readFileSync(path.resolve(__dirname, "./asyncapi.yaml"), 'utf8');
+const malformedInputYAML = fs.readFileSync(path.resolve(__dirname, "./malformed-asyncapi.yaml"), 'utf8');
 const outputJSON = '{"asyncapi":"2.0.0-rc1","channels":{"mychannel":{"publish":{"message":{"payload":{"properties":{"name":{"type":"string"}},"type":"object"}}}}},"components":{"messages":{"testMessage":{"payload":{"properties":{"name":{"type":"string"}},"type":"object"}}},"schemas":{"testSchema":{"properties":{"name":{"type":"string"}},"type":"object"}}},"id":"urn:myapi","info":{"title":"My API","version":"1.0.0"}}';
 
 describe('parse()', function () {
@@ -27,6 +28,13 @@ describe('parse()', function () {
     const testFn = () => parser.parse('');
     expect(testFn)
       .to.throw(ParserError, '[Invalid AsyncAPI document] Document is empty.')
+      .with.property('errors').to.be.undefined;
+  });
+  
+  it('should not crash if input is malformed', function () {
+    const testFn = () => parser.parse(malformedInputYAML);
+    expect(testFn)
+      .to.throw(ParserError, '[Empty result from parser] Received an empty result from the AsyncAPI parser. This is likely a problem with your document. If you are using YAML, please make sure it is properly indented.')
       .with.property('errors').to.be.undefined;
   });
 });

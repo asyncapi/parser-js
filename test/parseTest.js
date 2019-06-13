@@ -34,7 +34,7 @@ describe('parse()', function () {
   it('should not crash if input is malformed', function () {
     const testFn = () => parser.parse(malformedInputYAML);
     expect(testFn)
-      .to.throw(ParserError, '[Empty result from parser] Received an empty result from the AsyncAPI parser. This is likely a problem with your document. If you are using YAML, please make sure it is properly indented.')
+      .to.throw(ParserError, 'failed to resolve circular references: you a circular reference at #/components/schemas/sentAt please review it')
       .with.property('errors').to.be.undefined;
   });
 });

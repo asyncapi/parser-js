@@ -1,0 +1,21 @@
+asyncapi: '2.0.0-rc1'
+id: apis:async:checkouts
+info:
+  title: Checkouts Async API
+  version: '1.0'
+servers:
+  - url: demo.ecommerce.com/checkouts
+    protocol: ws
+
+channels:
+  /checkouts/{checkoutId}/shipping_rates:
+    subscribe:
+      message:
+        schemaFormat: application/raml+yaml
+        payload:
+          (data_model.model): ShippingRate
+          (data_model.mode): read-write
+          properties:
+            handle: string
+            price: string
+            title: string

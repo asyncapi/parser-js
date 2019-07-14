@@ -1,0 +1,4 @@
+type: object
+properties:
+  testing:
+    $ref: 'refed2.yaml'

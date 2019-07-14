@@ -17,7 +17,7 @@ channels:
               minimum: 0
               description: Light intensity measured in lumens.
             sentAt:
-            $ref: "#/components/schemas/sentAt"
+          $ref: "#/components/schemas/sentAt"
 components:
   schemas:
     sentAt:

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "bundle": "browserify lib/browser.js -o dist/bundle.js"
+    "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js"
   },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
@@ -17,7 +17,8 @@
     "browserify-shim": "^3.8.14",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "ajv": "^6.10.1",

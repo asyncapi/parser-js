@@ -7,9 +7,7 @@ channels:
   mychannel:
     publish:
       traits:
-        - 
-          - $ref: '#/components/traits/docs'
-          - headerId: 'lighting-measured'
+        - $ref: '#/components/traits/docs'        
       externalDocs:
         x-extension: true
         url: 'https://irrelevant.com'
@@ -36,4 +34,4 @@ components:
       x-some-extension: 'some extension'
     docs:
       externalDocs:
-        url: https://company.com/docs#{{headerId}}
+        url: https://company.com/docs

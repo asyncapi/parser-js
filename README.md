@@ -8,6 +8,12 @@
 
 ---
 
+## :loudspeaker: ATTENTION:
+
+This package is under development and it has not reached version 1.0.0, what means that its API might change without prior notice. Once it reaches its first stable version, we'll follow semantic versioning.
+
+---
+
 Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
 
 > This package doesn't support AsyncAPI 1.x.

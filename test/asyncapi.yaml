@@ -1,5 +1,4 @@
-asyncapi: '2.0.0-rc1'
-id: 'urn:myapi'
+asyncapi: 'unstable'
 info:
   title: My API
   version: '1.0.0'

@@ -1,5 +1,4 @@
-asyncapi: '2.0.0-rc1'
-id: 'urn:com:smartylighting:streetlights:server'
+asyncapi: 'unstable'
 info:
   title: "Test"
   version: '1.0.0'

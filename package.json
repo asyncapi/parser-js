@@ -28,8 +28,7 @@
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",
     "openapi-schema-to-json-schema": "^2.2.0",
-    "tiny-merge-patch": "^0.1.2",
-    "webapi-parser": "^0.1.0"
+    "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {
     "transform": [

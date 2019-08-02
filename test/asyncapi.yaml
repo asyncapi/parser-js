@@ -7,7 +7,7 @@ channels:
   mychannel:
     publish:
       traits:
-        - $ref: '#/components/traits/docs'        
+        - $ref: '#/components/operationTraits/docs'        
       externalDocs:
         x-extension: true
         url: 'https://irrelevant.com'
@@ -18,7 +18,7 @@ components:
   messages:
     testMessage:
       traits:
-        - $ref: '#/components/traits/no-params'
+        - $ref: '#/components/messageTraits/extension'
       payload:
         $ref: '#/components/schemas/testSchema'
   schemas:
@@ -29,9 +29,10 @@ components:
           type: string
         test:
           $ref: 'refs/refed.yaml'
-  traits:
-    no-params:
+  messageTraits:
+    extension:
       x-some-extension: 'some extension'
+  operationTraits:
     docs:
       externalDocs:
         url: https://company.com/docs

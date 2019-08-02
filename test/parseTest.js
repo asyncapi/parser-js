@@ -20,7 +20,7 @@ describe('parse()', function () {
     await expect(JSON.stringify(result)).to.equal(outputJSON);
   });
   
-  it('should fail to resolve relative files when options.file is not provided', async function () {
+  it('should fail to resolve relative files when options.path is not provided', async function () {
     const testFn = async () => await parser.parse(inputYAML);
     await expect(testFn())
       .to.be.rejectedWith(ParserError)

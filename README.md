@@ -1,14 +1,14 @@
 <h5 align="center">
   <br>
-  <a href="https://asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
+  <a href="https://www.asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
   <br>
-  Node.js parser
+  JS Parser
 </h5>
-<h4 align="center">Parse and validation AsyncAPI documents</h4>
+<h4 align="center">Parse and validate AsyncAPI documents</h4>
 
 ---
 
-Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js application.
+Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
 
 > This package doesn't support AsyncAPI 1.x.
 
@@ -20,9 +20,13 @@ npm install asyncapi-parser
 
 ### API
 
-#### `.parse(yamlOrJSONdocument) => AsyncAPIDocument`
+#### `.parse(yamlOrJSONdocument, options) => JSONDocument`
 
 The `parse` method will take care of parsing and validating the AsyncAPI document. It returns an AsyncAPIDocument, which is a JSON version of the document with all the message payloads converted to JSON Schema Draft 7 schemas and the traits already resolved and merged into the document.
+
+#### `.parseUrl(url, options) => JSONDocument`
+
+The `parseUrl` method fetches a YAML or JSON document on the given URL and passes its content to the `parse` method.
 
 ### Example
 
@@ -30,8 +34,7 @@ The `parse` method will take care of parsing and validating the AsyncAPI documen
 const parser = require('asyncapi-parser');
 
 const doc = parser.parse(`
-  asyncapi: '2.0.0'
-  id: 'urn:com.application.example'
+  asyncapi: '2.0.0-rc1'
   info:
     title: Example
     version: '0.1.0'
@@ -54,7 +57,3 @@ const doc = parser.parse(`
 console.log(doc.info.title);
 // => Example
 ```
-
-### Implementation details
-
-This package offers a wrapper for the compiled version of the original Go parser. [Check out the Go parser for more details](https://github.com/asyncapi/parser).

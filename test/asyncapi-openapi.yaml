@@ -11,7 +11,7 @@ channels:
 components:
   messages:
     testMessage:
-      schemaFormat: 'application/vnd.oai.openapi'
+      schemaFormat: 'application/vnd.oai.openapi;version=3.0.0'
       payload:
         $ref: '#/components/schemas/testSchema'
   schemas:

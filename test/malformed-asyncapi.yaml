@@ -1,5 +1,4 @@
-asyncapi: '2.0.0-rc1'
-id: 'urn:com:smartylighting:streetlights:server'
+asyncapi: 'unstable'
 info:
   title: "Test"
   version: '1.0.0'
@@ -17,7 +16,7 @@ channels:
               minimum: 0
               description: Light intensity measured in lumens.
             sentAt:
-            $ref: "#/components/schemas/sentAt"
+          $ref: "#/components/schemas/sentAt"
 components:
   schemas:
     sentAt:

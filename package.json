@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js"
   },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",

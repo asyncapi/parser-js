@@ -44,7 +44,7 @@ describe('Message', () => {
   describe('#schemaFormat()', function () {
     it('should return a string', () => {
       const d = new Message(js);
-      expect(d.schemaFormat()).to.equal('application/vnd.oai.openapi;version=3.0.0');
+      expect(d.schemaFormat()).to.equal('application/schema+json;version=draft-07');
     });
   });
 

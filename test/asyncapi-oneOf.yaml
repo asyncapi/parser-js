@@ -1,0 +1,22 @@
+asyncapi: '2.0.0-rc1'
+id: 'urn:hello-world-oneOf'
+info:
+  title: Hello world oneOf application
+  version: '0.1.0'
+channels:
+  hello:
+    publish:
+      message:
+        oneOf:
+          - $ref: '#/components/messages/hello-msg1'
+          - $ref: '#/components/messages/hello-msg2'          
+        
+components:
+  messages:
+    hello-msg1:
+      payload:
+        type: string
+        pattern: '^hello .+$' 
+    hello-msg2:
+      payload:
+        type: string        

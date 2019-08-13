@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const Tag = require('../../lib/models/tag');
-const js = { name: 'test', description: 'Testing', externalDocs: { url: 'somewhere' } };
+const js = { name: 'test', description: 'Testing', externalDocs: { url: 'somewhere' }, 'x-test': 'testing' };
 
 describe('Tag', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new Tag(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#name()', function () {
     it('should return a string', () => {
       const d = new Tag(js);

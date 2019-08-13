@@ -2,6 +2,14 @@ const { expect } = require('chai');
 const AsyncAPIDocument = require('../../lib/models/asyncapi');
 
 describe('AsyncAPIDocument', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const doc = { 'x-test': 'testing' };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.ext('x-test')).to.be.equal(doc['x-test']);
+    });
+  });
+
   describe('#info()', function () {
     it('should return an info object', () => {
       const doc = { info: { title: 'Test', version: '1.2.3', license: { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' } }};

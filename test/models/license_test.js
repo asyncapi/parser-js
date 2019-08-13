@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const License = require('../../lib/models/license');
-const js = { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' };
+const js = { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0', 'x-test': 'testing' };
 
 describe('License', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new License(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#name()', function () {
     it('should return a string', () => {
       const d = new License(js);

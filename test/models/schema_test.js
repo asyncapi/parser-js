@@ -2,6 +2,14 @@ const { expect } = require('chai');
 const Schema = require('../../lib/models/schema');
 
 describe('Schema', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const doc = { 'x-test': 'testing' };
+      const d = new Schema(doc);
+      expect(d.ext('x-test')).to.be.equal(doc['x-test']);
+    });
+  });
+
   describe('#multipleOf()', function () {
     it('should return a number', () => {
       const doc = { "type": "number", "multipleOf": 1.0 };

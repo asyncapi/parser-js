@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const Message = require('../../lib/models/message');
-const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [ { name: 'tag1' } ], protocolInfo: { amqp: { test: true } }, examples: [{test: true}] };
+const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [ { name: 'tag1' } ], protocolInfo: { amqp: { test: true } }, examples: [{test: true}], 'x-test': 'testing' };
 
 describe('Message', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new Message(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#headers()', function () {
     it('should return a map of Schema objects', () => {
       const d = new Message(js);

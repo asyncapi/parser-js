@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const ServerVariable = require('../../lib/models/server-variable');
-const js = { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] };
+const js = { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'], 'x-test': 'testing' };
 
 describe('ServerVariable', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new ServerVariable(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#allowedValues()', function () {
     it('should return an array of strings', () => {
       const d = new ServerVariable(js);

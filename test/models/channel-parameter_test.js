@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const ChannelParameter = require('../../lib/models/channel-parameter');
-const js = { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' } };
+const js = { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' }, 'x-test': 'testing' };
 
 describe('ChannelParameter', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new ChannelParameter(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#description()', function () {
     it('should return a string', () => {
       const d = new ChannelParameter(js);

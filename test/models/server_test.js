@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const Server = require('../../lib/models/server');
-const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }] };
+const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], 'x-test': 'testing' };
 
 describe('Server', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new Server(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#url()', function () {
     it('should return a string', () => {
       const d = new Server(js);

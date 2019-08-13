@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const Operation = require('../../lib/models/operation');
-const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, protocolInfo: { amqp: { test: true } }, message: { test: true }};
+const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, protocolInfo: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing' };
 
 describe('Operation', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new Operation(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#description()', function () {
     it('should return a string', () => {
       const d = new Operation(js);

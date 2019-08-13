@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const ExternalDocs = require('../../lib/models/external-docs');
-const js = { description: 'Testing', url: 'somewhere' };
+const js = { description: 'Testing', url: 'somewhere', 'x-test': 'testing' };
 
 describe('ExternalDocs', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new ExternalDocs(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+    });
+  });
+
   describe('#description()', function () {
     it('should return a string', () => {
       const d = new ExternalDocs(js);

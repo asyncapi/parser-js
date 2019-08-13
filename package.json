@@ -23,7 +23,6 @@
   "dependencies": {
     "ajv": "^6.10.1",
     "asyncapi": "^2.4.0",
-    "content-type-parser": "^1.0.2",
     "js-yaml": "^3.13.1",
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",

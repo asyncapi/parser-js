@@ -6,7 +6,9 @@ describe('AsyncAPIDocument', () => {
     it('should support extensions', () => {
       const doc = { 'x-test': 'testing' };
       const d = new AsyncAPIDocument(doc);
-      expect(d.ext('x-test')).to.be.equal(doc['x-test']);
+      expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
+      expect(d.extension('x-test')).to.be.equal(doc['x-test']);
+      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
     });
   });
 

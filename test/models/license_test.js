@@ -6,7 +6,9 @@ describe('License', () => {
   describe('#ext()', () => {
     it('should support extensions', () => {
       const d = new License(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
+      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
+      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
     });
   });
 

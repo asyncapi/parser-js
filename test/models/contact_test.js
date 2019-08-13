@@ -6,7 +6,9 @@ describe('Contact', () => {
   describe('#ext()', () => {
     it('should support extensions', () => {
       const d = new Contact(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
+      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
+      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
     });
   });
 

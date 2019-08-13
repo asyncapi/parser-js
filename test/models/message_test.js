@@ -5,8 +5,11 @@ const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 
 describe('Message', () => {
   describe('#ext()', () => {
     it('should support extensions', () => {
-      const d = new Message(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);
+      const doc = { 'x-test': 'testing' };
+      const d = new Message(doc);
+      expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
+      expect(d.extension('x-test')).to.be.equal(doc['x-test']);      
+      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
     });
   });
 

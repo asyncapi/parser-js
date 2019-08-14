@@ -10,7 +10,7 @@
 
 ## :loudspeaker: ATTENTION:
 
-This package is under development and it has not reached version 1.0.0, what means that its API might change without prior notice. Once it reaches its first stable version, we'll follow semantic versioning.
+This package is under development and it has not reached version 1.0.0 yet, what means its API might change without prior notice. Once it reaches its first stable version, we'll follow semantic versioning.
 
 ---
 
@@ -26,9 +26,7 @@ npm install asyncapi-parser
 
 ### API
 
-#### `.parse(yamlOrJSONdocument, options) => AsyncAPIDocument`
-
-The `parse` method will take care of parsing and validating the AsyncAPI document. It returns an AsyncAPIDocument object, which is a wrapper of the JSON version of the document with all the message payloads converted to JSON Schema Draft 7 schemas and the traits already resolved and merged into the document.
+[Check out the API page](./API.md).
 
 ##### Example
 
@@ -59,10 +57,6 @@ const doc = await parser.parse(`
 console.log(doc.info().title());
 // => Example
 ```
-
-#### `.parseUrl(url, options) => AsyncAPIDocument`
-
-The `parseUrl` method fetches a YAML or JSON document on the given URL and passes its content to the `parse` method.
 
 ##### Example
 

@@ -52,16 +52,16 @@
 ## Parser
 
 * [Parser](#module_Parser)
-    * [~parse(asyncapiYAMLorJSON, [options])](#module_Parser..parse) ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
-    * [~parseFromUrl(url, [fetchOptions], [options])](#module_Parser..parseFromUrl) ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
-    * [~registerSchemaParser(schemaFormats, parserFunction)](#module_Parser..registerSchemaParser)
+    * [.parse](#module_Parser+parse) ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
+    * [.parseFromUrl](#module_Parser+parseFromUrl) ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
+    * [.registerSchemaParser](#module_Parser+registerSchemaParser)
 
-<a name="module_Parser..parse"></a>
+<a name="module_Parser+parse"></a>
 
-### Parser~parse(asyncapiYAMLorJSON, [options]) ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
+### parser.parse ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
 Parses and validate an AsyncAPI document.
 
-**Kind**: inner method of [<code>Parser</code>](#module_Parser)  
+**Kind**: instance property of [<code>Parser</code>](#module_Parser)  
 **Returns**: [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument) - The parsed AsyncAPI document.  
 
 | Param | Type | Default | Description |
@@ -74,26 +74,26 @@ Parses and validate an AsyncAPI document.
 | [options.dereference] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
 
-<a name="module_Parser..parseFromUrl"></a>
+<a name="module_Parser+parseFromUrl"></a>
 
-### Parser~parseFromUrl(url, [fetchOptions], [options]) ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
+### parser.parseFromUrl ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
 Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
 
-**Kind**: inner method of [<code>Parser</code>](#module_Parser)  
+**Kind**: instance property of [<code>Parser</code>](#module_Parser)  
 **Returns**: [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument) - The parsed AsyncAPI document.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | url | <code>String</code> | URL where the AsyncAPI document is located. |
-| [fetchOptions] | <code>Object</code> | Configuration to pass to the `fetch` call. |
-| [options] | <code>Object</code> | Configuration to pass to the `parse` method. |
+| [fetchOptions] | <code>Object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
+| [options] | <code>Object</code> | Configuration to pass to the [parse](#module_Parser+parse) method. |
 
-<a name="module_Parser..registerSchemaParser"></a>
+<a name="module_Parser+registerSchemaParser"></a>
 
-### Parser~registerSchemaParser(schemaFormats, parserFunction)
+### parser.registerSchemaParser
 Registers a new schema parser. Schema parsers are in charge of parsing and transforming payloads to AsyncAPI Schema format.
 
-**Kind**: inner method of [<code>Parser</code>](#module_Parser)  
+**Kind**: instance property of [<code>Parser</code>](#module_Parser)  
 
 | Param | Type | Description |
 | --- | --- | --- |

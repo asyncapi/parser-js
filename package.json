@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
-    "docs": "jsdoc2md lib/**/*.js > API.md"
+    "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md"
   },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",

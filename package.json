@@ -7,8 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha",
-    "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js"
+    "test": "mocha --recursive",
+    "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
+    "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md"
   },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
@@ -17,13 +18,13 @@
     "browserify-shim": "^3.8.14",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "jsdoc-to-markdown": "^5.0.0",
     "mocha": "^6.1.4",
     "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "ajv": "^6.10.1",
     "asyncapi": "^2.4.0",
-    "content-type-parser": "^1.0.2",
     "js-yaml": "^3.13.1",
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",

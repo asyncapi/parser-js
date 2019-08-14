@@ -1,0 +1,70 @@
+const { expect } = require('chai');
+const Server = require('../../lib/models/server');
+const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], 'x-test': 'testing' };
+
+describe('Server', () => {
+  describe('#ext()', () => {
+    it('should support extensions', () => {
+      const d = new Server(js);
+      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
+      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
+      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
+    });
+  });
+
+  describe('#url()', function () {
+    it('should return a string', () => {
+      const d = new Server(js);
+      expect(d.url()).to.be.equal(js.url);
+    });
+  });
+  
+  describe('#protocol()', function () {
+    it('should return a string', () => {
+      const d = new Server(js);
+      expect(d.protocol()).to.be.equal(js.protocol);
+    });
+  });
+  
+  describe('#protocolVersion()', function () {
+    it('should return a string', () => {
+      const d = new Server(js);
+      expect(d.protocolVersion()).to.be.equal(js.protocolVersion);
+    });
+  });
+  
+  describe('#description()', function () {
+    it('should return a string', () => {
+      const d = new Server(js);
+      expect(d.description()).to.be.equal(js.description);
+    });
+  });
+  
+  describe('#variables()', function () {
+    it('should return a map of ServerVariable objects', () => {
+      const d = new Server(js);
+      expect(typeof d.variables()).to.be.equal('object');
+      expect(d.variables().test1.constructor.name).to.equal('ServerVariable');
+      expect(d.variables().test1.json()).to.equal(js.variables.test1);
+    });
+  });
+  
+  describe('#variable()', function () {
+    it('should return a specific ServerVariable object', () => {
+      const d = new Server(js);
+      expect(d.variable('test1').constructor.name).to.equal('ServerVariable');
+      expect(d.variable('test1').json()).to.equal(js.variables.test1);
+    });
+  });
+  
+  describe('#security()', function () {
+    it('should return an array of security requirements objects', () => {
+      const d = new Server(js);
+      expect(Array.isArray(d.security())).to.equal(true);
+      d.security().forEach((s, i) => {
+        expect(s.constructor.name).to.equal('ServerSecurityRequirement');
+        expect(s.json()).to.equal(js.security[i]);
+      });
+    });
+  });
+});

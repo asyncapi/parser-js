@@ -74,6 +74,15 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
+  describe('#channelNames()', function () {
+    it('should return an array of strings', () => {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const d = new AsyncAPIDocument(doc);
+      expect(Array.isArray(d.channelNames())).to.be.equal(true);
+      expect(d.channelNames()).to.deep.equal(['test1', 'test2']);
+    });
+  });
+
   describe('#channel()', function () {
     it('should return a specific channel object', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };

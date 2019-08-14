@@ -72,7 +72,7 @@ Parses and validate an AsyncAPI document.
 | [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.dereference] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.applyTraits] | <code>Object</code> | <code>false</code> | Whether to resolve and apply traits or not. |
+| [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
 
 <a name="module_Parser..parseFromUrl"></a>
 

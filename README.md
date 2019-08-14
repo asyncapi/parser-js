@@ -26,20 +26,16 @@ npm install asyncapi-parser
 
 ### API
 
-#### `.parse(yamlOrJSONdocument, options) => JSONDocument`
+#### `.parse(yamlOrJSONdocument, options) => AsyncAPIDocument`
 
-The `parse` method will take care of parsing and validating the AsyncAPI document. It returns an AsyncAPIDocument, which is a JSON version of the document with all the message payloads converted to JSON Schema Draft 7 schemas and the traits already resolved and merged into the document.
+The `parse` method will take care of parsing and validating the AsyncAPI document. It returns an AsyncAPIDocument object, which is a wrapper of the JSON version of the document with all the message payloads converted to JSON Schema Draft 7 schemas and the traits already resolved and merged into the document.
 
-#### `.parseUrl(url, options) => JSONDocument`
-
-The `parseUrl` method fetches a YAML or JSON document on the given URL and passes its content to the `parse` method.
-
-### Example
+##### Example
 
 ```js
 const parser = require('asyncapi-parser');
 
-const doc = parser.parse(`
+const doc = await parser.parse(`
   asyncapi: '2.0.0-rc1'
   info:
     title: Example
@@ -60,6 +56,21 @@ const doc = parser.parse(`
                 format: date-time
 `);
 
-console.log(doc.info.title);
+console.log(doc.info().title());
+// => Example
+```
+
+#### `.parseUrl(url, options) => AsyncAPIDocument`
+
+The `parseUrl` method fetches a YAML or JSON document on the given URL and passes its content to the `parse` method.
+
+##### Example
+
+```js
+const parser = require('asyncapi-parser');
+
+const doc = await parser.parseUrl('https://my.server.com/example-asyncapi.yaml');
+
+console.log(doc.info().title());
 // => Example
 ```

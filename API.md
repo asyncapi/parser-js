@@ -69,9 +69,9 @@ Parses and validate an AsyncAPI document.
 | asyncapiYAMLorJSON | <code>String</code> |  | An AsyncAPI document in JSON or YAML format. |
 | [options] | <code>Object</code> |  | Configuration options. |
 | [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. |
-| [options.parse] | <code>Object</code> |  | Configuration object to pass to `json-schema-ref-parser`. |
-| [options.resolve] | <code>Object</code> |  | Configuration object to pass to `json-schema-ref-parser`. |
-| [options.dereference] | <code>Object</code> |  | Configuration object to pass to `json-schema-ref-parser`. |
+| [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [options.dereference] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.applyTraits] | <code>Object</code> | <code>false</code> | Whether to resolve and apply traits or not. |
 
 <a name="module_Parser..parseFromUrl"></a>

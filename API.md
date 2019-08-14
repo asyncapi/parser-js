@@ -9,42 +9,58 @@
 
 <dl>
 <dt><a href="#AsyncAPIDocument">AsyncAPIDocument</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd><p>Contains handy methods to deal with the root AsyncAPI document.</p>
+<dd><p>Implements functions to deal with the AsyncAPI document.</p>
 </dd>
 <dt><a href="#Base">Base</a></dt>
-<dd></dd>
+<dd><p>Implements common functionality for all the models.</p>
+</dd>
 <dt><a href="#ChannelParameter">ChannelParameter</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a ChannelParameter object.</p>
+</dd>
 <dt><a href="#Channel">Channel</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a Channel object.</p>
+</dd>
 <dt><a href="#Contact">Contact</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with the Contact object.</p>
+</dd>
 <dt><a href="#CorrelationId">CorrelationId</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a CorrelationId object.</p>
+</dd>
 <dt><a href="#ExternalDocs">ExternalDocs</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with an ExternalDocs object.</p>
+</dd>
 <dt><a href="#Info">Info</a> ⇐ <code><a href="#Base">Base</a></code></dt>
 <dd></dd>
 <dt><a href="#License">License</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with the License object.</p>
+</dd>
 <dt><a href="#Message">Message</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a Message object.</p>
+</dd>
 <dt><a href="#Operation">Operation</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with an Operation object.</p>
+</dd>
 <dt><a href="#PublishOperation">PublishOperation</a> ⇐ <code><a href="#Operation">Operation</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a PublishOperation object.</p>
+</dd>
 <dt><a href="#Schema">Schema</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a Schema object.</p>
+</dd>
 <dt><a href="#ServerSecurityRequirement">ServerSecurityRequirement</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a ServerSecurityRequirement object.</p>
+</dd>
 <dt><a href="#ServerVariable">ServerVariable</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a ServerVariable object.</p>
+</dd>
 <dt><a href="#Server">Server</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a Server object.</p>
+</dd>
 <dt><a href="#SubscribeOperation">SubscribeOperation</a> ⇐ <code><a href="#Operation">Operation</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a SubscribeOperation object.</p>
+</dd>
 <dt><a href="#Tag">Tag</a> ⇐ <code><a href="#Base">Base</a></code></dt>
-<dd></dd>
+<dd><p>Implements functions to deal with a Tag object.</p>
+</dd>
 </dl>
 
 <a name="module_Parser"></a>
@@ -59,7 +75,7 @@
 <a name="module_Parser+parse"></a>
 
 ### parser.parse ⇒ [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument)
-Parses and validate an AsyncAPI document.
+Parses and validate an AsyncAPI document from YAML or JSON.
 
 **Kind**: instance property of [<code>Parser</code>](#module_Parser)  
 **Returns**: [<code>Promise.&lt;AsyncAPIDocument&gt;</code>](#AsyncAPIDocument) - The parsed AsyncAPI document.  
@@ -103,7 +119,7 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 <a name="AsyncAPIDocument"></a>
 
 ## AsyncAPIDocument ⇐ [<code>Base</code>](#Base)
-Contains handy methods to deal with the root AsyncAPI document.
+Implements functions to deal with the AsyncAPI document.
 
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
@@ -163,6 +179,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Base"></a>
 
 ## Base
+Implements common functionality for all the models.
+
 **Kind**: global class  
 <a name="Base+json"></a>
 
@@ -171,6 +189,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="ChannelParameter"></a>
 
 ## ChannelParameter ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a ChannelParameter object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -199,6 +219,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Channel"></a>
 
 ## Channel ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a Channel object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -252,6 +274,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Contact"></a>
 
 ## Contact ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with the Contact object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -280,6 +304,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="CorrelationId"></a>
 
 ## CorrelationId ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a CorrelationId object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -303,6 +329,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="ExternalDocs"></a>
 
 ## ExternalDocs ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with an ExternalDocs object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -330,11 +358,17 @@ Contains handy methods to deal with the root AsyncAPI document.
 **Extends**: [<code>Base</code>](#Base)  
 
 * [Info](#Info) ⇐ [<code>Base</code>](#Base)
+    * [new Info()](#new_Info_new)
     * [.title()](#Info+title) ⇒ <code>string</code>
     * [.version()](#Info+version) ⇒ <code>string</code>
     * [.license()](#Info+license) ⇒ [<code>License</code>](#License)
     * [.contact()](#Info+contact) ⇒ [<code>Contact</code>](#Contact)
     * [.json()](#Base+json) ⇒ <code>Object</code>
+
+<a name="new_Info_new"></a>
+
+### new Info()
+Implements functions to deal with the Info object.
 
 <a name="Info+title"></a>
 
@@ -359,6 +393,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="License"></a>
 
 ## License ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with the License object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -382,6 +418,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Message"></a>
 
 ## Message ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a Message object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -490,6 +528,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Operation"></a>
 
 ## Operation ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with an Operation object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -548,6 +588,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="PublishOperation"></a>
 
 ## PublishOperation ⇐ [<code>Operation</code>](#Operation)
+Implements functions to deal with a PublishOperation object.
+
 **Kind**: global class  
 **Extends**: [<code>Operation</code>](#Operation)  
 
@@ -621,6 +663,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Schema"></a>
 
 ## Schema ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a Schema object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -839,6 +883,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="ServerSecurityRequirement"></a>
 
 ## ServerSecurityRequirement ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a ServerSecurityRequirement object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 <a name="Base+json"></a>
@@ -848,6 +894,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="ServerVariable"></a>
 
 ## ServerVariable ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a ServerVariable object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -901,6 +949,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Server"></a>
 
 ## Server ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a Server object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 
@@ -954,6 +1004,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="SubscribeOperation"></a>
 
 ## SubscribeOperation ⇐ [<code>Operation</code>](#Operation)
+Implements functions to deal with a SubscribeOperation object.
+
 **Kind**: global class  
 **Extends**: [<code>Operation</code>](#Operation)  
 
@@ -1027,6 +1079,8 @@ Contains handy methods to deal with the root AsyncAPI document.
 <a name="Tag"></a>
 
 ## Tag ⇐ [<code>Base</code>](#Base)
+Implements functions to deal with a Tag object.
+
 **Kind**: global class  
 **Extends**: [<code>Base</code>](#Base)  
 

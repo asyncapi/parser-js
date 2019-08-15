@@ -1,6 +1,6 @@
 {
   "name": "asyncapi-parser",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "browser": "dist/bundle.js",

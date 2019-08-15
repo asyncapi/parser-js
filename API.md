@@ -130,6 +130,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.servers()](#AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
     * [.server(name)](#AsyncAPIDocument+server) ⇒ [<code>Server</code>](#Server)
     * [.channels()](#AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+    * [.channelNames()](#AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
     * [.channel(name)](#AsyncAPIDocument+channel) ⇒ [<code>Channel</code>](#Channel)
     * [.defaultContentType()](#AsyncAPIDocument+defaultContentType) ⇒ <code>string</code>
     * [.json()](#Base+json) ⇒ <code>Object</code>
@@ -158,6 +159,10 @@ Implements functions to deal with the AsyncAPI document.
 <a name="AsyncAPIDocument+channels"></a>
 
 ### asyncAPIDocument.channels() ⇒ <code>Object.&lt;string, Channel&gt;</code>
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
+<a name="AsyncAPIDocument+channelNames"></a>
+
+### asyncAPIDocument.channelNames() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="AsyncAPIDocument+channel"></a>
 

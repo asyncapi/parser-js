@@ -3,13 +3,15 @@
   "version": "0.5.0",
   "description": "Node.js version of the AsyncAPI parser.",
   "main": "lib/index.js",
+  "browser": "dist/bundle.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
-    "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md"
+    "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
+    "prepublishOnly": "npm run bundle"
   },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",

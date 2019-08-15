@@ -21,6 +21,36 @@ describe('parse()', function () {
     await expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
   
+  it('should forward ajv errors', async function () {
+    try {
+      await parser.parse({"asyncapi": "unstable", "info": {}});
+    } catch(e) {
+      const errors = [{
+        keyword: 'required',
+        dataPath: '.info',
+        schemaPath: '#/required',
+        params: { missingProperty: 'title' },
+        message: 'should have required property \'title\''
+      },
+        {
+          keyword: 'required',
+          dataPath: '.info',
+          schemaPath: '#/required',
+          params: { missingProperty: 'version' },
+          message: 'should have required property \'version\''
+        },
+        {
+          keyword: 'required',
+          dataPath: '',
+          schemaPath: '#/required',
+          params: { missingProperty: 'channels' },
+          message: 'should have required property \'channels\''
+        }];
+      
+      await expect(e.errors).to.deep.equal(errors);
+    }
+  });
+  
   it('should not apply traits', async function () {
     const result = await parser.parse(inputYAML, { path: __filename, applyTraits: false });
     await expect(JSON.stringify(result.json())).to.equal(outputJsonNoApplyTraits);

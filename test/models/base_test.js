@@ -14,5 +14,11 @@ describe('Base', () => {
       const d = new Base(doc);
       expect(d.json('test')).to.be.equal(doc.test);
     });
+    
+    it('should return the value of a given key, even when this is falsy', () => {
+      const doc = { 0: 'testing' };
+      const d = new Base(doc);
+      expect(d.json(0)).to.be.equal(doc[0]);
+    });
   });
 });

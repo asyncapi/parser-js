@@ -126,6 +126,17 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
+  describe('#hasComponents()', function () {
+    it('should return a boolean indicating if the AsyncAPI document has components', () => {
+      const doc = { components: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const docNoComponents = { test: 'testing' };
+      const d = new AsyncAPIDocument(doc);
+      const d2 = new AsyncAPIDocument(docNoComponents);
+      expect(d.hasComponents()).to.equal(true);
+      expect(d2.hasComponents()).to.equal(false);
+    });
+  });
+
   describe('#components()', function () {
     it('should return the components object', () => {
       const doc = { components: { test: 'testing' } };

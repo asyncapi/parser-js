@@ -85,4 +85,19 @@ describe('Operation', () => {
       });
     });
   });
+  
+  describe('#message()', function () {
+    it('should return a specific Message object', () => {
+      const doc = { message: { oneOf: [{ test: true }, { test: false }] } };
+      const d = new Operation(doc);
+      expect(d.message(0).json()).to.be.deep.equal(doc.message.oneOf[0]);
+      expect(d.message(1).json()).to.be.deep.equal(doc.message.oneOf[1]);
+    });
+    
+    it('should return null when index is out of bounds', () => {
+      const doc = { message: { oneOf: [{ test: true }, { test: false }] } };
+      const d = new Operation(doc);
+      expect(d.message(100)).to.be.equal(null);
+    });
+  });
 });

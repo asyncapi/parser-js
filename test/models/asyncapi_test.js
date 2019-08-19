@@ -29,6 +29,17 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
+  describe('#hasServers()', function () {
+    it('should return a boolean indicating if the AsyncAPI document has servers', () => {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const docNoServers = { test: 'testing' };
+      const d = new AsyncAPIDocument(doc);
+      const d2 = new AsyncAPIDocument(docNoServers);
+      expect(d.hasServers()).to.equal(true);
+      expect(d2.hasServers()).to.equal(false);
+    });
+  });
+
   describe('#servers()', function () {
     it('should return a map of server objects', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
@@ -59,6 +70,17 @@ describe('AsyncAPIDocument', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.server('not found')).to.equal(null);
+    });
+  });
+
+  describe('#hasChannels()', function () {
+    it('should return a boolean indicating if the AsyncAPI document has channels', () => {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const docNoChannels = { test: 'testing' };
+      const d = new AsyncAPIDocument(doc);
+      const d2 = new AsyncAPIDocument(docNoChannels);
+      expect(d.hasChannels()).to.equal(true);
+      expect(d2.hasChannels()).to.equal(false);
     });
   });
 
@@ -101,6 +123,26 @@ describe('AsyncAPIDocument', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.channel('not found')).to.equal(null);
+    });
+  });
+
+  describe('#hasComponents()', function () {
+    it('should return a boolean indicating if the AsyncAPI document has components', () => {
+      const doc = { components: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const docNoComponents = { test: 'testing' };
+      const d = new AsyncAPIDocument(doc);
+      const d2 = new AsyncAPIDocument(docNoComponents);
+      expect(d.hasComponents()).to.equal(true);
+      expect(d2.hasComponents()).to.equal(false);
+    });
+  });
+
+  describe('#components()', function () {
+    it('should return the components object', () => {
+      const doc = { components: { test: 'testing' } };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.components().constructor.name).to.equal('Components');
+      expect(d.components().json()).to.equal(doc.components);
     });
   });
 });

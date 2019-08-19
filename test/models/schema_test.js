@@ -254,6 +254,18 @@ describe('Schema', () => {
       expect(typeof d.additionalProperties()).to.be.equal('boolean');
       expect(d.additionalProperties()).to.be.equal(doc.additionalProperties);
     });
+    
+    it('should return undefined when not defined', () => {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.additionalProperties()).to.be.equal(undefined);
+    });
+    
+    it('should return undefined when null', () => {
+      const doc = { additionalProperties: null };
+      const d = new Schema(doc);
+      expect(d.additionalProperties()).to.be.equal(undefined);
+    });
   });
 
   describe('#patternProperties()', function () {

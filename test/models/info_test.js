@@ -26,6 +26,20 @@ describe('Info', () => {
     });
   });
   
+  describe('#description()', function () {
+    it('should return a string', () => {
+      const d = new Info(js);
+      expect(d.description()).to.be.equal(js.description);
+    });
+  });
+  
+  describe('#termsOfService()', function () {
+    it('should return a string', () => {
+      const d = new Info(js);
+      expect(d.termsOfService()).to.be.equal(js.termsOfService);
+    });
+  });
+  
   describe('#license()', function () {
     it('should return a license object', () => {
       const d = new Info(js);

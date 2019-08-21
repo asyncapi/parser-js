@@ -46,6 +46,11 @@ describe('Info', () => {
       expect(d.license().constructor.name).to.be.equal('License');
       expect(d.license().json()).to.be.equal(js.license);
     });
+    
+    it('should return null if a license object is not given', () => {
+      const d = new Info({});
+      expect(d.license()).to.be.equal(null);
+    });
   });
   
   describe('#contact()', function () {
@@ -53,6 +58,12 @@ describe('Info', () => {
       const d = new Info(js);
       expect(d.contact().constructor.name).to.be.equal('Contact');
       expect(d.contact().json()).to.be.equal(js.contact);
+    });
+
+
+    it('should return null if a contact object is not given', () => {
+      const d = new Info({});
+      expect(d.contact()).to.be.equal(null);
     });
   });
 });

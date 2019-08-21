@@ -158,6 +158,8 @@ Implements functions to deal with the AsyncAPI document.
     * [.defaultContentType()](#AsyncAPIDocument+defaultContentType) ⇒ <code>string</code>
     * [.hasComponents()](#AsyncAPIDocument+hasComponents) ⇒ <code>boolean</code>
     * [.components()](#AsyncAPIDocument+components) ⇒ [<code>Components</code>](#Components)
+    * [.hasTags()](#AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
+    * [.tags()](#AsyncAPIDocument+tags) ⇒ [<code>Array.&lt;Tag&gt;</code>](#Tag)
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="AsyncAPIDocument+info"></a>
@@ -217,6 +219,14 @@ Implements functions to deal with the AsyncAPI document.
 <a name="AsyncAPIDocument+components"></a>
 
 ### asyncAPIDocument.components() ⇒ [<code>Components</code>](#Components)
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
+<a name="AsyncAPIDocument+hasTags"></a>
+
+### asyncAPIDocument.hasTags() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
+<a name="AsyncAPIDocument+tags"></a>
+
+### asyncAPIDocument.tags() ⇒ [<code>Array.&lt;Tag&gt;</code>](#Tag)
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="Base+json"></a>
 

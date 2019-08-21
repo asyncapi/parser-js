@@ -145,4 +145,15 @@ describe('AsyncAPIDocument', () => {
       expect(d.components().json()).to.equal(doc.components);
     });
   });
+
+  describe('#tags()', function () {
+    it('should return an array of tags', () => {
+      const doc = { tags: [{ name: 'test1' }, { name: 'test2' }] };
+      const d = new AsyncAPIDocument(doc);
+      d.tags().forEach((t, i) => {
+        expect(t.constructor.name).to.be.equal('Tag');
+        expect(t.json()).to.be.equal(doc.tags[i]);
+      });
+    });
+  });
 });

@@ -1,5 +1,8 @@
 language: node_js
 node_js:
-  - "10"
-script:
-  - npm run test
+  - "8"
+deploy:
+  provider: script
+  script: "cp .npmrc.template $HOME/.npmrc && npm install && npm test && npm publish"
+  on:
+    tags: true

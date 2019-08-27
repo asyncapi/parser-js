@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const Channel = require('../../lib/models/channel');
-const js = { description: 'test', parameters: { param1: { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' } } }, 'x-test': 'testing' };
+const js = { description: 'test', parameters: { param1: { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' } } }, bindings: { amqp: 'test' }, 'x-test': 'testing' };
 
 describe('Channel', () => {
   describe('#ext()', () => {
@@ -69,6 +69,20 @@ describe('Channel', () => {
       expect(d.hasSubscribe()).to.be.equal(false);
       const d2 = new Channel({ subscribe: { description: 'sub' } });
       expect(d2.hasSubscribe()).to.be.equal(true);
+    });
+  });
+
+  describe('#bindings()', function () {
+    it('should return a map of bindings', () => {
+      const d = new Channel(js);
+      expect(d.bindings()).to.be.equal(js.bindings);
+    });
+  });
+
+  describe('#binding()', function () {
+    it('should return a specific binding', () => {
+      const d = new Channel(js);
+      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
 });

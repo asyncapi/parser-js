@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const Server = require('../../lib/models/server');
-const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], 'x-test': 'testing' };
+const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], bindings: { amqp: 'test' }, 'x-test': 'testing' };
 
 describe('Server', () => {
   describe('#ext()', () => {
@@ -65,6 +65,20 @@ describe('Server', () => {
         expect(s.constructor.name).to.equal('ServerSecurityRequirement');
         expect(s.json()).to.equal(js.security[i]);
       });
+    });
+  });
+
+  describe('#bindings()', function () {
+    it('should return a map of bindings', () => {
+      const d = new Server(js);
+      expect(d.bindings()).to.be.equal(js.bindings);
+    });
+  });
+
+  describe('#binding()', function () {
+    it('should return a specific binding', () => {
+      const d = new Server(js);
+      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
 });

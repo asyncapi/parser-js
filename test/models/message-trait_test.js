@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const MessageTrait = require('../../lib/models/message-trait');
-const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, correlationId: { test: true }, contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], protocolInfo: { amqp: { test: true } }, examples: [{ test: true }], 'x-test': 'testing' };
+const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, correlationId: { test: true }, contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{ test: true }], 'x-test': 'testing' };
 
 describe('MessageTrait', () => {
   describe('#ext()', () => {
@@ -121,14 +121,14 @@ describe('MessageTrait', () => {
   describe('#bindings()', function () {
     it('should return a map of bindings', () => {
       const d = new MessageTrait(js);
-      expect(d.bindings()).to.be.equal(js.protocolInfo);
+      expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
 
   describe('#binding()', function () {
     it('should return a specific binding', () => {
       const d = new MessageTrait(js);
-      expect(d.binding('amqp')).to.be.equal(js.protocolInfo.amqp);
+      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
 

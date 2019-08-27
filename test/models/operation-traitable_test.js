@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const OperationTraitable = require('../../lib/models/operation-traitable');
-const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, protocolInfo: { amqp: { test: true } }, 'x-test': 'testing' };
+const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, 'x-test': 'testing' };
 
 describe('OperationTraitable', () => {
   describe('#ext()', () => {
@@ -54,14 +54,14 @@ describe('OperationTraitable', () => {
   describe('#bindings()', function () {
     it('should return a map of bindings', () => {
       const d = new OperationTraitable(js);
-      expect(d.bindings()).to.be.equal(js.protocolInfo);
+      expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
   
   describe('#binding()', function () {
     it('should return a specific binding', () => {
       const d = new OperationTraitable(js);
-      expect(d.binding('amqp')).to.be.equal(js.protocolInfo.amqp);
+      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
   

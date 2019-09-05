@@ -146,6 +146,7 @@ Implements functions to deal with the AsyncAPI document.
 **Extends**: [<code>Base</code>](#Base)  
 
 * [AsyncAPIDocument](#AsyncAPIDocument) ⇐ [<code>Base</code>](#Base)
+    * [.version()](#AsyncAPIDocument+version) ⇒ <code>string</code>
     * [.info()](#AsyncAPIDocument+info) ⇒ [<code>Info</code>](#Info)
     * [.id()](#AsyncAPIDocument+id) ⇒ <code>string</code>
     * [.hasServers()](#AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
@@ -162,6 +163,10 @@ Implements functions to deal with the AsyncAPI document.
     * [.tags()](#AsyncAPIDocument+tags) ⇒ [<code>Array.&lt;Tag&gt;</code>](#Tag)
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
+<a name="AsyncAPIDocument+version"></a>
+
+### asyncAPIDocument.version() ⇒ <code>string</code>
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="AsyncAPIDocument+info"></a>
 
 ### asyncAPIDocument.info() ⇒ [<code>Info</code>](#Info)
@@ -288,6 +293,8 @@ Implements functions to deal with a Channel object.
     * [.subscribe()](#Channel+subscribe) ⇒ [<code>SubscribeOperation</code>](#SubscribeOperation)
     * [.hasPublish()](#Channel+hasPublish) ⇒ <code>boolean</code>
     * [.hasSubscribe()](#Channel+hasSubscribe) ⇒ <code>boolean</code>
+    * [.bindings()](#Channel+bindings) ⇒ <code>Object</code>
+    * [.binding(name)](#Channel+binding) ⇒ <code>Object</code>
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="Channel+description"></a>
@@ -323,6 +330,19 @@ Implements functions to deal with a Channel object.
 
 ### channel.hasSubscribe() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Channel</code>](#Channel)  
+<a name="Channel+bindings"></a>
+
+### channel.bindings() ⇒ <code>Object</code>
+**Kind**: instance method of [<code>Channel</code>](#Channel)  
+<a name="Channel+binding"></a>
+
+### channel.binding(name) ⇒ <code>Object</code>
+**Kind**: instance method of [<code>Channel</code>](#Channel)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the binding. |
+
 <a name="Base+json"></a>
 
 ### channel.json() ⇒ <code>Any</code>
@@ -1464,6 +1484,8 @@ Implements functions to deal with a Server object.
     * [.variables()](#Server+variables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
     * [.variable(name)](#Server+variable) ⇒ [<code>ServerVariable</code>](#ServerVariable)
     * [.security()](#Server+security) ⇒ [<code>Array.&lt;ServerSecurityRequirement&gt;</code>](#ServerSecurityRequirement)
+    * [.bindings()](#Server+bindings) ⇒ <code>Object</code>
+    * [.binding(name)](#Server+binding) ⇒ <code>Object</code>
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="Server+description"></a>
@@ -1499,6 +1521,19 @@ Implements functions to deal with a Server object.
 
 ### server.security() ⇒ [<code>Array.&lt;ServerSecurityRequirement&gt;</code>](#ServerSecurityRequirement)
 **Kind**: instance method of [<code>Server</code>](#Server)  
+<a name="Server+bindings"></a>
+
+### server.bindings() ⇒ <code>Object</code>
+**Kind**: instance method of [<code>Server</code>](#Server)  
+<a name="Server+binding"></a>
+
+### server.binding(name) ⇒ <code>Object</code>
+**Kind**: instance method of [<code>Server</code>](#Server)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the binding. |
+
 <a name="Base+json"></a>
 
 ### server.json() ⇒ <code>Any</code>

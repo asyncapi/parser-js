@@ -1159,6 +1159,7 @@ Implements functions to deal with a Schema object.
     * [.items()](#Schema+items) ⇒ [<code>Schema</code>](#Schema) \| [<code>Array.&lt;Schema&gt;</code>](#Schema)
     * [.properties()](#Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
     * [.additionalProperties()](#Schema+additionalProperties) ⇒ <code>boolean</code> \| [<code>Schema</code>](#Schema)
+    * [.additionalItems()](#Schema+additionalItems) ⇒ [<code>Schema</code>](#Schema)
     * [.patternProperties()](#Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
     * [.const()](#Schema+const) ⇒ <code>any</code>
     * [.contains()](#Schema+contains) ⇒ [<code>Schema</code>](#Schema)
@@ -1270,6 +1271,10 @@ Implements functions to deal with a Schema object.
 <a name="Schema+additionalProperties"></a>
 
 ### schema.additionalProperties() ⇒ <code>boolean</code> \| [<code>Schema</code>](#Schema)
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+additionalItems"></a>
+
+### schema.additionalItems() ⇒ [<code>Schema</code>](#Schema)
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+patternProperties"></a>
 

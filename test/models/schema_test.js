@@ -268,6 +268,27 @@ describe('Schema', () => {
     });
   });
 
+  describe('#additionalItems()', function () {
+    it('should return a Schema object', () => {
+      const doc = { "additionalItems": { "type": "string" } };
+      const d = new Schema(doc);
+      expect(d.additionalItems().constructor.name).to.be.equal('Schema');
+      expect(d.additionalItems().json()).to.be.equal(doc.additionalItems);
+    });
+    
+    it('should return undefined when not defined', () => {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.additionalItems()).to.be.equal(undefined);
+    });
+    
+    it('should return undefined when null', () => {
+      const doc = { additionalItems: null };
+      const d = new Schema(doc);
+      expect(d.additionalItems()).to.be.equal(undefined);
+    });
+  });
+
   describe('#patternProperties()', function () {
     it('should return a map of Schema objects', () => {
       const doc = { "patternProperties": { "test": { "type": "string" } } };

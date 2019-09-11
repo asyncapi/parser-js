@@ -1,5 +1,5 @@
 {
-	"asyncapi": "2.0.0-rc2",
+	"asyncapi": "2.0.0",
 	"info": {
 		"title": "My API",
 		"version": "1.0.0"

@@ -21,6 +21,31 @@ describe('Schema', () => {
     });
   });
   
+  describe('#uid()', function () {
+    it('should return a string', () => {
+      const doc = { "$id": "test" };
+      const d = new Schema(doc);
+      expect(typeof d.uid()).to.be.equal('string');
+      expect(d.uid()).to.be.equal(doc.$id);
+    });
+    
+    it('should return a string with the value of x-parser-schema-id when $id is not available', () => {
+      const doc = { "x-parser-schema-id": "test" };
+      const d = new Schema(doc);
+      expect(typeof d.uid()).to.be.equal('string');
+      expect(d.uid()).to.be.equal(doc['x-parser-schema-id']);
+    });
+  });
+  
+  describe('#$id()', function () {
+    it('should return a string', () => {
+      const doc = { "$id": "test" };
+      const d = new Schema(doc);
+      expect(typeof d.$id()).to.be.equal('string');
+      expect(d.$id()).to.be.equal(doc.$id);
+    });
+  });
+  
   describe('#maximum()', function () {
     it('should return a number', () => {
       const doc = { "type": "number", "maximum": 10 };

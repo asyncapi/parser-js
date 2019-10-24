@@ -162,6 +162,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.hasTags()](#AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
     * [.tags()](#AsyncAPIDocument+tags) ⇒ [<code>Array.&lt;Tag&gt;</code>](#Tag)
     * [.allMessages()](#AsyncAPIDocument+allMessages) ⇒ [<code>Map.&lt;Message&gt;</code>](#Message)
+    * [.allSchemas()](#AsyncAPIDocument+allSchemas) ⇒ [<code>Map.&lt;Schema&gt;</code>](#Schema)
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="AsyncAPIDocument+version"></a>
@@ -237,6 +238,10 @@ Implements functions to deal with the AsyncAPI document.
 <a name="AsyncAPIDocument+allMessages"></a>
 
 ### asyncAPIDocument.allMessages() ⇒ [<code>Map.&lt;Message&gt;</code>](#Message)
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
+<a name="AsyncAPIDocument+allSchemas"></a>
+
+### asyncAPIDocument.allSchemas() ⇒ [<code>Map.&lt;Schema&gt;</code>](#Schema)
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="Base+json"></a>
 
@@ -1142,6 +1147,8 @@ Implements functions to deal with a Schema object.
 **Extends**: [<code>Base</code>](#Base)  
 
 * [Schema](#Schema) ⇐ [<code>Base</code>](#Base)
+    * [.uid()](#Schema+uid) ⇒ <code>string</code>
+    * [.$id()](#Schema+$id) ⇒ <code>string</code>
     * [.multipleOf()](#Schema+multipleOf) ⇒ <code>number</code>
     * [.maximum()](#Schema+maximum) ⇒ <code>number</code>
     * [.exclusiveMaximum()](#Schema+exclusiveMaximum) ⇒ <code>number</code>
@@ -1186,6 +1193,14 @@ Implements functions to deal with a Schema object.
     * [.examples()](#Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
+<a name="Schema+uid"></a>
+
+### schema.uid() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+$id"></a>
+
+### schema.$id() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+multipleOf"></a>
 
 ### schema.multipleOf() ⇒ <code>number</code>

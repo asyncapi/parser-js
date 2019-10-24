@@ -161,7 +161,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.components()](#AsyncAPIDocument+components) ⇒ [<code>Components</code>](#Components)
     * [.hasTags()](#AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
     * [.tags()](#AsyncAPIDocument+tags) ⇒ [<code>Array.&lt;Tag&gt;</code>](#Tag)
-    * [.allMessages()](#AsyncAPIDocument+allMessages) ⇒ [<code>Array.&lt;Message&gt;</code>](#Message)
+    * [.allMessages()](#AsyncAPIDocument+allMessages) ⇒ [<code>Map.&lt;Message&gt;</code>](#Message)
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="AsyncAPIDocument+version"></a>
@@ -236,7 +236,7 @@ Implements functions to deal with the AsyncAPI document.
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="AsyncAPIDocument+allMessages"></a>
 
-### asyncAPIDocument.allMessages() ⇒ [<code>Array.&lt;Message&gt;</code>](#Message)
+### asyncAPIDocument.allMessages() ⇒ [<code>Map.&lt;Message&gt;</code>](#Message)
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="Base+json"></a>
 

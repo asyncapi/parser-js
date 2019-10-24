@@ -161,8 +161,8 @@ describe('AsyncAPIDocument', () => {
     it('should return an array with all the messages used in the document', () => {
       const doc = { channels: { test: { publish: { message: { test: true, k: 1 } } }, test2: { subscribe: { message: { name: 'test', test: true, k: 2 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
       const d = new AsyncAPIDocument(doc);
-      expect(Object.keys(d.allMessages()).length).to.be.equal(3);
-      Object.values(d.allMessages()).forEach(t => {
+      expect(d.allMessages().size).to.be.equal(3);
+      d.allMessages().forEach(t => {
         expect(t.constructor.name).to.be.equal('Message');
         expect(t.json().test).to.be.equal(true);
       });

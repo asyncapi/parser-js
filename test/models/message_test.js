@@ -14,9 +14,21 @@ describe('Message', () => {
   });
 
   describe('#uid()', function () {
-    it('should return a string', () => {
+    it('should return a string with the name', () => {
       const d = new Message(js);
-      expect(d.uid()).to.be.equal('eyJoZWFkZXJzIjp7InByb3BlcnRpZXMiOnsidGVzdDEiOnsidHlwZSI6InN0cmluZyJ9LCJ0ZXN0MiI6eyJ0eXBlIjoibnVtYmVyIn19fSwicGF5bG9hZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtcGF5bG9hZCI6eyJ0ZXN0aW5nIjp0cnVlfSwiY29ycmVsYXRpb25JZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtc2NoZW1hLWZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5hcGFjaGUuYXZybzt2ZXJzaW9uPTEuOS4wIiwiY29udGVudFR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIiwibmFtZSI6InRlc3QiLCJ0aXRsZSI6IlRlc3QiLCJzdW1tYXJ5IjoidGVzdCIsImRlc2NyaXB0aW9uIjoidGVzdGluZyIsImV4dGVybmFsRG9jcyI6eyJ0ZXN0Ijp0cnVlfSwidGFncyI6W3sibmFtZSI6InRhZzEifV0sImJpbmRpbmdzIjp7ImFtcXAiOnsidGVzdCI6dHJ1ZX19LCJleGFtcGxlcyI6W3sidGVzdCI6dHJ1ZX1dLCJ4LXRlc3QiOiJ0ZXN0aW5nIn0=');
+      expect(d.uid()).to.be.equal('test');
+    });
+    
+    it('should return a string with the x-parser-message-name extension when name is not available', () => {
+      const msg = { ...js, ...{ 'x-parser-message-name': 'test' } };
+      const d = new Message(msg);
+      expect(d.uid()).to.be.equal('test');
+    });
+    
+    it('should return a string with the base64 representation of the object when x-parser-message-name extension and name are not available', () => {
+      const msg = { ...js, ...{ name: undefined } };
+      const d = new Message(msg);
+      expect(d.uid()).to.be.equal('eyJoZWFkZXJzIjp7InByb3BlcnRpZXMiOnsidGVzdDEiOnsidHlwZSI6InN0cmluZyJ9LCJ0ZXN0MiI6eyJ0eXBlIjoibnVtYmVyIn19fSwicGF5bG9hZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtcGF5bG9hZCI6eyJ0ZXN0aW5nIjp0cnVlfSwiY29ycmVsYXRpb25JZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtc2NoZW1hLWZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5hcGFjaGUuYXZybzt2ZXJzaW9uPTEuOS4wIiwiY29udGVudFR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIiwidGl0bGUiOiJUZXN0Iiwic3VtbWFyeSI6InRlc3QiLCJkZXNjcmlwdGlvbiI6InRlc3RpbmciLCJleHRlcm5hbERvY3MiOnsidGVzdCI6dHJ1ZX0sInRhZ3MiOlt7Im5hbWUiOiJ0YWcxIn1dLCJiaW5kaW5ncyI6eyJhbXFwIjp7InRlc3QiOnRydWV9fSwiZXhhbXBsZXMiOlt7InRlc3QiOnRydWV9XSwieC10ZXN0IjoidGVzdGluZyJ9');
     });
   });
   

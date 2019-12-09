@@ -158,11 +158,18 @@ describe('AsyncAPIDocument', () => {
   });
   
   describe('#allMessages()', function () {
+    it('should return an array with all the messages used in the document and overwrite the message from channel', () => {
+      const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
+      const d = new AsyncAPIDocument(doc);
+      const allMessages = d.allMessages();
+      expect(allMessages.size).to.be.equal(1);
+      expect(allMessages.get('test').constructor.name).to.be.equal('Message');
+      expect(allMessages.get('test').json().test).to.be.equal(true);
+    });
     it('should return an array with all the messages used in the document', () => {
       const doc = { channels: { test: { publish: { message: { test: true, k: 1 } } }, test2: { subscribe: { message: { name: 'test', test: true, k: 2 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
-      console.log(JSON.stringify(doc, null, 4))
       const d = new AsyncAPIDocument(doc);
-      expect(d.allMessages().size).to.be.equal(3);
+      expect(d.allMessages().size).to.be.equal(2);
       d.allMessages().forEach(t => {
         expect(t.constructor.name).to.be.equal('Message');
         expect(t.json().test).to.be.equal(true);

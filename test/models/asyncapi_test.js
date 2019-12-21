@@ -158,10 +158,18 @@ describe('AsyncAPIDocument', () => {
   });
   
   describe('#allMessages()', function () {
+    it('should return an array with all the messages used in the document and overwrite the message from channel', () => {
+      const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
+      const d = new AsyncAPIDocument(doc);
+      const allMessages = d.allMessages();
+      expect(allMessages.size).to.be.equal(1);
+      expect(allMessages.get('test').constructor.name).to.be.equal('Message');
+      expect(allMessages.get('test').json().test).to.be.equal(true);
+    });
     it('should return an array with all the messages used in the document', () => {
       const doc = { channels: { test: { publish: { message: { test: true, k: 1 } } }, test2: { subscribe: { message: { name: 'test', test: true, k: 2 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
       const d = new AsyncAPIDocument(doc);
-      expect(d.allMessages().size).to.be.equal(3);
+      expect(d.allMessages().size).to.be.equal(2);
       d.allMessages().forEach(t => {
         expect(t.constructor.name).to.be.equal('Message');
         expect(t.json().test).to.be.equal(true);
@@ -171,13 +179,24 @@ describe('AsyncAPIDocument', () => {
   
   describe('#allSchemas()', function () {
     it('should return an array with all the schemas used in the document', () => {
-      const doc = { channels: { test: { parameters: { test: { schema: { $id: 'test', test: true, k: 0 } } }, publish: { message: { headers: { test: true, k: 1 }, payload: { test: true, k: 2 } } } }, test2: { subscribe: { message: { payload: { $id: 'test', test: true, k: 2 } } } } }, components: { schemas: { test: { test: true, k: 3 } } } };
+      const doc = { channels: { test: { parameters: { testParam1: { schema: { $id: 'testParamSchema', test: true, k: 0 } } }, publish: { message: { headers: { test: true, k: 1 }, payload: { test: true, k: 2 } } } }, test2: { subscribe: { message: { payload: { $id: 'testPayload', test: true, k: 2 } } } } }, components: { schemas: { testSchema: { test: true, k: 3 } } } };
       const d = new AsyncAPIDocument(doc);
-      expect(d.allSchemas().size).to.be.equal(4);
-      d.allSchemas().forEach(t => {
+      const schemas = d.allSchemas();
+      expect(schemas.size).to.be.equal(5);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        "testParamSchema",
+        "<anonymous-schema-1>",
+        "<anonymous-schema-2>",
+        "testPayload",
+        "testSchema"
+      ])
+      for(const t of schemas.values()){
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
-      });
+      }
     });
   });
 });

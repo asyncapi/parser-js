@@ -10,6 +10,7 @@ channels:
   otherchannel:
     subscribe:
       message:
+        schemaFormat: 'application/raml+yaml;version=1.0'
         payload:
           $ref: 'complex_cat.raml#/types/Cat'
 

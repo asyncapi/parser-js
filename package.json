@@ -27,12 +27,11 @@
     "ajv": "^6.10.1",
     "asyncapi": "^2.6.1",
     "js-yaml": "^3.13.1",
-    "json-schema-migrate": "^0.2.0",
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",
     "openapi-schema-to-json-schema": "^2.2.0",
-    "tiny-merge-patch": "^0.1.2",
-    "webapi-parser": "^0.5.0"
+    "ramldt2jsonschema": "^1.1.0",
+    "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {
     "transform": [

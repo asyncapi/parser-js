@@ -300,6 +300,7 @@ Implements functions to deal with a Channel object.
     * [.description()](#Channel+description) ⇒ <code>string</code>
     * [.parameters()](#Channel+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
     * [.parameter(name)](#Channel+parameter) ⇒ [<code>ChannelParameter</code>](#ChannelParameter)
+    * [.hasParameters()](#Channel+hasParameters) ⇒ <code>boolean</code>
     * [.publish()](#Channel+publish) ⇒ [<code>PublishOperation</code>](#PublishOperation)
     * [.subscribe()](#Channel+subscribe) ⇒ [<code>SubscribeOperation</code>](#SubscribeOperation)
     * [.hasPublish()](#Channel+hasPublish) ⇒ <code>boolean</code>
@@ -325,6 +326,10 @@ Implements functions to deal with a Channel object.
 | --- | --- | --- |
 | name | <code>string</code> | Name of the parameter. |
 
+<a name="Channel+hasParameters"></a>
+
+### channel.hasParameters() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Channel</code>](#Channel)  
 <a name="Channel+publish"></a>
 
 ### channel.publish() ⇒ [<code>PublishOperation</code>](#PublishOperation)
@@ -1509,6 +1514,7 @@ Implements functions to deal with a Server object.
     * [.protocolVersion()](#Server+protocolVersion) ⇒ <code>string</code>
     * [.variables()](#Server+variables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
     * [.variable(name)](#Server+variable) ⇒ [<code>ServerVariable</code>](#ServerVariable)
+    * [.hasVariables()](#Server+hasVariables) ⇒ <code>boolean</code>
     * [.security()](#Server+security) ⇒ [<code>Array.&lt;ServerSecurityRequirement&gt;</code>](#ServerSecurityRequirement)
     * [.bindings()](#Server+bindings) ⇒ <code>Object</code>
     * [.binding(name)](#Server+binding) ⇒ <code>Object</code>
@@ -1543,6 +1549,10 @@ Implements functions to deal with a Server object.
 | --- | --- | --- |
 | name | <code>string</code> | Name of the server variable. |
 
+<a name="Server+hasVariables"></a>
+
+### server.hasVariables() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Server</code>](#Server)  
 <a name="Server+security"></a>
 
 ### server.security() ⇒ [<code>Array.&lt;ServerSecurityRequirement&gt;</code>](#ServerSecurityRequirement)

@@ -68,3 +68,11 @@ const doc = await parser.parseUrl('https://my.server.com/example-asyncapi.yaml')
 console.log(doc.info().title());
 // => Example
 ```
+
+### Develop
+
+1. Run tests with `npm test`
+1. Write code and tests.
+1. Make sure all tests pass `npm test`
+1. Generate new API docs `npm run docs`
+1. Update bundle for client-side parser `npm run bundle`

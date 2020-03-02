@@ -73,9 +73,9 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#hasVariable()', function () {
-    it('should return a boolean indicating if the AsyncAPI document has server variables', () => {
-      const doc = { servers: { test1: { url: 'test1', variables: { port: { desc: 'test1' } } } } };
+  describe('#hasVariables()', function () {
+    it('should return a boolean indicating if a server URL has variables', () => {
+      const doc = { servers: { test1: { url: 'test1:{port}', variables: { port: { desc: 'test1' } } } } };
       const docNoServerVariables = { servers: { test: { url: 'test' } } };
       const d = new AsyncAPIDocument(doc);
       const d2 = new AsyncAPIDocument(docNoServerVariables);

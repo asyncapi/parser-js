@@ -39,7 +39,18 @@ describe('Server', () => {
       expect(d.description()).to.be.equal(js.description);
     });
   });
-  
+
+  describe('#hasVariables()', function () {
+    it('should return a boolean indicating if a server URL has variables', () => {
+      const doc = { url: 'test1:{port}', variables: { port: { desc: 'test1' } } };
+      const docNoServerVariables = { url: 'test' };
+      const d = new Server(doc);
+      const d2 = new Server(docNoServerVariables);
+      expect(d.hasVariables()).to.equal(true);
+      expect(d2.hasVariables()).to.equal(false);
+    });
+  });
+
   describe('#variables()', function () {
     it('should return a map of ServerVariable objects', () => {
       const d = new Server(js);

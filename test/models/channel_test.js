@@ -18,7 +18,19 @@ describe('Channel', () => {
       expect(d.description()).to.be.equal(js.description);
     });
   });
-   
+  
+  describe('#hasParameters()', function () {
+    it('should return a boolean indicating if the AsyncAPI document has channel parameters', () => {
+      const doc = { parameters: { test1param: { description: "test1param" } } };
+      const docNoChannelParams = { description: "test" };
+      const d = new Channel(doc);
+      const d2 = new Channel(docNoChannelParams);
+      expect(d.hasParameters()).to.equal(true);
+      expect(d2.hasParameters()).to.equal(false);
+    });
+  });
+
+
   describe('#parameters()', function () {
     it('should return a map of ChannelParameter objects', () => {
       const d = new Channel(js);

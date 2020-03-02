@@ -73,17 +73,6 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#hasVariables()', function () {
-    it('should return a boolean indicating if a server URL has variables', () => {
-      const doc = { servers: { test1: { url: 'test1:{port}', variables: { port: { desc: 'test1' } } } } };
-      const docNoServerVariables = { servers: { test: { url: 'test' } } };
-      const d = new AsyncAPIDocument(doc);
-      const d2 = new AsyncAPIDocument(docNoServerVariables);
-      expect(d.server('test1').hasVariables()).to.equal(true);
-      expect(d2.server('test').hasVariables()).to.equal(false);
-    });
-  });
-
   describe('#hasChannels()', function () {
     it('should return a boolean indicating if the AsyncAPI document has channels', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
@@ -134,17 +123,6 @@ describe('AsyncAPIDocument', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.channel('not found')).to.equal(null);
-    });
-  });
-
-  describe('#hasParameters()', function () {
-    it('should return a boolean indicating if the AsyncAPI document has channel parameters', () => {
-      const doc = { channels: { test1: { parameters: { test1param: { description: "test1param" } } } } };
-      const docNoChannelParams = { channels: { test: { description: "test" } } };
-      const d = new AsyncAPIDocument(doc);
-      const d2 = new AsyncAPIDocument(docNoChannelParams);
-      expect(d.channel('test1').hasParameters()).to.equal(true);
-      expect(d2.channel('test').hasParameters()).to.equal(false);
     });
   });
 

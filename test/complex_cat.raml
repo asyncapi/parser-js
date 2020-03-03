@@ -1,0 +1,111 @@
+#%RAML 1.0 Library
+
+types:
+  NameXML:
+    displayName: Name XML
+    type: string
+    xml:
+      attribute: false
+      wrapped: true
+      name: cat
+      prefix: animal
+
+  CatName:
+    type: NameXML
+    default: "regular cat"
+    example: fluffy
+    displayName: Cat
+    description: "Cat name"
+    facets:
+      amazing: boolean
+
+  CatBreed:
+    type: string
+    pattern: "\\w{3,}"
+    examples:
+      dogone: "CatOne"
+      dogtwo: "CatTwo"
+    enum: ["CatOne", "CatTwo", "CatThree"]
+
+  CatPros:
+    type: array
+    uniqueItems: false
+    items: string
+    minItems: 1
+    maxItems: 100
+
+  CatCons:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+      maxLength: 100
+
+  CatAge:
+    type: number
+    minimum: 1
+    maximum: 50
+    format: int32
+
+  CatWithCity:
+    additionalProperties: false
+    properties:
+      city: string
+
+  CatWithAddress:
+    additionalProperties: false
+    properties:
+      address: string
+
+  Cat:
+    type: [CatWithAddress, CatWithCity]
+    minProperties: 1
+    maxProperties: 50
+    additionalProperties: false
+    discriminator: breed
+    discriminatorValue: CatOne
+    properties:
+      proscons:
+        type: CatPros | CatCons
+        required: true
+      name:
+        type: CatName
+        amazing: true
+      breed:
+        type: CatBreed
+      age: CatAge
+      rating:
+        type: integer
+        multipleOf: 5
+        example:
+          displayName: Cat's rating
+          description: Rating of cat's awesomeness
+          strict: false
+          value: 50
+      year_of_birth: date-only
+      time_of_birth: time-only
+      dt_of_birth:
+        type: datetime-only
+        required: false
+      addition_date:
+        type: datetime
+        format: rfc2616
+      removal_date:
+        type: datetime
+      photo:
+        type: file
+        fileTypes: ['image/jpeg', 'image/png']
+        minLength: 1
+        maxLength: 307200
+      description: nil
+      habits?: string
+      character: nil | string
+      siblings: string[]
+      parents: CatName[]
+      ratingHistory: (integer | number)[]
+      additionalData:
+        type:
+          type: object
+          properties:
+            weight: number

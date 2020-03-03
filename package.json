@@ -30,6 +30,7 @@
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
+    "ramldt2jsonschema": "^1.1.0",
     "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {

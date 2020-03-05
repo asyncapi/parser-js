@@ -1,26 +1,27 @@
 const { expect } = require('chai');
 const AsyncAPIDocument = require('../../lib/models/asyncapi');
-
+const fs = require('fs');
+const path = require("path");
 describe('AsyncAPIDocument', () => {
   describe('#ext()', () => {
     it('should support extensions', () => {
       const doc = { 'x-test': 'testing' };
       const d = new AsyncAPIDocument(doc);
-      expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
+      expect(d.ext('x-test')).to.be.equal(doc['x-test']);
       expect(d.extension('x-test')).to.be.equal(doc['x-test']);
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
+      expect(d.extensions()).to.be.deep.equal({ 'x-test': 'testing' });
     });
   });
 
   describe('#info()', function () {
     it('should return an info object', () => {
-      const doc = { info: { title: 'Test', version: '1.2.3', license: { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' } }};
+      const doc = { info: { title: 'Test', version: '1.2.3', license: { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.info().constructor.name).to.be.equal('Info');
       expect(d.info().json()).to.be.equal(doc.info);
     });
   });
-  
+
   describe('#id()', function () {
     it('should return the id string', () => {
       const doc = { id: 'urn:test' };
@@ -51,7 +52,7 @@ describe('AsyncAPIDocument', () => {
       expect(d.servers().test2.json()).to.equal(doc.servers.test2);
     });
   });
-  
+
   describe('#server()', function () {
     it('should return a specific server object', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
@@ -59,13 +60,13 @@ describe('AsyncAPIDocument', () => {
       expect(d.server('test1').constructor.name).to.equal('Server');
       expect(d.server('test1').json()).to.equal(doc.servers.test1);
     });
-    
+
     it('should return null if a server name is not provided', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.server()).to.equal(null);
     });
-    
+
     it('should return null if a server name is not found', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
@@ -156,7 +157,7 @@ describe('AsyncAPIDocument', () => {
       });
     });
   });
-  
+
   describe('#allMessages()', function () {
     it('should return an array with all the messages used in the document and overwrite the message from channel', () => {
       const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
@@ -176,9 +177,9 @@ describe('AsyncAPIDocument', () => {
       });
     });
   });
-  
+
   describe('#allSchemas()', function () {
-    it('should return an array with all the schemas used in the document', () => {
+    it('should return a map with all the schemas used in the document', () => {
       const doc = { channels: { test: { parameters: { testParam1: { schema: { $id: 'testParamSchema', test: true, k: 0 } } }, publish: { message: { headers: { test: true, k: 1 }, payload: { test: true, k: 2 } } } }, test2: { subscribe: { message: { payload: { $id: 'testPayload', test: true, k: 2 } } } } }, components: { schemas: { testSchema: { test: true, k: 3 } } } };
       const d = new AsyncAPIDocument(doc);
       const schemas = d.allSchemas();
@@ -193,7 +194,28 @@ describe('AsyncAPIDocument', () => {
         "testPayload",
         "testSchema"
       ])
-      for(const t of schemas.values()){
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should return a map with all the nested schemas', () => {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../nested-schemas.json"), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      const schemas = d.allSchemas();
+      expect(schemas.size).to.be.equal(12);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      console.log(schemaKeys);
+      expect(schemaKeys).to.deep.equal([
+        "testParamSchema",
+        "<anonymous-schema-1>",
+        "<anonymous-schema-2>",
+        "testPayload",
+        "testSchema"
+      ])
+      for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }

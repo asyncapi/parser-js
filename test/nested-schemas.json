@@ -8,12 +8,12 @@
 						"type": "object",
 						"test": true,
 						"properties": {
-							"testprop": {
+							"testParamNestedSchemaProp": {
 								"$id": "testParamNestedSchemaProp",
 								"type": "object",
 								"test": true,
 								"properties": {
-									"testprop2": {
+									"testParamNestedNestedSchemaProp2": {
 										"$id": "testParamNestedNestedSchemaProp2",
 										"test": true,
 										"type": "string"
@@ -31,7 +31,7 @@
 						"type": "object",
 						"test": true,
 						"properties": {
-							"testprop": {
+							"testHeaderNestedSchemaProp": {
 								"$id": "testHeaderNestedSchemaProp",
 								"type": "object",
 								"test": true,
@@ -43,7 +43,7 @@
 									}
 								}
 							},
-							"testArray": {
+							"testHeaderNestedSchemaPropArray": {
 								"$id": "testHeaderNestedSchemaPropArray",
 								"type": "array",
 								"test": true,
@@ -62,19 +62,19 @@
 						"type": "object",
 						"test": true,
 						"properties": {
-							"testprop": {
+							"testPayloadNestedSchemaProp": {
 								"$id": "testPayloadNestedSchemaProp",
 								"type": "object",
 								"test": true,
 								"properties": {
-									"testprop2": {
+									"testPayloadNestedNestedSchemaProp1": {
 										"$id": "testPayloadNestedNestedSchemaProp1",
 										"test": true,
 										"type": "string"
 									}
 								}
 							},
-							"testArray": {
+							"testPayloadNestedSchemaPropArray": {
 								"$id": "testPayloadNestedSchemaPropArray",
 								"type": "array",
 								"test": true,
@@ -111,16 +111,34 @@
 				"test": true,
 				"properties": {
 					"testprop": {
-						"$id": "testComponentSchemaNestedSchemaProp",
-						"type": "object",
+						"$id": "testComponentSchemaNestedSchemaPropAllOf",
 						"test": true,
-						"properties": {
-							"testprop2": {
-								"$id": "testComponentSchemaNestedNestedSchemaProp1",
+						"allOf": [
+							{
+								"$id": "testComponentSchemaNestedSchemaPropAllOfSchema1",
+								"type": "object",
 								"test": true,
-								"type": "string"
+								"properties": {
+									"testprop2": {
+										"$id": "testComponentSchemaNestedSchemaPropAllOfSchema1Prop1",
+										"test": true,
+										"type": "string"
+									}
+								}
+							},
+							{
+								"$id": "testComponentSchemaNestedSchemaPropAllOfSchema2",
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop2": {
+										"$id": "testComponentSchemaNestedSchemaPropAllOfSchema2Prop1",
+										"test": true,
+										"type": "string"
+									}
+								}
 							}
-						}
+						]
 					},
 					"testArray": {
 						"$id": "testComponentSchemaNestedSchemaPropArray",

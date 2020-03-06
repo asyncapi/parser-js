@@ -203,17 +203,35 @@ describe('AsyncAPIDocument', () => {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../nested-schemas.json"), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = d.allSchemas();
-      expect(schemas.size).to.be.equal(12);
+      expect(schemas.size).to.be.equal(23);
 
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());
       console.log(schemaKeys);
       expect(schemaKeys).to.deep.equal([
         "testParamSchema",
-        "<anonymous-schema-1>",
-        "<anonymous-schema-2>",
+        "testParamNestedSchemaProp",
+        "testParamNestedNestedSchemaProp2",
+        "testHeaderSchema",
+        "testHeaderNestedSchemaProp",
+        "testHeaderNestedNestedSchemaProp1",
+        "testHeaderNestedSchemaPropArray",
+        "testHeaderNestedSchemaPropArrayProp1",
+        "testPayloadSchema",
+        "testPayloadNestedSchemaProp",
+        "testPayloadNestedNestedSchemaProp1",
+        "testPayloadNestedSchemaPropArray",
+        "testPayloadNestedSchemaPropArrayProp1",
         "testPayload",
-        "testSchema"
+        "testComponentSchemaSchema",
+        "testComponentSchemaNestedSchemaPropAllOf",
+        "testComponentSchemaNestedSchemaPropAllOfSchema1",
+        "testComponentSchemaNestedSchemaPropAllOfSchema1Prop1",
+        "testComponentSchemaNestedSchemaPropAllOfSchema2",
+        "testComponentSchemaNestedSchemaPropAllOfSchema2Prop1",
+        "testComponentSchemaNestedSchemaPropArray",
+        "testComponentSchemaNestedSchemaPropArrayProp1",
+        "testComponentSchemaNestedSchemaPropArrayProp2"
       ])
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');

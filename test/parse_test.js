@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiAsPromised = require("chai-as-promised");
 const fs = require('fs');
 const path = require("path");
+const ramlDtParser = require('@asyncapi/raml-dt-schema-parser');
 const parser = require('../lib');
 const ParserError = require('../lib/errors/parser-error');
 
@@ -81,6 +82,9 @@ describe('parse()', function () {
   });
   
   it('should parse RAML data types', async function () {
+    parser.registerSchemaParser([
+      'application/raml+yaml;version=1.0',
+    ], ramlDtParser);
     const result = await parser.parse(inputWithRAML, { path: __filename });
     await expect(JSON.stringify(result.json())).to.equal(outputWithRAML);
   });

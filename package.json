@@ -15,6 +15,7 @@
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@asyncapi/raml-dt-schema-parser": "^1.0.4",
     "browserify": "^16.3.0",
     "browserify-shim": "^3.8.14",
     "chai": "^4.2.0",
@@ -24,13 +25,12 @@
     "uglify-es": "^3.3.9"
   },
   "dependencies": {
+    "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
     "ajv": "^6.10.1",
     "asyncapi": "^2.6.1",
     "js-yaml": "^3.13.1",
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",
-    "@openapi-contrib/openapi-schema-to-json-schema": "^3.0.0",
-    "ramldt2jsonschema": "^1.1.0",
     "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {

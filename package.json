@@ -15,7 +15,6 @@
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@asyncapi/raml-dt-schema-parser": "^1.0.4",
     "browserify": "^16.3.0",
     "browserify-shim": "^3.8.14",
     "chai": "^4.2.0",

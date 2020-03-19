@@ -21,7 +21,7 @@ Use this package to parse and validate AsyncAPI documents —either YAML or JSON
 ### Install
 
 ```
-npm install asyncapi-parser
+npm install @asyncapi/parser
 ```
 
 ### API
@@ -33,7 +33,7 @@ npm install asyncapi-parser
 ##### Example passing inline AsyncAPI
 
 ```js
-const parser = require('asyncapi-parser');
+const parser = require('@asyncapi/parser');
 
 const doc = await parser.parse(`
   asyncapi: '2.0.0'
@@ -63,7 +63,7 @@ console.log(doc.info().title());
 ##### Example passing a URL
 
 ```js
-const parser = require('asyncapi-parser');
+const parser = require('@asyncapi/parser');
 
 const doc = await parser.parseUrl('https://my.server.com/example-asyncapi.yaml');
 
@@ -86,3 +86,7 @@ Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/ra
 1. Make sure all tests pass `npm test`
 1. Generate new API docs `npm run docs`
 1. Update bundle for client-side parser `npm run bundle`
+
+## Contributing
+
+Read [CONTRIBUTING](CONTRIBUTING.md) guide.

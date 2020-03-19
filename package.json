@@ -1,5 +1,5 @@
 {
-  "name": "asyncapi-parser",
+  "name": "@asyncapi/parser",
   "version": "0.15.0",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
@@ -12,8 +12,19 @@
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
     "prepublishOnly": "npm run bundle"
   },
+  "bugs": {
+    "url": "https://github.com/asyncapi/parser-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asyncapi/parser-js.git"
+  },
   "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "Apache-2.0",
+  "homepage": "https://github.com/asyncapi/parser-js",
   "devDependencies": {
     "browserify": "^16.3.0",
     "browserify-shim": "^3.8.14",
@@ -21,7 +32,13 @@
     "chai-as-promised": "^7.1.1",
     "jsdoc-to-markdown": "^5.0.0",
     "mocha": "^6.1.4",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/github": "^7.0.4",
+    "@semantic-release/npm": "^7.0.3",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "conventional-changelog-conventionalcommits": "^4.2.3",
+    "semantic-release": "^17.0.4"
   },
   "dependencies": {
     "ajv": "^6.10.1",
@@ -38,5 +55,26 @@
   },
   "browserify-shim": {
     "node-fetch": "global:fetch"
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
   }
 }

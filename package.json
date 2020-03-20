@@ -10,7 +10,8 @@
     "test": "mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
-    "prepublishOnly": "npm run bundle"
+    "prepublishOnly": "npm run bundle",
+    "release": "semantic-release"
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"

@@ -14,7 +14,7 @@ This package is under development and it has not reached version 1.0.0 yet, what
 
 ---
 
-Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
+Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application. Updated bundle for the browser is always attached to the GitHub Release.
 
 > This package doesn't support AsyncAPI 1.x.
 

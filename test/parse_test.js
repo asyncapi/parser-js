@@ -20,6 +20,7 @@ describe('parse()', function () {
     const result = await parser.parse(inputYAML, { path: __filename });
     await expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
+
   it('should forward ajv errors and AsyncAPI json', async function () {
     try {
       await parser.parse(invalidAsyncAPI);
@@ -28,6 +29,7 @@ describe('parse()', function () {
       await expect(e.parsedJSON).to.deep.equal(invalidAsyncAPI);
     }
   });
+
   it('should not forward AsyncAPI json when it is not possible to convert it', async function () {
     try {
       await parser.parse('bad');
@@ -36,6 +38,7 @@ describe('parse()', function () {
       await expect(e.parsedJSON).to.equal(undefined);
     }
   });
+
   it('should forward AsyncAPI json when version is not supported', async function () {
     try {
       await parser.parse('bad: true');
@@ -44,20 +47,24 @@ describe('parse()', function () {
       await expect(e.parsedJSON).to.deep.equal({ bad: true });
     }
   });
+
   it('should not apply traits', async function () {
     const result = await parser.parse(inputYAML, { path: __filename, applyTraits: false });
     await expect(JSON.stringify(result.json())).to.equal(outputJsonNoApplyTraits);
   });
+
   it('should fail to resolve relative files when options.path is not provided', async function () {
     const testFn = async () => await parser.parse(inputYAML);
     await expect(testFn())
       .to.be.rejectedWith(ParserError)
   });
+
   it('should throw error if document is invalid YAML', async function () {
     const testFn = async () => await parser.parse(invalidYAML, { path: __filename });
     await expect(testFn())
       .to.be.rejectedWith(ParserError)
   });
+
   it('should throw error if document is empty', async function () {
     const testFn = async () => await parser.parse('');
     await expect(testFn())

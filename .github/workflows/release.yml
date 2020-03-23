@@ -21,7 +21,7 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Generate bundle.js for the browser
-        run: npm run bundle
+        run: npm run prepublishOnly
       - name: Get version from package.json before release step
         id: initversion
         run: echo "::set-output name=version::$(npm run get-version --silent)"

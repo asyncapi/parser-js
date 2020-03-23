@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "directories": {
@@ -76,11 +76,17 @@
         }
       ],
       "@semantic-release/npm",
-      ["@semantic-release/github", {
-        "assets": [
-          {"path": "dist/bundle.js", "label": "Browser Bundle"}
-        ]
-      }]
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "dist/bundle.js",
+              "label": "Browser Bundle"
+            }
+          ]
+        }
+      ]
     ]
   }
 }

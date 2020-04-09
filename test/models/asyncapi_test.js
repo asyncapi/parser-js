@@ -211,7 +211,6 @@ describe('AsyncAPIDocument', () => {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../nested-schemas.json"), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = d.allSchemas();
-      expect(schemas.size).to.be.equal(23);
 
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());

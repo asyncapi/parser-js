@@ -1,0 +1,164 @@
+{
+	"channels": {
+		"test": {
+			"parameters": {
+				"testParam1": {
+					"schema": {
+						"$id": "testParamSchema",
+						"type": "object",
+						"test": true,
+						"properties": {
+							"testParamNestedSchemaProp": {
+								"$id": "testParamNestedSchemaProp",
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testParamNestedNestedSchemaProp2": {
+										"$id": "testParamNestedNestedSchemaProp2",
+										"test": true,
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"publish": {
+				"message": {
+					"headers": {
+						"$id": "testHeaderSchema",
+						"type": "object",
+						"test": true,
+						"properties": {
+							"testHeaderNestedSchemaProp": {
+								"$id": "testHeaderNestedSchemaProp",
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop2": {
+										"$id": "testHeaderNestedNestedSchemaProp1",
+										"test": true,
+										"type": "string"
+									}
+								}
+							},
+							"testHeaderNestedSchemaPropArray": {
+								"$id": "testHeaderNestedSchemaPropArray",
+								"type": "array",
+								"test": true,
+								"items": [
+									{
+										"$id": "testHeaderNestedSchemaPropArrayProp1",
+										"test": true,
+										"type": "string"
+									}
+								]
+							}
+						}
+					},
+					"payload": {
+						"$id": "testPayloadSchema",
+						"type": "object",
+						"test": true,
+						"properties": {
+							"testPayloadNestedSchemaProp": {
+								"$id": "testPayloadNestedSchemaProp",
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testPayloadNestedNestedSchemaProp1": {
+										"$id": "testPayloadNestedNestedSchemaProp1",
+										"test": true,
+										"type": "string"
+									}
+								}
+							},
+							"testPayloadNestedSchemaPropArray": {
+								"$id": "testPayloadNestedSchemaPropArray",
+								"type": "array",
+								"test": true,
+								"items": [
+									{
+										"$id": "testPayloadNestedSchemaPropArrayProp1",
+										"test": true,
+										"type": "string"
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"test2": {
+			"subscribe": {
+				"message": {
+					"payload": {
+						"$id": "testPayload",
+						"test": true,
+						"k": 2
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"testSchema": {
+				"$id": "testComponentSchemaSchema",
+				"type": "object",
+				"test": true,
+				"properties": {
+					"testprop": {
+						"$id": "testComponentSchemaNestedSchemaPropAllOf",
+						"test": true,
+						"allOf": [
+							{
+								"$id": "testComponentSchemaNestedSchemaPropAllOfSchema1",
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop2": {
+										"$id": "testComponentSchemaNestedSchemaPropAllOfSchema1Prop1",
+										"test": true,
+										"type": "string"
+									}
+								}
+							},
+							{
+								"$id": "testComponentSchemaNestedSchemaPropAllOfSchema2",
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop2": {
+										"$id": "testComponentSchemaNestedSchemaPropAllOfSchema2Prop1",
+										"test": true,
+										"type": "string"
+									}
+								}
+							}
+						]
+					},
+					"testArray": {
+						"$id": "testComponentSchemaNestedSchemaPropArray",
+						"type": "array",
+						"test": true,
+						"items": [
+							{
+								"$id": "testComponentSchemaNestedSchemaPropArrayProp1",
+								"test": true,
+								"type": "string"
+							},
+							{
+								"$id": "testComponentSchemaNestedSchemaPropArrayProp2",
+								"test": true,
+								"type": "string"
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}

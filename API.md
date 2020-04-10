@@ -8,6 +8,9 @@
 ## Classes
 
 <dl>
+<dt><a href="#ParserError">ParserError</a></dt>
+<dd><p>Represents an error while trying to parse an AsyncAPI document.</p>
+</dd>
 <dt><a href="#AsyncAPIDocument">AsyncAPIDocument</a> ⇐ <code><a href="#Base">Base</a></code></dt>
 <dd><p>Implements functions to deal with the AsyncAPI document.</p>
 </dd>
@@ -136,6 +139,41 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | --- | --- | --- |
 | schemaFormats | <code>Array.&lt;string&gt;</code> | An array of schema formats the given schema parser is able to recognize and transform. |
 | parserFunction | <code>function</code> | The schema parser function. |
+
+<a name="ParserError"></a>
+
+## ParserError
+Represents an error while trying to parse an AsyncAPI document.
+
+**Kind**: global class  
+<a name="new_ParserError_new"></a>
+
+### new ParserError(definition)
+Instantiates an error
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| definition | <code>Object</code> |  |
+| definition.type | <code>String</code> | The type of the error. |
+| definition.title | <code>String</code> | The message of the error. |
+| [definition.detail] | <code>String</code> | A string containing more detailed information about the error. |
+| [definition.parsedJSON] | <code>Object</code> | The resulting JSON after YAML transformation. Or the JSON object if the this was the initial format. |
+| [definition.validationErrors] | <code>Array.&lt;Object&gt;</code> | The errors resulting from the validation. For more information, see https://www.npmjs.com/package/better-ajv-errors. |
+| definition.validationErrors.start | <code>Object</code> | An object containing information about where the error starts in the JSON AsyncAPI document. |
+| definition.validationErrors.start.line | <code>Number</code> | The line where the error starts in the JSON AsyncAPI document. |
+| definition.validationErrors.start.column | <code>Number</code> | The column where the error starts in the JSON AsyncAPI document. |
+| definition.validationErrors.start.offset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the JSON AsyncAPI document. |
+| [definition.validationErrors.end] | <code>Object</code> | An object containing information about where the error ends in the JSON AsyncAPI document. |
+| definition.validationErrors.end.line | <code>Number</code> | The line where the error ends in the JSON AsyncAPI document. |
+| definition.validationErrors.end.column | <code>Number</code> | The column where the error ends in the JSON AsyncAPI document. |
+| definition.validationErrors.end.offset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the JSON AsyncAPI document. |
+| definition.validationErrors.error | <code>String</code> | A validation error message. |
+| definition.validationErrors.path | <code>String</code> | The path to the field that contains the error. Uses JSON Pointer format. |
+| [definition.validationErrors.suggestion] | <code>String</code> | A suggestion of what the correct value. |
+| [definition.yamlError] | <code>Object</code> | Error details after trying to parse a YAML AsyncAPI document. |
+| definition.yamlError.startLine | <code>Number</code> | The line of the YAML AsyncAPI document where the error starts. |
+| definition.yamlError.startColumn | <code>Number</code> | The column of the YAML AsyncAPI document where the error starts. |
 
 <a name="AsyncAPIDocument"></a>
 

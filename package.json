@@ -45,6 +45,7 @@
   "dependencies": {
     "ajv": "^6.10.1",
     "asyncapi": "^2.6.1",
+    "better-ajv-errors": "^0.6.7",
     "js-yaml": "^3.13.1",
     "json-schema-ref-parser": "^7.1.0",
     "node-fetch": "^2.6.0",

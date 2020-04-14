@@ -87,6 +87,29 @@
 </dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#assignUidToParameterSchemas">assignUidToParameterSchemas(doc)</a></dt>
+<dd><p>Assign parameter keys as uid for the parameter schema.</p>
+</dd>
+<dt><a href="#assignUidToComponentSchemas">assignUidToComponentSchemas(doc)</a></dt>
+<dd><p>Assign uid to component schemas.</p>
+</dd>
+<dt><a href="#assignNameToAnonymousMessages">assignNameToAnonymousMessages(doc)</a></dt>
+<dd><p>Assign anonymous names to nameless messages.</p>
+</dd>
+<dt><a href="#recursiveSchema">recursiveSchema(schema, callback(schema))</a></dt>
+<dd><p>Recursively go through each schema and execute callback.</p>
+</dd>
+<dt><a href="#schemaDocument">schemaDocument(doc, callback(schema))</a></dt>
+<dd><p>Go through each channel and for each parameter, and message payload and headers recursively call the callback for each schema.</p>
+</dd>
+<dt><a href="#assignIdToAnonymousSchemas">assignIdToAnonymousSchemas(doc)</a></dt>
+<dd><p>Gives schemas id to all anonymous schemas.</p>
+</dd>
+</dl>
+
 <a name="module_Parser"></a>
 
 ## Parser
@@ -108,7 +131,7 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 | --- | --- | --- | --- |
 | asyncapiYAMLorJSON | <code>String</code> |  | An AsyncAPI document in JSON or YAML format. |
 | [options] | <code>Object</code> |  | Configuration options. |
-| [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. |
+| [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
 | [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.dereference] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
@@ -160,20 +183,27 @@ Instantiates an error
 | [definition.detail] | <code>String</code> | A string containing more detailed information about the error. |
 | [definition.parsedJSON] | <code>Object</code> | The resulting JSON after YAML transformation. Or the JSON object if the this was the initial format. |
 | [definition.validationErrors] | <code>Array.&lt;Object&gt;</code> | The errors resulting from the validation. For more information, see https://www.npmjs.com/package/better-ajv-errors. |
-| definition.validationErrors.start | <code>Object</code> | An object containing information about where the error starts in the JSON AsyncAPI document. |
-| definition.validationErrors.start.line | <code>Number</code> | The line where the error starts in the JSON AsyncAPI document. |
-| definition.validationErrors.start.column | <code>Number</code> | The column where the error starts in the JSON AsyncAPI document. |
-| definition.validationErrors.start.offset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the JSON AsyncAPI document. |
-| [definition.validationErrors.end] | <code>Object</code> | An object containing information about where the error ends in the JSON AsyncAPI document. |
-| definition.validationErrors.end.line | <code>Number</code> | The line where the error ends in the JSON AsyncAPI document. |
-| definition.validationErrors.end.column | <code>Number</code> | The column where the error ends in the JSON AsyncAPI document. |
-| definition.validationErrors.end.offset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the JSON AsyncAPI document. |
-| definition.validationErrors.error | <code>String</code> | A validation error message. |
-| definition.validationErrors.path | <code>String</code> | The path to the field that contains the error. Uses JSON Pointer format. |
-| [definition.validationErrors.suggestion] | <code>String</code> | A suggestion of what the correct value. |
-| [definition.yamlError] | <code>Object</code> | Error details after trying to parse a YAML AsyncAPI document. |
-| definition.yamlError.startLine | <code>Number</code> | The line of the YAML AsyncAPI document where the error starts. |
-| definition.yamlError.startColumn | <code>Number</code> | The column of the YAML AsyncAPI document where the error starts. |
+| definition.validationErrors.title | <code>String</code> | A validation error message. |
+| definition.validationErrors.jsonPointer | <code>String</code> | The path to the field that contains the error. Uses JSON Pointer format. |
+| definition.validationErrors.startLine | <code>Number</code> | The line where the error starts in the AsyncAPI document. |
+| definition.validationErrors.startColumn | <code>Number</code> | The column where the error starts in the AsyncAPI document. |
+| definition.validationErrors.startOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the AsyncAPI document. |
+| definition.validationErrors.endLine | <code>Number</code> | The line where the error ends in the AsyncAPI document. |
+| definition.validationErrors.endColumn | <code>Number</code> | The column where the error ends in the AsyncAPI document. |
+| definition.validationErrors.endOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
+| [definition.location] | <code>Object</code> | Error location details after trying to parse an invalid JSON or YAML document. |
+| definition.location.startLine | <code>Number</code> | The line of the YAML/JSON document where the error starts. |
+| definition.location.startColumn | <code>Number</code> | The column of the YAML/JSON document where the error starts. |
+| definition.location.startOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the YAML/JSON AsyncAPI document. |
+| [definition.refs] | <code>Array.&lt;Object&gt;</code> | Error details after trying to resolve $ref's. |
+| definition.refs.title | <code>String</code> | A validation error message. |
+| definition.refs.jsonPointer | <code>String</code> | The path to the field that contains the error. Uses JSON Pointer format. |
+| definition.refs.startLine | <code>Number</code> | The line where the error starts in the AsyncAPI document. |
+| definition.refs.startColumn | <code>Number</code> | The column where the error starts in the AsyncAPI document. |
+| definition.refs.startOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the AsyncAPI document. |
+| definition.refs.endLine | <code>Number</code> | The line where the error ends in the AsyncAPI document. |
+| definition.refs.endColumn | <code>Number</code> | The column where the error ends in the AsyncAPI document. |
+| definition.refs.endOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
 
 <a name="AsyncAPIDocument"></a>
 
@@ -1732,3 +1762,71 @@ Implements functions to deal with a Tag object.
 
 ### tag.json() ⇒ <code>Any</code>
 **Kind**: instance method of [<code>Tag</code>](#Tag)  
+<a name="assignUidToParameterSchemas"></a>
+
+## assignUidToParameterSchemas(doc)
+Assign parameter keys as uid for the parameter schema.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) | 
+
+<a name="assignUidToComponentSchemas"></a>
+
+## assignUidToComponentSchemas(doc)
+Assign uid to component schemas.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) | 
+
+<a name="assignNameToAnonymousMessages"></a>
+
+## assignNameToAnonymousMessages(doc)
+Assign anonymous names to nameless messages.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) | 
+
+<a name="recursiveSchema"></a>
+
+## recursiveSchema(schema, callback(schema))
+Recursively go through each schema and execute callback.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | [<code>Schema</code>](#Schema) | found. |
+| callback(schema) | <code>function</code> | the function that is called foreach schema found.         schema {Schema}: the found schema. |
+
+<a name="schemaDocument"></a>
+
+## schemaDocument(doc, callback(schema))
+Go through each channel and for each parameter, and message payload and headers recursively call the callback for each schema.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) |  |
+| callback(schema) | <code>function</code> | the function that is called foreach schema found.         schema {Schema}: the found schema. |
+
+<a name="assignIdToAnonymousSchemas"></a>
+
+## assignIdToAnonymousSchemas(doc)
+Gives schemas id to all anonymous schemas.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) | 
+

@@ -84,9 +84,8 @@ Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/ra
 1. Run tests with `npm test`
 1. Write code and tests.
 1. Make sure all tests pass `npm test`
-1. Update bundle for client-side parser `npm run bundle`
 
-Release regenerates API documentation so you do not have to regenerate it manually with `npm run docs`.
+Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
 
 ## Contributing
 

@@ -143,7 +143,7 @@ describe.only('parse()', function () {
     } catch (e) {
       await expect(e.type).to.equal('https://github.com/asyncapi/parser-js/unsupported-version');
       await expect(e.title).to.equal('Version 1.2.0 is not supported.');
-      await expect(e.detail).to.equal('Please upgrade to the latest version.');
+      await expect(e.detail).to.equal('Please use latest version of the specification.');
       await expect(e.parsedJSON).to.deep.equal({ asyncapi: '1.2.0' });
       await expect(e.validationErrors).to.deep.equal([{
         jsonPointer: '/asyncapi',

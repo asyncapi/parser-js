@@ -169,6 +169,11 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 Represents an error while trying to parse an AsyncAPI document.
 
 **Kind**: global class  
+
+* [ParserError](#ParserError)
+    * [new ParserError(definition)](#new_ParserError_new)
+    * [.toJS()](#ParserError+toJS)
+
 <a name="new_ParserError_new"></a>
 
 ### new ParserError(definition)
@@ -205,6 +210,12 @@ Instantiates an error
 | definition.refs.endColumn | <code>Number</code> | The column where the error ends in the AsyncAPI document. |
 | definition.refs.endOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
 
+<a name="ParserError+toJS"></a>
+
+### parserError.toJS()
+Returns a JS object representation of the error.
+
+**Kind**: instance method of [<code>ParserError</code>](#ParserError)  
 <a name="AsyncAPIDocument"></a>
 
 ## AsyncAPIDocument ⇐ [<code>Base</code>](#Base)

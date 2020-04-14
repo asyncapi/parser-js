@@ -40,7 +40,7 @@ const checkErrorParsedJSON = async (fn, parsedJSON) => {
   }
 }
 
-describe.only('parse()', function () {
+describe('parse()', function () {
   it('should parse YAML', async function () {
     const result = await parser.parse(inputYAML, { path: __filename });
     await expect(JSON.stringify(result.json())).to.equal(outputJSON);

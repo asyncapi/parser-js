@@ -43,10 +43,12 @@
     "semantic-release": "^17.0.4"
   },
   "dependencies": {
+    "@fmvilas/pseudo-yaml-ast": "^0.3.0",
     "ajv": "^6.10.1",
     "@asyncapi/specs": "^2.7.1",
     "js-yaml": "^3.13.1",
     "json-schema-ref-parser": "^7.1.0",
+    "json-to-ast": "^2.1.0",
     "node-fetch": "^2.6.0",
     "tiny-merge-patch": "^0.1.2"
   },

@@ -20,6 +20,8 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+      - name: Regenerate docs
+        run: npm run docs
       - name: Generate bundle.js for the browser
         run: npm run prepublishOnly
       - name: Get version from package.json before release step

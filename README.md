@@ -103,8 +103,8 @@ For more information about the `ParserError` class, [check out the documentation
 1. Run tests with `npm test`
 1. Write code and tests.
 1. Make sure all tests pass `npm test`
-1. Generate new API docs `npm run docs`
-1. Update bundle for client-side parser `npm run bundle`
+
+Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
 
 ## Contributing
 

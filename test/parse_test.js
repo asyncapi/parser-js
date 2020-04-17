@@ -8,11 +8,11 @@ const ParserError = require('../lib/errors/parser-error');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const invalidYAML = fs.readFileSync(path.resolve(__dirname, "./malformed-asyncapi.yaml"), 'utf8');
-const inputYAML = fs.readFileSync(path.resolve(__dirname, "./asyncapi.yaml"), 'utf8');
-const inputJSON = fs.readFileSync(path.resolve(__dirname, "./asyncapi.json"), 'utf8');
-const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, "./invalid-asyncapi.yaml"), 'utf8');
-const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, "./invalid-asyncapi.json"), 'utf8');
+const invalidYAML = fs.readFileSync(path.resolve(__dirname, "./wrong/malformed-asyncapi.yaml"), 'utf8');
+const inputYAML = fs.readFileSync(path.resolve(__dirname, "./good/asyncapi.yaml"), 'utf8');
+const inputJSON = fs.readFileSync(path.resolve(__dirname, "./good/asyncapi.json"), 'utf8');
+const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, "./wrong/invalid-asyncapi.yaml"), 'utf8');
+const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, "./wrong/invalid-asyncapi.json"), 'utf8');
 const outputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}'
 const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}'
@@ -92,6 +92,29 @@ describe('parse()', function () {
         }
       }]);
       await expect(JSON.stringify(e.parsedJSON)).to.equal(invalidYamlOutput);
+    }
+  });
+
+  it('should fail when asyncapi is not valid (ref with line break) (yaml)', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/invalid-asyncapi-with-ref-with-line-break.yaml"), 'utf8'), {
+        path: __filename,
+      });
+    } catch (e) {
+      await expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      await expect(e.title).to.equal('There were errors validating the AsyncAPI document.');
+      await expect(e.validationErrors).to.deep.equal([{
+        title: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref should match format \"uri-reference\"',
+        location: {
+          jsonPointer: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref',
+          startLine: 67,
+          startColumn: 9,
+          startOffset: 1970,
+          endLine: 68,
+          endColumn: 46,
+          endOffset: 2024,
+        }
+      }]);
     }
   });
   
@@ -214,6 +237,69 @@ describe('parse()', function () {
     } catch (e) {
       expect(e.refs).to.deep.equal([{
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
+      }]);
+    }
+  });
+
+  it('should offer information about missing HTTP $refs', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/inexisting-http-ref.yaml"), 'utf8'), {
+        path: 'https://example.com',
+        resolve: {
+          file: false
+        }
+      })
+    } catch (e) {
+      expect(e.refs).to.deep.equal([{
+        jsonPointer: '/channels/mychannel/publish/message/$ref',
+        startLine: 9,
+        startColumn: 9,
+        startOffset: 116,
+        endLine: 9,
+        endColumn: 68,
+        endOffset: 175,
+      }]);
+    }
+  });
+  
+  it('should offer information about missing root $refs', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/inexisting-root-ref.yaml"), 'utf8'), {
+        path: 'https://example.com',
+        resolve: {
+          file: false
+        }
+      })
+    } catch (e) {
+      expect(e.refs).to.deep.equal([{
+        jsonPointer: '/channels/mychannel/subscribe/message/$ref',
+        startLine: 9,
+        startColumn: 9,
+        startOffset: 118,
+        endLine: 9,
+        endColumn: 49,
+        endOffset: 158,
+      }]);
+    }
+  });
+  
+  it('should offer information about missing local $refs', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/inexisting-local-ref.yaml"), 'utf8'), {
+        path: 'https://example.com',
+        resolve: {
+          file: false
+        }
+      })
+    } catch (e) {
+      expect(e.refs).to.deep.equal([{
+        jsonPointer: '/channels/mychannel2/publish/message/$ref',
+        startLine: 9,
+        startColumn: 9,
+        startOffset: 117,
+        endLine: 9,
+        endColumn: 50,
+        endOffset: 158,
       }]);
     }
   });

@@ -1,3 +1,4 @@
+const { EOL } = require('os');
 const chai = require('chai');
 const chaiAsPromised = require("chai-as-promised");
 const fs = require('fs');
@@ -20,6 +21,8 @@ const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","versio
 const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = { "asyncapi": "2.0.0", "info": {} };
 
+const eolLength = EOL.length;
+
 const checkErrorTypeAndMessage = async (fn, type, message) => {
   try {
     await fn();
@@ -39,6 +42,8 @@ const checkErrorParsedJSON = async (fn, parsedJSON) => {
     expect(JSON.stringify(e.parsedJSON)).to.equal(parsedJSON);
   }
 }
+
+const offset = (offset, line) => (offset + ((eolLength - 1) * (line - 1)))
 
 describe('parse()', function () {
   it('should parse YAML', async function () {
@@ -85,10 +90,10 @@ describe('parse()', function () {
           jsonPointer: '/info',
           startLine: 2,
           startColumn: 1,
-          startOffset: 16,
+          startOffset: offset(16, 2),
           endLine: 3,
           endColumn: 19,
-          endOffset: 40,
+          endOffset: offset(40, 3),
         }
       }]);
       await expect(JSON.stringify(e.parsedJSON)).to.equal(invalidYamlOutput);
@@ -109,10 +114,10 @@ describe('parse()', function () {
           jsonPointer: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref',
           startLine: 67,
           startColumn: 9,
-          startOffset: 1970,
+          startOffset: offset(1970, 67),
           endLine: 68,
           endColumn: 46,
-          endOffset: 2024,
+          endOffset: offset(2024, 68),
         }
       }]);
     }
@@ -130,10 +135,10 @@ describe('parse()', function () {
           jsonPointer: '/info',
           startLine: 3,
           startColumn: 11,
-          startOffset: 33,
+          startOffset: offset(33, 3),
           endLine: 5,
           endColumn: 4,
-          endOffset: 58,
+          endOffset: offset(58, 5),
         }
       }]);
       await expect(JSON.stringify(e.parsedJSON)).to.equal(invalidJsonOutput);
@@ -175,7 +180,7 @@ describe('parse()', function () {
         startOffset: 0,
         endLine: 1,
         endColumn: 16,
-        endOffset: 15,
+        endOffset: offset(15, 1),
       }]);
     }
   });
@@ -207,10 +212,10 @@ describe('parse()', function () {
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
         startLine: 30,
         startColumn: 11,
-        startOffset: 615,
+        startOffset: offset(615, 30),
         endLine: 30,
         endColumn: 34,
-        endOffset: 638,
+        endOffset: offset(638, 30),
       }]);
     }
   });
@@ -223,10 +228,10 @@ describe('parse()', function () {
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
         startLine: 38,
         startColumn: 21,
-        startOffset: 599,
+        startOffset: offset(599, 38),
         endLine: 38,
         endColumn: 38,
-        endOffset: 616,
+        endOffset: offset(616, 38),
       }]);
     }
   });
@@ -254,10 +259,10 @@ describe('parse()', function () {
         jsonPointer: '/channels/mychannel/publish/message/$ref',
         startLine: 9,
         startColumn: 9,
-        startOffset: 116,
+        startOffset: offset(116, 9),
         endLine: 9,
         endColumn: 68,
-        endOffset: 175,
+        endOffset: offset(175, 9),
       }]);
     }
   });
@@ -275,10 +280,10 @@ describe('parse()', function () {
         jsonPointer: '/channels/mychannel/subscribe/message/$ref',
         startLine: 9,
         startColumn: 9,
-        startOffset: 118,
+        startOffset: offset(118, 9),
         endLine: 9,
         endColumn: 49,
-        endOffset: 158,
+        endOffset: offset(158, 9),
       }]);
     }
   });
@@ -296,10 +301,10 @@ describe('parse()', function () {
         jsonPointer: '/channels/mychannel2/publish/message/$ref',
         startLine: 9,
         startColumn: 9,
-        startOffset: 117,
+        startOffset: offset(117, 9),
         endLine: 9,
         endColumn: 50,
-        endOffset: 158,
+        endOffset: offset(158, 9),
       }]);
     }
   });

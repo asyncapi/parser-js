@@ -43,7 +43,7 @@
     "semantic-release": "^17.0.4"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser",
+    "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser#add-more-info-about-errors",
     "@asyncapi/specs": "^2.7.1",
     "@fmvilas/pseudo-yaml-ast": "^0.3.0",
     "ajv": "^6.10.1",

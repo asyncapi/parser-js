@@ -1,3 +1,4 @@
+const { EOL } = require('os');
 const chai = require('chai');
 const chaiAsPromised = require("chai-as-promised");
 const fs = require('fs');
@@ -8,17 +9,19 @@ const ParserError = require('../lib/errors/parser-error');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const invalidYAML = fs.readFileSync(path.resolve(__dirname, "./malformed-asyncapi.yaml"), 'utf8');
-const inputYAML = fs.readFileSync(path.resolve(__dirname, "./asyncapi.yaml"), 'utf8');
-const inputJSON = fs.readFileSync(path.resolve(__dirname, "./asyncapi.json"), 'utf8');
-const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, "./invalid-asyncapi.yaml"), 'utf8');
-const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, "./invalid-asyncapi.json"), 'utf8');
+const invalidYAML = fs.readFileSync(path.resolve(__dirname, "./wrong/malformed-asyncapi.yaml"), 'utf8');
+const inputYAML = fs.readFileSync(path.resolve(__dirname, "./good/asyncapi.yaml"), 'utf8');
+const inputJSON = fs.readFileSync(path.resolve(__dirname, "./good/asyncapi.json"), 'utf8');
+const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, "./wrong/invalid-asyncapi.yaml"), 'utf8');
+const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, "./wrong/invalid-asyncapi.json"), 'utf8');
 const outputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}'
 const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}'
 const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"$ref":"#/components/operationTraits/docs"}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"$ref":"#/components/messages/testMessage"}}}},"components":{"messages":{"testMessage":{"traits":[{"$ref":"#/components/messageTraits/extension"}],"payload":{"$ref":"#/components/schemas/testSchema"}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"$ref":"refs/refed.yaml"}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = { "asyncapi": "2.0.0", "info": {} };
+
+const eolLength = EOL.length;
 
 const checkErrorTypeAndMessage = async (fn, type, message) => {
   try {
@@ -39,6 +42,8 @@ const checkErrorParsedJSON = async (fn, parsedJSON) => {
     expect(JSON.stringify(e.parsedJSON)).to.equal(parsedJSON);
   }
 }
+
+const offset = (offset, line) => (offset + ((eolLength - 1) * (line - 1)))
 
 describe('parse()', function () {
   it('should parse YAML', async function () {
@@ -85,13 +90,36 @@ describe('parse()', function () {
           jsonPointer: '/info',
           startLine: 2,
           startColumn: 1,
-          startOffset: 16,
+          startOffset: offset(16, 2),
           endLine: 3,
           endColumn: 19,
-          endOffset: 40,
+          endOffset: offset(40, 3),
         }
       }]);
       await expect(JSON.stringify(e.parsedJSON)).to.equal(invalidYamlOutput);
+    }
+  });
+
+  it('should fail when asyncapi is not valid (ref with line break) (yaml)', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/invalid-asyncapi-with-ref-with-line-break.yaml"), 'utf8'), {
+        path: __filename,
+      });
+    } catch (e) {
+      await expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      await expect(e.title).to.equal('There were errors validating the AsyncAPI document.');
+      await expect(e.validationErrors).to.deep.equal([{
+        title: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref should match format \"uri-reference\"',
+        location: {
+          jsonPointer: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref',
+          startLine: 67,
+          startColumn: 9,
+          startOffset: offset(1970, 67),
+          endLine: 68,
+          endColumn: 46,
+          endOffset: offset(2024, 68),
+        }
+      }]);
     }
   });
   
@@ -107,10 +135,10 @@ describe('parse()', function () {
           jsonPointer: '/info',
           startLine: 3,
           startColumn: 11,
-          startOffset: 33,
+          startOffset: offset(33, 3),
           endLine: 5,
           endColumn: 4,
-          endOffset: 58,
+          endOffset: offset(58, 5),
         }
       }]);
       await expect(JSON.stringify(e.parsedJSON)).to.equal(invalidJsonOutput);
@@ -152,7 +180,7 @@ describe('parse()', function () {
         startOffset: 0,
         endLine: 1,
         endColumn: 16,
-        endOffset: 15,
+        endOffset: offset(15, 1),
       }]);
     }
   });
@@ -184,10 +212,10 @@ describe('parse()', function () {
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
         startLine: 30,
         startColumn: 11,
-        startOffset: 615,
+        startOffset: offset(615, 30),
         endLine: 30,
         endColumn: 34,
-        endOffset: 638,
+        endOffset: offset(638, 30),
       }]);
     }
   });
@@ -200,10 +228,10 @@ describe('parse()', function () {
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
         startLine: 38,
         startColumn: 21,
-        startOffset: 599,
+        startOffset: offset(599, 38),
         endLine: 38,
         endColumn: 38,
-        endOffset: 616,
+        endOffset: offset(616, 38),
       }]);
     }
   });
@@ -214,6 +242,69 @@ describe('parse()', function () {
     } catch (e) {
       expect(e.refs).to.deep.equal([{
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
+      }]);
+    }
+  });
+
+  it('should offer information about missing HTTP $refs', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/inexisting-http-ref.yaml"), 'utf8'), {
+        path: 'https://example.com',
+        resolve: {
+          file: false
+        }
+      })
+    } catch (e) {
+      expect(e.refs).to.deep.equal([{
+        jsonPointer: '/channels/mychannel/publish/message/$ref',
+        startLine: 9,
+        startColumn: 9,
+        startOffset: offset(116, 9),
+        endLine: 9,
+        endColumn: 68,
+        endOffset: offset(175, 9),
+      }]);
+    }
+  });
+  
+  it('should offer information about missing root $refs', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/inexisting-root-ref.yaml"), 'utf8'), {
+        path: 'https://example.com',
+        resolve: {
+          file: false
+        }
+      })
+    } catch (e) {
+      expect(e.refs).to.deep.equal([{
+        jsonPointer: '/channels/mychannel/subscribe/message/$ref',
+        startLine: 9,
+        startColumn: 9,
+        startOffset: offset(118, 9),
+        endLine: 9,
+        endColumn: 49,
+        endOffset: offset(158, 9),
+      }]);
+    }
+  });
+  
+  it('should offer information about missing local $refs', async function () {
+    try {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, "./wrong/inexisting-local-ref.yaml"), 'utf8'), {
+        path: 'https://example.com',
+        resolve: {
+          file: false
+        }
+      })
+    } catch (e) {
+      expect(e.refs).to.deep.equal([{
+        jsonPointer: '/channels/mychannel2/publish/message/$ref',
+        startLine: 9,
+        startColumn: 9,
+        startOffset: offset(117, 9),
+        endLine: 9,
+        endColumn: 50,
+        endOffset: offset(158, 9),
       }]);
     }
   });

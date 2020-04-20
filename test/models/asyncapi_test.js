@@ -208,7 +208,7 @@ describe('AsyncAPIDocument', () => {
       }
     });
     it('should return a map with all the nested schemas', () => {
-      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../nested-schemas.json"), 'utf8'));
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../good/nested-schemas.json"), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = d.allSchemas();
 

@@ -206,7 +206,7 @@ describe('parse()', function () {
 
   it('should offer information about YAML line and column where $ref errors are located', async function () {
     try {
-      await parser.parse(inputYAML)
+      await parser.parse(inputYAML, { path: __filename })
     } catch (e) {
       expect(e.refs).to.deep.equal([{
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -222,7 +222,7 @@ describe('parse()', function () {
   
   it('should offer information about JSON line and column where $ref errors are located', async function () {
     try {
-      await parser.parse(inputJSON)
+      await parser.parse(inputJSON, { path: __filename })
     } catch (e) {
       expect(e.refs).to.deep.equal([{
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -238,7 +238,7 @@ describe('parse()', function () {
   
   it('should not offer information about JS line and column where $ref errors are located if format is JS', async function () {
     try {
-      await parser.parse(JSON.parse(inputJSON))
+      await parser.parse(JSON.parse(inputJSON), { path: __filename })
     } catch (e) {
       expect(e.refs).to.deep.equal([{
         jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -316,7 +316,7 @@ describe('parse()', function () {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/invalid-yaml');
       expect(e.title).to.equal('The provided YAML is not valid.');
       expect(e.detail).to.equal(`bad indentation of a mapping entry at line 19, column 11:\n              $ref: "#/components/schemas/sentAt"\n              ^`);
-      expect(e.location).to.deep.equal({ startOffset: 460, startLine: 19, startColumn: 11 });
+      expect(e.location).to.deep.equal({ startOffset: offset(460, 19), startLine: 19, startColumn: 11 });
     }
   });
   

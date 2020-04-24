@@ -214,7 +214,6 @@ describe('AsyncAPIDocument', () => {
 
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());
-      console.log(schemaKeys);
       expect(schemaKeys).to.deep.equal([
         "testParamSchema",
         "testParamNestedSchemaProp",

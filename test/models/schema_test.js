@@ -180,7 +180,7 @@ describe('Schema', () => {
       expect(d.type()).to.be.equal(doc.type);
     });
     
-    it('should return an array', () => {
+    it('should return an array of strings', () => {
       const doc = { "type": ["number", "string"] };
       const d = new Schema(doc);
       expect(Array.isArray(d.type())).to.be.equal(true);

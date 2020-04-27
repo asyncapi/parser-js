@@ -1248,7 +1248,7 @@ Implements functions to deal with a Schema object.
     * [.minProperties()](#Schema+minProperties) ⇒ <code>number</code>
     * [.required()](#Schema+required) ⇒ <code>Array.&lt;string&gt;</code>
     * [.enum()](#Schema+enum) ⇒ <code>Array.&lt;any&gt;</code>
-    * [.type()](#Schema+type) ⇒ <code>string</code>
+    * [.type()](#Schema+type) ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
     * [.allOf()](#Schema+allOf) ⇒ [<code>Array.&lt;Schema&gt;</code>](#Schema)
     * [.oneOf()](#Schema+oneOf) ⇒ [<code>Array.&lt;Schema&gt;</code>](#Schema)
     * [.anyOf()](#Schema+anyOf) ⇒ [<code>Array.&lt;Schema&gt;</code>](#Schema)
@@ -1347,7 +1347,7 @@ Implements functions to deal with a Schema object.
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+type"></a>
 
-### schema.type() ⇒ <code>string</code>
+### schema.type() ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+allOf"></a>
 

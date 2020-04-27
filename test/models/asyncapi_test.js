@@ -187,6 +187,79 @@ describe('AsyncAPIDocument', () => {
   });
 
   describe('#allSchemas()', function () {
+    
+    it('should return additional items schemas when no items specified', () => {
+      const doc = {
+        "channels": {
+          "some_channel": {
+            "subscribe": {
+              "message": {
+                "name": "some_map",
+                "payload": {
+                  "type": "array",
+                  "$id": "payloadSchema",
+                  "test": true,
+                  "additionalItems": {
+                    "type": "string",
+                    "$id": "additionalItemSchema", 
+                    "test": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      const d = new AsyncAPIDocument(doc);
+      const schemas = d.allSchemas();
+      expect(schemas.size).to.be.equal(2);
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        "payloadSchema",
+        "additionalItemSchema"
+      ])
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should return additional property schemas when no properties are specified', () => {
+      const doc = {
+        "channels": {
+          "some_channel": {
+            "subscribe": {
+              "message": {
+                "name": "some_map",
+                "payload": {
+                  "type": "object",
+                  "$id": "payloadSchema",
+                  "test": true,
+                  "additionalProperties": {
+                    "type": "string",
+                    "$id": "additionalPropSchema", 
+                    "test": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      const d = new AsyncAPIDocument(doc);
+      const schemas = d.allSchemas();
+      expect(schemas.size).to.be.equal(2);
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        "payloadSchema",
+        "additionalPropSchema"
+      ])
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
     it('should return a map with all the schemas used in the document', () => {
       const doc = { channels: { test: { parameters: { testParam1: { schema: { $id: 'testParamSchema', test: true, k: 0 } } }, publish: { message: { headers: { test: true, k: 1 }, payload: { test: true, k: 2 } } } }, test2: { subscribe: { message: { payload: { $id: 'testPayload', test: true, k: 2 } } } } }, components: { schemas: { testSchema: { test: true, k: 3 } } } };
       const d = new AsyncAPIDocument(doc);

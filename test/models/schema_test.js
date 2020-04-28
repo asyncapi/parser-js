@@ -483,6 +483,15 @@ describe('Schema', () => {
     });
   });
 
+  describe('#deprecated()', function () {
+    it('should return a boolean', () => {
+      const doc = { "type": "string", "deprecated": true };
+      const d = new Schema(doc);
+      expect(typeof d.deprecated()).to.be.equal('boolean');
+      expect(d.deprecated()).to.be.equal(doc.deprecated);
+    });
+  });
+
   describe('#readOnly()', function () {
     it('should return a boolean', () => {
       const doc = { "type": "string", "readOnly": true };

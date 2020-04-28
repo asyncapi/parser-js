@@ -1272,6 +1272,7 @@ Implements functions to deal with a Schema object.
     * [.description()](#Schema+description) ⇒ <code>string</code>
     * [.title()](#Schema+title) ⇒ <code>string</code>
     * [.default()](#Schema+default) ⇒ <code>any</code>
+    * [.deprecated()](#Schema+deprecated) ⇒ <code>boolean</code>
     * [.readOnly()](#Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
@@ -1440,6 +1441,10 @@ Implements functions to deal with a Schema object.
 <a name="Schema+default"></a>
 
 ### schema.default() ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+deprecated"></a>
+
+### schema.deprecated() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+readOnly"></a>
 

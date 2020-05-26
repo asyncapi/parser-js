@@ -155,13 +155,110 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
+  describe('#hasTags()', function() {
+    it('should return true when the AsyncAPI document has tags', () => {
+      const doc = {
+        "channels": {
+          "some_channel": {
+            "publish": {
+              "message": {
+                "name": "some_map",
+                "payload": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              },
+              "tags": [{"name":"holi"}]
+            }
+          },
+          "channel_without_tags": {
+            "subscribe": {
+              "message": {
+                "name": "channel_without_tags_map",
+                "payload": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasTags()).to.be.equal(true);
+    });
+    it('should return false when the AsyncAPI document has no tags', () => {
+      const doc = {
+        "channels": {
+          "channel_without_tags": {
+            "subscribe": {
+              "message": {
+                "name": "channel_without_tags_map",
+                "payload": {
+                  "type": "object",
+                  "properties": { "message": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasTags()).to.be.equal(false);
+    });
+  });
+
   describe('#tags()', function () {
     it('should return an array of tags', () => {
-      const doc = { tags: [{ name: 'test1' }, { name: 'test2' }] };
+      const tags = [{"name":"some-app"},{"name":"another-app"}];
+      const doc = {
+        "channels": {
+          "some_channel": {
+            "publish": {
+              "message": {
+                "name": "some_map",
+                "payload": {
+                  "type": "object",
+                  "properties": { "message": "string" }
+                }
+              },
+              "tags": [tags[0]]
+            }
+          },
+          "another_channel": {
+            "subscribe": {
+              "message": {
+                "name": "another_map",
+                "payload": {
+                  "type": "object",
+                  "properties": { "message": "string" }
+                }
+              },
+              "tags": [tags[1]]
+            }
+          },
+          "channel_without_tags": {
+            "subscribe": {
+              "message": {
+                "name": "channel_without_tags_map",
+                "payload": {
+                  "type": "object",
+                  "properties": { "message": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
       const d = new AsyncAPIDocument(doc);
+      expect(d.tags().length).to.be.equal(2)
       d.tags().forEach((t, i) => {
         expect(t.constructor.name).to.be.equal('Tag');
-        expect(t.json()).to.be.equal(doc.tags[i]);
+        expect(t.json()).to.be.eql(tags[i]);
       });
     });
   });

@@ -5,9 +5,11 @@ env:
 
 plugins:
   - sonarjs
+  - mocha
 
 extends:
   - plugin:sonarjs/recommended
+  - plugin:mocha/recommended
 
 parserOptions:
   ecmaVersion: 2018
@@ -95,3 +97,9 @@ rules:
   prefer-const: 2
   prefer-spread: 2
   prefer-template: 2
+
+overrides:
+  - files: "test/**"
+    rules:
+      prefer-arrow-callback: 0
+      sonarjs/no-duplicate-string: 0

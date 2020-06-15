@@ -1,10 +1,9 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Schema = require('../../lib/models/schema');
 
-describe('Schema', () => {
-  describe('#ext()', () => {
-    it('should support extensions', () => {
+describe('Schema', function() {
+  describe('#ext()', function() {
+    it('should support extensions', function() {
       const doc = { 'x-test': 'testing' };
       const d = new Schema(doc);
       expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
@@ -13,8 +12,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#multipleOf()', () => {
-    it('should return a number', () => {
+  describe('#multipleOf()', function() {
+    it('should return a number', function() {
       const doc = { type: 'number', multipleOf: 1.0 };
       const d = new Schema(doc);
       expect(typeof d.multipleOf()).to.be.equal('number');
@@ -22,15 +21,15 @@ describe('Schema', () => {
     });
   });
   
-  describe('#uid()', () => {
-    it('should return a string', () => {
+  describe('#uid()', function() {
+    it('should return a string', function() {
       const doc = { $id: 'test' };
       const d = new Schema(doc);
       expect(typeof d.uid()).to.be.equal('string');
       expect(d.uid()).to.be.equal(doc.$id);
     });
     
-    it('should return a string with the value of x-parser-schema-id when $id is not available', () => {
+    it('should return a string with the value of x-parser-schema-id when $id is not available', function() {
       const doc = { 'x-parser-schema-id': 'test' };
       const d = new Schema(doc);
       expect(typeof d.uid()).to.be.equal('string');
@@ -38,8 +37,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#$id()', () => {
-    it('should return a string', () => {
+  describe('#$id()', function() {
+    it('should return a string', function() {
       const doc = { $id: 'test' };
       const d = new Schema(doc);
       expect(typeof d.$id()).to.be.equal('string');
@@ -47,8 +46,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#maximum()', () => {
-    it('should return a number', () => {
+  describe('#maximum()', function() {
+    it('should return a number', function() {
       const doc = { type: 'number', maximum: 10 };
       const d = new Schema(doc);
       expect(typeof d.maximum()).to.be.equal('number');
@@ -56,8 +55,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#exclusiveMaximum()', () => {
-    it('should return a number', () => {
+  describe('#exclusiveMaximum()', function() {
+    it('should return a number', function() {
       const doc = { type: 'number', exclusiveMaximum: 10 };
       const d = new Schema(doc);
       expect(typeof d.exclusiveMaximum()).to.be.equal('number');
@@ -65,8 +64,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#minimum()', () => {
-    it('should return a number', () => {
+  describe('#minimum()', function() {
+    it('should return a number', function() {
       const doc = { type: 'number', minimum: 10 };
       const d = new Schema(doc);
       expect(typeof d.minimum()).to.be.equal('number');
@@ -74,8 +73,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#exclusiveMinimum()', () => {
-    it('should return a number', () => {
+  describe('#exclusiveMinimum()', function() {
+    it('should return a number', function() {
       const doc = { type: 'number', exclusiveMinimum: 10 };
       const d = new Schema(doc);
       expect(typeof d.exclusiveMinimum()).to.be.equal('number');
@@ -83,8 +82,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#maxLength()', () => {
-    it('should return a number', () => {
+  describe('#maxLength()', function() {
+    it('should return a number', function() {
       const doc = { type: 'string', maxLength: 10 };
       const d = new Schema(doc);
       expect(typeof d.maxLength()).to.be.equal('number');
@@ -92,8 +91,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#minLength()', () => {
-    it('should return a number', () => {
+  describe('#minLength()', function() {
+    it('should return a number', function() {
       const doc = { type: 'string', minLength: 10 };
       const d = new Schema(doc);
       expect(typeof d.minLength()).to.be.equal('number');
@@ -101,8 +100,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#pattern()', () => {
-    it('should return a string', () => {
+  describe('#pattern()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string', pattern: '^test' };
       const d = new Schema(doc);
       expect(typeof d.pattern()).to.be.equal('string');
@@ -110,8 +109,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#maxItems()', () => {
-    it('should return a number', () => {
+  describe('#maxItems()', function() {
+    it('should return a number', function() {
       const doc = { type: 'array', maxItems: 10 };
       const d = new Schema(doc);
       expect(typeof d.maxItems()).to.be.equal('number');
@@ -119,8 +118,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#minItems()', () => {
-    it('should return a number', () => {
+  describe('#minItems()', function() {
+    it('should return a number', function() {
       const doc = { type: 'array', minItems: 10 };
       const d = new Schema(doc);
       expect(typeof d.minItems()).to.be.equal('number');
@@ -128,8 +127,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#uniqueItems()', () => {
-    it('should return a boolean', () => {
+  describe('#uniqueItems()', function() {
+    it('should return a boolean', function() {
       const doc = { type: 'array', uniqueItems: true };
       const d = new Schema(doc);
       expect(typeof d.uniqueItems()).to.be.equal('boolean');
@@ -137,8 +136,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#maxProperties()', () => {
-    it('should return a number', () => {
+  describe('#maxProperties()', function() {
+    it('should return a number', function() {
       const doc = { type: 'object', maxProperties: 10 };
       const d = new Schema(doc);
       expect(typeof d.maxProperties()).to.be.equal('number');
@@ -146,8 +145,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#minProperties()', () => {
-    it('should return a number', () => {
+  describe('#minProperties()', function() {
+    it('should return a number', function() {
       const doc = { type: 'object', minProperties: 10 };
       const d = new Schema(doc);
       expect(typeof d.minProperties()).to.be.equal('number');
@@ -155,8 +154,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#required()', () => {
-    it('should return a number', () => {
+  describe('#required()', function() {
+    it('should return a number', function() {
       const doc = { type: 'object', required: ['test'] };
       const d = new Schema(doc);
       expect(Array.isArray(d.required())).to.be.equal(true);
@@ -164,8 +163,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#enum()', () => {
-    it('should return a number', () => {
+  describe('#enum()', function() {
+    it('should return a number', function() {
       const doc = { type: 'string', enum: ['test'] };
       const d = new Schema(doc);
       expect(Array.isArray(d.enum())).to.be.equal(true);
@@ -173,15 +172,15 @@ describe('Schema', () => {
     });
   });
 
-  describe('#type()', () => {
-    it('should return a string', () => {
+  describe('#type()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string' };
       const d = new Schema(doc);
       expect(typeof d.type()).to.be.equal('string');
       expect(d.type()).to.be.equal(doc.type);
     });
     
-    it('should return an array of strings', () => {
+    it('should return an array of strings', function() {
       const doc = { type: ['number', 'string'] };
       const d = new Schema(doc);
       expect(Array.isArray(d.type())).to.be.equal(true);
@@ -189,8 +188,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#allOf()', () => {
-    it('should return an array of Schema objects', () => {
+  describe('#allOf()', function() {
+    it('should return an array of Schema objects', function() {
       const doc = { allOf: [{ type: 'string' }, { type: 'number' }] };
       const d = new Schema(doc);
       expect(Array.isArray(d.allOf())).to.be.equal(true);
@@ -201,8 +200,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#oneOf()', () => {
-    it('should return an array of Schema objects', () => {
+  describe('#oneOf()', function() {
+    it('should return an array of Schema objects', function() {
       const doc = { oneOf: [{ type: 'string' }, { type: 'number' }] };
       const d = new Schema(doc);
       expect(Array.isArray(d.oneOf())).to.be.equal(true);
@@ -213,8 +212,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#anyOf()', () => {
-    it('should return an array of Schema objects', () => {
+  describe('#anyOf()', function() {
+    it('should return an array of Schema objects', function() {
       const doc = { anyOf: [{ type: 'string' }, { type: 'number' }] };
       const d = new Schema(doc);
       expect(Array.isArray(d.anyOf())).to.be.equal(true);
@@ -225,8 +224,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#not()', () => {
-    it('should return a Schema object', () => {
+  describe('#not()', function() {
+    it('should return a Schema object', function() {
       const doc = { not: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.not().constructor.name).to.be.equal('Schema');
@@ -234,15 +233,15 @@ describe('Schema', () => {
     });
   });
 
-  describe('#items()', () => {
-    it('should return a Schema object', () => {
+  describe('#items()', function() {
+    it('should return a Schema object', function() {
       const doc = { items: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.items().constructor.name).to.be.equal('Schema');
       expect(d.items().json()).to.be.equal(doc.items);
     });
     
-    it('should return an array of Schema objects', () => {
+    it('should return an array of Schema objects', function() {
       const doc = { items: [{ type: 'string' }, { type: 'number' }] };
       const d = new Schema(doc);
       expect(Array.isArray(d.items())).to.be.equal(true);
@@ -253,8 +252,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#properties()', () => {
-    it('should return a map of Schema objects', () => {
+  describe('#properties()', function() {
+    it('should return a map of Schema objects', function() {
       const doc = { properties: { test: { type: 'string' } } };
       const d = new Schema(doc);
       expect(typeof d.properties()).to.be.equal('object');
@@ -266,57 +265,57 @@ describe('Schema', () => {
     });
   });
 
-  describe('#additionalProperties()', () => {
-    it('should return a Schema object', () => {
+  describe('#additionalProperties()', function() {
+    it('should return a Schema object', function() {
       const doc = { additionalProperties: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.additionalProperties().constructor.name).to.be.equal('Schema');
       expect(d.additionalProperties().json()).to.be.equal(doc.additionalProperties);
     });
     
-    it('should return a boolean', () => {
+    it('should return a boolean', function() {
       const doc = { additionalProperties: true };
       const d = new Schema(doc);
       expect(typeof d.additionalProperties()).to.be.equal('boolean');
       expect(d.additionalProperties()).to.be.equal(doc.additionalProperties);
     });
     
-    it('should return undefined when not defined', () => {
+    it('should return undefined when not defined', function() {
       const doc = {};
       const d = new Schema(doc);
       expect(d.additionalProperties()).to.be.equal(undefined);
     });
     
-    it('should return undefined when null', () => {
+    it('should return undefined when null', function() {
       const doc = { additionalProperties: null };
       const d = new Schema(doc);
       expect(d.additionalProperties()).to.be.equal(undefined);
     });
   });
 
-  describe('#additionalItems()', () => {
-    it('should return a Schema object', () => {
+  describe('#additionalItems()', function() {
+    it('should return a Schema object', function() {
       const doc = { additionalItems: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.additionalItems().constructor.name).to.be.equal('Schema');
       expect(d.additionalItems().json()).to.be.equal(doc.additionalItems);
     });
     
-    it('should return undefined when not defined', () => {
+    it('should return undefined when not defined', function() {
       const doc = {};
       const d = new Schema(doc);
       expect(d.additionalItems()).to.be.equal(undefined);
     });
     
-    it('should return undefined when null', () => {
+    it('should return undefined when null', function() {
       const doc = { additionalItems: null };
       const d = new Schema(doc);
       expect(d.additionalItems()).to.be.equal(undefined);
     });
   });
 
-  describe('#patternProperties()', () => {
-    it('should return a map of Schema objects', () => {
+  describe('#patternProperties()', function() {
+    it('should return a map of Schema objects', function() {
       const doc = { patternProperties: { test: { type: 'string' } } };
       const d = new Schema(doc);
       expect(typeof d.patternProperties()).to.be.equal('object');
@@ -328,28 +327,28 @@ describe('Schema', () => {
     });
   });
 
-  describe('#const()', () => {
-    it('should return a number', () => {
+  describe('#const()', function() {
+    it('should return a number', function() {
       const doc = { type: 'object', const: 10 };
       const d = new Schema(doc);
       expect(typeof d.const()).to.be.equal('number');
       expect(d.const()).to.be.equal(doc.const);
     });
     
-    it('should return null', () => {
+    it('should return null', function() {
       const doc = { type: 'object', const: null };
       const d = new Schema(doc);
       expect(d.const()).to.be.equal(doc.const);
     });
     
-    it('should return an object', () => {
+    it('should return an object', function() {
       const doc = { type: 'object', const: { test: true } };
       const d = new Schema(doc);
       expect(typeof d.const()).to.be.equal('object');
       expect(d.const()).to.be.equal(doc.const);
     });
     
-    it('should return an array', () => {
+    it('should return an array', function() {
       const doc = { type: 'object', const: ['test'] };
       const d = new Schema(doc);
       expect(Array.isArray(d.const())).to.be.equal(true);
@@ -357,8 +356,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#contains()', () => {
-    it('should return a Schema object', () => {
+  describe('#contains()', function() {
+    it('should return a Schema object', function() {
       const doc = { contains: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.contains().constructor.name).to.be.equal('Schema');
@@ -366,8 +365,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#dependencies()', () => {
-    it('should return a map with an array value', () => {
+  describe('#dependencies()', function() {
+    it('should return a map with an array value', function() {
       const doc = { properties: { test: { type: 'string' }, test2: { type: 'number' } }, dependencies: { test: ['test2'] } };
       const d = new Schema(doc);
       expect(typeof d.dependencies()).to.be.equal('object');
@@ -378,7 +377,7 @@ describe('Schema', () => {
       });
     });
     
-    it('should return a map with a Schema value', () => {
+    it('should return a map with a Schema value', function() {
       const doc = { properties: { test: { type: 'string' } }, dependencies: { test: { properties: { test2: { type: 'number' } } } } };
       const d = new Schema(doc);
       expect(typeof d.dependencies()).to.be.equal('object');
@@ -390,8 +389,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#propertyNames()', () => {
-    it('should return a Schema object', () => {
+  describe('#propertyNames()', function() {
+    it('should return a Schema object', function() {
       const doc = { propertyNames: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.propertyNames().constructor.name).to.be.equal('Schema');
@@ -399,8 +398,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#if()', () => {
-    it('should return a Schema object', () => {
+  describe('#if()', function() {
+    it('should return a Schema object', function() {
       const doc = { if: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.if().constructor.name).to.be.equal('Schema');
@@ -408,8 +407,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#then()', () => {
-    it('should return a Schema object', () => {
+  describe('#then()', function() {
+    it('should return a Schema object', function() {
       const doc = { then: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.then().constructor.name).to.be.equal('Schema');
@@ -417,8 +416,8 @@ describe('Schema', () => {
     });
   });
   
-  describe('#else()', () => {
-    it('should return a Schema object', () => {
+  describe('#else()', function() {
+    it('should return a Schema object', function() {
       const doc = { else: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.else().constructor.name).to.be.equal('Schema');
@@ -426,8 +425,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#format()', () => {
-    it('should return a string', () => {
+  describe('#format()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string', format: 'email' };
       const d = new Schema(doc);
       expect(typeof d.format()).to.be.equal('string');
@@ -435,8 +434,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#contentEncoding()', () => {
-    it('should return a string', () => {
+  describe('#contentEncoding()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string', contentEncoding: 'base64' };
       const d = new Schema(doc);
       expect(typeof d.contentEncoding()).to.be.equal('string');
@@ -444,8 +443,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#contentMediaType()', () => {
-    it('should return a string', () => {
+  describe('#contentMediaType()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string', contentMediaType: 'text/html' };
       const d = new Schema(doc);
       expect(typeof d.contentMediaType()).to.be.equal('string');
@@ -453,8 +452,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#definitions()', () => {
-    it('should return a map of Schema objects', () => {
+  describe('#definitions()', function() {
+    it('should return a map of Schema objects', function() {
       const doc = { definitions: { test: { type: 'string' } } };
       const d = new Schema(doc);
       expect(typeof d.definitions()).to.be.equal('object');
@@ -466,8 +465,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#title()', () => {
-    it('should return a string', () => {
+  describe('#title()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string', title: 'test' };
       const d = new Schema(doc);
       expect(typeof d.title()).to.be.equal('string');
@@ -475,8 +474,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#description()', () => {
-    it('should return a string', () => {
+  describe('#description()', function() {
+    it('should return a string', function() {
       const doc = { type: 'string', description: 'test' };
       const d = new Schema(doc);
       expect(typeof d.description()).to.be.equal('string');
@@ -484,8 +483,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#deprecated()', () => {
-    it('should return a boolean', () => {
+  describe('#deprecated()', function() {
+    it('should return a boolean', function() {
       const doc = { type: 'string', deprecated: true };
       const d = new Schema(doc);
       expect(typeof d.deprecated()).to.be.equal('boolean');
@@ -493,8 +492,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#readOnly()', () => {
-    it('should return a boolean', () => {
+  describe('#readOnly()', function() {
+    it('should return a boolean', function() {
       const doc = { type: 'string', readOnly: true };
       const d = new Schema(doc);
       expect(typeof d.readOnly()).to.be.equal('boolean');
@@ -502,8 +501,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#writeOnly()', () => {
-    it('should return a boolean', () => {
+  describe('#writeOnly()', function() {
+    it('should return a boolean', function() {
       const doc = { type: 'string', writeOnly: true };
       const d = new Schema(doc);
       expect(typeof d.writeOnly()).to.be.equal('boolean');
@@ -511,8 +510,8 @@ describe('Schema', () => {
     });
   });
 
-  describe('#examples()', () => {
-    it('should return an array', () => {
+  describe('#examples()', function() {
+    it('should return an array', function() {
       const doc = { type: 'string', examples: ['test'] };
       const d = new Schema(doc);
       expect(Array.isArray(d.examples())).to.be.equal(true);

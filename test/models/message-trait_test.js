@@ -1,11 +1,10 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const MessageTrait = require('../../lib/models/message-trait');
 const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, correlationId: { test: true }, contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{ test: true }], 'x-test': 'testing' };
 
-describe('MessageTrait', () => {
-  describe('#ext()', () => {
-    it('should support extensions', () => {
+describe('MessageTrait', function() {
+  describe('#ext()', function() {
+    it('should support extensions', function() {
       const doc = { 'x-test': 'testing' };
       const d = new MessageTrait(doc);
       expect(d.ext('x-test')).to.be.equal(doc['x-test']);
@@ -14,102 +13,102 @@ describe('MessageTrait', () => {
     });
   });
 
-  describe('#headers()', () => {
-    it('should return a map of Schema objects', () => {
+  describe('#headers()', function() {
+    it('should return a map of Schema objects', function() {
       const d = new MessageTrait(js);
       expect(d.headers().constructor.name).to.be.equal('Schema');
       expect(d.headers().json()).to.equal(js.headers);
     });
   });
 
-  describe('#header()', () => {
-    it('should return a specific Schema object', () => {
+  describe('#header()', function() {
+    it('should return a specific Schema object', function() {
       const d = new MessageTrait(js);
       expect(d.header('test1').constructor.name).to.be.equal('Schema');
       expect(d.header('test1').json()).to.equal(js.headers.properties.test1);
     });
   });
 
-  describe('#payload()', () => {
-    it('should NOT have a payload method', () => {
+  describe('#payload()', function() {
+    it('should NOT have a payload method', function() {
       const d = new MessageTrait(js);
       expect(d.payload).to.be.equal(undefined);
     });
   });
 
-  describe('#originalPayload()', () => {
-    it('should NOT have an originalPayload method', () => {
+  describe('#originalPayload()', function() {
+    it('should NOT have an originalPayload method', function() {
       const d = new MessageTrait(js);
       expect(d.originalPayload).to.be.equal(undefined);
     });
   });
 
-  describe('#correlationId()', () => {
-    it('should return a CorrelationId object', () => {
+  describe('#correlationId()', function() {
+    it('should return a CorrelationId object', function() {
       const d = new MessageTrait(js);
       expect(d.correlationId().json()).to.equal(js.correlationId);
     });
   });
 
-  describe('#schemaFormat()', () => {
-    it('should return a string', () => {
+  describe('#schemaFormat()', function() {
+    it('should return a string', function() {
       const d = new MessageTrait(js);
       expect(d.schemaFormat()).to.equal('application/schema+json;version=draft-07');
     });
   });
 
-  describe('#originalSchemaFormat()', () => {
-    it('should NOT have an originalSchemaFormat method', () => {
+  describe('#originalSchemaFormat()', function() {
+    it('should NOT have an originalSchemaFormat method', function() {
       const d = new MessageTrait(js);
       expect(d.originalSchemaFormat).to.be.equal(undefined);
     });
   });
 
-  describe('#contentType()', () => {
-    it('should return a string', () => {
+  describe('#contentType()', function() {
+    it('should return a string', function() {
       const d = new MessageTrait(js);
       expect(d.contentType()).to.equal(js.contentType);
     });
   });
 
-  describe('#name()', () => {
-    it('should return a string', () => {
+  describe('#name()', function() {
+    it('should return a string', function() {
       const d = new MessageTrait(js);
       expect(d.name()).to.equal(js.name);
     });
   });
 
-  describe('#title()', () => {
-    it('should return a string', () => {
+  describe('#title()', function() {
+    it('should return a string', function() {
       const d = new MessageTrait(js);
       expect(d.title()).to.equal(js.title);
     });
   });
 
-  describe('#summary()', () => {
-    it('should return a string', () => {
+  describe('#summary()', function() {
+    it('should return a string', function() {
       const d = new MessageTrait(js);
       expect(d.summary()).to.equal(js.summary);
     });
   });
 
-  describe('#description()', () => {
-    it('should return a string', () => {
+  describe('#description()', function() {
+    it('should return a string', function() {
       const d = new MessageTrait(js);
       expect(d.description()).to.equal(js.description);
     });
   });
 
-  describe('#externalDocs()', () => {
-    it('should return an ExternalDocs object', () => {
+  describe('#externalDocs()', function() {
+    it('should return an ExternalDocs object', function() {
       const d = new MessageTrait(js);
       expect(d.externalDocs().constructor.name).to.equal('ExternalDocs');
       expect(d.externalDocs().json()).to.equal(js.externalDocs);
     });
   });
 
-  describe('#tags()', () => {
-    it('should return an array of Tag objects', () => {
+  describe('#tags()', function() {
+    it('should return an array of Tag objects', function() {
       const d = new MessageTrait(js);
       expect(Array.isArray(d.tags())).to.be.equal(true);
       d.tags().forEach((t, i) => {
@@ -119,22 +118,22 @@ describe('MessageTrait', () => {
     });
   });
 
-  describe('#bindings()', () => {
-    it('should return a map of bindings', () => {
+  describe('#bindings()', function() {
+    it('should return a map of bindings', function() {
       const d = new MessageTrait(js);
       expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
 
-  describe('#binding()', () => {
-    it('should return a specific binding', () => {
+  describe('#binding()', function() {
+    it('should return a specific binding', function() {
       const d = new MessageTrait(js);
       expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
 
-  describe('#examples()', () => {
-    it('should return an array of examples', () => {
+  describe('#examples()', function() {
+    it('should return an array of examples', function() {
       const d = new MessageTrait(js);
       expect(Array.isArray(d.examples())).to.be.equal(true);
       expect(d.examples()).to.be.equal(js.examples);

@@ -46,18 +46,18 @@ const checkErrorParsedJSON = async (fn, parsedJSON) => {
 
 const offset = (offset, line) => (offset + ((eolLength - 1) * (line - 1)));
 
-describe('parse()', () => {
-  it('should parse YAML', async () => {
+describe('parse()', function() {
+  it('should parse YAML', async function() {
     const result = await parser.parse(inputYAML, { path: __filename });
     await expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
 
-  it('should not apply traits', async () => {
+  it('should not apply traits', async function() {
     const result = await parser.parse(inputYAML, { path: __filename, applyTraits: false });
     await expect(JSON.stringify(result.json())).to.equal(outputJsonNoApplyTraits);
   });
   
-  it('should fail when asyncapi is not valid', async () => {
+  it('should fail when asyncapi is not valid', async function() {
     try {
       await parser.parse(invalidAsyncAPI);
     } catch (e) {
@@ -79,7 +79,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should fail when asyncapi is not valid (yaml)', async () => {
+  it('should fail when asyncapi is not valid (yaml)', async function() {
     try {
       await parser.parse(invalidAsyncapiYAML, { path: __filename });
     } catch (e) {
@@ -101,7 +101,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should fail when asyncapi is not valid (ref with line break) (yaml)', async () => {
+  it('should fail when asyncapi is not valid (ref with line break) (yaml)', async function() {
     try {
       await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-with-ref-with-line-break.yaml'), 'utf8'), {
         path: __filename,
@@ -124,7 +124,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should fail when asyncapi is not valid (json)', async () => {
+  it('should fail when asyncapi is not valid (json)', async function() {
     try {
       await parser.parse(invalidAsyncpiJSON, { path: __filename });
     } catch (e) {
@@ -146,7 +146,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should fail when it is not possible to convert asyncapi to json', async () => {
+  it('should fail when it is not possible to convert asyncapi to json', async function() {
     try {
       await parser.parse('bad');
     } catch (e) {
@@ -156,7 +156,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should fail when asyncapi is not present', async () => {
+  it('should fail when asyncapi is not present', async function() {
     try {
       await parser.parse('bad: true');
     } catch (e) {
@@ -166,7 +166,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should fail when asyncapi version is not supported', async () => {
+  it('should fail when asyncapi version is not supported', async function() {
     try {
       await parser.parse('asyncapi: 1.2.0');
     } catch (e) {
@@ -186,7 +186,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should fail when asyncapi is not yaml nor json', async () => {
+  it('should fail when asyncapi is not yaml nor json', async function() {
     try {
       await parser.parse('bad:\nbad:');
     } catch (e) {
@@ -197,7 +197,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should fail to resolve relative files when options.path is not provided', async () => {
+  it('should fail to resolve relative files when options.path is not provided', async function() {
     const type = 'https://github.com/asyncapi/parser-js/dereference-error';
     const message = `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`;
     const testFn = async () => { await parser.parse(inputYAML); };
@@ -205,7 +205,7 @@ describe('parse()', () => {
     await checkErrorParsedJSON(testFn, outputJsonWithRefs);
   });
 
-  it('should offer information about YAML line and column where $ref errors are located', async () => {
+  it('should offer information about YAML line and column where $ref errors are located', async function() {
     try {
       await parser.parse(inputYAML, { path: __filename });
     } catch (e) {
@@ -221,7 +221,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should offer information about JSON line and column where $ref errors are located', async () => {
+  it('should offer information about JSON line and column where $ref errors are located', async function() {
     try {
       await parser.parse(inputJSON, { path: __filename });
     } catch (e) {
@@ -237,7 +237,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should not offer information about JS line and column where $ref errors are located if format is JS', async () => {
+  it('should not offer information about JS line and column where $ref errors are located if format is JS', async function() {
     try {
       await parser.parse(JSON.parse(inputJSON), { path: __filename });
     } catch (e) {
@@ -247,7 +247,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should offer information about missing HTTP $refs', async () => {
+  it('should offer information about missing HTTP $refs', async function() {
     try {
       await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/inexisting-http-ref.yaml'), 'utf8'), {
         path: 'https://example.com',
@@ -268,7 +268,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should offer information about missing root $refs', async () => {
+  it('should offer information about missing root $refs', async function() {
     try {
       await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/inexisting-root-ref.yaml'), 'utf8'), {
         path: 'https://example.com',
@@ -289,7 +289,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should offer information about missing local $refs', async () => {
+  it('should offer information about missing local $refs', async function() {
     try {
       await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/inexisting-local-ref.yaml'), 'utf8'), {
         path: 'https://example.com',
@@ -310,7 +310,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should throw error if document is invalid YAML', async () => {
+  it('should throw error if document is invalid YAML', async function() {
     try {
       await parser.parse(invalidYAML, { path: __filename });
     } catch (e) {
@@ -321,7 +321,7 @@ describe('parse()', () => {
     }
   });
   
-  it('should throw error if document is invalid JSON', async () => {
+  it('should throw error if document is invalid JSON', async function() {
     try {
       await parser.parse(' {"invalid "json" }');
     } catch (e) {
@@ -332,7 +332,7 @@ describe('parse()', () => {
     }
   });
 
-  it('should throw error if document is null or falsey', async () => {
+  it('should throw error if document is null or falsey', async function() {
     const type = 'https://github.com/asyncapi/parser-js/null-or-falsey-document';
     const message = 'Document can\'t be null or falsey.';
     await checkErrorTypeAndMessage(async () => {
@@ -352,7 +352,7 @@ describe('parse()', () => {
     }, type, message);
   });
 
-  it('should throw error if document is not string nor object', async () => {
+  it('should throw error if document is not string nor object', async function() {
     const type = 'https://github.com/asyncapi/parser-js/invalid-document-type';
     const message = 'The AsyncAPI document has to be either a string or a JS object.';
 

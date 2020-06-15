@@ -1,11 +1,10 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const SecurityScheme = require('../../lib/models/security-scheme');
 const js = { type: 'testing', description: 'testing', name: 'testing', in: 'testing', scheme: 'testing', bearerFormat: 'testing', openIdConnectUrl: 'testing', flows: { test: { testing: true } }, 'x-test': 'testing' };
 
-describe('SecurityScheme', () => {
-  describe('#ext()', () => {
-    it('should support extensions', () => {
+describe('SecurityScheme', function() {
+  describe('#ext()', function() {
+    it('should support extensions', function() {
       const d = new SecurityScheme(js);
       expect(d.ext('x-test')).to.be.equal(js['x-test']);      
       expect(d.extension('x-test')).to.be.equal(js['x-test']);      
@@ -13,57 +12,57 @@ describe('SecurityScheme', () => {
     });
   });
 
-  describe('#type()', () => {
-    it('should return a string', () => {
+  describe('#type()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.type()).to.be.equal(js.type);
     });
   });
   
-  describe('#description()', () => {
-    it('should return a string', () => {
+  describe('#description()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
   
-  describe('#name()', () => {
-    it('should return a string', () => {
+  describe('#name()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.name()).to.be.equal(js.name);
     });
   });
   
-  describe('#in()', () => {
-    it('should return a string', () => {
+  describe('#in()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.in()).to.be.equal(js.in);
     });
   });
   
-  describe('#scheme()', () => {
-    it('should return a string', () => {
+  describe('#scheme()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.scheme()).to.be.equal(js.scheme);
     });
   });
   
-  describe('#bearerFormat()', () => {
-    it('should return a string', () => {
+  describe('#bearerFormat()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.bearerFormat()).to.be.equal(js.bearerFormat);
     });
   });
   
-  describe('#openIdConnectUrl()', () => {
-    it('should return a string', () => {
+  describe('#openIdConnectUrl()', function() {
+    it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.openIdConnectUrl()).to.be.equal(js.openIdConnectUrl);
     });
   });
   
-  describe('#flows()', () => {
-    it('should return a map of OAuthFlow objects', () => {
+  describe('#flows()', function() {
+    it('should return a map of OAuthFlow objects', function() {
       const d = new SecurityScheme(js);
       expect(typeof d.flows()).to.be.equal('object');
       expect(d.flows().test.constructor.name).to.equal('OAuthFlow');

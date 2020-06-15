@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Server = require('../../lib/models/server');
 const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], bindings: { amqp: 'test' }, 'x-test': 'testing' };
@@ -12,35 +13,35 @@ describe('Server', () => {
     });
   });
 
-  describe('#url()', function () {
+  describe('#url()', () => {
     it('should return a string', () => {
       const d = new Server(js);
       expect(d.url()).to.be.equal(js.url);
     });
   });
   
-  describe('#protocol()', function () {
+  describe('#protocol()', () => {
     it('should return a string', () => {
       const d = new Server(js);
       expect(d.protocol()).to.be.equal(js.protocol);
     });
   });
   
-  describe('#protocolVersion()', function () {
+  describe('#protocolVersion()', () => {
     it('should return a string', () => {
       const d = new Server(js);
       expect(d.protocolVersion()).to.be.equal(js.protocolVersion);
     });
   });
   
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new Server(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
 
-  describe('#hasVariables()', function () {
+  describe('#hasVariables()', () => {
     it('should return a boolean indicating if a server URL has variables', () => {
       const doc = { url: 'test1:{port}', variables: { port: { desc: 'test1' } } };
       const docNoServerVariables = { url: 'test' };
@@ -51,7 +52,7 @@ describe('Server', () => {
     });
   });
 
-  describe('#variables()', function () {
+  describe('#variables()', () => {
     it('should return a map of ServerVariable objects', () => {
       const d = new Server(js);
       expect(typeof d.variables()).to.be.equal('object');
@@ -60,7 +61,7 @@ describe('Server', () => {
     });
   });
   
-  describe('#variable()', function () {
+  describe('#variable()', () => {
     it('should return a specific ServerVariable object', () => {
       const d = new Server(js);
       expect(d.variable('test1').constructor.name).to.equal('ServerVariable');
@@ -68,7 +69,7 @@ describe('Server', () => {
     });
   });
   
-  describe('#security()', function () {
+  describe('#security()', () => {
     it('should return an array of security requirements objects', () => {
       const d = new Server(js);
       expect(Array.isArray(d.security())).to.equal(true);
@@ -79,14 +80,14 @@ describe('Server', () => {
     });
   });
 
-  describe('#bindings()', function () {
+  describe('#bindings()', () => {
     it('should return a map of bindings', () => {
       const d = new Server(js);
       expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
 
-  describe('#binding()', function () {
+  describe('#binding()', () => {
     it('should return a specific binding', () => {
       const d = new Server(js);
       expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);

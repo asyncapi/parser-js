@@ -1,6 +1,7 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Message = require('../../lib/models/message');
-const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [ { name: 'tag1' } ], bindings: { amqp: { test: true } }, examples: [{test: true}], 'x-test': 'testing' };
+const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{test: true}], 'x-test': 'testing' };
 
 describe('Message', () => {
   describe('#ext()', () => {
@@ -13,7 +14,7 @@ describe('Message', () => {
     });
   });
 
-  describe('#uid()', function () {
+  describe('#uid()', () => {
     it('should return a string with the name', () => {
       const d = new Message(js);
       expect(d.uid()).to.be.equal('test');
@@ -32,7 +33,7 @@ describe('Message', () => {
     });
   });
   
-  describe('#headers()', function () {
+  describe('#headers()', () => {
     it('should return a map of Schema objects', () => {
       const d = new Message(js);
       expect(d.headers().constructor.name).to.be.equal('Schema');
@@ -40,7 +41,7 @@ describe('Message', () => {
     });
   });
 
-  describe('#header()', function () {
+  describe('#header()', () => {
     it('should return a specific Schema object', () => {
       const d = new Message(js);
       expect(d.header('test1').constructor.name).to.be.equal('Schema');
@@ -48,7 +49,7 @@ describe('Message', () => {
     });
   });
 
-  describe('#payload()', function () {
+  describe('#payload()', () => {
     it('should return payload as a Schema object', () => {
       const d = new Message(js);
       expect(d.payload().constructor.name).to.be.equal('Schema');
@@ -56,70 +57,70 @@ describe('Message', () => {
     });
   });
 
-  describe('#originalPayload()', function () {
+  describe('#originalPayload()', () => {
     it('should return the original payload', () => {
       const d = new Message(js);
       expect(d.originalPayload()).to.equal(js['x-parser-original-payload']);
     });
   });
 
-  describe('#correlationId()', function () {
+  describe('#correlationId()', () => {
     it('should return a CorrelationId object', () => {
       const d = new Message(js);
       expect(d.correlationId().json()).to.equal(js.correlationId);
     });
   });
 
-  describe('#schemaFormat()', function () {
+  describe('#schemaFormat()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.schemaFormat()).to.equal('application/schema+json;version=draft-07');
     });
   });
 
-  describe('#originalSchemaFormat()', function () {
+  describe('#originalSchemaFormat()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.originalSchemaFormat()).to.equal(js['x-parser-original-schema-format']);
     });
   });
 
-  describe('#contentType()', function () {
+  describe('#contentType()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.contentType()).to.equal(js.contentType);
     });
   });
 
-  describe('#name()', function () {
+  describe('#name()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.name()).to.equal(js.name);
     });
   });
 
-  describe('#title()', function () {
+  describe('#title()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.title()).to.equal(js.title);
     });
   });
 
-  describe('#summary()', function () {
+  describe('#summary()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.summary()).to.equal(js.summary);
     });
   });
 
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new Message(js);
       expect(d.description()).to.equal(js.description);
     });
   });
 
-  describe('#externalDocs()', function () {
+  describe('#externalDocs()', () => {
     it('should return an ExternalDocs object', () => {
       const d = new Message(js);
       expect(d.externalDocs().constructor.name).to.equal('ExternalDocs');
@@ -127,7 +128,7 @@ describe('Message', () => {
     });
   });
 
-  describe('#tags()', function () {
+  describe('#tags()', () => {
     it('should return an array of Tag objects', () => {
       const d = new Message(js);
       expect(Array.isArray(d.tags())).to.be.equal(true);
@@ -138,21 +139,21 @@ describe('Message', () => {
     });
   });
 
-  describe('#bindings()', function () {
+  describe('#bindings()', () => {
     it('should return a map of bindings', () => {
       const d = new Message(js);
       expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
 
-  describe('#binding()', function () {
+  describe('#binding()', () => {
     it('should return a specific binding', () => {
       const d = new Message(js);
       expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
 
-  describe('#examples()', function () {
+  describe('#examples()', () => {
     it('should return an array of examples', () => {
       const d = new Message(js);
       expect(Array.isArray(d.examples())).to.be.equal(true);

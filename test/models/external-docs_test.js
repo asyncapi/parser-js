@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const ExternalDocs = require('../../lib/models/external-docs');
 const js = { description: 'Testing', url: 'somewhere', 'x-test': 'testing' };
@@ -12,14 +13,14 @@ describe('ExternalDocs', () => {
     });
   });
 
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new ExternalDocs(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
   
-  describe('#url()', function () {
+  describe('#url()', () => {
     it('should return a string', () => {
       const d = new ExternalDocs(js);
       expect(d.url()).to.be.equal(js.url);

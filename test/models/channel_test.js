@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Channel = require('../../lib/models/channel');
 const js = { description: 'test', parameters: { param1: { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' } } }, bindings: { amqp: 'test' }, 'x-test': 'testing' };
@@ -12,17 +13,17 @@ describe('Channel', () => {
     });
   });
   
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new Channel(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
   
-  describe('#hasParameters()', function () {
+  describe('#hasParameters()', () => {
     it('should return a boolean indicating if the AsyncAPI document has channel parameters', () => {
-      const doc = { parameters: { test1param: { description: "test1param" } } };
-      const docNoChannelParams = { description: "test" };
+      const doc = { parameters: { test1param: { description: 'test1param' } } };
+      const docNoChannelParams = { description: 'test' };
       const d = new Channel(doc);
       const d2 = new Channel(docNoChannelParams);
       expect(d.hasParameters()).to.equal(true);
@@ -30,8 +31,7 @@ describe('Channel', () => {
     });
   });
 
-
-  describe('#parameters()', function () {
+  describe('#parameters()', () => {
     it('should return a map of ChannelParameter objects', () => {
       const d = new Channel(js);
       expect(typeof d.parameters()).to.be.equal('object');
@@ -40,7 +40,7 @@ describe('Channel', () => {
     });
   });
    
-  describe('#parameter()', function () {
+  describe('#parameter()', () => {
     it('should return a specific ChannelParameter object', () => {
       const d = new Channel(js);
       expect(d.parameter('param1').constructor.name).to.be.equal('ChannelParameter');
@@ -48,7 +48,7 @@ describe('Channel', () => {
     });
   });
   
-  describe('#publish()', function () {
+  describe('#publish()', () => {
     it('should return a PublishOperation object', () => {
       const jsWithPub = { publish: { description: 'pub' } };
       const d = new Channel(jsWithPub);
@@ -57,7 +57,7 @@ describe('Channel', () => {
     });
   });
   
-  describe('#subscribe()', function () {
+  describe('#subscribe()', () => {
     it('should return a SubscribeOperation object', () => {
       const jsWithSub = { subscribe: { description: 'sub' } };
       const d = new Channel(jsWithSub);
@@ -66,7 +66,7 @@ describe('Channel', () => {
     });
   });
    
-  describe('#hasPublish()', function () {
+  describe('#hasPublish()', () => {
     it('should return true if the channel contains the publish operation', () => {
       const d = new Channel({ publish: { description: 'pub' } });
       expect(d.hasPublish()).to.be.equal(true);
@@ -75,7 +75,7 @@ describe('Channel', () => {
     });
   });
   
-  describe('#hasSubscribe()', function () {
+  describe('#hasSubscribe()', () => {
     it('should return true if the channel contains the publish operation', () => {
       const d = new Channel({ publish: { description: 'pub' } });
       expect(d.hasSubscribe()).to.be.equal(false);
@@ -84,14 +84,14 @@ describe('Channel', () => {
     });
   });
 
-  describe('#bindings()', function () {
+  describe('#bindings()', () => {
     it('should return a map of bindings', () => {
       const d = new Channel(js);
       expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
 
-  describe('#binding()', function () {
+  describe('#binding()', () => {
     it('should return a specific binding', () => {
       const d = new Channel(js);
       expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);

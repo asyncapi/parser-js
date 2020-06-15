@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const ChannelParameter = require('../../lib/models/channel-parameter');
 const js = { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' }, 'x-test': 'testing' };
@@ -12,21 +13,21 @@ describe('ChannelParameter', () => {
     });
   });
 
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new ChannelParameter(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
 
-  describe('#location()', function () {
+  describe('#location()', () => {
     it('should return a string', () => {
       const d = new ChannelParameter(js);
       expect(d.location()).to.be.equal(js.location);
     });
   });
    
-  describe('#schema()', function () {
+  describe('#schema()', () => {
     it('should return a Schema object', () => {
       const d = new ChannelParameter(js);
       expect(d.schema().constructor.name).to.be.equal('Schema');

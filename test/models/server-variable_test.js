@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const ServerVariable = require('../../lib/models/server-variable');
 const js = { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'], 'x-test': 'testing' };
@@ -12,14 +13,14 @@ describe('ServerVariable', () => {
     });
   });
 
-  describe('#allowedValues()', function () {
+  describe('#allowedValues()', () => {
     it('should return an array of strings', () => {
       const d = new ServerVariable(js);
       expect(d.allowedValues()).to.be.equal(js.enum);
     });
   });
   
-  describe('#hasAllowedValues()', function () {
+  describe('#hasAllowedValues()', () => {
     it('should return a true when enum is present', () => {
       const d = new ServerVariable(js);
       expect(d.hasAllowedValues()).to.be.equal(true);
@@ -31,7 +32,7 @@ describe('ServerVariable', () => {
     });
   });
   
-  describe('#allows()', function () {
+  describe('#allows()', () => {
     it('should return true if the value is in the enum', () => {
       const d = new ServerVariable(js);
       expect(d.allows('value1')).to.be.equal(true);
@@ -43,14 +44,14 @@ describe('ServerVariable', () => {
     });
   });
   
-  describe('#defaultValue()', function () {
+  describe('#defaultValue()', () => {
     it('should return a string', () => {
       const d = new ServerVariable(js);
       expect(d.defaultValue()).to.be.equal(js.default);
     });
   });
 
-  describe('#hasDefaultValue()', function () {
+  describe('#hasDefaultValue()', () => {
     it('should return true if default is present', () => {
       const d = new ServerVariable(js);
       expect(d.hasDefaultValue()).to.be.equal(true);
@@ -62,14 +63,14 @@ describe('ServerVariable', () => {
     });
   });
   
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new ServerVariable(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
   
-  describe('#examples()', function () {
+  describe('#examples()', () => {
     it('should return an array of strings', () => {
       const d = new ServerVariable(js);
       expect(d.examples()).to.be.equal(js.examples);

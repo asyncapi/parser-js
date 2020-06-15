@@ -1,12 +1,13 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const AsyncAPIDocument = require('../../lib/models/asyncapi');
 const fs = require('fs');
-const path = require("path");
+const path = require('path');
 describe('AsyncAPIDocument', () => {
   describe('assignUidToParameterSchemas()', () => {
     it('should assign uids to parameters', () => {
-      const inputDoc = { "channels": { "smartylighting/{streetlightId}": { "parameters": { "streetlightId": { "schema": { "type": "string" } } } } } };
-      const expectedDoc = { "channels": { "smartylighting/{streetlightId}": { "parameters": { "streetlightId": { "schema": { "type": "string", "x-parser-schema-id": "<anonymous-schema-1>" }, "x-parser-schema-id": "streetlightId" } } } } }
+      const inputDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string' } } } } } };
+      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } } };
       const d = new AsyncAPIDocument(inputDoc);
       expect(d.json()).to.be.deep.equal(expectedDoc);
     });
@@ -21,7 +22,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#info()', function () {
+  describe('#info()', () => {
     it('should return an info object', () => {
       const doc = { info: { title: 'Test', version: '1.2.3', license: { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' } } };
       const d = new AsyncAPIDocument(doc);
@@ -30,7 +31,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#id()', function () {
+  describe('#id()', () => {
     it('should return the id string', () => {
       const doc = { id: 'urn:test' };
       const d = new AsyncAPIDocument(doc);
@@ -38,7 +39,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#hasServers()', function () {
+  describe('#hasServers()', () => {
     it('should return a boolean indicating if the AsyncAPI document has servers', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const docNoServers = { test: 'testing' };
@@ -49,7 +50,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#servers()', function () {
+  describe('#servers()', () => {
     it('should return a map of server objects', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
@@ -61,7 +62,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#server()', function () {
+  describe('#server()', () => {
     it('should return a specific server object', () => {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
@@ -82,7 +83,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#hasChannels()', function () {
+  describe('#hasChannels()', () => {
     it('should return a boolean indicating if the AsyncAPI document has channels', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const docNoChannels = { test: 'testing' };
@@ -93,7 +94,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#channels()', function () {
+  describe('#channels()', () => {
     it('should return a map of channel objects', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
@@ -105,7 +106,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#channelNames()', function () {
+  describe('#channelNames()', () => {
     it('should return an array of strings', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
@@ -114,7 +115,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#channel()', function () {
+  describe('#channel()', () => {
     it('should return a specific channel object', () => {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
@@ -135,7 +136,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#hasComponents()', function () {
+  describe('#hasComponents()', () => {
     it('should return a boolean indicating if the AsyncAPI document has components', () => {
       const doc = { components: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
       const docNoComponents = { test: 'testing' };
@@ -146,7 +147,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#components()', function () {
+  describe('#components()', () => {
     it('should return the components object', () => {
       const doc = { components: { test: 'testing' } };
       const d = new AsyncAPIDocument(doc);
@@ -155,7 +156,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#tags()', function () {
+  describe('#tags()', () => {
     it('should return an array of tags', () => {
       const doc = { tags: [{ name: 'test1' }, { name: 'test2' }] };
       const d = new AsyncAPIDocument(doc);
@@ -166,7 +167,7 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#allMessages()', function () {
+  describe('#allMessages()', () => {
     it('should return an array with all the messages used in the document and overwrite the message from channel', () => {
       const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
       const d = new AsyncAPIDocument(doc);
@@ -186,23 +187,22 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
-  describe('#allSchemas()', function () {
-    
+  describe('#allSchemas()', () => {
     it('should return additional items schemas when no items specified', () => {
       const doc = {
-        "channels": {
-          "some_channel": {
-            "subscribe": {
-              "message": {
-                "name": "some_map",
-                "payload": {
-                  "type": "array",
-                  "$id": "payloadSchema",
-                  "test": true,
-                  "additionalItems": {
-                    "type": "string",
-                    "$id": "additionalItemSchema", 
-                    "test": true
+        channels: {
+          some_channel: {
+            subscribe: {
+              message: {
+                name: 'some_map',
+                payload: {
+                  type: 'array',
+                  $id: 'payloadSchema',
+                  test: true,
+                  additionalItems: {
+                    type: 'string',
+                    $id: 'additionalItemSchema', 
+                    test: true
                   }
                 }
               }
@@ -216,9 +216,9 @@ describe('AsyncAPIDocument', () => {
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());
       expect(schemaKeys).to.deep.equal([
-        "payloadSchema",
-        "additionalItemSchema"
-      ])
+        'payloadSchema',
+        'additionalItemSchema'
+      ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
@@ -226,19 +226,19 @@ describe('AsyncAPIDocument', () => {
     });
     it('should return additional property schemas when no properties are specified', () => {
       const doc = {
-        "channels": {
-          "some_channel": {
-            "subscribe": {
-              "message": {
-                "name": "some_map",
-                "payload": {
-                  "type": "object",
-                  "$id": "payloadSchema",
-                  "test": true,
-                  "additionalProperties": {
-                    "type": "string",
-                    "$id": "additionalPropSchema", 
-                    "test": true
+        channels: {
+          some_channel: {
+            subscribe: {
+              message: {
+                name: 'some_map',
+                payload: {
+                  type: 'object',
+                  $id: 'payloadSchema',
+                  test: true,
+                  additionalProperties: {
+                    type: 'string',
+                    $id: 'additionalPropSchema', 
+                    test: true
                   }
                 }
               }
@@ -252,9 +252,9 @@ describe('AsyncAPIDocument', () => {
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());
       expect(schemaKeys).to.deep.equal([
-        "payloadSchema",
-        "additionalPropSchema"
-      ])
+        'payloadSchema',
+        'additionalPropSchema'
+      ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
@@ -269,49 +269,49 @@ describe('AsyncAPIDocument', () => {
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());
       expect(schemaKeys).to.deep.equal([
-        "testParamSchema",
-        "<anonymous-schema-1>",
-        "<anonymous-schema-2>",
-        "testPayload",
-        "testSchema"
-      ])
+        'testParamSchema',
+        '<anonymous-schema-1>',
+        '<anonymous-schema-2>',
+        'testPayload',
+        'testSchema'
+      ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }
     });
     it('should return a map with all the nested schemas', () => {
-      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../good/nested-schemas.json"), 'utf8'));
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = d.allSchemas();
 
       //Ensure the actual keys are as expected
       const schemaKeys = Array.from(schemas.keys());
       expect(schemaKeys).to.deep.equal([
-        "testParamSchema",
-        "testParamNestedSchemaProp",
-        "testParamNestedNestedSchemaProp2",
-        "testHeaderSchema",
-        "testHeaderNestedSchemaProp",
-        "testHeaderNestedNestedSchemaProp1",
-        "testHeaderNestedSchemaPropArray",
-        "testHeaderNestedSchemaPropArrayProp1",
-        "testPayloadSchema",
-        "testPayloadNestedSchemaProp",
-        "testPayloadNestedNestedSchemaProp1",
-        "testPayloadNestedSchemaPropArray",
-        "testPayloadNestedSchemaPropArrayProp1",
-        "testPayload",
-        "testComponentSchemaSchema",
-        "testComponentSchemaNestedSchemaPropAllOf",
-        "testComponentSchemaNestedSchemaPropAllOfSchema1",
-        "testComponentSchemaNestedSchemaPropAllOfSchema1Prop1",
-        "testComponentSchemaNestedSchemaPropAllOfSchema2",
-        "testComponentSchemaNestedSchemaPropAllOfSchema2Prop1",
-        "testComponentSchemaNestedSchemaPropArray",
-        "testComponentSchemaNestedSchemaPropArrayProp1",
-        "testComponentSchemaNestedSchemaPropArrayProp2"
-      ])
+        'testParamSchema',
+        'testParamNestedSchemaProp',
+        'testParamNestedNestedSchemaProp2',
+        'testHeaderSchema',
+        'testHeaderNestedSchemaProp',
+        'testHeaderNestedNestedSchemaProp1',
+        'testHeaderNestedSchemaPropArray',
+        'testHeaderNestedSchemaPropArrayProp1',
+        'testPayloadSchema',
+        'testPayloadNestedSchemaProp',
+        'testPayloadNestedNestedSchemaProp1',
+        'testPayloadNestedSchemaPropArray',
+        'testPayloadNestedSchemaPropArrayProp1',
+        'testPayload',
+        'testComponentSchemaSchema',
+        'testComponentSchemaNestedSchemaPropAllOf',
+        'testComponentSchemaNestedSchemaPropAllOfSchema1',
+        'testComponentSchemaNestedSchemaPropAllOfSchema1Prop1',
+        'testComponentSchemaNestedSchemaPropAllOfSchema2',
+        'testComponentSchemaNestedSchemaPropAllOfSchema2Prop1',
+        'testComponentSchemaNestedSchemaPropArray',
+        'testComponentSchemaNestedSchemaPropArrayProp1',
+        'testComponentSchemaNestedSchemaPropArrayProp2'
+      ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);

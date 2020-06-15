@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Contact = require('../../lib/models/contact');
 const js = { name: 'Fran', url: 'https://www.asyncapi.com', email: 'fmvilas@gmail.com', 'x-test': 'testing' };
@@ -12,21 +13,21 @@ describe('Contact', () => {
     });
   });
 
-  describe('#name()', function () {
+  describe('#name()', () => {
     it('should return a string', () => {
       const d = new Contact(js);
       expect(d.name()).to.be.equal(js.name);
     });
   });
   
-  describe('#url()', function () {
+  describe('#url()', () => {
     it('should return a string', () => {
       const d = new Contact(js);
       expect(d.url()).to.be.equal(js.url);
     });
   });
   
-  describe('#email()', function () {
+  describe('#email()', () => {
     it('should return a string', () => {
       const d = new Contact(js);
       expect(d.email()).to.be.equal(js.email);

@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Operation = require('../../lib/models/operation');
 const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing' };
@@ -12,28 +13,28 @@ describe('Operation', () => {
     });
   });
 
-  describe('#description()', function () {
+  describe('#description()', () => {
     it('should return a string', () => {
       const d = new Operation(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
    
-  describe('#summary()', function () {
+  describe('#summary()', () => {
     it('should return a string', () => {
       const d = new Operation(js);
       expect(d.summary()).to.be.equal(js.summary);
     });
   });
    
-  describe('#id()', function () {
+  describe('#id()', () => {
     it('should return a string', () => {
       const d = new Operation(js);
       expect(d.id()).to.be.equal(js.operationId);
     });
   });
    
-  describe('#tags()', function () {
+  describe('#tags()', () => {
     it('should return an array of tags', () => {
       const d = new Operation(js);
       d.tags().forEach((t, i) => {
@@ -43,7 +44,7 @@ describe('Operation', () => {
     });
   });
   
-  describe('#externalDocs()', function () {
+  describe('#externalDocs()', () => {
     it('should return an ExternalDocs object', () => {
       const d = new Operation(js);
       expect(d.externalDocs().constructor.name).to.be.equal('ExternalDocs');
@@ -51,21 +52,21 @@ describe('Operation', () => {
     });
   });
   
-  describe('#bindings()', function () {
+  describe('#bindings()', () => {
     it('should return a map of bindings', () => {
       const d = new Operation(js);
       expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
   
-  describe('#binding()', function () {
+  describe('#binding()', () => {
     it('should return a specific binding', () => {
       const d = new Operation(js);
       expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
   
-  describe('#messages()', function () {
+  describe('#messages()', () => {
     it('should return an array of Message objects', () => {
       const d = new Operation(js);
       expect(Array.isArray(d.messages())).to.be.equal(true);
@@ -76,7 +77,7 @@ describe('Operation', () => {
     });
     
     it('should return an array of Message objects when using oneOf', () => {
-      const doc = { message: { oneOf: [ {test: true }, {test: false}] } };
+      const doc = { message: { oneOf: [{test: true }, {test: false}] } };
       const d = new Operation(doc);
       expect(Array.isArray(d.messages())).to.be.equal(true);
       d.messages().forEach((m, i) => {
@@ -86,7 +87,7 @@ describe('Operation', () => {
     });
   });
   
-  describe('#message()', function () {
+  describe('#message()', () => {
     it('should return a specific Message object', () => {
       const doc = { message: { oneOf: [{ test: true }, { test: false }] } };
       const d = new Operation(doc);

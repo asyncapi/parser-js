@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const Components = require('../../lib/models/components');
 
@@ -12,7 +13,7 @@ describe('Components', () => {
     });
   });
 
-  describe('#messages()', function () {
+  describe('#messages()', () => {
     it('should return a map of Message objects', () => {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -24,7 +25,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#message()', function () {
+  describe('#message()', () => {
     it('should return a specific Message object', () => {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -45,7 +46,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#schemas()', function () {
+  describe('#schemas()', () => {
     it('should return a map of Schema objects', () => {
       const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -57,7 +58,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#schema()', function () {
+  describe('#schema()', () => {
     it('should return a specific Schema object', () => {
       const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -78,7 +79,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#securitySchemes()', function () {
+  describe('#securitySchemes()', () => {
     it('should return a map of Security Scheme objects', () => {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -90,7 +91,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#securityScheme()', function () {
+  describe('#securityScheme()', () => {
     it('should return a specific securityScheme object', () => {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -111,7 +112,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#parameters()', function () {
+  describe('#parameters()', () => {
     it('should return a map of ChannelParameter objects', () => {
       const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -123,7 +124,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#parameter()', function () {
+  describe('#parameter()', () => {
     it('should return a specific parameter object', () => {
       const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -144,7 +145,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#correlationIds()', function () {
+  describe('#correlationIds()', () => {
     it('should return a map of CorrelationId objects', () => {
       const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -156,7 +157,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#correlationId()', function () {
+  describe('#correlationId()', () => {
     it('should return a specific correlationId object', () => {
       const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -177,7 +178,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#operationTraits()', function () {
+  describe('#operationTraits()', () => {
     it('should return a map of OperationTrait objects', () => {
       const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -189,7 +190,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#operationTrait()', function () {
+  describe('#operationTrait()', () => {
     it('should return a specific operationTrait object', () => {
       const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -210,7 +211,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#messageTraits()', function () {
+  describe('#messageTraits()', () => {
     it('should return a map of MessageTrait objects', () => {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
@@ -222,7 +223,7 @@ describe('Components', () => {
     });
   });
   
-  describe('#messageTrait()', function () {
+  describe('#messageTrait()', () => {
     it('should return a specific messageTrait object', () => {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);

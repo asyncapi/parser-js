@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const { expect } = require('chai');
 const OAuthFlow = require('../../lib/models/oauth-flow');
 const js = { authorizationUrl: 'testing', refreshUrl: 'testing', tokenUrl: 'testing', scopes: { test: 'testing' }, 'x-test': 'testing' };
@@ -12,28 +13,28 @@ describe('OAuthFlow', () => {
     });
   });
 
-  describe('#authorizationUrl()', function () {
+  describe('#authorizationUrl()', () => {
     it('should return a string', () => {
       const d = new OAuthFlow(js);
       expect(d.authorizationUrl()).to.be.equal(js.authorizationUrl);
     });
   });
   
-  describe('#tokenUrl()', function () {
+  describe('#tokenUrl()', () => {
     it('should return a string', () => {
       const d = new OAuthFlow(js);
       expect(d.tokenUrl()).to.be.equal(js.tokenUrl);
     });
   });
   
-  describe('#refreshUrl()', function () {
+  describe('#refreshUrl()', () => {
     it('should return a string', () => {
       const d = new OAuthFlow(js);
       expect(d.refreshUrl()).to.be.equal(js.refreshUrl);
     });
   });
   
-  describe('#scopes()', function () {
+  describe('#scopes()', () => {
     it('should return a Map of strings', () => {
       const d = new OAuthFlow(js);
       expect(typeof d.scopes()).to.be.equal('object');

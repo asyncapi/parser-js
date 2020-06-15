@@ -5,11 +5,9 @@ env:
 
 plugins:
   - sonarjs
-  - mocha
 
 extends:
   - plugin:sonarjs/recommended
-  - plugin:mocha/recommended
 
 parserOptions:
   ecmaVersion: 2018

@@ -167,6 +167,24 @@ describe('AsyncAPIDocument', () => {
     });
   });
 
+  describe('#hasMessages()', () => {
+    it('should return true if there is a message in components but not in channels', () => {
+      const doc = { components: { messages: { test: { test: true, k: 3 } } } };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasMessages()).to.equal(true);
+    });
+    it('should return true if there is a message in channels operations but not in components', () => {
+      const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } } };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasMessages()).to.equal(true);
+    });
+    it('should return false if there are no messages neither in components nor in channels operations', () => {
+      const doc = { channels: { test: { publish: { } } }, components: { } };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasMessages()).to.equal(false);
+    });
+  });
+
   describe('#allMessages()', () => {
     it('should return an array with all the messages used in the document and overwrite the message from channel', () => {
       const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } }, components: { messages: { test: { test: true, k: 3 } } } };

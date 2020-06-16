@@ -99,6 +99,9 @@
 <dt><a href="#assignNameToAnonymousMessages">assignNameToAnonymousMessages(doc)</a></dt>
 <dd><p>Assign anonymous names to nameless messages.</p>
 </dd>
+<dt><a href="#addNameToKey">addNameToKey(map)</a></dt>
+<dd><p>Add anonymous name to key if no name provided.</p>
+</dd>
 <dt><a href="#recursiveSchema">recursiveSchema(schema, callback(schema))</a></dt>
 <dd><p>Recursively go through each schema and execute callback.</p>
 </dd>
@@ -1278,6 +1281,7 @@ Implements functions to deal with a Schema object.
     * [.title()](#Schema+title) ⇒ <code>string</code>
     * [.default()](#Schema+default) ⇒ <code>any</code>
     * [.deprecated()](#Schema+deprecated) ⇒ <code>boolean</code>
+    * [.discriminator()](#Schema+discriminator) ⇒ <code>string</code>
     * [.readOnly()](#Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
@@ -1450,6 +1454,10 @@ Implements functions to deal with a Schema object.
 <a name="Schema+deprecated"></a>
 
 ### schema.deprecated() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+discriminator"></a>
+
+### schema.discriminator() ⇒ <code>string</code>
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+readOnly"></a>
 
@@ -1815,6 +1823,17 @@ Assign anonymous names to nameless messages.
 | Param | Type |
 | --- | --- |
 | doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) | 
+
+<a name="addNameToKey"></a>
+
+## addNameToKey(map)
+Add anonymous name to key if no name provided.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| map | <code>messages</code> | of messages |
 
 <a name="recursiveSchema"></a>
 

@@ -2,9 +2,9 @@ const { expect } = require('chai');
 const Server = require('../../lib/models/server');
 const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], bindings: { amqp: 'test' }, 'x-test': 'testing' };
 
-describe('Server', () => {
-  describe('#ext()', () => {
-    it('should support extensions', () => {
+describe('Server', function() {
+  describe('#ext()', function() {
+    it('should support extensions', function() {
       const d = new Server(js);
       expect(d.ext('x-test')).to.be.equal(js['x-test']);      
       expect(d.extension('x-test')).to.be.equal(js['x-test']);      
@@ -12,36 +12,36 @@ describe('Server', () => {
     });
   });
 
-  describe('#url()', function () {
-    it('should return a string', () => {
+  describe('#url()', function() {
+    it('should return a string', function() {
       const d = new Server(js);
       expect(d.url()).to.be.equal(js.url);
     });
   });
   
-  describe('#protocol()', function () {
-    it('should return a string', () => {
+  describe('#protocol()', function() {
+    it('should return a string', function() {
       const d = new Server(js);
       expect(d.protocol()).to.be.equal(js.protocol);
     });
   });
   
-  describe('#protocolVersion()', function () {
-    it('should return a string', () => {
+  describe('#protocolVersion()', function() {
+    it('should return a string', function() {
       const d = new Server(js);
       expect(d.protocolVersion()).to.be.equal(js.protocolVersion);
     });
   });
   
-  describe('#description()', function () {
-    it('should return a string', () => {
+  describe('#description()', function() {
+    it('should return a string', function() {
       const d = new Server(js);
       expect(d.description()).to.be.equal(js.description);
     });
   });
 
-  describe('#hasVariables()', function () {
-    it('should return a boolean indicating if a server URL has variables', () => {
+  describe('#hasVariables()', function() {
+    it('should return a boolean indicating if a server URL has variables', function() {
       const doc = { url: 'test1:{port}', variables: { port: { desc: 'test1' } } };
       const docNoServerVariables = { url: 'test' };
       const d = new Server(doc);
@@ -51,8 +51,8 @@ describe('Server', () => {
     });
   });
 
-  describe('#variables()', function () {
-    it('should return a map of ServerVariable objects', () => {
+  describe('#variables()', function() {
+    it('should return a map of ServerVariable objects', function() {
       const d = new Server(js);
       expect(typeof d.variables()).to.be.equal('object');
       expect(d.variables().test1.constructor.name).to.equal('ServerVariable');
@@ -60,16 +60,16 @@ describe('Server', () => {
     });
   });
   
-  describe('#variable()', function () {
-    it('should return a specific ServerVariable object', () => {
+  describe('#variable()', function() {
+    it('should return a specific ServerVariable object', function() {
       const d = new Server(js);
       expect(d.variable('test1').constructor.name).to.equal('ServerVariable');
       expect(d.variable('test1').json()).to.equal(js.variables.test1);
     });
   });
   
-  describe('#security()', function () {
-    it('should return an array of security requirements objects', () => {
+  describe('#security()', function() {
+    it('should return an array of security requirements objects', function() {
       const d = new Server(js);
       expect(Array.isArray(d.security())).to.equal(true);
       d.security().forEach((s, i) => {
@@ -79,15 +79,15 @@ describe('Server', () => {
     });
   });
 
-  describe('#bindings()', function () {
-    it('should return a map of bindings', () => {
+  describe('#bindings()', function() {
+    it('should return a map of bindings', function() {
       const d = new Server(js);
       expect(d.bindings()).to.be.equal(js.bindings);
     });
   });
 
-  describe('#binding()', function () {
-    it('should return a specific binding', () => {
+  describe('#binding()', function() {
+    it('should return a specific binding', function() {
       const d = new Server(js);
       expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });

@@ -2,9 +2,9 @@ const { expect } = require('chai');
 const OAuthFlow = require('../../lib/models/oauth-flow');
 const js = { authorizationUrl: 'testing', refreshUrl: 'testing', tokenUrl: 'testing', scopes: { test: 'testing' }, 'x-test': 'testing' };
 
-describe('OAuthFlow', () => {
-  describe('#ext()', () => {
-    it('should support extensions', () => {
+describe('OAuthFlow', function() {
+  describe('#ext()', function() {
+    it('should support extensions', function() {
       const d = new OAuthFlow(js);
       expect(d.ext('x-test')).to.be.equal(js['x-test']);      
       expect(d.extension('x-test')).to.be.equal(js['x-test']);      
@@ -12,29 +12,29 @@ describe('OAuthFlow', () => {
     });
   });
 
-  describe('#authorizationUrl()', function () {
-    it('should return a string', () => {
+  describe('#authorizationUrl()', function() {
+    it('should return a string', function() {
       const d = new OAuthFlow(js);
       expect(d.authorizationUrl()).to.be.equal(js.authorizationUrl);
     });
   });
   
-  describe('#tokenUrl()', function () {
-    it('should return a string', () => {
+  describe('#tokenUrl()', function() {
+    it('should return a string', function() {
       const d = new OAuthFlow(js);
       expect(d.tokenUrl()).to.be.equal(js.tokenUrl);
     });
   });
   
-  describe('#refreshUrl()', function () {
-    it('should return a string', () => {
+  describe('#refreshUrl()', function() {
+    it('should return a string', function() {
       const d = new OAuthFlow(js);
       expect(d.refreshUrl()).to.be.equal(js.refreshUrl);
     });
   });
   
-  describe('#scopes()', function () {
-    it('should return a Map of strings', () => {
+  describe('#scopes()', function() {
+    it('should return a Map of strings', function() {
       const d = new OAuthFlow(js);
       expect(typeof d.scopes()).to.be.equal('object');
       expect(d.scopes()).to.equal(js.scopes);

@@ -7,12 +7,13 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "nyc --reporter=text mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
     "prepublishOnly": "npm run bundle",
     "release": "semantic-release",
-    "get-version": "echo $npm_package_version"
+    "get-version": "echo $npm_package_version",
+    "lint": "eslint --config .eslintrc ."
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
@@ -28,19 +29,23 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/parser-js",
   "devDependencies": {
-    "browserify": "^16.3.0",
-    "browserify-shim": "^3.8.14",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
-    "jsdoc-to-markdown": "^5.0.0",
-    "mocha": "^6.1.4",
-    "uglify-es": "^3.3.9",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/github": "^7.0.4",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "browserify": "^16.3.0",
+    "browserify-shim": "^3.8.14",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "conventional-changelog-conventionalcommits": "^4.2.3",
-    "semantic-release": "^17.0.4"
+    "eslint": "^6.8.0",
+    "eslint-plugin-mocha": "^7.0.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "jsdoc-to-markdown": "^5.0.0",
+    "mocha": "^6.1.4",
+    "nyc": "^15.1.0",
+    "semantic-release": "^17.0.4",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser#add-more-info-about-errors",

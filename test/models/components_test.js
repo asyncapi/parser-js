@@ -1,9 +1,9 @@
 const { expect } = require('chai');
 const Components = require('../../lib/models/components');
 
-describe('Components', () => {
-  describe('#ext()', () => {
-    it('should support extensions', () => {
+describe('Components', function() {
+  describe('#ext()', function() {
+    it('should support extensions', function() {
       const doc = { 'x-test': 'testing' };
       const d = new Components(doc);
       expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
@@ -12,8 +12,8 @@ describe('Components', () => {
     });
   });
 
-  describe('#messages()', function () {
-    it('should return a map of Message objects', () => {
+  describe('#messages()', function() {
+    it('should return a map of Message objects', function() {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.messages()).to.be.equal('object');
@@ -24,29 +24,29 @@ describe('Components', () => {
     });
   });
   
-  describe('#message()', function () {
-    it('should return a specific Message object', () => {
+  describe('#message()', function() {
+    it('should return a specific Message object', function() {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.message('test1').constructor.name).to.equal('Message');
       expect(d.message('test1').json()).to.equal(doc.messages.test1);
     });
     
-    it('should return null if a message name is not provided', () => {
+    it('should return null if a message name is not provided', function() {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.message()).to.equal(null);
     });
     
-    it('should return null if a message name is not found', () => {
+    it('should return null if a message name is not found', function() {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.message('not found')).to.equal(null);
     });
   });
   
-  describe('#schemas()', function () {
-    it('should return a map of Schema objects', () => {
+  describe('#schemas()', function() {
+    it('should return a map of Schema objects', function() {
       const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.schemas()).to.be.equal('object');
@@ -57,29 +57,29 @@ describe('Components', () => {
     });
   });
   
-  describe('#schema()', function () {
-    it('should return a specific Schema object', () => {
+  describe('#schema()', function() {
+    it('should return a specific Schema object', function() {
       const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.schema('test1').constructor.name).to.equal('Schema');
       expect(d.schema('test1').json()).to.equal(doc.schemas.test1);
     });
     
-    it('should return null if a schema name is not provided', () => {
+    it('should return null if a schema name is not provided', function() {
       const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.schema()).to.equal(null);
     });
     
-    it('should return null if a schema name is not found', () => {
+    it('should return null if a schema name is not found', function() {
       const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.schema('not found')).to.equal(null);
     });
   });
   
-  describe('#securitySchemes()', function () {
-    it('should return a map of Security Scheme objects', () => {
+  describe('#securitySchemes()', function() {
+    it('should return a map of Security Scheme objects', function() {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.securitySchemes()).to.be.equal('object');
@@ -90,29 +90,29 @@ describe('Components', () => {
     });
   });
   
-  describe('#securityScheme()', function () {
-    it('should return a specific securityScheme object', () => {
+  describe('#securityScheme()', function() {
+    it('should return a specific securityScheme object', function() {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.securityScheme('test1').constructor.name).to.equal('SecurityScheme');
       expect(d.securityScheme('test1').json()).to.equal(doc.securitySchemes.test1);
     });
     
-    it('should return null if a securityScheme name is not provided', () => {
+    it('should return null if a securityScheme name is not provided', function() {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.securityScheme()).to.equal(null);
     });
     
-    it('should return null if a securityScheme name is not found', () => {
+    it('should return null if a securityScheme name is not found', function() {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.securityScheme('not found')).to.equal(null);
     });
   });
   
-  describe('#parameters()', function () {
-    it('should return a map of ChannelParameter objects', () => {
+  describe('#parameters()', function() {
+    it('should return a map of ChannelParameter objects', function() {
       const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.parameters()).to.be.equal('object');
@@ -123,29 +123,29 @@ describe('Components', () => {
     });
   });
   
-  describe('#parameter()', function () {
-    it('should return a specific parameter object', () => {
+  describe('#parameter()', function() {
+    it('should return a specific parameter object', function() {
       const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.parameter('test1').constructor.name).to.equal('ChannelParameter');
       expect(d.parameter('test1').json()).to.equal(doc.parameters.test1);
     });
     
-    it('should return null if a parameter name is not provided', () => {
+    it('should return null if a parameter name is not provided', function() {
       const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.parameter()).to.equal(null);
     });
     
-    it('should return null if a parameter name is not found', () => {
+    it('should return null if a parameter name is not found', function() {
       const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.parameter('not found')).to.equal(null);
     });
   });
   
-  describe('#correlationIds()', function () {
-    it('should return a map of CorrelationId objects', () => {
+  describe('#correlationIds()', function() {
+    it('should return a map of CorrelationId objects', function() {
       const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.correlationIds()).to.be.equal('object');
@@ -156,29 +156,29 @@ describe('Components', () => {
     });
   });
   
-  describe('#correlationId()', function () {
-    it('should return a specific correlationId object', () => {
+  describe('#correlationId()', function() {
+    it('should return a specific correlationId object', function() {
       const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.correlationId('test1').constructor.name).to.equal('CorrelationId');
       expect(d.correlationId('test1').json()).to.equal(doc.correlationIds.test1);
     });
     
-    it('should return null if a correlationId name is not provided', () => {
+    it('should return null if a correlationId name is not provided', function() {
       const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.correlationId()).to.equal(null);
     });
     
-    it('should return null if a correlationId name is not found', () => {
+    it('should return null if a correlationId name is not found', function() {
       const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.correlationId('not found')).to.equal(null);
     });
   });
   
-  describe('#operationTraits()', function () {
-    it('should return a map of OperationTrait objects', () => {
+  describe('#operationTraits()', function() {
+    it('should return a map of OperationTrait objects', function() {
       const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.operationTraits()).to.be.equal('object');
@@ -189,29 +189,29 @@ describe('Components', () => {
     });
   });
   
-  describe('#operationTrait()', function () {
-    it('should return a specific operationTrait object', () => {
+  describe('#operationTrait()', function() {
+    it('should return a specific operationTrait object', function() {
       const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.operationTrait('test1').constructor.name).to.equal('OperationTrait');
       expect(d.operationTrait('test1').json()).to.equal(doc.operationTraits.test1);
     });
     
-    it('should return null if a operationTrait name is not provided', () => {
+    it('should return null if a operationTrait name is not provided', function() {
       const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.operationTrait()).to.equal(null);
     });
     
-    it('should return null if a operationTrait name is not found', () => {
+    it('should return null if a operationTrait name is not found', function() {
       const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.operationTrait('not found')).to.equal(null);
     });
   });
   
-  describe('#messageTraits()', function () {
-    it('should return a map of MessageTrait objects', () => {
+  describe('#messageTraits()', function() {
+    it('should return a map of MessageTrait objects', function() {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(typeof d.messageTraits()).to.be.equal('object');
@@ -222,21 +222,21 @@ describe('Components', () => {
     });
   });
   
-  describe('#messageTrait()', function () {
-    it('should return a specific messageTrait object', () => {
+  describe('#messageTrait()', function() {
+    it('should return a specific messageTrait object', function() {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.messageTrait('test1').constructor.name).to.equal('MessageTrait');
       expect(d.messageTrait('test1').json()).to.equal(doc.messageTraits.test1);
     });
     
-    it('should return null if a messageTrait name is not provided', () => {
+    it('should return null if a messageTrait name is not provided', function() {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.messageTrait()).to.equal(null);
     });
     
-    it('should return null if a messageTrait name is not found', () => {
+    it('should return null if a messageTrait name is not found', function() {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.messageTrait('not found')).to.equal(null);

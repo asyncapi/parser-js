@@ -492,6 +492,15 @@ describe('Schema', function() {
     });
   });
 
+  describe('#discriminator()', function() {
+    it('should return a string', function() {
+      const doc = { type: 'string', discriminator: 'someType' };
+      const d = new Schema(doc);
+      expect(typeof d.discriminator()).to.be.equal('string');
+      expect(d.discriminator()).to.be.equal(doc.discriminator);
+    });
+  });
+
   describe('#readOnly()', function() {
     it('should return a boolean', function() {
       const doc = { type: 'string', readOnly: true };

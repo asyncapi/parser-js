@@ -95,6 +95,7 @@ This package throws a bunch of different error types. All errors contain a `type
 |`dereference-error`|`parsedJSON`, `refs`|This means the parser tried to resolve and dereference $ref's and the process failed. Typically, this means the $ref it's pointing to doesn't exist.
 |`unexpected-error`|`parsedJSON`|We have our code covered with try/catch blocks and you should never see this error. If you see it, please open an issue to let us know.
 |`validation-errors`|`parsedJSON`, `validationErrors`|The AsyncAPI document contains errors. See `validationErrors` for more information.
+|`impossible-to-register-parser`| None | Registration of custom message parser failed.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 

@@ -79,6 +79,28 @@ Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/op
 
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
 
+### Custom message parsers
+
+AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI or Avro. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
+
+1. Create custom parser module that exports two functions:
+    ```js
+    module.exports = {
+      parse: ({ message, defaultSchemaFormat }) => { //custom parsing logic},
+      getMimeTypes: () => [
+        '//mime types that will be used in the AsyncAPI document to specify mime type of given message',
+        'application/vnd.custom.type;version=1.0.0',
+        'application/vnd.custom.type+json;version=1.0.0',
+      ]
+    }
+    ```
+2. Before parsing AsyncAPI document with a parser, register additional custom schema parser:
+    ```
+    const myCustomParser = require('mycustomParser');
+
+    parser.registerSchemaParser(myCustomParser);
+    ```
+
 ### Error types
 
 This package throws a bunch of different error types. All errors contain a `type` (prefixed by this repo URL) and a `title` field. The following table describes all the errors and the extra fields they include:

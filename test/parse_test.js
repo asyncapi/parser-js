@@ -388,9 +388,8 @@ describe('parse()', function() {
 
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
-    console.log(JSON.stringify(result.channel('external/file').publish().message().payload()._json, null, 4));
-    expect(result.components().schemas().RecursiveAncestor._json.properties.children.items).to.equal('$.components.schemas.RecursiveSelf');
-    expect(result.components().schemas().RecursiveSelf._json.properties.something.properties.test).to.equal('$.components.schemas.RecursiveAncestor');
+    expect(result.components().schema('RecursiveAncestor').properties().children._json.items).to.equal('$.components.schemas.RecursiveSelf');
+    expect(result.components().schema('RecursiveSelf').properties().something._json.properties.test).to.equal('$.components.schemas.RecursiveAncestor');
     expect(result.channel('external/file').publish().message().payload()._json.properties.test.properties.children.items).to.equal('$.channels.external/file.publish.message.payload');
   });
 });

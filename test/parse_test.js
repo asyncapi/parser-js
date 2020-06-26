@@ -12,6 +12,7 @@ const expect = chai.expect;
 
 const invalidYAML = fs.readFileSync(path.resolve(__dirname, './wrong/malformed-asyncapi.yaml'), 'utf8');
 const inputYAML = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.yaml'), 'utf8');
+const inputYAMLCircular = fs.readFileSync(path.resolve(__dirname, './good/circular-refs.yaml'), 'utf8');
 const inputJSON = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.json'), 'utf8');
 const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.yaml'), 'utf8');
 const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.json'), 'utf8');
@@ -383,5 +384,13 @@ describe('parse()', function() {
     await checkErrorTypeAndMessage(async () => {
       await parser.parse(() => {});
     }, type, message);
+  });
+
+  it('should properly mark circular references', async function() {
+    const result = await parser.parse(inputYAMLCircular, { path: __filename });
+    console.log(JSON.stringify(result.channel('external/file').publish().message().payload()._json, null, 4));
+    expect(result.components().schemas().RecursiveAncestor._json.properties.children.items).to.equal('$.components.schemas.RecursiveSelf');
+    expect(result.components().schemas().RecursiveSelf._json.properties.something.properties.test).to.equal('$.components.schemas.RecursiveAncestor');
+    expect(result.channel('external/file').publish().message().payload()._json.properties.test.properties.children.items).to.equal('$.channels.external/file.publish.message.payload');
   });
 });

@@ -98,6 +98,10 @@ This package throws a bunch of different error types. All errors contain a `type
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 
+### Circular references
+
+Parser is not able to handle fully resolved circular references because this would lead to `Error: Maximum call stack size exceeded` error. Instead, such references are discovered and replaced with information about where is the circular reference pointing too: `$.components.schemas.RecursiveSelf`.
+
 ### Develop
 
 1. Run tests with `npm test`

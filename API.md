@@ -1282,6 +1282,7 @@ Implements functions to deal with a Schema object.
     * [.default()](#Schema+default) ⇒ <code>any</code>
     * [.deprecated()](#Schema+deprecated) ⇒ <code>boolean</code>
     * [.discriminator()](#Schema+discriminator) ⇒ <code>string</code>
+    * [.externalDocs()](#Schema+externalDocs) ⇒ [<code>ExternalDocs</code>](#ExternalDocs)
     * [.readOnly()](#Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
@@ -1458,6 +1459,10 @@ Implements functions to deal with a Schema object.
 <a name="Schema+discriminator"></a>
 
 ### schema.discriminator() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+externalDocs"></a>
+
+### schema.externalDocs() ⇒ [<code>ExternalDocs</code>](#ExternalDocs)
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+readOnly"></a>
 

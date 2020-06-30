@@ -81,20 +81,20 @@ Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/ra
 
 ### Custom message parsers
 
-AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI or Avro. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
+AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
 
 1. Create custom parser module that exports two functions:
     ```js
     module.exports = {
       parse: ({ message, defaultSchemaFormat }) => { //custom parsing logic},
       getMimeTypes: () => [
-        '//mime types that will be used in the AsyncAPI document to specify mime type of given message',
+        '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',
         'application/vnd.custom.type;version=1.0.0',
         'application/vnd.custom.type+json;version=1.0.0',
       ]
     }
     ```
-2. Before parsing AsyncAPI document with a parser, register additional custom schema parser:
+2. Before parsing an AsyncAPI document with a parser, register the additional custom schema parser:
     ```
     const myCustomParser = require('mycustomParser');
 

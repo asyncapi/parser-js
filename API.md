@@ -164,7 +164,7 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | Param | Type | Description |
 | --- | --- | --- |
 | schemaFormats | <code>Array.&lt;string&gt;</code> | An array of schema formats the given schema parser is able to recognize and transform. |
-| parserFunction | <code>function</code> | The schema parser function. |
+| parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
 
 <a name="ParserError"></a>
 

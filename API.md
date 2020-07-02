@@ -164,7 +164,7 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | Param | Type | Description |
 | --- | --- | --- |
 | schemaFormats | <code>Array.&lt;string&gt;</code> | An array of schema formats the given schema parser is able to recognize and transform. |
-| parserFunction | <code>function</code> | The schema parser function. |
+| parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
 
 <a name="ParserError"></a>
 
@@ -1282,6 +1282,7 @@ Implements functions to deal with a Schema object.
     * [.default()](#Schema+default) ⇒ <code>any</code>
     * [.deprecated()](#Schema+deprecated) ⇒ <code>boolean</code>
     * [.discriminator()](#Schema+discriminator) ⇒ <code>string</code>
+    * [.externalDocs()](#Schema+externalDocs) ⇒ [<code>ExternalDocs</code>](#ExternalDocs)
     * [.readOnly()](#Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
@@ -1458,6 +1459,10 @@ Implements functions to deal with a Schema object.
 <a name="Schema+discriminator"></a>
 
 ### schema.discriminator() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+externalDocs"></a>
+
+### schema.externalDocs() ⇒ [<code>ExternalDocs</code>](#ExternalDocs)
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Schema+readOnly"></a>
 

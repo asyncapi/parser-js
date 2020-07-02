@@ -79,6 +79,28 @@ Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/op
 
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
 
+### Custom message parsers
+
+AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
+
+1. Create custom parser module that exports two functions:
+    ```js
+    module.exports = {
+      parse: ({ message, defaultSchemaFormat }) => { //custom parsing logic},
+      getMimeTypes: () => [
+        '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',
+        'application/vnd.custom.type;version=1.0.0',
+        'application/vnd.custom.type+json;version=1.0.0',
+      ]
+    }
+    ```
+2. Before parsing an AsyncAPI document with a parser, register the additional custom schema parser:
+    ```
+    const myCustomParser = require('mycustomParser');
+
+    parser.registerSchemaParser(myCustomParser);
+    ```
+
 ### Error types
 
 This package throws a bunch of different error types. All errors contain a `type` (prefixed by this repo URL) and a `title` field. The following table describes all the errors and the extra fields they include:
@@ -95,6 +117,7 @@ This package throws a bunch of different error types. All errors contain a `type
 |`dereference-error`|`parsedJSON`, `refs`|This means the parser tried to resolve and dereference $ref's and the process failed. Typically, this means the $ref it's pointing to doesn't exist.
 |`unexpected-error`|`parsedJSON`|We have our code covered with try/catch blocks and you should never see this error. If you see it, please open an issue to let us know.
 |`validation-errors`|`parsedJSON`, `validationErrors`|The AsyncAPI document contains errors. See `validationErrors` for more information.
+|`impossible-to-register-parser`| None | Registration of custom message parser failed.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 

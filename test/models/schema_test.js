@@ -501,6 +501,20 @@ describe('Schema', function() {
     });
   });
 
+  describe('#externalDocs()', function() {
+    it('should return null', function() {
+      const doc = { type: 'string' };
+      const d = new Schema(doc);
+      expect(d.externalDocs()).to.be.equal(null);
+    });
+    it('should return a ExternalDocs object', function() {
+      const doc = { type: 'string', externalDocs: { description: 'someDescription', url: 'someUrl' } };
+      const d = new Schema(doc);
+      expect(d.externalDocs().constructor.name).to.be.equal('ExternalDocs');
+      expect(d.externalDocs().json()).to.be.equal(doc.externalDocs);
+    });
+  });
+
   describe('#readOnly()', function() {
     it('should return a boolean', function() {
       const doc = { type: 'string', readOnly: true };

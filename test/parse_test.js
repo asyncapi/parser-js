@@ -385,3 +385,27 @@ describe('parse()', function() {
     }, type, message);
   });
 });
+
+describe('registerSchemaParser()', function() {
+  it('no errors can be thrown', function() {
+    const parserModule = {
+      parse: () => {},
+      getMimeTypes: () => ['schemaFormat1', 'schemaFormat2']
+    };
+
+    expect(() => parser.registerSchemaParser(parserModule)).to.not.throw();
+  });
+
+  it('should throw error that required functions are missing', function() {
+    const parserModule = {
+      parse: () => {}
+    };
+
+    try {
+      parser.registerSchemaParser(parserModule);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/impossible-to-register-parser');
+      expect(e.title).to.equal('parserModule must have parse() and getMimeTypes() functions.');
+    }
+  });
+});

@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "nyc --reporter=text mocha --recursive",
+    "test": "nyc --reporter=html --reporter=text mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
     "prepublishOnly": "npm run bundle",
@@ -50,11 +50,12 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser#add-more-info-about-errors",
     "@asyncapi/specs": "^2.7.1",
-    "@fmvilas/pseudo-yaml-ast": "^0.3.0",
+    "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",
     "json-to-ast": "^2.1.0",
     "node-fetch": "^2.6.0",
+    "re2": "^1.15.0",
     "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {
@@ -94,6 +95,11 @@
           ]
         }
       ]
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "dist/bundle.js"
     ]
   }
 }

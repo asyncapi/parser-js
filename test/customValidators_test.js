@@ -1,4 +1,4 @@
-const {validateChannelParams, validateServerVariables} = require('../lib/customValidators.js');
+const {validateChannelParams, validateServerVariables, validateOperationId} = require('../lib/customValidators.js');
 const chai = require('chai');
 
 const expect = chai.expect;
@@ -300,5 +300,83 @@ describe('validateChannelParams()', function() {
     const parsedInput = JSON.parse(inputString);
 
     expect(() => validateChannelParams(parsedInput, inputString, input)).to.throw('Not all channel parameters are described with parameter object');
+  });
+});
+
+describe('validateOperationId()', function() {
+  it('should successfully validate operationId', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "operationId": "test1"
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "operationId": "test2"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateOperationId(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should successfully validate if channel object not provided', function() {
+    const inputString = '{}';
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateOperationId(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should throw error that operationId is duplicated', function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "operationId": "test"
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "operationId": "test"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateOperationId(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('operationId must be unique across all the operations.');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      /*expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'dummy server does not have a corresponding variable object for: host',
+          location: {
+            jsonPointer: '/servers/dummy',
+            startLine: 3,
+            startColumn: 19,
+            startOffset: 39,
+            endLine: 10,
+            endColumn: 11,
+            endOffset: 196
+          }
+        }
+      ]);
+      */
+    }
   });
 });

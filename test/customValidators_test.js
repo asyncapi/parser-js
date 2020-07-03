@@ -335,7 +335,7 @@ describe('validateOperationId()', function() {
     expect(validateOperationId(parsedInput, inputString, input)).to.equal(true);
   });
 
-  it('should throw error that operationId is duplicated', function() {
+  it('should throw error that operationIds are duplicated and that they duplicate', function() {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -351,6 +351,16 @@ describe('validateOperationId()', function() {
           "subscribe": {
             "operationId": "test"
           }
+        },
+        "test/3": {
+          "subscribe": {
+            "operationId": "test"
+          }
+        },
+        "test/4": {
+          "subscribe": {
+            "operationId": "test4"
+          }
         }
       }
     }`;
@@ -362,21 +372,32 @@ describe('validateOperationId()', function() {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
       expect(e.title).to.equal('operationId must be unique across all the operations.');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
-      /*expect(e.validationErrors).to.deep.equal([
+      expect(e.validationErrors).to.deep.equal([
         {
-          title: 'dummy server does not have a corresponding variable object for: host',
+          title: 'test/2/subscribe/operationId is a duplicate of: test/1/publish/operationId',
           location: {
-            jsonPointer: '/servers/dummy',
-            startLine: 3,
-            startColumn: 19,
-            startOffset: 39,
-            endLine: 10,
-            endColumn: 11,
-            endOffset: 196
+            jsonPointer: '/channels/test~12/subscribe/operationId',
+            startLine: 14,
+            startColumn: 29,
+            startOffset: 273,
+            endLine: 14,
+            endColumn: 35,
+            endOffset: 279
+          }
+        },
+        {
+          title: 'test/3/subscribe/operationId is a duplicate of: test/1/publish/operationId',
+          location: {
+            jsonPointer: '/channels/test~13/subscribe/operationId',
+            startLine: 19,
+            startColumn: 29,
+            startOffset: 375,
+            endLine: 19,
+            endColumn: 35,
+            endOffset: 381
           }
         }
       ]);
-      */
     }
   });
 });

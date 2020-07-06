@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const AsyncAPIDocument = require('../../lib/models/asyncapi');
 const fs = require('fs');
 const path = require('path');
+
 describe('AsyncAPIDocument', function() {
   describe('assignUidToParameterSchemas()', function() {
     it('should assign uids to parameters', function() {

@@ -15,24 +15,64 @@ describe('asyncapiSchemaFormatParser', function() {
       expect(e.parsedJSON).to.deep.equal(JSON.parse(invalidAsyncapi));
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/additionalProperties should be object,boolean',
-          location: { jsonPointer: '/additionalProperties' }
+          title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
+          location: {
+            jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
+            startLine: 13,
+            startColumn: 38,
+            startOffset: 252,
+            endLine: 15,
+            endColumn: 15,
+            endOffset: 297
+          }
         },
         {
-          title: '/additionalProperties should be object,boolean',
-          location: { jsonPointer: '/additionalProperties' }
+          title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
+          location: {
+            jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
+            startLine: 13,
+            startColumn: 38,
+            startOffset: 252,
+            endLine: 15,
+            endColumn: 15,
+            endOffset: 297
+          }
         },
         {
-          title: '/additionalProperties should be object',
-          location: { jsonPointer: '/additionalProperties' }
+          title: '/channels/mychannel/publish/message/payload/additionalProperties should be object',
+          location: {
+            jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
+            startLine: 13,
+            startColumn: 38,
+            startOffset: 252,
+            endLine: 15,
+            endColumn: 15,
+            endOffset: 297
+          }
         },
         {
-          title: '/additionalProperties should be boolean',
-          location: { jsonPointer: '/additionalProperties' }
+          title: '/channels/mychannel/publish/message/payload/additionalProperties should be boolean',
+          location: {
+            jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
+            startLine: 13,
+            startColumn: 38,
+            startOffset: 252,
+            endLine: 15,
+            endColumn: 15,
+            endOffset: 297
+          }
         },
         {
-          title: '/additionalProperties should match some schema in anyOf',
-          location: { jsonPointer: '/additionalProperties' }
+          title: '/channels/mychannel/publish/message/payload/additionalProperties should match some schema in anyOf',
+          location: {
+            jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
+            startLine: 13,
+            startColumn: 38,
+            startOffset: 252,
+            endLine: 15,
+            endColumn: 15,
+            endOffset: 297
+          }
         }
       ]);
     }

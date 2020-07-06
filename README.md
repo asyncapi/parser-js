@@ -86,7 +86,7 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
 1. Create custom parser module that exports two functions:
     ```js
     module.exports = {
-      parse: ({ message, defaultSchemaFormat, oryginalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument }) => { //custom parsing logic},
+      parse: ({ message, defaultSchemaFormat, originalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument }) => { /* custom parsing logic */ },
       getMimeTypes: () => [
         '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',
         'application/vnd.custom.type;version=1.0.0',

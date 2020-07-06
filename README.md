@@ -92,9 +92,9 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
        * schemaFormat {String} information about custom schemaFormat mime type provided in AsyncAPI Document
        * fileFormat {String} information if provided AsyncAPI Document was JSON or YAML
        * parsedAsyncAPIDocument {Object} Full AsyncAPI Document parsed into Object
-       * path {String} path of the message passed to the parser, relative to the root of AsyncAPI Document
+       * pathToPayload {String} path of the message passed to the parser, relative to the root of AsyncAPI Document
       */
-      parse: ({ message, defaultSchemaFormat, originalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument, path }) => { /* custom parsing logic */ },
+      parse: ({ message, defaultSchemaFormat, originalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument, pathToPayload }) => { /* custom parsing logic */ },
       getMimeTypes: () => [
         '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',
         'application/vnd.custom.type;version=1.0.0',

@@ -10,7 +10,6 @@ describe('asyncapiSchemaFormatParser', function() {
     try {
       await parser.parse(invalidAsyncapi);
     } catch (e) {
-      console.log('papapapapa', e.validationErrors);
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/schema-validation-errors');
       expect(e.title).to.equal('This is not a valid AsyncAPI Schema Object.');
       expect(e.parsedJSON).to.deep.equal(JSON.parse(invalidAsyncapi));

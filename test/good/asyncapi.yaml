@@ -12,6 +12,11 @@ channels:
         url: 'https://irrelevant.com'
       message:
         $ref: '#/components/messages/testMessage'
+  oneOfMessageChannel:
+    publish:
+      message:
+        oneOf: 
+          - $ref: '#/components/messages/testMessage'
 
 components:
   messages:

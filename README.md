@@ -118,6 +118,7 @@ This package throws a bunch of different error types. All errors contain a `type
 |`unexpected-error`|`parsedJSON`|We have our code covered with try/catch blocks and you should never see this error. If you see it, please open an issue to let us know.
 |`validation-errors`|`parsedJSON`, `validationErrors`|The AsyncAPI document contains errors. See `validationErrors` for more information.
 |`impossible-to-register-parser`| None | Registration of custom message parser failed.
+|`schema-validation-errors`| `parsedJSON`, `validationErrors` | Schema of the payload provided in the AsyncAPI document is not valid with AsyncAPI schema format.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 

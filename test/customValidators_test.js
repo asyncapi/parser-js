@@ -304,6 +304,8 @@ describe('validateChannelParams()', function() {
 });
 
 describe('validateOperationId()', function() {
+  const operations = ['subscribe', 'publish'];
+
   it('should successfully validate operationId', async function() {
     const inputString = `{
       "asyncapi": "2.0.0",
@@ -325,14 +327,14 @@ describe('validateOperationId()', function() {
     }`;
     const parsedInput = JSON.parse(inputString);
     
-    expect(validateOperationId(parsedInput, inputString, input)).to.equal(true);
+    expect(validateOperationId(parsedInput, inputString, input, operations)).to.equal(true);
   });
 
   it('should successfully validate if channel object not provided', function() {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
     
-    expect(validateOperationId(parsedInput, inputString, input)).to.equal(true);
+    expect(validateOperationId(parsedInput, inputString, input, operations)).to.equal(true);
   });
 
   it('should throw error that operationIds are duplicated and that they duplicate', function() {
@@ -367,7 +369,7 @@ describe('validateOperationId()', function() {
     const parsedInput = JSON.parse(inputString);
 
     try {
-      validateOperationId(parsedInput, inputString, input);
+      validateOperationId(parsedInput, inputString, input, operations);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
       expect(e.title).to.equal('operationId must be unique across all the operations.');

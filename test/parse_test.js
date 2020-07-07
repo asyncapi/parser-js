@@ -326,7 +326,7 @@ describe('parse()', function() {
     }
   });
 
-  it('should throw error if document is null or falsy', async function() {
+  it('should throw error if document is null or falsey', async function() {
     const type = 'https://github.com/asyncapi/parser-js/null-or-falsey-document';
     const message = 'Document can\'t be null or falsey.';
     await checkErrorTypeAndMessage(async () => {

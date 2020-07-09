@@ -86,7 +86,15 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
 1. Create custom parser module that exports two functions:
     ```js
     module.exports = {
-      parse: ({ message, defaultSchemaFormat }) => { //custom parsing logic},
+      /*
+       * message {Object} is the object containing AsyncAPI Message property
+       * defaultSchemaFormat {String} information about the default schema format mime type
+       * schemaFormat {String} information about custom schemaFormat mime type provided in AsyncAPI Document
+       * fileFormat {String} information if provided AsyncAPI Document was JSON or YAML
+       * parsedAsyncAPIDocument {Object} Full AsyncAPI Document parsed into Object
+       * pathToPayload {String} path of the message passed to the parser, relative to the root of AsyncAPI Document
+      */
+      parse: ({ message, defaultSchemaFormat, originalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument, pathToPayload }) => { /* custom parsing logic */ },
       getMimeTypes: () => [
         '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',
         'application/vnd.custom.type;version=1.0.0',
@@ -118,6 +126,7 @@ This package throws a bunch of different error types. All errors contain a `type
 |`unexpected-error`|`parsedJSON`|We have our code covered with try/catch blocks and you should never see this error. If you see it, please open an issue to let us know.
 |`validation-errors`|`parsedJSON`, `validationErrors`|The AsyncAPI document contains errors. See `validationErrors` for more information.
 |`impossible-to-register-parser`| None | Registration of custom message parser failed.
+|`schema-validation-errors`| `parsedJSON`, `validationErrors` | Schema of the payload provided in the AsyncAPI document is not valid with AsyncAPI schema format.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 

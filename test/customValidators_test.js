@@ -1,4 +1,4 @@
-const {validateChannelParams, validateServerVariables} = require('../lib/customValidators.js');
+const {validateChannelParams, validateServerVariables, validateOperationId} = require('../lib/customValidators.js');
 const chai = require('chai');
 
 const expect = chai.expect;
@@ -300,5 +300,106 @@ describe('validateChannelParams()', function() {
     const parsedInput = JSON.parse(inputString);
 
     expect(() => validateChannelParams(parsedInput, inputString, input)).to.throw('Not all channel parameters are described with parameter object');
+  });
+});
+
+describe('validateOperationId()', function() {
+  const operations = ['subscribe', 'publish'];
+
+  it('should successfully validate operationId', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "operationId": "test1"
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "operationId": "test2"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateOperationId(parsedInput, inputString, input, operations)).to.equal(true);
+  });
+
+  it('should successfully validate if channel object not provided', function() {
+    const inputString = '{}';
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateOperationId(parsedInput, inputString, input, operations)).to.equal(true);
+  });
+
+  it('should throw error that operationIds are duplicated and that they duplicate', function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "operationId": "test"
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "operationId": "test"
+          }
+        },
+        "test/3": {
+          "subscribe": {
+            "operationId": "test"
+          }
+        },
+        "test/4": {
+          "subscribe": {
+            "operationId": "test4"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateOperationId(parsedInput, inputString, input, operations);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('operationId must be unique across all the operations.');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'test/2/subscribe/operationId is a duplicate of: test/1/publish/operationId',
+          location: {
+            jsonPointer: '/channels/test~12/subscribe/operationId',
+            startLine: 14,
+            startColumn: 29,
+            startOffset: 273,
+            endLine: 14,
+            endColumn: 35,
+            endOffset: 279
+          }
+        },
+        {
+          title: 'test/3/subscribe/operationId is a duplicate of: test/1/publish/operationId',
+          location: {
+            jsonPointer: '/channels/test~13/subscribe/operationId',
+            startLine: 19,
+            startColumn: 29,
+            startOffset: 375,
+            endLine: 19,
+            endColumn: 35,
+            endOffset: 381
+          }
+        }
+      ]);
+    }
   });
 });

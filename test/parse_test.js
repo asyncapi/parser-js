@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 const { EOL } = require('os');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

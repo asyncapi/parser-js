@@ -6,10 +6,12 @@ env:
 plugins:
   - sonarjs
   - mocha
+  - security
 
 extends:
   - plugin:sonarjs/recommended
   - plugin:mocha/recommended
+  - plugin:security/recommended
 
 parserOptions:
   ecmaVersion: 2018
@@ -103,3 +105,5 @@ overrides:
     rules:
       prefer-arrow-callback: 0
       sonarjs/no-duplicate-string: 0
+      security/detect-object-injection: 0
+      security/detect-non-literal-fs-filename: 0

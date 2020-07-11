@@ -439,6 +439,58 @@ describe('validateServerSecurity()', function() {
     expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
   });
 
+  it('should successfully validate if server security not provided', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka"
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
+  });
+
+  it('should successfully validate server security of special security type like oauth2', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "oauth2": [
+                "write:test",
+                "read:test"
+              ]
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "oauth2": {
+            "type": "oauth2",
+            "flows": {}
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
+  });
+
   it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function() {
     const inputString = `{
       "asyncapi": "2.0.0",

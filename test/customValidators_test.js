@@ -1,4 +1,4 @@
-const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecuritySchemaMapping } = require('../lib/customValidators.js');
+const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
 const chai = require('chai');
 
 const expect = chai.expect;
@@ -404,7 +404,9 @@ describe('validateOperationId()', function() {
   });
 });
 
-describe('validateServerSecuritySchemaMapping()', function() {
+describe('validateServerSecurity()', function() {
+  const specialSecTypes = ['oauth2', 'openIdConnect'];
+
   it('should successfully validate server security', async function() {
     const inputString = `{
       "asyncapi": "2.0.0",
@@ -434,7 +436,7 @@ describe('validateServerSecuritySchemaMapping()', function() {
     }`;
     const parsedInput = JSON.parse(inputString);
     
-    expect(validateServerSecuritySchemaMapping(parsedInput, inputString, input)).to.equal(true);
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
   });
 
   it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function() {
@@ -467,7 +469,7 @@ describe('validateServerSecuritySchemaMapping()', function() {
     const parsedInput = JSON.parse(inputString);
     
     try {
-      validateServerSecuritySchemaMapping(parsedInput, inputString, input);
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
       expect(e.title).to.equal('Server security name must correspond to a security scheme which is declared in the security schemes under the components object.');
@@ -512,7 +514,7 @@ describe('validateServerSecuritySchemaMapping()', function() {
     const parsedInput = JSON.parse(inputString);
     
     try {
-      validateServerSecuritySchemaMapping(parsedInput, inputString, input);
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
       expect(e.title).to.equal('Server security name must correspond to a security scheme which is declared in the security schemes under the components object.');
@@ -568,7 +570,7 @@ describe('validateServerSecuritySchemaMapping()', function() {
     const parsedInput = JSON.parse(inputString);
     
     try {
-      validateServerSecuritySchemaMapping(parsedInput, inputString, input);
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
       expect(e.title).to.equal('Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect.');

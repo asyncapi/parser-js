@@ -1,17 +1,11 @@
 const { expect } = require('chai');
-const License = require('../../lib/models/license');
 const js = { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0', 'x-test': 'testing' };
 
-describe('License', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new License(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const License = require('../../lib/models/license');
 
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('License', function() {
   describe('#name()', function() {
     it('should return a string', function() {
       const d = new License(js);
@@ -23,6 +17,12 @@ describe('License', function() {
     it('should return a string', function() {
       const d = new License(js);
       expect(d.url()).to.be.equal(js.url);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinSpecificationExtensionsInheritance(License);
     });
   });
 });

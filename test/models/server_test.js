@@ -1,17 +1,13 @@
 const { expect } = require('chai');
-const Server = require('../../lib/models/server');
 const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], bindings: { amqp: 'test' }, 'x-test': 'testing' };
 
-describe('Server', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new Server(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const Server = require('../../lib/models/server');
 
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinBindingsInheritance } = require('../mixins/bindings_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('Server', function() {
   describe('#url()', function() {
     it('should return a string', function() {
       const d = new Server(js);
@@ -30,13 +26,6 @@ describe('Server', function() {
     it('should return a string', function() {
       const d = new Server(js);
       expect(d.protocolVersion()).to.be.equal(js.protocolVersion);
-    });
-  });
-  
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new Server(js);
-      expect(d.description()).to.be.equal(js.description);
     });
   });
 
@@ -79,17 +68,11 @@ describe('Server', function() {
     });
   });
 
-  describe('#bindings()', function() {
-    it('should return a map of bindings', function() {
-      const d = new Server(js);
-      expect(d.bindings()).to.be.equal(js.bindings);
-    });
-  });
-
-  describe('#binding()', function() {
-    it('should return a specific binding', function() {
-      const d = new Server(js);
-      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(Server);
+      assertMixinBindingsInheritance(Server);
+      assertMixinSpecificationExtensionsInheritance(Server);
     });
   });
 });

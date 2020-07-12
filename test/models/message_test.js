@@ -1,18 +1,15 @@
 const { expect } = require('chai');
-const Message = require('../../lib/models/message');
 const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{test: true}], 'x-test': 'testing' };
 
-describe('Message', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const doc = { 'x-test': 'testing' };
-      const d = new Message(doc);
-      expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(doc['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const Message = require('../../lib/models/message');
 
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
+const { assertMixinTagsInheritance } = require('../mixins/tags_test');
+const { assertMixinBindingsInheritance } = require('../mixins/bindings_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('Message', function() {
   describe('#uid()', function() {
     it('should return a string with the name', function() {
       const d = new Message(js);
@@ -112,51 +109,21 @@ describe('Message', function() {
     });
   });
 
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new Message(js);
-      expect(d.description()).to.equal(js.description);
-    });
-  });
-
-  describe('#externalDocs()', function() {
-    it('should return an ExternalDocs object', function() {
-      const d = new Message(js);
-      expect(d.externalDocs().constructor.name).to.equal('ExternalDocs');
-      expect(d.externalDocs().json()).to.equal(js.externalDocs);
-    });
-  });
-
-  describe('#tags()', function() {
-    it('should return an array of Tag objects', function() {
-      const d = new Message(js);
-      expect(Array.isArray(d.tags())).to.be.equal(true);
-      d.tags().forEach((t, i) => {
-        expect(t.constructor.name).to.equal('Tag');
-        expect(t.json()).to.equal(js.tags[i]);
-      });
-    });
-  });
-
-  describe('#bindings()', function() {
-    it('should return a map of bindings', function() {
-      const d = new Message(js);
-      expect(d.bindings()).to.be.equal(js.bindings);
-    });
-  });
-
-  describe('#binding()', function() {
-    it('should return a specific binding', function() {
-      const d = new Message(js);
-      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
-    });
-  });
-
   describe('#examples()', function() {
     it('should return an array of examples', function() {
       const d = new Message(js);
       expect(Array.isArray(d.examples())).to.be.equal(true);
       expect(d.examples()).to.be.equal(js.examples);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(Message);
+      assertMixinExternalDocsInheritance(Message);
+      assertMixinTagsInheritance(Message);
+      assertMixinBindingsInheritance(Message);
+      assertMixinSpecificationExtensionsInheritance(Message);
     });
   });
 });

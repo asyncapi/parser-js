@@ -109,7 +109,8 @@
   },
   "nyc": {
     "exclude": [
-      "dist/bundle.js"
+      "dist/bundle.js",
+      "test/**/*.js"
     ]
   }
 }

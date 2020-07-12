@@ -1,17 +1,12 @@
 const { expect } = require('chai');
-const Info = require('../../lib/models/info');
 const js = { title: 'Test', version: '1.2.3', license: { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' }, contact: { name: 'Fran', url: 'https://www.asyncapi.com', email: 'fmvilas@gmail.com' }, 'x-test': 'testing' };
 
-describe('Info', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new Info(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const Info = require('../../lib/models/info');
 
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('Info', function() {
   describe('#title()', function() {
     it('should return a string', function() {
       const d = new Info(js);
@@ -23,13 +18,6 @@ describe('Info', function() {
     it('should return a string', function() {
       const d = new Info(js);
       expect(d.version()).to.be.equal(js.version);
-    });
-  });
-  
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new Info(js);
-      expect(d.description()).to.be.equal(js.description);
     });
   });
   
@@ -63,6 +51,13 @@ describe('Info', function() {
     it('should return null if a contact object is not given', function() {
       const d = new Info({});
       expect(d.contact()).to.be.equal(null);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(Info);
+      assertMixinSpecificationExtensionsInheritance(Info);
     });
   });
 });

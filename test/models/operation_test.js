@@ -1,24 +1,15 @@
 const { expect } = require('chai');
-const Operation = require('../../lib/models/operation');
 const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing' };
 
-describe('Operation', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new Operation(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const Operation = require('../../lib/models/operation');
 
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new Operation(js);
-      expect(d.description()).to.be.equal(js.description);
-    });
-  });
-   
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
+const { assertMixinTagsInheritance } = require('../mixins/tags_test');
+const { assertMixinBindingsInheritance } = require('../mixins/bindings_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('Operation', function() {   
   describe('#summary()', function() {
     it('should return a string', function() {
       const d = new Operation(js);
@@ -30,38 +21,6 @@ describe('Operation', function() {
     it('should return a string', function() {
       const d = new Operation(js);
       expect(d.id()).to.be.equal(js.operationId);
-    });
-  });
-   
-  describe('#tags()', function() {
-    it('should return an array of tags', function() {
-      const d = new Operation(js);
-      d.tags().forEach((t, i) => {
-        expect(t.constructor.name).to.be.equal('Tag');
-        expect(t.json()).to.be.equal(js.tags[i]);
-      });
-    });
-  });
-  
-  describe('#externalDocs()', function() {
-    it('should return an ExternalDocs object', function() {
-      const d = new Operation(js);
-      expect(d.externalDocs().constructor.name).to.be.equal('ExternalDocs');
-      expect(d.externalDocs().json()).to.be.equal(js.externalDocs);
-    });
-  });
-  
-  describe('#bindings()', function() {
-    it('should return a map of bindings', function() {
-      const d = new Operation(js);
-      expect(d.bindings()).to.be.equal(js.bindings);
-    });
-  });
-  
-  describe('#binding()', function() {
-    it('should return a specific binding', function() {
-      const d = new Operation(js);
-      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
     });
   });
   
@@ -116,6 +75,16 @@ describe('Operation', function() {
       const doc = { message: { test: true } };
       const d = new Operation(doc);
       expect(d.message().json()).to.be.deep.equal(doc.message);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(Operation);
+      assertMixinExternalDocsInheritance(Operation);
+      assertMixinTagsInheritance(Operation);
+      assertMixinBindingsInheritance(Operation);
+      assertMixinSpecificationExtensionsInheritance(Operation);
     });
   });
 });

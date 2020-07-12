@@ -1,17 +1,12 @@
 const { expect } = require('chai');
+
 const Schema = require('../../lib/models/schema');
 
-describe('Schema', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const doc = { 'x-test': 'testing' };
-      const d = new Schema(doc);
-      expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(doc['x-test']);
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
 
+describe('Schema', function() {
   describe('#multipleOf()', function() {
     it('should return a number', function() {
       const doc = { type: 'number', multipleOf: 1.0 };
@@ -474,15 +469,6 @@ describe('Schema', function() {
     });
   });
 
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const doc = { type: 'string', description: 'test' };
-      const d = new Schema(doc);
-      expect(typeof d.description()).to.be.equal('string');
-      expect(d.description()).to.be.equal(doc.description);
-    });
-  });
-
   describe('#deprecated()', function() {
     it('should return a boolean', function() {
       const doc = { type: 'string', deprecated: true };
@@ -498,20 +484,6 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(typeof d.discriminator()).to.be.equal('string');
       expect(d.discriminator()).to.be.equal(doc.discriminator);
-    });
-  });
-
-  describe('#externalDocs()', function() {
-    it('should return null', function() {
-      const doc = { type: 'string' };
-      const d = new Schema(doc);
-      expect(d.externalDocs()).to.be.equal(null);
-    });
-    it('should return a ExternalDocs object', function() {
-      const doc = { type: 'string', externalDocs: { description: 'someDescription', url: 'someUrl' } };
-      const d = new Schema(doc);
-      expect(d.externalDocs().constructor.name).to.be.equal('ExternalDocs');
-      expect(d.externalDocs().json()).to.be.equal(doc.externalDocs);
     });
   });
 
@@ -548,6 +520,14 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(typeof d.isCircular()).to.be.equal('boolean');
       expect(d.isCircular()).to.be.equal(doc['x-parser-circular']);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(Schema);
+      assertMixinExternalDocsInheritance(Schema);
+      assertMixinSpecificationExtensionsInheritance(Schema);
     });
   });
 });

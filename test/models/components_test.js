@@ -1,17 +1,10 @@
 const { expect } = require('chai');
+
 const Components = require('../../lib/models/components');
 
-describe('Components', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const doc = { 'x-test': 'testing' };
-      const d = new Components(doc);
-      expect(d.ext('x-test')).to.be.equal(doc['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(doc['x-test']);
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
 
+describe('Components', function() {
   describe('#messages()', function() {
     it('should return a map of Message objects', function() {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
@@ -240,6 +233,12 @@ describe('Components', function() {
       const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.messageTrait('not found')).to.equal(null);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinSpecificationExtensionsInheritance(Components);
     });
   });
 });

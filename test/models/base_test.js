@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+
 const Base = require('../../lib/models/base');
 
 describe('Base', function() {

@@ -1,28 +1,16 @@
 const { expect } = require('chai');
-const SecurityScheme = require('../../lib/models/security-scheme');
 const js = { type: 'testing', description: 'testing', name: 'testing', in: 'testing', scheme: 'testing', bearerFormat: 'testing', openIdConnectUrl: 'testing', flows: { test: { testing: true } }, 'x-test': 'testing' };
 
-describe('SecurityScheme', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new SecurityScheme(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const SecurityScheme = require('../../lib/models/security-scheme');
 
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('SecurityScheme', function() {
   describe('#type()', function() {
     it('should return a string', function() {
       const d = new SecurityScheme(js);
       expect(d.type()).to.be.equal(js.type);
-    });
-  });
-  
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new SecurityScheme(js);
-      expect(d.description()).to.be.equal(js.description);
     });
   });
   
@@ -67,6 +55,13 @@ describe('SecurityScheme', function() {
       expect(typeof d.flows()).to.be.equal('object');
       expect(d.flows().test.constructor.name).to.equal('OAuthFlow');
       expect(d.flows().test.json()).to.equal(js.flows.test);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(SecurityScheme);
+      assertMixinSpecificationExtensionsInheritance(SecurityScheme);
     });
   });
 });

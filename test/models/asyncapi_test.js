@@ -1,7 +1,12 @@
 const { expect } = require('chai');
-const AsyncAPIDocument = require('../../lib/models/asyncapi');
 const fs = require('fs');
 const path = require('path');
+
+const AsyncAPIDocument = require('../../lib/models/asyncapi');
+
+const { assertMixinTagsInheritance } = require('../mixins/tags_test');
+const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
 
 describe('AsyncAPIDocument', function() {
   describe('assignUidToParameterSchemas()', function() {
@@ -10,15 +15,6 @@ describe('AsyncAPIDocument', function() {
       const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } } };
       const d = new AsyncAPIDocument(inputDoc);
       expect(d.json()).to.be.deep.equal(expectedDoc);
-    });
-  });
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const doc = { 'x-test': 'testing' };
-      const d = new AsyncAPIDocument(doc);
-      expect(d.ext('x-test')).to.be.equal(doc['x-test']);
-      expect(d.extension('x-test')).to.be.equal(doc['x-test']);
-      expect(d.extensions()).to.be.deep.equal({ 'x-test': 'testing' });
     });
   });
 
@@ -153,17 +149,6 @@ describe('AsyncAPIDocument', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.components().constructor.name).to.equal('Components');
       expect(d.components().json()).to.equal(doc.components);
-    });
-  });
-
-  describe('#tags()', function() {
-    it('should return an array of tags', function() {
-      const doc = { tags: [{ name: 'test1' }, { name: 'test2' }] };
-      const d = new AsyncAPIDocument(doc);
-      d.tags().forEach((t, i) => {
-        expect(t.constructor.name).to.be.equal('Tag');
-        expect(t.json()).to.be.equal(doc.tags[i]);
-      });
     });
   });
 
@@ -334,6 +319,14 @@ describe('AsyncAPIDocument', function() {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }
+    });
+  });
+
+  describe('mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinTagsInheritance(AsyncAPIDocument);
+      assertMixinExternalDocsInheritance(AsyncAPIDocument);
+      assertMixinSpecificationExtensionsInheritance(AsyncAPIDocument);
     });
   });
 });

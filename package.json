@@ -3,7 +3,7 @@
   "version": "0.25.1",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
-  "types": "lib/types.d.ts",
+  "types": "types.d.ts",
   "directories": {
     "test": "test"
   },
@@ -11,7 +11,7 @@
     "test": "nyc --reporter=html --reporter=text mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
-    "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r lib -d ./lib",
+    "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r lib -d ./",
     "prepublishOnly": "npm run bundle",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",

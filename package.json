@@ -1,13 +1,13 @@
 {
   "name": "@asyncapi/parser",
-  "version": "0.20.0",
+  "version": "0.25.1",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "nyc --reporter=text mocha --recursive",
+    "test": "nyc --reporter=html --reporter=text mocha --recursive",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
     "prepublishOnly": "npm run bundle",
@@ -38,8 +38,9 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "conventional-changelog-conventionalcommits": "^4.2.3",
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "eslint-plugin-mocha": "^7.0.1",
+    "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jsdoc-to-markdown": "^5.0.0",
     "mocha": "^6.1.4",
@@ -50,12 +51,13 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser#add-more-info-about-errors",
     "@asyncapi/specs": "^2.7.1",
-    "@fmvilas/pseudo-yaml-ast": "^0.3.0",
+    "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",
     "json-to-ast": "^2.1.0",
     "node-fetch": "^2.6.0",
     "smart-circular": "^1.0.2",
+    "re2": "^1.15.0",
     "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {
@@ -95,6 +97,11 @@
           ]
         }
       ]
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "dist/bundle.js"
     ]
   }
 }

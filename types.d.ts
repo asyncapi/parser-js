@@ -97,9 +97,6 @@ declare module "@asyncapi/parser" {
     }
     class Base {
         json(): any;
-        name(): string;
-        url(): string;
-        email(): string;
     }
     /**
      * Implements functions to deal with a ChannelParameter object.
@@ -165,8 +162,10 @@ declare module "@asyncapi/parser" {
         };
         messageTrait(): MessageTrait;
     }
-    class Base {
-        json(): any;
+    /**
+     * Implements functions to deal with the Contact object.
+     */
+    class Contact extends Base {
         name(): string;
         url(): string;
         email(): string;

@@ -48,8 +48,8 @@
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",
     "semantic-release": "^17.0.4",
-    "uglify-es": "^3.3.9",
-    "tsd-jsdoc": "^2.5.0"
+    "tsd-jsdoc": "^2.5.0",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser#add-more-info-about-errors",

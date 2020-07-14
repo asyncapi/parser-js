@@ -51,3 +51,12 @@ jobs:
           title: 'chore(release): ${{ steps.extractver.outputs.version }}'
           body: 'Version bump in package.json and package-lock.json for release [${{ steps.extractver.outputs.version }}](https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }})'
           branch: version-bump/${{ steps.extractver.outputs.version }}
+      - name: Publish information about the release to Twitter
+        if: steps.initversion.outputs.version != steps.extractver.outputs.version
+        uses: m1ner79/Github-Twittction@v1.0.1
+        with:
+          twitter_status: "Release ${{ steps.extractver.outputs.version }} for ${{github.repository}} is out in the wild 😱💪🍾🎂\n\nThank you for the contribution ${{ github.event.commits[0].author.name }} https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }}"
+          twitter_consumer_key: ${{ secrets.TWITTER_CONSUMER_KEY }} 
+          twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }} 
+          twitter_access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }} 
+          twitter_access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }} 

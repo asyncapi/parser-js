@@ -132,6 +132,7 @@ For more information about the `ParserError` class, [check out the documentation
 
 ### Circular references
 
+//TODO: update once finished
 Parser is not able to handle fully resolved circular references because this would lead to `Error: Maximum call stack size exceeded` error. Instead, such references are discovered and replaced with information about where is the circular reference pointing too: `$.components.schemas.RecursiveSelf`.
 
 ### Develop

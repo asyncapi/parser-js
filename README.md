@@ -132,8 +132,10 @@ For more information about the `ParserError` class, [check out the documentation
 
 ### Circular references
 
-//TODO: update once finished
-Parser is not able to handle fully resolved circular references because this would lead to `Error: Maximum call stack size exceeded` error. Instead, such references are discovered and replaced with information about where is the circular reference pointing too: `$.components.schemas.RecursiveSelf`.
+Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
+- `x-parser-circular` property is added to the root of AsyncAPI document to indicate that document contains circular references. Tooling developer that doesn't want to support circular references and quickly fail any action by checking this field or a special method `hasCircular`
+- `x-parser-circular` property is added to every schema that contains circular references, you can also use `isCircular` method on a Schema model like `document.components().schema('mySchema').isCircular()`
+- `x-parser-circular` property is added to every object where circular reference starts.
 
 ### Develop
 

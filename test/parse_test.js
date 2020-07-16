@@ -388,6 +388,8 @@ describe('parse()', function() {
     expect(result.json()[xParserCircle]).to.equal(true);
     //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
     expect(result.hasCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(true);
+    expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
     expect(result.components().schema('NonRecursive').properties().child[xParserCircle]).to.equal(undefined);
   });
 });

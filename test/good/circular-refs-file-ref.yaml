@@ -1,7 +1,7 @@
 ExternalFile:
   type: object
   properties:
-    test:
+    testExt:
       $ref: '#/YetAnother'
 YetAnother:
   type: object

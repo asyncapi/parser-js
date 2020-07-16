@@ -33,11 +33,11 @@ components:
     RecursiveSelf:
       type: object
       properties:
-        children:
+        selfChildren:
           type: array
           items:
             $ref: '#/components/schemas/RecursiveSelf'
-        something:
+        selfSomething:
           type: object
           properties:
             test: 
@@ -45,9 +45,9 @@ components:
     RecursiveAncestor:
       type: object
       properties:
-        children:
+        ancestorChildren:
           type: array
           items:
             $ref: '#/components/schemas/RecursiveSelf'
-        something:
+        ancestorSomething:
           type: string

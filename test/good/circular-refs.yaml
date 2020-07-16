@@ -13,8 +13,23 @@ channels:
       message:
         payload:
           $ref: './good/circular-refs-file-ref.yaml#/ExternalFile'
+  nonRecursive:
+    subscribe:
+      message:
+        payload:
+          $ref: '#/components/schemas/NonRecursive'
 components:
   schemas:
+    NonRecursive:
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/NonRecursiveChild'
+    NonRecursiveChild:
+      type: object
+      properties:
+        value:
+          type: string
     RecursiveSelf:
       type: object
       properties:

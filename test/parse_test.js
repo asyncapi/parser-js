@@ -20,6 +20,7 @@ const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"chann
 const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}';
 const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"$ref":"#/components/operationTraits/docs"}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"$ref":"#/components/messages/testMessage"}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"$ref":"#/components/messages/testMessage"}]}}}},"components":{"messages":{"testMessage":{"traits":[{"$ref":"#/components/messageTraits/extension"}],"payload":{"$ref":"#/components/schemas/testSchema"}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"$ref":"refs/refed.yaml"}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = { asyncapi: '2.0.0', info: {} };
+const xParserCircle = 'x-parser-circular';
 
 const eolLength = EOL.length;
 
@@ -381,9 +382,13 @@ describe('parse()', function() {
 
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
-    expect(result.components().schema('RecursiveAncestor').properties().children._json.items).to.equal('$.components.schemas.RecursiveSelf');
-    expect(result.components().schema('RecursiveSelf').properties().something._json.properties.test).to.equal('$.components.schemas.RecursiveAncestor');
-    expect(result.channel('external/file').publish().message().payload()._json.properties.test.properties.children.items).to.equal('$.channels.external/file.publish.message.payload');
+    expect(result.components().schema('RecursiveAncestor').properties().children._json.items[xParserCircle]).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties().something._json.properties.test.properties.children.items[xParserCircle]).to.equal(true);
+    expect(result.channel('external/file').publish().json().message.payload.properties.test.properties.children.items[xParserCircle]).to.equal(true);
+    expect(result.json()[xParserCircle]).to.equal(true);
+    //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
+    expect(result.hasCircular()).to.equal(true);
+    expect(result.components().schema('NonRecursive').properties().child[xParserCircle]).to.equal(undefined);
   });
 });
 

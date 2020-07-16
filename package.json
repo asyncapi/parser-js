@@ -56,7 +56,6 @@
     "js-yaml": "^3.13.1",
     "json-to-ast": "^2.1.0",
     "node-fetch": "^2.6.0",
-    "smart-circular": "^1.0.2",
     "re2": "^1.15.0",
     "tiny-merge-patch": "^0.1.2"
   },

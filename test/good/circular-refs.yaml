@@ -1,0 +1,53 @@
+asyncapi: 2.0.0
+info:
+  title: My Circular API
+  version: '1.0.0'
+channels:
+  recursive:
+    subscribe:
+      message:
+        payload:
+          $ref: '#/components/schemas/RecursiveSelf'
+  external/file:
+    publish:
+      message:
+        payload:
+          $ref: './good/circular-refs-file-ref.yaml#/ExternalFile'
+  nonRecursive:
+    subscribe:
+      message:
+        payload:
+          $ref: '#/components/schemas/NonRecursive'
+components:
+  schemas:
+    NonRecursive:
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/NonRecursiveChild'
+    NonRecursiveChild:
+      type: object
+      properties:
+        value:
+          type: string
+    RecursiveSelf:
+      type: object
+      properties:
+        selfChildren:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecursiveSelf'
+        selfSomething:
+          type: object
+          properties:
+            test: 
+               $ref: '#/components/schemas/RecursiveAncestor'
+    RecursiveAncestor:
+      type: object
+      properties:
+        ancestorChildren:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecursiveSelf'
+        ancestorSomething:
+          type: string

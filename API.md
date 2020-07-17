@@ -102,14 +102,29 @@
 <dt><a href="#addNameToKey">addNameToKey(map)</a></dt>
 <dd><p>Add anonymous name to key if no name provided.</p>
 </dd>
-<dt><a href="#recursiveSchema">recursiveSchema(schema, callback(schema))</a></dt>
+<dt><a href="#isCircular">isCircular(schema, seenObjects)</a></dt>
+<dd><p>Function that indicates that a circular reference was detected.</p>
+</dd>
+<dt><a href="#markCircular">markCircular(schema)</a></dt>
+<dd><p>Mark schema as being a circular ref</p>
+</dd>
+<dt><a href="#recursiveSchema">recursiveSchema(schemaContent, callback(schema))</a></dt>
 <dd><p>Recursively go through each schema and execute callback.</p>
+</dd>
+<dt><a href="#crawl">crawl(schemaContent, seenObj, callback(schema))</a></dt>
+<dd><p>Schema crawler</p>
 </dd>
 <dt><a href="#schemaDocument">schemaDocument(doc, callback(schema))</a></dt>
 <dd><p>Go through each channel and for each parameter, and message payload and headers recursively call the callback for each schema.</p>
 </dd>
 <dt><a href="#assignIdToAnonymousSchemas">assignIdToAnonymousSchemas(doc)</a></dt>
 <dd><p>Gives schemas id to all anonymous schemas.</p>
+</dd>
+<dt><a href="#recursiveSchemaObject">recursiveSchemaObject(schema, seenObj, callback(schema))</a></dt>
+<dd><p>Recursively go through schema of object type and execute callback.</p>
+</dd>
+<dt><a href="#recursiveSchemaArray">recursiveSchemaArray(schema, seenObj, callback(schema))</a></dt>
+<dd><p>Recursively go through schema of array type and execute callback.</p>
 </dd>
 </dl>
 
@@ -137,7 +152,6 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 | [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
 | [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.dereference] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
 | [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
 
 <a name="module_Parser+parseFromUrl"></a>
@@ -246,6 +260,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.hasMessages()](#AsyncAPIDocument+hasMessages) ⇒ <code>boolean</code>
     * [.allMessages()](#AsyncAPIDocument+allMessages) ⇒ [<code>Map.&lt;Message&gt;</code>](#Message)
     * [.allSchemas()](#AsyncAPIDocument+allSchemas) ⇒ [<code>Map.&lt;Schema&gt;</code>](#Schema)
+    * [.hasCircular()](#AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="AsyncAPIDocument+version"></a>
@@ -329,6 +344,10 @@ Implements functions to deal with the AsyncAPI document.
 <a name="AsyncAPIDocument+allSchemas"></a>
 
 ### asyncAPIDocument.allSchemas() ⇒ [<code>Map.&lt;Schema&gt;</code>](#Schema)
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
+<a name="AsyncAPIDocument+hasCircular"></a>
+
+### asyncAPIDocument.hasCircular() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#AsyncAPIDocument)  
 <a name="Base+json"></a>
 
@@ -1286,6 +1305,7 @@ Implements functions to deal with a Schema object.
     * [.readOnly()](#Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+    * [.isCircular()](#Schema+isCircular) ⇒ <code>boolean</code>
     * [.json()](#Base+json) ⇒ <code>Any</code>
 
 <a name="Schema+uid"></a>
@@ -1475,6 +1495,10 @@ Implements functions to deal with a Schema object.
 <a name="Schema+examples"></a>
 
 ### schema.examples() ⇒ <code>Array.&lt;any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#Schema)  
+<a name="Schema+isCircular"></a>
+
+### schema.isCircular() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Schema</code>](#Schema)  
 <a name="Base+json"></a>
 
@@ -1840,16 +1864,52 @@ Add anonymous name to key if no name provided.
 | --- | --- | --- |
 | map | <code>messages</code> | of messages |
 
+<a name="isCircular"></a>
+
+## isCircular(schema, seenObjects)
+Function that indicates that a circular reference was detected.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | [<code>Schema</code>](#Schema) | schema that is currently accessed and need to be checked if it is a first time |
+| seenObjects | <code>Array</code> | list of objects that were already seen during recursion |
+
+<a name="markCircular"></a>
+
+## markCircular(schema)
+Mark schema as being a circular ref
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | [<code>Schema</code>](#Schema) | schema that should be marked as circular |
+
 <a name="recursiveSchema"></a>
 
-## recursiveSchema(schema, callback(schema))
+## recursiveSchema(schemaContent, callback(schema))
 Recursively go through each schema and execute callback.
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| schema | [<code>Schema</code>](#Schema) | found. |
+| schemaContent | [<code>Schema</code>](#Schema) | schema. |
+| callback(schema) | <code>function</code> | the function that is called foreach schema found.         schema {Schema}: the found schema. |
+
+<a name="crawl"></a>
+
+## crawl(schemaContent, seenObj, callback(schema))
+Schema crawler
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schemaContent | [<code>Schema</code>](#Schema) | schema. |
+| seenObj | <code>Array</code> | schema elements that crowler went through already. |
 | callback(schema) | <code>function</code> | the function that is called foreach schema found.         schema {Schema}: the found schema. |
 
 <a name="schemaDocument"></a>
@@ -1874,4 +1934,30 @@ Gives schemas id to all anonymous schemas.
 | Param | Type |
 | --- | --- |
 | doc | [<code>AsyncAPIDocument</code>](#AsyncAPIDocument) | 
+
+<a name="recursiveSchemaObject"></a>
+
+## recursiveSchemaObject(schema, seenObj, callback(schema))
+Recursively go through schema of object type and execute callback.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | [<code>Schema</code>](#Schema) | Object type. |
+| seenObj | <code>Array</code> | schema elements that crawler went through already. |
+| callback(schema) | <code>function</code> | the function that is called foreach schema found.         schema {Schema}: the found schema. |
+
+<a name="recursiveSchemaArray"></a>
+
+## recursiveSchemaArray(schema, seenObj, callback(schema))
+Recursively go through schema of array type and execute callback.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | [<code>Schema</code>](#Schema) | Array type. |
+| seenObj | <code>Array</code> | schema elements that crowler went through already. |
+| callback(schema) | <code>function</code> | the function that is called foreach schema found.         schema {Schema}: the found schema. |
 

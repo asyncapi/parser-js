@@ -18,6 +18,11 @@ Use this package to parse and validate AsyncAPI documents —either YAML or JSON
 
 > This package doesn't support AsyncAPI 1.x.
 
+## Requirements
+
+* Git v1+
+
+
 ### Install
 
 ```

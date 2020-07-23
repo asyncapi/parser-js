@@ -20,7 +20,7 @@ Use this package to parse and validate AsyncAPI documents —either YAML or JSON
 
 ## Requirements
 
-* Git v1+
+* (Temporarily) Git v1+
 
 
 ### Install

@@ -94,6 +94,7 @@ declare module "@asyncapi/parser" {
         hasMessages(): boolean;
         allMessages(): Map<string, Message>;
         allSchemas(): Map<string, Schema>;
+        hasCircular(): boolean;
     }
     class Base {
         json(): any;
@@ -347,6 +348,7 @@ declare module "@asyncapi/parser" {
         readOnly(): boolean;
         writeOnly(): boolean;
         examples(): any[];
+        isCircular(): boolean;
     }
     /**
      * Implements functions to deal with a SecurityScheme object.
@@ -429,7 +431,6 @@ declare module "@asyncapi/parser" {
      * @param [options.path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
      * @param [options.parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
      * @param [options.resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @param [options.dereference] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
      * @param [options.applyTraits = true] - Whether to resolve and apply traits or not.
      * @returns The parsed AsyncAPI document.
      */
@@ -437,7 +438,6 @@ declare module "@asyncapi/parser" {
         path?: string;
         parse?: any;
         resolve?: any;
-        dereference?: any;
         applyTraits?: any;
     }): Promise<AsyncAPIDocument>;
     /**

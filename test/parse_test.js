@@ -256,8 +256,7 @@ describe('parse()', function() {
   it('should offer information about YAML line and column where $ref errors are located', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
-      title: 'Error opening file "/Users/wookiee/Documents/sources/parser-js/refs/refed.yaml" \n' +
-    'ENOENT: no such file or directory, open \'/Users/wookiee/Documents/sources/parser-js/refs/refed.yaml\'',
+      title: `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`,
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -279,8 +278,7 @@ describe('parse()', function() {
   it('should offer information about JSON line and column where $ref errors are located', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
-      title: 'Error opening file "/Users/wookiee/Documents/sources/parser-js/refs/refed.yaml" \n' +
-    'ENOENT: no such file or directory, open \'/Users/wookiee/Documents/sources/parser-js/refs/refed.yaml\'',
+      title: `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`,
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -302,8 +300,7 @@ describe('parse()', function() {
   it('should not offer information about JS line and column where $ref errors are located if format is JS', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
-      title: 'Error opening file "/Users/wookiee/Documents/sources/parser-js/refs/refed.yaml" \n' +
-    'ENOENT: no such file or directory, open \'/Users/wookiee/Documents/sources/parser-js/refs/refed.yaml\'',
+      title: `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`,
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -319,8 +316,7 @@ describe('parse()', function() {
   it('should offer information about missing HTTP $refs', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
-      title: 'Error downloading https://example.com/components/messages/testMessage \n' +
-      'HTTP ERROR 404',
+      title: 'Error downloading https://example.com/components/messages/testMessage \nHTTP ERROR 404',
       refs: [
         {
           jsonPointer: '/channels/mychannel/publish/message/$ref',
@@ -347,8 +343,7 @@ describe('parse()', function() {
   it('should offer information about missing root $refs', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
-      title: 'Error downloading https://example.com/components/messages/testMessage \n' +
-      'HTTP ERROR 404',
+      title: 'Error downloading https://example.com/components/messages/testMessage \nHTTP ERROR 404',
       refs: [
         {
           jsonPointer: '/channels/mychannel/subscribe/message/$ref',

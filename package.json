@@ -52,7 +52,7 @@
     "uglify-es": "^3.3.9"
   },
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "github:fmvilas/json-schema-ref-parser#add-more-info-about-errors",
+    "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "@asyncapi/specs": "^2.7.1",
     "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",

@@ -1,4 +1,4 @@
-const {validateChannelParams, validateServerVariables, validateOperationId} = require('../lib/customValidators.js');
+const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
 const chai = require('chai');
 
 const expect = chai.expect;
@@ -401,5 +401,258 @@ describe('validateOperationId()', function() {
         }
       ]);
     }
+  });
+});
+
+describe('validateServerSecurity()', function() {
+  const specialSecTypes = ['oauth2', 'openIdConnect'];
+
+  it('should successfully validate server security', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "simple": []
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "simple": {
+            "type": "httpApiKey",
+            "name": "Api-Key",
+            "in": "header"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
+  });
+
+  it('should successfully validate if server security not provided', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka"
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
+  });
+
+  it('should successfully validate server security of special security type like oauth2', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "oauth2": [
+                "write:test",
+                "read:test"
+              ]
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "oauth2": {
+            "type": "oauth2",
+            "flows": {}
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
+  });
+
+  it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "complex": []
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "simple": {
+            "type": "httpApiKey",
+            "name": "Api-Key",
+            "in": "header"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    try {
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Server security name must correspond to a security scheme which is declared in the security schemes under the components object.');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
+          location: {
+            jsonPointer: '/servers/dummy/security/complex',
+            startLine: 12,
+            startColumn: 27,
+            startOffset: 250,
+            endLine: 12,
+            endColumn: 29,
+            endOffset: 252
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that server has no security schema provided when components schema object is not in the document', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "complex": []
+            }
+          ]
+        }
+      },
+      "components": {
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    try {
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Server security name must correspond to a security scheme which is declared in the security schemes under the components object.');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
+          location: {
+            jsonPointer: '/servers/dummy/security/complex',
+            startLine: 12,
+            startColumn: 27,
+            startOffset: 250,
+            endLine: 12,
+            endColumn: 29,
+            endOffset: 252
+          }
+        }
+      ]);
+    }  
+  });
+
+  it('should throw error that server security is not declared as empty array', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "basic": ["user", "password"]
+            },
+            {
+              "apikey": [12345678]
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "basic": {
+            "type": "userPassword"
+          },
+          "apikey": {
+            "type": "httpApiKey"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    try {
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect.');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'dummy/security/basic security info must have an empty array because its corresponding security schema type is: userPassword',
+          location: {
+            jsonPointer: '/servers/dummy/security/basic',
+            startLine: 12,
+            startColumn: 25,
+            startOffset: 248,
+            endLine: 12,
+            endColumn: 45,
+            endOffset: 268
+          }
+        },
+        {
+          title: 'dummy/security/apikey security info must have an empty array because its corresponding security schema type is: httpApiKey',
+          location: {
+            jsonPointer: '/servers/dummy/security/apikey',
+            startLine: 15,
+            startColumn: 26,
+            startOffset: 322,
+            endLine: 15,
+            endColumn: 36,
+            endOffset: 332
+          }
+        }
+      ]);
+    }  
   });
 });

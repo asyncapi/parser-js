@@ -541,4 +541,13 @@ describe('Schema', function() {
       expect(d.examples()).to.be.equal(doc.examples);
     });
   });
+
+  describe('#isCircular()', function() {
+    it('should return a boolean', function() {
+      const doc = { 'x-parser-circular': true};
+      const d = new Schema(doc);
+      expect(typeof d.isCircular()).to.be.equal('boolean');
+      expect(d.isCircular()).to.be.equal(doc['x-parser-circular']);
+    });
+  });
 });

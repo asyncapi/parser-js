@@ -11,6 +11,7 @@ const expect = chai.expect;
 
 const invalidYAML = fs.readFileSync(path.resolve(__dirname, './wrong/malformed-asyncapi.yaml'), 'utf8');
 const inputYAML = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.yaml'), 'utf8');
+const inputYAMLCircular = fs.readFileSync(path.resolve(__dirname, './good/circular-refs.yaml'), 'utf8');
 const inputJSON = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.json'), 'utf8');
 const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.yaml'), 'utf8');
 const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.json'), 'utf8');
@@ -376,6 +377,20 @@ describe('parse()', function() {
     await checkErrorTypeAndMessage(async () => {
       await parser.parse(() => {});
     }, type, message);
+  });
+
+  it('should properly mark circular references', async function() {
+    const result = await parser.parse(inputYAMLCircular, { path: __filename });
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(true);
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(true);
+    //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
+    expect(result.hasCircular()).to.equal(true);
+    //we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
+    expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(false);
+    expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(true);
+    expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
   });
 });
 

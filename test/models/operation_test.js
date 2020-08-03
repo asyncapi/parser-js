@@ -87,6 +87,12 @@ describe('Operation', function() {
   });
   
   describe('#message()', function() {
+    it('should return null if channel doesn\'t have a message', function() {
+      const doc = { };
+      const d = new Operation(doc);
+      expect(d.message()).to.be.equal(null);
+    });
+    
     it('should return a specific Message object', function() {
       const doc = { message: { oneOf: [{ test: true }, { test: false }] } };
       const d = new Operation(doc);
@@ -98,6 +104,18 @@ describe('Operation', function() {
       const doc = { message: { oneOf: [{ test: true }, { test: false }] } };
       const d = new Operation(doc);
       expect(d.message(100)).to.be.equal(null);
+    });
+
+    it('should return null if index is not a number', function() {
+      const doc = { message: { oneOf: [{ test: true }, { test: false }] } };
+      const d = new Operation(doc);
+      expect(d.message('0')).to.be.equal(null);
+    });
+
+    it('should return message object if no index is provided and message is not oneOf', function() {
+      const doc = { message: { test: true } };
+      const d = new Operation(doc);
+      expect(d.message().json()).to.be.deep.equal(doc.message);
     });
   });
 });

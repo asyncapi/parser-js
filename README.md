@@ -130,6 +130,12 @@ This package throws a bunch of different error types. All errors contain a `type
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 
+### Circular references
+
+Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
+- `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular` method to check the document and provide a proper message to the user.
+- `x-parser-circular` property is added to every schema where circular reference starts. You should use `isCircular` method on a Schema model like `document.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()`.
+
 ### Develop
 
 1. Run tests with `npm test`

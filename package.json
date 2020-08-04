@@ -15,7 +15,7 @@
     "prepublishOnly": "npm run bundle",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",
-    "lint": "eslint --config .eslintrc ."
+    "lint": "eslint --max-warnings 0 --config .eslintrc ."
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"

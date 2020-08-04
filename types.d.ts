@@ -450,9 +450,16 @@ declare module "@asyncapi/parser" {
     function parseFromUrl(url: string, fetchOptions?: any, options?: any): Promise<AsyncAPIDocument>;
     /**
      * Registers a new schema parser. Schema parsers are in charge of parsing and transforming payloads to AsyncAPI Schema format.
-     * @param schemaFormats - An array of schema formats the given schema parser is able to recognize and transform.
      * @param parserModule - The schema parser module containing parse() and getMimeTypes() functions.
      */
-    function registerSchemaParser(schemaFormats: string[], parserModule: any): void;
+    function registerSchemaParser(parserModule: any): void;
+    /**
+     * Triggers additional operations on the AsyncAPI channels like traits application or message validation and conversion
+     * @param parsedJSON - parsed AsyncAPI document
+     * @param asyncapiYAMLorJSON - AsyncAPI document in string
+     * @param initialFormat - information of the document was oryginally JSON or YAML
+     * @param options - Configuration options.
+     */
+    function customChannelsOperations(parsedJSON: any, asyncapiYAMLorJSON: string, initialFormat: string, options: any): void;
 }
 

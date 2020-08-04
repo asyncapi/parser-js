@@ -77,4 +77,25 @@ describe('asyncapiSchemaFormatParser', function() {
       ]);
     }
   });
+
+  it('should not throw error if payload not provided', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+          "title": "My API",
+          "version": "1.0.0"
+      },
+      "channels": {
+        "mychannel": {
+          "publish": {
+            "message": {
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(async () => await parser.parse(parsedInput)).to.not.throw();
+  });
 });

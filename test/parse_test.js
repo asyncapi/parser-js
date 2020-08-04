@@ -45,7 +45,7 @@ const checkErrorWrapper = async (fn, validationObject) => {
   }
 };
 
-const offset = (offset, line) => (offset + ((eolLength - 1) * (line - 1)));
+const offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
 
 describe('parse()', function() {
   it('should parse YAML', async function() {

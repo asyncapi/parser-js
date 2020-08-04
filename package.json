@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "0.28.1",
+  "version": "0.28.2",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -15,7 +15,7 @@
     "prepublishOnly": "npm run bundle",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",
-    "lint": "eslint --config .eslintrc ."
+    "lint": "eslint --max-warnings 0 --config .eslintrc ."
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"

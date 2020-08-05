@@ -497,6 +497,10 @@ describe('parse()', function() {
     expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
     expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(true);
     expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
+    //NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
+    //If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
+    //This is why it is important to check that NormalSchemaC is or sure not marked as circular
+    expect(result.components().schema('NormalSchemaC').isCircular()).to.equal(false);
   });
 });
 

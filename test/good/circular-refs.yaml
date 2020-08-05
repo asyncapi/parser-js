@@ -18,7 +18,17 @@ channels:
       message:
         payload:
           $ref: '#/components/schemas/NonRecursive'
+  testChannel:
+    subscribe:
+      message:
+        oneOf:
+          - $ref: '#/components/messages/testMessage'
 components:
+  messages:
+    testMessage:
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/NormalSchemaA'
   schemas:
     NonRecursive:
       type: object
@@ -51,3 +61,28 @@ components:
             $ref: '#/components/schemas/RecursiveSelf'
         ancestorSomething:
           type: string
+    NormalSchemaA:
+      type: object
+      properties:
+        schemaBReference:
+          $ref: '#/components/schemas/NormalSchemaB'
+        schemaCReference:
+          $ref: '#/components/schemas/NormalSchemaC'
+        commonEnumName:
+          type: string
+          enum:
+            - ENUM_1
+            - ENUM_2
+    NormalSchemaB:
+      type: string
+      enum:
+        - ENUM_A
+        - ENUM_B
+        - ENUM_C
+        - ENUM_D
+    NormalSchemaC:
+      allOf:
+        - $ref: '#/components/schemas/NormalSchemaB'
+        - type: string
+          enum:
+            - ENUM_E

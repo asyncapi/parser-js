@@ -4,7 +4,6 @@ const chaiAsPromised = require('chai-as-promised');
 const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
-const ParserError = require('../lib/errors/parser-error');
 const checkErrorWrapper = require('./utils');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -23,14 +22,6 @@ const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
 
 const eolLength = EOL.length;
 
-/* eslint-disable sonarjs/cognitive-complexity */
-/**
- * Disabled the rule for this function as there is no way to make it shorter in a meaningfull way
- * This function should always be used in tests where errors are evaluated to make sure they always work even if proper error is not thrown
- * @private
- * @param  {Function} fn Function that you want to test
- * @param  {Object} validationObject Error object to evaluate against the error thrown by fn()
-*/
 const offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
 
 describe('parse()', function() {

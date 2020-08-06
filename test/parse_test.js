@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
 const ParserError = require('../lib/errors/parser-error');
-
+const checkErrorWrapper = require('./utils');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
@@ -31,28 +31,6 @@ const eolLength = EOL.length;
  * @param  {Function} fn Function that you want to test
  * @param  {Object} validationObject Error object to evaluate against the error thrown by fn()
 */
-const checkErrorWrapper = async (fn, validationObject) => {
-  const { type, message, title, refs, detail, location, validationErrors, parsedJSON } = validationObject;
-
-  try {
-    await fn();
-    throw Error('This error should not be reachable. If you reached it, it means the function did not throw a proper error and executed successfully.');
-  } catch (e) {
-    const isProperError = e instanceof ParserError;
-    if (!isProperError) console.log(e);
-
-    if (isProperError) expect(e instanceof ParserError).to.equal(true);
-    if (type) expect(e).to.have.own.property('type', type);
-    if (message) expect(e).to.have.own.property('message', message);
-    if (title) expect(e).to.have.own.property('title', title);
-    if (detail) expect(e).to.have.own.property('detail', detail);
-    if (refs) expect(e.refs).to.deep.equal(refs);
-    if (location) expect(e.location).to.deep.equal(location);
-    if (validationErrors) expect(e.validationErrors).to.deep.equal(validationErrors);
-    if (parsedJSON) expect(JSON.stringify(e.parsedJSON)).to.deep.equal(parsedJSON);
-  }
-};
-
 const offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
 
 describe('parse()', function() {

@@ -1,5 +1,6 @@
 const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
 const chai = require('chai');
+const { offset } = require('../lib/utils'); 
 
 const expect = chai.expect;
 const input = 'json';
@@ -59,10 +60,10 @@ describe('validateServerVariables()', function() {
             jsonPointer: '/servers/dummy',
             startLine: 3,
             startColumn: 19,
-            startOffset: 39,
+            startOffset: offset(39, 3),
             endLine: 10,
             endColumn: 11,
-            endOffset: 196
+            endOffset: offset(196, 10),
           }
         }
       ]);
@@ -92,10 +93,10 @@ describe('validateServerVariables()', function() {
             jsonPointer: '/servers/dummy',
             startLine: 3,
             startColumn: 19,
-            startOffset: 39,
+            startOffset: offset(39, 3),
             endLine: 5,
             endColumn: 11,
-            endOffset: 89
+            endOffset: offset(89, 5),
           }
         }
       ]);
@@ -130,10 +131,10 @@ describe('validateServerVariables()', function() {
             jsonPointer: '/servers/dummy',
             startLine: 3,
             startColumn: 19,
-            startOffset: 39,
+            startOffset: offset(39, 3),
             endLine: 10,
             endColumn: 11,
-            endOffset: 200
+            endOffset: offset(200, 10),
           }
         }
       ]);
@@ -209,10 +210,10 @@ describe('validateChannelParams()', function() {
             jsonPointer: '/channels/test~1{test}~1{testid}',
             startLine: 3,
             startColumn: 34,
-            startOffset: 54,
+            startOffset: offset(54, 3),
             endLine: 11,
             endColumn: 11,
-            endOffset: 214
+            endOffset: offset(214, 11)
           }
         }
       ]);
@@ -248,10 +249,10 @@ describe('validateChannelParams()', function() {
             jsonPointer: '/channels/test~1{test}',
             startLine: 3,
             startColumn: 25,
-            startOffset: 45,
+            startOffset: offset(45, 3),
             endLine: 11,
             endColumn: 11,
-            endOffset: 206
+            endOffset: offset(206, 11)
           }
         }
       ]);
@@ -280,10 +281,10 @@ describe('validateChannelParams()', function() {
             jsonPointer: '/channels/test~1{test}~1{testid}',
             startLine: 3,
             startColumn: 34,
-            startOffset: 54,
+            startOffset: offset(54, 3),
             endLine: 4,
             endColumn: 11,
-            endOffset: 65
+            endOffset: offset(65, 4)
           }
         }
       ]);
@@ -381,10 +382,10 @@ describe('validateOperationId()', function() {
             jsonPointer: '/channels/test~12/subscribe/operationId',
             startLine: 14,
             startColumn: 29,
-            startOffset: 273,
+            startOffset: offset(273, 14),
             endLine: 14,
             endColumn: 35,
-            endOffset: 279
+            endOffset: offset(279, 14)
           }
         },
         {
@@ -393,10 +394,10 @@ describe('validateOperationId()', function() {
             jsonPointer: '/channels/test~13/subscribe/operationId',
             startLine: 19,
             startColumn: 29,
-            startOffset: 375,
+            startOffset: offset(375, 19),
             endLine: 19,
             endColumn: 35,
-            endOffset: 381
+            endOffset: offset(381, 19)
           }
         }
       ]);
@@ -430,6 +431,46 @@ describe('validateServerSecurity()', function() {
             "type": "httpApiKey",
             "name": "Api-Key",
             "in": "header"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
+  });
+
+  it('should successfully validate server security for oauth2 that requires scopes', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "oauthsec": ["read:pets"]
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "oauthsec": {
+            "type": "oauth2",
+            "flows": {
+              "implicit": {
+                "authorizationUrl": "https://example.com/api/oauth/auth",
+                "refreshUrl": "https://example.com/api/oauth/refresh",
+                "scopes": {
+                  "write:pets": "modify pets in your account",
+                  "read:pets": "read your pets"
+                }
+              }
+            }
           }
         }
       }
@@ -533,10 +574,70 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
             startColumn: 27,
-            startOffset: 250,
+            startOffset: offset(250, 12),
             endLine: 12,
             endColumn: 29,
-            endOffset: 252
+            endOffset: offset(252, 12)
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that server security is missing scopes that are required for special security types like oauth2 and openIdConnect', async function() {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "servers": {
+        "dummy": {
+          "url": "http://localhost",
+          "protocol": "kafka",
+          "security": [
+            {
+              "oauthsec": []
+            }
+          ]
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "oauthsec": {
+            "type": "oauth2",
+            "flows": {
+              "implicit": {
+                "authorizationUrl": "https://example.com/api/oauth/auth",
+                "refreshUrl": "https://example.com/api/oauth/refresh",
+                "scopes": {
+                  "write:pets": "modify pets in your account",
+                  "read:pets": "read your pets"
+                }
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+    
+    try {
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Server security value must not be an empty array if corresponding security schema type is oauth2 or openIdConnect. Add list of required scopes.');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'dummy/security/oauthsec security info must not have an empty array because its corresponding security schema type is: oauth2',
+          location: {
+            jsonPointer: '/servers/dummy/security/oauthsec',
+            startLine: 12,
+            startColumn: 28,
+            startOffset: offset(251, 12),
+            endLine: 12,
+            endColumn: 30,
+            endOffset: offset(253, 12)
           }
         }
       ]);
@@ -578,10 +679,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
             startColumn: 27,
-            startOffset: 250,
+            startOffset: offset(250, 12),
             endLine: 12,
             endColumn: 29,
-            endOffset: 252
+            endOffset: offset(252, 12)
           }
         }
       ]);
@@ -634,10 +735,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/basic',
             startLine: 12,
             startColumn: 25,
-            startOffset: 248,
+            startOffset: offset(248, 12),
             endLine: 12,
             endColumn: 45,
-            endOffset: 268
+            endOffset: offset(268, 12)
           }
         },
         {
@@ -646,10 +747,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/apikey',
             startLine: 15,
             startColumn: 26,
-            startOffset: 322,
+            startOffset: offset(322, 15),
             endLine: 15,
             endColumn: 36,
-            endOffset: 332
+            endOffset: offset(332, 15)
           }
         }
       ]);

@@ -1,5 +1,6 @@
 const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
 const chai = require('chai');
+const { offset } = require('../lib/utils'); 
 
 const expect = chai.expect;
 const input = 'json';
@@ -59,10 +60,10 @@ describe('validateServerVariables()', function() {
             jsonPointer: '/servers/dummy',
             startLine: 3,
             startColumn: 19,
-            startOffset: 39,
+            startOffset: offset(39, 3),
             endLine: 10,
             endColumn: 11,
-            endOffset: 196
+            endOffset: offset(196, 10),
           }
         }
       ]);
@@ -92,10 +93,10 @@ describe('validateServerVariables()', function() {
             jsonPointer: '/servers/dummy',
             startLine: 3,
             startColumn: 19,
-            startOffset: 39,
+            startOffset: offset(39, 3),
             endLine: 5,
             endColumn: 11,
-            endOffset: 89
+            endOffset: offset(89, 5),
           }
         }
       ]);
@@ -130,10 +131,10 @@ describe('validateServerVariables()', function() {
             jsonPointer: '/servers/dummy',
             startLine: 3,
             startColumn: 19,
-            startOffset: 39,
+            startOffset: offset(39, 3),
             endLine: 10,
             endColumn: 11,
-            endOffset: 200
+            endOffset: offset(200, 10),
           }
         }
       ]);
@@ -209,10 +210,10 @@ describe('validateChannelParams()', function() {
             jsonPointer: '/channels/test~1{test}~1{testid}',
             startLine: 3,
             startColumn: 34,
-            startOffset: 54,
+            startOffset: offset(54, 3),
             endLine: 11,
             endColumn: 11,
-            endOffset: 214
+            endOffset: offset(214, 11)
           }
         }
       ]);
@@ -248,10 +249,10 @@ describe('validateChannelParams()', function() {
             jsonPointer: '/channels/test~1{test}',
             startLine: 3,
             startColumn: 25,
-            startOffset: 45,
+            startOffset: offset(45, 3),
             endLine: 11,
             endColumn: 11,
-            endOffset: 206
+            endOffset: offset(206, 11)
           }
         }
       ]);
@@ -280,10 +281,10 @@ describe('validateChannelParams()', function() {
             jsonPointer: '/channels/test~1{test}~1{testid}',
             startLine: 3,
             startColumn: 34,
-            startOffset: 54,
+            startOffset: offset(54, 3),
             endLine: 4,
             endColumn: 11,
-            endOffset: 65
+            endOffset: offset(65, 4)
           }
         }
       ]);
@@ -381,10 +382,10 @@ describe('validateOperationId()', function() {
             jsonPointer: '/channels/test~12/subscribe/operationId',
             startLine: 14,
             startColumn: 29,
-            startOffset: 273,
+            startOffset: offset(273, 14),
             endLine: 14,
             endColumn: 35,
-            endOffset: 279
+            endOffset: offset(279, 14)
           }
         },
         {
@@ -393,10 +394,10 @@ describe('validateOperationId()', function() {
             jsonPointer: '/channels/test~13/subscribe/operationId',
             startLine: 19,
             startColumn: 29,
-            startOffset: 375,
+            startOffset: offset(375, 19),
             endLine: 19,
             endColumn: 35,
-            endOffset: 381
+            endOffset: offset(381, 19)
           }
         }
       ]);
@@ -573,10 +574,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
             startColumn: 27,
-            startOffset: 250,
+            startOffset: offset(250, 12),
             endLine: 12,
             endColumn: 29,
-            endOffset: 252
+            endOffset: offset(252, 12)
           }
         }
       ]);
@@ -633,10 +634,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/oauthsec',
             startLine: 12,
             startColumn: 28,
-            startOffset: 251,
+            startOffset: offset(251, 12),
             endLine: 12,
             endColumn: 30,
-            endOffset: 253
+            endOffset: offset(253, 12)
           }
         }
       ]);
@@ -678,10 +679,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
             startColumn: 27,
-            startOffset: 250,
+            startOffset: offset(250, 12),
             endLine: 12,
             endColumn: 29,
-            endOffset: 252
+            endOffset: offset(252, 12)
           }
         }
       ]);
@@ -734,10 +735,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/basic',
             startLine: 12,
             startColumn: 25,
-            startOffset: 248,
+            startOffset: offset(248, 12),
             endLine: 12,
             endColumn: 45,
-            endOffset: 268
+            endOffset: offset(268, 12)
           }
         },
         {
@@ -746,10 +747,10 @@ describe('validateServerSecurity()', function() {
             jsonPointer: '/servers/dummy/security/apikey',
             startLine: 15,
             startColumn: 26,
-            startOffset: 322,
+            startOffset: offset(322, 15),
             endLine: 15,
             endColumn: 36,
-            endOffset: 332
+            endOffset: offset(332, 15)
           }
         }
       ]);

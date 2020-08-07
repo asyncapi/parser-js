@@ -1,10 +1,10 @@
-const { EOL } = require('os');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
 const ParserError = require('../lib/errors/parser-error');
+const { offset } = require('../lib/utils'); 
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -20,8 +20,6 @@ const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"chann
 const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}';
 const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":null}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
-
-const eolLength = EOL.length;
 
 /* eslint-disable sonarjs/cognitive-complexity */
 /**
@@ -53,8 +51,6 @@ const checkErrorWrapper = async (fn, validationObject) => {
   }
 };
 
-const offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
-
 describe('parse()', function() {
   it('should parse YAML', async function() {
     const result = await parser.parse(inputYAML, { path: __filename });
@@ -71,22 +67,24 @@ describe('parse()', function() {
         location: { 
           endColumn: 31,
           endLine: 1,
-          endOffset: 29,
+          endOffset: offset(29, 1),
           jsonPointer: '/info',
           startColumn: 29,
           startLine: 1,
-          startOffset: 27
+          startOffset: offset(27, 1)
         }
       },
       {
         title: '/info should have required property \'version\'',
-        location: { endColumn: 31,
+        location: { 
+          endColumn: 31,
           endLine: 1,
-          endOffset: 29,
+          endOffset: offset(29, 1),
           jsonPointer: '/info',
           startColumn: 29,
           startLine: 1,
-          startOffset: 27 }
+          startOffset: offset(27, 1) 
+        }
       },
       {
         title: '/ should have required property \'channels\'',
@@ -213,7 +211,7 @@ describe('parse()', function() {
           jsonPointer: '/asyncapi',
           startLine: 1,
           startColumn: 1,
-          startOffset: 0,
+          startOffset: offset(0, 1),
           endLine: 1,
           endColumn: 16,
           endOffset: offset(15, 1),
@@ -231,7 +229,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-yaml',
       title: 'The provided YAML is not valid.',
       detail: 'duplicated mapping key at line 2, column -4:\n    bad:\n    ^',
-      location: { startOffset: 5, startLine: 2, startColumn: -4 }
+      location: { startOffset: offset(5, 2), startLine: 2, startColumn: -4 }
     };
 
     await checkErrorWrapper(async () => {
@@ -249,10 +247,10 @@ describe('parse()', function() {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
           startLine: 35,
           startColumn: 11,
-          startOffset: 736,
+          startOffset: offset(736, 35),
           endLine: 35,
           endColumn: 34,
-          endOffset: 759
+          endOffset: offset(759, 35)
         }
       ]
     };
@@ -270,10 +268,10 @@ describe('parse()', function() {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
           startLine: 35,
           startColumn: 11,
-          startOffset: 736,
+          startOffset: offset(736, 35),
           endLine: 35,
           endColumn: 34,
-          endOffset: 759
+          endOffset: offset(759, 35)
         }
       ]
     };
@@ -407,7 +405,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-yaml',
       title: 'The provided YAML is not valid.',
       detail: 'bad indentation of a mapping entry at line 19, column 11:\n              $ref: "#/components/schemas/sentAt"\n              ^',
-      location: { startOffset: 460, startLine: 19, startColumn: 11 }
+      location: { startOffset: offset(460, 19), startLine: 19, startColumn: 11 }
     };
 
     await checkErrorWrapper(async () => {
@@ -420,7 +418,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-json',
       title: 'The provided JSON is not valid.',
       detail: 'Unexpected token j in JSON at position 12 while parsing near \' {"invalid "json" }\'',
-      location: { startOffset: 12, startLine: 1, startColumn: 12 }
+      location: { startOffset: offset(12, 1), startLine: 1, startColumn: 12 }
     };
 
     await checkErrorWrapper(async () => {

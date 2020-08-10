@@ -440,46 +440,6 @@ describe('validateServerSecurity()', function() {
     expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
   });
 
-  it('should successfully validate server security for oauth2 that requires scopes', async function() {
-    const inputString = `{
-      "asyncapi": "2.0.0",
-      "info": {
-        "version": "1.0.0"
-      },
-      "servers": {
-        "dummy": {
-          "url": "http://localhost",
-          "protocol": "kafka",
-          "security": [
-            {
-              "oauthsec": ["read:pets"]
-            }
-          ]
-        }
-      },
-      "components": {
-        "securitySchemes": {
-          "oauthsec": {
-            "type": "oauth2",
-            "flows": {
-              "implicit": {
-                "authorizationUrl": "https://example.com/api/oauth/auth",
-                "refreshUrl": "https://example.com/api/oauth/refresh",
-                "scopes": {
-                  "write:pets": "modify pets in your account",
-                  "read:pets": "read your pets"
-                }
-              }
-            }
-          }
-        }
-      }
-    }`;
-    const parsedInput = JSON.parse(inputString);
-    
-    expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
-  });
-
   it('should successfully validate if server security not provided', async function() {
     const inputString = `{
       "asyncapi": "2.0.0",
@@ -578,66 +538,6 @@ describe('validateServerSecurity()', function() {
             endLine: 12,
             endColumn: 29,
             endOffset: offset(252, 12)
-          }
-        }
-      ]);
-    }
-  });
-
-  it('should throw error that server security is missing scopes that are required for special security types like oauth2 and openIdConnect', async function() {
-    const inputString = `{
-      "asyncapi": "2.0.0",
-      "info": {
-        "version": "1.0.0"
-      },
-      "servers": {
-        "dummy": {
-          "url": "http://localhost",
-          "protocol": "kafka",
-          "security": [
-            {
-              "oauthsec": []
-            }
-          ]
-        }
-      },
-      "components": {
-        "securitySchemes": {
-          "oauthsec": {
-            "type": "oauth2",
-            "flows": {
-              "implicit": {
-                "authorizationUrl": "https://example.com/api/oauth/auth",
-                "refreshUrl": "https://example.com/api/oauth/refresh",
-                "scopes": {
-                  "write:pets": "modify pets in your account",
-                  "read:pets": "read your pets"
-                }
-              }
-            }
-          }
-        }
-      }
-    }`;
-    const parsedInput = JSON.parse(inputString);
-    
-    try {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
-    } catch (e) {
-      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Server security value must not be an empty array if corresponding security schema type is oauth2 or openIdConnect. Add list of required scopes.');
-      expect(e.parsedJSON).to.deep.equal(parsedInput);
-      expect(e.validationErrors).to.deep.equal([
-        {
-          title: 'dummy/security/oauthsec security info must not have an empty array because its corresponding security schema type is: oauth2',
-          location: {
-            jsonPointer: '/servers/dummy/security/oauthsec',
-            startLine: 12,
-            startColumn: 28,
-            startOffset: offset(251, 12),
-            endLine: 12,
-            endColumn: 30,
-            endOffset: offset(253, 12)
           }
         }
       ]);

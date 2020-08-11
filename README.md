@@ -18,30 +18,31 @@
 
 <!-- toc -->
 
-  * [Install](#install)
-  * [Examples](#examples)
-    + [Example passing inline AsyncAPI](#example-passing-inline-asyncapi)
-    + [Example passing a URL](#example-passing-a-url)
-    + [Example using OpenAPI schemas](#example-using-openapi-schemas)
-    + [Example using RAML data types](#example-using-raml-data-types)
-  * [API documentation](#api-documentation)
-  * [Custom message parsers](#custom-message-parsers)
-  * [Error types](#error-types)
-  * [Circular references](#circular-references)
+- [Install](#install)
+- [Examples](#examples)
+  * [Example passing inline AsyncAPI](#example-passing-inline-asyncapi)
+  * [Example passing a URL](#example-passing-a-url)
+  * [Example using OpenAPI schemas](#example-using-openapi-schemas)
+  * [Example using RAML data types](#example-using-raml-data-types)
+  * [Example using Avro schemas](#example-using-avro-schemas)
+- [API documentation](#api-documentation)
+- [Custom message parsers](#custom-message-parsers)
+- [Error types](#error-types)
+- [Circular references](#circular-references)
 - [Contributing](#contributing)
 - [Contributors ✨](#contributors-%E2%9C%A8)
 
 <!-- tocstop -->
 
-### Install
+## Install
 
 ```
 npm install @asyncapi/parser
 ```
 
-### Examples 
+## Examples 
 
-#### Example passing inline AsyncAPI
+### Example passing inline AsyncAPI
 
 ```js
 const parser = require('@asyncapi/parser');
@@ -71,7 +72,7 @@ console.log(doc.info().title());
 // => Example
 ```
 
-#### Example passing a URL
+### Example passing a URL
 
 ```js
 const parser = require('@asyncapi/parser');
@@ -82,23 +83,23 @@ console.log(doc.info().title());
 // => Example
 ```
 
-#### Example using OpenAPI schemas
+### Example using OpenAPI schemas
 
 Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/openapi-schema-parser) for more information.
 
-#### Example using RAML data types
+### Example using RAML data types
 
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
 
-#### Example using Avro schemas
+### Example using Avro schemas
 
 Head over to [asyncapi/avro-schema-parser](https://www.github.com/asyncapi/avro-schema-parser) for more information.
 
-### API documentation
+## API documentation
 
 See [API documentation](/API.md) for more example and full API reference information.
 
-### Custom message parsers
+## Custom message parsers
 
 AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
 
@@ -122,13 +123,13 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
     }
     ```
 2. Before parsing an AsyncAPI document with a parser, register the additional custom schema parser:
-    ```
+    ```js
     const myCustomParser = require('mycustomParser');
 
     parser.registerSchemaParser(myCustomParser);
     ```
 
-### Error types
+## Error types
 
 This package throws a bunch of different error types. All errors contain a `type` (prefixed by this repo URL) and a `title` field. The following table describes all the errors and the extra fields they include:
 
@@ -149,7 +150,7 @@ This package throws a bunch of different error types. All errors contain a `type
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 
-### Circular references
+## Circular references
 
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular` method to check the document and provide a proper message to the user.

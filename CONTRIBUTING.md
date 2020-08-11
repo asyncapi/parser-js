@@ -9,6 +9,14 @@ Contributions are more than welcome. If you want to contribute, please make sure
 3. Open a Pull Request pointing to the `master` branch.
 4. A maintainer will review and, eventually, merge your Pull Request. Please, be patient as most of us are doing this in our spare time.
 
+### Develop
+
+1. Write code and tests.
+1. Make sure all tests pass `npm test`
+1. Make sure code is well formatted and secure `npm run lint`
+
+Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
+
 ## Conventional commits
 
 This project follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification. Releasing to GitHub and NPM is done with the support of [semantic-release](https://semantic-release.gitbook.io/semantic-release/).

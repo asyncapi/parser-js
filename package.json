@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "0.33.1",
+  "version": "1.0.0-rc.1",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -15,7 +15,8 @@
     "prepublishOnly": "npm run bundle",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",
-    "lint": "eslint --max-warnings 0 --config .eslintrc ."
+    "lint": "eslint --max-warnings 0 --config .eslintrc .",
+    "gen-readme-toc": "markdown-toc -i README.md"
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
@@ -49,7 +50,8 @@
     "nyc": "^15.1.0",
     "semantic-release": "^17.0.4",
     "tsd-jsdoc": "^2.5.0",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "markdown-toc": "^1.2.0"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",

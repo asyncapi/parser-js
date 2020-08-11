@@ -10,8 +10,6 @@
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/parser?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/parser?style=for-the-badge)
 
-<br><br>
-
 > :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
@@ -22,15 +20,16 @@
 - [Examples](#examples)
   * [Example passing inline AsyncAPI](#example-passing-inline-asyncapi)
   * [Example passing a URL](#example-passing-a-url)
+  * [Example using Avro schemas](#example-using-avro-schemas)
   * [Example using OpenAPI schemas](#example-using-openapi-schemas)
   * [Example using RAML data types](#example-using-raml-data-types)
-  * [Example using Avro schemas](#example-using-avro-schemas)
 - [API documentation](#api-documentation)
 - [Custom message parsers](#custom-message-parsers)
 - [Error types](#error-types)
 - [Circular references](#circular-references)
+- [Develop](#develop)
 - [Contributing](#contributing)
-- [Contributors ✨](#contributors-%E2%9C%A8)
+- [Contributors](#contributors)
 
 <!-- tocstop -->
 
@@ -83,6 +82,10 @@ console.log(doc.info().title());
 // => Example
 ```
 
+### Example using Avro schemas
+
+Head over to [asyncapi/avro-schema-parser](https://www.github.com/asyncapi/avro-schema-parser) for more information.
+
 ### Example using OpenAPI schemas
 
 Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/openapi-schema-parser) for more information.
@@ -90,10 +93,6 @@ Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/op
 ### Example using RAML data types
 
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
-
-### Example using Avro schemas
-
-Head over to [asyncapi/avro-schema-parser](https://www.github.com/asyncapi/avro-schema-parser) for more information.
 
 ## API documentation
 
@@ -156,11 +155,19 @@ Parser dereferences all circular references by default. In addition, to simplify
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular` method to check the document and provide a proper message to the user.
 - `x-parser-circular` property is added to every schema where circular reference starts. You should use `isCircular` method on a Schema model like `document.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()`.
 
+## Develop
+
+1. Write code and tests.
+1. Make sure all tests pass `npm test`
+1. Make sure code is well formatted and secure `npm run lint`
+
+Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
+
 ## Contributing
 
-Read [CONTRIBUTING](CONTRIBUTING.md) guide.
+Read [CONTRIBUTING](https://github.com/asyncapi/.github/blob/master/CONTRIBUTING.md) guide.
 
-## Contributors ✨
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 

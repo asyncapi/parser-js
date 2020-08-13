@@ -494,6 +494,10 @@ describe('parse()', function() {
     expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(false);
     expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
     expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].hasCircularProps()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps()[0]).to.equal('test');
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps().length).to.equal(1);
     expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
     //NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
     //If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs

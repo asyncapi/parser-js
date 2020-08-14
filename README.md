@@ -135,7 +135,7 @@ For more information about the `ParserError` class, [check out the documentation
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular()` function to check the document and provide a proper message to the user.
 - `x-parser-circular` property is added to every schema of array type that is circular. To check if schema is circular or not, you should use `isCircular()` function on a Schema model like `document.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()`.
-- `x-parser-circular-props` property is added to every schema of object type with a list of properties that are circular. To check if schema has properties with circular references, you should use `hasCircularProps()` function. To get a list of properties with circular references, you should use `circularProps()` function.
+- `x-parser-circular-props` property is added to every schema of object type with a list of properties that are circular. To check if a schema has properties with circular references, you should use `hasCircularProps()` function. To get a list of properties with circular references, you should use `circularProps()` function.
 
 ### Develop
 

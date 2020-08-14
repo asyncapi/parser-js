@@ -146,6 +146,8 @@
             * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
             * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
             * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
+            * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
+            * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
         * [.SecurityScheme](#module_@asyncapi/parser+SecurityScheme) ⇐ <code>Base</code>
             * [.type()](#module_@asyncapi/parser+SecurityScheme+type) ⇒ <code>string</code>
             * [.description()](#module_@asyncapi/parser+SecurityScheme+description) ⇒ <code>string</code>
@@ -835,6 +837,8 @@ Implements functions to deal with a Schema object.
     * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
     * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
+    * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
+    * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="module_@asyncapi/parser+Schema+uid"></a>
 
@@ -1027,6 +1031,14 @@ Implements functions to deal with a Schema object.
 <a name="module_@asyncapi/parser+Schema+isCircular"></a>
 
 #### schema.isCircular() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+hasCircularProps"></a>
+
+#### schema.hasCircularProps() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+circularProps"></a>
+
+#### schema.circularProps() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+SecurityScheme"></a>
 

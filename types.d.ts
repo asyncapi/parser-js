@@ -349,6 +349,8 @@ declare module "@asyncapi/parser" {
         writeOnly(): boolean;
         examples(): any[];
         isCircular(): boolean;
+        hasCircularProps(): boolean;
+        circularProps(): string[];
     }
     /**
      * Implements functions to deal with a SecurityScheme object.

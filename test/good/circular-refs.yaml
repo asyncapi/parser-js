@@ -47,6 +47,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RecursiveSelf'
+        selfObjectChildren:
+          type: object
+          properties:
+            test:
+              $ref: '#/components/schemas/RecursiveSelf'
+            nonRecursive:
+              type: string
         selfSomething:
           type: object
           properties:

@@ -21,3 +21,7 @@ jobs:
         run: npm run lint
       - name: Run tests
         run: npm test
+      - name: Regenerate types to make sure nothing is broken
+        run: npm run types
+      - name: Regenerate docs to make sure jsdoc are not broken
+        run: npm run docs

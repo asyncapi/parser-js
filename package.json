@@ -12,7 +12,7 @@
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
     "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r lib -d ./",
-    "prepublishOnly": "npm run bundle",
+    "prepublishOnly": "npm run bundle && npm run docs && npm run types",
     "release": "semantic-release",
     "get-version": "echo $npm_package_version",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",

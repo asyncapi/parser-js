@@ -2,7 +2,7 @@ const parser = require('../lib');
 const chai = require('chai');
 const fs = require('fs');
 const path = require('path');
-const { offset } = require('../lib/utils'); 
+const { offset } = require('./testsUtils'); 
 
 const expect = chai.expect;
 

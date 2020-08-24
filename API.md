@@ -214,7 +214,6 @@
         * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
-        * [~customChannelsOperations(parsedJSON, asyncapiYAMLorJSON, initialFormat, options)](#module_@asyncapi/parser..customChannelsOperations)
 
 <a name="module_@asyncapi/parser+ChannelParameter"></a>
 
@@ -1487,18 +1486,4 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | Param | Type | Description |
 | --- | --- | --- |
 | parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
-
-<a name="module_@asyncapi/parser..customChannelsOperations"></a>
-
-### @asyncapi/parser~customChannelsOperations(parsedJSON, asyncapiYAMLorJSON, initialFormat, options)
-Triggers additional operations on the AsyncAPI channels like traits application or message validation and conversion
-
-**Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| parsedJSON | <code>Object</code> | parsed AsyncAPI document |
-| asyncapiYAMLorJSON | <code>String</code> | AsyncAPI document in string |
-| initialFormat | <code>String</code> | information of the document was oryginally JSON or YAML |
-| options | <code>Object</code> | Configuration options. |
 

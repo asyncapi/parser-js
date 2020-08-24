@@ -1,6 +1,6 @@
 const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
 const chai = require('chai');
-const { offset } = require('../lib/utils'); 
+const { offset } = require('./testsUtils'); 
 
 const expect = chai.expect;
 const input = 'json';

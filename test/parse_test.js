@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
 const ParserError = require('../lib/errors/parser-error');
-const { offset } = require('../lib/utils'); 
+const { offset } = require('./testsUtils'); 
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;

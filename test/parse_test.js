@@ -56,6 +56,16 @@ describe('parse()', function() {
     const result = await parser.parse(inputYAML, { path: __filename });
     await expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
+
+  it('should parse 2 AsyncAPI specs in Promise.all() and not fail with resolving references', async function() {
+    const input = [
+      await parser.parse(inputYAML, { path: __filename }), 
+      await parser.parse(inputYAML, { path: __filename })
+    ];
+    const result = await Promise.all(input);
+    await expect(JSON.stringify(result[0].json())).to.equal(outputJSON);
+    await expect(JSON.stringify(result[1].json())).to.equal(outputJSON);
+  });
   
   it('should fail when asyncapi is not valid', async function() {
     const expectedErrorObject = {

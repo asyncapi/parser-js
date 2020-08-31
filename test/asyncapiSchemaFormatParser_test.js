@@ -3,17 +3,16 @@ const chai = require('chai');
 const fs = require('fs');
 const path = require('path');
 const expect = chai.expect;
+const checkErrorWrapper = require('./utils');
 
 describe('asyncapiSchemaFormatParser', function() {
   it('should throw an error because of invalid schema', async function() {
     const invalidAsyncapi = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-payload-asyncapi-format.json'), 'utf8');
-    try {
-      await parser.parse(invalidAsyncapi);
-    } catch (e) {
-      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/schema-validation-errors');
-      expect(e.title).to.equal('This is not a valid AsyncAPI Schema Object.');
-      expect(e.parsedJSON).to.deep.equal(JSON.parse(invalidAsyncapi));
-      expect(e.validationErrors).to.deep.equal([
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/schema-validation-errors',
+      title: 'This is not a valid AsyncAPI Schema Object.',
+      parsedJSON: invalidAsyncapi,
+      validationErrors: [
         {
           title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
           location: {
@@ -74,8 +73,11 @@ describe('asyncapiSchemaFormatParser', function() {
             endOffset: 297
           }
         }
-      ]);
-    }
+      ],
+    };
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidAsyncapi);
+    }, expectedErrorObject);
   });
 
   it('should not throw error if payload not provided', async function() {

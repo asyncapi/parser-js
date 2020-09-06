@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const js = { location: "$message.header#/correlationId" };
+const js = { location: '$message.header#/correlationId' };
 
 const CorrelationId = require('../../lib/models/correlation-id');
 
@@ -16,7 +16,7 @@ describe('CorrelationId', function() {
 
   describe('#mixins', function() {
     it('model should inherit from mixins', function() {
-      assertMixinDescriptionInheritance(CorrelationId)
+      assertMixinDescriptionInheritance(CorrelationId);
       assertMixinSpecificationExtensionsInheritance(CorrelationId);
     });
   });

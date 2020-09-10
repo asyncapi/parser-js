@@ -7,4 +7,5 @@ test/
 coverage
 .nyc_output
 assets/logo.png
+scripts
 vscode

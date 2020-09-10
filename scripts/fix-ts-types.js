@@ -1,12 +1,15 @@
 /**
  * This script removes unnecessary and broken types from "types.d.ts" file.
- * Script should be run in root path of repository.
+ * Script should be run on repository's root path.
  */
 
 const fs = require('fs');
+const path = require('path');
 
-const data = fs.readFileSync('types.d.ts', 'utf-8');
+const tsFile = path.resolve(__dirname, '../types.d.ts');
+
+const data = fs.readFileSync(tsFile, 'utf-8');
 const namespaceRegex = /(declare namespace)[ A-Za-z]*{((.|\n)+?)(?!(};))}/g;
 const newData = data.replace(namespaceRegex, '');
 
-fs.writeFileSync('types.d.ts', newData, 'utf-8');
+fs.writeFileSync(tsFile, newData, 'utf-8');

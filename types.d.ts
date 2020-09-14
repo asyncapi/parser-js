@@ -1,3 +1,43 @@
+
+
+/**
+ * Implements functions to deal with the common Bindings object.
+ */
+declare interface MixinBindings {
+}
+
+
+
+/**
+ * Implements functions to deal with the description field.
+ */
+declare interface MixinDescription {
+}
+
+
+
+/**
+ * Implements functions to deal with the ExternalDocs object.
+ */
+declare interface MixinExternalDocs {
+}
+
+
+
+/**
+ * Implements functions to deal with the SpecificationExtensions object.
+ */
+declare interface MixinSpecificationExtensions {
+}
+
+
+
+/**
+ * Implements functions to deal with the Tags object.
+ */
+declare interface MixinTags {
+}
+
 declare module "@asyncapi/parser" {
     /**
      * Instantiates an error
@@ -65,7 +105,9 @@ declare module "@asyncapi/parser" {
          */
         toJS(): void;
     }
-    class AsyncAPIDocument extends Base {
+    interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
+    }
+    class AsyncAPIDocument extends Base implements MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
         version(): string;
         info(): Info;
         id(): string;
@@ -89,29 +131,123 @@ declare module "@asyncapi/parser" {
         defaultContentType(): string;
         hasComponents(): boolean;
         components(): Components;
-        hasTags(): boolean;
-        tags(): Tag[];
         hasMessages(): boolean;
         allMessages(): Map<string, Message>;
         allSchemas(): Map<string, Schema>;
         hasCircular(): boolean;
+        hasTags(): boolean;
+        tags(): Tag[];
+        tagNames(): string[];
+        /**
+         * @param name - Name of the tag.
+         */
+        hasTag(name: string): boolean;
+        /**
+         * @param name - Name of the tag.
+         */
+        tag(name: string): Tag | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+        hasTags(): boolean;
+        tags(): Tag[];
+        tagNames(): string[];
+        /**
+         * @param name - Name of the tag.
+         */
+        hasTag(name: string): boolean;
+        /**
+         * @param name - Name of the tag.
+         */
+        tag(name: string): Tag | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     class Base {
         json(): any;
     }
+    interface ChannelParameter extends MixinDescription, MixinSpecificationExtensions {
+    }
     /**
      * Implements functions to deal with a ChannelParameter object.
      */
-    class ChannelParameter extends Base {
-        description(): string;
+    class ChannelParameter extends Base implements MixinDescription, MixinSpecificationExtensions {
         location(): string;
         schema(): Schema;
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface Channel extends MixinDescription, MixinBindings, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with a Channel object.
      */
-    class Channel extends Base {
-        description(): string;
+    class Channel extends Base implements MixinDescription, MixinBindings, MixinSpecificationExtensions {
         parameters(): {
             [key: string]: ChannelParameter;
         };
@@ -124,16 +260,48 @@ declare module "@asyncapi/parser" {
         subscribe(): SubscribeOperation;
         hasPublish(): boolean;
         hasSubscribe(): boolean;
+        hasDescription(): boolean;
+        description(): string | null;
+        hasBindings(): boolean;
         bindings(): any;
+        bindingProtocols(): string[];
         /**
          * @param name - Name of the binding.
          */
-        binding(name: string): any;
+        hasBinding(name: string): boolean;
+        /**
+         * @param name - Name of the binding.
+         */
+        binding(name: string): any | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface Components extends MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with a Components object.
      */
-    class Components extends Base {
+    class Components extends Base implements MixinSpecificationExtensions {
         messages(): {
             [key: string]: Message;
         };
@@ -162,54 +330,203 @@ declare module "@asyncapi/parser" {
             [key: string]: MessageTrait;
         };
         messageTrait(): MessageTrait;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface Contact extends MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with the Contact object.
      */
-    class Contact extends Base {
+    class Contact extends Base implements MixinSpecificationExtensions {
         name(): string;
         url(): string;
         email(): string;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface CorrelationId extends MixinDescription, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with a CorrelationId object.
      */
-    class CorrelationId extends Base {
-        description(): string;
+    class CorrelationId extends Base implements MixinDescription, MixinSpecificationExtensions {
         location(): string;
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface ExternalDocs extends MixinDescription, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with an ExternalDocs object.
      */
-    class ExternalDocs extends Base {
-        description(): string;
+    class ExternalDocs extends Base implements MixinDescription, MixinSpecificationExtensions {
         url(): string;
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface Info extends MixinDescription, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with the Info object.
      */
-    class Info extends Base {
+    class Info extends Base implements MixinDescription, MixinSpecificationExtensions {
         title(): string;
         version(): string;
+        termsOfService(): string | undefined;
         license(): License;
         contact(): Contact;
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface License extends MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with the License object.
      */
-    class License extends Base {
+    class License extends Base implements MixinSpecificationExtensions {
         name(): string;
         url(): string;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Implements functions to deal with a MessageTrait object.
      */
-    class MessageTrait extends Base {
+    class MessageTrait extends MessageTraitable {
+    }
+    interface MessageTraitable extends MixinDescription, MixinTags, MixinExternalDocs, MixinBindings, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with a the common properties that Message and MessageTrait objects have.
      */
-    class MessageTraitable extends Base {
+    class MessageTraitable extends Base implements MixinDescription, MixinTags, MixinExternalDocs, MixinBindings, MixinSpecificationExtensions {
         headers(): Schema;
         /**
          * @param name - Name of the header.
@@ -221,16 +538,55 @@ declare module "@asyncapi/parser" {
         name(): string;
         title(): string;
         summary(): string;
-        description(): string;
-        externalDocs(): ExternalDocs;
+        examples(): any[];
+        hasDescription(): boolean;
+        description(): string | null;
         hasTags(): boolean;
         tags(): Tag[];
+        tagNames(): string[];
+        /**
+         * @param name - Name of the tag.
+         */
+        hasTag(name: string): boolean;
+        /**
+         * @param name - Name of the tag.
+         */
+        tag(name: string): Tag | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasBindings(): boolean;
         bindings(): any;
+        bindingProtocols(): string[];
         /**
          * @param name - Name of the binding.
          */
-        binding(name: string): any;
-        examples(): any[];
+        hasBinding(name: string): boolean;
+        /**
+         * @param name - Name of the binding.
+         */
+        binding(name: string): any | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Implements functions to deal with a Message object.
@@ -241,37 +597,102 @@ declare module "@asyncapi/parser" {
         originalPayload(): any;
         originalSchemaFormat(): string;
     }
+    interface OAuthFlow extends MixinSpecificationExtensions {
+    }
     /**
      * Implements functions to deal with a OAuthFlow object.
      */
-    class OAuthFlow extends Base {
+    class OAuthFlow extends Base implements MixinSpecificationExtensions {
         authorizationUrl(): string;
         tokenUrl(): string;
         refreshUrl(): string;
         scopes(): {
             [key: string]: string;
         };
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Implements functions to deal with a OperationTrait object.
      */
     class OperationTrait extends OperationTraitable {
     }
+    interface OperationTraitable extends MixinDescription, MixinTags, MixinExternalDocs, MixinBindings, MixinSpecificationExtensions {
+    }
     /**
      * Implements functions to deal with the common properties Operation and OperationTrait object have.
      */
-    class OperationTraitable extends Base {
+    class OperationTraitable extends Base implements MixinDescription, MixinTags, MixinExternalDocs, MixinBindings, MixinSpecificationExtensions {
         id(): string;
         summary(): string;
-        description(): string;
+        hasDescription(): boolean;
+        description(): string | null;
         hasTags(): boolean;
         tags(): Tag[];
-        externalDocs(): ExternalDocs;
+        tagNames(): string[];
+        /**
+         * @param name - Name of the tag.
+         */
+        hasTag(name: string): boolean;
+        /**
+         * @param name - Name of the tag.
+         */
+        tag(name: string): Tag | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasBindings(): boolean;
         bindings(): any;
+        bindingProtocols(): string[];
         /**
          * @param name - Name of the binding.
          */
-        binding(name: string): any;
+        hasBinding(name: string): boolean;
+        /**
+         * @param name - Name of the binding.
+         */
+        binding(name: string): any | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Implements functions to deal with an Operation object.
@@ -289,10 +710,12 @@ declare module "@asyncapi/parser" {
         isSubscribe(): boolean;
         kind(): string;
     }
+    interface Schema extends MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
+    }
     /**
      * Implements functions to deal with a Schema object.
      */
-    class Schema extends Base {
+    class Schema extends Base implements MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
         uid(): string;
         $id(): string;
         multipleOf(): number;
@@ -339,25 +762,50 @@ declare module "@asyncapi/parser" {
         definitions(): {
             [key: string]: Schema;
         };
-        description(): string;
         title(): string;
         default(): any;
         deprecated(): boolean;
         discriminator(): string;
-        externalDocs(): ExternalDocs;
         readOnly(): boolean;
         writeOnly(): boolean;
         examples(): any[];
         isCircular(): boolean;
         hasCircularProps(): boolean;
         circularProps(): string[];
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface SecurityScheme extends MixinDescription, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with a SecurityScheme object.
      */
-    class SecurityScheme extends Base {
+    class SecurityScheme extends Base implements MixinDescription, MixinSpecificationExtensions {
         type(): string;
-        description(): string;
         name(): string;
         in(): string;
         scheme(): string;
@@ -366,16 +814,42 @@ declare module "@asyncapi/parser" {
         flows(): {
             [key: string]: OAuthFlow;
         };
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Implements functions to deal with a ServerSecurityRequirement object.
      */
     class ServerSecurityRequirement extends Base {
     }
+    interface ServerVariable extends MixinDescription, MixinSpecificationExtensions {
+    }
     /**
      * Implements functions to deal with a ServerVariable object.
      */
-    class ServerVariable extends Base {
+    class ServerVariable extends Base implements MixinDescription, MixinSpecificationExtensions {
         allowedValues(): any[];
         /**
          * @param name - Name of the variable.
@@ -384,14 +858,38 @@ declare module "@asyncapi/parser" {
         hasAllowedValues(): boolean;
         defaultValue(): string;
         hasDefaultValue(): boolean;
-        description(): string;
         examples(): string[];
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
+    }
+    interface Server extends MixinDescription, MixinBindings, MixinSpecificationExtensions {
     }
     /**
      * Implements functions to deal with a Server object.
      */
-    class Server extends Base {
-        description(): string;
+    class Server extends Base implements MixinDescription, MixinBindings, MixinSpecificationExtensions {
         url(): string;
         protocol(): string;
         protocolVersion(): string;
@@ -404,11 +902,41 @@ declare module "@asyncapi/parser" {
         variable(name: string): ServerVariable;
         hasVariables(): boolean;
         security(): ServerSecurityRequirement[];
+        hasDescription(): boolean;
+        description(): string | null;
+        hasBindings(): boolean;
         bindings(): any;
+        bindingProtocols(): string[];
         /**
          * @param name - Name of the binding.
          */
-        binding(name: string): any;
+        hasBinding(name: string): boolean;
+        /**
+         * @param name - Name of the binding.
+         */
+        binding(name: string): any | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Implements functions to deal with a SubscribeOperation object.
@@ -418,13 +946,39 @@ declare module "@asyncapi/parser" {
         isSubscribe(): boolean;
         kind(): string;
     }
+    interface Tag extends MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
+    }
     /**
      * Implements functions to deal with a Tag object.
      */
-    class Tag extends Base {
+    class Tag extends Base implements MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
         name(): string;
-        description(): string;
-        externalDocs(): ExternalDocs;
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
     }
     /**
      * Parses and validate an AsyncAPI document from YAML or JSON.

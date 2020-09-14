@@ -1,24 +1,13 @@
 const { expect } = require('chai');
-const Channel = require('../../lib/models/channel');
 const js = { description: 'test', parameters: { param1: { description: 'param1', location: '$message.headers#/x-param1', schema: { type: 'string' } } }, bindings: { amqp: 'test' }, 'x-test': 'testing' };
 
-describe('Channel', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new Channel(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
-  
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new Channel(js);
-      expect(d.description()).to.be.equal(js.description);
-    });
-  });
-  
+const Channel = require('../../lib/models/channel');
+
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinBindingsInheritance } = require('../mixins/bindings_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('Channel', function() {  
   describe('#hasParameters()', function() {
     it('should return a boolean indicating if the AsyncAPI document has channel parameters', function() {
       const doc = { parameters: { test1param: { description: 'test1param' } } };
@@ -83,17 +72,11 @@ describe('Channel', function() {
     });
   });
 
-  describe('#bindings()', function() {
-    it('should return a map of bindings', function() {
-      const d = new Channel(js);
-      expect(d.bindings()).to.be.equal(js.bindings);
-    });
-  });
-
-  describe('#binding()', function() {
-    it('should return a specific binding', function() {
-      const d = new Channel(js);
-      expect(d.binding('amqp')).to.be.equal(js.bindings.amqp);
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(Channel);
+      assertMixinBindingsInheritance(Channel);
+      assertMixinSpecificationExtensionsInheritance(Channel);
     });
   });
 });

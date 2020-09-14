@@ -1,17 +1,11 @@
 const { expect } = require('chai');
-const OAuthFlow = require('../../lib/models/oauth-flow');
 const js = { authorizationUrl: 'testing', refreshUrl: 'testing', tokenUrl: 'testing', scopes: { test: 'testing' }, 'x-test': 'testing' };
 
-describe('OAuthFlow', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new OAuthFlow(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const OAuthFlow = require('../../lib/models/oauth-flow');
 
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('OAuthFlow', function() {
   describe('#authorizationUrl()', function() {
     it('should return a string', function() {
       const d = new OAuthFlow(js);
@@ -38,6 +32,12 @@ describe('OAuthFlow', function() {
       const d = new OAuthFlow(js);
       expect(typeof d.scopes()).to.be.equal('object');
       expect(d.scopes()).to.equal(js.scopes);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinSpecificationExtensionsInheritance(OAuthFlow);
     });
   });
 });

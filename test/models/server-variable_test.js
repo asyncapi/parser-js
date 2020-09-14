@@ -1,17 +1,12 @@
 const { expect } = require('chai');
-const ServerVariable = require('../../lib/models/server-variable');
 const js = { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'], 'x-test': 'testing' };
 
-describe('ServerVariable', function() {
-  describe('#ext()', function() {
-    it('should support extensions', function() {
-      const d = new ServerVariable(js);
-      expect(d.ext('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extension('x-test')).to.be.equal(js['x-test']);      
-      expect(d.extensions()).to.be.deep.equal({'x-test': 'testing'});
-    });
-  });
+const ServerVariable = require('../../lib/models/server-variable');
 
+const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
+const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+describe('ServerVariable', function() {
   describe('#allowedValues()', function() {
     it('should return an array of strings', function() {
       const d = new ServerVariable(js);
@@ -62,17 +57,17 @@ describe('ServerVariable', function() {
     });
   });
   
-  describe('#description()', function() {
-    it('should return a string', function() {
-      const d = new ServerVariable(js);
-      expect(d.description()).to.be.equal(js.description);
-    });
-  });
-  
   describe('#examples()', function() {
     it('should return an array of strings', function() {
       const d = new ServerVariable(js);
       expect(d.examples()).to.be.equal(js.examples);
+    });
+  });
+
+  describe('#mixins', function() {
+    it('model should inherit from mixins', function() {
+      assertMixinDescriptionInheritance(ServerVariable);
+      assertMixinSpecificationExtensionsInheritance(ServerVariable);
     });
   });
 });

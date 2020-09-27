@@ -58,6 +58,15 @@ describe('AsyncAPIDocument', function() {
     });
   });
 
+  describe('#serverNames()', function() {
+    it('should return an array of strings', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const d = new AsyncAPIDocument(doc);
+      expect(Array.isArray(d.serverNames())).to.be.equal(true);
+      expect(d.serverNames()).to.deep.equal(['test1', 'test2']);
+    });
+  });
+
   describe('#server()', function() {
     it('should return a specific server object', function() {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
@@ -76,6 +85,34 @@ describe('AsyncAPIDocument', function() {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.server('not found')).to.equal(null);
+    });
+  });
+
+  describe('#hasDefaultContentType()', function() {
+    it('should return true if field exists', function() {
+      const doc = { defaultContentType: 'application/json' };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasDefaultContentType()).to.be.equal(true);
+    });
+
+    it('should return false if field does not exist', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasDefaultContentType()).to.be.equal(false);
+    });
+  });
+
+  describe('#defaultContentType()', function() {
+    it('should return string if field exists', function() {
+      const doc = { defaultContentType: 'application/json' };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.defaultContentType()).to.be.equal('application/json');
+    });
+
+    it('should return null if field does not exist', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(d.defaultContentType()).to.be.equal(null);
     });
   });
 

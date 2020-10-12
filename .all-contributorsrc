@@ -1,5 +1,5 @@
 {
-  "projectName": "@asyncapi/parser",
+  "projectName": "parser-js",
   "projectOwner": "asyncapi",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -85,7 +85,7 @@
         "code"
       ]
     },
-        {
+    {
       "login": "rmelian",
       "name": "raisel melian",
       "avatar_url": "https://avatars3.githubusercontent.com/u/4565267?v=4",
@@ -93,7 +93,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "DanielChuDC",
+      "name": "danielchu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/52316624?v=4",
+      "profile": "https://github.com/DanielChuDC",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
-  "contributorsPerLine": 4
+  "contributorsPerLine": 4,
+  "skipCi": true
 }

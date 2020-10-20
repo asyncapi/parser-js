@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.0.0-rc.5",
+  "version": "1.0.0",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",

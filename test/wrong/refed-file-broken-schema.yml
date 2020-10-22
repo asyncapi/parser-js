@@ -1,0 +1,4 @@
+type: string
+properties:
+  name:
+  type: string

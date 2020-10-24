@@ -410,6 +410,19 @@ describe('parse()', function() {
     }, expectedErrorObject);
   });
 
+  it('should throw proper error even if issue is inside $refed file of a $refed file', async function() {
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/schema-validation-errors',
+      title: 'This is not a valid AsyncAPI Schema Object.'
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/good-ref-to-broken-file.yaml'), 'utf8'), {
+        path: __filename,
+      });
+    }, expectedErrorObject);
+  });
+
   it('should throw error if document is invalid YAML', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/invalid-yaml',

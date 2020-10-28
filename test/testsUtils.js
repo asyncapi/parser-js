@@ -8,9 +8,8 @@ const utils = module.exports;
  * 
  * @function offset
  * @private
- * @param  {Number} oset end or start offset number
- * @param  {Number} line end or start line number
- * @returns {Number} calculated offset number
-
+ * @param {number} oset end or start offset number
+ * @param {number} line end or start line number
+ * @returns {number} calculated offset number
  */
 utils.offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));

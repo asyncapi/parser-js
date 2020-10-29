@@ -1,4 +1,4 @@
-const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
+const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity, validateChannelName } = require('../lib/customValidators.js');
 const chai = require('chai');
 const { offset } = require('./testsUtils'); 
 
@@ -656,4 +656,88 @@ describe('validateServerSecurity()', function() {
       ]);
     }  
   });
-});
+},
+describe('validateChannelNames()', function() {
+  it('should successfully validate if channel name is correct', async function() {
+    const inputDoc = {};
+    
+    expect(validateChannelName(inputDoc, input)).to.equal(true);
+  });
+
+  it('should successfully validate channel name with variable', async function() {
+    const inputString = `{
+      "channels": {
+        "test/{test}": {
+          "parameters": {
+            "test": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(validateChannelName(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should successfully validate channel name without variable', async function() {
+    const inputString = `{
+      "channels": {
+        "test/test01": {
+          "parameters": {
+            "test": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(validateChannelName(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should throw error that one of provided channel name is invalid', async function() {
+    const inputString = `{
+      "channels": {
+        "/user/signedup?foo=1": {
+          "subscribe": {
+            "message": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannelName(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel names with parameters exist');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: '/user/signedup?foo=1 channels contain invalid name with url parameters : ?foo=1',
+          location: {
+            jsonPointer: '/channels//user/signedup?foo=1'
+          }
+        }
+      ]);
+    }
+  });
+}));

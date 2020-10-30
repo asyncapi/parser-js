@@ -356,13 +356,19 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/user/signedup?foo=1 channels contain invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
           location: {
-            jsonPointer: '/channels//user/signedup?foo=1'
+            endColumn: 11,
+            endLine: 4,
+            endOffset: 65,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 34,
+            startLine: 3,
+            startOffset: 54
           }
         }
       ]);
@@ -384,13 +390,19 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/user/signedup?foo=1 channels contain invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
           location: {
-            jsonPointer: '/channels//user/signedup?foo=1'
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 59,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 32,
+            startLine: 3,
+            startOffset: 50
           }
         }
       ]);
@@ -412,19 +424,75 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/user/signedup?foo=1 channels contain invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
           location: {
-            jsonPointer: '/channels//user/signedup?foo=1'
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 59,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 32,
+            startLine: 3,
+            startOffset: 50
           }
         },
         {
-          title: '/user/login?bar=2 channels contain invalid name with url query parameters : ?bar=2',
+          title: '/user/login?bar=2 channel contains invalid name with url query parameters : ?bar=2',
           location: {
-            jsonPointer: '/channels//user/login?bar=2'
+            endColumn: 9,
+            endLine: 6,
+            endOffset: 96,
+            jsonPointer: '/channels/~1user~1login?bar=2',
+            startColumn: 28,
+            startLine: 5,
+            startOffset: 87
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that single channel definition failed both validations', async function () {
+    const inputString = `{
+    "channels": {
+      "user/{userId}/signedup?foo=1": {
+      }
+    }
+  }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'user/{userId}/signedup?foo=1 channel does not have a corresponding parameter object for: userId',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 67,
+            jsonPointer: '/channels/user~1{userId}~1signedup?foo=1',
+            startColumn: 40,
+            startLine: 3,
+            startOffset: 58
+          }
+        },
+        {
+          title: 'user/{userId}/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 67,
+            jsonPointer: '/channels/user~1{userId}~1signedup?foo=1',
+            startColumn: 40,
+            startLine: 3,
+            startOffset: 58
           }
         }
       ]);
@@ -446,7 +514,7 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -462,9 +530,15 @@ describe('validateChannel()', function () {
           }
         },
         {
-          title: '/user/signedup?foo=1 channels contain invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
           location: {
-            jsonPointer: '/channels//user/signedup?foo=1'
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 59,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 32,
+            startLine: 3,
+            startOffset: 50
           }
         }
       ]);

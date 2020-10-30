@@ -229,7 +229,7 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -268,7 +268,7 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -300,7 +300,7 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Channel validation failed wiht following errors');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -328,7 +328,7 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(() => validateChannels(parsedInput, inputString, input)).to.throw('Channel validation failed wiht following errors');
+    expect(() => validateChannels(parsedInput, inputString, input)).to.throw('Channel validation failed');
   });
 
   it('should successfully validate channel name without variable', async function () {

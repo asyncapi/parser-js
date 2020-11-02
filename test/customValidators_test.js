@@ -1,12 +1,12 @@
-const { validateChannelParams, validateServerVariables, validateOperationId, validateServerSecurity } = require('../lib/customValidators.js');
+const { validateServerVariables, validateOperationId, validateServerSecurity, validateChannels } = require('../lib/customValidators.js');
 const chai = require('chai');
-const { offset } = require('./testsUtils'); 
+const { offset } = require('./testsUtils');
 
 const expect = chai.expect;
 const input = 'json';
 
-describe('validateServerVariables()', function() {
-  it('should successfully validate the server variables', async function() {
+describe('validateServerVariables()', function () {
+  it('should successfully validate the server variables', async function () {
     const inputString = `{ 
       "servers": {
         "dummy": {
@@ -21,18 +21,18 @@ describe('validateServerVariables()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateServerVariables(parsedInput, inputString, input)).to.equal(true);
   });
 
-  it('should successfully validate if server object not provided', async function() {
+  it('should successfully validate if server object not provided', async function () {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateServerVariables(parsedInput, inputString, input)).to.equal(true);
   });
 
-  it('should throw error that one of variables is not provided', async function() {
+  it('should throw error that one of variables is not provided', async function () {
     const inputString = `{ 
       "servers": {
         "dummy": {
@@ -70,7 +70,7 @@ describe('validateServerVariables()', function() {
     }
   });
 
-  it('should throw error that variables are not provided if there is no variables object', async function() {
+  it('should throw error that variables are not provided if there is no variables object', async function () {
     const inputString = `{ 
       "servers": {
         "dummy": {
@@ -79,9 +79,9 @@ describe('validateServerVariables()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     try {
-      validateServerVariables(parsedInput, inputString,  input);
+      validateServerVariables(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
       expect(e.title).to.equal('Not all server variables are described with variable object');
@@ -103,7 +103,7 @@ describe('validateServerVariables()', function() {
     }
   });
 
-  it('should throw error that variables are not provided even if they are but not matching the name', async function() {
+  it('should throw error that variables are not provided even if they are but not matching the name', async function () {
     const inputString = `{ 
       "servers": {
         "dummy": {
@@ -140,29 +140,29 @@ describe('validateServerVariables()', function() {
       ]);
     }
   });
-});
 
-it('should throw error', async function() {
-  const inputString = `{ 
-    "servers": {
-      "dummy": {
-        "url": "http://{host}{port}"
+  it('should throw error', async function () {
+    const inputString = `{ 
+      "servers": {
+        "dummy": {
+          "url": "http://{host}{port}"
+        }
       }
-    }
-  }`;
-  const parsedInput = JSON.parse(inputString);
-
-  expect(() => validateServerVariables(parsedInput, inputString, input)).to.throw('Not all server variables are described with variable object');
-});
+    }`;
+    const parsedInput = JSON.parse(inputString);
   
-describe('validateChannelParams()', function() {
-  it('should successfully validate if channel object not provided', async function() {
+    expect(() => validateServerVariables(parsedInput, inputString, input)).to.throw('Not all server variables are described with variable object');
+  });
+});
+
+describe('validateChannel()', function () {
+  it('should successfully validate if channel object not provided', async function () {
     const inputDoc = {};
-    
-    expect(validateChannelParams(inputDoc, input)).to.equal(true);
+
+    expect(validateChannels(inputDoc, input)).to.equal(true);
   });
 
-  it('should successfully validate channel param', async function() {
+  it('should successfully validate channel param', async function () {
     const inputString = `{
       "channels": {
         "test/{test}": {
@@ -178,10 +178,38 @@ describe('validateChannelParams()', function() {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateChannelParams(parsedInput, inputString, input)).to.equal(true);
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
   });
 
-  it('should throw error that one of provided channel params is not declared', async function() {
+  it('should successfully validate channel param for 2 channels', async function () {
+    const inputString = `{
+      "channels": {
+        "test/{test01}": {
+          "parameters": {
+            "test01": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "test/{test02}": {
+          "parameters": {
+            "test02": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should throw error that one of provided channel params is not declared', async function () {
     const inputString = `{
       "channels": {
         "test/{test}/{testid}": {
@@ -198,10 +226,10 @@ describe('validateChannelParams()', function() {
     const parsedInput = JSON.parse(inputString);
 
     try {
-      validateChannelParams(parsedInput, inputString, input);
+      validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Not all channel parameters are described with parameter object');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -220,7 +248,7 @@ describe('validateChannelParams()', function() {
     }
   });
 
-  it('should throw error that one of provided channel params is not declared even if other not provided params have a corresponding parameter object', async function() {
+  it('should throw error that one of provided channel params is not declared even if other not provided params have a corresponding parameter object', async function () {
     const inputString = `{
       "channels": {
         "test/{test}": {
@@ -237,10 +265,10 @@ describe('validateChannelParams()', function() {
     const parsedInput = JSON.parse(inputString);
 
     try {
-      validateChannelParams(parsedInput, inputString, input);
+      validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Not all channel parameters are described with parameter object');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -259,7 +287,7 @@ describe('validateChannelParams()', function() {
     }
   });
 
-  it('should throw error when there are no parameter objects', async function() {
+  it('should throw error when there are no parameter objects', async function () {
     const inputString = `{
       "channels": {
         "test/{test}/{testid}": {
@@ -269,10 +297,10 @@ describe('validateChannelParams()', function() {
     const parsedInput = JSON.parse(inputString);
 
     try {
-      validateChannelParams(parsedInput, inputString, input);
+      validateChannels(parsedInput, inputString, input);
     } catch (e) {
       expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
-      expect(e.title).to.equal('Not all channel parameters are described with parameter object');
+      expect(e.title).to.equal('Channel validation failed');
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
@@ -291,7 +319,7 @@ describe('validateChannelParams()', function() {
     }
   });
 
-  it('should throw error', async function() {
+  it('should throw error', async function () {
     const inputString = `{
       "channels": {
         "test/{test}/{testid}": {
@@ -300,14 +328,227 @@ describe('validateChannelParams()', function() {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(() => validateChannelParams(parsedInput, inputString, input)).to.throw('Not all channel parameters are described with parameter object');
+    expect(() => validateChannels(parsedInput, inputString, input)).to.throw('Channel validation failed');
+  });
+
+  it('should successfully validate channel name without variable', async function () {
+    const inputString = `{
+      "channels": {
+        "test/test01": {
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should throw error that the provided channel name is invalid', async function () {
+    const inputString = `{
+      "channels": {
+        "/user/signedup?foo=1": {
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
+          location: {
+            endColumn: 11,
+            endLine: 4,
+            endOffset: 65,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 34,
+            startLine: 3,
+            startOffset: 54
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that one of the provided channel name is invalid', async function () {
+    const inputString = `{
+    "channels": {
+      "/user/signedup?foo=1": {
+      },
+	  "/user/login": {
+      }
+    }
+  }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 59,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 32,
+            startLine: 3,
+            startOffset: 50
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that both provided channel name is invalid', async function () {
+    const inputString = `{
+    "channels": {
+      "/user/signedup?foo=1": {
+      },
+	    "/user/login?bar=2": {
+      }
+    }
+  }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 59,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 32,
+            startLine: 3,
+            startOffset: 50
+          }
+        },
+        {
+          title: '/user/login?bar=2 channel contains invalid name with url query parameters: ?bar=2',
+          location: {
+            endColumn: 9,
+            endLine: 6,
+            endOffset: 96,
+            jsonPointer: '/channels/~1user~1login?bar=2',
+            startColumn: 28,
+            startLine: 5,
+            startOffset: 87
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that single channel definition failed both validations', async function () {
+    const inputString = `{
+    "channels": {
+      "user/{userId}/signedup?foo=1": {
+      }
+    }
+  }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'user/{userId}/signedup?foo=1 channel does not have a corresponding parameter object for: userId',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 67,
+            jsonPointer: '/channels/user~1{userId}~1signedup?foo=1',
+            startColumn: 40,
+            startLine: 3,
+            startOffset: 58
+          }
+        },
+        {
+          title: 'user/{userId}/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 67,
+            jsonPointer: '/channels/user~1{userId}~1signedup?foo=1',
+            startColumn: 40,
+            startLine: 3,
+            startOffset: 58
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that both provided channels contain errors', async function () {
+    const inputString = `{
+    "channels": {
+      "/user/signedup?foo=1": {
+      },
+	    "test/{test}": {
+      }
+    }
+  }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: 'test/{test} channel does not have a corresponding parameter object for: test',
+          location: {
+            endColumn: 9,
+            endLine: 6,
+            endOffset: 90,
+            jsonPointer: '/channels/test~1{test}',
+            startColumn: 22,
+            startLine: 5,
+            startOffset: 81
+          }
+        },
+        {
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 59,
+            jsonPointer: '/channels/~1user~1signedup?foo=1',
+            startColumn: 32,
+            startLine: 3,
+            startOffset: 50
+          }
+        }
+      ]);
+    }
   });
 });
-
-describe('validateOperationId()', function() {
+describe('validateOperationId()', function () {
   const operations = ['subscribe', 'publish'];
 
-  it('should successfully validate operationId', async function() {
+  it('should successfully validate operationId', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -327,18 +568,18 @@ describe('validateOperationId()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateOperationId(parsedInput, inputString, input, operations)).to.equal(true);
   });
 
-  it('should successfully validate if channel object not provided', function() {
+  it('should successfully validate if channel object not provided', function () {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateOperationId(parsedInput, inputString, input, operations)).to.equal(true);
   });
 
-  it('should throw error that operationIds are duplicated and that they duplicate', function() {
+  it('should throw error that operationIds are duplicated and that they duplicate', function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -405,10 +646,10 @@ describe('validateOperationId()', function() {
   });
 });
 
-describe('validateServerSecurity()', function() {
+describe('validateServerSecurity()', function () {
   const specialSecTypes = ['oauth2', 'openIdConnect'];
 
-  it('should successfully validate server security', async function() {
+  it('should successfully validate server security', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -436,11 +677,11 @@ describe('validateServerSecurity()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
   });
 
-  it('should successfully validate if server security not provided', async function() {
+  it('should successfully validate if server security not provided', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -454,11 +695,11 @@ describe('validateServerSecurity()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
   });
 
-  it('should successfully validate server security of special security type like oauth2', async function() {
+  it('should successfully validate server security of special security type like oauth2', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -488,11 +729,11 @@ describe('validateServerSecurity()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     expect(validateServerSecurity(parsedInput, inputString, input, specialSecTypes)).to.equal(true);
   });
 
-  it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function() {
+  it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -520,7 +761,7 @@ describe('validateServerSecurity()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     try {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
@@ -544,7 +785,7 @@ describe('validateServerSecurity()', function() {
     }
   });
 
-  it('should throw error that server has no security schema provided when components schema object is not in the document', async function() {
+  it('should throw error that server has no security schema provided when components schema object is not in the document', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -565,7 +806,7 @@ describe('validateServerSecurity()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     try {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
@@ -586,10 +827,10 @@ describe('validateServerSecurity()', function() {
           }
         }
       ]);
-    }  
+    }
   });
 
-  it('should throw error that server security is not declared as empty array', async function() {
+  it('should throw error that server security is not declared as empty array', async function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -621,7 +862,7 @@ describe('validateServerSecurity()', function() {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-    
+
     try {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
@@ -654,6 +895,7 @@ describe('validateServerSecurity()', function() {
           }
         }
       ]);
-    }  
+    }
   });
-});
+}
+);

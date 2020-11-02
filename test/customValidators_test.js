@@ -360,7 +360,7 @@ describe('validateChannel()', function () {
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
           location: {
             endColumn: 11,
             endLine: 4,
@@ -394,7 +394,7 @@ describe('validateChannel()', function () {
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
           location: {
             endColumn: 9,
             endLine: 4,
@@ -428,7 +428,7 @@ describe('validateChannel()', function () {
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
-          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
           location: {
             endColumn: 9,
             endLine: 4,
@@ -440,7 +440,7 @@ describe('validateChannel()', function () {
           }
         },
         {
-          title: '/user/login?bar=2 channel contains invalid name with url query parameters : ?bar=2',
+          title: '/user/login?bar=2 channel contains invalid name with url query parameters: ?bar=2',
           location: {
             endColumn: 9,
             endLine: 6,
@@ -484,7 +484,7 @@ describe('validateChannel()', function () {
           }
         },
         {
-          title: 'user/{userId}/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
+          title: 'user/{userId}/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
           location: {
             endColumn: 9,
             endLine: 4,
@@ -530,7 +530,7 @@ describe('validateChannel()', function () {
           }
         },
         {
-          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters : ?foo=1',
+          title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
           location: {
             endColumn: 9,
             endLine: 4,

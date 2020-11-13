@@ -343,6 +343,18 @@ describe('validateChannel()', function () {
     expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
   });
 
+  it('should successfully validate channel name is just a single slash (/)', async function () {
+    const inputString = `{
+      "channels": {
+        "/": {
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+  });
+
   it('should throw error that the provided channel name is invalid', async function () {
     const inputString = `{
       "channels": {
@@ -369,6 +381,70 @@ describe('validateChannel()', function () {
             startColumn: 34,
             startLine: 3,
             startOffset: 54
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that the provided channel name is invalid when channel name is just a single slash (/)', async function () {
+    const inputString = `{
+      "channels": {
+        "/?foo=1": {
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: '/?foo=1 channel contains invalid name with url query parameters: ?foo=1',
+          location: {
+            endColumn: 11,
+            endLine: 4,
+            endOffset: 52,
+            jsonPointer: '/channels/~1?foo=1',
+            startColumn: 21,
+            startLine: 3,
+            startOffset: 41
+          }
+        }
+      ]);
+    }
+  });
+
+  it('should throw error that channel has invalid name with two query params', async function () {
+    const inputString = `{
+    "channels": {
+      "/user/signedup?foo=1&bar=0": {
+      }
+    }
+  }`;
+    const parsedInput = JSON.parse(inputString);
+
+    try {
+      validateChannels(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.type).to.equal('https://github.com/asyncapi/parser-js/validation-errors');
+      expect(e.title).to.equal('Channel validation failed');
+      expect(e.parsedJSON).to.deep.equal(parsedInput);
+      expect(e.validationErrors).to.deep.equal([
+        {
+          title: '/user/signedup?foo=1&bar=0 channel contains invalid name with url query parameters: ?foo=1&bar=0',
+          location: {
+            endColumn: 9,
+            endLine: 4,
+            endOffset: 65,
+            jsonPointer: '/channels/~1user~1signedup?foo=1&bar=0',
+            startColumn: 38,
+            startLine: 3,
+            startOffset: 56
           }
         }
       ]);

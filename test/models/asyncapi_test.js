@@ -65,6 +65,13 @@ describe('AsyncAPIDocument', function() {
       expect(Array.isArray(d.serverNames())).to.be.equal(true);
       expect(d.serverNames()).to.deep.equal(['test1', 'test2']);
     });
+
+    it('should return an empty array', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(Array.isArray(d.serverNames())).to.be.equal(true);
+      expect(d.serverNames()).to.deep.equal([]);
+    });
   });
 
   describe('#server()', function() {

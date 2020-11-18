@@ -44,17 +44,6 @@ jobs:
       - name: Get version from package.json after release step
         id: extractver
         run: echo "::set-output name=version::$(npm run get-version --silent)"
-      - name: Create Pull Request with updated package files
-        if: steps.initversion.outputs.version != steps.extractver.outputs.version
-        uses: peter-evans/create-pull-request@v2.4.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          commit-message: 'chore(release): ${{ steps.extractver.outputs.version }}'
-          committer: asyncapi-bot <info@asyncapi.io>
-          author: asyncapi-bot <info@asyncapi.io>
-          title: 'chore(release): ${{ steps.extractver.outputs.version }}'
-          body: 'Version bump in package.json and package-lock.json for release [${{ steps.extractver.outputs.version }}](https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }})'
-          branch: version-bump/${{ steps.extractver.outputs.version }}
       - name: Check if version changed  # Version check based on package.json version number
         uses: EndBug/version-check@v1.6.0
         id: check
@@ -67,3 +56,14 @@ jobs:
           twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }} 
           twitter_access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }} 
           twitter_access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }} 
+      - name: Create Pull Request with updated package files
+        if: steps.initversion.outputs.version != steps.extractver.outputs.version
+        uses: peter-evans/create-pull-request@v2.4.4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: 'chore(release): ${{ steps.extractver.outputs.version }}'
+          committer: asyncapi-bot <info@asyncapi.io>
+          author: asyncapi-bot <info@asyncapi.io>
+          title: 'chore(release): ${{ steps.extractver.outputs.version }}'
+          body: 'Version bump in package.json and package-lock.json for release [${{ steps.extractver.outputs.version }}](https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }})'
+          branch: version-bump/${{ steps.extractver.outputs.version }}

@@ -115,10 +115,13 @@ declare module "@asyncapi/parser" {
         servers(): {
             [key: string]: Server;
         };
+        serverNames(): string[];
         /**
          * @param name - Name of the server.
          */
         server(name: string): Server;
+        hasDefaultContentType(): boolean;
+        defaultContentType(): string | null;
         hasChannels(): boolean;
         channels(): {
             [key: string]: Channel;
@@ -128,7 +131,6 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the channel.
          */
         channel(name: string): Channel;
-        defaultContentType(): string;
         hasComponents(): boolean;
         components(): Components;
         hasMessages(): boolean;
@@ -305,31 +307,59 @@ declare module "@asyncapi/parser" {
         messages(): {
             [key: string]: Message;
         };
-        message(): Message;
+        hasMessages(): boolean;
+        /**
+         * @param name - Name of the message.
+         */
+        message(name: string): Message;
         schemas(): {
             [key: string]: Schema;
         };
-        schema(): Schema;
+        hasSchemas(): boolean;
+        /**
+         * @param name - Name of the schema.
+         */
+        schema(name: string): Schema;
         securitySchemes(): {
             [key: string]: SecurityScheme;
         };
-        securityScheme(): SecurityScheme;
+        hasSecuritySchemes(): boolean;
+        /**
+         * @param name - Name of the security schema.
+         */
+        securityScheme(name: string): SecurityScheme;
         parameters(): {
             [key: string]: ChannelParameter;
         };
-        parameter(): ChannelParameter;
+        hasParameters(): boolean;
+        /**
+         * @param name - Name of the channel parameter.
+         */
+        parameter(name: string): ChannelParameter;
         correlationIds(): {
             [key: string]: CorrelationId;
         };
-        correlationId(): CorrelationId;
+        hasCorrelationIds(): boolean;
+        /**
+         * @param name - Name of the correlationId.
+         */
+        correlationId(name: string): CorrelationId;
         operationTraits(): {
             [key: string]: OperationTrait;
         };
-        operationTrait(): OperationTrait;
+        hasOperationTraits(): boolean;
+        /**
+         * @param name - Name of the operation trait.
+         */
+        operationTrait(name: string): OperationTrait;
         messageTraits(): {
             [key: string]: MessageTrait;
         };
-        messageTrait(): MessageTrait;
+        hasMessageTraits(): boolean;
+        /**
+         * @param name - Name of the message trait.
+         */
+        messageTrait(name: string): MessageTrait;
         hasExtensions(): boolean;
         extensions(): {
             [key: string]: any;
@@ -742,6 +772,10 @@ declare module "@asyncapi/parser" {
         properties(): {
             [key: string]: Schema;
         };
+        /**
+         * @param name - Name of the property.
+         */
+        property(name: string): Schema;
         additionalProperties(): boolean | Schema;
         additionalItems(): Schema;
         patternProperties(): {

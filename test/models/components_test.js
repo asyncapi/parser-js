@@ -16,7 +16,7 @@ describe('Components', function() {
       expect(d.messages().test2.json()).to.equal(doc.messages.test2);
     });
 
-    it('should return an empty object if the components field has not messages', function() {
+    it('should return an empty object if the components field has no defined messages', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.messages()).to.be.equal('object');
@@ -67,7 +67,7 @@ describe('Components', function() {
       expect(d.schemas().test2.json()).to.equal(doc.schemas.test2);
     });
 
-    it('should return an empty object if the components field has not schemas', function() {
+    it('should return an empty object if the components field has no defined schemas', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.schemas()).to.be.equal('object');
@@ -118,7 +118,7 @@ describe('Components', function() {
       expect(d.securitySchemes().test2.json()).to.equal(doc.securitySchemes.test2);
     });
 
-    it('should return an empty object if the components field has not securitySchemes', function() {
+    it('should return an empty object if the components field has no defined securitySchemes', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.securitySchemes()).to.be.equal('object');
@@ -169,7 +169,7 @@ describe('Components', function() {
       expect(d.parameters().test2.json()).to.equal(doc.parameters.test2);
     });
 
-    it('should return an empty object if the components field has not parameters', function() {
+    it('should return an empty object if the components field has no defined parameters', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.parameters()).to.be.equal('object');
@@ -220,7 +220,7 @@ describe('Components', function() {
       expect(d.correlationIds().test2.json()).to.equal(doc.correlationIds.test2);
     });
 
-    it('should return an empty object if the components field has not correlationIds', function() {
+    it('should return an empty object if the components field has no defined correlationIds', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.correlationIds()).to.be.equal('object');
@@ -271,7 +271,7 @@ describe('Components', function() {
       expect(d.operationTraits().test2.json()).to.equal(doc.operationTraits.test2);
     });
 
-    it('should return an empty object if the components field has not operationTraits', function() {
+    it('should return an empty object if the components field has no defined operationTraits', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.operationTraits()).to.be.equal('object');
@@ -322,7 +322,7 @@ describe('Components', function() {
       expect(d.messageTraits().test2.json()).to.equal(doc.messageTraits.test2);
     });
 
-    it('should return an empty object if the components field has not messageTraits', function() {
+    it('should return an empty object if the components field has no defined messageTraits', function() {
       const doc = {};
       const d = new Components(doc);
       expect(typeof d.messageTraits()).to.be.equal('object');

@@ -327,60 +327,60 @@ describe('AsyncAPIDocument', function() {
       'testParamSchema',
       'testParamNestedSchemaProp',
       'testParamNestedNestedSchemaProp2'
-    ]
+    ];
     const headerObjectSchemas = [
       'testHeaderSchema',
       'testHeaderNestedSchemaProp',
       'testHeaderNestedNestedSchemaProp1',
-    ]
+    ];
     const headerArraySchemas = [
       'testHeaderNestedSchemaPropArray',
       'testHeaderNestedSchemaPropArrayProp1'
-    ]
+    ];
     const payloadObjectSchemas = [
       'testPayloadSchema',
       'testPayloadNestedSchemaProp',
       'testPayloadNestedNestedSchemaProp1'
-    ]
+    ];
     const payloadArraySchemas = [
       'testPayloadNestedSchemaPropArray',
       'testPayloadNestedSchemaPropArrayProp1'
-    ]
+    ];
     const payloadSchemas = [
       'testPayload'
-    ]
+    ];
     const componentObjectAllOfSchemas = [
       'testComponentSchemaNestedSchemaPropAllOf',
       'testComponentSchemaNestedSchemaPropAllOfSchema1',
       'testComponentSchemaNestedSchemaPropAllOfSchema1Prop1',
       'testComponentSchemaNestedSchemaPropAllOfSchema2',
       'testComponentSchemaNestedSchemaPropAllOfSchema2Prop1',
-    ]
+    ];
     const componentObjectSchemas = [
       'testComponentSchemaSchema'
-    ]
+    ];
     const componentArraySchemas = [
       'testComponentSchemaNestedSchemaPropArray',
       'testComponentSchemaNestedSchemaPropArrayProp1',
       'testComponentSchemaNestedSchemaPropArrayProp2'
-    ]
+    ];
     it('Should not include parameter schemas if defined', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);
-      }
+      };
       const typesToTraverse = [
-        "objects",
-        "arrays",
-        "components",
-        "oneOfs", 
-        "allOfs",
-        "anyOfs",
-        "payloads",
-        "headers"
-      ]
+        'objects',
+        'arrays',
+        'components',
+        'oneOfs', 
+        'allOfs',
+        'anyOfs',
+        'payloads',
+        'headers'
+      ];
       d.traverseSchemas(cb, typesToTraverse);
 
       //Ensure the actual keys are as expected
@@ -406,17 +406,17 @@ describe('AsyncAPIDocument', function() {
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);
-      }
+      };
       const typesToTraverse = [
-        "objects",
-        "arrays",
-        "components",
-        "oneOfs", 
-        "allOfs",
-        "anyOfs",
-        "parameters",
-        "headers"
-      ]
+        'objects',
+        'arrays',
+        'components',
+        'oneOfs', 
+        'allOfs',
+        'anyOfs',
+        'parameters',
+        'headers'
+      ];
       d.traverseSchemas(cb, typesToTraverse);
 
       //Ensure the actual keys are as expected
@@ -440,17 +440,17 @@ describe('AsyncAPIDocument', function() {
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);
-      }
+      };
       const typesToTraverse = [
-        "objects",
-        "arrays",
-        "components",
-        "oneOfs", 
-        "allOfs",
-        "anyOfs",
-        "parameters",
-        "payloads"
-      ]
+        'objects',
+        'arrays',
+        'components',
+        'oneOfs', 
+        'allOfs',
+        'anyOfs',
+        'parameters',
+        'payloads'
+      ];
       d.traverseSchemas(cb, typesToTraverse);
 
       //Ensure the actual keys are as expected
@@ -475,17 +475,17 @@ describe('AsyncAPIDocument', function() {
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);
-      }
+      };
       const typesToTraverse = [
-        "objects",
-        "components",
-        "oneOfs", 
-        "allOfs",
-        "anyOfs",
-        "parameters",
-        "payloads",
-        "headers"
-      ]
+        'objects',
+        'components',
+        'oneOfs', 
+        'allOfs',
+        'anyOfs',
+        'parameters',
+        'payloads',
+        'headers'
+      ];
       d.traverseSchemas(cb, typesToTraverse);
 
       //Ensure the actual keys are as expected
@@ -509,7 +509,7 @@ describe('AsyncAPIDocument', function() {
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);
-      }
+      };
       d.traverseSchemas(cb);
 
       //Ensure the actual keys are as expected
@@ -536,17 +536,17 @@ describe('AsyncAPIDocument', function() {
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);
-      }
+      };
       const typesToTraverse = [
-        "objects",
-        "arrays",
-        "oneOfs", 
-        "allOfs",
-        "anyOfs",
-        "parameters",
-        "payloads",
-        "headers"
-      ]
+        'objects',
+        'arrays',
+        'oneOfs', 
+        'allOfs',
+        'anyOfs',
+        'parameters',
+        'payloads',
+        'headers'
+      ];
       d.traverseSchemas(cb, typesToTraverse);
 
       //Ensure the actual keys are as expected

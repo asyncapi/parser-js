@@ -23,6 +23,7 @@ on:
             - edited
 jobs:
     test:
+        if: github.event.pull_request.draft == false
         name: Checking sentiments
         runs-on: ubuntu-latest
         steps:

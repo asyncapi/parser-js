@@ -56,6 +56,29 @@ describe('AsyncAPIDocument', function() {
       expect(d.servers().test2.constructor.name).to.equal('Server');
       expect(d.servers().test2.json()).to.equal(doc.servers.test2);
     });
+
+    it('should return an empty object if the AsyncAPI document has no defined servers', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(typeof d.servers()).to.be.equal('object');
+      expect(d.servers()).to.deep.equal({});
+    });
+  });
+
+  describe('#serverNames()', function() {
+    it('should return an array of strings', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const d = new AsyncAPIDocument(doc);
+      expect(Array.isArray(d.serverNames())).to.be.equal(true);
+      expect(d.serverNames()).to.deep.equal(['test1', 'test2']);
+    });
+
+    it('should return an empty array if the AsyncAPI document has no defined servers', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(Array.isArray(d.serverNames())).to.be.equal(true);
+      expect(d.serverNames()).to.deep.equal([]);
+    });
   });
 
   describe('#server()', function() {
@@ -76,6 +99,34 @@ describe('AsyncAPIDocument', function() {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
       const d = new AsyncAPIDocument(doc);
       expect(d.server('not found')).to.equal(null);
+    });
+  });
+
+  describe('#hasDefaultContentType()', function() {
+    it('should return true if field exists', function() {
+      const doc = { defaultContentType: 'application/json' };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasDefaultContentType()).to.be.equal(true);
+    });
+
+    it('should return false if field does not exist', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(d.hasDefaultContentType()).to.be.equal(false);
+    });
+  });
+
+  describe('#defaultContentType()', function() {
+    it('should return string if field exists', function() {
+      const doc = { defaultContentType: 'application/json' };
+      const d = new AsyncAPIDocument(doc);
+      expect(d.defaultContentType()).to.be.equal('application/json');
+    });
+
+    it('should return null if field does not exist', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(d.defaultContentType()).to.be.equal(null);
     });
   });
 
@@ -100,6 +151,13 @@ describe('AsyncAPIDocument', function() {
       expect(d.channels().test2.constructor.name).to.equal('Channel');
       expect(d.channels().test2.json()).to.equal(doc.channels.test2);
     });
+
+    it('should return an empty object if the AsyncAPI document has no defined channels', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(typeof d.channels()).to.be.equal('object');
+      expect(d.servers()).to.deep.equal({});
+    });
   });
 
   describe('#channelNames()', function() {
@@ -108,6 +166,13 @@ describe('AsyncAPIDocument', function() {
       const d = new AsyncAPIDocument(doc);
       expect(Array.isArray(d.channelNames())).to.be.equal(true);
       expect(d.channelNames()).to.deep.equal(['test1', 'test2']);
+    });
+
+    it('should return an empty array if the AsyncAPI document has no defined channels', function() {
+      const doc = {};
+      const d = new AsyncAPIDocument(doc);
+      expect(Array.isArray(d.channelNames())).to.be.equal(true);
+      expect(d.channelNames()).to.deep.equal([]);
     });
   });
 

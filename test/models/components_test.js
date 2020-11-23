@@ -15,6 +15,24 @@ describe('Components', function() {
       expect(d.messages().test2.constructor.name).to.equal('Message');
       expect(d.messages().test2.json()).to.equal(doc.messages.test2);
     });
+
+    it('should return an empty object if the components field has no defined messages', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.messages()).to.be.equal('object');
+      expect(d.messages()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasMessages()', function() {
+    it('should return a boolean indicating if the components field has messages', function() {
+      const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoMessages = { schemas: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoMessages);
+      expect(d.hasMessages()).to.equal(true);
+      expect(d2.hasMessages()).to.equal(false);
+    });
   });
   
   describe('#message()', function() {
@@ -47,6 +65,24 @@ describe('Components', function() {
       expect(d.schemas().test1.json()).to.equal(doc.schemas.test1);
       expect(d.schemas().test2.constructor.name).to.equal('Schema');
       expect(d.schemas().test2.json()).to.equal(doc.schemas.test2);
+    });
+
+    it('should return an empty object if the components field has no defined schemas', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.schemas()).to.be.equal('object');
+      expect(d.schemas()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasSchemas()', function() {
+    it('should return a boolean indicating if the components field has schemas', function() {
+      const doc = { schemas: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoSchemas = { messages: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasSchemas()).to.equal(true);
+      expect(d2.hasSchemas()).to.equal(false);
     });
   });
   
@@ -81,6 +117,24 @@ describe('Components', function() {
       expect(d.securitySchemes().test2.constructor.name).to.equal('SecurityScheme');
       expect(d.securitySchemes().test2.json()).to.equal(doc.securitySchemes.test2);
     });
+
+    it('should return an empty object if the components field has no defined securitySchemes', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.securitySchemes()).to.be.equal('object');
+      expect(d.securitySchemes()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasSecuritySchemes()', function() {
+    it('should return a boolean indicating if the components field has securitySchemes', function() {
+      const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoSchemas = { messages: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasSecuritySchemes()).to.equal(true);
+      expect(d2.hasSecuritySchemes()).to.equal(false);
+    });
   });
   
   describe('#securityScheme()', function() {
@@ -113,6 +167,24 @@ describe('Components', function() {
       expect(d.parameters().test1.json()).to.equal(doc.parameters.test1);
       expect(d.parameters().test2.constructor.name).to.equal('ChannelParameter');
       expect(d.parameters().test2.json()).to.equal(doc.parameters.test2);
+    });
+
+    it('should return an empty object if the components field has no defined parameters', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.parameters()).to.be.equal('object');
+      expect(d.parameters()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasParameters()', function() {
+    it('should return a boolean indicating if the components field has parameters', function() {
+      const doc = { parameters: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoSchemas = { messages: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasParameters()).to.equal(true);
+      expect(d2.hasParameters()).to.equal(false);
     });
   });
   
@@ -147,6 +219,24 @@ describe('Components', function() {
       expect(d.correlationIds().test2.constructor.name).to.equal('CorrelationId');
       expect(d.correlationIds().test2.json()).to.equal(doc.correlationIds.test2);
     });
+
+    it('should return an empty object if the components field has no defined correlationIds', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.correlationIds()).to.be.equal('object');
+      expect(d.correlationIds()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasCorrelationIds()', function() {
+    it('should return a boolean indicating if the components field has correlationIds', function() {
+      const doc = { correlationIds: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoSchemas = { messages: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasCorrelationIds()).to.equal(true);
+      expect(d2.hasCorrelationIds()).to.equal(false);
+    });
   });
   
   describe('#correlationId()', function() {
@@ -180,6 +270,24 @@ describe('Components', function() {
       expect(d.operationTraits().test2.constructor.name).to.equal('OperationTrait');
       expect(d.operationTraits().test2.json()).to.equal(doc.operationTraits.test2);
     });
+
+    it('should return an empty object if the components field has no defined operationTraits', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.operationTraits()).to.be.equal('object');
+      expect(d.operationTraits()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasOperationTraits()', function() {
+    it('should return a boolean indicating if the components field has operationTraits', function() {
+      const doc = { operationTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoSchemas = { messages: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasOperationTraits()).to.equal(true);
+      expect(d2.hasOperationTraits()).to.equal(false);
+    });
   });
   
   describe('#operationTrait()', function() {
@@ -212,6 +320,24 @@ describe('Components', function() {
       expect(d.messageTraits().test1.json()).to.equal(doc.messageTraits.test1);
       expect(d.messageTraits().test2.constructor.name).to.equal('MessageTrait');
       expect(d.messageTraits().test2.json()).to.equal(doc.messageTraits.test2);
+    });
+
+    it('should return an empty object if the components field has no defined messageTraits', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.messageTraits()).to.be.equal('object');
+      expect(d.messageTraits()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasMessageTraits()', function() {
+    it('should return a boolean indicating if the components field has messageTraits', function() {
+      const doc = { messageTraits: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
+      const docNoSchemas = { messages: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasMessageTraits()).to.equal(true);
+      expect(d2.hasMessageTraits()).to.equal(false);
     });
   });
   

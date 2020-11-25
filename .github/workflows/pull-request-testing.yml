@@ -2,10 +2,11 @@ name: Pull request testing
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [opened, reopened, synchronize, ready_for_review]
 
 jobs:
   release:
+    if: github.event.pull_request.draft == false
     name: 'Run tests'
     runs-on: ubuntu-latest
     steps:

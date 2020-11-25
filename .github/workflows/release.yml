@@ -67,3 +67,24 @@ jobs:
           title: 'chore(release): ${{ steps.extractver.outputs.version }}'
           body: 'Version bump in package.json and package-lock.json for release [${{ steps.extractver.outputs.version }}](https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }})'
           branch: version-bump/${{ steps.extractver.outputs.version }}
+  dispatch:
+    needs: release
+    strategy:
+      matrix:
+        repo: ['asyncapi/generator']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - id: package_details
+        uses: ./.github/actions/package-details
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: ${{ matrix.repo }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: '${{github.repository}}/release'
+          client-payload: '{"name": "${{ steps.package_details.outputs.name }}", "version":"${{ steps.package_details.outputs.version }}"}'
+          

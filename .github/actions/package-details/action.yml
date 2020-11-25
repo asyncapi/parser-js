@@ -1,0 +1,5 @@
+name: 'Package details'
+description: 'Use this action to get package.json details like name and version.'
+runs:
+  using: 'node12'
+  main: 'index.js'

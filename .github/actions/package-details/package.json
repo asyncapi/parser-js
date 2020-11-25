@@ -1,0 +1,10 @@
+{
+  "name": "package-details",
+  "version": "0.1.0",
+  "description": "Use this action to get package.json details like name and version.",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@actions/core": "^1.2.6"
+  }
+}

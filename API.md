@@ -3701,6 +3701,6 @@ Callback used when crawling a schema.
 | Param | Type | Description |
 | --- | --- | --- |
 | schema | <code>Schema</code> | which is being crawled |
-| callbackType | [<code>SchemaIteratorCallbackType</code>](#SchemaIteratorCallbackType) | is the schema a new one or is the crawler finishing one. |
 | propName | <code>String</code> | if the schema is from a property get the name of such |
+| callbackType | [<code>SchemaIteratorCallbackType</code>](#SchemaIteratorCallbackType) | is the schema a new one or is the crawler finishing one. |
 

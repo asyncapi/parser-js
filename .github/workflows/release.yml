@@ -43,20 +43,16 @@ jobs:
         run: npm run release
       - name: Get version from package.json after release step
         id: extractver
-        #npm is slow and has delays it is better to sleep here a bit to be 100% sure the next step that relies on npm gets latest value
-        run: |
-          sleep 1m
-          echo "::set-output name=version::$(npm run get-version --silent)"
+        run: echo "::set-output name=version::$(npm run get-version --silent)"
       - name: Check if version changed  # Version check based on package.json version number
         uses: EndBug/version-check@v1.6.0
         id: check
         with:
-          #we need to do static check here because version-check action checks on local package.json from a commit from push event
-          #and version from commiton push event is older than the one we just updated and pushed to npm
-          file-url: https://unpkg.com/@asyncapi/parser@latest/package.json
-          static-checking: remoteIsNew
+          # we need to statically check that local version is now newer than the one in master
+          file-url: https://raw.githubusercontent.com/${{github.repository}}/master/package.json
+          static-checking: localIsNew
       - name: Publish information about the release to Twitter # tweet only if detected version change is not a patch
-        if: steps.check.outputs.changed == 'true' && steps.check.outputs.type != 'patch'
+        if: steps.initversion.outputs.version != steps.extractver.outputs.version && steps.check.outputs.changed == 'true' && steps.check.outputs.type != 'patch'
         uses: m1ner79/Github-Twittction@v1.0.1
         with:
           twitter_status: "Release ${{ steps.extractver.outputs.version }} for ${{github.repository}} is out in the wild 😱💪🍾🎂\n\nThank you for the contribution ${{ github.event.commits[0].author.name }} https://github.com/${{github.repository}}/releases/tag/v${{ steps.extractver.outputs.version }}"

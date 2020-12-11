@@ -1,0 +1,42 @@
+asyncapi: 2.0.0
+info:
+  title: My API
+  version: '1.0.0'
+channels:
+  mychannel:
+    publish:
+      traits:
+        - $ref: '#/components/operationTraits/docs'        
+      externalDocs:
+        x-extension: true
+        url: 'https://irrelevant.com'
+      message:
+        $ref: '#/components/messages/testMessage'
+  oneOfMessageChannel:
+    publish:
+      message:
+        oneOf: 
+          - $ref: '#/components/messages/testMessage'
+
+components:
+  messages:
+    testMessage:
+      traits:
+        - $ref: '#/components/messageTraits/extension'
+      payload:
+        $ref: '#/components/schemas/testSchema'
+  schemas:
+    testSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        test:
+          $ref: 'refs/refed.yaml'
+  messageTraits:
+    extension:
+      x-some-extension: 'some extension'
+  operationTraits:
+    docs:
+      externalDocs:
+        url: https://company.com/docs

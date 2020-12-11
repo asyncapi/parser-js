@@ -10,6 +10,10 @@ describe('Check Parser in the browser', function() {
     //use this in case you want to troubleshoot in a real chrome window => browser = await puppeteer.launch({headless: false});
     browser = await puppeteer.launch();
     page = await browser.newPage();
+    page.on('console', msg => {
+      for (let i = 0; i < msg.args().length; ++i)
+        console.error(`Browser console error ${i}: ${JSON.stringify(msg.args()[i]._remoteObject, null, 2)}`);
+    });
     await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
   });
       

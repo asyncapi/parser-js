@@ -25,6 +25,20 @@
 </dd>
 </dl>
 
+## Typedefs
+
+<dl>
+<dt><a href="#SchemaIteratorCallbackType">SchemaIteratorCallbackType</a></dt>
+<dd><p>The different kind of stages when crawling a schema.</p>
+</dd>
+<dt><a href="#SchemaTypesToIterate">SchemaTypesToIterate</a></dt>
+<dd><p>The different types of schemas you can iterate</p>
+</dd>
+<dt><a href="#TraverseSchemas">TraverseSchemas</a> ⇒ <code>boolean</code></dt>
+<dd><p>Callback used when crawling a schema.</p>
+</dd>
+</dl>
+
 <a name="module_@asyncapi/parser"></a>
 
 ## @asyncapi/parser
@@ -408,6 +422,7 @@
             * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
             * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
             * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
+            * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
             * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
             * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
             * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
@@ -3044,6 +3059,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
     * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
     * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
+    * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
     * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
     * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
     * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
@@ -3161,6 +3177,19 @@ Implements functions to deal with the AsyncAPI document.
 
 #### asyncAPIDocument.hasCircular() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+<a name="module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas"></a>
+
+#### asyncAPIDocument.traverseSchemas(callback, schemaTypesToIterate)
+Traverse schemas in the document and select which types of schemas to include.
+By default all schemas are iterated
+
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+
+| Param | Type |
+| --- | --- |
+| callback | [<code>TraverseSchemas</code>](#TraverseSchemas) | 
+| schemaTypesToIterate | [<code>Array.&lt;SchemaTypesToIterate&gt;</code>](#SchemaTypesToIterate) | 
+
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasTags"></a>
 
 #### asyncAPIDocument.hasTags() ⇒ <code>boolean</code>
@@ -3617,4 +3646,61 @@ Implements functions to deal with the Tags object.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the tag. |
+
+<a name="SchemaIteratorCallbackType"></a>
+
+## SchemaIteratorCallbackType : <code>enum</code>
+**Kind**: global enum  
+**Read only**: true  
+<a name="SchemaTypesToIterate"></a>
+
+## SchemaTypesToIterate : <code>enum</code>
+**Kind**: global enum  
+**Read only**: true  
+<a name="SchemaIteratorCallbackType"></a>
+
+## SchemaIteratorCallbackType
+The different kind of stages when crawling a schema.
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| NEW_SCHEMA | <code>string</code> | The crawler just started crawling a schema. |
+| END_SCHEMA | <code>string</code> | The crawler just finished crawling a schema. |
+
+<a name="SchemaTypesToIterate"></a>
+
+## SchemaTypesToIterate
+The different types of schemas you can iterate
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| parameters | <code>string</code> | Crawl all schemas in parameters |
+| payloads | <code>string</code> | Crawl all schemas in payloads |
+| headers | <code>string</code> | Crawl all schemas in headers |
+| components | <code>string</code> | Crawl all schemas in components |
+| objects | <code>string</code> | Crawl all schemas of type object |
+| arrays | <code>string</code> | Crawl all schemas of type array |
+| oneOfs | <code>string</code> | Crawl all schemas in oneOf's |
+| allOfs | <code>string</code> | Crawl all schemas in allOf's |
+| anyOfs | <code>string</code> | Crawl all schemas in anyOf's |
+
+<a name="TraverseSchemas"></a>
+
+## TraverseSchemas ⇒ <code>boolean</code>
+Callback used when crawling a schema.
+
+**Kind**: global typedef  
+**Returns**: <code>boolean</code> - should the crawler continue crawling the schema?  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | <code>Schema</code> | which is being crawled |
+| propName | <code>String</code> | if the schema is from a property get the name of such |
+| callbackType | [<code>SchemaIteratorCallbackType</code>](#SchemaIteratorCallbackType) | is the schema a new one or is the crawler finishing one. |
 

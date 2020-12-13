@@ -527,6 +527,22 @@ describe('parse()', function() {
     }, expectedErrorObject);
   });
 
+  it('Should include schemas after circular property', async function() {
+    const input = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"test":{"publish":{"message":{"payload":{"$ref":"#/components/schemas/testSchema"}}}}},"components":{"schemas":{"testSchema":{"$id":"testSchema","type":"object","test":true,"properties":{"recursiveTestProp":{"$ref":"#/components/schemas/testSchema"},"testProp":{"$id":"testString","type":"string"}}}}}}';
+    const result = await parser.parse(input, { path: __filename });
+    const schemas = new Map();
+    const cb = (schema) => {
+      schemas.set(schema.uid(), schema);
+    };
+    result.traverseSchemas(cb);
+
+    //Ensure the actual keys are as expected
+    const schemaKeys = Array.from(schemas.keys());
+    expect(schemaKeys).to.deep.equal([
+      'testSchema',
+      'testString'
+    ]);
+  });
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
     expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(true);

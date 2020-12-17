@@ -12,7 +12,7 @@ describe('Check Parser in the browser', function() {
     page = await browser.newPage();
     page.on('console', msg => {
       for (let i = 0; i < msg.args().length; ++i)
-        console.error(`Browser console error ${i}: ${JSON.stringify(msg.args()[i]._remoteObject, null, 2)}`);
+        console.error(`Browser console content ${i}: ${JSON.stringify(msg.args()[i]._remoteObject, null, 2)}`);
     });
     await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
   });

@@ -19,7 +19,8 @@
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "gen-readme-toc": "markdown-toc -i README.md",
     "test-lib": "nyc --reporter=html --reporter=text mocha --exclude test/browser_test.js --recursive",
-    "test-browser": "npm run bundle && cp dist/bundle.js test/sample_browser/  && start-server-and-test 'http-server test/sample_browser --cors -s' 8080 'mocha --timeout 3000 test/browser_test.js' && rimraf test/sample_browser/bundle.js"
+    "test-browser": "npm run test-browser-cleanup && npm run bundle && cp dist/bundle.js test/sample_browser/  && start-server-and-test 'http-server test/sample_browser --cors -s' 8080 'mocha --timeout 3000 test/browser_test.js' && npm run test-browser-cleanup",
+    "test-browser-cleanup": "rimraf test/sample_browser/bundle.js" 
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"

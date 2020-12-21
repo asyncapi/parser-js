@@ -13,7 +13,8 @@
             "additionalProperties": [
               "invalid_array"
             ]
-          }
+          },
+          "x-parser-original-schema-format": "application/vnd.aai.asyncapi;version=2.0.0"
         }
       }
     }

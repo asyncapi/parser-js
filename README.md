@@ -113,6 +113,7 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
        * parsedAsyncAPIDocument {Object} Full AsyncAPI Document parsed into Object
        * pathToPayload {String} path of the message passed to the parser, relative to the root of AsyncAPI Document
       */
+      // parse function MUST populate a `x-parser-original-schema-format` property at the message with the mime type of the message
       parse: ({ message, defaultSchemaFormat, originalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument, pathToPayload }) => { /* custom parsing logic */ },
       getMimeTypes: () => [
         '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',

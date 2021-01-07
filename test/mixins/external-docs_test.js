@@ -37,6 +37,9 @@ describe('MixinExternalDocs', function() {
   });
 });
 
+/**
+ * @param {any} model Model.
+ */
 function assertMixinExternalDocsInheritance(model) {
   describe('MixinExternalDocsInheritance', function() {
     it(`check if ${model.name} model has inherited methods from MixinExternalDocs`, function() {

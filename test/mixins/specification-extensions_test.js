@@ -105,6 +105,9 @@ describe('MixinSpecificationExtensions', function() {
   });
 });
 
+/**
+ * @param {any} model Model.
+ */
 function assertMixinSpecificationExtensionsInheritance(model) {
   describe('MixinSpecificationExtensionsInheritance', function() {
     it(`check if ${model.name} model has inherited methods from MixinSpecificationExtensions`, function() {

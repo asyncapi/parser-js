@@ -5,6 +5,14 @@
 <dd></dd>
 </dl>
 
+## Classes
+
+<dl>
+<dt><a href="#exp_module_@asyncapi/parser+Message--Message">Message</a> ⇐ <code>MessageTraitable</code> ⏏</dt>
+<dd><p>Implements functions to deal with a Message object.</p>
+</dd>
+</dl>
+
 ## Mixins
 
 <dl>
@@ -37,7 +45,7 @@
             * [.hasDescription()](#module_@asyncapi/parser+ChannelParameter+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+ChannelParameter+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+ChannelParameter+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+ChannelParameter+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+ChannelParameter+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+ChannelParameter+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+ChannelParameter+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+ChannelParameter+hasExtension) ⇒ <code>boolean</code>
@@ -45,7 +53,7 @@
             * [.hasExt(key)](#module_@asyncapi/parser+ChannelParameter+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+ChannelParameter+ext) ⇒ <code>any</code>
         * [.Channel](#module_@asyncapi/parser+Channel) ⇐ <code>Base</code>
-            * [.parameters()](#module_@asyncapi/parser+Channel+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
+            * [.parameters()](#module_@asyncapi/parser+Channel+parameters) ⇒ <code>object.&lt;string, ChannelParameter&gt;</code>
             * [.parameter(name)](#module_@asyncapi/parser+Channel+parameter) ⇒ <code>ChannelParameter</code>
             * [.hasParameters()](#module_@asyncapi/parser+Channel+hasParameters) ⇒ <code>boolean</code>
             * [.publish()](#module_@asyncapi/parser+Channel+publish) ⇒ <code>PublishOperation</code>
@@ -55,12 +63,12 @@
             * [.hasDescription()](#module_@asyncapi/parser+Channel+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+Channel+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasBindings()](#module_@asyncapi/parser+Channel+hasBindings) ⇒ <code>boolean</code>
-            * [.bindings()](#module_@asyncapi/parser+Channel+bindings) ⇒ <code>Object</code>
+            * [.bindings()](#module_@asyncapi/parser+Channel+bindings) ⇒ <code>object</code>
             * [.bindingProtocols()](#module_@asyncapi/parser+Channel+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasBinding(name)](#module_@asyncapi/parser+Channel+hasBinding) ⇒ <code>boolean</code>
-            * [.binding(name)](#module_@asyncapi/parser+Channel+binding) ⇒ <code>Object</code> \| <code>null</code>
+            * [.binding(name)](#module_@asyncapi/parser+Channel+binding) ⇒ <code>object</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Channel+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Channel+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Channel+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Channel+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Channel+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Channel+hasExtension) ⇒ <code>boolean</code>
@@ -68,22 +76,22 @@
             * [.hasExt(key)](#module_@asyncapi/parser+Channel+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+Channel+ext) ⇒ <code>any</code>
         * [.Components](#module_@asyncapi/parser+Components) ⇐ <code>Base</code>
-            * [.messages()](#module_@asyncapi/parser+Components+messages) ⇒ <code>Object.&lt;string, Message&gt;</code>
-            * [.message()](#module_@asyncapi/parser+Components+message) ⇒ <code>Message</code>
-            * [.schemas()](#module_@asyncapi/parser+Components+schemas) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-            * [.schema()](#module_@asyncapi/parser+Components+schema) ⇒ <code>Schema</code>
-            * [.securitySchemes()](#module_@asyncapi/parser+Components+securitySchemes) ⇒ <code>Object.&lt;string, SecurityScheme&gt;</code>
-            * [.securityScheme()](#module_@asyncapi/parser+Components+securityScheme) ⇒ <code>SecurityScheme</code>
-            * [.parameters()](#module_@asyncapi/parser+Components+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
-            * [.parameter()](#module_@asyncapi/parser+Components+parameter) ⇒ <code>ChannelParameter</code>
-            * [.correlationIds()](#module_@asyncapi/parser+Components+correlationIds) ⇒ <code>Object.&lt;string, CorrelationId&gt;</code>
-            * [.correlationId()](#module_@asyncapi/parser+Components+correlationId) ⇒ <code>CorrelationId</code>
-            * [.operationTraits()](#module_@asyncapi/parser+Components+operationTraits) ⇒ <code>Object.&lt;string, OperationTrait&gt;</code>
-            * [.operationTrait()](#module_@asyncapi/parser+Components+operationTrait) ⇒ <code>OperationTrait</code>
-            * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
-            * [.messageTrait()](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
+            * [.messages()](#module_@asyncapi/parser+Components+messages) ⇒ <code>object.&lt;string, Message&gt;</code>
+            * [.message(name)](#module_@asyncapi/parser+Components+message) ⇒ <code>Message</code>
+            * [.schemas()](#module_@asyncapi/parser+Components+schemas) ⇒ <code>object.&lt;string, Schema&gt;</code>
+            * [.schema(name)](#module_@asyncapi/parser+Components+schema) ⇒ <code>Schema</code>
+            * [.securitySchemes()](#module_@asyncapi/parser+Components+securitySchemes) ⇒ <code>object.&lt;string, SecurityScheme&gt;</code>
+            * [.securityScheme(name)](#module_@asyncapi/parser+Components+securityScheme) ⇒ <code>SecurityScheme</code>
+            * [.parameters()](#module_@asyncapi/parser+Components+parameters) ⇒ <code>object.&lt;string, ChannelParameter&gt;</code>
+            * [.parameter(name)](#module_@asyncapi/parser+Components+parameter) ⇒ <code>ChannelParameter</code>
+            * [.correlationIds()](#module_@asyncapi/parser+Components+correlationIds) ⇒ <code>object.&lt;string, CorrelationId&gt;</code>
+            * [.correlationId(name)](#module_@asyncapi/parser+Components+correlationId) ⇒ <code>CorrelationId</code>
+            * [.operationTraits()](#module_@asyncapi/parser+Components+operationTraits) ⇒ <code>object.&lt;string, OperationTrait&gt;</code>
+            * [.operationTrait(name)](#module_@asyncapi/parser+Components+operationTrait) ⇒ <code>OperationTrait</code>
+            * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>object.&lt;string, MessageTrait&gt;</code>
+            * [.messageTrait(name)](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Components+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Components+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Components+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Components+hasExtension) ⇒ <code>boolean</code>
@@ -95,7 +103,7 @@
             * [.url()](#module_@asyncapi/parser+Contact+url) ⇒ <code>string</code>
             * [.email()](#module_@asyncapi/parser+Contact+email) ⇒ <code>string</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Contact+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Contact+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Contact+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Contact+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Contact+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Contact+hasExtension) ⇒ <code>boolean</code>
@@ -107,7 +115,7 @@
             * [.hasDescription()](#module_@asyncapi/parser+CorrelationId+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+CorrelationId+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+CorrelationId+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+CorrelationId+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+CorrelationId+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+CorrelationId+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+CorrelationId+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+CorrelationId+hasExtension) ⇒ <code>boolean</code>
@@ -119,7 +127,7 @@
             * [.hasDescription()](#module_@asyncapi/parser+ExternalDocs+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+ExternalDocs+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+ExternalDocs+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+ExternalDocs+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+ExternalDocs+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+ExternalDocs+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+ExternalDocs+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+ExternalDocs+hasExtension) ⇒ <code>boolean</code>
@@ -135,7 +143,7 @@
             * [.hasDescription()](#module_@asyncapi/parser+Info+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+Info+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Info+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Info+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Info+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Info+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Info+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Info+hasExtension) ⇒ <code>boolean</code>
@@ -146,58 +154,53 @@
             * [.name()](#module_@asyncapi/parser+License+name) ⇒ <code>string</code>
             * [.url()](#module_@asyncapi/parser+License+url) ⇒ <code>string</code>
             * [.hasExtensions()](#module_@asyncapi/parser+License+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+License+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+License+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+License+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+License+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+License+hasExtension) ⇒ <code>boolean</code>
             * [.extension(key)](#module_@asyncapi/parser+License+extension) ⇒ <code>any</code>
             * [.hasExt(key)](#module_@asyncapi/parser+License+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+License+ext) ⇒ <code>any</code>
-        * [.MessageTrait](#module_@asyncapi/parser+MessageTrait) ⇐ <code>MessageTraitable</code>
-        * [.MessageTraitable](#module_@asyncapi/parser+MessageTraitable) ⇐ <code>Base</code>
-            * [.headers()](#module_@asyncapi/parser+MessageTraitable+headers) ⇒ <code>Schema</code>
-            * [.header(name)](#module_@asyncapi/parser+MessageTraitable+header) ⇒ <code>Schema</code>
-            * [.correlationId()](#module_@asyncapi/parser+MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
-            * [.schemaFormat()](#module_@asyncapi/parser+MessageTraitable+schemaFormat) ⇒ <code>string</code>
-            * [.contentType()](#module_@asyncapi/parser+MessageTraitable+contentType) ⇒ <code>string</code>
-            * [.name()](#module_@asyncapi/parser+MessageTraitable+name) ⇒ <code>string</code>
-            * [.title()](#module_@asyncapi/parser+MessageTraitable+title) ⇒ <code>string</code>
-            * [.summary()](#module_@asyncapi/parser+MessageTraitable+summary) ⇒ <code>string</code>
-            * [.examples()](#module_@asyncapi/parser+MessageTraitable+examples) ⇒ <code>Array.&lt;any&gt;</code>
-            * [.hasDescription()](#module_@asyncapi/parser+MessageTraitable+hasDescription) ⇒ <code>boolean</code>
-            * [.description()](#module_@asyncapi/parser+MessageTraitable+description) ⇒ <code>string</code> \| <code>null</code>
-            * [.hasTags()](#module_@asyncapi/parser+MessageTraitable+hasTags) ⇒ <code>boolean</code>
-            * [.tags()](#module_@asyncapi/parser+MessageTraitable+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
-            * [.tagNames()](#module_@asyncapi/parser+MessageTraitable+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasTag(name)](#module_@asyncapi/parser+MessageTraitable+hasTag) ⇒ <code>boolean</code>
-            * [.tag(name)](#module_@asyncapi/parser+MessageTraitable+tag) ⇒ <code>Tag</code> \| <code>null</code>
-            * [.hasExternalDocs()](#module_@asyncapi/parser+MessageTraitable+hasExternalDocs) ⇒ <code>boolean</code>
-            * [.externalDocs()](#module_@asyncapi/parser+MessageTraitable+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-            * [.hasBindings()](#module_@asyncapi/parser+MessageTraitable+hasBindings) ⇒ <code>boolean</code>
-            * [.bindings()](#module_@asyncapi/parser+MessageTraitable+bindings) ⇒ <code>Object</code>
-            * [.bindingProtocols()](#module_@asyncapi/parser+MessageTraitable+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasBinding(name)](#module_@asyncapi/parser+MessageTraitable+hasBinding) ⇒ <code>boolean</code>
-            * [.binding(name)](#module_@asyncapi/parser+MessageTraitable+binding) ⇒ <code>Object</code> \| <code>null</code>
-            * [.hasExtensions()](#module_@asyncapi/parser+MessageTraitable+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+MessageTraitable+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-            * [.extensionKeys()](#module_@asyncapi/parser+MessageTraitable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.extKeys()](#module_@asyncapi/parser+MessageTraitable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasExtension(key)](#module_@asyncapi/parser+MessageTraitable+hasExtension) ⇒ <code>boolean</code>
-            * [.extension(key)](#module_@asyncapi/parser+MessageTraitable+extension) ⇒ <code>any</code>
-            * [.hasExt(key)](#module_@asyncapi/parser+MessageTraitable+hasExt) ⇒ <code>boolean</code>
-            * [.ext(key)](#module_@asyncapi/parser+MessageTraitable+ext) ⇒ <code>any</code>
-        * [.Message](#module_@asyncapi/parser+Message) ⇐ <code>MessageTraitable</code>
-            * [.uid()](#module_@asyncapi/parser+Message+uid) ⇒ <code>string</code>
-            * [.payload()](#module_@asyncapi/parser+Message+payload) ⇒ <code>Schema</code>
-            * [.originalPayload()](#module_@asyncapi/parser+Message+originalPayload) ⇒ <code>any</code>
-            * [.originalSchemaFormat()](#module_@asyncapi/parser+Message+originalSchemaFormat) ⇒ <code>string</code>
+        * [.MessageTrait](#module_@asyncapi/parser+Message--MessageTrait) ⇐ <code>MessageTraitable</code>
+        * [.MessageTraitable](#module_@asyncapi/parser+Message--MessageTraitable) ⇐ <code>Base</code>
+            * [.headers()](#module_@asyncapi/parser+Message--MessageTraitable+headers) ⇒ <code>Schema</code>
+            * [.header(name)](#module_@asyncapi/parser+Message--MessageTraitable+header) ⇒ <code>Schema</code>
+            * [.correlationId()](#module_@asyncapi/parser+Message--MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
+            * [.schemaFormat()](#module_@asyncapi/parser+Message--MessageTraitable+schemaFormat) ⇒ <code>string</code>
+            * [.contentType()](#module_@asyncapi/parser+Message--MessageTraitable+contentType) ⇒ <code>string</code>
+            * [.name()](#module_@asyncapi/parser+Message--MessageTraitable+name) ⇒ <code>string</code>
+            * [.title()](#module_@asyncapi/parser+Message--MessageTraitable+title) ⇒ <code>string</code>
+            * [.summary()](#module_@asyncapi/parser+Message--MessageTraitable+summary) ⇒ <code>string</code>
+            * [.examples()](#module_@asyncapi/parser+Message--MessageTraitable+examples) ⇒ <code>Array.&lt;any&gt;</code>
+            * [.hasDescription()](#module_@asyncapi/parser+Message--MessageTraitable+hasDescription) ⇒ <code>boolean</code>
+            * [.description()](#module_@asyncapi/parser+Message--MessageTraitable+description) ⇒ <code>string</code> \| <code>null</code>
+            * [.hasTags()](#module_@asyncapi/parser+Message--MessageTraitable+hasTags) ⇒ <code>boolean</code>
+            * [.tags()](#module_@asyncapi/parser+Message--MessageTraitable+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
+            * [.tagNames()](#module_@asyncapi/parser+Message--MessageTraitable+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.hasTag(name)](#module_@asyncapi/parser+Message--MessageTraitable+hasTag) ⇒ <code>boolean</code>
+            * [.tag(name)](#module_@asyncapi/parser+Message--MessageTraitable+tag) ⇒ <code>Tag</code> \| <code>null</code>
+            * [.hasExternalDocs()](#module_@asyncapi/parser+Message--MessageTraitable+hasExternalDocs) ⇒ <code>boolean</code>
+            * [.externalDocs()](#module_@asyncapi/parser+Message--MessageTraitable+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+            * [.hasBindings()](#module_@asyncapi/parser+Message--MessageTraitable+hasBindings) ⇒ <code>boolean</code>
+            * [.bindings()](#module_@asyncapi/parser+Message--MessageTraitable+bindings) ⇒ <code>object</code>
+            * [.bindingProtocols()](#module_@asyncapi/parser+Message--MessageTraitable+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.hasBinding(name)](#module_@asyncapi/parser+Message--MessageTraitable+hasBinding) ⇒ <code>boolean</code>
+            * [.binding(name)](#module_@asyncapi/parser+Message--MessageTraitable+binding) ⇒ <code>object</code> \| <code>null</code>
+            * [.hasExtensions()](#module_@asyncapi/parser+Message--MessageTraitable+hasExtensions) ⇒ <code>boolean</code>
+            * [.extensions()](#module_@asyncapi/parser+Message--MessageTraitable+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
+            * [.extensionKeys()](#module_@asyncapi/parser+Message--MessageTraitable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.extKeys()](#module_@asyncapi/parser+Message--MessageTraitable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.hasExtension(key)](#module_@asyncapi/parser+Message--MessageTraitable+hasExtension) ⇒ <code>boolean</code>
+            * [.extension(key)](#module_@asyncapi/parser+Message--MessageTraitable+extension) ⇒ <code>any</code>
+            * [.hasExt(key)](#module_@asyncapi/parser+Message--MessageTraitable+hasExt) ⇒ <code>boolean</code>
+            * [.ext(key)](#module_@asyncapi/parser+Message--MessageTraitable+ext) ⇒ <code>any</code>
         * [.OAuthFlow](#module_@asyncapi/parser+OAuthFlow) ⇐ <code>Base</code>
             * [.authorizationUrl()](#module_@asyncapi/parser+OAuthFlow+authorizationUrl) ⇒ <code>string</code>
             * [.tokenUrl()](#module_@asyncapi/parser+OAuthFlow+tokenUrl) ⇒ <code>string</code>
             * [.refreshUrl()](#module_@asyncapi/parser+OAuthFlow+refreshUrl) ⇒ <code>string</code>
-            * [.scopes()](#module_@asyncapi/parser+OAuthFlow+scopes) ⇒ <code>Object.&lt;string, string&gt;</code>
+            * [.scopes()](#module_@asyncapi/parser+OAuthFlow+scopes) ⇒ <code>object.&lt;string, string&gt;</code>
             * [.hasExtensions()](#module_@asyncapi/parser+OAuthFlow+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+OAuthFlow+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+OAuthFlow+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+OAuthFlow+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+OAuthFlow+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+OAuthFlow+hasExtension) ⇒ <code>boolean</code>
@@ -218,12 +221,12 @@
             * [.hasExternalDocs()](#module_@asyncapi/parser+OperationTraitable+hasExternalDocs) ⇒ <code>boolean</code>
             * [.externalDocs()](#module_@asyncapi/parser+OperationTraitable+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
             * [.hasBindings()](#module_@asyncapi/parser+OperationTraitable+hasBindings) ⇒ <code>boolean</code>
-            * [.bindings()](#module_@asyncapi/parser+OperationTraitable+bindings) ⇒ <code>Object</code>
+            * [.bindings()](#module_@asyncapi/parser+OperationTraitable+bindings) ⇒ <code>object</code>
             * [.bindingProtocols()](#module_@asyncapi/parser+OperationTraitable+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasBinding(name)](#module_@asyncapi/parser+OperationTraitable+hasBinding) ⇒ <code>boolean</code>
-            * [.binding(name)](#module_@asyncapi/parser+OperationTraitable+binding) ⇒ <code>Object</code> \| <code>null</code>
+            * [.binding(name)](#module_@asyncapi/parser+OperationTraitable+binding) ⇒ <code>object</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+OperationTraitable+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+OperationTraitable+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+OperationTraitable+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+OperationTraitable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+OperationTraitable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+OperationTraitable+hasExtension) ⇒ <code>boolean</code>
@@ -233,7 +236,7 @@
         * [.Operation](#module_@asyncapi/parser+Operation) ⇐ <code>OperationTraitable</code>
             * [.hasMultipleMessages()](#module_@asyncapi/parser+Operation+hasMultipleMessages) ⇒ <code>boolean</code>
             * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
-            * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
+            * [.message(index)](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
         * [.PublishOperation](#module_@asyncapi/parser+PublishOperation) ⇐ <code>Operation</code>
             * [.isPublish()](#module_@asyncapi/parser+PublishOperation+isPublish) ⇒ <code>boolean</code>
             * [.isSubscribe()](#module_@asyncapi/parser+PublishOperation+isSubscribe) ⇒ <code>boolean</code>
@@ -262,13 +265,13 @@
             * [.anyOf()](#module_@asyncapi/parser+Schema+anyOf) ⇒ <code>Array.&lt;Schema&gt;</code>
             * [.not()](#module_@asyncapi/parser+Schema+not) ⇒ <code>Schema</code>
             * [.items()](#module_@asyncapi/parser+Schema+items) ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
-            * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+            * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>object.&lt;string, Schema&gt;</code>
             * [.additionalProperties()](#module_@asyncapi/parser+Schema+additionalProperties) ⇒ <code>boolean</code> \| <code>Schema</code>
             * [.additionalItems()](#module_@asyncapi/parser+Schema+additionalItems) ⇒ <code>Schema</code>
-            * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+            * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>object.&lt;string, Schema&gt;</code>
             * [.const()](#module_@asyncapi/parser+Schema+const) ⇒ <code>any</code>
             * [.contains()](#module_@asyncapi/parser+Schema+contains) ⇒ <code>Schema</code>
-            * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
+            * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
             * [.propertyNames()](#module_@asyncapi/parser+Schema+propertyNames) ⇒ <code>Schema</code>
             * [.if()](#module_@asyncapi/parser+Schema+if) ⇒ <code>Schema</code>
             * [.then()](#module_@asyncapi/parser+Schema+then) ⇒ <code>Schema</code>
@@ -276,7 +279,7 @@
             * [.format()](#module_@asyncapi/parser+Schema+format) ⇒ <code>string</code>
             * [.contentEncoding()](#module_@asyncapi/parser+Schema+contentEncoding) ⇒ <code>string</code>
             * [.contentMediaType()](#module_@asyncapi/parser+Schema+contentMediaType) ⇒ <code>string</code>
-            * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+            * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>object.&lt;string, Schema&gt;</code>
             * [.title()](#module_@asyncapi/parser+Schema+title) ⇒ <code>string</code>
             * [.default()](#module_@asyncapi/parser+Schema+default) ⇒ <code>any</code>
             * [.deprecated()](#module_@asyncapi/parser+Schema+deprecated) ⇒ <code>boolean</code>
@@ -292,7 +295,7 @@
             * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
             * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
@@ -306,11 +309,11 @@
             * [.scheme()](#module_@asyncapi/parser+SecurityScheme+scheme) ⇒ <code>string</code>
             * [.bearerFormat()](#module_@asyncapi/parser+SecurityScheme+bearerFormat) ⇒ <code>string</code>
             * [.openIdConnectUrl()](#module_@asyncapi/parser+SecurityScheme+openIdConnectUrl) ⇒ <code>string</code>
-            * [.flows()](#module_@asyncapi/parser+SecurityScheme+flows) ⇒ <code>Object.&lt;string, OAuthFlow&gt;</code>
+            * [.flows()](#module_@asyncapi/parser+SecurityScheme+flows) ⇒ <code>object.&lt;string, OAuthFlow&gt;</code>
             * [.hasDescription()](#module_@asyncapi/parser+SecurityScheme+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+SecurityScheme+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+SecurityScheme+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+SecurityScheme+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+SecurityScheme+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+SecurityScheme+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+SecurityScheme+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+SecurityScheme+hasExtension) ⇒ <code>boolean</code>
@@ -328,7 +331,7 @@
             * [.hasDescription()](#module_@asyncapi/parser+ServerVariable+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+ServerVariable+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+ServerVariable+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+ServerVariable+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+ServerVariable+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+ServerVariable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+ServerVariable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+ServerVariable+hasExtension) ⇒ <code>boolean</code>
@@ -339,19 +342,19 @@
             * [.url()](#module_@asyncapi/parser+Server+url) ⇒ <code>string</code>
             * [.protocol()](#module_@asyncapi/parser+Server+protocol) ⇒ <code>string</code>
             * [.protocolVersion()](#module_@asyncapi/parser+Server+protocolVersion) ⇒ <code>string</code>
-            * [.variables()](#module_@asyncapi/parser+Server+variables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+            * [.variables()](#module_@asyncapi/parser+Server+variables) ⇒ <code>object.&lt;string, ServerVariable&gt;</code>
             * [.variable(name)](#module_@asyncapi/parser+Server+variable) ⇒ <code>ServerVariable</code>
             * [.hasVariables()](#module_@asyncapi/parser+Server+hasVariables) ⇒ <code>boolean</code>
             * [.security()](#module_@asyncapi/parser+Server+security) ⇒ <code>Array.&lt;ServerSecurityRequirement&gt;</code>
             * [.hasDescription()](#module_@asyncapi/parser+Server+hasDescription) ⇒ <code>boolean</code>
             * [.description()](#module_@asyncapi/parser+Server+description) ⇒ <code>string</code> \| <code>null</code>
             * [.hasBindings()](#module_@asyncapi/parser+Server+hasBindings) ⇒ <code>boolean</code>
-            * [.bindings()](#module_@asyncapi/parser+Server+bindings) ⇒ <code>Object</code>
+            * [.bindings()](#module_@asyncapi/parser+Server+bindings) ⇒ <code>object</code>
             * [.bindingProtocols()](#module_@asyncapi/parser+Server+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasBinding(name)](#module_@asyncapi/parser+Server+hasBinding) ⇒ <code>boolean</code>
-            * [.binding(name)](#module_@asyncapi/parser+Server+binding) ⇒ <code>Object</code> \| <code>null</code>
+            * [.binding(name)](#module_@asyncapi/parser+Server+binding) ⇒ <code>object</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Server+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Server+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Server+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Server+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Server+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Server+hasExtension) ⇒ <code>boolean</code>
@@ -369,7 +372,7 @@
             * [.hasExternalDocs()](#module_@asyncapi/parser+Tag+hasExternalDocs) ⇒ <code>boolean</code>
             * [.externalDocs()](#module_@asyncapi/parser+Tag+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Tag+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Tag+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+Tag+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Tag+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+Tag+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+Tag+hasExtension) ⇒ <code>boolean</code>
@@ -379,16 +382,16 @@
     * _inner_
         * [~ParserError](#module_@asyncapi/parser+ParserError) ⇐ <code>Error</code>
             * [new ParserError(definition)](#new_module_@asyncapi/parser+ParserError_new)
-            * [.toJS()](#module_@asyncapi/parser+ParserError+toJS)
-        * [~AsyncAPIDocument](#module_@asyncapi/parser+AsyncAPIDocument) ⇐ <code>Base</code>
+            * [.toJS()](#module_@asyncapi/parser+ParserError+toJS) ⇒ <code>object</code>
+        * [~AsyncAPIDocument](#module_@asyncapi/parser+AsyncAPIDocument)
             * [.version()](#module_@asyncapi/parser+AsyncAPIDocument+version) ⇒ <code>string</code>
             * [.info()](#module_@asyncapi/parser+AsyncAPIDocument+info) ⇒ <code>Info</code>
             * [.id()](#module_@asyncapi/parser+AsyncAPIDocument+id) ⇒ <code>string</code>
             * [.hasServers()](#module_@asyncapi/parser+AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
-            * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
+            * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>object.&lt;string, Server&gt;</code>
             * [.server(name)](#module_@asyncapi/parser+AsyncAPIDocument+server) ⇒ <code>Server</code>
             * [.hasChannels()](#module_@asyncapi/parser+AsyncAPIDocument+hasChannels) ⇒ <code>boolean</code>
-            * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+            * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>object.&lt;string, Channel&gt;</code>
             * [.channelNames()](#module_@asyncapi/parser+AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
             * [.channel(name)](#module_@asyncapi/parser+AsyncAPIDocument+channel) ⇒ <code>Channel</code>
             * [.defaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+defaultContentType) ⇒ <code>string</code>
@@ -406,7 +409,7 @@
             * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
             * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
@@ -421,7 +424,7 @@
             * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
             * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
             * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
             * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
@@ -429,10 +432,15 @@
             * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
         * [~Base](#module_@asyncapi/parser+Base)
-            * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
+            * [.json(key)](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
         * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+        * [~dereference(refParser, parsedJSON, initialFormat, asyncapiYAMLorJSON, options)](#module_@asyncapi/parser..dereference)
+        * [~handleCircularRefs(refParser, parsedJSON, initialFormat, asyncapiYAMLorJSON, options)](#module_@asyncapi/parser..handleCircularRefs)
+        * [~customDocumentOperations(parsedJSON, asyncapiYAMLorJSON, initialFormat, options)](#module_@asyncapi/parser..customDocumentOperations)
+        * [~validateAndConvertMessage(msg, originalAsyncAPIDocument, fileFormat, parsedAsyncAPIDocument, pathToPayload)](#module_@asyncapi/parser..validateAndConvertMessage)
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
+        * [~applyTraits(js)](#module_@asyncapi/parser..applyTraits)
 
 <a name="module_@asyncapi/parser+ChannelParameter"></a>
 
@@ -449,7 +457,7 @@ Implements functions to deal with a ChannelParameter object.
     * [.hasDescription()](#module_@asyncapi/parser+ChannelParameter+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+ChannelParameter+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+ChannelParameter+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+ChannelParameter+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+ChannelParameter+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+ChannelParameter+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+ChannelParameter+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+ChannelParameter+hasExtension) ⇒ <code>boolean</code>
@@ -482,7 +490,7 @@ Implements functions to deal with a ChannelParameter object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+ChannelParameter+extensions"></a>
 
-#### channelParameter.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### channelParameter.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>ChannelParameter</code>](#module_@asyncapi/parser+ChannelParameter)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+ChannelParameter+extensionKeys"></a>
@@ -545,7 +553,7 @@ Implements functions to deal with a Channel object.
 **Mixes**: [<code>MixinDescription</code>](#MixinDescription), [<code>MixinBindings</code>](#MixinBindings), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
 * [.Channel](#module_@asyncapi/parser+Channel) ⇐ <code>Base</code>
-    * [.parameters()](#module_@asyncapi/parser+Channel+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
+    * [.parameters()](#module_@asyncapi/parser+Channel+parameters) ⇒ <code>object.&lt;string, ChannelParameter&gt;</code>
     * [.parameter(name)](#module_@asyncapi/parser+Channel+parameter) ⇒ <code>ChannelParameter</code>
     * [.hasParameters()](#module_@asyncapi/parser+Channel+hasParameters) ⇒ <code>boolean</code>
     * [.publish()](#module_@asyncapi/parser+Channel+publish) ⇒ <code>PublishOperation</code>
@@ -555,12 +563,12 @@ Implements functions to deal with a Channel object.
     * [.hasDescription()](#module_@asyncapi/parser+Channel+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+Channel+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasBindings()](#module_@asyncapi/parser+Channel+hasBindings) ⇒ <code>boolean</code>
-    * [.bindings()](#module_@asyncapi/parser+Channel+bindings) ⇒ <code>Object</code>
+    * [.bindings()](#module_@asyncapi/parser+Channel+bindings) ⇒ <code>object</code>
     * [.bindingProtocols()](#module_@asyncapi/parser+Channel+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasBinding(name)](#module_@asyncapi/parser+Channel+hasBinding) ⇒ <code>boolean</code>
-    * [.binding(name)](#module_@asyncapi/parser+Channel+binding) ⇒ <code>Object</code> \| <code>null</code>
+    * [.binding(name)](#module_@asyncapi/parser+Channel+binding) ⇒ <code>object</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Channel+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Channel+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Channel+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Channel+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Channel+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Channel+hasExtension) ⇒ <code>boolean</code>
@@ -570,7 +578,7 @@ Implements functions to deal with a Channel object.
 
 <a name="module_@asyncapi/parser+Channel+parameters"></a>
 
-#### channel.parameters() ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
+#### channel.parameters() ⇒ <code>object.&lt;string, ChannelParameter&gt;</code>
 **Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
 <a name="module_@asyncapi/parser+Channel+parameter"></a>
 
@@ -618,7 +626,7 @@ Implements functions to deal with a Channel object.
 **Mixes**: [<code>hasBindings</code>](#MixinBindings.hasBindings)  
 <a name="module_@asyncapi/parser+Channel+bindings"></a>
 
-#### channel.bindings() ⇒ <code>Object</code>
+#### channel.bindings() ⇒ <code>object</code>
 **Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
 **Mixes**: [<code>bindings</code>](#MixinBindings.bindings)  
 <a name="module_@asyncapi/parser+Channel+bindingProtocols"></a>
@@ -638,7 +646,7 @@ Implements functions to deal with a Channel object.
 
 <a name="module_@asyncapi/parser+Channel+binding"></a>
 
-#### channel.binding(name) ⇒ <code>Object</code> \| <code>null</code>
+#### channel.binding(name) ⇒ <code>object</code> \| <code>null</code>
 **Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
 **Mixes**: [<code>binding</code>](#MixinBindings.binding)  
 
@@ -653,7 +661,7 @@ Implements functions to deal with a Channel object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Channel+extensions"></a>
 
-#### channel.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### channel.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Channel+extensionKeys"></a>
@@ -716,22 +724,22 @@ Implements functions to deal with a Components object.
 **Mixes**: [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
 * [.Components](#module_@asyncapi/parser+Components) ⇐ <code>Base</code>
-    * [.messages()](#module_@asyncapi/parser+Components+messages) ⇒ <code>Object.&lt;string, Message&gt;</code>
-    * [.message()](#module_@asyncapi/parser+Components+message) ⇒ <code>Message</code>
-    * [.schemas()](#module_@asyncapi/parser+Components+schemas) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-    * [.schema()](#module_@asyncapi/parser+Components+schema) ⇒ <code>Schema</code>
-    * [.securitySchemes()](#module_@asyncapi/parser+Components+securitySchemes) ⇒ <code>Object.&lt;string, SecurityScheme&gt;</code>
-    * [.securityScheme()](#module_@asyncapi/parser+Components+securityScheme) ⇒ <code>SecurityScheme</code>
-    * [.parameters()](#module_@asyncapi/parser+Components+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
-    * [.parameter()](#module_@asyncapi/parser+Components+parameter) ⇒ <code>ChannelParameter</code>
-    * [.correlationIds()](#module_@asyncapi/parser+Components+correlationIds) ⇒ <code>Object.&lt;string, CorrelationId&gt;</code>
-    * [.correlationId()](#module_@asyncapi/parser+Components+correlationId) ⇒ <code>CorrelationId</code>
-    * [.operationTraits()](#module_@asyncapi/parser+Components+operationTraits) ⇒ <code>Object.&lt;string, OperationTrait&gt;</code>
-    * [.operationTrait()](#module_@asyncapi/parser+Components+operationTrait) ⇒ <code>OperationTrait</code>
-    * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
-    * [.messageTrait()](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
+    * [.messages()](#module_@asyncapi/parser+Components+messages) ⇒ <code>object.&lt;string, Message&gt;</code>
+    * [.message(name)](#module_@asyncapi/parser+Components+message) ⇒ <code>Message</code>
+    * [.schemas()](#module_@asyncapi/parser+Components+schemas) ⇒ <code>object.&lt;string, Schema&gt;</code>
+    * [.schema(name)](#module_@asyncapi/parser+Components+schema) ⇒ <code>Schema</code>
+    * [.securitySchemes()](#module_@asyncapi/parser+Components+securitySchemes) ⇒ <code>object.&lt;string, SecurityScheme&gt;</code>
+    * [.securityScheme(name)](#module_@asyncapi/parser+Components+securityScheme) ⇒ <code>SecurityScheme</code>
+    * [.parameters()](#module_@asyncapi/parser+Components+parameters) ⇒ <code>object.&lt;string, ChannelParameter&gt;</code>
+    * [.parameter(name)](#module_@asyncapi/parser+Components+parameter) ⇒ <code>ChannelParameter</code>
+    * [.correlationIds()](#module_@asyncapi/parser+Components+correlationIds) ⇒ <code>object.&lt;string, CorrelationId&gt;</code>
+    * [.correlationId(name)](#module_@asyncapi/parser+Components+correlationId) ⇒ <code>CorrelationId</code>
+    * [.operationTraits()](#module_@asyncapi/parser+Components+operationTraits) ⇒ <code>object.&lt;string, OperationTrait&gt;</code>
+    * [.operationTrait(name)](#module_@asyncapi/parser+Components+operationTrait) ⇒ <code>OperationTrait</code>
+    * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>object.&lt;string, MessageTrait&gt;</code>
+    * [.messageTrait(name)](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Components+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Components+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Components+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Components+hasExtension) ⇒ <code>boolean</code>
@@ -741,60 +749,95 @@ Implements functions to deal with a Components object.
 
 <a name="module_@asyncapi/parser+Components+messages"></a>
 
-#### components.messages() ⇒ <code>Object.&lt;string, Message&gt;</code>
+#### components.messages() ⇒ <code>object.&lt;string, Message&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+message"></a>
 
-#### components.message() ⇒ <code>Message</code>
+#### components.message(name) ⇒ <code>Message</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+schemas"></a>
 
-#### components.schemas() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+#### components.schemas() ⇒ <code>object.&lt;string, Schema&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+schema"></a>
 
-#### components.schema() ⇒ <code>Schema</code>
+#### components.schema(name) ⇒ <code>Schema</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+securitySchemes"></a>
 
-#### components.securitySchemes() ⇒ <code>Object.&lt;string, SecurityScheme&gt;</code>
+#### components.securitySchemes() ⇒ <code>object.&lt;string, SecurityScheme&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+securityScheme"></a>
 
-#### components.securityScheme() ⇒ <code>SecurityScheme</code>
+#### components.securityScheme(name) ⇒ <code>SecurityScheme</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+parameters"></a>
 
-#### components.parameters() ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
+#### components.parameters() ⇒ <code>object.&lt;string, ChannelParameter&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+parameter"></a>
 
-#### components.parameter() ⇒ <code>ChannelParameter</code>
+#### components.parameter(name) ⇒ <code>ChannelParameter</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+correlationIds"></a>
 
-#### components.correlationIds() ⇒ <code>Object.&lt;string, CorrelationId&gt;</code>
+#### components.correlationIds() ⇒ <code>object.&lt;string, CorrelationId&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+correlationId"></a>
 
-#### components.correlationId() ⇒ <code>CorrelationId</code>
+#### components.correlationId(name) ⇒ <code>CorrelationId</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+operationTraits"></a>
 
-#### components.operationTraits() ⇒ <code>Object.&lt;string, OperationTrait&gt;</code>
+#### components.operationTraits() ⇒ <code>object.&lt;string, OperationTrait&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+operationTrait"></a>
 
-#### components.operationTrait() ⇒ <code>OperationTrait</code>
+#### components.operationTrait(name) ⇒ <code>OperationTrait</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+messageTraits"></a>
 
-#### components.messageTraits() ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
+#### components.messageTraits() ⇒ <code>object.&lt;string, MessageTrait&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 <a name="module_@asyncapi/parser+Components+messageTrait"></a>
 
-#### components.messageTrait() ⇒ <code>MessageTrait</code>
+#### components.messageTrait(name) ⇒ <code>MessageTrait</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param |
+| --- |
+| name | 
+
 <a name="module_@asyncapi/parser+Components+hasExtensions"></a>
 
 #### components.hasExtensions() ⇒ <code>boolean</code>
@@ -802,7 +845,7 @@ Implements functions to deal with a Components object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Components+extensions"></a>
 
-#### components.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### components.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Components+extensionKeys"></a>
@@ -869,7 +912,7 @@ Implements functions to deal with the Contact object.
     * [.url()](#module_@asyncapi/parser+Contact+url) ⇒ <code>string</code>
     * [.email()](#module_@asyncapi/parser+Contact+email) ⇒ <code>string</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Contact+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Contact+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Contact+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Contact+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Contact+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Contact+hasExtension) ⇒ <code>boolean</code>
@@ -896,7 +939,7 @@ Implements functions to deal with the Contact object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Contact+extensions"></a>
 
-#### contact.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### contact.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Contact</code>](#module_@asyncapi/parser+Contact)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Contact+extensionKeys"></a>
@@ -963,7 +1006,7 @@ Implements functions to deal with a CorrelationId object.
     * [.hasDescription()](#module_@asyncapi/parser+CorrelationId+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+CorrelationId+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+CorrelationId+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+CorrelationId+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+CorrelationId+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+CorrelationId+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+CorrelationId+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+CorrelationId+hasExtension) ⇒ <code>boolean</code>
@@ -992,7 +1035,7 @@ Implements functions to deal with a CorrelationId object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+CorrelationId+extensions"></a>
 
-#### correlationId.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### correlationId.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>CorrelationId</code>](#module_@asyncapi/parser+CorrelationId)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+CorrelationId+extensionKeys"></a>
@@ -1059,7 +1102,7 @@ Implements functions to deal with an ExternalDocs object.
     * [.hasDescription()](#module_@asyncapi/parser+ExternalDocs+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+ExternalDocs+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+ExternalDocs+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+ExternalDocs+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+ExternalDocs+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+ExternalDocs+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+ExternalDocs+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+ExternalDocs+hasExtension) ⇒ <code>boolean</code>
@@ -1088,7 +1131,7 @@ Implements functions to deal with an ExternalDocs object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+ExternalDocs+extensions"></a>
 
-#### externalDocs.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### externalDocs.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>ExternalDocs</code>](#module_@asyncapi/parser+ExternalDocs)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+ExternalDocs+extensionKeys"></a>
@@ -1159,7 +1202,7 @@ Implements functions to deal with the Info object.
     * [.hasDescription()](#module_@asyncapi/parser+Info+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+Info+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Info+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Info+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Info+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Info+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Info+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Info+hasExtension) ⇒ <code>boolean</code>
@@ -1171,22 +1214,27 @@ Implements functions to deal with the Info object.
 
 #### info.title() ⇒ <code>string</code>
 **Kind**: instance method of [<code>Info</code>](#module_@asyncapi/parser+Info)  
+**Returns**: <code>string</code> - Title.  
 <a name="module_@asyncapi/parser+Info+version"></a>
 
 #### info.version() ⇒ <code>string</code>
 **Kind**: instance method of [<code>Info</code>](#module_@asyncapi/parser+Info)  
+**Returns**: <code>string</code> - Version.  
 <a name="module_@asyncapi/parser+Info+termsOfService"></a>
 
 #### info.termsOfService() ⇒ <code>string</code> \| <code>undefined</code>
 **Kind**: instance method of [<code>Info</code>](#module_@asyncapi/parser+Info)  
+**Returns**: <code>string</code> \| <code>undefined</code> - Terms of service.  
 <a name="module_@asyncapi/parser+Info+license"></a>
 
 #### info.license() ⇒ <code>License</code>
 **Kind**: instance method of [<code>Info</code>](#module_@asyncapi/parser+Info)  
+**Returns**: <code>License</code> - License.  
 <a name="module_@asyncapi/parser+Info+contact"></a>
 
 #### info.contact() ⇒ <code>Contact</code>
 **Kind**: instance method of [<code>Info</code>](#module_@asyncapi/parser+Info)  
+**Returns**: <code>Contact</code> - Contact.  
 <a name="module_@asyncapi/parser+Info+hasDescription"></a>
 
 #### info.hasDescription() ⇒ <code>boolean</code>
@@ -1204,7 +1252,7 @@ Implements functions to deal with the Info object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Info+extensions"></a>
 
-#### info.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### info.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Info</code>](#module_@asyncapi/parser+Info)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Info+extensionKeys"></a>
@@ -1270,7 +1318,7 @@ Implements functions to deal with the License object.
     * [.name()](#module_@asyncapi/parser+License+name) ⇒ <code>string</code>
     * [.url()](#module_@asyncapi/parser+License+url) ⇒ <code>string</code>
     * [.hasExtensions()](#module_@asyncapi/parser+License+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+License+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+License+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+License+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+License+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+License+hasExtension) ⇒ <code>boolean</code>
@@ -1293,7 +1341,7 @@ Implements functions to deal with the License object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+License+extensions"></a>
 
-#### license.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### license.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>License</code>](#module_@asyncapi/parser+License)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+License+extensionKeys"></a>
@@ -1346,14 +1394,14 @@ Implements functions to deal with the License object.
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
-<a name="module_@asyncapi/parser+MessageTrait"></a>
+<a name="module_@asyncapi/parser+Message--MessageTrait"></a>
 
 ### @asyncapi/parser.MessageTrait ⇐ <code>MessageTraitable</code>
 Implements functions to deal with a MessageTrait object.
 
 **Kind**: instance class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 **Extends**: <code>MessageTraitable</code>  
-<a name="module_@asyncapi/parser+MessageTraitable"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable"></a>
 
 ### @asyncapi/parser.MessageTraitable ⇐ <code>Base</code>
 Implements functions to deal with a the common properties that Message and MessageTrait objects have.
@@ -1362,260 +1410,230 @@ Implements functions to deal with a the common properties that Message and Messa
 **Extends**: <code>Base</code>  
 **Mixes**: [<code>MixinDescription</code>](#MixinDescription), [<code>MixinTags</code>](#MixinTags), [<code>MixinExternalDocs</code>](#MixinExternalDocs), [<code>MixinBindings</code>](#MixinBindings), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
-* [.MessageTraitable](#module_@asyncapi/parser+MessageTraitable) ⇐ <code>Base</code>
-    * [.headers()](#module_@asyncapi/parser+MessageTraitable+headers) ⇒ <code>Schema</code>
-    * [.header(name)](#module_@asyncapi/parser+MessageTraitable+header) ⇒ <code>Schema</code>
-    * [.correlationId()](#module_@asyncapi/parser+MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
-    * [.schemaFormat()](#module_@asyncapi/parser+MessageTraitable+schemaFormat) ⇒ <code>string</code>
-    * [.contentType()](#module_@asyncapi/parser+MessageTraitable+contentType) ⇒ <code>string</code>
-    * [.name()](#module_@asyncapi/parser+MessageTraitable+name) ⇒ <code>string</code>
-    * [.title()](#module_@asyncapi/parser+MessageTraitable+title) ⇒ <code>string</code>
-    * [.summary()](#module_@asyncapi/parser+MessageTraitable+summary) ⇒ <code>string</code>
-    * [.examples()](#module_@asyncapi/parser+MessageTraitable+examples) ⇒ <code>Array.&lt;any&gt;</code>
-    * [.hasDescription()](#module_@asyncapi/parser+MessageTraitable+hasDescription) ⇒ <code>boolean</code>
-    * [.description()](#module_@asyncapi/parser+MessageTraitable+description) ⇒ <code>string</code> \| <code>null</code>
-    * [.hasTags()](#module_@asyncapi/parser+MessageTraitable+hasTags) ⇒ <code>boolean</code>
-    * [.tags()](#module_@asyncapi/parser+MessageTraitable+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
-    * [.tagNames()](#module_@asyncapi/parser+MessageTraitable+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasTag(name)](#module_@asyncapi/parser+MessageTraitable+hasTag) ⇒ <code>boolean</code>
-    * [.tag(name)](#module_@asyncapi/parser+MessageTraitable+tag) ⇒ <code>Tag</code> \| <code>null</code>
-    * [.hasExternalDocs()](#module_@asyncapi/parser+MessageTraitable+hasExternalDocs) ⇒ <code>boolean</code>
-    * [.externalDocs()](#module_@asyncapi/parser+MessageTraitable+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-    * [.hasBindings()](#module_@asyncapi/parser+MessageTraitable+hasBindings) ⇒ <code>boolean</code>
-    * [.bindings()](#module_@asyncapi/parser+MessageTraitable+bindings) ⇒ <code>Object</code>
-    * [.bindingProtocols()](#module_@asyncapi/parser+MessageTraitable+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasBinding(name)](#module_@asyncapi/parser+MessageTraitable+hasBinding) ⇒ <code>boolean</code>
-    * [.binding(name)](#module_@asyncapi/parser+MessageTraitable+binding) ⇒ <code>Object</code> \| <code>null</code>
-    * [.hasExtensions()](#module_@asyncapi/parser+MessageTraitable+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+MessageTraitable+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-    * [.extensionKeys()](#module_@asyncapi/parser+MessageTraitable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.extKeys()](#module_@asyncapi/parser+MessageTraitable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasExtension(key)](#module_@asyncapi/parser+MessageTraitable+hasExtension) ⇒ <code>boolean</code>
-    * [.extension(key)](#module_@asyncapi/parser+MessageTraitable+extension) ⇒ <code>any</code>
-    * [.hasExt(key)](#module_@asyncapi/parser+MessageTraitable+hasExt) ⇒ <code>boolean</code>
-    * [.ext(key)](#module_@asyncapi/parser+MessageTraitable+ext) ⇒ <code>any</code>
+* [.MessageTraitable](#module_@asyncapi/parser+Message--MessageTraitable) ⇐ <code>Base</code>
+    * [.headers()](#module_@asyncapi/parser+Message--MessageTraitable+headers) ⇒ <code>Schema</code>
+    * [.header(name)](#module_@asyncapi/parser+Message--MessageTraitable+header) ⇒ <code>Schema</code>
+    * [.correlationId()](#module_@asyncapi/parser+Message--MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
+    * [.schemaFormat()](#module_@asyncapi/parser+Message--MessageTraitable+schemaFormat) ⇒ <code>string</code>
+    * [.contentType()](#module_@asyncapi/parser+Message--MessageTraitable+contentType) ⇒ <code>string</code>
+    * [.name()](#module_@asyncapi/parser+Message--MessageTraitable+name) ⇒ <code>string</code>
+    * [.title()](#module_@asyncapi/parser+Message--MessageTraitable+title) ⇒ <code>string</code>
+    * [.summary()](#module_@asyncapi/parser+Message--MessageTraitable+summary) ⇒ <code>string</code>
+    * [.examples()](#module_@asyncapi/parser+Message--MessageTraitable+examples) ⇒ <code>Array.&lt;any&gt;</code>
+    * [.hasDescription()](#module_@asyncapi/parser+Message--MessageTraitable+hasDescription) ⇒ <code>boolean</code>
+    * [.description()](#module_@asyncapi/parser+Message--MessageTraitable+description) ⇒ <code>string</code> \| <code>null</code>
+    * [.hasTags()](#module_@asyncapi/parser+Message--MessageTraitable+hasTags) ⇒ <code>boolean</code>
+    * [.tags()](#module_@asyncapi/parser+Message--MessageTraitable+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
+    * [.tagNames()](#module_@asyncapi/parser+Message--MessageTraitable+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.hasTag(name)](#module_@asyncapi/parser+Message--MessageTraitable+hasTag) ⇒ <code>boolean</code>
+    * [.tag(name)](#module_@asyncapi/parser+Message--MessageTraitable+tag) ⇒ <code>Tag</code> \| <code>null</code>
+    * [.hasExternalDocs()](#module_@asyncapi/parser+Message--MessageTraitable+hasExternalDocs) ⇒ <code>boolean</code>
+    * [.externalDocs()](#module_@asyncapi/parser+Message--MessageTraitable+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+    * [.hasBindings()](#module_@asyncapi/parser+Message--MessageTraitable+hasBindings) ⇒ <code>boolean</code>
+    * [.bindings()](#module_@asyncapi/parser+Message--MessageTraitable+bindings) ⇒ <code>object</code>
+    * [.bindingProtocols()](#module_@asyncapi/parser+Message--MessageTraitable+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.hasBinding(name)](#module_@asyncapi/parser+Message--MessageTraitable+hasBinding) ⇒ <code>boolean</code>
+    * [.binding(name)](#module_@asyncapi/parser+Message--MessageTraitable+binding) ⇒ <code>object</code> \| <code>null</code>
+    * [.hasExtensions()](#module_@asyncapi/parser+Message--MessageTraitable+hasExtensions) ⇒ <code>boolean</code>
+    * [.extensions()](#module_@asyncapi/parser+Message--MessageTraitable+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
+    * [.extensionKeys()](#module_@asyncapi/parser+Message--MessageTraitable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.extKeys()](#module_@asyncapi/parser+Message--MessageTraitable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.hasExtension(key)](#module_@asyncapi/parser+Message--MessageTraitable+hasExtension) ⇒ <code>boolean</code>
+    * [.extension(key)](#module_@asyncapi/parser+Message--MessageTraitable+extension) ⇒ <code>any</code>
+    * [.hasExt(key)](#module_@asyncapi/parser+Message--MessageTraitable+hasExt) ⇒ <code>boolean</code>
+    * [.ext(key)](#module_@asyncapi/parser+Message--MessageTraitable+ext) ⇒ <code>any</code>
 
-<a name="module_@asyncapi/parser+MessageTraitable+headers"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+headers"></a>
 
 #### messageTraitable.headers() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+header"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+header"></a>
 
 #### messageTraitable.header(name) ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the header. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+correlationId"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+correlationId"></a>
 
 #### messageTraitable.correlationId() ⇒ <code>CorrelationId</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+schemaFormat"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+schemaFormat"></a>
 
 #### messageTraitable.schemaFormat() ⇒ <code>string</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+contentType"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+contentType"></a>
 
 #### messageTraitable.contentType() ⇒ <code>string</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+name"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+name"></a>
 
 #### messageTraitable.name() ⇒ <code>string</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+title"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+title"></a>
 
 #### messageTraitable.title() ⇒ <code>string</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+summary"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+summary"></a>
 
 #### messageTraitable.summary() ⇒ <code>string</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+examples"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+examples"></a>
 
 #### messageTraitable.examples() ⇒ <code>Array.&lt;any&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
-<a name="module_@asyncapi/parser+MessageTraitable+hasDescription"></a>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasDescription"></a>
 
 #### messageTraitable.hasDescription() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasDescription</code>](#MixinDescription.hasDescription)  
-<a name="module_@asyncapi/parser+MessageTraitable+description"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+description"></a>
 
 #### messageTraitable.description() ⇒ <code>string</code> \| <code>null</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>description</code>](#MixinDescription.description)  
-<a name="module_@asyncapi/parser+MessageTraitable+hasTags"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasTags"></a>
 
 #### messageTraitable.hasTags() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasTags</code>](#MixinTags.hasTags)  
-<a name="module_@asyncapi/parser+MessageTraitable+tags"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+tags"></a>
 
 #### messageTraitable.tags() ⇒ <code>Array.&lt;Tag&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>tags</code>](#MixinTags.tags)  
-<a name="module_@asyncapi/parser+MessageTraitable+tagNames"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+tagNames"></a>
 
 #### messageTraitable.tagNames() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>tagNames</code>](#MixinTags.tagNames)  
-<a name="module_@asyncapi/parser+MessageTraitable+hasTag"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasTag"></a>
 
 #### messageTraitable.hasTag(name) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasTag</code>](#MixinTags.hasTag)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the tag. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+tag"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+tag"></a>
 
 #### messageTraitable.tag(name) ⇒ <code>Tag</code> \| <code>null</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>tag</code>](#MixinTags.tag)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the tag. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+hasExternalDocs"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasExternalDocs"></a>
 
 #### messageTraitable.hasExternalDocs() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasExternalDocs</code>](#MixinExternalDocs.hasExternalDocs)  
-<a name="module_@asyncapi/parser+MessageTraitable+externalDocs"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+externalDocs"></a>
 
 #### messageTraitable.externalDocs() ⇒ <code>ExternalDocs</code> \| <code>null</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>externalDocs</code>](#MixinExternalDocs.externalDocs)  
-<a name="module_@asyncapi/parser+MessageTraitable+hasBindings"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasBindings"></a>
 
 #### messageTraitable.hasBindings() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasBindings</code>](#MixinBindings.hasBindings)  
-<a name="module_@asyncapi/parser+MessageTraitable+bindings"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+bindings"></a>
 
-#### messageTraitable.bindings() ⇒ <code>Object</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+#### messageTraitable.bindings() ⇒ <code>object</code>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>bindings</code>](#MixinBindings.bindings)  
-<a name="module_@asyncapi/parser+MessageTraitable+bindingProtocols"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+bindingProtocols"></a>
 
 #### messageTraitable.bindingProtocols() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>bindingProtocols</code>](#MixinBindings.bindingProtocols)  
-<a name="module_@asyncapi/parser+MessageTraitable+hasBinding"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasBinding"></a>
 
 #### messageTraitable.hasBinding(name) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasBinding</code>](#MixinBindings.hasBinding)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the binding. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+binding"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+binding"></a>
 
-#### messageTraitable.binding(name) ⇒ <code>Object</code> \| <code>null</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+#### messageTraitable.binding(name) ⇒ <code>object</code> \| <code>null</code>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>binding</code>](#MixinBindings.binding)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the binding. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+hasExtensions"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasExtensions"></a>
 
 #### messageTraitable.hasExtensions() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
-<a name="module_@asyncapi/parser+MessageTraitable+extensions"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+extensions"></a>
 
-#### messageTraitable.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+#### messageTraitable.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
-<a name="module_@asyncapi/parser+MessageTraitable+extensionKeys"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+extensionKeys"></a>
 
 #### messageTraitable.extensionKeys() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>extensionKeys</code>](#MixinSpecificationExtensions.extensionKeys)  
-<a name="module_@asyncapi/parser+MessageTraitable+extKeys"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+extKeys"></a>
 
 #### messageTraitable.extKeys() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>extKeys</code>](#MixinSpecificationExtensions.extKeys)  
-<a name="module_@asyncapi/parser+MessageTraitable+hasExtension"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasExtension"></a>
 
 #### messageTraitable.hasExtension(key) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasExtension</code>](#MixinSpecificationExtensions.hasExtension)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+extension"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+extension"></a>
 
 #### messageTraitable.extension(key) ⇒ <code>any</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>extension</code>](#MixinSpecificationExtensions.extension)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+hasExt"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+hasExt"></a>
 
 #### messageTraitable.hasExt(key) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>hasExt</code>](#MixinSpecificationExtensions.hasExt)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
-<a name="module_@asyncapi/parser+MessageTraitable+ext"></a>
+<a name="module_@asyncapi/parser+Message--MessageTraitable+ext"></a>
 
 #### messageTraitable.ext(key) ⇒ <code>any</code>
-**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+Message--MessageTraitable)  
 **Mixes**: [<code>ext</code>](#MixinSpecificationExtensions.ext)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
-<a name="module_@asyncapi/parser+Message"></a>
-
-### @asyncapi/parser.Message ⇐ <code>MessageTraitable</code>
-Implements functions to deal with a Message object.
-
-**Kind**: instance class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
-**Extends**: <code>MessageTraitable</code>  
-
-* [.Message](#module_@asyncapi/parser+Message) ⇐ <code>MessageTraitable</code>
-    * [.uid()](#module_@asyncapi/parser+Message+uid) ⇒ <code>string</code>
-    * [.payload()](#module_@asyncapi/parser+Message+payload) ⇒ <code>Schema</code>
-    * [.originalPayload()](#module_@asyncapi/parser+Message+originalPayload) ⇒ <code>any</code>
-    * [.originalSchemaFormat()](#module_@asyncapi/parser+Message+originalSchemaFormat) ⇒ <code>string</code>
-
-<a name="module_@asyncapi/parser+Message+uid"></a>
-
-#### message.uid() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
-<a name="module_@asyncapi/parser+Message+payload"></a>
-
-#### message.payload() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
-<a name="module_@asyncapi/parser+Message+originalPayload"></a>
-
-#### message.originalPayload() ⇒ <code>any</code>
-**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
-<a name="module_@asyncapi/parser+Message+originalSchemaFormat"></a>
-
-#### message.originalSchemaFormat() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
 <a name="module_@asyncapi/parser+OAuthFlow"></a>
 
 ### @asyncapi/parser.OAuthFlow ⇐ <code>Base</code>
@@ -1629,9 +1647,9 @@ Implements functions to deal with a OAuthFlow object.
     * [.authorizationUrl()](#module_@asyncapi/parser+OAuthFlow+authorizationUrl) ⇒ <code>string</code>
     * [.tokenUrl()](#module_@asyncapi/parser+OAuthFlow+tokenUrl) ⇒ <code>string</code>
     * [.refreshUrl()](#module_@asyncapi/parser+OAuthFlow+refreshUrl) ⇒ <code>string</code>
-    * [.scopes()](#module_@asyncapi/parser+OAuthFlow+scopes) ⇒ <code>Object.&lt;string, string&gt;</code>
+    * [.scopes()](#module_@asyncapi/parser+OAuthFlow+scopes) ⇒ <code>object.&lt;string, string&gt;</code>
     * [.hasExtensions()](#module_@asyncapi/parser+OAuthFlow+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+OAuthFlow+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+OAuthFlow+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+OAuthFlow+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+OAuthFlow+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+OAuthFlow+hasExtension) ⇒ <code>boolean</code>
@@ -1653,7 +1671,7 @@ Implements functions to deal with a OAuthFlow object.
 **Kind**: instance method of [<code>OAuthFlow</code>](#module_@asyncapi/parser+OAuthFlow)  
 <a name="module_@asyncapi/parser+OAuthFlow+scopes"></a>
 
-#### oAuthFlow.scopes() ⇒ <code>Object.&lt;string, string&gt;</code>
+#### oAuthFlow.scopes() ⇒ <code>object.&lt;string, string&gt;</code>
 **Kind**: instance method of [<code>OAuthFlow</code>](#module_@asyncapi/parser+OAuthFlow)  
 <a name="module_@asyncapi/parser+OAuthFlow+hasExtensions"></a>
 
@@ -1662,7 +1680,7 @@ Implements functions to deal with a OAuthFlow object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+OAuthFlow+extensions"></a>
 
-#### oAuthFlow.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### oAuthFlow.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>OAuthFlow</code>](#module_@asyncapi/parser+OAuthFlow)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+OAuthFlow+extensionKeys"></a>
@@ -1744,12 +1762,12 @@ Implements functions to deal with the common properties Operation and OperationT
     * [.hasExternalDocs()](#module_@asyncapi/parser+OperationTraitable+hasExternalDocs) ⇒ <code>boolean</code>
     * [.externalDocs()](#module_@asyncapi/parser+OperationTraitable+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
     * [.hasBindings()](#module_@asyncapi/parser+OperationTraitable+hasBindings) ⇒ <code>boolean</code>
-    * [.bindings()](#module_@asyncapi/parser+OperationTraitable+bindings) ⇒ <code>Object</code>
+    * [.bindings()](#module_@asyncapi/parser+OperationTraitable+bindings) ⇒ <code>object</code>
     * [.bindingProtocols()](#module_@asyncapi/parser+OperationTraitable+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasBinding(name)](#module_@asyncapi/parser+OperationTraitable+hasBinding) ⇒ <code>boolean</code>
-    * [.binding(name)](#module_@asyncapi/parser+OperationTraitable+binding) ⇒ <code>Object</code> \| <code>null</code>
+    * [.binding(name)](#module_@asyncapi/parser+OperationTraitable+binding) ⇒ <code>object</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+OperationTraitable+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+OperationTraitable+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+OperationTraitable+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+OperationTraitable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+OperationTraitable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+OperationTraitable+hasExtension) ⇒ <code>boolean</code>
@@ -1827,7 +1845,7 @@ Implements functions to deal with the common properties Operation and OperationT
 **Mixes**: [<code>hasBindings</code>](#MixinBindings.hasBindings)  
 <a name="module_@asyncapi/parser+OperationTraitable+bindings"></a>
 
-#### operationTraitable.bindings() ⇒ <code>Object</code>
+#### operationTraitable.bindings() ⇒ <code>object</code>
 **Kind**: instance method of [<code>OperationTraitable</code>](#module_@asyncapi/parser+OperationTraitable)  
 **Mixes**: [<code>bindings</code>](#MixinBindings.bindings)  
 <a name="module_@asyncapi/parser+OperationTraitable+bindingProtocols"></a>
@@ -1847,7 +1865,7 @@ Implements functions to deal with the common properties Operation and OperationT
 
 <a name="module_@asyncapi/parser+OperationTraitable+binding"></a>
 
-#### operationTraitable.binding(name) ⇒ <code>Object</code> \| <code>null</code>
+#### operationTraitable.binding(name) ⇒ <code>object</code> \| <code>null</code>
 **Kind**: instance method of [<code>OperationTraitable</code>](#module_@asyncapi/parser+OperationTraitable)  
 **Mixes**: [<code>binding</code>](#MixinBindings.binding)  
 
@@ -1862,7 +1880,7 @@ Implements functions to deal with the common properties Operation and OperationT
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+OperationTraitable+extensions"></a>
 
-#### operationTraitable.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### operationTraitable.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>OperationTraitable</code>](#module_@asyncapi/parser+OperationTraitable)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+OperationTraitable+extensionKeys"></a>
@@ -1926,7 +1944,7 @@ Implements functions to deal with an Operation object.
 * [.Operation](#module_@asyncapi/parser+Operation) ⇐ <code>OperationTraitable</code>
     * [.hasMultipleMessages()](#module_@asyncapi/parser+Operation+hasMultipleMessages) ⇒ <code>boolean</code>
     * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
-    * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
+    * [.message(index)](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
 
 <a name="module_@asyncapi/parser+Operation+hasMultipleMessages"></a>
 
@@ -1938,8 +1956,13 @@ Implements functions to deal with an Operation object.
 **Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
 <a name="module_@asyncapi/parser+Operation+message"></a>
 
-#### operation.message() ⇒ <code>Message</code>
+#### operation.message(index) ⇒ <code>Message</code>
 **Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+
+| Param |
+| --- |
+| index | 
+
 <a name="module_@asyncapi/parser+PublishOperation"></a>
 
 ### @asyncapi/parser.PublishOperation ⇐ <code>Operation</code>
@@ -1998,13 +2021,13 @@ Implements functions to deal with a Schema object.
     * [.anyOf()](#module_@asyncapi/parser+Schema+anyOf) ⇒ <code>Array.&lt;Schema&gt;</code>
     * [.not()](#module_@asyncapi/parser+Schema+not) ⇒ <code>Schema</code>
     * [.items()](#module_@asyncapi/parser+Schema+items) ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
-    * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+    * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>object.&lt;string, Schema&gt;</code>
     * [.additionalProperties()](#module_@asyncapi/parser+Schema+additionalProperties) ⇒ <code>boolean</code> \| <code>Schema</code>
     * [.additionalItems()](#module_@asyncapi/parser+Schema+additionalItems) ⇒ <code>Schema</code>
-    * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+    * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>object.&lt;string, Schema&gt;</code>
     * [.const()](#module_@asyncapi/parser+Schema+const) ⇒ <code>any</code>
     * [.contains()](#module_@asyncapi/parser+Schema+contains) ⇒ <code>Schema</code>
-    * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
+    * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
     * [.propertyNames()](#module_@asyncapi/parser+Schema+propertyNames) ⇒ <code>Schema</code>
     * [.if()](#module_@asyncapi/parser+Schema+if) ⇒ <code>Schema</code>
     * [.then()](#module_@asyncapi/parser+Schema+then) ⇒ <code>Schema</code>
@@ -2012,7 +2035,7 @@ Implements functions to deal with a Schema object.
     * [.format()](#module_@asyncapi/parser+Schema+format) ⇒ <code>string</code>
     * [.contentEncoding()](#module_@asyncapi/parser+Schema+contentEncoding) ⇒ <code>string</code>
     * [.contentMediaType()](#module_@asyncapi/parser+Schema+contentMediaType) ⇒ <code>string</code>
-    * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+    * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>object.&lt;string, Schema&gt;</code>
     * [.title()](#module_@asyncapi/parser+Schema+title) ⇒ <code>string</code>
     * [.default()](#module_@asyncapi/parser+Schema+default) ⇒ <code>any</code>
     * [.deprecated()](#module_@asyncapi/parser+Schema+deprecated) ⇒ <code>boolean</code>
@@ -2028,7 +2051,7 @@ Implements functions to deal with a Schema object.
     * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
     * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
@@ -2130,7 +2153,7 @@ Implements functions to deal with a Schema object.
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+properties"></a>
 
-#### schema.properties() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+#### schema.properties() ⇒ <code>object.&lt;string, Schema&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+additionalProperties"></a>
 
@@ -2142,7 +2165,7 @@ Implements functions to deal with a Schema object.
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+patternProperties"></a>
 
-#### schema.patternProperties() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+#### schema.patternProperties() ⇒ <code>object.&lt;string, Schema&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+const"></a>
 
@@ -2154,7 +2177,7 @@ Implements functions to deal with a Schema object.
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+dependencies"></a>
 
-#### schema.dependencies() ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
+#### schema.dependencies() ⇒ <code>object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+propertyNames"></a>
 
@@ -2186,7 +2209,7 @@ Implements functions to deal with a Schema object.
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+definitions"></a>
 
-#### schema.definitions() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+#### schema.definitions() ⇒ <code>object.&lt;string, Schema&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+title"></a>
 
@@ -2255,7 +2278,7 @@ Implements functions to deal with a Schema object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Schema+extensions"></a>
 
-#### schema.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### schema.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Schema+extensionKeys"></a>
@@ -2324,11 +2347,11 @@ Implements functions to deal with a SecurityScheme object.
     * [.scheme()](#module_@asyncapi/parser+SecurityScheme+scheme) ⇒ <code>string</code>
     * [.bearerFormat()](#module_@asyncapi/parser+SecurityScheme+bearerFormat) ⇒ <code>string</code>
     * [.openIdConnectUrl()](#module_@asyncapi/parser+SecurityScheme+openIdConnectUrl) ⇒ <code>string</code>
-    * [.flows()](#module_@asyncapi/parser+SecurityScheme+flows) ⇒ <code>Object.&lt;string, OAuthFlow&gt;</code>
+    * [.flows()](#module_@asyncapi/parser+SecurityScheme+flows) ⇒ <code>object.&lt;string, OAuthFlow&gt;</code>
     * [.hasDescription()](#module_@asyncapi/parser+SecurityScheme+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+SecurityScheme+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+SecurityScheme+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+SecurityScheme+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+SecurityScheme+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+SecurityScheme+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+SecurityScheme+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+SecurityScheme+hasExtension) ⇒ <code>boolean</code>
@@ -2362,7 +2385,7 @@ Implements functions to deal with a SecurityScheme object.
 **Kind**: instance method of [<code>SecurityScheme</code>](#module_@asyncapi/parser+SecurityScheme)  
 <a name="module_@asyncapi/parser+SecurityScheme+flows"></a>
 
-#### securityScheme.flows() ⇒ <code>Object.&lt;string, OAuthFlow&gt;</code>
+#### securityScheme.flows() ⇒ <code>object.&lt;string, OAuthFlow&gt;</code>
 **Kind**: instance method of [<code>SecurityScheme</code>](#module_@asyncapi/parser+SecurityScheme)  
 <a name="module_@asyncapi/parser+SecurityScheme+hasDescription"></a>
 
@@ -2381,7 +2404,7 @@ Implements functions to deal with a SecurityScheme object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+SecurityScheme+extensions"></a>
 
-#### securityScheme.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### securityScheme.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>SecurityScheme</code>](#module_@asyncapi/parser+SecurityScheme)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+SecurityScheme+extensionKeys"></a>
@@ -2460,7 +2483,7 @@ Implements functions to deal with a ServerVariable object.
     * [.hasDescription()](#module_@asyncapi/parser+ServerVariable+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+ServerVariable+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+ServerVariable+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+ServerVariable+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+ServerVariable+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+ServerVariable+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+ServerVariable+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+ServerVariable+hasExtension) ⇒ <code>boolean</code>
@@ -2514,7 +2537,7 @@ Implements functions to deal with a ServerVariable object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+ServerVariable+extensions"></a>
 
-#### serverVariable.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### serverVariable.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>ServerVariable</code>](#module_@asyncapi/parser+ServerVariable)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+ServerVariable+extensionKeys"></a>
@@ -2580,19 +2603,19 @@ Implements functions to deal with a Server object.
     * [.url()](#module_@asyncapi/parser+Server+url) ⇒ <code>string</code>
     * [.protocol()](#module_@asyncapi/parser+Server+protocol) ⇒ <code>string</code>
     * [.protocolVersion()](#module_@asyncapi/parser+Server+protocolVersion) ⇒ <code>string</code>
-    * [.variables()](#module_@asyncapi/parser+Server+variables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+    * [.variables()](#module_@asyncapi/parser+Server+variables) ⇒ <code>object.&lt;string, ServerVariable&gt;</code>
     * [.variable(name)](#module_@asyncapi/parser+Server+variable) ⇒ <code>ServerVariable</code>
     * [.hasVariables()](#module_@asyncapi/parser+Server+hasVariables) ⇒ <code>boolean</code>
     * [.security()](#module_@asyncapi/parser+Server+security) ⇒ <code>Array.&lt;ServerSecurityRequirement&gt;</code>
     * [.hasDescription()](#module_@asyncapi/parser+Server+hasDescription) ⇒ <code>boolean</code>
     * [.description()](#module_@asyncapi/parser+Server+description) ⇒ <code>string</code> \| <code>null</code>
     * [.hasBindings()](#module_@asyncapi/parser+Server+hasBindings) ⇒ <code>boolean</code>
-    * [.bindings()](#module_@asyncapi/parser+Server+bindings) ⇒ <code>Object</code>
+    * [.bindings()](#module_@asyncapi/parser+Server+bindings) ⇒ <code>object</code>
     * [.bindingProtocols()](#module_@asyncapi/parser+Server+bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasBinding(name)](#module_@asyncapi/parser+Server+hasBinding) ⇒ <code>boolean</code>
-    * [.binding(name)](#module_@asyncapi/parser+Server+binding) ⇒ <code>Object</code> \| <code>null</code>
+    * [.binding(name)](#module_@asyncapi/parser+Server+binding) ⇒ <code>object</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Server+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Server+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Server+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Server+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Server+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Server+hasExtension) ⇒ <code>boolean</code>
@@ -2614,7 +2637,7 @@ Implements functions to deal with a Server object.
 **Kind**: instance method of [<code>Server</code>](#module_@asyncapi/parser+Server)  
 <a name="module_@asyncapi/parser+Server+variables"></a>
 
-#### server.variables() ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+#### server.variables() ⇒ <code>object.&lt;string, ServerVariable&gt;</code>
 **Kind**: instance method of [<code>Server</code>](#module_@asyncapi/parser+Server)  
 <a name="module_@asyncapi/parser+Server+variable"></a>
 
@@ -2650,7 +2673,7 @@ Implements functions to deal with a Server object.
 **Mixes**: [<code>hasBindings</code>](#MixinBindings.hasBindings)  
 <a name="module_@asyncapi/parser+Server+bindings"></a>
 
-#### server.bindings() ⇒ <code>Object</code>
+#### server.bindings() ⇒ <code>object</code>
 **Kind**: instance method of [<code>Server</code>](#module_@asyncapi/parser+Server)  
 **Mixes**: [<code>bindings</code>](#MixinBindings.bindings)  
 <a name="module_@asyncapi/parser+Server+bindingProtocols"></a>
@@ -2670,7 +2693,7 @@ Implements functions to deal with a Server object.
 
 <a name="module_@asyncapi/parser+Server+binding"></a>
 
-#### server.binding(name) ⇒ <code>Object</code> \| <code>null</code>
+#### server.binding(name) ⇒ <code>object</code> \| <code>null</code>
 **Kind**: instance method of [<code>Server</code>](#module_@asyncapi/parser+Server)  
 **Mixes**: [<code>binding</code>](#MixinBindings.binding)  
 
@@ -2685,7 +2708,7 @@ Implements functions to deal with a Server object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Server+extensions"></a>
 
-#### server.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### server.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Server</code>](#module_@asyncapi/parser+Server)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Server+extensionKeys"></a>
@@ -2779,7 +2802,7 @@ Implements functions to deal with a Tag object.
     * [.hasExternalDocs()](#module_@asyncapi/parser+Tag+hasExternalDocs) ⇒ <code>boolean</code>
     * [.externalDocs()](#module_@asyncapi/parser+Tag+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Tag+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Tag+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+Tag+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Tag+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+Tag+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+Tag+hasExtension) ⇒ <code>boolean</code>
@@ -2791,6 +2814,7 @@ Implements functions to deal with a Tag object.
 
 #### tag.name() ⇒ <code>string</code>
 **Kind**: instance method of [<code>Tag</code>](#module_@asyncapi/parser+Tag)  
+**Returns**: <code>string</code> - Name  
 <a name="module_@asyncapi/parser+Tag+hasDescription"></a>
 
 #### tag.hasDescription() ⇒ <code>boolean</code>
@@ -2818,7 +2842,7 @@ Implements functions to deal with a Tag object.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+Tag+extensions"></a>
 
-#### tag.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### tag.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>Tag</code>](#module_@asyncapi/parser+Tag)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+Tag+extensionKeys"></a>
@@ -2881,7 +2905,7 @@ Represents an error while trying to parse an AsyncAPI document.
 
 * [~ParserError](#module_@asyncapi/parser+ParserError) ⇐ <code>Error</code>
     * [new ParserError(definition)](#new_module_@asyncapi/parser+ParserError_new)
-    * [.toJS()](#module_@asyncapi/parser+ParserError+toJS)
+    * [.toJS()](#module_@asyncapi/parser+ParserError+toJS) ⇒ <code>object</code>
 
 <a name="new_module_@asyncapi/parser+ParserError_new"></a>
 
@@ -2891,58 +2915,56 @@ Instantiates an error
 
 | Param | Type | Description |
 | --- | --- | --- |
-| definition | <code>Object</code> |  |
-| definition.type | <code>String</code> | The type of the error. |
-| definition.title | <code>String</code> | The message of the error. |
-| [definition.detail] | <code>String</code> | A string containing more detailed information about the error. |
-| [definition.parsedJSON] | <code>Object</code> | The resulting JSON after YAML transformation. Or the JSON object if the this was the initial format. |
-| [definition.validationErrors] | <code>Array.&lt;Object&gt;</code> | The errors resulting from the validation. For more information, see https://www.npmjs.com/package/better-ajv-errors. |
-| definition.validationErrors.title | <code>String</code> | A validation error message. |
-| definition.validationErrors.jsonPointer | <code>String</code> | The path to the field that contains the error. Uses JSON Pointer format. |
-| definition.validationErrors.startLine | <code>Number</code> | The line where the error starts in the AsyncAPI document. |
-| definition.validationErrors.startColumn | <code>Number</code> | The column where the error starts in the AsyncAPI document. |
-| definition.validationErrors.startOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the AsyncAPI document. |
-| definition.validationErrors.endLine | <code>Number</code> | The line where the error ends in the AsyncAPI document. |
-| definition.validationErrors.endColumn | <code>Number</code> | The column where the error ends in the AsyncAPI document. |
-| definition.validationErrors.endOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
-| [definition.location] | <code>Object</code> | Error location details after trying to parse an invalid JSON or YAML document. |
-| definition.location.startLine | <code>Number</code> | The line of the YAML/JSON document where the error starts. |
-| definition.location.startColumn | <code>Number</code> | The column of the YAML/JSON document where the error starts. |
-| definition.location.startOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the YAML/JSON AsyncAPI document. |
-| [definition.refs] | <code>Array.&lt;Object&gt;</code> | Error details after trying to resolve $ref's. |
-| definition.refs.title | <code>String</code> | A validation error message. |
-| definition.refs.jsonPointer | <code>String</code> | The path to the field that contains the error. Uses JSON Pointer format. |
-| definition.refs.startLine | <code>Number</code> | The line where the error starts in the AsyncAPI document. |
-| definition.refs.startColumn | <code>Number</code> | The column where the error starts in the AsyncAPI document. |
-| definition.refs.startOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error starts in the AsyncAPI document. |
-| definition.refs.endLine | <code>Number</code> | The line where the error ends in the AsyncAPI document. |
-| definition.refs.endColumn | <code>Number</code> | The column where the error ends in the AsyncAPI document. |
-| definition.refs.endOffset | <code>Number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
+| definition | <code>object</code> |  |
+| definition.type | <code>string</code> | The type of the error. |
+| definition.title | <code>string</code> | The message of the error. |
+| [definition.detail] | <code>string</code> | A string containing more detailed information about the error. |
+| [definition.parsedJSON] | <code>object</code> | The resulting JSON after YAML transformation. Or the JSON object if the this was the initial format. |
+| [definition.validationErrors] | <code>Array.&lt;object&gt;</code> | The errors resulting from the validation. For more information, see https://www.npmjs.com/package/better-ajv-errors. |
+| definition.validationErrors.title | <code>string</code> | A validation error message. |
+| definition.validationErrors.jsonPointer | <code>string</code> | The path to the field that contains the error. Uses JSON Pointer format. |
+| definition.validationErrors.startLine | <code>number</code> | The line where the error starts in the AsyncAPI document. |
+| definition.validationErrors.startColumn | <code>number</code> | The column where the error starts in the AsyncAPI document. |
+| definition.validationErrors.startOffset | <code>number</code> | The offset (starting from the beginning of the document) where the error starts in the AsyncAPI document. |
+| definition.validationErrors.endLine | <code>number</code> | The line where the error ends in the AsyncAPI document. |
+| definition.validationErrors.endColumn | <code>number</code> | The column where the error ends in the AsyncAPI document. |
+| definition.validationErrors.endOffset | <code>number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
+| [definition.location] | <code>object</code> | Error location details after trying to parse an invalid JSON or YAML document. |
+| definition.location.startLine | <code>number</code> | The line of the YAML/JSON document where the error starts. |
+| definition.location.startColumn | <code>number</code> | The column of the YAML/JSON document where the error starts. |
+| definition.location.startOffset | <code>number</code> | The offset (starting from the beginning of the document) where the error starts in the YAML/JSON AsyncAPI document. |
+| [definition.refs] | <code>Array.&lt;object&gt;</code> | Error details after trying to resolve $ref's. |
+| definition.refs.title | <code>string</code> | A validation error message. |
+| definition.refs.jsonPointer | <code>string</code> | The path to the field that contains the error. Uses JSON Pointer format. |
+| definition.refs.startLine | <code>number</code> | The line where the error starts in the AsyncAPI document. |
+| definition.refs.startColumn | <code>number</code> | The column where the error starts in the AsyncAPI document. |
+| definition.refs.startOffset | <code>number</code> | The offset (starting from the beginning of the document) where the error starts in the AsyncAPI document. |
+| definition.refs.endLine | <code>number</code> | The line where the error ends in the AsyncAPI document. |
+| definition.refs.endColumn | <code>number</code> | The column where the error ends in the AsyncAPI document. |
+| definition.refs.endOffset | <code>number</code> | The offset (starting from the beginning of the document) where the error ends in the AsyncAPI document. |
 
 <a name="module_@asyncapi/parser+ParserError+toJS"></a>
 
-#### parserError.toJS()
-Returns a JS object representation of the error.
-
+#### parserError.toJS() ⇒ <code>object</code>
 **Kind**: instance method of [<code>ParserError</code>](#module_@asyncapi/parser+ParserError)  
+**Returns**: <code>object</code> - Returns a JS object representation of the error.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument"></a>
 
-### @asyncapi/parser~AsyncAPIDocument ⇐ <code>Base</code>
+### @asyncapi/parser~AsyncAPIDocument
 Implements functions to deal with the AsyncAPI document.
 
 **Kind**: inner class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
-**Extends**: <code>Base</code>  
 **Mixes**: [<code>MixinTags</code>](#MixinTags), [<code>MixinExternalDocs</code>](#MixinExternalDocs), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
-* [~AsyncAPIDocument](#module_@asyncapi/parser+AsyncAPIDocument) ⇐ <code>Base</code>
+* [~AsyncAPIDocument](#module_@asyncapi/parser+AsyncAPIDocument)
     * [.version()](#module_@asyncapi/parser+AsyncAPIDocument+version) ⇒ <code>string</code>
     * [.info()](#module_@asyncapi/parser+AsyncAPIDocument+info) ⇒ <code>Info</code>
     * [.id()](#module_@asyncapi/parser+AsyncAPIDocument+id) ⇒ <code>string</code>
     * [.hasServers()](#module_@asyncapi/parser+AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
-    * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
+    * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>object.&lt;string, Server&gt;</code>
     * [.server(name)](#module_@asyncapi/parser+AsyncAPIDocument+server) ⇒ <code>Server</code>
     * [.hasChannels()](#module_@asyncapi/parser+AsyncAPIDocument+hasChannels) ⇒ <code>boolean</code>
-    * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+    * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>object.&lt;string, Channel&gt;</code>
     * [.channelNames()](#module_@asyncapi/parser+AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
     * [.channel(name)](#module_@asyncapi/parser+AsyncAPIDocument+channel) ⇒ <code>Channel</code>
     * [.defaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+defaultContentType) ⇒ <code>string</code>
@@ -2960,7 +2982,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
     * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
@@ -2975,7 +2997,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
     * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
     * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
@@ -2987,26 +3009,32 @@ Implements functions to deal with the AsyncAPI document.
 
 #### asyncAPIDocument.version() ⇒ <code>string</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>string</code> - Version.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+info"></a>
 
 #### asyncAPIDocument.info() ⇒ <code>Info</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Info</code> - Info.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+id"></a>
 
 #### asyncAPIDocument.id() ⇒ <code>string</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>string</code> - Id.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasServers"></a>
 
 #### asyncAPIDocument.hasServers() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>boolean</code> - If it has servers.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+servers"></a>
 
-#### asyncAPIDocument.servers() ⇒ <code>Object.&lt;string, Server&gt;</code>
+#### asyncAPIDocument.servers() ⇒ <code>object.&lt;string, Server&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>object.&lt;string, Server&gt;</code> - Servers.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+server"></a>
 
 #### asyncAPIDocument.server(name) ⇒ <code>Server</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Server</code> - The server for given name.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3016,18 +3044,22 @@ Implements functions to deal with the AsyncAPI document.
 
 #### asyncAPIDocument.hasChannels() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>boolean</code> - If it has channels.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+channels"></a>
 
-#### asyncAPIDocument.channels() ⇒ <code>Object.&lt;string, Channel&gt;</code>
+#### asyncAPIDocument.channels() ⇒ <code>object.&lt;string, Channel&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>object.&lt;string, Channel&gt;</code> - Channels.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+channelNames"></a>
 
 #### asyncAPIDocument.channelNames() ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Array.&lt;string&gt;</code> - An array with channels names.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+channel"></a>
 
 #### asyncAPIDocument.channel(name) ⇒ <code>Channel</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Channel</code> - The channel for given name.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3037,30 +3069,37 @@ Implements functions to deal with the AsyncAPI document.
 
 #### asyncAPIDocument.defaultContentType() ⇒ <code>string</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>string</code> - The content type.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasComponents"></a>
 
 #### asyncAPIDocument.hasComponents() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>boolean</code> - If it has Components.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+components"></a>
 
 #### asyncAPIDocument.components() ⇒ <code>Components</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Components</code> - Components  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasMessages"></a>
 
 #### asyncAPIDocument.hasMessages() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>boolean</code> - If it has messages.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+allMessages"></a>
 
 #### asyncAPIDocument.allMessages() ⇒ <code>Map.&lt;string, Message&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Map.&lt;string, Message&gt;</code> - All messages.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+allSchemas"></a>
 
 #### asyncAPIDocument.allSchemas() ⇒ <code>Map.&lt;string, Schema&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>Map.&lt;string, Schema&gt;</code> - All schemas.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasCircular"></a>
 
 #### asyncAPIDocument.hasCircular() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+**Returns**: <code>boolean</code> - If it has circular refs.  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasTags"></a>
 
 #### asyncAPIDocument.hasTags() ⇒ <code>boolean</code>
@@ -3113,7 +3152,7 @@ Implements functions to deal with the AsyncAPI document.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+extensions"></a>
 
-#### asyncAPIDocument.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### asyncAPIDocument.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+extensionKeys"></a>
@@ -3218,7 +3257,7 @@ Implements functions to deal with the AsyncAPI document.
 **Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+extensions"></a>
 
-#### asyncAPIDocument.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+#### asyncAPIDocument.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
 **Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
 <a name="module_@asyncapi/parser+AsyncAPIDocument+extensionKeys"></a>
@@ -3279,8 +3318,14 @@ Implements common functionality for all the models.
 **Kind**: inner class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 <a name="module_@asyncapi/parser+Base+json"></a>
 
-#### base.json() ⇒ <code>any</code>
+#### base.json(key) ⇒ <code>any</code>
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
+**Returns**: <code>any</code> - The value for the given key  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>any</code> | Key to find |
+
 <a name="module_@asyncapi/parser..parse"></a>
 
 ### @asyncapi/parser~parse(asyncapiYAMLorJSON, [options]) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
@@ -3291,12 +3336,12 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| asyncapiYAMLorJSON | <code>String</code> |  | An AsyncAPI document in JSON or YAML format. |
-| [options] | <code>Object</code> |  | Configuration options. |
-| [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
-| [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
+| asyncapiYAMLorJSON | <code>string</code> |  | An AsyncAPI document in JSON or YAML format. |
+| [options] | <code>object</code> |  | Configuration options. |
+| [options.path] | <code>string</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
+| [options.parse] | <code>object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [options.resolve] | <code>object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [options.applyTraits] | <code>object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
 
 <a name="module_@asyncapi/parser..parseFromUrl"></a>
 
@@ -3308,9 +3353,60 @@ Fetches an AsyncAPI document from the given URL and passes its content to the `p
 
 | Param | Type | Description |
 | --- | --- | --- |
-| url | <code>String</code> | URL where the AsyncAPI document is located. |
-| [fetchOptions] | <code>Object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
-| [options] | <code>Object</code> | Configuration to pass to the [module:Parser#parse](module:Parser#parse) method. |
+| url | <code>string</code> | URL where the AsyncAPI document is located. |
+| [fetchOptions] | <code>object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
+| [options] | <code>object</code> | Configuration to pass to the [module:Parser#parse](module:Parser#parse) method. |
+
+<a name="module_@asyncapi/parser..dereference"></a>
+
+### @asyncapi/parser~dereference(refParser, parsedJSON, initialFormat, asyncapiYAMLorJSON, options)
+**Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+
+| Param |
+| --- |
+| refParser | 
+| parsedJSON | 
+| initialFormat | 
+| asyncapiYAMLorJSON | 
+| options | 
+
+<a name="module_@asyncapi/parser..handleCircularRefs"></a>
+
+### @asyncapi/parser~handleCircularRefs(refParser, parsedJSON, initialFormat, asyncapiYAMLorJSON, options)
+**Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+
+| Param |
+| --- |
+| refParser | 
+| parsedJSON | 
+| initialFormat | 
+| asyncapiYAMLorJSON | 
+| options | 
+
+<a name="module_@asyncapi/parser..customDocumentOperations"></a>
+
+### @asyncapi/parser~customDocumentOperations(parsedJSON, asyncapiYAMLorJSON, initialFormat, options)
+**Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+
+| Param |
+| --- |
+| parsedJSON | 
+| asyncapiYAMLorJSON | 
+| initialFormat | 
+| options | 
+
+<a name="module_@asyncapi/parser..validateAndConvertMessage"></a>
+
+### @asyncapi/parser~validateAndConvertMessage(msg, originalAsyncAPIDocument, fileFormat, parsedAsyncAPIDocument, pathToPayload)
+**Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+
+| Param |
+| --- |
+| msg | 
+| originalAsyncAPIDocument | 
+| fileFormat | 
+| parsedAsyncAPIDocument | 
+| pathToPayload | 
 
 <a name="module_@asyncapi/parser..registerSchemaParser"></a>
 
@@ -3321,7 +3417,16 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 
 | Param | Type | Description |
 | --- | --- | --- |
-| parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
+| parserModule | <code>object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
+
+<a name="module_@asyncapi/parser..applyTraits"></a>
+
+### @asyncapi/parser~applyTraits(js)
+**Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+
+| Param |
+| --- |
+| js | 
 
 <a name="MixinBindings"></a>
 
@@ -3332,10 +3437,10 @@ Implements functions to deal with the common Bindings object.
 
 * [MixinBindings](#MixinBindings)
     * [.hasBindings()](#MixinBindings.hasBindings) ⇒ <code>boolean</code>
-    * [.bindings()](#MixinBindings.bindings) ⇒ <code>Object</code>
+    * [.bindings()](#MixinBindings.bindings) ⇒ <code>object</code>
     * [.bindingProtocols()](#MixinBindings.bindingProtocols) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasBinding(name)](#MixinBindings.hasBinding) ⇒ <code>boolean</code>
-    * [.binding(name)](#MixinBindings.binding) ⇒ <code>Object</code> \| <code>null</code>
+    * [.binding(name)](#MixinBindings.binding) ⇒ <code>object</code> \| <code>null</code>
 
 <a name="MixinBindings.hasBindings"></a>
 
@@ -3343,7 +3448,7 @@ Implements functions to deal with the common Bindings object.
 **Kind**: static method of [<code>MixinBindings</code>](#MixinBindings)  
 <a name="MixinBindings.bindings"></a>
 
-### MixinBindings.bindings() ⇒ <code>Object</code>
+### MixinBindings.bindings() ⇒ <code>object</code>
 **Kind**: static method of [<code>MixinBindings</code>](#MixinBindings)  
 <a name="MixinBindings.bindingProtocols"></a>
 
@@ -3360,7 +3465,7 @@ Implements functions to deal with the common Bindings object.
 
 <a name="MixinBindings.binding"></a>
 
-### MixinBindings.binding(name) ⇒ <code>Object</code> \| <code>null</code>
+### MixinBindings.binding(name) ⇒ <code>object</code> \| <code>null</code>
 **Kind**: static method of [<code>MixinBindings</code>](#MixinBindings)  
 
 | Param | Type | Description |
@@ -3414,7 +3519,7 @@ Implements functions to deal with the SpecificationExtensions object.
 
 * [MixinSpecificationExtensions](#MixinSpecificationExtensions)
     * [.hasExtensions()](#MixinSpecificationExtensions.hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#MixinSpecificationExtensions.extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensions()](#MixinSpecificationExtensions.extensions) ⇒ <code>object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#MixinSpecificationExtensions.extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.extKeys()](#MixinSpecificationExtensions.extKeys) ⇒ <code>Array.&lt;string&gt;</code>
     * [.hasExtension(key)](#MixinSpecificationExtensions.hasExtension) ⇒ <code>boolean</code>
@@ -3428,7 +3533,7 @@ Implements functions to deal with the SpecificationExtensions object.
 **Kind**: static method of [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 <a name="MixinSpecificationExtensions.extensions"></a>
 
-### MixinSpecificationExtensions.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+### MixinSpecificationExtensions.extensions() ⇒ <code>object.&lt;string, any&gt;</code>
 **Kind**: static method of [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 <a name="MixinSpecificationExtensions.extensionKeys"></a>
 

@@ -63,6 +63,9 @@ describe('MixinBindings', function() {
   });
 });
 
+/**
+ * @param {any} model Model.
+ */
 function assertMixinBindingsInheritance(model) {
   describe('MixinBindingsInheritance', function() {
     it(`check if ${model.name} model has inherited methods from MixinBindings`, function() {

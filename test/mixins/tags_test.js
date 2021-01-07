@@ -75,6 +75,9 @@ describe('MixinTags', function() {
   });
 });
 
+/**
+ * @param {any} model Model.
+ */
 function assertMixinTagsInheritance(model) {
   describe('MixinTagsInheritance', function() {
     it(`check if ${model.name} model has inherited methods from MixinTags`, function() {

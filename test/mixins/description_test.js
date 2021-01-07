@@ -33,6 +33,9 @@ describe('MixinDescription', function() {
   });
 });
 
+/**
+ * @param {any} model Model.
+ */
 function assertMixinDescriptionInheritance(model) {
   describe('MixinDescriptionInheritance', function() {
     it(`check if ${model.name} model has inherited methods from MixinDescription`, function() {

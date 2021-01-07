@@ -1,0 +1,144 @@
+{
+	"channels": {
+		"test": {
+			"parameters": {
+				"testParam1": {
+					"schema": {
+						"type": "object",
+						"test": true,
+						"properties": {
+							"testParamNestedSchemaProp": {
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testParamNestedNestedSchemaProp2": {
+										"test": true,
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"publish": {
+				"message": {
+					"headers": {
+						"type": "object",
+						"test": true,
+						"properties": {
+							"testHeaderNestedSchemaProp": {
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop2": {
+										"$ref": "#/components/schemas/testSchema"
+									}
+								}
+							},
+							"testHeaderNestedSchemaPropArray": {
+								"type": "array",
+								"test": true,
+								"items": [
+									{
+										"test": true,
+										"type": "string"
+									}
+								]
+							}
+						}
+					},
+					"payload": {
+						"type": "object",
+						"test": true,
+						"properties": {
+							"testPayloadNestedSchemaProp": {
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testPayloadNestedNestedSchemaProp1": {
+										"test": true,
+										"type": "string"
+									}
+								}
+							},
+							"testPayloadNestedSchemaPropArray": {
+								"type": "array",
+								"test": true,
+								"items": [
+									{
+										"test": true,
+										"type": "string"
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"test2": {
+			"subscribe": {
+				"message": {
+					"payload": {
+						"test": true,
+						"k": 2
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"loneSchema": {
+				"type": "string"
+				
+			},
+			"testSchema": {
+				"type": "object",
+				"test": true,
+				"properties": {
+					"testprop": {
+						"test": true,
+						"allOf": [
+							{
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop1": {
+										"test": true,
+										"type": "string"
+									}
+								}
+							},
+							{
+								"type": "object",
+								"test": true,
+								"properties": {
+									"testprop2": {
+										"test": true,
+										"type": "string"
+									}
+								}
+							}
+						]
+					},
+					"testArray": {
+						"type": "array",
+						"test": true,
+						"items": [
+							{
+								"test": true,
+								"type": "string"
+							},
+							{
+								"test": true,
+								"type": "string"
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}

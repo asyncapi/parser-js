@@ -9,12 +9,44 @@ const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_
 const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
 
 describe('AsyncAPIDocument', function() {
-  describe('assignUidToParameterSchemas()', function() {
-    it('should assign uids to parameters', function() {
-      const inputDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string' } } } } } };
-      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } } };
-      const d = new AsyncAPIDocument(inputDoc);
-      expect(d.json()).to.be.deep.equal(expectedDoc);
+  describe('Assign correc uid to schemas', function() {
+    it('should give nested schemas correct uids', function() {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/anonym.json'), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      console.log(JSON.stringify(d._json, null, 4));
+      const schemas = d.allSchemas();
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        'testParamSchema',
+        'testParamNestedSchemaProp',
+        'testParamNestedNestedSchemaProp2',
+        'testHeaderSchema',
+        'testHeaderNestedSchemaProp',
+        'testHeaderNestedNestedSchemaProp1',
+        'testHeaderNestedSchemaPropArray',
+        'testHeaderNestedSchemaPropArrayProp1',
+        'testPayloadSchema',
+        'testPayloadNestedSchemaProp',
+        'testPayloadNestedNestedSchemaProp1',
+        'testPayloadNestedSchemaPropArray',
+        'testPayloadNestedSchemaPropArrayProp1',
+        'testPayload',
+        'testComponentSchemaSchema',
+        'testComponentSchemaNestedSchemaPropAllOf',
+        'testComponentSchemaNestedSchemaPropAllOfSchema1',
+        'testComponentSchemaNestedSchemaPropAllOfSchema1Prop1',
+        'testComponentSchemaNestedSchemaPropAllOfSchema2',
+        'testComponentSchemaNestedSchemaPropAllOfSchema2Prop1',
+        'testComponentSchemaNestedSchemaPropArray',
+        'testComponentSchemaNestedSchemaPropArrayProp1',
+        'testComponentSchemaNestedSchemaPropArrayProp2'
+      ]);
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
     });
   });
 

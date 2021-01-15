@@ -38,6 +38,82 @@ declare interface MixinSpecificationExtensions {
 declare interface MixinTags {
 }
 
+/**
+ * The different kind of stages when crawling a schema.
+ * @property NEW_SCHEMA - The crawler just started crawling a schema.
+ * @property END_SCHEMA - The crawler just finished crawling a schema.
+ */
+declare type SchemaIteratorCallbackType = {
+    NEW_SCHEMA: string;
+    END_SCHEMA: string;
+};
+
+/**
+ * The different kind of stages when crawling a schema.
+ * @property NEW_SCHEMA - The crawler just started crawling a schema.
+ * @property END_SCHEMA - The crawler just finished crawling a schema.
+ */
+declare type SchemaIteratorCallbackType = {
+    NEW_SCHEMA: string;
+    END_SCHEMA: string;
+};
+
+/**
+ * The different types of schemas you can iterate
+ * @property parameters - Crawl all schemas in parameters
+ * @property payloads - Crawl all schemas in payloads
+ * @property headers - Crawl all schemas in headers
+ * @property components - Crawl all schemas in components
+ * @property objects - Crawl all schemas of type object
+ * @property arrays - Crawl all schemas of type array
+ * @property oneOfs - Crawl all schemas in oneOf's
+ * @property allOfs - Crawl all schemas in allOf's
+ * @property anyOfs - Crawl all schemas in anyOf's
+ */
+declare type SchemaTypesToIterate = {
+    parameters: string;
+    payloads: string;
+    headers: string;
+    components: string;
+    objects: string;
+    arrays: string;
+    oneOfs: string;
+    allOfs: string;
+    anyOfs: string;
+};
+
+/**
+ * The different types of schemas you can iterate
+ * @property parameters - Crawl all schemas in parameters
+ * @property payloads - Crawl all schemas in payloads
+ * @property headers - Crawl all schemas in headers
+ * @property components - Crawl all schemas in components
+ * @property objects - Crawl all schemas of type object
+ * @property arrays - Crawl all schemas of type array
+ * @property oneOfs - Crawl all schemas in oneOf's
+ * @property allOfs - Crawl all schemas in allOf's
+ * @property anyOfs - Crawl all schemas in anyOf's
+ */
+declare type SchemaTypesToIterate = {
+    parameters: string;
+    payloads: string;
+    headers: string;
+    components: string;
+    objects: string;
+    arrays: string;
+    oneOfs: string;
+    allOfs: string;
+    anyOfs: string;
+};
+
+/**
+ * Callback used when crawling a schema.
+ * @param schema - which is being crawled
+ * @param propName - if the schema is from a property get the name of such
+ * @param callbackType - is the schema a new one or is the crawler finishing one.
+ */
+declare type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
+
 declare module "@asyncapi/parser" {
     /**
      * Instantiates an error
@@ -115,10 +191,13 @@ declare module "@asyncapi/parser" {
         servers(): {
             [key: string]: Server;
         };
+        serverNames(): string[];
         /**
          * @param name - Name of the server.
          */
         server(name: string): Server;
+        hasDefaultContentType(): boolean;
+        defaultContentType(): string | null;
         hasChannels(): boolean;
         channels(): {
             [key: string]: Channel;
@@ -128,13 +207,17 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the channel.
          */
         channel(name: string): Channel;
-        defaultContentType(): string;
         hasComponents(): boolean;
         components(): Components;
         hasMessages(): boolean;
         allMessages(): Map<string, Message>;
         allSchemas(): Map<string, Schema>;
         hasCircular(): boolean;
+        /**
+         * Traverse schemas in the document and select which types of schemas to include.
+         * By default all schemas are iterated
+         */
+        traverseSchemas(callback: TraverseSchemas, schemaTypesToIterate: SchemaTypesToIterate[]): void;
         hasTags(): boolean;
         tags(): Tag[];
         tagNames(): string[];
@@ -305,31 +388,59 @@ declare module "@asyncapi/parser" {
         messages(): {
             [key: string]: Message;
         };
-        message(): Message;
+        hasMessages(): boolean;
+        /**
+         * @param name - Name of the message.
+         */
+        message(name: string): Message;
         schemas(): {
             [key: string]: Schema;
         };
-        schema(): Schema;
+        hasSchemas(): boolean;
+        /**
+         * @param name - Name of the schema.
+         */
+        schema(name: string): Schema;
         securitySchemes(): {
             [key: string]: SecurityScheme;
         };
-        securityScheme(): SecurityScheme;
+        hasSecuritySchemes(): boolean;
+        /**
+         * @param name - Name of the security schema.
+         */
+        securityScheme(name: string): SecurityScheme;
         parameters(): {
             [key: string]: ChannelParameter;
         };
-        parameter(): ChannelParameter;
+        hasParameters(): boolean;
+        /**
+         * @param name - Name of the channel parameter.
+         */
+        parameter(name: string): ChannelParameter;
         correlationIds(): {
             [key: string]: CorrelationId;
         };
-        correlationId(): CorrelationId;
+        hasCorrelationIds(): boolean;
+        /**
+         * @param name - Name of the correlationId.
+         */
+        correlationId(name: string): CorrelationId;
         operationTraits(): {
             [key: string]: OperationTrait;
         };
-        operationTrait(): OperationTrait;
+        hasOperationTraits(): boolean;
+        /**
+         * @param name - Name of the operation trait.
+         */
+        operationTrait(name: string): OperationTrait;
         messageTraits(): {
             [key: string]: MessageTrait;
         };
-        messageTrait(): MessageTrait;
+        hasMessageTraits(): boolean;
+        /**
+         * @param name - Name of the message trait.
+         */
+        messageTrait(name: string): MessageTrait;
         hasExtensions(): boolean;
         extensions(): {
             [key: string]: any;
@@ -742,6 +853,10 @@ declare module "@asyncapi/parser" {
         properties(): {
             [key: string]: Schema;
         };
+        /**
+         * @param name - Name of the property.
+         */
+        property(name: string): Schema;
         additionalProperties(): boolean | Schema;
         additionalItems(): Schema;
         patternProperties(): {

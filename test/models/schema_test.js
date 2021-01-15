@@ -260,6 +260,15 @@ describe('Schema', function() {
     });
   });
 
+  describe('#property()', function() {
+    it('should return a specific Schema object', function() {
+      const doc = { properties: { test: { type: 'string' } } };
+      const d = new Schema(doc);
+      expect(d.property('test').constructor.name).to.be.equal('Schema');
+      expect(d.property('test').json()).to.equal(doc.properties.test);
+    });
+  });
+
   describe('#additionalProperties()', function() {
     it('should return a Schema object', function() {
       const doc = { additionalProperties: { type: 'string' } };
@@ -466,6 +475,14 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(typeof d.title()).to.be.equal('string');
       expect(d.title()).to.be.equal(doc.title);
+    });
+  });
+
+  describe('#default()', function() {
+    it('should return a value', function() {
+      const doc = { type: 'string', default: 'test' };
+      const d = new Schema(doc);
+      expect(d.default()).to.be.equal('test');
     });
   });
 

@@ -1,3 +1,71 @@
+/**
+ * The different kind of stages when crawling a schema.
+ * @property NEW_SCHEMA - The crawler just started crawling a schema.
+ * @property END_SCHEMA - The crawler just finished crawling a schema.
+ */
+declare type SchemaIteratorCallbackType = {
+    NEW_SCHEMA: string;
+    END_SCHEMA: string;
+};
+
+/**
+ * The different kind of stages when crawling a schema.
+ * @property NEW_SCHEMA - The crawler just started crawling a schema.
+ * @property END_SCHEMA - The crawler just finished crawling a schema.
+ */
+declare type SchemaIteratorCallbackType = {
+    NEW_SCHEMA: string;
+    END_SCHEMA: string;
+};
+
+/**
+ * The different types of schemas you can iterate
+ * @property parameters - Crawl all schemas in parameters
+ * @property payloads - Crawl all schemas in payloads
+ * @property headers - Crawl all schemas in headers
+ * @property components - Crawl all schemas in components
+ * @property objects - Crawl all schemas of type object
+ * @property arrays - Crawl all schemas of type array
+ * @property oneOfs - Crawl all schemas in oneOf's
+ * @property allOfs - Crawl all schemas in allOf's
+ * @property anyOfs - Crawl all schemas in anyOf's
+ */
+declare type SchemaTypesToIterate = {
+    parameters: string;
+    payloads: string;
+    headers: string;
+    components: string;
+    objects: string;
+    arrays: string;
+    oneOfs: string;
+    allOfs: string;
+    anyOfs: string;
+};
+
+/**
+ * The different types of schemas you can iterate
+ * @property parameters - Crawl all schemas in parameters
+ * @property payloads - Crawl all schemas in payloads
+ * @property headers - Crawl all schemas in headers
+ * @property components - Crawl all schemas in components
+ * @property objects - Crawl all schemas of type object
+ * @property arrays - Crawl all schemas of type array
+ * @property oneOfs - Crawl all schemas in oneOf's
+ * @property allOfs - Crawl all schemas in allOf's
+ * @property anyOfs - Crawl all schemas in anyOf's
+ */
+declare type SchemaTypesToIterate = {
+    parameters: string;
+    payloads: string;
+    headers: string;
+    components: string;
+    objects: string;
+    arrays: string;
+    oneOfs: string;
+    allOfs: string;
+    anyOfs: string;
+};
+
 
 
 /**
@@ -37,74 +105,6 @@ declare interface MixinSpecificationExtensions {
  */
 declare interface MixinTags {
 }
-
-/**
- * The different kind of stages when crawling a schema.
- * @property NEW_SCHEMA - The crawler just started crawling a schema.
- * @property END_SCHEMA - The crawler just finished crawling a schema.
- */
-declare type SchemaIteratorCallbackType = {
-    NEW_SCHEMA: string;
-    END_SCHEMA: string;
-};
-
-/**
- * The different kind of stages when crawling a schema.
- * @property NEW_SCHEMA - The crawler just started crawling a schema.
- * @property END_SCHEMA - The crawler just finished crawling a schema.
- */
-declare type SchemaIteratorCallbackType = {
-    NEW_SCHEMA: string;
-    END_SCHEMA: string;
-};
-
-/**
- * The different types of schemas you can iterate
- * @property parameters - Crawl all schemas in parameters
- * @property payloads - Crawl all schemas in payloads
- * @property headers - Crawl all schemas in headers
- * @property components - Crawl all schemas in components
- * @property objects - Crawl all schemas of type object
- * @property arrays - Crawl all schemas of type array
- * @property oneOfs - Crawl all schemas in oneOf's
- * @property allOfs - Crawl all schemas in allOf's
- * @property anyOfs - Crawl all schemas in anyOf's
- */
-declare type SchemaTypesToIterate = {
-    parameters: string;
-    payloads: string;
-    headers: string;
-    components: string;
-    objects: string;
-    arrays: string;
-    oneOfs: string;
-    allOfs: string;
-    anyOfs: string;
-};
-
-/**
- * The different types of schemas you can iterate
- * @property parameters - Crawl all schemas in parameters
- * @property payloads - Crawl all schemas in payloads
- * @property headers - Crawl all schemas in headers
- * @property components - Crawl all schemas in components
- * @property objects - Crawl all schemas of type object
- * @property arrays - Crawl all schemas of type array
- * @property oneOfs - Crawl all schemas in oneOf's
- * @property allOfs - Crawl all schemas in allOf's
- * @property anyOfs - Crawl all schemas in anyOf's
- */
-declare type SchemaTypesToIterate = {
-    parameters: string;
-    payloads: string;
-    headers: string;
-    components: string;
-    objects: string;
-    arrays: string;
-    oneOfs: string;
-    allOfs: string;
-    anyOfs: string;
-};
 
 /**
  * Callback used when crawling a schema.

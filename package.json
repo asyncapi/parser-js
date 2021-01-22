@@ -8,19 +8,21 @@
     "test": "test"
   },
   "scripts": {
-    "test": "npm run test-lib && npm run test-browser",
+    "test": "npm run test:lib && npm run test:browser",
     "bundle": "browserify lib/browser.js | uglifyjs > dist/bundle.js",
     "docs": "jsdoc2md lib/parser.js -f lib/**/*.js > API.md",
     "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r lib -d ./ && node ./scripts/fix-ts-types.js",
     "prepublishOnly": "npm run bundle && npm run docs && npm run types",
     "release": "semantic-release",
-    "get-version": "echo $npm_package_version",
-    "get-name": "echo $npm_package_name",
+    "get:version": "echo $npm_package_version",
+    "get:name": "echo $npm_package_name",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
-    "gen-readme-toc": "markdown-toc -i README.md",
-    "test-lib": "nyc --reporter=html --reporter=text mocha --exclude test/browser_test.js --recursive",
-    "test-browser": "npm run test-browser-cleanup && npm run bundle && cp dist/bundle.js test/sample_browser/  && start-server-and-test 'http-server test/sample_browser --cors -s' 8080 'mocha --timeout 3000 test/browser_test.js' && npm run test-browser-cleanup",
-    "test-browser-cleanup": "rimraf test/sample_browser/bundle.js"
+    "test:lib": "nyc --reporter=html --reporter=text mocha --exclude test/browser_test.js --recursive",
+    "test:browser": "npm run test:browser:cleanup && npm run bundle && cp dist/bundle.js test/sample_browser/  && start-server-and-test 'http-server test/sample_browser --cors -s' 8080 'mocha --timeout 3000 test/browser_test.js' && npm run test:browser:cleanup",
+    "test:browser:cleanup": "rimraf test/sample_browser/bundle.js",
+    "generate:readme:toc": "markdown-toc -i README.md",
+    "generate:assets": "npm run docs && npm run generate:readme:toc && npm run types && npm run bundle",
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"

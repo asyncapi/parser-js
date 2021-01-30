@@ -175,9 +175,12 @@ describe('validateServerVariables()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(() =>
+    try{
       validateServerVariables(parsedInput, inputString, input)
-    ).to.throw('Not all server variables are described with variable object');
+    }
+    catch(e){
+      expect(e.title).to.equal('Not all server variables are described with variable object');
+    }
   });
 
   // server with a variable that has enum and an example match one of them
@@ -253,10 +256,10 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-try {
+    try {
       validateServerVariables(parsedInput, inputString, input);
     } catch (e) {
-      expect(e.title).to.equal('Please check your server variables. The example value is not one of the values from the enum');
+      expect(e.title).to.equal('Please check your server variables. The example does not match the enum list');
     }
   });
 
@@ -296,13 +299,13 @@ try {
         'https://github.com/asyncapi/parser-js/validation-errors'
       );
       expect(e.title).to.equal(
-        'Please check your server variables. The example value is not one of the values from the enum'
+        'Please check your server variables. The example does not match the enum list'
       );
       expect(e.parsedJSON).to.deep.equal(parsedInput);
       expect(e.validationErrors).to.deep.equal([
         {
           title:
-            'dummy/variables/basePath server does not have a corresponding variable object for',
+            'dummy/variables/basePath server variable provides an example that does not match the enum list',
           location: {
             jsonPointer: '/servers/dummy/variables/basePath',
             startLine: 14,

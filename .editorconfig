@@ -9,3 +9,4 @@ insert_final_newline = true
 [*.js]
 indent_size = 2
 indent_style = space
+quote_type = single

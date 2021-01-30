@@ -253,11 +253,11 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-    expect(() =>
-      validateServerVariables(parsedInput, inputString, input)
-    ).to.throw(
-      'Please check your server variables. The example value is not one of the values from the enum'
-    );
+try {
+      validateServerVariables(parsedInput, inputString, input);
+    } catch (e) {
+      expect(e.title).to.equal('Please check your server variables. The example value is not one of the values from the enum');
+    }
   });
 
   // server with a variable that has more than one example and only one of them match enum list,

@@ -1070,7 +1070,7 @@ describe('validateServerSecurity()', function () {
       expect(e.validationErrors).to.deep.equal([
         {
           title:
-            "dummy/security/complex doesn't have a corresponding security schema under the components object",
+            "dummy/security/complex doesn\'t have a corresponding security schema under the components object",
           location: {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
@@ -1120,7 +1120,7 @@ describe('validateServerSecurity()', function () {
       expect(e.validationErrors).to.deep.equal([
         {
           title:
-            "dummy/security/complex doesn't have a corresponding security schema under the components object",
+            "dummy/security/complex doesn\'t have a corresponding security schema under the components object",
           location: {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,

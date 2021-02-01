@@ -196,7 +196,7 @@ describe('validateServerVariables()', function () {
               "port": {
                 "enum": ["8883", "8884"],
                 "default": "8883",
-                "examples" : "8883"
+                "examples" : ["8883"]
               }
             }
           }
@@ -222,7 +222,7 @@ describe('validateServerVariables()', function () {
           "variables": {
             "port": {
               "default": "8883",
-              "examples" : "8883"
+              "examples" : ["8883"]
             }
           }
         }
@@ -248,7 +248,7 @@ describe('validateServerVariables()', function () {
           "variables": {
             "port": {
               "enum": ["8883", "8884"],
-              "examples" : "8882"
+              "examples" : ["8882"]
             }
           }
         }
@@ -261,7 +261,7 @@ describe('validateServerVariables()', function () {
       validateServerVariables(parsedInput, inputString, input);
     } catch (e) {
       expect(e.title).to.equal(
-        'Please check your server variables. The example does not match the enum list'
+        'Check your server variables. The example does not match the enum list'
       );
     }
   });
@@ -269,23 +269,28 @@ describe('validateServerVariables()', function () {
   // server with a variable that has more than one example and only one of them match enum list,
   // but the rest don't,
   // so validation should fail with clear information which example is wrong and where in the file is it
-  it('should throw error on the server variables has one example and only one of them match enum list, but the rest do not', async function () {
+  it('should throw error on the server variables that has wrong examples but not on the ones that have correct examples', async function () {
     const inputString = `{ 
       "servers": {
         "dummy":
         {
-          "url": "http://localhost:{port}/{basePath}",
+          "url": "{protocol}://localhost:{port}/{basePath}",
           "description": "The production API server",
           "protocol": "secure-mqtt",
           "variables": {
+            "protocol": {
+              "enum": ["http", "https"],
+              "examples" : ["http"],
+              "default": "https"
+            },
             "port": {
               "enum": ["8883", "8884"],
-              "examples" : "8883",
+              "examples" : ["8883", "8885", "8887"],
               "default": "8883"
             },
             "basePath": {
               "enum": ["v1", "v2", "v3"],
-              "examples" : "v4",
+              "examples" : ["v4"],
               "default": "v2"
             }
           }
@@ -302,24 +307,33 @@ describe('validateServerVariables()', function () {
         'https://github.com/asyncapi/parser-js/validation-errors'
       );
       expect(e.title).to.equal(
-        'Please check your server variables. The example does not match the enum list'
+        'Check your server variables. The example does not match the enum list'
       );
       expect(e.parsedJSON).to.deep.equal(parsedInput);
-      expect(e.validationErrors).to.deep.equal([
-        {
-          title:
-            'dummy/variables/basePath server variable provides an example that does not match the enum list',
-          location: {
-            jsonPointer: '/servers/dummy/variables/basePath',
-            startLine: 14,
-            startColumn: 26,
-            startOffset: offset(388, 3),
-            endLine: 18,
-            endColumn: 15,
-            endOffset: offset(508, 5),
-          },
-        },
-      ]);
+      expect(e.validationErrors).to.deep.equal([{
+        title: 'dummy/variables/port server variable provides an example that does not match the enum list: 8885,8887',
+        location: {
+          jsonPointer: '/servers/dummy/variables/port',
+          startLine: 14,
+          startColumn: 22,
+          startOffset: offset(398,14),
+          endLine: 18,
+          endColumn: 15,
+          endOffset: offset(538,18),
+        }
+      },
+      {
+        title: 'dummy/variables/basePath server variable provides an example that does not match the enum list: v4',
+        location: {
+          jsonPointer: '/servers/dummy/variables/basePath',
+          startLine: 19,
+          startColumn: 26,
+          startOffset: offset(564,19),
+          endLine: 23,
+          endColumn: 15,
+          endOffset: offset(686,23),
+        }
+      }]);
     }
   });
 });

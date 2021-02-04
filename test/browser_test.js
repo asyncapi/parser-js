@@ -7,37 +7,52 @@ let page;
 
 describe('Check Parser in the browser', function() {
   before(async function() {
-    //use this in case you want to troubleshoot in a real chrome window => browser = await puppeteer.launch({headless: false});
-    browser = await puppeteer.launch();
-    page = await browser.newPage();
-    page.on('console', msg => {
-      for (let i = 0; i < msg.args().length; ++i)
-        console.error(`Browser console content ${i}: ${JSON.stringify(msg.args()[i]._remoteObject, null, 2)}`);
-    });
-    await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
+    try {
+      //use this in case you want to troubleshoot in a real chrome window => browser = await puppeteer.launch({headless: false});
+      browser = await puppeteer.launch();
+      page = await browser.newPage();
+      page.on('console', msg => {
+        for (let i = 0; i < msg.args().length; ++i)
+          console.error(`Browser console content ${i}: ${JSON.stringify(msg.args()[i]._remoteObject, null, 2)}`);
+      });
+      await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
+    } catch (e) {
+      throw new Error(e);
+    }
   });
       
   it('parsing spec as string should complete successfully', async function() {
-    const specString = await page.$('#fromString');
-    const content = await page.evaluate(element => element.textContent, specString);
-
-    expect(content).to.be.equal('2.0.0');
+    try {
+      const specString = await page.$('#fromString');
+      const content = await page.evaluate(element => element.textContent, specString);
+      expect(content).to.be.equal('2.0.0');
+    } catch (e) {
+      throw new Error(e);
+    }
   }).timeout(1000);
 
   it('parsing spec from remote should complete successfully', async function() {
-    //making sure the div element is visible as this is how test script works, that it shows element only when fetching and parsing is done
+    try {
+      //making sure the div element is visible as this is how test script works, that it shows element only when fetching and parsing is done
     //this way we are 100% sure test will not go faster than the script in the browser
-    await page.waitForSelector('#fromUrl', {
-      visible: true,
-    });
-    const specUrl = await page.$('#fromUrl');
-    const content = await page.evaluate(element => element.textContent, specUrl);
+      await page.waitForSelector('#fromUrl', {
+        visible: true,
+      });
+      const specUrl = await page.$('#fromUrl');
+      const content = await page.evaluate(element => element.textContent, specUrl);
 
-    expect(content).to.be.equal('2.0.0');
+      expect(content).to.be.equal('2.0.0');
+    } catch (e) {
+      throw new Error(e);
+    }
   }).timeout(5000);
 
   after(async function() {
-    await browser.close();
+    try {
+      await browser.close();
+    } catch (e) {
+      throw new Error(e);
+    }
   });
 });
 

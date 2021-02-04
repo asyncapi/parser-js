@@ -33,7 +33,7 @@ describe('Check Parser in the browser', function() {
     } catch (e) {
       throw new Error(e);
     }
-  }).timeout(3000);
+  }).timeout(5000);
 
   it('parsing spec from remote should complete successfully', async function() {
     try {

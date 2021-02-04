@@ -260,7 +260,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-yaml',
       title: 'The provided YAML is not valid.',
       detail: 'duplicated mapping key at line 2, column -4:\n    bad:\n    ^',
-      location: { startOffset: offset(5, 2), startLine: 2, startColumn: -4 }
+      location: { startOffset: 5, startLine: 2, startColumn: -4 }
     };
 
     await checkErrorWrapper(async () => {

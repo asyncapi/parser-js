@@ -376,11 +376,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 11,
             endLine: 4,
-            endOffset: 65,
+            endOffset: offset(65, 4),
             jsonPointer: '/channels/~1user~1signedup?foo=1',
             startColumn: 34,
             startLine: 3,
-            startOffset: 54
+            startOffset: offset(54, 3)
           }
         }
       ]);
@@ -408,11 +408,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 11,
             endLine: 4,
-            endOffset: 52,
+            endOffset: offset(52, 4),
             jsonPointer: '/channels/~1?foo=1',
             startColumn: 21,
             startLine: 3,
-            startOffset: 41
+            startOffset: offset(41, 3)
           }
         }
       ]);
@@ -440,11 +440,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 4,
-            endOffset: 65,
+            endOffset: offset(65, 4),
             jsonPointer: '/channels/~1user~1signedup?foo=1&bar=0',
             startColumn: 38,
             startLine: 3,
-            startOffset: 56
+            startOffset: offset(56, 3)
           }
         }
       ]);
@@ -474,11 +474,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 4,
-            endOffset: 59,
+            endOffset: offset(59, 4),
             jsonPointer: '/channels/~1user~1signedup?foo=1',
             startColumn: 32,
             startLine: 3,
-            startOffset: 50
+            startOffset: offset(50, 3)
           }
         }
       ]);
@@ -508,11 +508,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 4,
-            endOffset: 59,
+            endOffset: offset(59, 4),
             jsonPointer: '/channels/~1user~1signedup?foo=1',
             startColumn: 32,
             startLine: 3,
-            startOffset: 50
+            startOffset: offset(50, 3)
           }
         },
         {
@@ -520,11 +520,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 6,
-            endOffset: 96,
+            endOffset: offset(96, 6),
             jsonPointer: '/channels/~1user~1login?bar=2',
             startColumn: 28,
             startLine: 5,
-            startOffset: 87
+            startOffset: offset(87, 5)
           }
         }
       ]);
@@ -552,11 +552,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 4,
-            endOffset: 67,
+            endOffset: offset(67, 4),
             jsonPointer: '/channels/user~1{userId}~1signedup?foo=1',
             startColumn: 40,
             startLine: 3,
-            startOffset: 58
+            startOffset: offset(58, 3)
           }
         },
         {
@@ -564,11 +564,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 4,
-            endOffset: 67,
+            endOffset: offset(67, 4),
             jsonPointer: '/channels/user~1{userId}~1signedup?foo=1',
             startColumn: 40,
             startLine: 3,
-            startOffset: 58
+            startOffset: offset(58, 3)
           }
         }
       ]);
@@ -598,11 +598,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 6,
-            endOffset: 90,
+            endOffset: offset(90, 6),
             jsonPointer: '/channels/test~1{test}',
             startColumn: 22,
             startLine: 5,
-            startOffset: 81
+            startOffset: offset(81, 5)
           }
         },
         {
@@ -610,11 +610,11 @@ describe('validateChannel()', function () {
           location: {
             endColumn: 9,
             endLine: 4,
-            endOffset: 59,
+            endOffset: offset(59, 4),
             jsonPointer: '/channels/~1user~1signedup?foo=1',
             startColumn: 32,
             startLine: 3,
-            startOffset: 50
+            startOffset: offset(50, 3)
           }
         }
       ]);

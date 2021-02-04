@@ -2,6 +2,7 @@ const parser = require('../lib');
 const chai = require('chai');
 const fs = require('fs');
 const path = require('path');
+const { offset } = require('./testsUtils'); 
 
 const expect = chai.expect;
 
@@ -21,10 +22,10 @@ describe('asyncapiSchemaFormatParser', function() {
             jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
             startLine: 13,
             startColumn: 38,
-            startOffset: 252,
+            startOffset: offset(252, 13),
             endLine: 15,
             endColumn: 15,
-            endOffset: 297
+            endOffset: offset(297, 15)
           }
         },
         {
@@ -33,10 +34,10 @@ describe('asyncapiSchemaFormatParser', function() {
             jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
             startLine: 13,
             startColumn: 38,
-            startOffset: 252,
+            startOffset: offset(252, 13),
             endLine: 15,
             endColumn: 15,
-            endOffset: 297
+            endOffset: offset(297, 15)
           }
         },
         {
@@ -45,10 +46,10 @@ describe('asyncapiSchemaFormatParser', function() {
             jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
             startLine: 13,
             startColumn: 38,
-            startOffset: 252,
+            startOffset: offset(252, 13),
             endLine: 15,
             endColumn: 15,
-            endOffset: 297
+            endOffset: offset(297, 15)
           }
         },
         {
@@ -57,10 +58,10 @@ describe('asyncapiSchemaFormatParser', function() {
             jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
             startLine: 13,
             startColumn: 38,
-            startOffset: 252,
+            startOffset: offset(252, 13),
             endLine: 15,
             endColumn: 15,
-            endOffset: 297
+            endOffset: offset(297, 15)
           }
         },
         {
@@ -69,10 +70,10 @@ describe('asyncapiSchemaFormatParser', function() {
             jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
             startLine: 13,
             startColumn: 38,
-            startOffset: 252,
+            startOffset: offset(252, 13),
             endLine: 15,
             endColumn: 15,
-            endOffset: 297
+            endOffset: offset(297, 15)
           }
         }
       ]);

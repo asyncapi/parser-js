@@ -50,7 +50,7 @@ describe('validateServerVariables()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Not all server variables are described with variable object',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'dummy server does not have a corresponding variable object for: host',
         location: {
@@ -83,7 +83,7 @@ describe('validateServerVariables()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Not all server variables are described with variable object',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'dummy server does not have a corresponding variable object for: host,port',
         location: {
@@ -121,7 +121,7 @@ describe('validateServerVariables()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Not all server variables are described with variable object',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'dummy server does not have a corresponding variable object for: port',
         location: {
@@ -228,7 +228,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'test/{test}/{testid} channel does not have a corresponding parameter object for: testid',
         location: {
@@ -267,7 +267,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'test/{test} channel does not have a corresponding parameter object for: test',
         location: {
@@ -299,7 +299,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'test/{test}/{testid} channel does not have a corresponding parameter object for: test,testid',
         location: {
@@ -367,7 +367,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
         location: {
@@ -399,7 +399,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: '/?foo=1 channel contains invalid name with url query parameters: ?foo=1',
         location: {
@@ -431,7 +431,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: '/user/signedup?foo=1&bar=0 channel contains invalid name with url query parameters: ?foo=1&bar=0',
         location: {
@@ -465,7 +465,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
         location: {
@@ -499,7 +499,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: '/user/signedup?foo=1 channel contains invalid name with url query parameters: ?foo=1',
         location: {
@@ -543,7 +543,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'user/{userId}/signedup?foo=1 channel does not have a corresponding parameter object for: userId',
         location: {
@@ -589,7 +589,7 @@ describe('validateChannel()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Channel validation failed',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'test/{test} channel does not have a corresponding parameter object for: test',
         location: {
@@ -689,7 +689,7 @@ describe('validateOperationId()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'operationId must be unique across all the operations.',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'test/2/subscribe/operationId is a duplicate of: test/1/publish/operationId',
         location: {
@@ -841,7 +841,7 @@ describe('validateServerSecurity()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Server security name must correspond to a security scheme which is declared in the security schemes under the components object.',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
         location: {
@@ -886,7 +886,7 @@ describe('validateServerSecurity()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Server security name must correspond to a security scheme which is declared in the security schemes under the components object.',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
         location: {
@@ -942,7 +942,7 @@ describe('validateServerSecurity()', function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect.',
-      parsedJSON: JSON.stringify(parsedInput),
+      parsedJSON: parsedInput,
       validationErrors: [{
         title: 'dummy/security/basic security info must have an empty array because its corresponding security schema type is: userPassword',
         location: {

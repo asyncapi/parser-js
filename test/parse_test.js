@@ -61,7 +61,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: invalidAsyncAPI,
+      parsedJSON: JSON.parse(invalidAsyncAPI),
       validationErrors: [{
         title: '/info should have required property \'title\'',
         location: { 
@@ -101,7 +101,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: invalidYamlOutput,
+      parsedJSON: JSON.parse(invalidYamlOutput),
       validationErrors: [
         {
           title: '/info should have required property \'title\'',
@@ -154,7 +154,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: invalidJsonOutput,
+      parsedJSON: JSON.parse(invalidJsonOutput),
       validationErrors: [
         {
           title: '/info should have required property \'title\'',
@@ -192,7 +192,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/missing-asyncapi-field',
       title: 'The `asyncapi` field is missing.',
-      parsedJSON: '{"bad":true}'
+      parsedJSON: JSON.parse('{"bad":true}')
     };
 
     await checkErrorWrapper(async () => {
@@ -205,7 +205,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/unsupported-version',
       title: 'Version 1.2.0 is not supported.',
       detail: 'Please use latest version of the specification.',
-      parsedJSON: '{"asyncapi":"1.2.0"}',
+      parsedJSON: JSON.parse('{"asyncapi":"1.2.0"}'),
       validationErrors: [
         {
           jsonPointer: '/asyncapi',
@@ -241,7 +241,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
       title: `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`,
-      parsedJSON: outputJsonWithRefs,
+      parsedJSON: JSON.parse(outputJsonWithRefs),
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',

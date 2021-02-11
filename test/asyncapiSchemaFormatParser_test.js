@@ -12,7 +12,7 @@ describe('asyncapiSchemaFormatParser', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/schema-validation-errors',
       title: 'This is not a valid AsyncAPI Schema Object.',
-      parsedJSON: invalidAsyncapi,
+      parsedJSON: JSON.parse(invalidAsyncapi),
       validationErrors: [{
         title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
         location: {

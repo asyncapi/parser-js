@@ -46,6 +46,6 @@ testsUtils.checkErrorWrapper = async (fn, validationObject) => {
     if (refs) expect(e.refs).to.deep.equal(refs);
     if (location) expect(e.location).to.deep.equal(location);
     if (validationErrors) expect(e.validationErrors).to.deep.equal(validationErrors);
-    if (parsedJSON) expect(e.parsedJSON).to.deep.equal(JSON.parse(parsedJSON));
+    if (parsedJSON) expect(e.parsedJSON).to.deep.equal(parsedJSON);
   }
 };

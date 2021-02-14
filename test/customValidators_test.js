@@ -1085,12 +1085,7 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(
-        parsedInput,
-        inputString,
-        input,
-        specialSecTypes
-      );
+      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, expectedErrorObject);
   });
 
@@ -1139,12 +1134,7 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(
-        parsedInput,
-        inputString,
-        input,
-        specialSecTypes
-      );
+      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, expectedErrorObject);
   });
 
@@ -1217,12 +1207,7 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(
-        parsedInput,
-        inputString,
-        input,
-        specialSecTypes
-      );
+      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, expectedErrorObject);
   });
 });

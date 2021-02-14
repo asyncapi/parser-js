@@ -5,7 +5,7 @@ const {
   validateChannels,
 } = require('../lib/customValidators.js');
 const chai = require('chai');
-const { checkErrorWrapper } = require('./testsUtils');
+const { offset } = require('./testsUtils');
 
 const expect = chai.expect;
 const input = 'json';
@@ -56,7 +56,6 @@ describe('validateServerVariables()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateServerVariables(parsedInput, inputString, input);
     } catch (e) {
@@ -94,7 +93,6 @@ describe('validateServerVariables()', function () {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateServerVariables(parsedInput, inputString, input);
@@ -409,7 +407,6 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
@@ -487,7 +484,6 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
@@ -561,7 +557,6 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
@@ -597,7 +592,6 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
@@ -632,7 +626,6 @@ describe('validateChannel()', function () {
     }
   }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateChannels(parsedInput, inputString, input);
@@ -671,7 +664,6 @@ describe('validateChannel()', function () {
   }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateChannels(parsedInput, inputString, input);
     } catch (e) {
@@ -708,7 +700,6 @@ describe('validateChannel()', function () {
     }
   }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateChannels(parsedInput, inputString, input);
@@ -757,7 +748,6 @@ describe('validateChannel()', function () {
     }
   }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateChannels(parsedInput, inputString, input);
@@ -808,7 +798,6 @@ describe('validateChannel()', function () {
     }
   }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateChannels(parsedInput, inputString, input);
@@ -887,7 +876,7 @@ describe('validateOperationId()', function () {
     ).to.equal(true);
   });
 
-  it('should throw error that operationIds are duplicated and that they duplicate', async function () {
+  it('should throw error that operationIds are duplicated and that they duplicate', function () {
     const inputString = `{
       "asyncapi": "2.0.0",
       "info": {
@@ -917,7 +906,6 @@ describe('validateOperationId()', function () {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateOperationId(parsedInput, inputString, input, operations);
@@ -1083,7 +1071,6 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-
     try {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     } catch (e) {
@@ -1133,7 +1120,6 @@ describe('validateServerSecurity()', function () {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
@@ -1195,7 +1181,6 @@ describe('validateServerSecurity()', function () {
       }
     }`;
     const parsedInput = JSON.parse(inputString);
-
 
     try {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes);

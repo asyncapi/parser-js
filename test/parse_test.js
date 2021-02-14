@@ -3,7 +3,8 @@ const chaiAsPromised = require('chai-as-promised');
 const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
-const { offset, checkErrorWrapper } = require('./testsUtils');
+const ParserError = require('../lib/errors/parser-error');
+const { offset } = require('./testsUtils'); 
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -25,6 +26,36 @@ const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","versio
 const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
 const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}}}';
 const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}}}';
+
+/* eslint-disable sonarjs/cognitive-complexity */
+/**
+ * Disabled the rule for this function as there is no way to make it shorter in a meaningfull way
+ * This function should always be used in tests where errors are evaluated to make sure they always work even if proper error is not thrown
+ * @private
+ * @param  {Function} fn Function that you want to test
+ * @param  {Object} validationObject Error object to evaluate against the error thrown by fn()
+*/
+const checkErrorWrapper = async (fn, validationObject) => {
+  const { type, message, title, refs, detail, location, validationErrors, parsedJSON } = validationObject;
+
+  try {
+    await fn();
+    throw Error('This error should not be reachable. If you reached it, it means the function did not throw a proper error and executed successfully.');
+  } catch (e) {
+    const isProperError = e instanceof ParserError;
+    if (!isProperError) console.log(e);
+
+    if (isProperError) expect(e instanceof ParserError).to.equal(true);
+    if (type) expect(e).to.have.own.property('type', type);
+    if (message) expect(e).to.have.own.property('message', message);
+    if (title) expect(e).to.have.own.property('title', title);
+    if (detail) expect(e).to.have.own.property('detail', detail);
+    if (refs) expect(e.refs).to.deep.equal(refs);
+    if (location) expect(e.location).to.deep.equal(location);
+    if (validationErrors) expect(e.validationErrors).to.deep.equal(validationErrors);
+    if (parsedJSON) expect(JSON.stringify(e.parsedJSON)).to.deep.equal(parsedJSON);
+  }
+};
 
 describe('parse()', function() {
   it('should parse YAML', async function() {
@@ -61,17 +92,17 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: JSON.parse(invalidAsyncAPI),
+      parsedJSON: invalidAsyncAPI,
       validationErrors: [{
         title: '/info should have required property \'title\'',
         location: { 
           endColumn: 31,
           endLine: 1,
-          endOffset: 29,
+          endOffset: offset(29, 1),
           jsonPointer: '/info',
           startColumn: 29,
           startLine: 1,
-          startOffset: 27
+          startOffset: offset(27, 1)
         }
       },
       {
@@ -79,11 +110,11 @@ describe('parse()', function() {
         location: { 
           endColumn: 31,
           endLine: 1,
-          endOffset: 29,
+          endOffset: offset(29, 1),
           jsonPointer: '/info',
           startColumn: 29,
           startLine: 1,
-          startOffset: 27 
+          startOffset: offset(27, 1) 
         }
       },
       {
@@ -101,7 +132,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: JSON.parse(invalidYamlOutput),
+      parsedJSON: invalidYamlOutput,
       validationErrors: [
         {
           title: '/info should have required property \'title\'',
@@ -112,7 +143,7 @@ describe('parse()', function() {
             startOffset: offset(16, 2),
             endLine: 3,
             endColumn: 19,
-            endOffset: offset(40, 3)
+            endOffset: offset(40, 3),
           }
         }
       ]
@@ -154,7 +185,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: JSON.parse(invalidJsonOutput),
+      parsedJSON: invalidJsonOutput,
       validationErrors: [
         {
           title: '/info should have required property \'title\'',
@@ -165,7 +196,7 @@ describe('parse()', function() {
             startOffset: offset(33, 3),
             endLine: 5,
             endColumn: 4,
-            endOffset: offset(58, 5)
+            endOffset: offset(58, 5),
           }
         }
       ]
@@ -192,7 +223,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/missing-asyncapi-field',
       title: 'The `asyncapi` field is missing.',
-      parsedJSON: JSON.parse('{"bad":true}')
+      parsedJSON: '{"bad":true}'
     };
 
     await checkErrorWrapper(async () => {
@@ -205,16 +236,16 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/unsupported-version',
       title: 'Version 1.2.0 is not supported.',
       detail: 'Please use latest version of the specification.',
-      parsedJSON: JSON.parse('{"asyncapi":"1.2.0"}'),
+      parsedJSON: '{"asyncapi":"1.2.0"}',
       validationErrors: [
         {
           jsonPointer: '/asyncapi',
           startLine: 1,
           startColumn: 1,
-          startOffset: 0,
+          startOffset: offset(0, 1),
           endLine: 1,
           endColumn: 16,
-          endOffset: 15
+          endOffset: offset(15, 1),
         }
       ]
     };
@@ -229,7 +260,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-yaml',
       title: 'The provided YAML is not valid.',
       detail: 'duplicated mapping key at line 2, column -4:\n    bad:\n    ^',
-      location: { startOffset: 5, startLine: 2, startColumn: -4 }
+      location: { startOffset: offset(5, 2), startLine: 2, startColumn: -4 }
     };
 
     await checkErrorWrapper(async () => {
@@ -241,7 +272,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
       title: `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`,
-      parsedJSON: JSON.parse(outputJsonWithRefs),
+      parsedJSON: outputJsonWithRefs,
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -431,7 +462,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-json',
       title: 'The provided JSON is not valid.',
       detail: 'Unexpected token j in JSON at position 12 while parsing near \' {"invalid "json" }\'',
-      location: { startOffset: 12, startLine: 1, startColumn: 12 }
+      location: { startOffset: offset(12, 1), startLine: 1, startColumn: 12 }
     };
 
     await checkErrorWrapper(async () => {

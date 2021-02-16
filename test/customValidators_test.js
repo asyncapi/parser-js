@@ -513,9 +513,9 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateChannels(parsedInput, inputString, input);
-    }, 'Channel validation failed');
+    expect(() => validateChannels(parsedInput, inputString, input)).to.throw(
+      'Channel validation failed'
+    );
   });
 
   it('should successfully validate channel name without variable', async function () {

@@ -255,7 +255,6 @@ describe('validateServerVariables()', function () {
     checkErrorWrapper(() => {
       validateServerVariables(parsedInput, inputString, input);
     } ,expectedErrorObject);
-    
   });
 
   // server with a variable that has more than one example and only one of them match enum list,

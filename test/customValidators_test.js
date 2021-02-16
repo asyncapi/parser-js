@@ -6,6 +6,7 @@ const {
 } = require('../lib/customValidators.js');
 const chai = require('chai');
 const { checkErrorWrapper } = require('./testsUtils');
+const ParserError = require('../lib/errors/parser-error');
 
 const expect = chai.expect;
 const input = 'json';
@@ -27,18 +28,18 @@ describe('validateServerVariables()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
-      true
-    );
+    checkErrorWrapper(() => {
+      validateServerVariables(parsedInput, inputString, input);
+    }, true);
   });
 
   it('should successfully validate if server object not provided', async function () {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
-      true
-    );
+    checkErrorWrapper(() => {
+      validateServerVariables(parsedInput, inputString, input);
+    }, true);
   });
 
   it('should throw error that one of variables is not provided', async function () {
@@ -169,9 +170,9 @@ describe('validateServerVariables()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(() =>
-      validateServerVariables(parsedInput, inputString, input)
-    ).to.throw('Not all server variables are described with variable object');
+    checkErrorWrapper(() => {
+      validateServerVariables(parsedInput, inputString, input);
+    }, 'Not all server variables are described with variable object');
   });
 
   // server with a variable that has enum and an example match one of them
@@ -195,9 +196,9 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
-      true
-    );
+    checkErrorWrapper(() => {
+      validateServerVariables(parsedInput, inputString, input);
+    }, true);
   });
 
   // server with a variable that  has only default and example, no enum
@@ -221,9 +222,9 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
-      true
-    );
+    checkErrorWrapper(() => {
+      validateServerVariables(parsedInput, inputString, input);
+    }, true);
   });
 
   // server with a variable that has one example and it doesn't match any of provided enum
@@ -247,13 +248,16 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-    try {
+
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title:
+        'Check your server variables. The example does not match the enum list',
+    };
+
+    checkErrorWrapper(() => {
       validateServerVariables(parsedInput, inputString, input);
-    } catch (e) {
-      expect(e.title).to.equal(
-        'Check your server variables. The example does not match the enum list'
-      );
-    }
+    }, expectedErrorObject);
   });
 
   // server with a variable that has more than one example and only one of them match enum list,
@@ -334,7 +338,9 @@ describe('validateChannel()', function () {
   it('should successfully validate if channel object not provided', async function () {
     const inputDoc = {};
 
-    expect(validateChannels(inputDoc, input)).to.equal(true);
+    checkErrorWrapper( () => {
+      validateChannels(inputDoc, input)
+    }, true);
   });
 
   it('should successfully validate channel param', async function () {
@@ -353,7 +359,10 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+    checkErrorWrapper( () => {
+      validateChannels(parsedInput, inputString, input)
+    }, true);
+    
   });
 
   it('should successfully validate channel param for 2 channels', async function () {
@@ -381,7 +390,10 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+    checkErrorWrapper( () => {
+      validateChannels(parsedInput, inputString, input)
+    }, true);
+
   });
 
   it('should throw error that one of provided channel params is not declared', async function () {
@@ -512,9 +524,9 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(() => validateChannels(parsedInput, inputString, input)).to.throw(
-      'Channel validation failed'
-    );
+    checkErrorWrapper( () => {
+      validateChannels(parsedInput, inputString, input)
+    }, 'Channel validation failed');
   });
 
   it('should successfully validate channel name without variable', async function () {
@@ -526,7 +538,10 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+    checkErrorWrapper( () => {
+      validateChannels(parsedInput, inputString, input)
+    }, true);
+    
   });
 
   it('should successfully validate channel name is just a single slash (/)', async function () {
@@ -538,7 +553,9 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+    checkErrorWrapper( () => {
+      validateChannels(parsedInput, inputString, input)
+    }, true);
   });
 
   it('should throw error that the provided channel name is invalid', async function () {
@@ -792,15 +809,11 @@ describe('validateChannel()', function () {
   }`;
     const parsedInput = JSON.parse(inputString);
 
-    try {
-      validateChannels(parsedInput, inputString, input);
-    } catch (e) {
-      expect(e.type).to.equal(
-        'https://github.com/asyncapi/parser-js/validation-errors'
-      );
-      expect(e.title).to.equal('Channel validation failed');
-      expect(e.parsedJSON).to.deep.equal(parsedInput);
-      expect(e.validationErrors).to.deep.equal([
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Channel validation failed',
+      parsedJSON: parsedInput,
+      validationErrors: [
         {
           title:
             'test/{test} channel does not have a corresponding parameter object for: test',
@@ -827,8 +840,13 @@ describe('validateChannel()', function () {
             startOffset: 50,
           },
         },
-      ]);
-    }
+      ],
+    };
+
+    checkErrorWrapper( () => {
+       validateChannels(parsedInput, inputString, input);
+    }, expectedErrorObject);
+
   });
 });
 describe('validateOperationId()', function () {
@@ -855,18 +873,18 @@ describe('validateOperationId()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(
+    checkErrorWrapper(() => {
       validateOperationId(parsedInput, inputString, input, operations)
-    ).to.equal(true);
+    }, true);
   });
 
   it('should successfully validate if channel object not provided', function () {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
 
-    expect(
+    checkErrorWrapper(() => {
       validateOperationId(parsedInput, inputString, input, operations)
-    ).to.equal(true);
+    }, true);
   });
 
   it('should throw error that operationIds are duplicated and that they duplicate', async function () {
@@ -972,9 +990,9 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(
+    checkErrorWrapper(() => {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
-    ).to.equal(true);
+    }, true);
   });
 
   it('should successfully validate if server security not provided', async function () {
@@ -992,9 +1010,9 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(
+    checkErrorWrapper(() => {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
-    ).to.equal(true);
+    }, true);
   });
 
   it('should successfully validate server security of special security type like oauth2', async function () {
@@ -1028,9 +1046,9 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    expect(
+    checkErrorWrapper(() => {
       validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
-    ).to.equal(true);
+    }, true);
   });
 
   it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function () {
@@ -1070,7 +1088,7 @@ describe('validateServerSecurity()', function () {
       validationErrors: [
         {
           title:
-            'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
+            "dummy/security/complex doesn't have a corresponding security schema under the components object",
           location: {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
@@ -1085,7 +1103,12 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+      await validateServerSecurity(
+        parsedInput,
+        inputString,
+        input,
+        specialSecTypes
+      );
     }, expectedErrorObject);
   });
 
@@ -1119,7 +1142,7 @@ describe('validateServerSecurity()', function () {
       validationErrors: [
         {
           title:
-            'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
+            "dummy/security/complex doesn't have a corresponding security schema under the components object",
           location: {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
@@ -1134,7 +1157,12 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+      await validateServerSecurity(
+        parsedInput,
+        inputString,
+        input,
+        specialSecTypes
+      );
     }, expectedErrorObject);
   });
 
@@ -1207,7 +1235,12 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
+      await validateServerSecurity(
+        parsedInput,
+        inputString,
+        input,
+        specialSecTypes
+      );
     }, expectedErrorObject);
   });
 });

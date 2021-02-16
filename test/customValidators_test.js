@@ -4,11 +4,7 @@ const {
   validateServerSecurity,
   validateChannels,
 } = require('../lib/customValidators.js');
-const chai = require('chai');
 const { checkErrorWrapper } = require('./testsUtils');
-const ParserError = require('../lib/errors/parser-error');
-
-const expect = chai.expect;
 const input = 'json';
 
 describe('validateServerVariables()', function () {
@@ -248,11 +244,9 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title:
-        'Check your server variables. The example does not match the enum list',
+      title: 'Check your server variables. The example does not match the enum list',
     };
 
     checkErrorWrapper(() => {
@@ -338,8 +332,8 @@ describe('validateChannel()', function () {
   it('should successfully validate if channel object not provided', async function () {
     const inputDoc = {};
 
-    checkErrorWrapper( () => {
-      validateChannels(inputDoc, input)
+    checkErrorWrapper(() => {
+      validateChannels(inputDoc, input);
     }, true);
   });
 
@@ -359,10 +353,9 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper( () => {
-      validateChannels(parsedInput, inputString, input)
+    checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
     }, true);
-    
   });
 
   it('should successfully validate channel param for 2 channels', async function () {
@@ -390,10 +383,9 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper( () => {
-      validateChannels(parsedInput, inputString, input)
+    checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
     }, true);
-
   });
 
   it('should throw error that one of provided channel params is not declared', async function () {
@@ -524,8 +516,8 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper( () => {
-      validateChannels(parsedInput, inputString, input)
+    checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
     }, 'Channel validation failed');
   });
 
@@ -538,10 +530,9 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper( () => {
-      validateChannels(parsedInput, inputString, input)
+    checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
     }, true);
-    
   });
 
   it('should successfully validate channel name is just a single slash (/)', async function () {
@@ -553,8 +544,8 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper( () => {
-      validateChannels(parsedInput, inputString, input)
+    checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
     }, true);
   });
 
@@ -843,10 +834,9 @@ describe('validateChannel()', function () {
       ],
     };
 
-    checkErrorWrapper( () => {
-       validateChannels(parsedInput, inputString, input);
+    checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
     }, expectedErrorObject);
-
   });
 });
 describe('validateOperationId()', function () {
@@ -874,7 +864,7 @@ describe('validateOperationId()', function () {
     const parsedInput = JSON.parse(inputString);
 
     checkErrorWrapper(() => {
-      validateOperationId(parsedInput, inputString, input, operations)
+      validateOperationId(parsedInput, inputString, input, operations);
     }, true);
   });
 
@@ -883,7 +873,7 @@ describe('validateOperationId()', function () {
     const parsedInput = JSON.parse(inputString);
 
     checkErrorWrapper(() => {
-      validateOperationId(parsedInput, inputString, input, operations)
+      validateOperationId(parsedInput, inputString, input, operations);
     }, true);
   });
 
@@ -991,7 +981,7 @@ describe('validateServerSecurity()', function () {
     const parsedInput = JSON.parse(inputString);
 
     checkErrorWrapper(() => {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, true);
   });
 
@@ -1011,7 +1001,7 @@ describe('validateServerSecurity()', function () {
     const parsedInput = JSON.parse(inputString);
 
     checkErrorWrapper(() => {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, true);
   });
 
@@ -1047,7 +1037,7 @@ describe('validateServerSecurity()', function () {
     const parsedInput = JSON.parse(inputString);
 
     checkErrorWrapper(() => {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, true);
   });
 
@@ -1088,7 +1078,7 @@ describe('validateServerSecurity()', function () {
       validationErrors: [
         {
           title:
-            "dummy/security/complex doesn't have a corresponding security schema under the components object",
+            'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
           location: {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
@@ -1142,7 +1132,7 @@ describe('validateServerSecurity()', function () {
       validationErrors: [
         {
           title:
-            "dummy/security/complex doesn't have a corresponding security schema under the components object",
+            'dummy/security/complex doesn\'t have a corresponding security schema under the components object',
           location: {
             jsonPointer: '/servers/dummy/security/complex',
             startLine: 12,
@@ -1157,12 +1147,7 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(
-        parsedInput,
-        inputString,
-        input,
-        specialSecTypes
-      );
+      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, expectedErrorObject);
   });
 
@@ -1235,12 +1220,7 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(
-        parsedInput,
-        inputString,
-        input,
-        specialSecTypes
-      );
+      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, expectedErrorObject);
   });
 });

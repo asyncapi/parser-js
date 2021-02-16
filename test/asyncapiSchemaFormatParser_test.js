@@ -9,10 +9,20 @@ const expect = chai.expect;
 describe('asyncapiSchemaFormatParser', function() {
   it('should throw an error because of invalid schema', async function() {
     const invalidAsyncapi = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-payload-asyncapi-format.json'), 'utf8');
+
+    const parsedJSON = JSON.parse(invalidAsyncapi);
+    parsedJSON.channels.mychannel.publish.message['x-parser-original-payload'] = {
+      type: 'object',
+      additionalProperties: [
+        'invalid_array'
+      ]
+    };
+    parsedJSON.channels.mychannel.publish.message['x-parser-original-schema-format'] = 'application/vnd.aai.asyncapi;version=2.0.0';
+
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/schema-validation-errors',
       title: 'This is not a valid AsyncAPI Schema Object.',
-      parsedJSON: JSON.parse(invalidAsyncapi),
+      parsedJSON,
       validationErrors: [{
         title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
         location: {
@@ -78,6 +88,7 @@ describe('asyncapiSchemaFormatParser', function() {
       await parser.parse(invalidAsyncapi);
     }, expectedErrorObject);
   });
+
   it('should not throw error if payload not provided', async function() {
     const inputString = `{
       "asyncapi": "2.0.0",
@@ -97,5 +108,39 @@ describe('asyncapiSchemaFormatParser', function() {
     const parsedInput = JSON.parse(inputString);
 
     expect(async () => await parser.parse(parsedInput)).to.not.throw();
+  });
+
+  it('should deep clone schema into x-parser-original-payload', async function() {
+    const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/asyncapi-complex-schema.yml'), 'utf8');
+    const expectedOriginalPayload = {
+      type: 'object',
+      properties: {
+        id: {
+          description: 'Id of the streetlight.',
+          minimum: 0,
+          type: 'integer'
+        },
+        lumens: {
+          description: 'Light intensity measured in lumens.',
+          minimum: 0,
+          type: 'integer'
+        },
+        sentAt: {
+          description: 'Date and time when the message was sent.',
+          format: 'date-time',
+          type: 'string'
+        }
+      }
+    };
+    const expectedOriginalSchemaFormat = 'application/vnd.aai.asyncapi;version=2.0.0';
+    
+    const parsedOutput = await parser.parse(asyncapi);
+    const parsedMessage = parsedOutput.channel('light/measured').publish().message().json();
+
+    expect(parsedMessage.payload).to.have.property('x-parser-schema-id');
+    expect(parsedMessage).to.have.property('x-parser-original-payload');
+    expect(parsedMessage).to.have.property('x-parser-original-schema-format');
+    expect(parsedMessage['x-parser-original-payload']).to.deep.equal(expectedOriginalPayload);
+    expect(parsedMessage['x-parser-original-schema-format']).to.deep.equal(expectedOriginalSchemaFormat);
   });
 });

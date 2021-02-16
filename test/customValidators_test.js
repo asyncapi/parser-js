@@ -5,6 +5,9 @@ const {
   validateChannels,
 } = require('../lib/customValidators.js');
 const { checkErrorWrapper } = require('./testsUtils');
+
+const chai = require('chai');
+const expect = chai.expect;
 const input = 'json';
 
 describe('validateServerVariables()', function () {
@@ -24,18 +27,18 @@ describe('validateServerVariables()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerVariables(parsedInput, inputString, input);
-    }, true);
+    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
+      true
+    );
   });
 
   it('should successfully validate if server object not provided', async function () {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerVariables(parsedInput, inputString, input);
-    }, true);
+    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
+      true
+    );
   });
 
   it('should throw error that one of variables is not provided', async function () {
@@ -166,9 +169,9 @@ describe('validateServerVariables()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerVariables(parsedInput, inputString, input);
-    }, 'Not all server variables are described with variable object');
+    expect(() =>
+      validateServerVariables(parsedInput, inputString, input)
+    ).to.throw('Not all server variables are described with variable object');
   });
 
   // server with a variable that has enum and an example match one of them
@@ -192,9 +195,9 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerVariables(parsedInput, inputString, input);
-    }, true);
+    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
+      true
+    );
   });
 
   // server with a variable that  has only default and example, no enum
@@ -218,9 +221,9 @@ describe('validateServerVariables()', function () {
 
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerVariables(parsedInput, inputString, input);
-    }, true);
+    expect(validateServerVariables(parsedInput, inputString, input)).to.equal(
+      true
+    );
   });
 
   // server with a variable that has one example and it doesn't match any of provided enum
@@ -251,7 +254,8 @@ describe('validateServerVariables()', function () {
 
     checkErrorWrapper(() => {
       validateServerVariables(parsedInput, inputString, input);
-    }, expectedErrorObject);
+    } ,expectedErrorObject);
+    
   });
 
   // server with a variable that has more than one example and only one of them match enum list,
@@ -332,9 +336,7 @@ describe('validateChannel()', function () {
   it('should successfully validate if channel object not provided', async function () {
     const inputDoc = {};
 
-    checkErrorWrapper(() => {
-      validateChannels(inputDoc, input);
-    }, true);
+    expect(validateChannels(inputDoc, input)).to.equal(true);
   });
 
   it('should successfully validate channel param', async function () {
@@ -353,9 +355,7 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateChannels(parsedInput, inputString, input);
-    }, true);
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
   });
 
   it('should successfully validate channel param for 2 channels', async function () {
@@ -383,9 +383,7 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateChannels(parsedInput, inputString, input);
-    }, true);
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
   });
 
   it('should throw error that one of provided channel params is not declared', async function () {
@@ -530,9 +528,7 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateChannels(parsedInput, inputString, input);
-    }, true);
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
   });
 
   it('should successfully validate channel name is just a single slash (/)', async function () {
@@ -544,9 +540,7 @@ describe('validateChannel()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateChannels(parsedInput, inputString, input);
-    }, true);
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
   });
 
   it('should throw error that the provided channel name is invalid', async function () {
@@ -831,7 +825,7 @@ describe('validateChannel()', function () {
             startOffset: 50,
           },
         },
-      ],
+      ]
     };
 
     checkErrorWrapper(() => {
@@ -863,18 +857,18 @@ describe('validateOperationId()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateOperationId(parsedInput, inputString, input, operations);
-    }, true);
+    expect(
+      validateOperationId(parsedInput, inputString, input, operations)
+    ).to.equal(true);
   });
 
   it('should successfully validate if channel object not provided', function () {
     const inputString = '{}';
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateOperationId(parsedInput, inputString, input, operations);
-    }, true);
+    expect(
+      validateOperationId(parsedInput, inputString, input, operations)
+    ).to.equal(true);
   });
 
   it('should throw error that operationIds are duplicated and that they duplicate', async function () {
@@ -980,9 +974,9 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
-    }, true);
+    expect(
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
+    ).to.equal(true);
   });
 
   it('should successfully validate if server security not provided', async function () {
@@ -1000,9 +994,9 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
-    }, true);
+    expect(
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
+    ).to.equal(true);
   });
 
   it('should successfully validate server security of special security type like oauth2', async function () {
@@ -1036,9 +1030,9 @@ describe('validateServerSecurity()', function () {
     }`;
     const parsedInput = JSON.parse(inputString);
 
-    checkErrorWrapper(() => {
-      validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
-    }, true);
+    expect(
+      validateServerSecurity(parsedInput, inputString, input, specialSecTypes)
+    ).to.equal(true);
   });
 
   it('should throw error that server has no security schema provided when components schema object is there but missing proper values', async function () {
@@ -1093,12 +1087,7 @@ describe('validateServerSecurity()', function () {
     };
 
     await checkErrorWrapper(async () => {
-      await validateServerSecurity(
-        parsedInput,
-        inputString,
-        input,
-        specialSecTypes
-      );
+      await validateServerSecurity(parsedInput, inputString, input, specialSecTypes);
     }, expectedErrorObject);
   });
 

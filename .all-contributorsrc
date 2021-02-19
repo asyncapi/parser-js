@@ -100,7 +100,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/52316624?v=4",
       "profile": "https://github.com/DanielChuDC",
       "contributions": [
-        "infra"
+        "infra",
+        "code"
       ]
     },
     {
@@ -110,6 +111,15 @@
       "profile": "https://www.linkedin.com/in/jbreitenbaumer/",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "aeworxet",
+      "name": "Viacheslav Turovskyi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16149591?v=4",
+      "profile": "https://github.com/aeworxet",
+      "contributions": [
+        "test"
       ]
     }
   ],

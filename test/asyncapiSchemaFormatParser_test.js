@@ -141,6 +141,7 @@ describe('asyncapiSchemaFormatParser', function() {
     expect(parsedMessage).to.have.property('x-parser-original-payload');
     expect(parsedMessage).to.have.property('x-parser-original-schema-format');
     expect(parsedMessage['x-parser-original-payload']).to.deep.equal(expectedOriginalPayload);
+    expect(parsedMessage['x-parser-original-payload']).to.not.equal(parsedMessage.payload);
     expect(parsedMessage['x-parser-original-schema-format']).to.deep.equal(expectedOriginalSchemaFormat);
   });
 });

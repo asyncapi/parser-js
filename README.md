@@ -95,6 +95,7 @@ Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/op
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
 
 ## API documentation
+The parser API is generally structured the same way as the AsyncAPI specification, with additional support functions such as `has<Something>()`. The parser uses wrapped functions to get the properties stored in JSON. This means in order to get the info object you would use the function `doc.info()` and to get the title inside the info object you call `doc.info().title()`.
 
 See [API documentation](/API.md) for more example and full API reference information.
 

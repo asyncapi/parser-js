@@ -72,6 +72,14 @@ declare interface MixinSpecificationExtensions {
 declare interface MixinTags {
 }
 
+/**
+ * Callback used when crawling a schema.
+ * @param schema - which is being crawled
+ * @param propName - if the schema is from a property get the name of such
+ * @param callbackType - is the schema a new one or is the crawler finishing one.
+ */
+declare type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
+
 declare module "@asyncapi/parser" {
     /**
      * Instantiates an error
@@ -178,7 +186,7 @@ declare module "@asyncapi/parser" {
          * Traverse schemas in the document and select which types of schemas to include.
          * By default all schemas are iterated
          */
-        traverseSchemas(callback: (...params: any[]) => any, schemaTypesToIterate: SchemaTypesToIterate[]): void;
+        traverseSchemas(callback: TraverseSchemas, schemaTypesToIterate: SchemaTypesToIterate[]): void;
         hasTags(): boolean;
         tags(): Tag[];
         tagNames(): string[];

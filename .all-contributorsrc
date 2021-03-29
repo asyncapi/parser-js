@@ -140,6 +140,16 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "JQrdan",
+      "name": "Jordan Tucker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25624685?v=4",
+      "profile": "https://github.com/JQrdan",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 4,

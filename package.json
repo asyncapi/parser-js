@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -18,8 +18,8 @@
     "get:name": "echo $npm_package_name",
     "lint": "eslint --max-warnings 0 --config \".eslintrc\" \".\"",
     "test:lib": "nyc --silent --no-clean mocha --exclude \"test/browser_test.js\" --exclude \"test/parseFromUrl_test.js\" --recursive",
-    "test:parseFromUrl":"nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",
-    "cover:report":"nyc report --reporter=text --reporter=html",
+    "test:parseFromUrl": "nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",
+    "cover:report": "nyc report --reporter=text --reporter=html",
     "test:browser": "npm run test:browser:cleanup && npm run bundle && shx cp \"dist/bundle.js\" \"test/sample_browser/\"  && start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha --timeout 20000 test/browser_test.js\" && npm run test:browser:cleanup",
     "test:browser:cleanup": "rimraf \"test/sample_browser/bundle.js\"",
     "generate:readme:toc": "markdown-toc -i \"README.md\"",

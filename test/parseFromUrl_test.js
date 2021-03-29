@@ -26,6 +26,7 @@ describe('parseFromUrl()', function() {
 
   it('should fail when url is not absolute and not valid', async function() {
     const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/fetch-url-error',
       message: 'Only absolute URLs are supported',
     };
 

@@ -73,6 +73,7 @@
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",
     "json-to-ast": "^2.1.0",
+    "lodash.clonedeep": "^4.5.0",
     "node-fetch": "^2.6.0",
     "tiny-merge-patch": "^0.1.2"
   },

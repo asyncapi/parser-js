@@ -147,6 +147,7 @@ This package throws a bunch of different error types. All errors contain a `type
 |`validation-errors`|`parsedJSON`, `validationErrors`|The AsyncAPI document contains errors. See `validationErrors` for more information.
 |`impossible-to-register-parser`| None | Registration of custom message parser failed.
 |`schema-validation-errors`| `parsedJSON`, `validationErrors` | Schema of the payload provided in the AsyncAPI document is not valid with AsyncAPI schema format.
+|`fetch-url-error`| None | The URL provided for fetching AsynAPI document is invalid.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 

@@ -141,9 +141,6 @@ declare module "@asyncapi/parser" {
     }
     interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
     }
-    /**
-     * Implements functions to deal with the AsyncAPI document.
-     */
     class AsyncAPIDocument extends Base implements MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
         version(): string;
         info(): Info;
@@ -257,9 +254,6 @@ declare module "@asyncapi/parser" {
      * @param callbackType - is the schema a new one or is the crawler finishing one.
      */
     type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
-    /**
-     * Implements common functionality for all the models.
-     */
     class Base {
         json(): any;
     }

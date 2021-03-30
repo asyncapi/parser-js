@@ -139,6 +139,52 @@ declare module "@asyncapi/parser" {
          */
         toJS(): void;
     }
+    class IntentAsyncAPIDocument extends Base {
+        hasContentType(contentType: any): boolean;
+        channels(role: any): IntentChannel[];
+        channelsSubscribes(role: any): IntentChannel[];
+        channelsPublishes(role: any): IntentChannel[];
+        isSubscribingToChannels(role: any): boolean;
+        isPublishingToChannels(role: any): boolean;
+        messages(role: any): IntentMessage[];
+        schemas(): Schema;
+        servers(): Server[];
+        server(): Server;
+        securitySchemes(): SecurityScheme;
+    }
+    class IntentChannel extends Base {
+        path(): string;
+        messages(): IntentMessage[];
+        messagesPublishes(role: any): IntentMessage[];
+        messagesSubscribes(role: any): IntentMessage[];
+        isSubscribing(role: any): boolean;
+        isPublishing(role: any): boolean;
+        description(): string;
+        parameters(): Schema[];
+        extension(extensionProperty: any): any;
+        extensionForPublishing(role: any, extensionProperty: any): any;
+        extensionForSubscribing(role: any, extensionProperty: any): any;
+        binding(bindingProtocol: any, bindingProperty: any): any;
+        bindingForSubscribing(role: any, bindingProtocol: any, bindingProperty: any): any;
+        bindingForPublishing(role: any, bindingProtocol: any, bindingProperty: any): any;
+        summaryForPublishing(role: any): string;
+        summaryForSubscribing(role: any): string;
+        operationIdForPublishing(role: any): string;
+        operationIdForSubscribing(role: any): string;
+    }
+    class IntentInfo extends Base {
+        title(): string;
+        description(): string;
+        version(): string;
+    }
+    class IntentMessage extends Base {
+        headers(): Schema;
+        payload(): Schema;
+    }
+    class IntentServer extends Base {
+        name(): string;
+        protocol(): string;
+    }
     interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
     }
     class AsyncAPIDocument extends Base implements MixinTags, MixinExternalDocs, MixinSpecificationExtensions {

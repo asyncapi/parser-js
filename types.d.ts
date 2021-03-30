@@ -1061,6 +1061,22 @@ declare module "@asyncapi/parser" {
         ext(key: string): any;
     }
     /**
+     * Parses and validate an AsyncAPI document from YAML or JSON into an intents.
+     * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
+     * @param [options] - Configuration options.
+     * @param [options.path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
+     * @param [options.parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @param [options.resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @param [options.applyTraits = true] - Whether to resolve and apply traits or not.
+     * @returns The parsed AsyncAPI document wrapped in intents.
+     */
+    function parseIntents(asyncapiYAMLorJSON: string, options?: {
+        path?: string;
+        parse?: any;
+        resolve?: any;
+        applyTraits?: any;
+    }): Promise<IntentAsyncAPIDocument>;
+    /**
      * Parses and validate an AsyncAPI document from YAML or JSON.
      * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
      * @param [options] - Configuration options.

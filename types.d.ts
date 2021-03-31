@@ -140,17 +140,20 @@ declare module "@asyncapi/parser" {
         toJS(): void;
     }
     class IntentAsyncAPIDocument extends Base {
+        info(): IntentInfo;
         hasContentType(contentType: any): boolean;
+        defaultContentType(): string;
         channels(role: any): IntentChannel[];
         channelsSubscribes(role: any): IntentChannel[];
         channelsPublishes(role: any): IntentChannel[];
         isSubscribingToChannels(role: any): boolean;
         isPublishingToChannels(role: any): boolean;
         messages(role: any): IntentMessage[];
-        schemas(): Schema;
+        schemas(): Schema[];
         servers(): Server[];
         server(): Server;
-        securitySchemes(): SecurityScheme;
+        securitySchemes(): SecurityScheme[];
+        parameters(): Schema[];
     }
     class IntentChannel extends Base {
         path(): string;
@@ -165,6 +168,7 @@ declare module "@asyncapi/parser" {
         extensionForPublishing(role: any, extensionProperty: any): any;
         extensionForSubscribing(role: any, extensionProperty: any): any;
         binding(bindingProtocol: any, bindingProperty: any): any;
+        hasBinding(bindingProtocol: any, bindingProperty: any): boolean;
         bindingForSubscribing(role: any, bindingProtocol: any, bindingProperty: any): any;
         bindingForPublishing(role: any, bindingProtocol: any, bindingProperty: any): any;
         summaryForPublishing(role: any): string;
@@ -178,8 +182,11 @@ declare module "@asyncapi/parser" {
         version(): string;
     }
     class IntentMessage extends Base {
+        uid(): string;
+        name(): string;
         headers(): Schema;
         payload(): Schema;
+        contentType(): string;
     }
     class IntentServer extends Base {
         name(): string;

@@ -1,17 +1,18 @@
 asyncapi: 2.0.0
 info:
+  test: true
   version: '1.0.0'
 channels:
   mychannel:
     publish:
       traits:
-        - $ref: '#/components/operationTraits/docs'        
+        - $ref: '#/components/operationTraits/docs'
       externalDocs:
         x-extension: true
         url: 'https://irrelevant.com'
       message:
         $ref: '#/components/messages/testMessage'
-
+test: true
 components:
   messages:
     testMessage:

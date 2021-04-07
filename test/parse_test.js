@@ -118,13 +118,13 @@ describe('parse()', function() {
         {
           title: '/info should NOT have additional properties',
           location: {
-            jsonPointer: '/info',
-            startLine: 2,
-            startColumn: 1,
-            startOffset: offset(16,2),
-            endLine: 4,
-            endColumn: 19,
-            endOffset: offset(53,4)
+            jsonPointer: '/info/test',
+            startLine: 3,
+            startColumn: 3,
+            startOffset: offset(24,3),
+            endLine: 3,
+            endColumn: 13,
+            endOffset: offset(34,3)
           }
         },
         {
@@ -196,13 +196,13 @@ describe('parse()', function() {
         {
           title: '/info should NOT have additional properties',
           location: {
-            jsonPointer: '/info',
-            startLine: 3,
-            startColumn: 11,
-            startOffset: offset(33,3),
-            endLine: 6,
-            endColumn: 4,
-            endOffset: offset(74,6)
+            jsonPointer: '/info/test',
+            startLine: 4,
+            startColumn: 12,
+            startOffset: offset(45,4),
+            endLine: 4,
+            endColumn: 16,
+            endOffset: offset(49,4)
           }
         },
         {

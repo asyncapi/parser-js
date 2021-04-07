@@ -131,6 +131,25 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "aayushmau5",
+      "name": "Aayush Kumar Sahu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54525741?v=4",
+      "profile": "https://github.com/aayushmau5",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "JQrdan",
+      "name": "Jordan Tucker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25624685?v=4",
+      "profile": "https://github.com/JQrdan",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 4,

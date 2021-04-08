@@ -1,0 +1,1774 @@
+{
+  "parser": {
+    "name": "asyncapi-parser",
+    "language": "js",
+    "url": "https://github.com/asyncapi/parser-js",
+    "version": "^1.4.4"
+  },
+  "results": [
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-asyncapi-type.yaml",
+      "success": false,
+      "error": "Error: parsedJSON.asyncapi.startsWith is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-channels-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-components-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-externalDocs-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-id-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-info-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-servers-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/Fields Types/invalid-tags-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/invalid-duplicate-tags.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/invalid-missing-asyncapi.yaml",
+      "success": false,
+      "error": "Error: The `asyncapi` field is missing."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/invalid-missing-channels.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/invalid-missing-info.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Version String/invalid-missing-patch.yaml",
+      "success": false,
+      "error": "Error: parsedJSON.asyncapi.startsWith is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Version String/invalid-version-string-format.yaml",
+      "success": false,
+      "error": "Error: Version welcome is not supported."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Version String/valid-major-minor-patch.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/AsyncAPI Version String/valid-with-hyphen.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-exchange-autoDelete-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-exchange-durable-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-exchange-name-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-exchange-type-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-exchange-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-exchange-vhost-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-is-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-queue-autoDelete-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-queue-durable-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-queue-exclusive-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-queue-name-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-queue-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/Fields Types/invalid-queue-vhost-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/invalid-exchange-name-length.yaml.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/invalid-exchange-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/invalid-is-value.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/invalid-queue-name-length.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/amqp/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/Fields Types/invalid-headers-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/Fields Types/invalid-method-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/Fields Types/invalid-query-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/invalid-headers-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/invalid-method.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/invalid-query-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Bindings Object/ws/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/Fields Types/invalid-bindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/Fields Types/invalid-parameters-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/Fields Types/invalid-publish-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/Fields Types/invalid-ref-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/Fields Types/invalid-subscribe-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/invalid-external-ref-structure.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/valid-external-ref.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/valid-publish.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channel Item Object/valid-subscribe.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channels Object/Fields Types/invalid-channel-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channels Object/invalid-query-param-used.yaml",
+      "success": false,
+      "error": "Error: Channel validation failed"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Channels Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-channelBindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-correlationIds-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-messageBindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-messageTraits-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-messages-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-operationBindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-operationTraits-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-parameters-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-schemas-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-securitySchemes-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/Fields Types/invalid-serverBindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-channelBindings-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-correlationIds-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-messageBindings-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-messageTraits-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-messages-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-operationBindings-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-operationTraits-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-parameters-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-schemas-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-securitySchemes-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/invalid-serverBindings-key.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Components Object/valid-complete.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/Fields Types/invalid-email-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/Fields Types/invalid-name-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/Fields Types/invalid-url-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/invalid-email-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/invalid-url-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Contact Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Correlation ID Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Correlation ID Object/Fields Types/invalid-location-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Correlation ID Object/invalid-location-expression.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Correlation ID Object/invalid-missing-location.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Correlation ID Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/External Documentation Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/External Documentation Object/Fields Types/invalid-url-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/External Documentation Object/invalid-missing-url.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/External Documentation Object/invalid-url-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/External Documentation Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/File Structure/invalid-incorrect-json-pointer-no-slash.yaml",
+      "success": false,
+      "error": "Error: Invalid $ref pointer \"userSignUp\". Pointers must begin with \"#/\""
+    },
+    {
+      "file": "/tests/asyncapi-2.0/File Structure/invalid-incorrect-json-pointer-ref.yaml",
+      "success": false,
+      "error": "Error: Invalid $ref pointer \"userSignUp\". Pointers must begin with \"#/\""
+    },
+    {
+      "file": "/tests/asyncapi-2.0/File Structure/invalid-inexisting-file-ref.yaml",
+      "success": false,
+      "error": "Error: Error opening file \"/home/khudadadn/WebstormProjects/AsyncAPI/tck/tests/asyncapi-2.0/File Structure/inexistingFile.yml\" \nENOENT: no such file or directory, open '/home/khudadadn/WebstormProjects/AsyncAPI/tck/tests/asyncapi-2.0/File Structure/inexistingFile.yml'"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/File Structure/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Format/invalid-case-sensitive.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Format/invalid-json-schema-tag.yaml",
+      "success": false,
+      "error": "Error: The provided YAML is not valid."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Format/invalid-key.yaml",
+      "success": false,
+      "error": "Error: The provided YAML is not valid."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Format/invalid-syntax.yaml",
+      "success": false,
+      "error": "Error: Could not convert AsyncAPI to JSON."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Format/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Identifier/invalid-uri-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Identifier/valid-uri.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Identifier/valid-urn.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/Fields Types/invalid-contact-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/Fields Types/invalid-license-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/Fields Types/invalid-termsOfService-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/Fields Types/invalid-title-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/Fields Types/invalid-version-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/invalid-missing-title.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/invalid-missing-version.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/invalid-termsofservice-url-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Info Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/License Object/Fields Types/invalid-name-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/License Object/Fields Types/invalid-url-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/License Object/invalid-missing-name.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/License Object/invalid-url-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/License Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/amqp/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/amqp/Fields Types/invalid-contentEncoding-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/amqp/Fields Types/invalid-messageType-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/amqp/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/amqp/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/http/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/http/Fields Types/invalid-headers-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/http/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/http/invalid-headers-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/http/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/kafka/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/kafka/Fields Types/invalid-key-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/kafka/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/kafka/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/mqtt/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/mqtt/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/mqtt/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Bindings Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-bindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-contentType-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-correlationId-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-examples-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-externalDocs-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-headers-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-name-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-schemaFormat-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-summary-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-tags-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-title-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Fields Types/invalid-traits-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/includes/user-avro-schema-optional.yaml",
+      "success": false,
+      "error": "Error: The `asyncapi` field is missing."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/includes/user-json-schema-optional.yaml",
+      "success": false,
+      "error": "Error: The `asyncapi` field is missing."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/includes/user-oas-schema-object-optional.yaml",
+      "success": false,
+      "error": "Error: The `asyncapi` field is missing."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-json-schema-json.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-json-schema-yaml.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-avro-schema-json.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-avro-schema-yaml.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-oas-schema-object-json.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-oas-schema-object-yaml.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-raml-api.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-raml-datatype.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/Payloads/valid-optional-raml-library.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/invalid-duplicate-tags.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/invalid-examples-item.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/invalid-headers-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/valid-internal-ref-correlationId.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/valid-internal-ref-header.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/valid-missing-contentType.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/valid-using-defaultContentType.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-bindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-contentType-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-correlationId-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-examples-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-externalDocs-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-headers-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-schemaFormat-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-summary-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-tags-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/Fields Types/invalid-title-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/invalid-defines-payload.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/invalid-defines-traits.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/invalid-duplicate-tags.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/invalid-examples-item.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/invalid-headers-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/valid-internal-ref-correlationId.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/valid-internal-ref-header.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/valid-missing-content-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/valid-using-defaultContentType.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Message Trait Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-ack-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-bcc-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-cc-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-deliveryMode-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-expiration-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-mandatory-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-priority-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-replyTo-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-timestamp-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/Fields Types/invalid-userId-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/invalid-deliveryMode-value.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/invalid-expiration-below-zero.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/amqp/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/Fields Types/invalid-method-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/Fields Types/invalid-query-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/Fields Types/invalid-type-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/invalid-method-value.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/invalid-missing-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/invalid-query-schema-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/invalid-type-value.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/http/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/kafka/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/kafka/Fields Types/invalid-clientId-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/kafka/Fields Types/invalid-groupId-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/kafka/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/kafka/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/mqtt/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/mqtt/Fields Types/invalid-qos-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/mqtt/Fields Types/invalid-retain-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/mqtt/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/mqtt/invalid-qos-value.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/mqtt/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Bindings Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-bindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-externalDocs-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-message-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-operationId-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-summary-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-tags-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/Fields Types/invalid-traits-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/invalid-duplicate-operationId.yaml",
+      "success": false,
+      "error": "Error: operationId must be unique across all the operations."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/invalid-duplicate-tags.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/valid-bare-minimum.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/valid-case-sensitive-operationId.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/valid-multiple-messages.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/Fields Types/invalid-bindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/Fields Types/invalid-externalDocs-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/Fields Types/invalid-operationId-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/Fields Types/invalid-summary-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/Fields Types/invalid-tags-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/invalid-duplicate-operationId.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/invalid-duplicate-tags.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/invalid-trait-with-message.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/invalid-trait-with-traits.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/valid-case-sensetive-operationId.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/valid-empty-trait.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Operation Trait Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/Fields Types/invalid-location-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/Fields Types/invalid-schema-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/invalid-runtime-expression.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/valid-extra-parameter.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/valid-parameter-not-defined.yaml",
+      "success": false,
+      "error": "Error: Channel validation failed"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/valid-ref-schema.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameter Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameters Object/Fields Types/invalid-parameter-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameters Object/invalid-pattern-field.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameters Object/valid-internal-ref.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Parameters Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/Fields Types/invalid-ref-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-channelBindings.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-correlationId.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-message.yaml",
+      "success": false,
+      "error": "Error: PARSERS[String(...)] is not a function"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-messageBindings.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-messageTraits.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-operationBindings.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-operationTraits.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-parameter.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-schema.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-securityScheme.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Reference Object/valid-external-ref-serverBindings.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Schema Object/invalid-polymorphism-discriminated-field-not-required.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Schema Object/valid-composition.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Schema Object/valid-polymorphism.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Schema Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/Fields Types/invalid-name-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-X509-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-apiKey-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-asymmetricEncryption-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-http-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-httpApiKey-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-inexisting-scheme.yaml",
+      "success": false,
+      "error": "Error: Server security name must correspond to a security scheme which is declared in the security schemes under the components object."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-symmetricEncryption-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/invalid-userPassword-non-empty-array.yaml",
+      "success": false,
+      "error": "Error: Server security value must be an empty array if corresponding security schema type is not oauth2 or openIdConnect."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/valid-oauth2-without-scopes.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Requirement Object/valid-openIdConnect-without-scopes.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-bearerFormat-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-flows-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-in-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-name-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-openIdConnectUrl-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-scheme-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/Fields Types/invalid-type-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/X509/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/apiKey/invalid-in-value.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/apiKey/invalid-missing-in-property.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/apiKey/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/asymmetricEncryption/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/http/invalid-missing-scheme.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/http/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/httpApiKey/invalid-in-value.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/httpApiKey/invalid-missing-in-property.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/httpApiKey/invalid-missing-name.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/httpApiKey/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-authorizationCode-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-authorizationUrl-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-clientCredentials-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-implicit-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-password-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-refreshUrl-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-scopes-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/Fields Types/invalid-tokenUrl-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-authorizationUrl-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-missing-authorizationCode-authrozationUrl.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-missing-authorizationCode-tokenUrl.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-missing-clientCredentials-tokenUrl.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-missing-flows.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-missing-implicit-authorizationUrl.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-missing-scopes.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-password-missing-tokenUrl.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-refreshUrl-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/invalid-tokenUrl-format.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/valid-empty-flows.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/oauth2/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/openIdConnect/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/symmetricEncryption/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/userPassword/invalid-missing-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Security Scheme Object/userPassword/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-bindingVersion-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-cleanSession-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-clientId-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-keepAlive-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-lastWill-message-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-lastWill-qos-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-lastWill-retain-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-lastWill-topic-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/Fields Types/invalid-lastWill-type.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/invalid-extra-properties.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/mqtt/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Bindings Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-bindings-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-protocol-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-protocolVersion-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-security-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-url-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/Fields Types/invalid-variables-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/invalid-inexisting-security-scheme.yaml",
+      "success": false,
+      "error": "Error: Server security name must correspond to a security scheme which is declared in the security schemes under the components object."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/invalid-missing-protocol.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/invalid-missing-url.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/valid-multiple-servers.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/valid-not-official-protocol.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/valid-relative-url.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/valid-security.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/Fields Types/invalid-default-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/Fields Types/invalid-enum-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/Fields Types/invalid-examples-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/invalid-examples-item.yaml",
+      "success": false,
+      "error": "Error: Check your server variables. The example does not match the enum list"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/valid-empty-object.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/valid-extra-variable.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/valid-variable-not-defined.yaml",
+      "success": false,
+      "error": "Error: Not all server variables are described with variable object"
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Server Variable Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Servers Object/invalid-patterned-field.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Servers Object/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Specification Extensions/valid.yaml",
+      "success": true
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Tag Object/Fields Types/invalid-description-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Tag Object/Fields Types/invalid-externalDocs-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Tag Object/Fields Types/invalid-name-type.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Tag Object/invalid-missing-name.yaml",
+      "success": false,
+      "error": "Error: There were errors validating the AsyncAPI document."
+    },
+    {
+      "file": "/tests/asyncapi-2.0/Tag Object/valid.yaml",
+      "success": true
+    }
+  ]
+}

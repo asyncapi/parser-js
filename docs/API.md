@@ -44,7 +44,11 @@ Empty for now.
 - `Operation.binding('<binding protocol>', '<binding property>')` : any
 - `Operation.servers()` : Server[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `Operation.server('<server name>')` : Server (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
-
+- `Operation.isClientSubscribing()` : boolean
+- `Operation.isClientPublishing()` : boolean
+- `Operation.isApplicationSubscribing()` : boolean
+- `Operation.isApplicationPublishing()` : boolean
+- `Operation.type()` : string - Returns either `ClientSubscribing`, `ClientPublishing`, `ApplicationSubscribing`, `ApplicationPublishing`
 ### Channel
 - `Channel.path()` : string
 - `Channel.messages()` : Message[]

@@ -41,7 +41,7 @@ Empty for now.
 - `Operation.messages()` : Message[]
 - `Operation.channels()` : Channel[]
 - `Operation.extension('<extension property>')` : any
-- `Operation.binding('<binding protocol>', '<binding property>')` : any
+- `Operation.binding('<binding protocol>')` : any
 - `Operation.servers()` : Server[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `Operation.server('<server name>')` : Server (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `Operation.isClientSubscribing()` : boolean
@@ -49,13 +49,14 @@ Empty for now.
 - `Operation.isApplicationSubscribing()` : boolean
 - `Operation.isApplicationPublishing()` : boolean
 - `Operation.type()` : string - Returns either `ClientSubscribing`, `ClientPublishing`, `ApplicationSubscribing`, `ApplicationPublishing`
+
 ### Channel
 - `Channel.path()` : string
 - `Channel.messages()` : Message[]
 - `Channel.operations()` : Operation[]
 - `Channel.description()` : string (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319), [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407))
 - `Channel.extension('<extension property>')` : any (outcome of comment(s): [799598596](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799598596))
-- `Channel.binding('<binding protocol>', '<binding property>')` : any (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319), [799598596](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799598596))
+- `Channel.binding('<binding protocol>')` : any (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319), [799598596](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799598596))
 - `Channel.parameters()` : Schema[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 
 ### Message
@@ -64,5 +65,5 @@ Empty for now.
 - `Message.channels()` : Channel[]
 - `Message.operations()` : Operation[]
 - `Message.extension('<extension property>')` : any
-- `Message.binding('<binding protocol>', '<binding property>')` : any
+- `Message.binding('<binding protocol>')` : any
 - `Message.contentType()` : string

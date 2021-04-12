@@ -156,7 +156,7 @@ declare module "@asyncapi/parser" {
         clientPublishOperations(): IntentOperation[];
         clientSubscribeOperations(): IntentOperation[];
         operations(): IntentOperation[];
-        schemas(): IntentSchema[];
+        schemas(): Schema[];
         servers(): IntentServer[];
         securitySchemes(): SecurityScheme[];
     }
@@ -181,11 +181,11 @@ declare module "@asyncapi/parser" {
         name(): string;
         headers(): Schema;
         payload(): Schema;
-        contentType(): string;
         channels(): IntentChannel[];
         operations(): IntentOperation[];
         extension(): any;
         binding(): any;
+        contentType(): string;
     }
     class IntentOperation extends IntentBase {
         id(): string;
@@ -194,10 +194,19 @@ declare module "@asyncapi/parser" {
         channels(): IntentChannel[];
         extension(): any;
         binding(): any;
+        servers(): IntentServer[];
+        server(): IntentServer;
+        isClientSubscribing(): boolean;
+        isClientPublishing(): boolean;
+        isApplicationSubscribing(): boolean;
+        isApplicationPublishing(): boolean;
+        type(): Types;
     }
     class IntentServer extends IntentBase {
         name(): string;
         protocol(): string;
+        url(): string;
+        operations(): IntentOperation[];
     }
     interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
     }

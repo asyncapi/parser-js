@@ -1,3 +1,5 @@
+# NOTICE - This document is not yet up to date
+
 # Intents
 As we see it we have two options/concepts we can follow in regards to how we structure intents.
 

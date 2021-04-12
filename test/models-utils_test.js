@@ -5,7 +5,9 @@ const utils = require('../lib/models-utils');
 describe('utils', function() {
   describe('mix()', function() {
     const Mixin = {
-      utilFn() {},
+      utilFn() {
+        // This is intentional
+      },
     };
 
     it('should create mixed object', function() {
@@ -31,7 +33,9 @@ describe('utils', function() {
 
     it('should throw error if model has method identically like in one of mixins', function() {
       class Base {
-        utilFn() {}
+        utilFn() {
+          // This is intentional
+        }
       }
 
       let error = undefined;

@@ -61,3 +61,4 @@ Empty for now.
 - `Message.operations()` : Operation[]
 - `Message.extension('<extension property>')` : any
 - `Message.binding('<binding protocol>', '<binding property>')` : any
+- `Message.contentType()` : string

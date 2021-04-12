@@ -30,6 +30,7 @@
 ### Server
 - `Server.name()` : string
 - `Server.protocol()` : string (outcome of comment(s): [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407))
+- `Server.operations()` : Operation[]
 
 ### SecurityScheme
 Empty for now.
@@ -41,6 +42,8 @@ Empty for now.
 - `Operation.channels()` : Channel[]
 - `Operation.extension('<extension property>')` : any
 - `Operation.binding('<binding protocol>', '<binding property>')` : any
+- `Operation.servers()` : Server[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
+- `Operation.server('<server name>')` : Server (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 
 ### Channel
 - `Channel.path()` : string

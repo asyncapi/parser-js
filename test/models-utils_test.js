@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 
-const utils = require('../lib/utils');
+const utils = require('../lib/models-utils');
 
 describe('utils', function() {
   describe('mix()', function() {

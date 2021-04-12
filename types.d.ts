@@ -139,56 +139,63 @@ declare module "@asyncapi/parser" {
          */
         toJS(): void;
     }
-    class IntentAsyncAPIDocument extends Base {
+    class IntentAsyncAPIDocument extends IntentBase {
         info(): IntentInfo;
-        hasContentType(contentType: any): boolean;
-        defaultContentType(): string;
-        channels(role: any): IntentChannel[];
-        channelsSubscribes(role: any): IntentChannel[];
-        channelsPublishes(role: any): IntentChannel[];
-        isSubscribingToChannels(role: any): boolean;
-        isPublishingToChannels(role: any): boolean;
-        messages(role: any): IntentMessage[];
-        schemas(): Schema[];
-        servers(): Server[];
-        server(): Server;
+        applicationPublishableChannels(): IntentChannel[];
+        applicationSubscribableChannels(): IntentChannel[];
+        clientPublishableChannels(): IntentChannel[];
+        clientSubscribableChannels(): IntentChannel[];
+        channels(): IntentChannel[];
+        applicationPublishableMessages(): IntentMessage[];
+        applicationSubscribableMessages(): IntentMessage[];
+        clientPublishableMessages(): IntentMessage[];
+        clientSubscribableMessages(): IntentMessage[];
+        messages(): IntentMessage[];
+        applicationPublishOperations(): IntentOperation[];
+        applicationSubscribeOperations(): IntentOperation[];
+        clientPublishOperations(): IntentOperation[];
+        clientSubscribeOperations(): IntentOperation[];
+        operations(): IntentOperation[];
+        schemas(): IntentSchema[];
+        servers(): IntentServer[];
         securitySchemes(): SecurityScheme[];
-        parameters(): Schema[];
     }
-    class IntentChannel extends Base {
+    class IntentBase {
+        json(): any;
+    }
+    class IntentChannel extends IntentBase {
+        operations(): IntentOperation[];
         path(): string;
         messages(): IntentMessage[];
-        messagesPublishes(role: any): IntentMessage[];
-        messagesSubscribes(role: any): IntentMessage[];
-        isSubscribing(role: any): boolean;
-        isPublishing(role: any): boolean;
+        extension(): any;
+        binding(): any;
         description(): string;
-        parameters(): Schema[];
-        extension(extensionProperty: any): any;
-        extensionForPublishing(role: any, extensionProperty: any): any;
-        extensionForSubscribing(role: any, extensionProperty: any): any;
-        binding(bindingProtocol: any, bindingProperty: any): any;
-        hasBinding(bindingProtocol: any, bindingProperty: any): boolean;
-        bindingForSubscribing(role: any, bindingProtocol: any, bindingProperty: any): any;
-        bindingForPublishing(role: any, bindingProtocol: any, bindingProperty: any): any;
-        summaryForPublishing(role: any): string;
-        summaryForSubscribing(role: any): string;
-        operationIdForPublishing(role: any): string;
-        operationIdForSubscribing(role: any): string;
     }
-    class IntentInfo extends Base {
+    class IntentInfo extends IntentBase {
         title(): string;
         description(): string;
         version(): string;
     }
-    class IntentMessage extends Base {
+    class IntentMessage extends IntentBase {
         uid(): string;
         name(): string;
         headers(): Schema;
         payload(): Schema;
         contentType(): string;
+        channels(): IntentChannel[];
+        operations(): IntentOperation[];
+        extension(): any;
+        binding(): any;
     }
-    class IntentServer extends Base {
+    class IntentOperation extends IntentBase {
+        id(): string;
+        summary(): string;
+        messages(): IntentMessage[];
+        channels(): IntentChannel[];
+        extension(): any;
+        binding(): any;
+    }
+    class IntentServer extends IntentBase {
         name(): string;
         protocol(): string;
     }

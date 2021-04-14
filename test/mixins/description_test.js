@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { mix } = require('../../lib/utils');
+const { mix } = require('../../lib/models/utils');
 
 const Base = require('../../lib/models/base');
 const MixinDescription = require('../../lib/mixins/description');

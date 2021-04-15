@@ -54,8 +54,8 @@
 - `ServerSecurity.values()` : string[] (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 
 ### SecurityScheme
-- `SecurityScheme.type()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
-- `SecurityScheme.in()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
+- `SecurityScheme.type()` : Types (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
+- `SecurityScheme.in()` : ApiKeyLocations (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 - `SecurityScheme.name()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 - `SecurityScheme.scheme()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 - `SecurityScheme.bearerFormat()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)

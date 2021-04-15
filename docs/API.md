@@ -79,8 +79,7 @@
 - `Operation.type()` : string - Returns either `ClientSubscribing`, `ClientPublishing`, `ApplicationSubscribing`, `ApplicationPublishing`
 
 ### Channel
-- `Channel.name()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Channels.js#L26)
-- `Channel.path()` : string
+- `Channel.path()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Channels.js#L26)
 - `Channel.messages()` : Message[]
 - `Channel.operations()` : Operation[]
 - `Channel.hasDescription()` : boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Channels.js#L28)

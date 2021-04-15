@@ -45,9 +45,9 @@
 ### ServerVariable
 - `ServerVariable.hasDefaultValue()` : boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
 - `ServerVariable.defaultValue()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
-- `ServerVariable.hasAllowedValues() boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
+- `ServerVariable.hasAllowedValues()` : boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
 - `ServerVariable.allowedValues()` : any[] (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
-- `ServerVariable.description() string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
+- `ServerVariable.description()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
 
 ### ServerSecurity
 - `ServerSecurity.securityScheme()` : SecurityScheme (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)

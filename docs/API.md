@@ -38,9 +38,11 @@
 - `Server.protocol()` : string (outcome of comment(s): [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407))
 - `Server.operations()` : Operation[]
 - `Server.protocolVersion()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L27)
+- `Server.hasDescription()` : boolean
 - `Server.description()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L28)
 - `Server.variables()` : ServerVariable[] (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L37)
 - `Server.security()` : ServerSecurity[] (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L38 and https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L73-L93)
+- `Server.binding(<binding_protocol>)` : any
 
 ### ServerVariable
 - `ServerVariable.name()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49)
@@ -48,7 +50,9 @@
 - `ServerVariable.defaultValue()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
 - `ServerVariable.hasAllowedValues()` : boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
 - `ServerVariable.allowedValues()` : any[] (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
+- `ServerVariable.hasDescription()` : boolean
 - `ServerVariable.description()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js/#L49-L54)
+- `ServerVariable.examples()` : string[]
 
 ### ServerSecurity
 - `ServerSecurity.securityScheme()` : SecurityScheme (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
@@ -60,6 +64,10 @@
 - `SecurityScheme.name()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 - `SecurityScheme.scheme()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 - `SecurityScheme.bearerFormat()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
+- `SecurityScheme.hasDescription()` : boolean
+- `SecurityScheme.description()` : string
+- `SecurityScheme.flows()` : OauthFlows
+- `SecurityScheme.openIdConnectUrl()` : string
 
 ### Operation
 - `Operation.id()` : string
@@ -78,6 +86,10 @@
 - `Operation.isApplicationSubscribing()` : boolean
 - `Operation.isApplicationPublishing()` : boolean
 - `Operation.type()` : string - Returns either `ClientSubscribing`, `ClientPublishing`, `ApplicationSubscribing`, `ApplicationPublishing`
+- `Operation.hasExternalDocs()` : boolean
+- `Operation.externalDocs()` : ExternalDocumentation
+- `Operation.hasTags()` : boolean
+- `Operation.tags()` : Tag[] 
 
 ### Channel
 - `Channel.path()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Channels.js#L26)
@@ -111,3 +123,7 @@
 
 ### Tag
 - `Tag.name()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Message.js#L52)
+- `Tag.hasDescription()` : string
+- `Tag.description()` : string
+- `Tag.hasExternalDocs()` : boolean
+- `Tag.externalDocs` : ExternalDocumentation

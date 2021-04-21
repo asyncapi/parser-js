@@ -1,8 +1,21 @@
+
 ### All models (Base)
 - `<base>.hasExtension(key)` : boolean (outcome of https://github.com/asyncapi/parser-js/blob/b06e44f519f31fcda11336eb6d84aaf1d4630366/lib/parser.js#L129)
 - `<base>.extension(key)` : any (outcome of https://github.com/asyncapi/parser-js/blob/b06e44f519f31fcda11336eb6d84aaf1d4630366/lib/parser.js#L129)
+- `<base>.json()` : string (outcome of https://github.com/asyncapi/parser-js/blob/b06e44f519f31fcda11336eb6d84aaf1d4630366/lib/parser.js#L129)
 
 ### Root - AsyncAPIDocument
+
+- `AsyncAPIDocument.version()` : string
+- `AsyncAPIDocument.hasId()` : boolean
+- `AsyncAPIDocument.id()` : string|undefined
+- `AsyncAPIDocument.hasDefaultContentType()` : boolean
+- `AsyncAPIDocument.defaultContentType()` : string|undefined
+- `AsyncAPIDocument.hasExternalDocs()` : boolean
+- `AsyncAPIDocument.externalDocs()` : string|undefined
+- `AsyncAPIDocument.hasTags()` : boolean
+- `AsyncAPIDocument.tags()` : IntentTag|undefined
+- `AsyncAPIDocument.hasContentType('<content type>')` : boolean (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319))
 - `AsyncAPIDocument.applicationPublishableChannels()` : Channel[] (outcome of comment(s): [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407), [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `AsyncAPIDocument.applicationPublishableMessages()` : Message[]
 - `AsyncAPIDocument.applicationPublishOperations()` : Operation[]
@@ -18,15 +31,14 @@
 - `AsyncAPIDocument.messages(<message name>[])` : Message[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `AsyncAPIDocument.hasChannels()` : boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/template/asyncapi.js#L32)
 - `AsyncAPIDocument.channels(<channel name>[])` : Channel[] (outcome of comment(s): [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407), [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
-- `AsyncAPIDocument.operations(<operation id>[])` : Operation[]		
-- `AsyncAPIDocument.hasContentType('<content type>')` : boolean (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319))
+- `AsyncAPIDocument.operations(<operation id>[])` : Operation[]
 - `AsyncAPIDocument.schemas()` : Schema[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `AsyncAPIDocument.hasServers()` : boolean (outcome of https://github.com/asyncapi/markdown-template/blob/master/template/asyncapi.js#L32)
 - `AsyncAPIDocument.servers()` : Server[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `AsyncAPIDocument.server('<server name>')` : Server (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
 - `AsyncAPIDocument.info()` : Info
-- `AsyncAPIDocument.json()` : string (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961), [800963792](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800963792))
 - `AsyncAPIDocument.securitySchemes()` : SecurityScheme[] (outcome of comment(s): [800935961](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800935961))
+
 ### Info
 - `Info.title()` : string (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319), [799598596](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799598596), [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407), [800963792](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800963792))
 - `Info.description()` : string (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319), [799598596](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799598596), [800282407](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-800282407))
@@ -55,8 +67,11 @@
 - `ServerVariable.examples()` : string[]
 
 ### ServerSecurity
+- `ServerSecurity.hasExtension()` : boolean
+- `ServerSecurity.extension()` : any|undefined
 - `ServerSecurity.securityScheme()` : SecurityScheme (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
 - `ServerSecurity.values()` : string[] (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
+
 
 ### SecurityScheme
 - `SecurityScheme.type()` : Types (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Servers.js#L75-L80)
@@ -117,9 +132,9 @@
 - `Message.payload()` : Schema (outcome of comment(s): [799481319](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799481319), [799598596](https://github.com/asyncapi/shape-up-process/issues/84#issuecomment-799598596))
 - `Message.channels()` : Channel[]
 - `Message.operations()` : Operation[]
-- `Message.extension('<extension property>')` : any
 - `Message.binding('<binding protocol>')` : any
 - `Message.contentType()` : string
+
 
 ### Tag
 - `Tag.name()` : string (outcome of https://github.com/asyncapi/markdown-template/blob/master/components/Message.js#L52)
@@ -127,3 +142,4 @@
 - `Tag.description()` : string
 - `Tag.hasExternalDocs()` : boolean
 - `Tag.externalDocs` : ExternalDocumentation
+

@@ -59,7 +59,7 @@ describe('AsyncAPIDocument', function() {
   describe('assignUidToParameterSchemas()', function() {
     it('should assign uids to parameters', function() {
       const inputDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string' } } } } } };
-      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } } };
+      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } }, "x-parser-spec-parsed": true };
       const d = new AsyncAPIDocument(inputDoc);
       expect(d.json()).to.be.deep.equal(expectedDoc);
     });

@@ -11,7 +11,7 @@ const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/spe
 
 describe('AsyncAPIDocument', function() {
   describe('constructor', function() {
-    it.only('should not change assigned uids', function() {
+    it('should not change assigned uids', function() {
       const schema = {};
       const message = {
         payload: schema,

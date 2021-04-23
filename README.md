@@ -151,14 +151,6 @@ This package throws a bunch of different error types. All errors contain a `type
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 
-## Custom extensions
-
-Parser during validation and parsing adds custom extensions (started by `x-parser`) that add additional information about the specification:
-
-| Name | Value | Location | Description |
-|---|---|---|
-| `x-parser-spec-parsed` | `true` | Root of parsed specification | Indicates that specifixation is parsed |
-
 ## Circular references
 
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:

@@ -43,23 +43,23 @@ describe('AsyncAPIDocument', function() {
       let d = new AsyncAPIDocument(inputDoc);
       d = new AsyncAPIDocument(JSON.parse(JSON.stringify(d.json())));
 
-      expect(d.json().channels.channel.subscribe.message[xParserMessageName]).to.be.equal("someMessage");
-      expect(d.json().channels.channel.subscribe.message.payload[xParserSchemaId]).to.be.equal("someSchema");
+      expect(d.json().channels.channel.subscribe.message[xParserMessageName]).to.be.equal('someMessage');
+      expect(d.json().channels.channel.subscribe.message.payload[xParserSchemaId]).to.be.equal('someSchema');
 
-      expect(d.json().channels.channel.publish.message[xParserMessageName]).to.be.equal("<anonymous-message-1>");
-      expect(d.json().channels.channel.publish.message.payload[xParserSchemaId]).to.be.equal("<anonymous-schema-1>");
+      expect(d.json().channels.channel.publish.message[xParserMessageName]).to.be.equal('<anonymous-message-1>');
+      expect(d.json().channels.channel.publish.message.payload[xParserSchemaId]).to.be.equal('<anonymous-schema-1>');
 
-      expect(d.json().components.messages.someMessage[xParserMessageName]).to.be.equal("someMessage");
-      expect(d.json().components.messages.someMessage.payload[xParserSchemaId]).to.be.equal("someSchema");
+      expect(d.json().components.messages.someMessage[xParserMessageName]).to.be.equal('someMessage');
+      expect(d.json().components.messages.someMessage.payload[xParserSchemaId]).to.be.equal('someSchema');
 
-      expect(d.json().components.schemas.someSchema[xParserSchemaId]).to.be.equal("someSchema");
+      expect(d.json().components.schemas.someSchema[xParserSchemaId]).to.be.equal('someSchema');
     });
   });
 
   describe('assignUidToParameterSchemas()', function() {
     it('should assign uids to parameters', function() {
       const inputDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string' } } } } } };
-      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } }, "x-parser-spec-parsed": true };
+      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': { parameters: { streetlightId: { schema: { type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' }, 'x-parser-schema-id': 'streetlightId' } } } }, 'x-parser-spec-parsed': true };
       const d = new AsyncAPIDocument(inputDoc);
       expect(d.json()).to.be.deep.equal(expectedDoc);
     });

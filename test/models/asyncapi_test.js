@@ -40,8 +40,8 @@ describe('AsyncAPIDocument', function() {
         } 
       };
 
-      let d = new AsyncAPIDocument(inputDoc);
-      d = new AsyncAPIDocument(JSON.parse(JSON.stringify(d.json())));
+      let d = new AsyncAPIDocument(inputDoc); // NOSONAR
+      d = new AsyncAPIDocument(JSON.parse(JSON.stringify(d.json()))); // NOSONAR
 
       expect(d.json().channels.channel.subscribe.message[xParserMessageName]).to.be.equal('someMessage');
       expect(d.json().channels.channel.subscribe.message.payload[xParserSchemaId]).to.be.equal('someSchema');

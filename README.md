@@ -26,6 +26,7 @@
 - [API documentation](#api-documentation)
 - [Custom message parsers](#custom-message-parsers)
 - [Error types](#error-types)
+- [Custom Extensions](#custom-extensions)
 - [Circular references](#circular-references)
 - [Develop](#develop)
 - [Contributing](#contributing)
@@ -150,6 +151,17 @@ This package throws a bunch of different error types. All errors contain a `type
 |`fetch-url-error`| None | The URL provided for fetching AsynAPI document is invalid.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
+
+## Custom Extensions
+
+Parser uses custom extensions (started by `x-parser`) to define the missed/additional information about the spec or some part of spec. Following custom extensions are used :
+- `x-parser-spec-parsed` is used for describing the state of spec, i.e. if it has been already parsed or not. `x-parser-spec-parsed: true` extension is added to the root of parsed spec.
+- `x-parser-message-parsed` is used for describing the status of message in AsyncApi document. `x-parser-message-parsed: true` is added for the already parsed message.
+- `x-parser-message-name` property is used for defining the original name of the message in the AsyncApi document.
+- `x-parser-schema-id` property defines the schema of the AsyncApi document through a unique id.
+- `x-parser-original-traits` property defines the original traits of the message in ASyncApi document.
+- `x-parser-original-schema-format` property is added to schema for defining the original schema format of the AsyncApi document.
+- `x-parser-original-payload` property is added to schema for defining the original payload of the message.
 
 ## Circular references
 

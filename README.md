@@ -159,7 +159,7 @@ Parser uses custom extensions (started by `x-parser`) to define the missed/addit
 - `x-parser-message-parsed` is used for describing the status of message in AsyncApi document. `x-parser-message-parsed: true` is added for the already parsed message.
 - `x-parser-message-name` property is used for defining the original name of the message in the AsyncApi document.
 - `x-parser-schema-id` property defines the schema of the AsyncApi document through a unique id.
-- `x-parser-original-traits` property defines the original traits of the message in ASyncApi document.
+- `x-parser-original-traits` property defines the original traits of the message in AsyncApi document.
 - `x-parser-original-schema-format` property is added to schema for defining the original schema format of the AsyncApi document.
 - `x-parser-original-payload` property is added to schema for defining the original payload of the message.
 

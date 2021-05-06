@@ -26,7 +26,7 @@
 - [API documentation](#api-documentation)
 - [Custom message parsers](#custom-message-parsers)
 - [Error types](#error-types)
-- [Custom Extensions](#custom-extensions)
+- [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
 - [Develop](#develop)
 - [Contributing](#contributing)
@@ -152,7 +152,7 @@ This package throws a bunch of different error types. All errors contain a `type
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 
-## Custom Extensions
+## Custom extensions
 
 The parser uses custom extensions to define additional information about the spec. Each has a different purpose but all of them are there to make it much easier to work with the AsyncAPI document. These extensions are prefixed with `x-parser-`. The following extensions are used :
 - `x-parser-spec-parsed` is used to specify if the AsyncAPI document is already parsed by the parser. Property `x-parser-spec-parsed` is added to the root of the document with the `true` value.

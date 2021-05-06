@@ -141,6 +141,9 @@ declare module "@asyncapi/parser" {
     }
     interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
     }
+    /**
+     * Implements functions to deal with the AsyncAPI document.
+     */
     class AsyncAPIDocument extends Base implements MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
         version(): string;
         info(): Info;

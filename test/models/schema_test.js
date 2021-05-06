@@ -226,6 +226,12 @@ describe('Schema', function() {
       expect(d.not().constructor.name).to.be.equal('Schema');
       expect(d.not().json()).to.be.equal(doc.not);
     });
+
+    it('should return null when not is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.not()).to.be.equal(null);
+    });
   });
 
   describe('#items()', function() {
@@ -367,6 +373,12 @@ describe('Schema', function() {
       expect(d.contains().constructor.name).to.be.equal('Schema');
       expect(d.contains().json()).to.be.equal(doc.contains);
     });
+
+    it('should return null when contains is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.contains()).to.be.equal(null);
+    });
   });
 
   describe('#dependencies()', function() {
@@ -391,6 +403,12 @@ describe('Schema', function() {
         expect(s.json()).to.be.equal(doc.dependencies[key]);
       });
     });
+
+    it('should return null when dependencies are omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.dependencies()).to.be.equal(null);
+    });
   });
 
   describe('#propertyNames()', function() {
@@ -399,6 +417,12 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(d.propertyNames().constructor.name).to.be.equal('Schema');
       expect(d.propertyNames().json()).to.be.equal(doc.propertyNames);
+    });
+
+    it('should return null when propertyNames are omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.propertyNames()).to.be.equal(null);
     });
   });
 
@@ -409,6 +433,12 @@ describe('Schema', function() {
       expect(d.if().constructor.name).to.be.equal('Schema');
       expect(d.if().json()).to.be.equal(doc.if);
     });
+
+    it('should return null when if is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.if()).to.be.equal(null);
+    });
   });
 
   describe('#then()', function() {
@@ -418,6 +448,12 @@ describe('Schema', function() {
       expect(d.then().constructor.name).to.be.equal('Schema');
       expect(d.then().json()).to.be.equal(doc.then);
     });
+
+    it('should return null when then is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.then()).to.be.equal(null);
+    });
   });
   
   describe('#else()', function() {
@@ -426,6 +462,12 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(d.else().constructor.name).to.be.equal('Schema');
       expect(d.else().json()).to.be.equal(doc.else);
+    });
+
+    it('should return null when else is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.else()).to.be.equal(null);
     });
   });
 

@@ -26,6 +26,7 @@
 - [API documentation](#api-documentation)
 - [Custom message parsers](#custom-message-parsers)
 - [Error types](#error-types)
+- [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
 - [Develop](#develop)
 - [Contributing](#contributing)
@@ -150,6 +151,19 @@ This package throws a bunch of different error types. All errors contain a `type
 |`fetch-url-error`| None | The URL provided for fetching AsynAPI document is invalid.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
+
+## Custom extensions
+
+The parser uses custom extensions to define additional information about the spec. Each has a different purpose but all of them are there to make it much easier to work with the AsyncAPI document. These extensions are prefixed with `x-parser-`. The following extensions are used :
+- `x-parser-spec-parsed` is used to specify if the AsyncAPI document is already parsed by the parser. Property `x-parser-spec-parsed` is added to the root of the document with the `true` value.
+- `x-parser-message-parsed` is used to specify if the message is already parsed by the message parser. Property `x-parser-message-parsed` is added to the root of the document with the `true` value.
+- `x-parser-message-name` is used to specify the name of the message if it is not provided. For messages without names, the parser generates anonymous names. Property `x-parser-message-name` is added to a message object with a value that follows this pattern: `<anonymous-message-${number}>`. This value is returned by `message.uid()` when regular `name` property is not present.
+- `x-parser-schema-id` is used to specify the ID of the schema if it is not provided. For schemas without IDs, the parser generates anonymous names. Property `x-parser-schema-id` is added to every object of a schema with a value that follows this pattern: `<anonymous-schema-${number}>`. This value is returned by `schema.uid()` when regular `$id` property is not present.
+- `x-parser-original-traits` is where traits are stored after they are applied on the AsyncAPI document. The reason is because the original `traits` property is removed.
+- `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
+- `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
+- [`x-parser-circular`](#circular-references)
+- [`x-parser-circular-props`](#circular-references)
 
 ## Circular references
 

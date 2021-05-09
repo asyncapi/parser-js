@@ -1,6 +1,7 @@
 {
 	"asyncapi": "2.0.0",
 	"info": {
+		"test": true,
 		"version": "1.0.0"
 	},
 	"channels": {
@@ -18,7 +19,9 @@
 				}
 			}
 		}
-	}, "components": {
+	},
+	"test": true,
+	"components": {
 		"messages": {
 			"testMessage": {
 				"payload": {
@@ -29,12 +32,12 @@
 		"schemas": {
 			"testSchema": {
 				"type": "object",
-      	"properties": {
-        	"name": {
-          	"type": "string"
+				"properties": {
+					"name": {
+						"type": "string"
 					},
-        	"test": {
-          	"$ref": "refs/refed.yaml"
+					"test": {
+						"$ref": "refs/refed.yaml"
 					}
 				}
 			}

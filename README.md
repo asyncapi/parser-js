@@ -24,6 +24,7 @@
   * [Example using OpenAPI schemas](#example-using-openapi-schemas)
   * [Example using RAML data types](#example-using-raml-data-types)
 - [API documentation](#api-documentation)
+- [Using in the browser](#using-in-the-browser)
 - [Custom message parsers](#custom-message-parsers)
 - [Error types](#error-types)
 - [Custom extensions](#custom-extensions)

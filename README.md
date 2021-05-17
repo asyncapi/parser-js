@@ -123,7 +123,7 @@ const parser = window['AsyncAPIParser'];
 ...
 ```
 
-Otherwise, if your application is bundled via bundles like `webpack`, you can import the parser like a regular package:
+Otherwise, if your application is bundled via bundlers like `webpack`, you can import the parser like a regular package:
 
 ```js
 import parser from '@asyncapi/parser';

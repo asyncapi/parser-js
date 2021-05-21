@@ -1,0 +1,60 @@
+{
+    "asyncapi": "2.0.0",
+    "info": {
+      "title": "example",
+      "version": "0.1.0"
+    },
+      "channels": {
+          "example": {
+              "publish": {
+                  "message": {
+                      "payload": {
+                          "$id": "testPayloadSchema",
+						  "test": true,
+                          "type": "object",
+                          "properties": {
+                              "testPayloadNestedSchemaProp": {
+                                  "$id": "testPayloadNestedSchemaProp",
+						          "test": true,
+                                  "type": "string"
+                              }
+                          },
+                          "dependencies": {
+                              "testPayloadDependencySchema": {
+                              "$id": "testPayloadDependencySchema",
+					          "test": true
+                              }
+                          },
+                          "patternProperties": {
+                              "testPayloadPatternPropertiesSchema1": {
+                                  "$id": "testPayloadPatternPropertiesSchema1",
+					              "test": true,
+                                  "type": "string"
+                              },
+                              "testPayloadPatternPropertiesSchema2": {
+                                  "$id": "testPayloadPatternPropertiesSchema2",
+						          "test": true,
+                                  "type": "integer"
+                              }
+                          },
+                          "definitions": {
+                              "testPayloadDefinitionSchema": {
+                                  "$id": "testPayloadDefinitionSchema",
+						          "test": true,
+                                  "type": "object",
+                                  "properties": {
+                                      "testPayloadDefinitionSchemaProp1": {
+                                          "$id": "testPayloadDefinitionSchemaProp",
+					                      "test": true,
+                                          "type": "string"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  }
+  

@@ -7,11 +7,13 @@ plugins:
   - sonarjs
   - mocha
   - security
+  - jsdoc
 
 extends:
   - plugin:sonarjs/recommended
   - plugin:mocha/recommended
   - plugin:security/recommended
+  - plugin:jsdoc/recommended
 
 parserOptions:
   ecmaVersion: 2018

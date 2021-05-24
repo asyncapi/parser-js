@@ -61,4 +61,3 @@ describe('Check Parser in the browser', function() {
     }
   });
 });
-

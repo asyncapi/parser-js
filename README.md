@@ -24,6 +24,7 @@
   * [Example using OpenAPI schemas](#example-using-openapi-schemas)
   * [Example using RAML data types](#example-using-raml-data-types)
 - [API documentation](#api-documentation)
+- [Using in the browser](#using-in-the-browser)
 - [Custom message parsers](#custom-message-parsers)
 - [Error types](#error-types)
 - [Custom extensions](#custom-extensions)
@@ -96,15 +97,45 @@ Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/op
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
 
 ## API documentation
+
 The parser API is generally structured the same way as the AsyncAPI specification, with additional support functions such as `has<Something>()`. The parser uses wrapped functions to get the properties stored in JSON. This means in order to get the info object you would use the function `doc.info()` and to get the title inside the info object you call `doc.info().title()`.
 
 See [API documentation](/API.md) for more example and full API reference information.
+
+## Using in the browser
+
+The package contains a built-in version of the parser, which is created via [`browserify`](https://github.com/browserify/browserify). To use it, you need to import the parser into the HTML file as below:
+
+```html
+<script src="https://unpkg.com/@asyncapi/parser@latest/dist/bundle.js"></script>
+
+<script>
+  const parser = window['AsyncAPIParser'];
+  ...
+</script>
+```
+
+Or, if you want to use a parser in a JS application of the SPA kind, import the parser as shown below:
+
+```js
+import '@asyncapi/parser/dist/bundle';
+
+const parser = window['AsyncAPIParser'];
+...
+```
+
+Otherwise, if your application is bundled via bundlers like `webpack`, you can import the parser like a regular package:
+
+```js
+import parser from '@asyncapi/parser';
+```
 
 ## Custom message parsers
 
 AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
 
 1. Create custom parser module that exports two functions:
+
     ```js
     module.exports = {
       /*
@@ -123,7 +154,9 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
       ]
     }
     ```
+
 2. Before parsing an AsyncAPI document with a parser, register the additional custom schema parser:
+
     ```js
     const myCustomParser = require('mycustomParser');
 

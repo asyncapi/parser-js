@@ -41,7 +41,7 @@
   "homepage": "https://github.com/asyncapi/parser-js",
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",
-    "@semantic-release/github": "^7.0.4",
+    "@semantic-release/github": "7.2.3",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
     "browserify": "^16.3.0",
@@ -60,7 +60,7 @@
     "nyc": "^15.1.0",
     "puppeteer": "^7.0.1",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.0.4",
+    "semantic-release": "17.4.3",
     "shx": "^0.3.3",
     "start-server-and-test": "^1.11.3",
     "tsd-jsdoc": "^2.5.0",
@@ -87,7 +87,11 @@
   },
   "release": {
     "branches": [
-      "master"
+      "master",
+      {
+        "name": "2021-06-release",
+        "prerelease": true
+      }
     ],
     "plugins": [
       [

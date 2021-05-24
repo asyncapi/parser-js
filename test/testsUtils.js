@@ -14,20 +14,21 @@ const testsUtils = module.exports;
  * 
  * @function offset
  * @private
- * @param  {Number} oset end or start offset number
- * @param  {Number} line end or start line number
- * @returns {Number} calculated offset number
+ * @param  {number} oset end or start offset number
+ * @param  {number} line end or start line number
+ * @returns {number} calculated offset number
  */
 testsUtils.offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
 
 /* eslint-disable sonarjs/cognitive-complexity */
 /**
- * Disabled the rule for this function as there is no way to make it shorter in a meaningfull way
+ * Disabled the rule for this function as there is no way to make it shorter in a meaning full way
  * This function should always be used in tests where errors are evaluated to make sure they always work even if proper error is not thrown
+ * 
  * @private
- * @param  {Function} fn Function that you want to test
- * @param  {Object} validationObject Error object to evaluate against the error thrown by fn()
-*/
+ * @param {Function} fn Function that you want to test
+ * @param {object} validationObject Error object to evaluate against the error thrown by fn()
+ */
 testsUtils.checkErrorWrapper = async (fn, validationObject) => {
   const { type, message, title, refs, detail, location, validationErrors, parsedJSON } = validationObject;
 

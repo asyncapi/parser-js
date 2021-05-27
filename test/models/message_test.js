@@ -1,7 +1,8 @@
 const { expect } = require('chai');
-const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{test: true}], 'x-test': 'testing' };
+const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
 
 const Message = require('../../lib/models/message');
+const MessageExample = require('../../lib/models/message-example');
 
 const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
 const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
@@ -25,7 +26,7 @@ describe('Message', function() {
     it('should return a string with the base64 representation of the object when x-parser-message-name extension and name are not available', function() {
       const msg = { ...js, ...{ name: undefined } };
       const d = new Message(msg);
-      expect(d.uid()).to.be.equal('eyJoZWFkZXJzIjp7InByb3BlcnRpZXMiOnsidGVzdDEiOnsidHlwZSI6InN0cmluZyJ9LCJ0ZXN0MiI6eyJ0eXBlIjoibnVtYmVyIn19fSwicGF5bG9hZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtcGF5bG9hZCI6eyJ0ZXN0aW5nIjp0cnVlfSwiY29ycmVsYXRpb25JZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtc2NoZW1hLWZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5hcGFjaGUuYXZybzt2ZXJzaW9uPTEuOS4wIiwiY29udGVudFR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIiwidGl0bGUiOiJUZXN0Iiwic3VtbWFyeSI6InRlc3QiLCJkZXNjcmlwdGlvbiI6InRlc3RpbmciLCJleHRlcm5hbERvY3MiOnsidGVzdCI6dHJ1ZX0sInRhZ3MiOlt7Im5hbWUiOiJ0YWcxIn1dLCJiaW5kaW5ncyI6eyJhbXFwIjp7InRlc3QiOnRydWV9fSwiZXhhbXBsZXMiOlt7InRlc3QiOnRydWV9XSwieC10ZXN0IjoidGVzdGluZyJ9');
+      expect(d.uid()).to.be.equal('eyJoZWFkZXJzIjp7InByb3BlcnRpZXMiOnsidGVzdDEiOnsidHlwZSI6InN0cmluZyJ9LCJ0ZXN0MiI6eyJ0eXBlIjoibnVtYmVyIn19fSwicGF5bG9hZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtcGF5bG9hZCI6eyJ0ZXN0aW5nIjp0cnVlfSwiY29ycmVsYXRpb25JZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtc2NoZW1hLWZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5hcGFjaGUuYXZybzt2ZXJzaW9uPTEuOS4wIiwiY29udGVudFR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIiwidGl0bGUiOiJUZXN0Iiwic3VtbWFyeSI6InRlc3QiLCJkZXNjcmlwdGlvbiI6InRlc3RpbmciLCJleHRlcm5hbERvY3MiOnsidGVzdCI6dHJ1ZX0sInRhZ3MiOlt7Im5hbWUiOiJ0YWcxIn1dLCJiaW5kaW5ncyI6eyJhbXFwIjp7InRlc3QiOnRydWV9fSwiZXhhbXBsZXMiOlt7Im5hbWUiOiJ0ZXN0Iiwic3VtbWFyeSI6InRlc3Qgc3VtbWFyeSIsInBheWxvYWQiOnsidGVzdCI6dHJ1ZX19XSwieC10ZXN0IjoidGVzdGluZyJ9');
     });
   });
   
@@ -110,10 +111,11 @@ describe('Message', function() {
   });
 
   describe('#examples()', function() {
-    it('should return an array of examples', function() {
+    it('should return an array of MessageExample object', function() {
       const d = new Message(js);
-      expect(Array.isArray(d.examples())).to.be.equal(true);
-      expect(d.examples()).to.be.equal(js.examples);
+      expect(Array.isArray(d.examples()));
+      expect(d.examples().length).to.equals(js.examples.length);
+      expect(d.examples()[0]).to.be.an.instanceOf(MessageExample);
     });
   });
 

@@ -109,6 +109,7 @@ overrides:
       sonarjs/no-duplicate-string: 0
       security/detect-object-injection: 0
       security/detect-non-literal-fs-filename: 0
+      jsdoc/require-jsdoc: 0
 
 settings:
   jsdoc:

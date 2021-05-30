@@ -115,3 +115,4 @@ settings:
   jsdoc:
     tagNamePreference:
       class: constructor
+      class: class

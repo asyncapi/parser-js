@@ -613,8 +613,8 @@ it('should throw schema-parser-not-registered error on unrecognized schema', asy
 
   expect(errorPresent.title).equal('The file does not correspond to a supported schema format');
   expect(errorPresent.type).equal('https://github.com/asyncapi/parser-js/schema-parser-not-registered');
-  expect(errorPresent.detail).equal('The asyncApi document cannot be handled by provided parsers.\n' +
-    'It occurred while trying to parse the following message payload /channels/mychannel/publish/message/payload');
+  expect(errorPresent.detail).equal(`The following message payload "${global.tempPathToPayload}" has "${global.tempSchemaFormat}" schema 
+  format which isn't supported by parser instance. Add a missed format parser through the "registerSchemaParser" function.`);
 });
 
 describe('registerSchemaParser()', function() {

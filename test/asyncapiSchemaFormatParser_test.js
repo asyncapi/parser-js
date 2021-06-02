@@ -139,7 +139,7 @@ describe('asyncapiSchemaFormatParser', function() {
       }
     };
   
-    expect(async () => await parser.parse(inputSpec)).to.not.throw();
+    expect(async () => parser.parse(inputSpec)).to.not.throw();
   });
 
   it('should deep clone schema into x-parser-original-payload', async function() {

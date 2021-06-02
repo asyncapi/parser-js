@@ -33,6 +33,12 @@ describe('parse()', function() {
     expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
   
+  it('should parse AsyncAPI document passed as JS object', async function() {
+    const object = JSON.parse(inputYAML);
+    const result = await parser.parse(object, { path: __filename });
+    expect(JSON.stringify(result.json())).to.equal(outputJSON);
+  });
+
   it('should parse YAML correctly when no components object', async function() {
     const result = await parser.parse(inputYAMLNoComponents, { path: __filename });
     expect(JSON.stringify(result.json())).to.equal(outputJSONNoComponents);

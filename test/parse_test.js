@@ -34,7 +34,7 @@ describe('parse()', function() {
   });
   
   it('should parse AsyncAPI document passed as JS object', async function() {
-    const object = JSON.parse(inputYAML);
+    const object = JSON.parse(inputJSON);
     const result = await parser.parse(object, { path: __filename });
     expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });

@@ -8,7 +8,7 @@ describe('AsyncAPIDocument', function () {
   describe('constructor', function() {
     it('Should traverse patternProperties, definitions, dependencies ', function () {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/iterator.json'),'utf8'));
-      const d = new AsyncAPIDocument(doc);
+      const d = new AsyncAPIDocument(doc); //NOSONAR
       const schemas = new Map();
       const cb = (schema) => {
         schemas.set(schema.uid(), schema);

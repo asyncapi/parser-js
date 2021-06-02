@@ -573,6 +573,23 @@ describe('Schema', function() {
     });
   });
 
+  describe('#booleanValue()', function() {
+    it('should return a true when schema is true', function() {
+      const d = new Schema(true);
+      expect(d.booleanValue()).to.be.equal(true);
+    });
+
+    it('should return a false when schema is false', function() {
+      const d = new Schema(false);
+      expect(d.booleanValue()).to.be.equal(false);
+    });
+
+    it('should return an undefined when schema has not boolean value', function() {
+      const d = new Schema({});
+      expect(d.booleanValue()).to.be.equal(undefined);
+    });
+  });
+
   describe('#isBooleanSchema()', function() {
     it('should return a true when schema is true', function() {
       const d = new Schema(true);

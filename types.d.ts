@@ -1073,7 +1073,7 @@ declare module "@asyncapi/parser" {
      * @param [options.applyTraits = true] - Whether to resolve and apply traits or not.
      * @returns The parsed AsyncAPI document.
      */
-    function parse(asyncapiYAMLorJSON: string, options?: {
+    function parse(asyncapiYAMLorJSON: string | any, options?: {
         path?: string;
         parse?: any;
         resolve?: any;

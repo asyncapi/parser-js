@@ -21,8 +21,8 @@
                           },
                           "dependencies": {
                               "testPayloadDependencySchema": {
-                              "$id": "testPayloadDependencySchema",
-					          "test": true
+                                  "$id": "testPayloadDependencySchema",
+					              "test": true
                               }
                           },
                           "patternProperties": {

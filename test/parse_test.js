@@ -606,7 +606,7 @@ it('should apply `x-parser-spec-parsed` extension', async function() {
 
 it('should throw schema-parser-not-registered error on unrecognized schema', async function() {
   let errorPresent = null;
-  const notRegisteredFormatFile = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-schema-format.yaml'), 'utf8');
+  const notRegisteredFormatFile = fs.readFileSync(path.resolve(__dirname, './wrong/unknown-schema-format.yaml'), 'utf8');
   await parser.parse(notRegisteredFormatFile, {path: __filename}).catch((err) => {
     errorPresent = err;
   });

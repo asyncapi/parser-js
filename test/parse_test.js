@@ -605,16 +605,19 @@ it('should apply `x-parser-spec-parsed` extension', async function() {
 });
 
 it('should throw schema-parser-not-registered error on unrecognized schema', async function() {
-  let errorPresent = null;
   const notRegisteredFormatFile = fs.readFileSync(path.resolve(__dirname, './wrong/unknown-schema-format.yaml'), 'utf8');
-  await parser.parse(notRegisteredFormatFile, {path: __filename}).catch((err) => {
-    errorPresent = err;
-  });
+  const errorObject = {
+    title: 'The file does not correspond to a supported schema format',
+    type: 'https://github.com/asyncapi/parser-js/schema-parser-not-registered',
+    detail: `The following message payload "/channels/mychannel/publish/message/payload" has "UnknownSchemaFormat" schema 
+  format which isn't supported by parser instance. Add a missed format parser through the "registerSchemaParser" function.`
 
-  expect(errorPresent.title).equal('The file does not correspond to a supported schema format');
-  expect(errorPresent.type).equal('https://github.com/asyncapi/parser-js/schema-parser-not-registered');
-  expect(errorPresent.detail).equal(`The following message payload "/channels/mychannel/publish/message/payload" has "UnknownSchemaFormat" schema 
-  format which isn't supported by parser instance. Add a missed format parser through the "registerSchemaParser" function.`);
+  };
+  await checkErrorWrapper(
+    async () => {
+      await parser.parse(notRegisteredFormatFile, {path: __filename});
+    },errorObject
+  );
 });
 
 describe('registerSchemaParser()', function() {

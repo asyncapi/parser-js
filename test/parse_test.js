@@ -615,8 +615,6 @@ it('should throw schema-parser-not-registered error on unrecognized schema', asy
   expect(errorPresent.type).equal('https://github.com/asyncapi/parser-js/schema-parser-not-registered');
   expect(errorPresent.detail).equal(`The following message payload "/channels/mychannel/publish/message/payload" has "UnknownSchemaFormat" schema 
   format which isn't supported by parser instance. Add a missed format parser through the "registerSchemaParser" function.`);
-  const actualValue = 'test and something different';
-  expect(actualValue).equal('test and something different');
 });
 
 describe('registerSchemaParser()', function() {

@@ -579,9 +579,19 @@ describe('Schema', function() {
       expect(d.booleanValue()).to.be.equal(true);
     });
 
+    it('_json property should be empty object when schema is true', function() {
+      const d = new Schema(true);
+      expect(JSON.stringify(d.json())).to.be.equal(JSON.stringify({}));
+    });
+
     it('should return a false when schema is false', function() {
       const d = new Schema(false);
       expect(d.booleanValue()).to.be.equal(false);
+    });
+
+    it('_json property should be { not: {} } when schema is false', function() {
+      const d = new Schema(false);
+      expect(JSON.stringify(d.json())).to.be.equal(JSON.stringify({ not: {} }));
     });
 
     it('should return an undefined when schema has not boolean value', function() {

@@ -3433,7 +3433,7 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| asyncapiYAMLorJSON | <code>String</code> |  | An AsyncAPI document in JSON or YAML format. |
+| asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> |  | An AsyncAPI document in JSON or YAML format. |
 | [options] | <code>Object</code> |  | Configuration options. |
 | [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
 | [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |

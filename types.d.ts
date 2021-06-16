@@ -852,6 +852,7 @@ declare module "@asyncapi/parser" {
         readOnly(): boolean;
         writeOnly(): boolean;
         examples(): any[];
+        isBooleanSchema(): boolean;
         isCircular(): boolean;
         hasCircularProps(): boolean;
         circularProps(): string[];

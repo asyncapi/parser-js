@@ -120,6 +120,19 @@ describe('asyncapiSchemaFormatParser', function() {
                 },
               }
             }
+          },
+          subscribe: {
+            message: {
+              headers: true,
+              payload: false,
+            }
+          },
+        },
+        testChanne2: {
+          publish: {
+            message: {
+              payload: true,
+            }
           }
         }
       },
@@ -134,12 +147,20 @@ describe('asyncapiSchemaFormatParser', function() {
                 type: 'string',
               }
             },
-          }
+          },
+          anySchema: true,
+          cannotBeDefined: false,
         }
       }
     };
-  
-    expect(async () => parser.parse(inputSpec)).to.not.throw();
+    
+    let err;
+    try {
+      await parser.parse(inputSpec);
+    } catch (e) {
+      err = e;
+    }
+    expect(err).to.equal(undefined);
   });
 
   it('should deep clone schema into x-parser-original-payload', async function() {

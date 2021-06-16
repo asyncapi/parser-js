@@ -573,42 +573,25 @@ describe('Schema', function() {
     });
   });
 
-  describe('#booleanValue()', function() {
-    it('should return a true when schema is true', function() {
-      const d = new Schema(true);
-      expect(d.booleanValue()).to.be.equal(true);
-    });
-
-    it('_json property should be empty object when schema is true', function() {
-      const d = new Schema(true);
-      expect(JSON.stringify(d.json())).to.be.equal(JSON.stringify({}));
-    });
-
-    it('should return a false when schema is false', function() {
-      const d = new Schema(false);
-      expect(d.booleanValue()).to.be.equal(false);
-    });
-
-    it('_json property should be { not: {} } when schema is false', function() {
-      const d = new Schema(false);
-      expect(JSON.stringify(d.json())).to.be.equal(JSON.stringify({ not: {} }));
-    });
-
-    it('should return an undefined when schema has not boolean value', function() {
-      const d = new Schema({});
-      expect(d.booleanValue()).to.be.equal(undefined);
-    });
-  });
-
   describe('#isBooleanSchema()', function() {
     it('should return a true when schema is true', function() {
       const d = new Schema(true);
       expect(d.isBooleanSchema()).to.be.equal(true);
     });
 
+    it('_json property should equal to true when schema is true', function() {
+      const d = new Schema(true);
+      expect(d.json()).to.be.equal(true);
+    });
+
     it('should return a true when schema is false', function() {
       const d = new Schema(false);
       expect(d.isBooleanSchema()).to.be.equal(true);
+    });
+
+    it('_json property should equal to false when schema is false', function() {
+      const d = new Schema(false);
+      expect(d.json()).to.be.equal(false);
     });
   });
 

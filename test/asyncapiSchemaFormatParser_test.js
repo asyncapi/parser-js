@@ -154,13 +154,7 @@ describe('asyncapiSchemaFormatParser', function() {
       }
     };
     
-    let err;
-    try {
-      await parser.parse(inputSpec);
-    } catch (e) {
-      err = e;
-    }
-    expect(err).to.equal(undefined);
+    expect(async () => await parser.parse(inputSpec)).to.not.throw();
   });
 
   it('should deep clone schema into x-parser-original-payload', async function() {

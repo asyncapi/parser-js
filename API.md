@@ -303,6 +303,7 @@
             * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
             * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
             * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+            * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
             * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
             * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
             * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
@@ -2115,6 +2116,7 @@ Implements functions to deal with a Schema object.
     * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+    * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
     * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
     * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
     * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
@@ -2319,6 +2321,10 @@ Implements functions to deal with a Schema object.
 <a name="module_@asyncapi/parser+Schema+examples"></a>
 
 #### schema.examples() ⇒ <code>Array.&lt;any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+isBooleanSchema"></a>
+
+#### schema.isBooleanSchema() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+isCircular"></a>
 

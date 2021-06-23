@@ -2,7 +2,6 @@ const { expect } = require('chai');
 const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, correlationId: { test: true }, contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
 
 const MessageTrait = require('../../lib/models/message-trait');
-const MessageExample = require('../../lib/models/message-example');
 
 const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
 const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
@@ -91,11 +90,10 @@ describe('MessageTrait', function() {
   });
 
   describe('#examples()', function() {
-    it('should return an array of MesageExample objects', function() {
+    it('should return an array of examples', function() {
       const d = new MessageTrait(js);
-      expect(Array.isArray(d.examples()));
-      expect(d.examples().length).to.equals(js.examples.length);
-      expect(d.examples()[0]).to.be.an.instanceOf(MessageExample);
+      expect(Array.isArray(d.examples())).to.be.equal(true);
+      expect(d.examples()).to.be.equal(js.examples);
     });
   });
 

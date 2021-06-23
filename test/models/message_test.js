@@ -2,7 +2,6 @@ const { expect } = require('chai');
 const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
 
 const Message = require('../../lib/models/message');
-const MessageExample = require('../../lib/models/message-example');
 
 const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
 const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
@@ -111,11 +110,10 @@ describe('Message', function() {
   });
 
   describe('#examples()', function() {
-    it('should return an array of MessageExample object', function() {
+    it('should return an array of examples', function() {
       const d = new Message(js);
-      expect(Array.isArray(d.examples()));
-      expect(d.examples().length).to.equals(js.examples.length);
-      expect(d.examples()[0]).to.be.an.instanceOf(MessageExample);
+      expect(Array.isArray(d.examples())).to.be.equal(true);
+      expect(d.examples()).to.be.equal(js.examples);
     });
   });
 

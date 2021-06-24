@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
+const js = { schemaFormat: 'mySchema', headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, payload: { test: true }, 'x-parser-original-payload': { testing: true }, correlationId: { test: true }, 'x-parser-original-schema-format': 'application/vnd.apache.avro;version=1.9.0', contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
 
 const Message = require('../../lib/models/message');
 
@@ -25,7 +25,7 @@ describe('Message', function() {
     it('should return a string with the base64 representation of the object when x-parser-message-name extension and name are not available', function() {
       const msg = { ...js, ...{ name: undefined } };
       const d = new Message(msg);
-      expect(d.uid()).to.be.equal('eyJoZWFkZXJzIjp7InByb3BlcnRpZXMiOnsidGVzdDEiOnsidHlwZSI6InN0cmluZyJ9LCJ0ZXN0MiI6eyJ0eXBlIjoibnVtYmVyIn19fSwicGF5bG9hZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtcGF5bG9hZCI6eyJ0ZXN0aW5nIjp0cnVlfSwiY29ycmVsYXRpb25JZCI6eyJ0ZXN0Ijp0cnVlfSwieC1wYXJzZXItb3JpZ2luYWwtc2NoZW1hLWZvcm1hdCI6ImFwcGxpY2F0aW9uL3ZuZC5hcGFjaGUuYXZybzt2ZXJzaW9uPTEuOS4wIiwiY29udGVudFR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIiwidGl0bGUiOiJUZXN0Iiwic3VtbWFyeSI6InRlc3QiLCJkZXNjcmlwdGlvbiI6InRlc3RpbmciLCJleHRlcm5hbERvY3MiOnsidGVzdCI6dHJ1ZX0sInRhZ3MiOlt7Im5hbWUiOiJ0YWcxIn1dLCJiaW5kaW5ncyI6eyJhbXFwIjp7InRlc3QiOnRydWV9fSwiZXhhbXBsZXMiOlt7Im5hbWUiOiJ0ZXN0Iiwic3VtbWFyeSI6InRlc3Qgc3VtbWFyeSIsInBheWxvYWQiOnsidGVzdCI6dHJ1ZX19XSwieC10ZXN0IjoidGVzdGluZyJ9');
+      expect(d.uid()).to.be.equal('eyJzY2hlbWFGb3JtYXQiOiJteVNjaGVtYSIsImhlYWRlcnMiOnsicHJvcGVydGllcyI6eyJ0ZXN0MSI6eyJ0eXBlIjoic3RyaW5nIn0sInRlc3QyIjp7InR5cGUiOiJudW1iZXIifX19LCJwYXlsb2FkIjp7InRlc3QiOnRydWV9LCJ4LXBhcnNlci1vcmlnaW5hbC1wYXlsb2FkIjp7InRlc3RpbmciOnRydWV9LCJjb3JyZWxhdGlvbklkIjp7InRlc3QiOnRydWV9LCJ4LXBhcnNlci1vcmlnaW5hbC1zY2hlbWEtZm9ybWF0IjoiYXBwbGljYXRpb24vdm5kLmFwYWNoZS5hdnJvO3ZlcnNpb249MS45LjAiLCJjb250ZW50VHlwZSI6ImFwcGxpY2F0aW9uL2pzb24iLCJ0aXRsZSI6IlRlc3QiLCJzdW1tYXJ5IjoidGVzdCIsImRlc2NyaXB0aW9uIjoidGVzdGluZyIsImV4dGVybmFsRG9jcyI6eyJ0ZXN0Ijp0cnVlfSwidGFncyI6W3sibmFtZSI6InRhZzEifV0sImJpbmRpbmdzIjp7ImFtcXAiOnsidGVzdCI6dHJ1ZX19LCJleGFtcGxlcyI6W3sibmFtZSI6InRlc3QiLCJzdW1tYXJ5IjoidGVzdCBzdW1tYXJ5IiwicGF5bG9hZCI6eyJ0ZXN0Ijp0cnVlfX1dLCJ4LXRlc3QiOiJ0ZXN0aW5nIn0=');
     });
   });
   
@@ -70,7 +70,7 @@ describe('Message', function() {
   describe('#schemaFormat()', function() {
     it('should return a string', function() {
       const d = new Message(js);
-      expect(d.schemaFormat()).to.equal('application/schema+json;version=draft-07');
+      expect(d.schemaFormat()).to.equal('mySchema');
     });
   });
 

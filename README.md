@@ -49,7 +49,7 @@ npm install @asyncapi/parser
 const parser = require('@asyncapi/parser');
 
 const doc = await parser.parse(`
-  asyncapi: '2.0.0'
+  asyncapi: '2.1.0'
   info:
     title: Example
     version: '0.1.0'

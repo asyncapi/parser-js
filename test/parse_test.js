@@ -605,7 +605,7 @@ it('should apply `x-parser-spec-parsed` extension', async function() {
 });
 
 it('should parse and include examples', async function() {
-  var result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  let result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');

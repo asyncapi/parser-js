@@ -65,6 +65,15 @@ describe('AsyncAPIDocument', function() {
     });
   });
 
+  describe('assignUidToComponentParameterSchemas()', function() {
+    it('should assign uids to component parameters', function() {
+      const inputDoc = { channels: { 'smartylighting/{streetlightId}': {}, components: { parameters: { streetlightId: { schema: { type: 'string' } } } } } };
+      const expectedDoc = { channels: { 'smartylighting/{streetlightId}': {}, components: { parameters: {streetlightId: { schema: { type: 'string', 'x-parser-schema-id': 'streetlightId' } } } } }, 'x-parser-spec-parsed': true };
+      const d = new AsyncAPIDocument(inputDoc);
+      expect(d.json()).to.be.deep.equal(expectedDoc);
+    });
+  });
+
   describe('#info()', function() {
     it('should return an info object', function() {
       const doc = { info: { title: 'Test', version: '1.2.3', license: { name: 'Apache 2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' } } };

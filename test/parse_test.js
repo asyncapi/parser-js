@@ -663,4 +663,12 @@ describe('registerSchemaParser()', function() {
       parser.registerSchemaParser(parserModule);
     }, expectedErrorObject);
   });
+
+  it('should show that for 2.0 default schema format is 2.0 and for 2.1 it is 2.1', async function() {
+    const result20 = await parser.parse(inputYAML, { path: __filename });
+    const result21 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+    console.log(result20.channel('mychannel').publish().messages()[0]._json);
+    expect(result20.channel('mychannel').publish().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.0.0');
+    expect(result21.channel('myChannel').subscribe().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.1.0');
+  });
 });

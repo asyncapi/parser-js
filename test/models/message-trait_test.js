@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const js = { headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, correlationId: { test: true }, contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
+const js = { schemaFormat: 'mySchema', headers: { properties: { test1: { type: 'string' }, test2: { type: 'number' } } }, correlationId: { test: true }, contentType: 'application/json', name: 'test', title: 'Test', summary: 'test', description: 'testing', externalDocs: { test: true }, tags: [{ name: 'tag1' }], bindings: { amqp: { test: true } }, examples: [{name: 'test', summary: 'test summary', payload: {test: true}}], 'x-test': 'testing' };
 
 const MessageTrait = require('../../lib/models/message-trait');
 
@@ -50,7 +50,7 @@ describe('MessageTrait', function() {
   describe('#schemaFormat()', function() {
     it('should return a string', function() {
       const d = new MessageTrait(js);
-      expect(d.schemaFormat()).to.equal('application/schema+json;version=draft-07');
+      expect(d.schemaFormat()).to.equal('mySchema');
     });
   });
 

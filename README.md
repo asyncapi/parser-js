@@ -78,7 +78,7 @@ console.log(doc.info().title());
 ```js
 const parser = require('@asyncapi/parser');
 
-const doc = await parser.parseUrl('https://my.server.com/example-asyncapi.yaml');
+const doc = await parser.parseFromUrl('https://my.server.com/example-asyncapi.yaml');
 
 console.log(doc.info().title());
 // => Example

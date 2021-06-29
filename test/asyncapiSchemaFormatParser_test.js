@@ -98,6 +98,65 @@ describe('asyncapiSchemaFormatParser', function() {
     expect(async () => await parser.parse(parsedInput)).to.not.throw();
   });
 
+  it('should handle true/false JSON Schemas', async function() {
+    const inputSpec = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Example Spec',
+        version: '1.0.0',
+      },
+      channels: {
+        testChannel: {
+          publish: {
+            message: {
+              payload: {
+                type: 'object',
+                properties: {
+                  trueSchema: true,
+                  falseSchema: false,
+                  normalSchema: {
+                    type: 'string',
+                  }
+                },
+              }
+            }
+          },
+          subscribe: {
+            message: {
+              headers: true,
+              payload: false,
+            }
+          },
+        },
+        testChanne2: {
+          publish: {
+            message: {
+              payload: true,
+            }
+          }
+        }
+      },
+      components: {
+        schemas: {
+          testSchema: {
+            type: 'object',
+            properties: {
+              trueSchema: true,
+              falseSchema: false,
+              normalSchema: {
+                type: 'string',
+              }
+            },
+          },
+          anySchema: true,
+          cannotBeDefined: false,
+        }
+      }
+    };
+    
+    expect(async () => await parser.parse(inputSpec)).to.not.throw();
+  });
+
   it('should deep clone schema into x-parser-original-payload', async function() {
     const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/asyncapi-complex-schema.yml'), 'utf8');
     const expectedOriginalPayload = {

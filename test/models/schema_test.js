@@ -573,6 +573,28 @@ describe('Schema', function() {
     });
   });
 
+  describe('#isBooleanSchema()', function() {
+    it('should return a true when schema is true', function() {
+      const d = new Schema(true);
+      expect(d.isBooleanSchema()).to.be.equal(true);
+    });
+
+    it('_json property should equal to true when schema is true', function() {
+      const d = new Schema(true);
+      expect(d.json()).to.be.equal(true);
+    });
+
+    it('should return a true when schema is false', function() {
+      const d = new Schema(false);
+      expect(d.isBooleanSchema()).to.be.equal(true);
+    });
+
+    it('_json property should equal to false when schema is false', function() {
+      const d = new Schema(false);
+      expect(d.json()).to.be.equal(false);
+    });
+  });
+
   describe('#isCircular()', function() {
     it('should return a boolean', function() {
       const doc = { 'x-parser-circular': true};

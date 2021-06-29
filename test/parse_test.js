@@ -611,6 +611,41 @@ it('should apply `x-parser-spec-parsed` extension', async function() {
   await expect(parsedSpec.json()[String(xParserSpecParsed)]).to.equal(true);
 });
 
+it('should parse and include examples', async function() {
+  let result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-headers.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-optional.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal(undefined);
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal(undefined);
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+});
+
+it('should fail on invalid examples', async function() {
+  const expectedErrorObject = {
+    type: 'https://github.com/asyncapi/parser-js/validation-errors',
+    title: 'There were errors validating the AsyncAPI document.',
+  };
+
+  await checkErrorWrapper(async () => {
+    await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  }, expectedErrorObject);
+});
+
 describe('registerSchemaParser()', function() {
   it('no errors can be thrown', function() {
     const parserModule = {
@@ -634,5 +669,13 @@ describe('registerSchemaParser()', function() {
     await checkErrorWrapper(async () => {
       parser.registerSchemaParser(parserModule);
     }, expectedErrorObject);
+  });
+
+  it('should show that for 2.0 default schema format is 2.0 and for 2.1 it is 2.1', async function() {
+    const result20 = await parser.parse(inputYAML, { path: __filename });
+    const result21 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+
+    expect(result20.channel('mychannel').publish().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.0.0');
+    expect(result21.channel('myChannel').subscribe().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.1.0');
   });
 });

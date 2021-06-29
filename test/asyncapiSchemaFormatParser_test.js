@@ -48,18 +48,6 @@ describe('asyncapiSchemaFormatParser', function() {
         }
       },
       {
-        title: '/channels/mychannel/publish/message/payload/additionalProperties should be object',
-        location: {
-          jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
-          startLine: 13,
-          startColumn: 38,
-          startOffset: offset(252, 13),
-          endLine: 15,
-          endColumn: 15,
-          endOffset: offset(297, 15)
-        }
-      },
-      {
         title: '/channels/mychannel/publish/message/payload/additionalProperties should be boolean',
         location: {
           jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',

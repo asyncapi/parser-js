@@ -14,8 +14,6 @@
     "types": "jsdoc -t \"node_modules/tsd-jsdoc/dist\" -r lib -d \"./\" && node \"./scripts/fix-ts-types.js\"",
     "prepublishOnly": "npm run bundle && npm run docs && npm run types",
     "release": "semantic-release",
-    "get:version": "echo $npm_package_version",
-    "get:name": "echo $npm_package_name",
     "lint": "eslint --max-warnings 0 --config \".eslintrc\" \".\"",
     "test:lib": "nyc --silent --no-clean mocha --exclude \"test/browser_test.js\" --exclude \"test/parseFromUrl_test.js\" --recursive",
     "test:parseFromUrl": "nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",

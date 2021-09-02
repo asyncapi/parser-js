@@ -1,7 +1,10 @@
+#This action is centrally managed in https://github.com/asyncapi/.github/
+#Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in above mentioned repo
+
 name: Automerge release bump PR
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - labeled
       - unlabeled
@@ -14,19 +17,16 @@ on:
   pull_request_review:
     types:
       - submitted
-  check_suite: 
-    types:
-      - completed
-  status: {}
   
 jobs:
 
   autoapprove:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Autoapproving
-        uses: hmarr/auto-approve-action@v2.0.0
-        if: github.actor == 'asyncapi-bot' || github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        uses: hmarr/auto-approve-action@v2
+        if: github.actor == ('asyncapi-bot' || github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]') && !contains(github.event.pull_request.labels.*.name, 'released')
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Automerging
-        uses: pascalgn/automerge-action@v0.7.5
+        uses: pascalgn/automerge-action@v0.13.0
         if: github.actor == 'asyncapi-bot' || github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
@@ -43,5 +43,5 @@ jobs:
           MERGE_LABELS: ""
           MERGE_METHOD: "squash"
           MERGE_COMMIT_MESSAGE: "pull-request-title"
-          MERGE_RETRIES: "10"
-          MERGE_RETRY_SLEEP: "10000"
+          MERGE_RETRIES: "20"
+          MERGE_RETRY_SLEEP: "30000"

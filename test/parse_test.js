@@ -3,58 +3,46 @@ const chaiAsPromised = require('chai-as-promised');
 const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
-const ParserError = require('../lib/errors/parser-error');
-const { offset } = require('./testsUtils'); 
+const { xParserSpecParsed } = require('../lib/constants');
+const { offset, checkErrorWrapper } = require('./testsUtils');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 const invalidYAML = fs.readFileSync(path.resolve(__dirname, './wrong/malformed-asyncapi.yaml'), 'utf8');
 const inputYAML = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.yaml'), 'utf8');
+const inputYAMLNoComponents = fs.readFileSync(path.resolve(__dirname, './good/asyncapi-no-components.yml'), 'utf8');
+const inputYAMLNoChannels = fs.readFileSync(path.resolve(__dirname, './good/asyncapi-no-channels.yml'), 'utf8');
+const inputYAMLMessagesChannels = fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-channels.yml'), 'utf8');
 const inputYAMLCircular = fs.readFileSync(path.resolve(__dirname, './good/circular-refs.yaml'), 'utf8');
 const inputJSON = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.json'), 'utf8');
 const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.yaml'), 'utf8');
 const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.json'), 'utf8');
-const outputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
-const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
-const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}';
+const outputJSONForObjectInput = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"testSchema"}}},"x-parser-spec-parsed":true}';
+const outputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
+const outputJSONNoComponents = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"/test/tester":{"subscribe":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}},"x-parser-spec-parsed":true}';
+const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"test": true,"version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}},"test":true,"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
+const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"test":true,"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"test":true,"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}';
 const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":null}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
-
-/* eslint-disable sonarjs/cognitive-complexity */
-/**
- * Disabled the rule for this function as there is no way to make it shorter in a meaningfull way
- * This function should always be used in tests where errors are evaluated to make sure they always work even if proper error is not thrown
- * @private
- * @param  {Function} fn Function that you want to test
- * @param  {Object} validationObject Error object to evaluate against the error thrown by fn()
-*/
-const checkErrorWrapper = async (fn, validationObject) => {
-  const { type, message, title, refs, detail, location, validationErrors, parsedJSON } = validationObject;
-
-  try {
-    await fn();
-    throw Error('This error should not be reachable. If you reached it, it means the function did not throw a proper error and executed successfully.');
-  } catch (e) {
-    const isProperError = e instanceof ParserError;
-    if (!isProperError) console.log(e);
-
-    if (isProperError) expect(e instanceof ParserError).to.equal(true);
-    if (type) expect(e).to.have.own.property('type', type);
-    if (message) expect(e).to.have.own.property('message', message);
-    if (title) expect(e).to.have.own.property('title', title);
-    if (detail) expect(e).to.have.own.property('detail', detail);
-    if (refs) expect(e.refs).to.deep.equal(refs);
-    if (location) expect(e.location).to.deep.equal(location);
-    if (validationErrors) expect(e.validationErrors).to.deep.equal(validationErrors);
-    if (parsedJSON) expect(JSON.stringify(e.parsedJSON)).to.deep.equal(parsedJSON);
-  }
-};
+const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}},"x-parser-spec-parsed":true}';
+const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}},"x-parser-spec-parsed":true}';
 
 describe('parse()', function() {
   it('should parse YAML', async function() {
     const result = await parser.parse(inputYAML, { path: __filename });
     expect(JSON.stringify(result.json())).to.equal(outputJSON);
+  });
+  
+  it('should parse AsyncAPI document passed as JS object', async function() {
+    const object = JSON.parse(inputJSON);
+    const result = await parser.parse(object, { path: __filename });
+    expect(JSON.stringify(result.json())).to.equal(outputJSONForObjectInput);
+  });
+
+  it('should parse YAML correctly when no components object', async function() {
+    const result = await parser.parse(inputYAMLNoComponents, { path: __filename });
+    expect(JSON.stringify(result.json())).to.equal(outputJSONNoComponents);
   });
 
   it('should parse 2 AsyncAPI specs in Promise.all() and not fail with resolving references', async function() {
@@ -66,22 +54,32 @@ describe('parse()', function() {
     expect(JSON.stringify(result[0].json())).to.equal(outputJSON);
     expect(JSON.stringify(result[1].json())).to.equal(outputJSON);
   });
+
+  it('should apply traits to messages even with empty channels object', async function() {
+    const result = await parser.parse(inputYAMLNoChannels, { path: __filename });
+    expect(JSON.stringify(result.json())).to.equal(outputJSONNoChannels);
+  });  
+  
+  it('should apply traits to messages used and not used in a channel', async function() {
+    const result = await parser.parse(inputYAMLMessagesChannels, { path: __filename });
+    expect(JSON.stringify(result.json())).to.equal(outputJSONMessagesChannels);
+  });
   
   it('should fail when asyncapi is not valid', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: invalidAsyncAPI,
+      parsedJSON: JSON.parse(invalidAsyncAPI),
       validationErrors: [{
         title: '/info should have required property \'title\'',
         location: { 
           endColumn: 31,
           endLine: 1,
-          endOffset: offset(29, 1),
+          endOffset: 29,
           jsonPointer: '/info',
           startColumn: 29,
           startLine: 1,
-          startOffset: offset(27, 1)
+          startOffset: 27
         }
       },
       {
@@ -89,11 +87,11 @@ describe('parse()', function() {
         location: { 
           endColumn: 31,
           endLine: 1,
-          endOffset: offset(29, 1),
+          endOffset: 29,
           jsonPointer: '/info',
           startColumn: 29,
           startLine: 1,
-          startOffset: offset(27, 1) 
+          startOffset: 27 
         }
       },
       {
@@ -111,21 +109,46 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: invalidYamlOutput,
+      parsedJSON: JSON.parse(invalidYamlOutput),
       validationErrors: [
+        {
+          title: '/ should NOT have additional properties',
+          location: {
+            jsonPointer: '/test',
+            startLine: 15,
+            startColumn: 1,
+            startOffset: offset(305,15),
+            endLine: 15,
+            endColumn: 11,
+            endOffset: offset(315,15)
+          }
+        },
+        {
+          title: '/info should NOT have additional properties',
+          location: {
+            jsonPointer: '/info/test',
+            startLine: 3,
+            startColumn: 3,
+            startOffset: offset(24,3),
+            endLine: 3,
+            endColumn: 13,
+            endOffset: offset(34,3)
+          }
+        },
         {
           title: '/info should have required property \'title\'',
           location: {
             jsonPointer: '/info',
             startLine: 2,
             startColumn: 1,
-            startOffset: offset(16, 2),
-            endLine: 3,
+            startOffset: offset(16,2),
+            endLine: 4,
             endColumn: 19,
-            endOffset: offset(40, 3),
+            endOffset: offset(53,4)
           }
         }
       ]
+
     };
 
     await checkErrorWrapper(async () => {
@@ -164,28 +187,53 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',
-      parsedJSON: invalidJsonOutput,
+      parsedJSON: JSON.parse(invalidJsonOutput),
       validationErrors: [
+        {
+          title: '/ should NOT have additional properties',
+          location: {
+            jsonPointer: '/test',
+            startLine: 23,
+            startColumn: 11,
+            startOffset: offset(299,23),
+            endLine: 23,
+            endColumn: 15,
+            endOffset: offset(303,23)
+          }
+        },
+        {
+          title: '/info should NOT have additional properties',
+          location: {
+            jsonPointer: '/info/test',
+            startLine: 4,
+            startColumn: 12,
+            startOffset: offset(45,4),
+            endLine: 4,
+            endColumn: 16,
+            endOffset: offset(49,4)
+          }
+        },
         {
           title: '/info should have required property \'title\'',
           location: {
             jsonPointer: '/info',
             startLine: 3,
             startColumn: 11,
-            startOffset: offset(33, 3),
-            endLine: 5,
+            startOffset: offset(33,3),
+            endLine: 6,
             endColumn: 4,
-            endOffset: offset(58, 5),
+            endOffset: offset(74,6)
           }
         }
       ]
+
     };
 
     await checkErrorWrapper(async () => {
       await parser.parse(invalidAsyncpiJSON, { path: __filename });
     }, expectedErrorObject);
   });
-  
+
   it('should fail when it is not possible to convert asyncapi to json', async function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/impossible-to-convert-to-json',
@@ -202,7 +250,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/missing-asyncapi-field',
       title: 'The `asyncapi` field is missing.',
-      parsedJSON: '{"bad":true}'
+      parsedJSON: JSON.parse('{"bad":true}')
     };
 
     await checkErrorWrapper(async () => {
@@ -215,16 +263,16 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/unsupported-version',
       title: 'Version 1.2.0 is not supported.',
       detail: 'Please use latest version of the specification.',
-      parsedJSON: '{"asyncapi":"1.2.0"}',
+      parsedJSON: JSON.parse('{"asyncapi":"1.2.0"}'),
       validationErrors: [
         {
           jsonPointer: '/asyncapi',
           startLine: 1,
           startColumn: 1,
-          startOffset: offset(0, 1),
+          startOffset: 0,
           endLine: 1,
           endColumn: 16,
-          endOffset: offset(15, 1),
+          endOffset: 15
         }
       ]
     };
@@ -239,7 +287,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-yaml',
       title: 'The provided YAML is not valid.',
       detail: 'duplicated mapping key at line 2, column -4:\n    bad:\n    ^',
-      location: { startOffset: offset(5, 2), startLine: 2, startColumn: -4 }
+      location: { startOffset: 5, startLine: 2, startColumn: -4 }
     };
 
     await checkErrorWrapper(async () => {
@@ -251,7 +299,7 @@ describe('parse()', function() {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/dereference-error',
       title: `Error opening file "${path.resolve(process.cwd(), 'refs/refed.yaml')}" \nENOENT: no such file or directory, open '${path.resolve(process.cwd(), 'refs/refed.yaml')}'`,
-      parsedJSON: outputJsonWithRefs,
+      parsedJSON: JSON.parse(outputJsonWithRefs),
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
@@ -441,7 +489,7 @@ describe('parse()', function() {
       type: 'https://github.com/asyncapi/parser-js/invalid-json',
       title: 'The provided JSON is not valid.',
       detail: 'Unexpected token j in JSON at position 12 while parsing near \' {"invalid "json" }\'',
-      location: { startOffset: offset(12, 1), startLine: 1, startColumn: 12 }
+      location: { startOffset: 12, startLine: 1, startColumn: 12 }
     };
 
     await checkErrorWrapper(async () => {
@@ -506,6 +554,22 @@ describe('parse()', function() {
     }, expectedErrorObject);
   });
 
+  it('Should include schemas after circular property', async function() {
+    const input = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"test":{"publish":{"message":{"payload":{"$ref":"#/components/schemas/testSchema"}}}}},"components":{"schemas":{"testSchema":{"$id":"testSchema","type":"object","test":true,"properties":{"recursiveTestProp":{"$ref":"#/components/schemas/testSchema"},"testProp":{"$id":"testString","type":"string"}}}}}}';
+    const result = await parser.parse(input, { path: __filename });
+    const schemas = new Map();
+    const cb = (schema) => {
+      schemas.set(schema.uid(), schema);
+    };
+    result.traverseSchemas(cb);
+
+    //Ensure the actual keys are as expected
+    const schemaKeys = Array.from(schemas.keys());
+    expect(schemaKeys).to.deep.equal([
+      'testSchema',
+      'testString'
+    ]);
+  });
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
     expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(true);
@@ -530,15 +594,56 @@ describe('parse()', function() {
 });
 
 it('should not apply traits', async function() {
-  const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
+  const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
   const result = await parser.parse(inputYAML, { path: __filename, applyTraits: false });
+
   await expect(JSON.stringify(result.json())).to.equal(outputJsonNoApplyTraits);
 });
 
 it('should apply traits', async function() {
-  const outputJsonApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
+  const outputJsonApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
   const result = await parser.parse(inputYAML, { path: __filename, applyTraits: true });
   await expect(JSON.stringify(result.json())).to.equal(outputJsonApplyTraits);
+});
+
+it('should apply `x-parser-spec-parsed` extension', async function() {
+  const parsedSpec = await parser.parse(inputYAML, { path: __filename });
+  await expect(parsedSpec.json()[String(xParserSpecParsed)]).to.equal(true);
+});
+
+it('should parse and include examples', async function() {
+  let result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-headers.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-optional.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal(undefined);
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal(undefined);
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+});
+
+it('should fail on invalid examples', async function() {
+  const expectedErrorObject = {
+    type: 'https://github.com/asyncapi/parser-js/validation-errors',
+    title: 'There were errors validating the AsyncAPI document.',
+  };
+
+  await checkErrorWrapper(async () => {
+    await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  }, expectedErrorObject);
 });
 
 describe('registerSchemaParser()', function() {
@@ -564,5 +669,13 @@ describe('registerSchemaParser()', function() {
     await checkErrorWrapper(async () => {
       parser.registerSchemaParser(parserModule);
     }, expectedErrorObject);
+  });
+
+  it('should show that for 2.0 default schema format is 2.0 and for 2.1 it is 2.1', async function() {
+    const result20 = await parser.parse(inputYAML, { path: __filename });
+    const result21 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+
+    expect(result20.channel('mychannel').publish().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.0.0');
+    expect(result21.channel('myChannel').subscribe().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.1.0');
   });
 });

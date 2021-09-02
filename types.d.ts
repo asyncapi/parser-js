@@ -1,3 +1,37 @@
+/**
+ * The different kind of stages when crawling a schema.
+ * @property NEW_SCHEMA - The crawler just started crawling a schema.
+ * @property END_SCHEMA - The crawler just finished crawling a schema.
+ */
+declare type SchemaIteratorCallbackType = {
+    NEW_SCHEMA: string;
+    END_SCHEMA: string;
+};
+
+/**
+ * The different types of schemas you can iterate
+ * @property parameters - Crawl all schemas in parameters
+ * @property payloads - Crawl all schemas in payloads
+ * @property headers - Crawl all schemas in headers
+ * @property components - Crawl all schemas in components
+ * @property objects - Crawl all schemas of type object
+ * @property arrays - Crawl all schemas of type array
+ * @property oneOfs - Crawl all schemas in oneOf's
+ * @property allOfs - Crawl all schemas in allOf's
+ * @property anyOfs - Crawl all schemas in anyOf's
+ */
+declare type SchemaTypesToIterate = {
+    parameters: string;
+    payloads: string;
+    headers: string;
+    components: string;
+    objects: string;
+    arrays: string;
+    oneOfs: string;
+    allOfs: string;
+    anyOfs: string;
+};
+
 
 
 /**
@@ -107,6 +141,9 @@ declare module "@asyncapi/parser" {
     }
     interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
     }
+    /**
+     * Implements functions to deal with the AsyncAPI document.
+     */
     class AsyncAPIDocument extends Base implements MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
         version(): string;
         info(): Info;
@@ -137,6 +174,11 @@ declare module "@asyncapi/parser" {
         allMessages(): Map<string, Message>;
         allSchemas(): Map<string, Schema>;
         hasCircular(): boolean;
+        /**
+         * Traverse schemas in the document and select which types of schemas to include.
+         * By default all schemas are iterated
+         */
+        traverseSchemas(callback: TraverseSchemas, schemaTypesToIterate: SchemaTypesToIterate[]): void;
         hasTags(): boolean;
         tags(): Tag[];
         tagNames(): string[];
@@ -208,6 +250,13 @@ declare module "@asyncapi/parser" {
          */
         ext(key: string): any;
     }
+    /**
+     * Callback used when crawling a schema.
+     * @param schema - which is being crawled
+     * @param propName - if the schema is from a property get the name of such
+     * @param callbackType - is the schema a new one or is the crawler finishing one.
+     */
+    type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
     class Base {
         json(): any;
     }
@@ -803,6 +852,7 @@ declare module "@asyncapi/parser" {
         readOnly(): boolean;
         writeOnly(): boolean;
         examples(): any[];
+        isBooleanSchema(): boolean;
         isCircular(): boolean;
         hasCircularProps(): boolean;
         circularProps(): string[];
@@ -1015,29 +1065,33 @@ declare module "@asyncapi/parser" {
         ext(key: string): any;
     }
     /**
+     * The complete list of parse configuration options used to parse the given data.
+     * @property path - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
+     * @property parse - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property resolve - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property applyTraits - Whether to resolve and apply traits or not. Defaults to true.
+     */
+    type ParserOptions = {
+        path: string;
+        parse: any;
+        resolve: any;
+        applyTraits: boolean;
+    };
+    /**
      * Parses and validate an AsyncAPI document from YAML or JSON.
      * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
-     * @param [options] - Configuration options.
-     * @param [options.path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
-     * @param [options.parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @param [options.resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @param [options.applyTraits = true] - Whether to resolve and apply traits or not.
+     * @param options - Configuration options object {@link ParserOptions}
      * @returns The parsed AsyncAPI document.
      */
-    function parse(asyncapiYAMLorJSON: string, options?: {
-        path?: string;
-        parse?: any;
-        resolve?: any;
-        applyTraits?: any;
-    }): Promise<AsyncAPIDocument>;
+    function parse(asyncapiYAMLorJSON: string | any, options: ParserOptions): Promise<AsyncAPIDocument>;
     /**
      * Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
      * @param url - URL where the AsyncAPI document is located.
      * @param [fetchOptions] - Configuration to pass to the {@link https://developer.mozilla.org/en-US/docs/Web/API/Request|fetch} call.
-     * @param [options] - Configuration to pass to the {@link module:Parser#parse} method.
+     * @param [options] - Configuration to pass to the {@link ParserOptions} method.
      * @returns The parsed AsyncAPI document.
      */
-    function parseFromUrl(url: string, fetchOptions?: any, options?: any): Promise<AsyncAPIDocument>;
+    function parseFromUrl(url: string, fetchOptions?: any, options?: ParserOptions): Promise<AsyncAPIDocument>;
     /**
      * Registers a new schema parser. Schema parsers are in charge of parsing and transforming payloads to AsyncAPI Schema format.
      * @param parserModule - The schema parser module containing parse() and getMimeTypes() functions.

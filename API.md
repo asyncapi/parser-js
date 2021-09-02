@@ -25,6 +25,17 @@
 </dd>
 </dl>
 
+## Typedefs
+
+<dl>
+<dt><a href="#SchemaIteratorCallbackType">SchemaIteratorCallbackType</a></dt>
+<dd><p>The different kind of stages when crawling a schema.</p>
+</dd>
+<dt><a href="#SchemaTypesToIterate">SchemaTypesToIterate</a></dt>
+<dd><p>The different types of schemas you can iterate</p>
+</dd>
+</dl>
+
 <a name="module_@asyncapi/parser"></a>
 
 ## @asyncapi/parser
@@ -292,6 +303,7 @@
             * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
             * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
             * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+            * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
             * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
             * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
             * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
@@ -384,6 +396,8 @@
             * [.extension(key)](#module_@asyncapi/parser+Tag+extension) ⇒ <code>any</code>
             * [.hasExt(key)](#module_@asyncapi/parser+Tag+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+Tag+ext) ⇒ <code>any</code>
+    * _static_
+        * [.TraverseSchemas](#module_@asyncapi/parser.TraverseSchemas) ⇒ <code>boolean</code>
     * _inner_
         * [~ParserError](#module_@asyncapi/parser+ParserError) ⇐ <code>Error</code>
             * [new ParserError(definition)](#new_module_@asyncapi/parser+ParserError_new)
@@ -408,6 +422,7 @@
             * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
             * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
             * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
+            * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
             * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
             * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
             * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
@@ -440,9 +455,10 @@
             * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
         * [~Base](#module_@asyncapi/parser+Base)
             * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
-        * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+        * [~parse(asyncapiYAMLorJSON, options)](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
+        * [~ParserOptions](#module_@asyncapi/parser..ParserOptions) : <code>Object</code>
 
 <a name="module_@asyncapi/parser+ChannelParameter"></a>
 
@@ -2101,6 +2117,7 @@ Implements functions to deal with a Schema object.
     * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
     * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
     * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+    * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
     * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
     * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
     * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
@@ -2305,6 +2322,10 @@ Implements functions to deal with a Schema object.
 <a name="module_@asyncapi/parser+Schema+examples"></a>
 
 #### schema.examples() ⇒ <code>Array.&lt;any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+isBooleanSchema"></a>
+
+#### schema.isBooleanSchema() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
 <a name="module_@asyncapi/parser+Schema+isCircular"></a>
 
@@ -2961,6 +2982,20 @@ Implements functions to deal with a Tag object.
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
+<a name="module_@asyncapi/parser.TraverseSchemas"></a>
+
+### @asyncapi/parser.TraverseSchemas ⇒ <code>boolean</code>
+Callback used when crawling a schema.
+
+**Kind**: static typedef of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Returns**: <code>boolean</code> - should the crawler continue crawling the schema?  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | <code>Schema</code> | which is being crawled |
+| propName | <code>String</code> | if the schema is from a property get the name of such |
+| callbackType | [<code>SchemaIteratorCallbackType</code>](#SchemaIteratorCallbackType) | is the schema a new one or is the crawler finishing one. |
+
 <a name="module_@asyncapi/parser+ParserError"></a>
 
 ### @asyncapi/parser~ParserError ⇐ <code>Error</code>
@@ -3044,6 +3079,7 @@ Implements functions to deal with the AsyncAPI document.
     * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
     * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
     * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
+    * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
     * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
     * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
     * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
@@ -3161,6 +3197,19 @@ Implements functions to deal with the AsyncAPI document.
 
 #### asyncAPIDocument.hasCircular() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+<a name="module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas"></a>
+
+#### asyncAPIDocument.traverseSchemas(callback, schemaTypesToIterate)
+Traverse schemas in the document and select which types of schemas to include.
+By default all schemas are iterated
+
+**Kind**: instance method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+
+| Param | Type |
+| --- | --- |
+| callback | <code>TraverseSchemas</code> | 
+| schemaTypesToIterate | [<code>Array.&lt;SchemaTypesToIterate&gt;</code>](#SchemaTypesToIterate) | 
+
 <a name="module_@asyncapi/parser+AsyncAPIDocument+hasTags"></a>
 
 #### asyncAPIDocument.hasTags() ⇒ <code>boolean</code>
@@ -3383,20 +3432,16 @@ Implements common functionality for all the models.
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
 <a name="module_@asyncapi/parser..parse"></a>
 
-### @asyncapi/parser~parse(asyncapiYAMLorJSON, [options]) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+### @asyncapi/parser~parse(asyncapiYAMLorJSON, options) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
 Parses and validate an AsyncAPI document from YAML or JSON.
 
 **Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 **Returns**: <code>Promise.&lt;AsyncAPIDocument&gt;</code> - The parsed AsyncAPI document.  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| asyncapiYAMLorJSON | <code>String</code> |  | An AsyncAPI document in JSON or YAML format. |
-| [options] | <code>Object</code> |  | Configuration options. |
-| [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
-| [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
+| Param | Type | Description |
+| --- | --- | --- |
+| asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> | An AsyncAPI document in JSON or YAML format. |
+| options | <code>ParserOptions</code> | Configuration options object [ParserOptions](ParserOptions) |
 
 <a name="module_@asyncapi/parser..parseFromUrl"></a>
 
@@ -3410,7 +3455,7 @@ Fetches an AsyncAPI document from the given URL and passes its content to the `p
 | --- | --- | --- |
 | url | <code>String</code> | URL where the AsyncAPI document is located. |
 | [fetchOptions] | <code>Object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
-| [options] | <code>Object</code> | Configuration to pass to the [module:Parser#parse](module:Parser#parse) method. |
+| [options] | <code>ParserOptions</code> | Configuration to pass to the [ParserOptions](ParserOptions) method. |
 
 <a name="module_@asyncapi/parser..registerSchemaParser"></a>
 
@@ -3422,6 +3467,21 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | Param | Type | Description |
 | --- | --- | --- |
 | parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
+
+<a name="module_@asyncapi/parser..ParserOptions"></a>
+
+### @asyncapi/parser~ParserOptions : <code>Object</code>
+The complete list of parse configuration options used to parse the given data.
+
+**Kind**: inner typedef of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
+| parse | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| resolve | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| applyTraits | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
 
 <a name="MixinBindings"></a>
 
@@ -3617,4 +3677,37 @@ Implements functions to deal with the Tags object.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the tag. |
+
+<a name="SchemaIteratorCallbackType"></a>
+
+## SchemaIteratorCallbackType
+The different kind of stages when crawling a schema.
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| NEW_SCHEMA | <code>string</code> | The crawler just started crawling a schema. |
+| END_SCHEMA | <code>string</code> | The crawler just finished crawling a schema. |
+
+<a name="SchemaTypesToIterate"></a>
+
+## SchemaTypesToIterate
+The different types of schemas you can iterate
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| parameters | <code>string</code> | Crawl all schemas in parameters |
+| payloads | <code>string</code> | Crawl all schemas in payloads |
+| headers | <code>string</code> | Crawl all schemas in headers |
+| components | <code>string</code> | Crawl all schemas in components |
+| objects | <code>string</code> | Crawl all schemas of type object |
+| arrays | <code>string</code> | Crawl all schemas of type array |
+| oneOfs | <code>string</code> | Crawl all schemas in oneOf's |
+| allOfs | <code>string</code> | Crawl all schemas in allOf's |
+| anyOfs | <code>string</code> | Crawl all schemas in anyOf's |
 

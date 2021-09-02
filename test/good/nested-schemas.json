@@ -119,7 +119,7 @@
 								"type": "object",
 								"test": true,
 								"properties": {
-									"testprop2": {
+									"testprop1": {
 										"$id": "testComponentSchemaNestedSchemaPropAllOfSchema1Prop1",
 										"test": true,
 										"type": "string"

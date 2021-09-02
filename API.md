@@ -455,9 +455,10 @@
             * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
         * [~Base](#module_@asyncapi/parser+Base)
             * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
-        * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+        * [~parse(asyncapiYAMLorJSON, options)](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
+        * [~ParserOptions](#module_@asyncapi/parser..ParserOptions) : <code>Object</code>
 
 <a name="module_@asyncapi/parser+ChannelParameter"></a>
 
@@ -3431,20 +3432,16 @@ Implements common functionality for all the models.
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
 <a name="module_@asyncapi/parser..parse"></a>
 
-### @asyncapi/parser~parse(asyncapiYAMLorJSON, [options]) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+### @asyncapi/parser~parse(asyncapiYAMLorJSON, options) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
 Parses and validate an AsyncAPI document from YAML or JSON.
 
 **Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 **Returns**: <code>Promise.&lt;AsyncAPIDocument&gt;</code> - The parsed AsyncAPI document.  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> |  | An AsyncAPI document in JSON or YAML format. |
-| [options] | <code>Object</code> |  | Configuration options. |
-| [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
-| [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
+| Param | Type | Description |
+| --- | --- | --- |
+| asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> | An AsyncAPI document in JSON or YAML format. |
+| options | <code>ParserOptions</code> | Configuration options object [ParserOptions](ParserOptions) |
 
 <a name="module_@asyncapi/parser..parseFromUrl"></a>
 
@@ -3458,7 +3455,7 @@ Fetches an AsyncAPI document from the given URL and passes its content to the `p
 | --- | --- | --- |
 | url | <code>String</code> | URL where the AsyncAPI document is located. |
 | [fetchOptions] | <code>Object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
-| [options] | <code>Object</code> | Configuration to pass to the [module:Parser#parse](module:Parser#parse) method. |
+| [options] | <code>ParserOptions</code> | Configuration to pass to the [ParserOptions](ParserOptions) method. |
 
 <a name="module_@asyncapi/parser..registerSchemaParser"></a>
 
@@ -3470,6 +3467,21 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | Param | Type | Description |
 | --- | --- | --- |
 | parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
+
+<a name="module_@asyncapi/parser..ParserOptions"></a>
+
+### @asyncapi/parser~ParserOptions : <code>Object</code>
+The complete list of parse configuration options used to parse the given data.
+
+**Kind**: inner typedef of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
+| parse | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| resolve | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| applyTraits | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
 
 <a name="MixinBindings"></a>
 

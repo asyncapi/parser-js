@@ -1080,10 +1080,10 @@ declare module "@asyncapi/parser" {
     /**
      * Parses and validate an AsyncAPI document from YAML or JSON.
      * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
-     * @param options - Configuration options object {@link ParserOptions}
+     * @param [options] - Configuration options object {@link ParserOptions}
      * @returns The parsed AsyncAPI document.
      */
-    function parse(asyncapiYAMLorJSON: string | any, options: ParserOptions): Promise<AsyncAPIDocument>;
+    function parse(asyncapiYAMLorJSON: string | any, options?: ParserOptions): Promise<AsyncAPIDocument>;
     /**
      * Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
      * @param url - URL where the AsyncAPI document is located.

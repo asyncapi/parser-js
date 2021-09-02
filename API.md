@@ -455,7 +455,7 @@
             * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
         * [~Base](#module_@asyncapi/parser+Base)
             * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
-        * [~parse(asyncapiYAMLorJSON, options)](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+        * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
         * [~ParserOptions](#module_@asyncapi/parser..ParserOptions) : <code>Object</code>
@@ -3432,7 +3432,7 @@ Implements common functionality for all the models.
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
 <a name="module_@asyncapi/parser..parse"></a>
 
-### @asyncapi/parser~parse(asyncapiYAMLorJSON, options) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
+### @asyncapi/parser~parse(asyncapiYAMLorJSON, [options]) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
 Parses and validate an AsyncAPI document from YAML or JSON.
 
 **Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
@@ -3441,7 +3441,7 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 | Param | Type | Description |
 | --- | --- | --- |
 | asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> | An AsyncAPI document in JSON or YAML format. |
-| options | <code>ParserOptions</code> | Configuration options object [ParserOptions](ParserOptions) |
+| [options] | <code>ParserOptions</code> | Configuration options object [ParserOptions](ParserOptions) |
 
 <a name="module_@asyncapi/parser..parseFromUrl"></a>
 

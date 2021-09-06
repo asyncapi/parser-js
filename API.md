@@ -3478,10 +3478,10 @@ The complete list of parse configuration options used to parse the given data.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| path | <code>String</code> | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
-| parse | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| resolve | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| applyTraits | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
+| [path] | <code>String</code> | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
+| [parse] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [resolve] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [applyTraits] | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
 
 <a name="MixinBindings"></a>
 

@@ -3,7 +3,7 @@
  * @property NEW_SCHEMA - The crawler just started crawling a schema.
  * @property END_SCHEMA - The crawler just finished crawling a schema.
  */
- declare type SchemaIteratorCallbackType = {
+declare type SchemaIteratorCallbackType = {
     NEW_SCHEMA: string;
     END_SCHEMA: string;
 };

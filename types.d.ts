@@ -1066,16 +1066,16 @@ declare module "@asyncapi/parser" {
     }
     /**
      * The complete list of parse configuration options used to parse the given data.
-     * @property path - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
-     * @property parse - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @property resolve - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @property applyTraits - Whether to resolve and apply traits or not. Defaults to true.
+     * @property [path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
+     * @property [parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [applyTraits] - Whether to resolve and apply traits or not. Defaults to true.
      */
     type ParserOptions = {
-        path: string;
-        parse: any;
-        resolve: any;
-        applyTraits: boolean;
+        path?: string;
+        parse?: any;
+        resolve?: any;
+        applyTraits?: boolean;
     };
     /**
      * Parses and validate an AsyncAPI document from YAML or JSON.

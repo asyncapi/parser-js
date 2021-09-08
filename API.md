@@ -207,6 +207,8 @@
         * [.Message](#module_@asyncapi/parser+Message) ⇐ <code>MessageTraitable</code>
             * [.uid()](#module_@asyncapi/parser+Message+uid) ⇒ <code>string</code>
             * [.payload()](#module_@asyncapi/parser+Message+payload) ⇒ <code>Schema</code>
+            * [.traits()](#module_@asyncapi/parser+Message+traits) ⇒ <code>Array.&lt;MessageTrait&gt;</code>
+            * [.hasTraits()](#module_@asyncapi/parser+Message+hasTraits) ⇒ <code>boolean</code>
             * [.originalPayload()](#module_@asyncapi/parser+Message+originalPayload) ⇒ <code>any</code>
             * [.originalSchemaFormat()](#module_@asyncapi/parser+Message+originalSchemaFormat) ⇒ <code>string</code>
         * [.OAuthFlow](#module_@asyncapi/parser+OAuthFlow) ⇐ <code>Base</code>
@@ -250,6 +252,8 @@
             * [.ext(key)](#module_@asyncapi/parser+OperationTraitable+ext) ⇒ <code>any</code>
         * [.Operation](#module_@asyncapi/parser+Operation) ⇐ <code>OperationTraitable</code>
             * [.hasMultipleMessages()](#module_@asyncapi/parser+Operation+hasMultipleMessages) ⇒ <code>boolean</code>
+            * [.traits()](#module_@asyncapi/parser+Operation+traits) ⇒ <code>Array.&lt;OperationTrait&gt;</code>
+            * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
             * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
             * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
         * [.PublishOperation](#module_@asyncapi/parser+PublishOperation) ⇐ <code>Operation</code>
@@ -1693,6 +1697,8 @@ Implements functions to deal with a Message object.
 * [.Message](#module_@asyncapi/parser+Message) ⇐ <code>MessageTraitable</code>
     * [.uid()](#module_@asyncapi/parser+Message+uid) ⇒ <code>string</code>
     * [.payload()](#module_@asyncapi/parser+Message+payload) ⇒ <code>Schema</code>
+    * [.traits()](#module_@asyncapi/parser+Message+traits) ⇒ <code>Array.&lt;MessageTrait&gt;</code>
+    * [.hasTraits()](#module_@asyncapi/parser+Message+hasTraits) ⇒ <code>boolean</code>
     * [.originalPayload()](#module_@asyncapi/parser+Message+originalPayload) ⇒ <code>any</code>
     * [.originalSchemaFormat()](#module_@asyncapi/parser+Message+originalSchemaFormat) ⇒ <code>string</code>
 
@@ -1703,6 +1709,14 @@ Implements functions to deal with a Message object.
 <a name="module_@asyncapi/parser+Message+payload"></a>
 
 #### message.payload() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
+<a name="module_@asyncapi/parser+Message+traits"></a>
+
+#### message.traits() ⇒ <code>Array.&lt;MessageTrait&gt;</code>
+**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
+<a name="module_@asyncapi/parser+Message+hasTraits"></a>
+
+#### message.hasTraits() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
 <a name="module_@asyncapi/parser+Message+originalPayload"></a>
 
@@ -2021,12 +2035,22 @@ Implements functions to deal with an Operation object.
 
 * [.Operation](#module_@asyncapi/parser+Operation) ⇐ <code>OperationTraitable</code>
     * [.hasMultipleMessages()](#module_@asyncapi/parser+Operation+hasMultipleMessages) ⇒ <code>boolean</code>
+    * [.traits()](#module_@asyncapi/parser+Operation+traits) ⇒ <code>Array.&lt;OperationTrait&gt;</code>
+    * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
     * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
     * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
 
 <a name="module_@asyncapi/parser+Operation+hasMultipleMessages"></a>
 
 #### operation.hasMultipleMessages() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+<a name="module_@asyncapi/parser+Operation+traits"></a>
+
+#### operation.traits() ⇒ <code>Array.&lt;OperationTrait&gt;</code>
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+<a name="module_@asyncapi/parser+Operation+hasTraits"></a>
+
+#### operation.hasTraits() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
 <a name="module_@asyncapi/parser+Operation+messages"></a>
 

@@ -22,12 +22,33 @@ describe('Operation', function() {
       const d = new Operation(js);
       expect(d.traits()[0].json()).to.equal(js.traits[0]);
     });
+
+    it('should return a list of traits from x-parser-original-traits', function() {
+      const { traits, ...newJs } = js;
+      newJs['x-parser-original-traits'] = traits;
+      const d = new Operation(newJs);
+      expect(d.traits()[0].json()).to.be.equal(newJs['x-parser-original-traits'][0]);
+    });
   });
 
   describe('#hasTraits()', function() {
     it('should return true', function() {
       const d = new Operation(js);
       expect(d.hasTraits()).to.equal(true);
+    });
+
+    it('should return true if in x-parser-original-traits', function() {
+      const { traits, ...newJs } = js;
+      newJs['x-parser-original-traits'] = traits;
+      const d = new Operation(newJs);
+      expect(d.hasTraits()).to.equal(true);
+    });
+
+    it('should return false', function() {
+      // eslint-disable-next-line no-unused-vars
+      const { traits, ...newJs } = js;
+      const d = new Operation(newJs);
+      expect(d.hasTraits()).to.equal(false);
     });
   });
   

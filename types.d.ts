@@ -673,6 +673,8 @@ declare module "@asyncapi/parser" {
     class Message extends MessageTraitable {
         uid(): string;
         payload(): Schema;
+        traits(): MessageTrait[];
+        hasTraits(): boolean;
         originalPayload(): any;
         originalSchemaFormat(): string;
     }
@@ -778,6 +780,8 @@ declare module "@asyncapi/parser" {
      */
     class Operation extends OperationTraitable {
         hasMultipleMessages(): boolean;
+        traits(): OperationTrait[];
+        hasTraits(): boolean;
         messages(): Message[];
         message(): Message;
     }

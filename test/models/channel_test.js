@@ -49,16 +49,19 @@ describe('Channel', function() {
   });
 
   describe('#servers()', function() {
-    it('should return an array of String server names or an empty array', function() {
-      const d1 = new Channel(jsWithServers);
-      const d2 = new Channel(jsWithoutServers);
-      expect(Array.isArray(d1.servers())).to.equal(true);
-      expect(Array.isArray(d2.servers())).to.equal(true);
-      d1.servers().forEach((s, i) => {
+    it('should return an array of String server names if the channel has a servers list', function() {
+      const d = new Channel(jsWithServers);
+      expect(Array.isArray(d.servers())).to.equal(true);
+      d.servers().forEach((s, i) => {
         expect(isString(s)).to.equal(true);
         expect(s).to.equal(jsWithServers.servers[i]);
       });
-      expect(d2.servers().length).to.equal(0);
+    });
+
+    it('should return an empty array if the channel doesn\'t have servers', function() {
+      const d = new Channel(jsWithoutServers);
+      expect(Array.isArray(d.servers())).to.equal(true);
+      expect(d.servers().length).to.equal(0);
     });
   });
 

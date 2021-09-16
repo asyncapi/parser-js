@@ -207,6 +207,8 @@
         * [.Message](#module_@asyncapi/parser+Message) ⇐ <code>MessageTraitable</code>
             * [.uid()](#module_@asyncapi/parser+Message+uid) ⇒ <code>string</code>
             * [.payload()](#module_@asyncapi/parser+Message+payload) ⇒ <code>Schema</code>
+            * [.traits()](#module_@asyncapi/parser+Message+traits) ⇒ <code>Array.&lt;MessageTrait&gt;</code>
+            * [.hasTraits()](#module_@asyncapi/parser+Message+hasTraits) ⇒ <code>boolean</code>
             * [.originalPayload()](#module_@asyncapi/parser+Message+originalPayload) ⇒ <code>any</code>
             * [.originalSchemaFormat()](#module_@asyncapi/parser+Message+originalSchemaFormat) ⇒ <code>string</code>
         * [.OAuthFlow](#module_@asyncapi/parser+OAuthFlow) ⇐ <code>Base</code>
@@ -250,6 +252,8 @@
             * [.ext(key)](#module_@asyncapi/parser+OperationTraitable+ext) ⇒ <code>any</code>
         * [.Operation](#module_@asyncapi/parser+Operation) ⇐ <code>OperationTraitable</code>
             * [.hasMultipleMessages()](#module_@asyncapi/parser+Operation+hasMultipleMessages) ⇒ <code>boolean</code>
+            * [.traits()](#module_@asyncapi/parser+Operation+traits) ⇒ <code>Array.&lt;OperationTrait&gt;</code>
+            * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
             * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
             * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
         * [.PublishOperation](#module_@asyncapi/parser+PublishOperation) ⇐ <code>Operation</code>
@@ -458,6 +462,7 @@
         * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
+        * [~ParserOptions](#module_@asyncapi/parser..ParserOptions) : <code>Object</code>
 
 <a name="module_@asyncapi/parser+ChannelParameter"></a>
 
@@ -1692,6 +1697,8 @@ Implements functions to deal with a Message object.
 * [.Message](#module_@asyncapi/parser+Message) ⇐ <code>MessageTraitable</code>
     * [.uid()](#module_@asyncapi/parser+Message+uid) ⇒ <code>string</code>
     * [.payload()](#module_@asyncapi/parser+Message+payload) ⇒ <code>Schema</code>
+    * [.traits()](#module_@asyncapi/parser+Message+traits) ⇒ <code>Array.&lt;MessageTrait&gt;</code>
+    * [.hasTraits()](#module_@asyncapi/parser+Message+hasTraits) ⇒ <code>boolean</code>
     * [.originalPayload()](#module_@asyncapi/parser+Message+originalPayload) ⇒ <code>any</code>
     * [.originalSchemaFormat()](#module_@asyncapi/parser+Message+originalSchemaFormat) ⇒ <code>string</code>
 
@@ -1702,6 +1709,14 @@ Implements functions to deal with a Message object.
 <a name="module_@asyncapi/parser+Message+payload"></a>
 
 #### message.payload() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
+<a name="module_@asyncapi/parser+Message+traits"></a>
+
+#### message.traits() ⇒ <code>Array.&lt;MessageTrait&gt;</code>
+**Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
+<a name="module_@asyncapi/parser+Message+hasTraits"></a>
+
+#### message.hasTraits() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Message</code>](#module_@asyncapi/parser+Message)  
 <a name="module_@asyncapi/parser+Message+originalPayload"></a>
 
@@ -2020,12 +2035,22 @@ Implements functions to deal with an Operation object.
 
 * [.Operation](#module_@asyncapi/parser+Operation) ⇐ <code>OperationTraitable</code>
     * [.hasMultipleMessages()](#module_@asyncapi/parser+Operation+hasMultipleMessages) ⇒ <code>boolean</code>
+    * [.traits()](#module_@asyncapi/parser+Operation+traits) ⇒ <code>Array.&lt;OperationTrait&gt;</code>
+    * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
     * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
     * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
 
 <a name="module_@asyncapi/parser+Operation+hasMultipleMessages"></a>
 
 #### operation.hasMultipleMessages() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+<a name="module_@asyncapi/parser+Operation+traits"></a>
+
+#### operation.traits() ⇒ <code>Array.&lt;OperationTrait&gt;</code>
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+<a name="module_@asyncapi/parser+Operation+hasTraits"></a>
+
+#### operation.hasTraits() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
 <a name="module_@asyncapi/parser+Operation+messages"></a>
 
@@ -3437,14 +3462,10 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 **Kind**: inner method of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 **Returns**: <code>Promise.&lt;AsyncAPIDocument&gt;</code> - The parsed AsyncAPI document.  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> |  | An AsyncAPI document in JSON or YAML format. |
-| [options] | <code>Object</code> |  | Configuration options. |
-| [options.path] | <code>String</code> |  | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
-| [options.parse] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.resolve] | <code>Object</code> |  | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [options.applyTraits] | <code>Object</code> | <code>true</code> | Whether to resolve and apply traits or not. |
+| Param | Type | Description |
+| --- | --- | --- |
+| asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> | An AsyncAPI document in JSON or YAML format. |
+| [options] | <code>ParserOptions</code> | Configuration options object [ParserOptions](ParserOptions) |
 
 <a name="module_@asyncapi/parser..parseFromUrl"></a>
 
@@ -3458,7 +3479,7 @@ Fetches an AsyncAPI document from the given URL and passes its content to the `p
 | --- | --- | --- |
 | url | <code>String</code> | URL where the AsyncAPI document is located. |
 | [fetchOptions] | <code>Object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
-| [options] | <code>Object</code> | Configuration to pass to the [module:Parser#parse](module:Parser#parse) method. |
+| [options] | <code>ParserOptions</code> | Configuration to pass to the [ParserOptions](ParserOptions) method. |
 
 <a name="module_@asyncapi/parser..registerSchemaParser"></a>
 
@@ -3470,6 +3491,21 @@ Registers a new schema parser. Schema parsers are in charge of parsing and trans
 | Param | Type | Description |
 | --- | --- | --- |
 | parserModule | <code>Object</code> | The schema parser module containing parse() and getMimeTypes() functions. |
+
+<a name="module_@asyncapi/parser..ParserOptions"></a>
+
+### @asyncapi/parser~ParserOptions : <code>Object</code>
+The complete list of parse configuration options used to parse the given data.
+
+**Kind**: inner typedef of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [path] | <code>String</code> | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
+| [parse] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [resolve] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [applyTraits] | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
 
 <a name="MixinBindings"></a>
 

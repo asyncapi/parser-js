@@ -882,7 +882,7 @@ describe('validateChannel()', function () {
       validationErrors: [
         {
           title:
-            'jmsQueue channel does not have a corresponding server object for: unknownServer',
+            'jmsQueue channel is defined for servers that are not defined in the document: unknownServer',
           location: {
             endColumn: 11,
             endLine: 15,

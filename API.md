@@ -59,6 +59,9 @@
             * [.parameters()](#module_@asyncapi/parser+Channel+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
             * [.parameter(name)](#module_@asyncapi/parser+Channel+parameter) ⇒ <code>ChannelParameter</code>
             * [.hasParameters()](#module_@asyncapi/parser+Channel+hasParameters) ⇒ <code>boolean</code>
+            * [.hasServers()](#module_@asyncapi/parser+Channel+hasServers) ⇒ <code>boolean</code>
+            * [.servers()](#module_@asyncapi/parser+Channel+servers) ⇒ <code>Array.&lt;String&gt;</code>
+            * [.server(index)](#module_@asyncapi/parser+Channel+server) ⇒ <code>String</code>
             * [.publish()](#module_@asyncapi/parser+Channel+publish) ⇒ <code>PublishOperation</code>
             * [.subscribe()](#module_@asyncapi/parser+Channel+subscribe) ⇒ <code>SubscribeOperation</code>
             * [.hasPublish()](#module_@asyncapi/parser+Channel+hasPublish) ⇒ <code>boolean</code>
@@ -578,6 +581,9 @@ Implements functions to deal with a Channel object.
     * [.parameters()](#module_@asyncapi/parser+Channel+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
     * [.parameter(name)](#module_@asyncapi/parser+Channel+parameter) ⇒ <code>ChannelParameter</code>
     * [.hasParameters()](#module_@asyncapi/parser+Channel+hasParameters) ⇒ <code>boolean</code>
+    * [.hasServers()](#module_@asyncapi/parser+Channel+hasServers) ⇒ <code>boolean</code>
+    * [.servers()](#module_@asyncapi/parser+Channel+servers) ⇒ <code>Array.&lt;String&gt;</code>
+    * [.server(index)](#module_@asyncapi/parser+Channel+server) ⇒ <code>String</code>
     * [.publish()](#module_@asyncapi/parser+Channel+publish) ⇒ <code>PublishOperation</code>
     * [.subscribe()](#module_@asyncapi/parser+Channel+subscribe) ⇒ <code>SubscribeOperation</code>
     * [.hasPublish()](#module_@asyncapi/parser+Channel+hasPublish) ⇒ <code>boolean</code>
@@ -615,6 +621,23 @@ Implements functions to deal with a Channel object.
 
 #### channel.hasParameters() ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
+<a name="module_@asyncapi/parser+Channel+hasServers"></a>
+
+#### channel.hasServers() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
+<a name="module_@asyncapi/parser+Channel+servers"></a>
+
+#### channel.servers() ⇒ <code>Array.&lt;String&gt;</code>
+**Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
+<a name="module_@asyncapi/parser+Channel+server"></a>
+
+#### channel.server(index) ⇒ <code>String</code>
+**Kind**: instance method of [<code>Channel</code>](#module_@asyncapi/parser+Channel)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | Index of the server. |
+
 <a name="module_@asyncapi/parser+Channel+publish"></a>
 
 #### channel.publish() ⇒ <code>PublishOperation</code>

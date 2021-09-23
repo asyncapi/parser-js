@@ -307,6 +307,12 @@ declare module "@asyncapi/parser" {
          */
         parameter(name: string): ChannelParameter;
         hasParameters(): boolean;
+        hasServers(): boolean;
+        servers(): String[];
+        /**
+         * @param index - Index of the server.
+         */
+        server(index: number): string;
         publish(): PublishOperation;
         subscribe(): SubscribeOperation;
         hasPublish(): boolean;

@@ -40,7 +40,7 @@
 ```
 npm install @asyncapi/parser
 ```
-The parser by default supports on AsyncAPI Schema Format and JSON Schema Format. For additional formats, you need to install additional plugins.
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format. For additional formats, you need to install additional plugins. For example:
 - Avro schema
   ```
   npm install @asyncapi/avro-schema-parser

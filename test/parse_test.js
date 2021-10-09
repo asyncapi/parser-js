@@ -613,15 +613,20 @@ describe('parse()', function() {
   });
 
   /*
-  * Duplicate tags tests
-  */
+   * Duplicate tags tests
+   */
   it('should throw error that the provided root object has duplicate tags', async function () {
     const parsedJSON = JSON.parse(invalidRootWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid document, there can\'t be any duplicate tags in the root',
+      title: 'Invalid document, there can\'t be any duplicate tags in the root object',
       parsedJSON,
-      validationErrors: [],
+      validationErrors: [{
+        title: ' contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/asyncapi/',
+        }
+      }]
     };
 
     await checkErrorWrapper(async () => {
@@ -633,9 +638,20 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidOperationWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid operation in channel "subscribe", there can\'t be any duplicate tags',
+      title: 'Invalid channel, there can\'t be any duplicate tags',
       parsedJSON,
-      validationErrors: [],
+      validationErrors: [{
+        title: '/user/signedup/subscribe contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/subscribe',
+          startLine: 9,
+          startColumn: 5,
+          startOffset: offset(108, 9),
+          endLine: 24,
+          endColumn: 1,
+          endOffset: offset(461, 24),
+        }
+      }]
     };
 
     await checkErrorWrapper(async () => {
@@ -647,9 +663,20 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidOperationTraitsWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid operationTrait "userSignedUpTrait", there can\'t be any duplicate tags in the operationTrait object',
+      title: 'Invalid operationTraits object, there can\'t be any duplicate tags in the operationTrait object',
       parsedJSON,
-      validationErrors: [],
+      validationErrors: [{
+        title: 'operationTraits/userSignedUpTrait contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/operationTraits/userSignedUpTrait',
+          startLine: 22,
+          startColumn: 5,
+          startOffset: offset(372, 22),
+          endLine: 27,
+          endColumn: 1,
+          endOffset: offset(478, 27),
+        }
+      }]
     };
 
     await checkErrorWrapper(async () => {
@@ -661,9 +688,20 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidMessageWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid message in channel "subscribe", there can\'t be any duplicate tags',
+      title: 'Invalid channel, there can\'t be any duplicate tags',
       parsedJSON,
-      validationErrors: [],
+      validationErrors: [{
+        title: '/user/signedup/subscribe/message contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/subscribe/message',
+          startLine: 10,
+          startColumn: 7,
+          startOffset: offset(124, 10),
+          endLine: 16,
+          endColumn: 1,
+          endOffset: offset(265, 16),
+        }
+      }]
     };
 
     await checkErrorWrapper(async () => {
@@ -675,9 +713,20 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidMessageTraitWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid messageTrait "signedUpMessage", there can\'t be any duplicate tags in the messageTrait object',
+      title: 'Invalid messageTraits object, there can\'t be any duplicate tags in the messageTrait object',
       parsedJSON,
-      validationErrors: [],
+      validationErrors: [{
+        title: 'messageTraits/signedUpMessage contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messageTraits/signedUpMessage',
+          startLine: 16,
+          startColumn: 5,
+          startOffset: offset(240, 16),
+          endLine: 21,
+          endColumn: 36,
+          endOffset: offset(379, 21),
+        }
+      }]
     };
 
     await checkErrorWrapper(async () => {

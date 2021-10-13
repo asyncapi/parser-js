@@ -40,6 +40,19 @@
 ```
 npm install @asyncapi/parser
 ```
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format. For additional formats, you need to install additional plugins. For example:
+- Avro schema
+  ```
+  npm install @asyncapi/avro-schema-parser
+  ```
+- OpenAPI Schema Object
+  ```
+  npm install @asyncapi/openapi-schema-parser
+  ```
+- RAML data type
+  ```
+  npm install @asyncapi/raml-dt-schema-parser
+  ```
 
 ## Examples 
 

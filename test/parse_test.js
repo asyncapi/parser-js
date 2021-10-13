@@ -622,9 +622,9 @@ describe('parse()', function() {
       title: 'Invalid document, there can\'t be any duplicate tags in the root object',
       parsedJSON,
       validationErrors: [{
-        title: ' contains duplicate tag names: user',
+        title: 'tags contains duplicate tag names: user',
         location: {
-          jsonPointer: '/asyncapi/',
+          jsonPointer: '/asyncapi/tags',
         }
       }]
     };
@@ -641,12 +641,12 @@ describe('parse()', function() {
       title: 'Invalid channel, there can\'t be any duplicate tags',
       parsedJSON,
       validationErrors: [{
-        title: '/user/signedup/subscribe contains duplicate tag names: user',
+        title: '/user/signedup/subscribe/tags contains duplicate tag names: user',
         location: {
-          jsonPointer: '/channels/~1user~1signedup/subscribe',
-          startLine: 9,
-          startColumn: 5,
-          startOffset: offset(108, 9),
+          jsonPointer: '/channels/~1user~1signedup/subscribe/tags',
+          startLine: 20,
+          startColumn: 7,
+          startOffset: offset(379, 20),
           endLine: 24,
           endColumn: 1,
           endOffset: offset(461, 24),
@@ -666,12 +666,12 @@ describe('parse()', function() {
       title: 'Invalid operationTraits object, there can\'t be any duplicate tags in the operationTrait object',
       parsedJSON,
       validationErrors: [{
-        title: 'operationTraits/userSignedUpTrait contains duplicate tag names: user',
+        title: 'operationTraits/userSignedUpTrait/tags contains duplicate tag names: user',
         location: {
-          jsonPointer: '/components/operationTraits/userSignedUpTrait',
-          startLine: 22,
-          startColumn: 5,
-          startOffset: offset(372, 22),
+          jsonPointer: '/components/operationTraits/userSignedUpTrait/tags',
+          startLine: 23,
+          startColumn: 7,
+          startOffset: offset(396, 23),
           endLine: 27,
           endColumn: 1,
           endOffset: offset(478, 27),
@@ -691,12 +691,12 @@ describe('parse()', function() {
       title: 'Invalid channel, there can\'t be any duplicate tags',
       parsedJSON,
       validationErrors: [{
-        title: '/user/signedup/subscribe/message contains duplicate tag names: user',
+        title: '/user/signedup/subscribe/message/tags contains duplicate tag names: user',
         location: {
-          jsonPointer: '/channels/~1user~1signedup/subscribe/message',
-          startLine: 10,
-          startColumn: 7,
-          startOffset: offset(124, 10),
+          jsonPointer: '/channels/~1user~1signedup/subscribe/message/tags',
+          startLine: 12,
+          startColumn: 9,
+          startOffset: offset(177, 12),
           endLine: 16,
           endColumn: 1,
           endOffset: offset(265, 16),
@@ -716,15 +716,15 @@ describe('parse()', function() {
       title: 'Invalid messageTraits object, there can\'t be any duplicate tags in the messageTrait object',
       parsedJSON,
       validationErrors: [{
-        title: 'messageTraits/signedUpMessage contains duplicate tag names: user',
+        title: 'messageTraits/signedUpMessage/tags contains duplicate tag names: user',
         location: {
-          jsonPointer: '/components/messageTraits/signedUpMessage',
-          startLine: 16,
-          startColumn: 5,
-          startOffset: offset(240, 16),
+          jsonPointer: '/components/messageTraits/signedUpMessage/tags',
+          startLine: 17,
+          startColumn: 7,
+          startOffset: offset(262, 17),
           endLine: 21,
-          endColumn: 36,
-          endOffset: offset(379, 21),
+          endColumn: 7,
+          endOffset: offset(350, 21),
         }
       }]
     };

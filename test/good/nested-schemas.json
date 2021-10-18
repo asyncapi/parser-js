@@ -156,6 +156,98 @@
 								"type": "string"
 							}
 						]
+					},
+					"testPatternProperties": {
+						"$id": "testComponentSchemaNestedSchemaPropPatternProperties",
+						"type": "object",
+						"test": true,
+						"patternProperties": {
+							"^S_": {
+								"$id": "testComponentSchemaNestedSchemaPropPatternPropertiesProp1",
+								"test": true,
+								"type": "string"
+							},
+							"^N_": {
+								"$id": "testComponentSchemaNestedSchemaPropPatternPropertiesProp2",
+								"test": true,
+								"type": "number"
+							}
+						}
+					},
+					"testConditional": {
+						"$id": "testComponentSchemaNestedSchemaPropConditional",
+						"type": "string",
+						"test": true,
+						"if": {
+							"$id": "testComponentSchemaNestedSchemaPropConditionalIf",
+							"test": true,
+							"type": "string"
+						},
+						"then": {
+							"$id": "testComponentSchemaNestedSchemaPropConditionalThen",
+							"test": true,
+							"type": "number"
+						},
+						"else": {
+							"$id": "testComponentSchemaNestedSchemaPropConditionalElse",
+							"test": true,
+							"type": "boolean"
+						}
+					},
+					"testDependencies": {
+						"$id": "testComponentSchemaNestedSchemaPropDependencies",
+						"type": "string",
+						"test": true,
+						"dependencies": {
+							"dep1": {
+								"$id": "testComponentSchemaNestedSchemaPropDependenciesDep1",
+								"test": true,
+								"type": "string"
+							},
+							"dep2": ["test1", "test2"],
+							"dep3": {
+								"$id": "testComponentSchemaNestedSchemaPropDependenciesDep3",
+								"test": true,
+								"type": "number"
+							}
+						}
+					},
+					"testDefinitions": {
+						"$id": "testComponentSchemaNestedSchemaPropDefinitions",
+						"type": "string",
+						"test": true,
+						"definitions": {
+							"def1": {
+								"$id": "testComponentSchemaNestedSchemaPropDefinitionsDef1",
+								"test": true,
+								"type": "string"
+							},
+							"def2": {
+								"$id": "testComponentSchemaNestedSchemaPropDefinitionsDef2",
+								"test": true,
+								"type": "number"
+							}
+						}
+					},
+					"testMisc": {
+						"$id": "testComponentSchemaNestedSchemaPropMisc",
+						"type": "object",
+						"test": true,
+						"not": {
+							"$id": "testComponentSchemaNestedSchemaPropMiscNot",
+							"test": true,
+							"type": "string"
+						},
+						"propertyNames": {
+							"$id": "testComponentSchemaNestedSchemaPropMiscPropertyNames",
+							"test": true,
+							"type": "string"
+						},
+						"contains": {
+							"$id": "testComponentSchemaNestedSchemaPropMiscContains",
+							"test": true,
+							"type": "string"
+						}
 					}
 				}
 			}

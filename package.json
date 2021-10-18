@@ -15,6 +15,7 @@
     "prepublishOnly": "npm run bundle && npm run docs && npm run types",
     "release": "semantic-release",
     "lint": "eslint --max-warnings 0 --config \".eslintrc\" \".\"",
+    "lint:fix": "eslint --max-warnings 0 --config \".eslintrc\" \".\" --fix",
     "test:lib": "nyc --silent --no-clean mocha --exclude \"test/browser_test.js\" --exclude \"test/parseFromUrl_test.js\" --recursive",
     "test:parseFromUrl": "nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",
     "cover:report": "nyc report --reporter=text --reporter=html",

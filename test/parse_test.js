@@ -570,26 +570,64 @@ describe('parse()', function() {
       'testString'
     ]);
   });
+  
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
-    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(true);
-    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(true);
-    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(true);
+
     //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
     expect(result.hasCircular()).to.equal(true);
-    //we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
+
+    // we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
     expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(false);
     expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
-    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].items().isCircular()).to.equal(true);
     expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].isCircular()).to.equal(false);
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].hasCircularProps()).to.equal(true);
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps()[0]).to.equal('test');
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps().length).to.equal(1);
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
     expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
-    //NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
-    //If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
-    //This is why it is important to check that NormalSchemaC is or sure not marked as circular
+
+    // NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
+    // If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
+    // This is why it is important to check that NormalSchemaC is or sure not marked as circular
     expect(result.components().schema('NormalSchemaC').isCircular()).to.equal(false);
+
+    // NestedAllOfSchema has circular reference
+    expect(result.components().schema('NestedAllOfSchema').allOf()[0].isCircular()).to.equal(false);
+    expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[0].isCircular()).to.equal(true);
+    expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[1].isCircular()).to.equal(false);
+
+    // OneOf has circular reference
+    expect(result.components().schema('OneOf').properties()['kind'].isCircular()).to.equal(false);
+    expect(result.components().schema('OneOf').properties()['kind'].oneOf()[0].isCircular()).to.equal(true);
+  
+    // AnyOf has circular reference
+    expect(result.components().schema('AnyOf').anyOf()[5].isCircular()).to.equal(false);
+    expect(result.components().schema('AnyOf').anyOf()[5].items().isCircular()).to.equal(true);
+
+    // external/file channel has deep circular reference
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(false);
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].items().isCircular()).to.equal(true);
+
+    // RecursiveSelf and RecursiveAncestor have deep circular references
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+
+    // RecursiveComplex has complex deep circular references
+    expect(result.components().schema('RecursiveComplex').contains().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').items()[0].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').items()[1].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').then().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^bar'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].items().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
   });
 });
 

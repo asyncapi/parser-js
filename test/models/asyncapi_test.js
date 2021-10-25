@@ -691,7 +691,6 @@ describe('AsyncAPIDocument', function() {
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
       const cb = (schema) => {
-        console.log(schema.uid());
         schemas.set(schema.uid(), schema);
       };
       const typesToTraverse = [

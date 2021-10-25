@@ -208,6 +208,7 @@ The parser uses custom extensions to define additional information about the spe
 - `x-parser-original-traits` is where traits are stored after they are applied on the AsyncAPI document. The reason is because the original `traits` property is removed.
 - `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
+- [`x-parser-circular`](#circular-references)
 
 ## Circular references
 

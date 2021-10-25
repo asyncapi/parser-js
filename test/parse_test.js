@@ -45,7 +45,7 @@ const invalidMessageWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, 
 const invalidMessageWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"contentType":"application\/json","tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}}';
 
 const invalidMessageOneOfWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-with-oneof-and-duplicate-tags.yaml'), 'utf8');
-const invalidMessageOneOfWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"publish":{"operationId":"userSignedUp","summary":"user signed up","description":"user signed up to load some data","message":{"oneOf":[{"tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"contentType":"application\/json","tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]}]}}}},"components":{"messages":{"testMessage1":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}]},"testMessage2":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}],"contentType":"application\/json"}}}}';
+const invalidMessageOneOfWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"publish":{"operationId":"userSignedUp","summary":"user signed up","description":"user signed up to load some data","message":{"oneOf":[{"tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"contentType":"application\/json","tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"payload":null,"tags":[{"description":"Description for user3 tag","name":"user3"},{"name":"user3"}]}]}}}},"components":{"messages":{"testMessage1":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}]},"testMessage2":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}],"contentType":"application\/json"}}}}';
 
 // Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Message%20Trait%20Object/invalid-duplicate-tags.yaml
 const invalidMessageTraitWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-message-traits-with-duplicate-tags.yaml'), 'utf8');
@@ -622,12 +622,18 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidRootWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid document, there can\'t be any duplicate tags in the root object',
+      title: 'Tags validation failed',
       parsedJSON,
       validationErrors: [{
         title: 'tags contains duplicate tag names: user',
         location: {
-          jsonPointer: '/asyncapi/tags',
+          jsonPointer: '/tags',
+          startLine: 3,
+          startColumn: 1,
+          startOffset: offset(15, 3),
+          endLine: 8,
+          endColumn: 1,
+          endOffset: offset(79, 8),
         }
       }]
     };
@@ -641,7 +647,7 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidOperationWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid channel, there can\'t be any duplicate tags',
+      title: 'Tags validation failed',
       parsedJSON,
       validationErrors: [{
         title: '/user/signedup/subscribe/tags contains duplicate tag names: user',
@@ -666,7 +672,7 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidOperationTraitsWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid operationTraits object, there can\'t be any duplicate tags in the operationTrait object',
+      title: 'Tags validation failed',
       parsedJSON,
       validationErrors: [{
         title: 'operationTraits/userSignedUpTrait/tags contains duplicate tag names: user',
@@ -691,7 +697,7 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidMessageWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid channel, there can\'t be any duplicate tags',
+      title: 'Tags validation failed',
       parsedJSON,
       validationErrors: [{
         title: '/user/signedup/subscribe/message/tags contains duplicate tag names: user',
@@ -716,30 +722,54 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidMessageOneOfWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid message object, there can\'t be any duplicate tags in the message object',
+      title: 'Tags validation failed',
       parsedJSON,
       validationErrors: [{
+        title: '/user/signedup/publish/message/oneOf/0/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/0/tags',
+        }
+      },
+      {
+        title: '/user/signedup/publish/message/oneOf/1/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/1/tags',
+        }
+      },
+      {
+        title: '/user/signedup/publish/message/oneOf/2/tags contains duplicate tag names: user3',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/2/tags',
+          startLine: 18,
+          startColumn: 13,
+          startOffset: offset(395, 18),
+          endLine: 23,
+          endColumn: 1,
+          endOffset: offset(508, 23),
+        }
+      },
+      {
         title: 'messages/testMessage1/tags contains duplicate tag names: user',
         location: {
           jsonPointer: '/components/messages/testMessage1/tags',
-          startLine: 21,
+          startLine: 26,
           startColumn: 7,
-          startOffset: offset(408, 21),
-          endLine: 26,
+          startOffset: offset(553, 26),
+          endLine: 31,
           endColumn: 5,
-          endOffset: offset(526, 26),
+          endOffset: offset(671, 31),
         }
       },
       {
         title: 'messages/testMessage2/tags contains duplicate tag names: user',
         location: {
           jsonPointer: '/components/messages/testMessage2/tags',
-          startLine: 27,
+          startLine: 32,
           startColumn: 7,
-          startOffset: offset(545, 27),
-          endLine: 32,
+          startOffset: offset(690, 32),
+          endLine: 37,
           endColumn: 7,
-          endOffset: offset(665, 32),
+          endOffset: offset(840, 7),
         }
       }]
     };
@@ -753,7 +783,7 @@ describe('parse()', function() {
     const parsedJSON = JSON.parse(invalidMessageTraitWithDuplicateTagsJSON);
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
-      title: 'Invalid messageTraits object, there can\'t be any duplicate tags in the messageTrait object',
+      title: 'Tags validation failed',
       parsedJSON,
       validationErrors: [{
         title: 'messageTraits/signedUpMessage/tags contains duplicate tag names: user',

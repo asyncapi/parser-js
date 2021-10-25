@@ -208,15 +208,12 @@ The parser uses custom extensions to define additional information about the spe
 - `x-parser-original-traits` is where traits are stored after they are applied on the AsyncAPI document. The reason is because the original `traits` property is removed.
 - `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
-- [`x-parser-circular`](#circular-references)
-- [`x-parser-circular-props`](#circular-references)
 
 ## Circular references
 
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular()` function to check the document and provide a proper message to the user.
-- `x-parser-circular` property is added to every schema of array type that is circular. To check if schema is circular or not, you should use `isCircular()` function on a Schema model like `document.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()`.
-- `x-parser-circular-props` property is added to every schema of object type with a list of properties that are circular. To check if a schema has properties with circular references, you should use `hasCircularProps()` function. To get a list of properties with circular references, you should use `circularProps()` function.
+- `isCircular()` function is added to the [Schema Model](./lib/models/schema.js) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
 
 ## Develop
 

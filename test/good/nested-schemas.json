@@ -231,7 +231,7 @@
 					},
 					"testMisc": {
 						"$id": "testComponentSchemaNestedSchemaPropMisc",
-						"type": "object",
+						"type": ["object", "array"],
 						"test": true,
 						"not": {
 							"$id": "testComponentSchemaNestedSchemaPropMiscNot",

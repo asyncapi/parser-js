@@ -449,9 +449,9 @@ describe('AsyncAPIDocument', function() {
         'testComponentSchemaNestedSchemaPropDefinitionsDef1',
         'testComponentSchemaNestedSchemaPropDefinitionsDef2',
         'testComponentSchemaNestedSchemaPropMisc',
-        'testComponentSchemaNestedSchemaPropMiscNot',
         'testComponentSchemaNestedSchemaPropMiscPropertyNames',
         'testComponentSchemaNestedSchemaPropMiscContains',
+        'testComponentSchemaNestedSchemaPropMiscNot',
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
@@ -543,9 +543,9 @@ describe('AsyncAPIDocument', function() {
     ];
     const componentMiscSchemas = [
       ...componentMiscSchema,
-      'testComponentSchemaNestedSchemaPropMiscNot',
       'testComponentSchemaNestedSchemaPropMiscPropertyNames',
       'testComponentSchemaNestedSchemaPropMiscContains',
+      'testComponentSchemaNestedSchemaPropMiscNot',
     ];
     it('should not include parameter schemas if defined', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
@@ -724,7 +724,6 @@ describe('AsyncAPIDocument', function() {
         ...componentConditionalSchemas,
         ...componentDependenciesSchemas,
         ...componentDefinitionsSchemas,
-        ...componentMiscSchema,
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');

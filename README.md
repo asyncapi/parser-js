@@ -215,6 +215,7 @@ The parser uses custom extensions to define additional information about the spe
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular()` function to check the document and provide a proper message to the user.
 - `isCircular()` function is added to the [Schema Model](./lib/models/schema.js) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
+- To check if a schema has properties with circular references, you should use `hasCircularProps()` function. To get a list of properties with circular references, you should use `circularProps()` function.
 
 ## Develop
 

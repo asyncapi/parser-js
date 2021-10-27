@@ -460,7 +460,7 @@ describe('AsyncAPIDocument', function() {
     });
   });
 
-  describe('#traverseSchemas()', function() { // eslint-disable-line sonarjs/cognitive-complexity
+  describe('#traverseSchemas()', function() { // NOSONAR // eslint-disable-line sonarjs/cognitive-complexity
     const parameterSchemas = [
       'testParamSchema',
       'testParamNestedSchemaProp',

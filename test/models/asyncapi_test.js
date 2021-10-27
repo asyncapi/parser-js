@@ -460,7 +460,8 @@ describe('AsyncAPIDocument', function() {
     });
   });
 
-  describe('#traverseSchemas()', function() { // NOSONAR // eslint-disable-line sonarjs/cognitive-complexity
+  /* eslint-disable sonarjs/cognitive-complexity */
+  describe('#traverseSchemas()', function() { // NOSONAR
     const parameterSchemas = [
       'testParamSchema',
       'testParamNestedSchemaProp',
@@ -975,6 +976,7 @@ describe('AsyncAPIDocument', function() {
       }
     });
   });
+  /* eslint-enable sonarjs/cognitive-complexity */
 
   describe('mixins', function() {
     it('model should inherit from mixins', function() {

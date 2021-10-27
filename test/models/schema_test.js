@@ -619,7 +619,7 @@ describe('Schema', function() {
     });
   });
 
-  describe('#getCircular()', function() {
+  describe('#getCircularSchema()', function() {
     it('should return a circular schema', function() {
       const doc = {
         properties: {
@@ -632,8 +632,8 @@ describe('Schema', function() {
       doc.properties.circular = doc;
       const d = new Schema(doc);
       expect(d.isCircular()).to.be.equal(false);
-      expect(d.properties()['nonCircular'].getCircular()).to.be.equal(undefined);
-      expect(d.properties()['circular'].getCircular()).to.be.equal(d);
+      expect(d.properties()['nonCircular'].getCircularSchema()).to.be.equal(undefined);
+      expect(d.properties()['circular'].getCircularSchema()).to.be.equal(d);
     });
   });
 

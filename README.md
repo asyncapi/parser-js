@@ -210,6 +210,8 @@ The parser uses custom extensions to define additional information about the spe
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
 - [`x-parser-circular`](#circular-references)
 
+> **NOTE**: All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
+
 ## Circular references
 
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:

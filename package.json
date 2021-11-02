@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "^2.10.1",
+    "@asyncapi/specs": "^2.11.0",
     "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",

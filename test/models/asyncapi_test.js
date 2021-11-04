@@ -1005,7 +1005,7 @@ describe('AsyncAPIDocument', function() {
     });
 
     it('should parse stringified document with circular references', async function() {
-      // Test circular references to test that every circular reference has this same reference
+      // Test circular references to ensure that every circular reference has this same reference after parsing
       const result = AsyncAPIDocument.parse(circularOutputYAML);
 
       // not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function

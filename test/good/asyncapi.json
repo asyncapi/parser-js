@@ -19,8 +19,7 @@
 				}
 			}
 		}
-	}, 
-	"components": {
+	}, "components": {
 		"messages": {
 			"testMessage": {
 				"payload": {

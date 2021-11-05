@@ -369,12 +369,12 @@ describe('parse()', function() {
       refs: [
         {
           jsonPointer: '/components/schemas/testSchema/properties/test/$ref',
-          startLine: 39,
+          startLine: 38,
           startColumn: 21,
-          startOffset: offset(601, 38),
-          endLine: 39,
+          startOffset: offset(599, 38),
+          endLine: 38,
           endColumn: 38,
-          endOffset: offset(618, 38)
+          endOffset: offset(616, 38)
         }
       ]
     };

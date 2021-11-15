@@ -630,10 +630,10 @@ describe('parse()', function() {
           jsonPointer: '/tags',
           startLine: 3,
           startColumn: 1,
-          startOffset: offset(15, 3),
+          startOffset: offset(17, 3),
           endLine: 8,
           endColumn: 1,
-          endOffset: offset(79, 8),
+          endOffset: offset(86, 8),
         }
       }]
     };
@@ -655,10 +655,10 @@ describe('parse()', function() {
           jsonPointer: '/channels/~1user~1signedup/subscribe/tags',
           startLine: 20,
           startColumn: 7,
-          startOffset: offset(379, 20),
+          startOffset: offset(398, 20),
           endLine: 24,
           endColumn: 1,
-          endOffset: offset(461, 24),
+          endOffset: offset(484, 24),
         }
       }]
     };
@@ -680,10 +680,10 @@ describe('parse()', function() {
           jsonPointer: '/components/operationTraits/userSignedUpTrait/tags',
           startLine: 23,
           startColumn: 7,
-          startOffset: offset(396, 23),
+          startOffset: offset(418, 23),
           endLine: 27,
           endColumn: 1,
-          endOffset: offset(478, 27),
+          endOffset: offset(504, 27),
         }
       }]
     };
@@ -705,10 +705,10 @@ describe('parse()', function() {
           jsonPointer: '/channels/~1user~1signedup/subscribe/message/tags',
           startLine: 12,
           startColumn: 9,
-          startOffset: offset(177, 12),
+          startOffset: offset(188, 12),
           endLine: 16,
           endColumn: 1,
-          endOffset: offset(265, 16),
+          endOffset: offset(280, 16),
         }
       }]
     };
@@ -742,10 +742,10 @@ describe('parse()', function() {
           jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/2/tags',
           startLine: 18,
           startColumn: 13,
-          startOffset: offset(395, 18),
+          startOffset: offset(412, 18),
           endLine: 23,
           endColumn: 1,
-          endOffset: offset(508, 23),
+          endOffset: offset(530, 23),
         }
       },
       {
@@ -754,10 +754,10 @@ describe('parse()', function() {
           jsonPointer: '/components/messages/testMessage1/tags',
           startLine: 26,
           startColumn: 7,
-          startOffset: offset(553, 26),
+          startOffset: offset(578, 26),
           endLine: 31,
           endColumn: 5,
-          endOffset: offset(671, 31),
+          endOffset: offset(701, 31),
         }
       },
       {
@@ -766,10 +766,10 @@ describe('parse()', function() {
           jsonPointer: '/components/messages/testMessage2/tags',
           startLine: 32,
           startColumn: 7,
-          startOffset: offset(690, 32),
+          startOffset: offset(721, 32),
           endLine: 37,
           endColumn: 7,
-          endOffset: offset(840, 7),
+          endOffset: offset(846, 7),
         }
       }]
     };
@@ -791,10 +791,10 @@ describe('parse()', function() {
           jsonPointer: '/components/messageTraits/signedUpMessage/tags',
           startLine: 17,
           startColumn: 7,
-          startOffset: offset(262, 17),
+          startOffset: offset(278, 17),
           endLine: 21,
           endColumn: 7,
-          endOffset: offset(350, 21),
+          endOffset: offset(370, 21),
         }
       }]
     };

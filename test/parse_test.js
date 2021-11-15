@@ -860,7 +860,7 @@ it('should fail on invalid examples', async function() {
 
 describe('memory usage', function () {
   it('should use this same instance of validation function in each call', async function() {
-    const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/complex-schema.json'), 'utf8');
+    const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/zbos_mqtt-all-asyncapi.json'), 'utf8');
 
     for (let i = 0, l = 25; i < l; i++) {
       await parser.parse(asyncapi);

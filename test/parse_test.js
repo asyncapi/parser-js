@@ -769,7 +769,7 @@ describe('parse()', function() {
           startOffset: offset(721, 32),
           endLine: 37,
           endColumn: 7,
-          endOffset: offset(846, 7),
+          endOffset: offset(846, 37),
         }
       }]
     };

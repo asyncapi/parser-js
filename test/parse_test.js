@@ -659,6 +659,7 @@ describe('memory usage', function () {
       if (used < min) min = used; 
       expect(used < 60).to.equal(true); // less than 60 MB
     }
+    console.log(min, max);
     expect((max - min) < 30).to.equal(true);
     expect((60 / min) > 1.5).to.equal(true);
   });

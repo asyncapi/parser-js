@@ -649,19 +649,12 @@ it('should fail on invalid examples', async function() {
 describe('memory usage', function () {
   it('should use this same instance of validation function in each call', async function() {
     const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/asyncapi-complex-schema.yml'), 'utf8');
-    let min = Number.POSITIVE_INFINITY;
-    let max = 0;
 
     for (let i = 0, l = 2500; i < l; i++) {
       await parser.parse(asyncapi);
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
-      if (used > max) max = used; 
-      if (used < min) min = used; 
       expect(used < 60).to.equal(true); // less than 60 MB
     }
-    console.log(min, max);
-    expect((max - min) < 30).to.equal(true);
-    expect((60 / min) > 1.5).to.equal(true);
   });
 });
 

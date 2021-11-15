@@ -1,0 +1,21 @@
+asyncapi: 2.0.0
+
+info:
+  title: Signup service example (internal)
+  version: 0.1.0
+
+channels:
+  /user/signedup:
+    subscribe:
+      message:
+        traits:
+          - $ref: "#/components/messageTraits/signedUpMessage"
+
+components:
+  messageTraits:
+    signedUpMessage:
+      tags:
+        - name: user
+          description: user signed up
+        - name: user
+      contentType: application/json

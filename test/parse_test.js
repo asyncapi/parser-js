@@ -653,7 +653,7 @@ describe('memory usage', function () {
     for (let i = 0, l = 2500; i < l; i++) {
       await parser.parse(asyncapi);
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
-      expect(used < 50).to.equal(true); // less than 50 MB
+      expect(used < 60).to.equal(true); // less than 60 MB
     }
   });
 });

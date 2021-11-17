@@ -866,7 +866,6 @@ describe('memory usage', function () {
     for (let i = 0, l = 50; i < l; i++) {
       await parser.parse(asyncapi);
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
-      console.log(used);
       expect(used < 100).to.equal(true); // less than 100 MB
     }
   });

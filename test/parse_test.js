@@ -863,11 +863,11 @@ describe('memory usage', function () {
     this.timeout(12500);
     const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/zbos_mqtt-all-asyncapi.json'), 'utf8');
 
-    for (let i = 0, l = 100; i < l; i++) {
+    for (let i = 0, l = 50; i < l; i++) {
       await parser.parse(asyncapi);
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
       console.log(used);
-      expect(used < 90).to.equal(true); // less than 90 MB
+      expect(used < 100).to.equal(true); // less than 100 MB
     }
   });
 });

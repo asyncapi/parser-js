@@ -263,69 +263,6 @@
             * [.isPublish()](#module_@asyncapi/parser+PublishOperation+isPublish) ⇒ <code>boolean</code>
             * [.isSubscribe()](#module_@asyncapi/parser+PublishOperation+isSubscribe) ⇒ <code>boolean</code>
             * [.kind()](#module_@asyncapi/parser+PublishOperation+kind) ⇒ <code>string</code>
-        * [.Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
-            * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
-            * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
-            * [.multipleOf()](#module_@asyncapi/parser+Schema+multipleOf) ⇒ <code>number</code>
-            * [.maximum()](#module_@asyncapi/parser+Schema+maximum) ⇒ <code>number</code>
-            * [.exclusiveMaximum()](#module_@asyncapi/parser+Schema+exclusiveMaximum) ⇒ <code>number</code>
-            * [.minimum()](#module_@asyncapi/parser+Schema+minimum) ⇒ <code>number</code>
-            * [.exclusiveMinimum()](#module_@asyncapi/parser+Schema+exclusiveMinimum) ⇒ <code>number</code>
-            * [.maxLength()](#module_@asyncapi/parser+Schema+maxLength) ⇒ <code>number</code>
-            * [.minLength()](#module_@asyncapi/parser+Schema+minLength) ⇒ <code>number</code>
-            * [.pattern()](#module_@asyncapi/parser+Schema+pattern) ⇒ <code>string</code>
-            * [.maxItems()](#module_@asyncapi/parser+Schema+maxItems) ⇒ <code>number</code>
-            * [.minItems()](#module_@asyncapi/parser+Schema+minItems) ⇒ <code>number</code>
-            * [.uniqueItems()](#module_@asyncapi/parser+Schema+uniqueItems) ⇒ <code>boolean</code>
-            * [.maxProperties()](#module_@asyncapi/parser+Schema+maxProperties) ⇒ <code>number</code>
-            * [.minProperties()](#module_@asyncapi/parser+Schema+minProperties) ⇒ <code>number</code>
-            * [.required()](#module_@asyncapi/parser+Schema+required) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.enum()](#module_@asyncapi/parser+Schema+enum) ⇒ <code>Array.&lt;any&gt;</code>
-            * [.type()](#module_@asyncapi/parser+Schema+type) ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
-            * [.allOf()](#module_@asyncapi/parser+Schema+allOf) ⇒ <code>Array.&lt;Schema&gt;</code>
-            * [.oneOf()](#module_@asyncapi/parser+Schema+oneOf) ⇒ <code>Array.&lt;Schema&gt;</code>
-            * [.anyOf()](#module_@asyncapi/parser+Schema+anyOf) ⇒ <code>Array.&lt;Schema&gt;</code>
-            * [.not()](#module_@asyncapi/parser+Schema+not) ⇒ <code>Schema</code>
-            * [.items()](#module_@asyncapi/parser+Schema+items) ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
-            * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-            * [.property(name)](#module_@asyncapi/parser+Schema+property) ⇒ <code>Schema</code>
-            * [.additionalProperties()](#module_@asyncapi/parser+Schema+additionalProperties) ⇒ <code>boolean</code> \| <code>Schema</code>
-            * [.additionalItems()](#module_@asyncapi/parser+Schema+additionalItems) ⇒ <code>Schema</code>
-            * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-            * [.const()](#module_@asyncapi/parser+Schema+const) ⇒ <code>any</code>
-            * [.contains()](#module_@asyncapi/parser+Schema+contains) ⇒ <code>Schema</code>
-            * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
-            * [.propertyNames()](#module_@asyncapi/parser+Schema+propertyNames) ⇒ <code>Schema</code>
-            * [.if()](#module_@asyncapi/parser+Schema+if) ⇒ <code>Schema</code>
-            * [.then()](#module_@asyncapi/parser+Schema+then) ⇒ <code>Schema</code>
-            * [.else()](#module_@asyncapi/parser+Schema+else) ⇒ <code>Schema</code>
-            * [.format()](#module_@asyncapi/parser+Schema+format) ⇒ <code>string</code>
-            * [.contentEncoding()](#module_@asyncapi/parser+Schema+contentEncoding) ⇒ <code>string</code>
-            * [.contentMediaType()](#module_@asyncapi/parser+Schema+contentMediaType) ⇒ <code>string</code>
-            * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-            * [.title()](#module_@asyncapi/parser+Schema+title) ⇒ <code>string</code>
-            * [.default()](#module_@asyncapi/parser+Schema+default) ⇒ <code>any</code>
-            * [.deprecated()](#module_@asyncapi/parser+Schema+deprecated) ⇒ <code>boolean</code>
-            * [.discriminator()](#module_@asyncapi/parser+Schema+discriminator) ⇒ <code>string</code>
-            * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
-            * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
-            * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
-            * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
-            * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
-            * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
-            * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasDescription()](#module_@asyncapi/parser+Schema+hasDescription) ⇒ <code>boolean</code>
-            * [.description()](#module_@asyncapi/parser+Schema+description) ⇒ <code>string</code> \| <code>null</code>
-            * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
-            * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-            * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-            * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
-            * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
-            * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
-            * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
         * [.SecurityScheme](#module_@asyncapi/parser+SecurityScheme) ⇐ <code>Base</code>
             * [.type()](#module_@asyncapi/parser+SecurityScheme+type) ⇒ <code>string</code>
             * [.name()](#module_@asyncapi/parser+SecurityScheme+name) ⇒ <code>string</code>
@@ -462,6 +399,82 @@
             * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
         * [~Base](#module_@asyncapi/parser+Base)
             * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
+        * [~Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
+            * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
+            * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
+            * [.multipleOf()](#module_@asyncapi/parser+Schema+multipleOf) ⇒ <code>number</code>
+            * [.maximum()](#module_@asyncapi/parser+Schema+maximum) ⇒ <code>number</code>
+            * [.exclusiveMaximum()](#module_@asyncapi/parser+Schema+exclusiveMaximum) ⇒ <code>number</code>
+            * [.minimum()](#module_@asyncapi/parser+Schema+minimum) ⇒ <code>number</code>
+            * [.exclusiveMinimum()](#module_@asyncapi/parser+Schema+exclusiveMinimum) ⇒ <code>number</code>
+            * [.maxLength()](#module_@asyncapi/parser+Schema+maxLength) ⇒ <code>number</code>
+            * [.minLength()](#module_@asyncapi/parser+Schema+minLength) ⇒ <code>number</code>
+            * [.pattern()](#module_@asyncapi/parser+Schema+pattern) ⇒ <code>string</code>
+            * [.maxItems()](#module_@asyncapi/parser+Schema+maxItems) ⇒ <code>number</code>
+            * [.minItems()](#module_@asyncapi/parser+Schema+minItems) ⇒ <code>number</code>
+            * [.uniqueItems()](#module_@asyncapi/parser+Schema+uniqueItems) ⇒ <code>boolean</code>
+            * [.maxProperties()](#module_@asyncapi/parser+Schema+maxProperties) ⇒ <code>number</code>
+            * [.minProperties()](#module_@asyncapi/parser+Schema+minProperties) ⇒ <code>number</code>
+            * [.required()](#module_@asyncapi/parser+Schema+required) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.enum()](#module_@asyncapi/parser+Schema+enum) ⇒ <code>Array.&lt;any&gt;</code>
+            * [.type()](#module_@asyncapi/parser+Schema+type) ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
+            * [.allOf()](#module_@asyncapi/parser+Schema+allOf) ⇒ <code>Array.&lt;Schema&gt;</code>
+            * [.oneOf()](#module_@asyncapi/parser+Schema+oneOf) ⇒ <code>Array.&lt;Schema&gt;</code>
+            * [.anyOf()](#module_@asyncapi/parser+Schema+anyOf) ⇒ <code>Array.&lt;Schema&gt;</code>
+            * [.not()](#module_@asyncapi/parser+Schema+not) ⇒ <code>Schema</code>
+            * [.items()](#module_@asyncapi/parser+Schema+items) ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
+            * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+            * [.property(name)](#module_@asyncapi/parser+Schema+property) ⇒ <code>Schema</code>
+            * [.additionalProperties()](#module_@asyncapi/parser+Schema+additionalProperties) ⇒ <code>boolean</code> \| <code>Schema</code>
+            * [.additionalItems()](#module_@asyncapi/parser+Schema+additionalItems) ⇒ <code>Schema</code>
+            * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+            * [.const()](#module_@asyncapi/parser+Schema+const) ⇒ <code>any</code>
+            * [.contains()](#module_@asyncapi/parser+Schema+contains) ⇒ <code>Schema</code>
+            * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
+            * [.propertyNames()](#module_@asyncapi/parser+Schema+propertyNames) ⇒ <code>Schema</code>
+            * [.if()](#module_@asyncapi/parser+Schema+if) ⇒ <code>Schema</code>
+            * [.then()](#module_@asyncapi/parser+Schema+then) ⇒ <code>Schema</code>
+            * [.else()](#module_@asyncapi/parser+Schema+else) ⇒ <code>Schema</code>
+            * [.format()](#module_@asyncapi/parser+Schema+format) ⇒ <code>string</code>
+            * [.contentEncoding()](#module_@asyncapi/parser+Schema+contentEncoding) ⇒ <code>string</code>
+            * [.contentMediaType()](#module_@asyncapi/parser+Schema+contentMediaType) ⇒ <code>string</code>
+            * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+            * [.title()](#module_@asyncapi/parser+Schema+title) ⇒ <code>string</code>
+            * [.default()](#module_@asyncapi/parser+Schema+default) ⇒ <code>any</code>
+            * [.deprecated()](#module_@asyncapi/parser+Schema+deprecated) ⇒ <code>boolean</code>
+            * [.discriminator()](#module_@asyncapi/parser+Schema+discriminator) ⇒ <code>string</code>
+            * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
+            * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
+            * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+            * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
+            * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
+            * [.circularSchema()](#module_@asyncapi/parser+Schema+circularSchema) ⇒ <code>Schema</code>
+            * ~~[.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>~~
+            * ~~[.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>~~
+            * [.hasDescription()](#module_@asyncapi/parser+Schema+hasDescription) ⇒ <code>boolean</code>
+            * [.description()](#module_@asyncapi/parser+Schema+description) ⇒ <code>string</code> \| <code>null</code>
+            * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
+            * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+            * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
+            * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
+            * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
+            * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
+            * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
+            * [.hasDescription()](#module_@asyncapi/parser+Schema+hasDescription) ⇒ <code>boolean</code>
+            * [.description()](#module_@asyncapi/parser+Schema+description) ⇒ <code>string</code> \| <code>null</code>
+            * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
+            * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+            * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
+            * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+            * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+            * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
+            * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
+            * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
+            * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
         * [~parse(asyncapiYAMLorJSON, [options])](#module_@asyncapi/parser..parse) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~parseFromUrl(url, [fetchOptions], [options])](#module_@asyncapi/parser..parseFromUrl) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
         * [~registerSchemaParser(parserModule)](#module_@asyncapi/parser..registerSchemaParser)
@@ -2108,364 +2121,6 @@ Implements functions to deal with a PublishOperation object.
 
 #### publishOperation.kind() ⇒ <code>string</code>
 **Kind**: instance method of [<code>PublishOperation</code>](#module_@asyncapi/parser+PublishOperation)  
-<a name="module_@asyncapi/parser+Schema"></a>
-
-### @asyncapi/parser.Schema ⇐ <code>Base</code>
-Implements functions to deal with a Schema object.
-
-**Kind**: instance class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
-**Extends**: <code>Base</code>  
-**Mixes**: [<code>MixinDescription</code>](#MixinDescription), [<code>MixinExternalDocs</code>](#MixinExternalDocs), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
-
-* [.Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
-    * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
-    * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
-    * [.multipleOf()](#module_@asyncapi/parser+Schema+multipleOf) ⇒ <code>number</code>
-    * [.maximum()](#module_@asyncapi/parser+Schema+maximum) ⇒ <code>number</code>
-    * [.exclusiveMaximum()](#module_@asyncapi/parser+Schema+exclusiveMaximum) ⇒ <code>number</code>
-    * [.minimum()](#module_@asyncapi/parser+Schema+minimum) ⇒ <code>number</code>
-    * [.exclusiveMinimum()](#module_@asyncapi/parser+Schema+exclusiveMinimum) ⇒ <code>number</code>
-    * [.maxLength()](#module_@asyncapi/parser+Schema+maxLength) ⇒ <code>number</code>
-    * [.minLength()](#module_@asyncapi/parser+Schema+minLength) ⇒ <code>number</code>
-    * [.pattern()](#module_@asyncapi/parser+Schema+pattern) ⇒ <code>string</code>
-    * [.maxItems()](#module_@asyncapi/parser+Schema+maxItems) ⇒ <code>number</code>
-    * [.minItems()](#module_@asyncapi/parser+Schema+minItems) ⇒ <code>number</code>
-    * [.uniqueItems()](#module_@asyncapi/parser+Schema+uniqueItems) ⇒ <code>boolean</code>
-    * [.maxProperties()](#module_@asyncapi/parser+Schema+maxProperties) ⇒ <code>number</code>
-    * [.minProperties()](#module_@asyncapi/parser+Schema+minProperties) ⇒ <code>number</code>
-    * [.required()](#module_@asyncapi/parser+Schema+required) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.enum()](#module_@asyncapi/parser+Schema+enum) ⇒ <code>Array.&lt;any&gt;</code>
-    * [.type()](#module_@asyncapi/parser+Schema+type) ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
-    * [.allOf()](#module_@asyncapi/parser+Schema+allOf) ⇒ <code>Array.&lt;Schema&gt;</code>
-    * [.oneOf()](#module_@asyncapi/parser+Schema+oneOf) ⇒ <code>Array.&lt;Schema&gt;</code>
-    * [.anyOf()](#module_@asyncapi/parser+Schema+anyOf) ⇒ <code>Array.&lt;Schema&gt;</code>
-    * [.not()](#module_@asyncapi/parser+Schema+not) ⇒ <code>Schema</code>
-    * [.items()](#module_@asyncapi/parser+Schema+items) ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
-    * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-    * [.property(name)](#module_@asyncapi/parser+Schema+property) ⇒ <code>Schema</code>
-    * [.additionalProperties()](#module_@asyncapi/parser+Schema+additionalProperties) ⇒ <code>boolean</code> \| <code>Schema</code>
-    * [.additionalItems()](#module_@asyncapi/parser+Schema+additionalItems) ⇒ <code>Schema</code>
-    * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-    * [.const()](#module_@asyncapi/parser+Schema+const) ⇒ <code>any</code>
-    * [.contains()](#module_@asyncapi/parser+Schema+contains) ⇒ <code>Schema</code>
-    * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
-    * [.propertyNames()](#module_@asyncapi/parser+Schema+propertyNames) ⇒ <code>Schema</code>
-    * [.if()](#module_@asyncapi/parser+Schema+if) ⇒ <code>Schema</code>
-    * [.then()](#module_@asyncapi/parser+Schema+then) ⇒ <code>Schema</code>
-    * [.else()](#module_@asyncapi/parser+Schema+else) ⇒ <code>Schema</code>
-    * [.format()](#module_@asyncapi/parser+Schema+format) ⇒ <code>string</code>
-    * [.contentEncoding()](#module_@asyncapi/parser+Schema+contentEncoding) ⇒ <code>string</code>
-    * [.contentMediaType()](#module_@asyncapi/parser+Schema+contentMediaType) ⇒ <code>string</code>
-    * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>Object.&lt;string, Schema&gt;</code>
-    * [.title()](#module_@asyncapi/parser+Schema+title) ⇒ <code>string</code>
-    * [.default()](#module_@asyncapi/parser+Schema+default) ⇒ <code>any</code>
-    * [.deprecated()](#module_@asyncapi/parser+Schema+deprecated) ⇒ <code>boolean</code>
-    * [.discriminator()](#module_@asyncapi/parser+Schema+discriminator) ⇒ <code>string</code>
-    * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
-    * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
-    * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
-    * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
-    * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
-    * [.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>
-    * [.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasDescription()](#module_@asyncapi/parser+Schema+hasDescription) ⇒ <code>boolean</code>
-    * [.description()](#module_@asyncapi/parser+Schema+description) ⇒ <code>string</code> \| <code>null</code>
-    * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
-    * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-    * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-    * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
-    * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
-    * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
-    * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
-
-<a name="module_@asyncapi/parser+Schema+uid"></a>
-
-#### schema.uid() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+$id"></a>
-
-#### schema.$id() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+multipleOf"></a>
-
-#### schema.multipleOf() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+maximum"></a>
-
-#### schema.maximum() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+exclusiveMaximum"></a>
-
-#### schema.exclusiveMaximum() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+minimum"></a>
-
-#### schema.minimum() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+exclusiveMinimum"></a>
-
-#### schema.exclusiveMinimum() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+maxLength"></a>
-
-#### schema.maxLength() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+minLength"></a>
-
-#### schema.minLength() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+pattern"></a>
-
-#### schema.pattern() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+maxItems"></a>
-
-#### schema.maxItems() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+minItems"></a>
-
-#### schema.minItems() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+uniqueItems"></a>
-
-#### schema.uniqueItems() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+maxProperties"></a>
-
-#### schema.maxProperties() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+minProperties"></a>
-
-#### schema.minProperties() ⇒ <code>number</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+required"></a>
-
-#### schema.required() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+enum"></a>
-
-#### schema.enum() ⇒ <code>Array.&lt;any&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+type"></a>
-
-#### schema.type() ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+allOf"></a>
-
-#### schema.allOf() ⇒ <code>Array.&lt;Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+oneOf"></a>
-
-#### schema.oneOf() ⇒ <code>Array.&lt;Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+anyOf"></a>
-
-#### schema.anyOf() ⇒ <code>Array.&lt;Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+not"></a>
-
-#### schema.not() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+items"></a>
-
-#### schema.items() ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+properties"></a>
-
-#### schema.properties() ⇒ <code>Object.&lt;string, Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+property"></a>
-
-#### schema.property(name) ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| name | <code>string</code> | Name of the property. |
-
-<a name="module_@asyncapi/parser+Schema+additionalProperties"></a>
-
-#### schema.additionalProperties() ⇒ <code>boolean</code> \| <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+additionalItems"></a>
-
-#### schema.additionalItems() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+patternProperties"></a>
-
-#### schema.patternProperties() ⇒ <code>Object.&lt;string, Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+const"></a>
-
-#### schema.const() ⇒ <code>any</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+contains"></a>
-
-#### schema.contains() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+dependencies"></a>
-
-#### schema.dependencies() ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+propertyNames"></a>
-
-#### schema.propertyNames() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+if"></a>
-
-#### schema.if() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+then"></a>
-
-#### schema.then() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+else"></a>
-
-#### schema.else() ⇒ <code>Schema</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+format"></a>
-
-#### schema.format() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+contentEncoding"></a>
-
-#### schema.contentEncoding() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+contentMediaType"></a>
-
-#### schema.contentMediaType() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+definitions"></a>
-
-#### schema.definitions() ⇒ <code>Object.&lt;string, Schema&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+title"></a>
-
-#### schema.title() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+default"></a>
-
-#### schema.default() ⇒ <code>any</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+deprecated"></a>
-
-#### schema.deprecated() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+discriminator"></a>
-
-#### schema.discriminator() ⇒ <code>string</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+readOnly"></a>
-
-#### schema.readOnly() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+writeOnly"></a>
-
-#### schema.writeOnly() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+examples"></a>
-
-#### schema.examples() ⇒ <code>Array.&lt;any&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+isBooleanSchema"></a>
-
-#### schema.isBooleanSchema() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+isCircular"></a>
-
-#### schema.isCircular() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+hasCircularProps"></a>
-
-#### schema.hasCircularProps() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+circularProps"></a>
-
-#### schema.circularProps() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-<a name="module_@asyncapi/parser+Schema+hasDescription"></a>
-
-#### schema.hasDescription() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>hasDescription</code>](#MixinDescription.hasDescription)  
-<a name="module_@asyncapi/parser+Schema+description"></a>
-
-#### schema.description() ⇒ <code>string</code> \| <code>null</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>description</code>](#MixinDescription.description)  
-<a name="module_@asyncapi/parser+Schema+hasExternalDocs"></a>
-
-#### schema.hasExternalDocs() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>hasExternalDocs</code>](#MixinExternalDocs.hasExternalDocs)  
-<a name="module_@asyncapi/parser+Schema+externalDocs"></a>
-
-#### schema.externalDocs() ⇒ <code>ExternalDocs</code> \| <code>null</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>externalDocs</code>](#MixinExternalDocs.externalDocs)  
-<a name="module_@asyncapi/parser+Schema+hasExtensions"></a>
-
-#### schema.hasExtensions() ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
-<a name="module_@asyncapi/parser+Schema+extensions"></a>
-
-#### schema.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
-<a name="module_@asyncapi/parser+Schema+extensionKeys"></a>
-
-#### schema.extensionKeys() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>extensionKeys</code>](#MixinSpecificationExtensions.extensionKeys)  
-<a name="module_@asyncapi/parser+Schema+extKeys"></a>
-
-#### schema.extKeys() ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>extKeys</code>](#MixinSpecificationExtensions.extKeys)  
-<a name="module_@asyncapi/parser+Schema+hasExtension"></a>
-
-#### schema.hasExtension(key) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>hasExtension</code>](#MixinSpecificationExtensions.hasExtension)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | Extension key. |
-
-<a name="module_@asyncapi/parser+Schema+extension"></a>
-
-#### schema.extension(key) ⇒ <code>any</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>extension</code>](#MixinSpecificationExtensions.extension)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | Extension key. |
-
-<a name="module_@asyncapi/parser+Schema+hasExt"></a>
-
-#### schema.hasExt(key) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>hasExt</code>](#MixinSpecificationExtensions.hasExt)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | Extension key. |
-
-<a name="module_@asyncapi/parser+Schema+ext"></a>
-
-#### schema.ext(key) ⇒ <code>any</code>
-**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
-**Mixes**: [<code>ext</code>](#MixinSpecificationExtensions.ext)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | Extension key. |
-
 <a name="module_@asyncapi/parser+SecurityScheme"></a>
 
 ### @asyncapi/parser.SecurityScheme ⇐ <code>Base</code>
@@ -3477,6 +3132,465 @@ Implements common functionality for all the models.
 
 #### base.json() ⇒ <code>any</code>
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
+<a name="module_@asyncapi/parser+Schema"></a>
+
+### @asyncapi/parser~Schema ⇐ <code>Base</code>
+Implements functions to deal with a Schema object.
+
+**Kind**: inner class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Extends**: <code>Base</code>  
+**Mixes**: [<code>MixinDescription</code>](#MixinDescription), [<code>MixinExternalDocs</code>](#MixinExternalDocs), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
+
+* [~Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
+    * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
+    * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
+    * [.multipleOf()](#module_@asyncapi/parser+Schema+multipleOf) ⇒ <code>number</code>
+    * [.maximum()](#module_@asyncapi/parser+Schema+maximum) ⇒ <code>number</code>
+    * [.exclusiveMaximum()](#module_@asyncapi/parser+Schema+exclusiveMaximum) ⇒ <code>number</code>
+    * [.minimum()](#module_@asyncapi/parser+Schema+minimum) ⇒ <code>number</code>
+    * [.exclusiveMinimum()](#module_@asyncapi/parser+Schema+exclusiveMinimum) ⇒ <code>number</code>
+    * [.maxLength()](#module_@asyncapi/parser+Schema+maxLength) ⇒ <code>number</code>
+    * [.minLength()](#module_@asyncapi/parser+Schema+minLength) ⇒ <code>number</code>
+    * [.pattern()](#module_@asyncapi/parser+Schema+pattern) ⇒ <code>string</code>
+    * [.maxItems()](#module_@asyncapi/parser+Schema+maxItems) ⇒ <code>number</code>
+    * [.minItems()](#module_@asyncapi/parser+Schema+minItems) ⇒ <code>number</code>
+    * [.uniqueItems()](#module_@asyncapi/parser+Schema+uniqueItems) ⇒ <code>boolean</code>
+    * [.maxProperties()](#module_@asyncapi/parser+Schema+maxProperties) ⇒ <code>number</code>
+    * [.minProperties()](#module_@asyncapi/parser+Schema+minProperties) ⇒ <code>number</code>
+    * [.required()](#module_@asyncapi/parser+Schema+required) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.enum()](#module_@asyncapi/parser+Schema+enum) ⇒ <code>Array.&lt;any&gt;</code>
+    * [.type()](#module_@asyncapi/parser+Schema+type) ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
+    * [.allOf()](#module_@asyncapi/parser+Schema+allOf) ⇒ <code>Array.&lt;Schema&gt;</code>
+    * [.oneOf()](#module_@asyncapi/parser+Schema+oneOf) ⇒ <code>Array.&lt;Schema&gt;</code>
+    * [.anyOf()](#module_@asyncapi/parser+Schema+anyOf) ⇒ <code>Array.&lt;Schema&gt;</code>
+    * [.not()](#module_@asyncapi/parser+Schema+not) ⇒ <code>Schema</code>
+    * [.items()](#module_@asyncapi/parser+Schema+items) ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
+    * [.properties()](#module_@asyncapi/parser+Schema+properties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+    * [.property(name)](#module_@asyncapi/parser+Schema+property) ⇒ <code>Schema</code>
+    * [.additionalProperties()](#module_@asyncapi/parser+Schema+additionalProperties) ⇒ <code>boolean</code> \| <code>Schema</code>
+    * [.additionalItems()](#module_@asyncapi/parser+Schema+additionalItems) ⇒ <code>Schema</code>
+    * [.patternProperties()](#module_@asyncapi/parser+Schema+patternProperties) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+    * [.const()](#module_@asyncapi/parser+Schema+const) ⇒ <code>any</code>
+    * [.contains()](#module_@asyncapi/parser+Schema+contains) ⇒ <code>Schema</code>
+    * [.dependencies()](#module_@asyncapi/parser+Schema+dependencies) ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
+    * [.propertyNames()](#module_@asyncapi/parser+Schema+propertyNames) ⇒ <code>Schema</code>
+    * [.if()](#module_@asyncapi/parser+Schema+if) ⇒ <code>Schema</code>
+    * [.then()](#module_@asyncapi/parser+Schema+then) ⇒ <code>Schema</code>
+    * [.else()](#module_@asyncapi/parser+Schema+else) ⇒ <code>Schema</code>
+    * [.format()](#module_@asyncapi/parser+Schema+format) ⇒ <code>string</code>
+    * [.contentEncoding()](#module_@asyncapi/parser+Schema+contentEncoding) ⇒ <code>string</code>
+    * [.contentMediaType()](#module_@asyncapi/parser+Schema+contentMediaType) ⇒ <code>string</code>
+    * [.definitions()](#module_@asyncapi/parser+Schema+definitions) ⇒ <code>Object.&lt;string, Schema&gt;</code>
+    * [.title()](#module_@asyncapi/parser+Schema+title) ⇒ <code>string</code>
+    * [.default()](#module_@asyncapi/parser+Schema+default) ⇒ <code>any</code>
+    * [.deprecated()](#module_@asyncapi/parser+Schema+deprecated) ⇒ <code>boolean</code>
+    * [.discriminator()](#module_@asyncapi/parser+Schema+discriminator) ⇒ <code>string</code>
+    * [.readOnly()](#module_@asyncapi/parser+Schema+readOnly) ⇒ <code>boolean</code>
+    * [.writeOnly()](#module_@asyncapi/parser+Schema+writeOnly) ⇒ <code>boolean</code>
+    * [.examples()](#module_@asyncapi/parser+Schema+examples) ⇒ <code>Array.&lt;any&gt;</code>
+    * [.isBooleanSchema()](#module_@asyncapi/parser+Schema+isBooleanSchema) ⇒ <code>boolean</code>
+    * [.isCircular()](#module_@asyncapi/parser+Schema+isCircular) ⇒ <code>boolean</code>
+    * [.circularSchema()](#module_@asyncapi/parser+Schema+circularSchema) ⇒ <code>Schema</code>
+    * ~~[.hasCircularProps()](#module_@asyncapi/parser+Schema+hasCircularProps) ⇒ <code>boolean</code>~~
+    * ~~[.circularProps()](#module_@asyncapi/parser+Schema+circularProps) ⇒ <code>Array.&lt;string&gt;</code>~~
+    * [.hasDescription()](#module_@asyncapi/parser+Schema+hasDescription) ⇒ <code>boolean</code>
+    * [.description()](#module_@asyncapi/parser+Schema+description) ⇒ <code>string</code> \| <code>null</code>
+    * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
+    * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+    * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
+    * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
+    * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
+    * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
+    * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
+    * [.hasDescription()](#module_@asyncapi/parser+Schema+hasDescription) ⇒ <code>boolean</code>
+    * [.description()](#module_@asyncapi/parser+Schema+description) ⇒ <code>string</code> \| <code>null</code>
+    * [.hasExternalDocs()](#module_@asyncapi/parser+Schema+hasExternalDocs) ⇒ <code>boolean</code>
+    * [.externalDocs()](#module_@asyncapi/parser+Schema+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+    * [.hasExtensions()](#module_@asyncapi/parser+Schema+hasExtensions) ⇒ <code>boolean</code>
+    * [.extensions()](#module_@asyncapi/parser+Schema+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+    * [.extensionKeys()](#module_@asyncapi/parser+Schema+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.extKeys()](#module_@asyncapi/parser+Schema+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+    * [.hasExtension(key)](#module_@asyncapi/parser+Schema+hasExtension) ⇒ <code>boolean</code>
+    * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
+    * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
+    * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
+
+<a name="module_@asyncapi/parser+Schema+uid"></a>
+
+#### schema.uid() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+$id"></a>
+
+#### schema.$id() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+multipleOf"></a>
+
+#### schema.multipleOf() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+maximum"></a>
+
+#### schema.maximum() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+exclusiveMaximum"></a>
+
+#### schema.exclusiveMaximum() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+minimum"></a>
+
+#### schema.minimum() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+exclusiveMinimum"></a>
+
+#### schema.exclusiveMinimum() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+maxLength"></a>
+
+#### schema.maxLength() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+minLength"></a>
+
+#### schema.minLength() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+pattern"></a>
+
+#### schema.pattern() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+maxItems"></a>
+
+#### schema.maxItems() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+minItems"></a>
+
+#### schema.minItems() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+uniqueItems"></a>
+
+#### schema.uniqueItems() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+maxProperties"></a>
+
+#### schema.maxProperties() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+minProperties"></a>
+
+#### schema.minProperties() ⇒ <code>number</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+required"></a>
+
+#### schema.required() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+enum"></a>
+
+#### schema.enum() ⇒ <code>Array.&lt;any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+type"></a>
+
+#### schema.type() ⇒ <code>string</code> \| <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+allOf"></a>
+
+#### schema.allOf() ⇒ <code>Array.&lt;Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+oneOf"></a>
+
+#### schema.oneOf() ⇒ <code>Array.&lt;Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+anyOf"></a>
+
+#### schema.anyOf() ⇒ <code>Array.&lt;Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+not"></a>
+
+#### schema.not() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+items"></a>
+
+#### schema.items() ⇒ <code>Schema</code> \| <code>Array.&lt;Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+properties"></a>
+
+#### schema.properties() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+property"></a>
+
+#### schema.property(name) ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the property. |
+
+<a name="module_@asyncapi/parser+Schema+additionalProperties"></a>
+
+#### schema.additionalProperties() ⇒ <code>boolean</code> \| <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+additionalItems"></a>
+
+#### schema.additionalItems() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+patternProperties"></a>
+
+#### schema.patternProperties() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+const"></a>
+
+#### schema.const() ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+contains"></a>
+
+#### schema.contains() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+dependencies"></a>
+
+#### schema.dependencies() ⇒ <code>Object.&lt;string, (Schema\|Array.&lt;string&gt;)&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+propertyNames"></a>
+
+#### schema.propertyNames() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+if"></a>
+
+#### schema.if() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+then"></a>
+
+#### schema.then() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+else"></a>
+
+#### schema.else() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+format"></a>
+
+#### schema.format() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+contentEncoding"></a>
+
+#### schema.contentEncoding() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+contentMediaType"></a>
+
+#### schema.contentMediaType() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+definitions"></a>
+
+#### schema.definitions() ⇒ <code>Object.&lt;string, Schema&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+title"></a>
+
+#### schema.title() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+default"></a>
+
+#### schema.default() ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+deprecated"></a>
+
+#### schema.deprecated() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+discriminator"></a>
+
+#### schema.discriminator() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+readOnly"></a>
+
+#### schema.readOnly() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+writeOnly"></a>
+
+#### schema.writeOnly() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+examples"></a>
+
+#### schema.examples() ⇒ <code>Array.&lt;any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+isBooleanSchema"></a>
+
+#### schema.isBooleanSchema() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+isCircular"></a>
+
+#### schema.isCircular() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+circularSchema"></a>
+
+#### schema.circularSchema() ⇒ <code>Schema</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+hasCircularProps"></a>
+
+#### ~~schema.hasCircularProps() ⇒ <code>boolean</code>~~
+***Deprecated***
+
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+circularProps"></a>
+
+#### ~~schema.circularProps() ⇒ <code>Array.&lt;string&gt;</code>~~
+***Deprecated***
+
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+<a name="module_@asyncapi/parser+Schema+hasDescription"></a>
+
+#### schema.hasDescription() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasDescription</code>](#MixinDescription.hasDescription)  
+<a name="module_@asyncapi/parser+Schema+description"></a>
+
+#### schema.description() ⇒ <code>string</code> \| <code>null</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>description</code>](#MixinDescription.description)  
+<a name="module_@asyncapi/parser+Schema+hasExternalDocs"></a>
+
+#### schema.hasExternalDocs() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExternalDocs</code>](#MixinExternalDocs.hasExternalDocs)  
+<a name="module_@asyncapi/parser+Schema+externalDocs"></a>
+
+#### schema.externalDocs() ⇒ <code>ExternalDocs</code> \| <code>null</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>externalDocs</code>](#MixinExternalDocs.externalDocs)  
+<a name="module_@asyncapi/parser+Schema+hasExtensions"></a>
+
+#### schema.hasExtensions() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
+<a name="module_@asyncapi/parser+Schema+extensions"></a>
+
+#### schema.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
+<a name="module_@asyncapi/parser+Schema+extensionKeys"></a>
+
+#### schema.extensionKeys() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extensionKeys</code>](#MixinSpecificationExtensions.extensionKeys)  
+<a name="module_@asyncapi/parser+Schema+extKeys"></a>
+
+#### schema.extKeys() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extKeys</code>](#MixinSpecificationExtensions.extKeys)  
+<a name="module_@asyncapi/parser+Schema+hasExtension"></a>
+
+#### schema.hasExtension(key) ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExtension</code>](#MixinSpecificationExtensions.hasExtension)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+extension"></a>
+
+#### schema.extension(key) ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extension</code>](#MixinSpecificationExtensions.extension)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+hasExt"></a>
+
+#### schema.hasExt(key) ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExt</code>](#MixinSpecificationExtensions.hasExt)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+ext"></a>
+
+#### schema.ext(key) ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>ext</code>](#MixinSpecificationExtensions.ext)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+hasDescription"></a>
+
+#### schema.hasDescription() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasDescription</code>](#MixinDescription.hasDescription)  
+<a name="module_@asyncapi/parser+Schema+description"></a>
+
+#### schema.description() ⇒ <code>string</code> \| <code>null</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>description</code>](#MixinDescription.description)  
+<a name="module_@asyncapi/parser+Schema+hasExternalDocs"></a>
+
+#### schema.hasExternalDocs() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExternalDocs</code>](#MixinExternalDocs.hasExternalDocs)  
+<a name="module_@asyncapi/parser+Schema+externalDocs"></a>
+
+#### schema.externalDocs() ⇒ <code>ExternalDocs</code> \| <code>null</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>externalDocs</code>](#MixinExternalDocs.externalDocs)  
+<a name="module_@asyncapi/parser+Schema+hasExtensions"></a>
+
+#### schema.hasExtensions() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExtensions</code>](#MixinSpecificationExtensions.hasExtensions)  
+<a name="module_@asyncapi/parser+Schema+extensions"></a>
+
+#### schema.extensions() ⇒ <code>Object.&lt;string, any&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extensions</code>](#MixinSpecificationExtensions.extensions)  
+<a name="module_@asyncapi/parser+Schema+extensionKeys"></a>
+
+#### schema.extensionKeys() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extensionKeys</code>](#MixinSpecificationExtensions.extensionKeys)  
+<a name="module_@asyncapi/parser+Schema+extKeys"></a>
+
+#### schema.extKeys() ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extKeys</code>](#MixinSpecificationExtensions.extKeys)  
+<a name="module_@asyncapi/parser+Schema+hasExtension"></a>
+
+#### schema.hasExtension(key) ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExtension</code>](#MixinSpecificationExtensions.hasExtension)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+extension"></a>
+
+#### schema.extension(key) ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>extension</code>](#MixinSpecificationExtensions.extension)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+hasExt"></a>
+
+#### schema.hasExt(key) ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>hasExt</code>](#MixinSpecificationExtensions.hasExt)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
+<a name="module_@asyncapi/parser+Schema+ext"></a>
+
+#### schema.ext(key) ⇒ <code>any</code>
+**Kind**: instance method of [<code>Schema</code>](#module_@asyncapi/parser+Schema)  
+**Mixes**: [<code>ext</code>](#MixinSpecificationExtensions.ext)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | Extension key. |
+
 <a name="module_@asyncapi/parser..parse"></a>
 
 ### @asyncapi/parser~parse(asyncapiYAMLorJSON, [options]) ⇒ <code>Promise.&lt;AsyncAPIDocument&gt;</code>
@@ -3757,4 +3871,13 @@ The different types of schemas you can iterate
 | oneOfs | <code>string</code> | Crawl all schemas in oneOf's |
 | allOfs | <code>string</code> | Crawl all schemas in allOf's |
 | anyOfs | <code>string</code> | Crawl all schemas in anyOf's |
+| nots | <code>string</code> | Crawl all schemas in not field |
+| propertyNames | <code>string</code> | Crawl all schemas in propertyNames field |
+| patternProperties | <code>string</code> | Crawl all schemas in patternProperties field |
+| contains | <code>string</code> | Crawl all schemas in contains field |
+| ifs | <code>string</code> | Crawl all schemas in if field |
+| thenes | <code>string</code> | Crawl all schemas in then field |
+| elses | <code>string</code> | Crawl all schemas in else field |
+| dependencies | <code>string</code> | Crawl all schemas in dependencies field |
+| definitions | <code>string</code> | Crawl all schemas in definitions field |
 

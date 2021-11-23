@@ -28,6 +28,29 @@ const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
 const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}}}},"x-parser-spec-parsed":true}';
 const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"<anonymous-schema-3>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}}},"x-parser-spec-parsed":true}';
 
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/AsyncAPI%20Object/invalid-duplicate-tags.yaml
+const invalidRootWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-root-with-duplicate-tags.yaml'), 'utf8');
+const invalidRootWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","tags":[{"name":"user","description":"user signed up"},{"name":"user"}],"info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"payload":{"type":"object","properties":{"email":{"type":"string","format":"email"}}}}}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Operation%20Object/invalid-duplicate-tags.yaml
+const invalidOperationWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-with-duplicate-tags.yaml'), 'utf8');
+const invalidOperationWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"operationId":"userSignedUp","summary":"user signed up","description":"user signed up to load some data","message":{"payload":{"type":"object","properties":{"email":{"type":"string","format":"email"}}}},"tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Operation%20Trait%20Object/invalid-duplicate-tags.yaml
+const invalidOperationTraitsWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-traits-with-duplicate-tags.yaml'), 'utf8');
+const invalidOperationTraitsWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"payload":{"type":"object","properties":{"email":{"type":"string","format":"email"}}}},"traits":[{"tags":[{"description":"user signed up","name":"user"},{"name":"user"}]}]}}},"components":{"operationTraits":{"userSignedUpTrait":{"tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Message%20Object/invalid-duplicate-tags.yaml
+const invalidMessageWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-message-with-duplicate-tags.yaml'), 'utf8');
+const invalidMessageWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"contentType":"application\/json","tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}}';
+
+const invalidMessageOneOfWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-with-oneof-and-duplicate-tags.yaml'), 'utf8');
+const invalidMessageOneOfWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"publish":{"operationId":"userSignedUp","summary":"user signed up","description":"user signed up to load some data","message":{"oneOf":[{"tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"contentType":"application\/json","tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"payload":null,"tags":[{"description":"Description for user3 tag","name":"user3"},{"name":"user3"}]}]}}}},"components":{"messages":{"testMessage1":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}]},"testMessage2":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}],"contentType":"application\/json"}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Message%20Trait%20Object/invalid-duplicate-tags.yaml
+const invalidMessageTraitWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-message-traits-with-duplicate-tags.yaml'), 'utf8');
+const invalidMessageTraitWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"traits":[{"contentType":"application\/json","tags":[{"description":"user signed up","name":"user"},{"name":"user"}]}]}}}},"components":{"messageTraits":{"signedUpMessage":{"tags":[{"name":"user","description":"user signed up"},{"name":"user"}],"contentType":"application\/json"}}}}';
+
 describe('parse()', function() {
   it('should parse YAML', async function() {
     const result = await parser.parse(inputYAML, { path: __filename });
@@ -629,6 +652,195 @@ describe('parse()', function() {
     expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
     expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
   });
+
+  /*
+   * Duplicate tags tests
+   */
+  it('should throw error that the provided root object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidRootWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: 'tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/tags',
+          startLine: 3,
+          startColumn: 1,
+          startOffset: offset(17, 3),
+          endLine: 8,
+          endColumn: 1,
+          endOffset: offset(86, 8),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidRootWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided operation object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidOperationWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: '/user/signedup/subscribe/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/subscribe/tags',
+          startLine: 20,
+          startColumn: 7,
+          startOffset: offset(398, 20),
+          endLine: 24,
+          endColumn: 1,
+          endOffset: offset(484, 24),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidOperationWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided operation trait object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidOperationTraitsWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: 'operationTraits/userSignedUpTrait/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/operationTraits/userSignedUpTrait/tags',
+          startLine: 23,
+          startColumn: 7,
+          startOffset: offset(418, 23),
+          endLine: 27,
+          endColumn: 1,
+          endOffset: offset(504, 27),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidOperationTraitsWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided message object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidMessageWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: '/user/signedup/subscribe/message/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/subscribe/message/tags',
+          startLine: 12,
+          startColumn: 9,
+          startOffset: offset(188, 12),
+          endLine: 16,
+          endColumn: 1,
+          endOffset: offset(280, 16),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidMessageWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided message objects in oneOf has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidMessageOneOfWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: '/user/signedup/publish/message/oneOf/0/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/0/tags',
+        }
+      },
+      {
+        title: '/user/signedup/publish/message/oneOf/1/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/1/tags',
+        }
+      },
+      {
+        title: '/user/signedup/publish/message/oneOf/2/tags contains duplicate tag names: user3',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/2/tags',
+          startLine: 18,
+          startColumn: 13,
+          startOffset: offset(412, 18),
+          endLine: 23,
+          endColumn: 1,
+          endOffset: offset(530, 23),
+        }
+      },
+      {
+        title: 'messages/testMessage1/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messages/testMessage1/tags',
+          startLine: 26,
+          startColumn: 7,
+          startOffset: offset(578, 26),
+          endLine: 31,
+          endColumn: 5,
+          endOffset: offset(701, 31),
+        }
+      },
+      {
+        title: 'messages/testMessage2/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messages/testMessage2/tags',
+          startLine: 32,
+          startColumn: 7,
+          startOffset: offset(721, 32),
+          endLine: 37,
+          endColumn: 7,
+          endOffset: offset(846, 37),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidMessageOneOfWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided message trait object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidMessageTraitWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: 'messageTraits/signedUpMessage/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messageTraits/signedUpMessage/tags',
+          startLine: 17,
+          startColumn: 7,
+          startOffset: offset(278, 17),
+          endLine: 21,
+          endColumn: 7,
+          endOffset: offset(370, 21),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidMessageTraitWithDuplicateTags);
+    }, expectedErrorObject);
+  });
 });
 
 it('should not apply traits', async function() {
@@ -682,6 +894,19 @@ it('should fail on invalid examples', async function() {
   await checkErrorWrapper(async () => {
     await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
   }, expectedErrorObject);
+});
+
+describe('memory usage', function () {
+  it('should use this same instance of validation function in each call', async function() {
+    this.timeout(12500);
+    const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/zbos_mqtt-all-asyncapi.json'), 'utf8');
+
+    for (let i = 0, l = 50; i < l; i++) {
+      await parser.parse(asyncapi);
+      const used = process.memoryUsage().heapUsed / 1024 / 1024;
+      expect(used < 100).to.equal(true); // less than 100 MB
+    }
+  });
 });
 
 describe('registerSchemaParser()', function() {

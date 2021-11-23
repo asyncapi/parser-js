@@ -19,6 +19,15 @@ declare type SchemaIteratorCallbackType = {
  * @property oneOfs - Crawl all schemas in oneOf's
  * @property allOfs - Crawl all schemas in allOf's
  * @property anyOfs - Crawl all schemas in anyOf's
+ * @property nots - Crawl all schemas in not field
+ * @property propertyNames - Crawl all schemas in propertyNames field
+ * @property patternProperties - Crawl all schemas in patternProperties field
+ * @property contains - Crawl all schemas in contains field
+ * @property ifs - Crawl all schemas in if field
+ * @property thenes - Crawl all schemas in then field
+ * @property elses - Crawl all schemas in else field
+ * @property dependencies - Crawl all schemas in dependencies field
+ * @property definitions - Crawl all schemas in definitions field
  */
 declare type SchemaTypesToIterate = {
     parameters: string;
@@ -30,6 +39,15 @@ declare type SchemaTypesToIterate = {
     oneOfs: string;
     allOfs: string;
     anyOfs: string;
+    nots: string;
+    propertyNames: string;
+    patternProperties: string;
+    contains: string;
+    ifs: string;
+    thenes: string;
+    elses: string;
+    dependencies: string;
+    definitions: string;
 };
 
 
@@ -864,8 +882,35 @@ declare module "@asyncapi/parser" {
         examples(): any[];
         isBooleanSchema(): boolean;
         isCircular(): boolean;
+        circularSchema(): Schema;
         hasCircularProps(): boolean;
         circularProps(): string[];
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
         hasDescription(): boolean;
         description(): string | null;
         hasExternalDocs(): boolean;

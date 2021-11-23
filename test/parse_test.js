@@ -25,8 +25,8 @@ const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"test": true,"version":"1
 const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"test":true,"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"test":true,"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}';
 const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":null}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
-const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}},"x-parser-spec-parsed":true}';
-const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}},"x-parser-spec-parsed":true}';
+const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}}}},"x-parser-spec-parsed":true}';
+const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"<anonymous-schema-3>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}}},"x-parser-spec-parsed":true}';
 
 // Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/AsyncAPI%20Object/invalid-duplicate-tags.yaml
 const invalidRootWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-root-with-duplicate-tags.yaml'), 'utf8');
@@ -593,26 +593,64 @@ describe('parse()', function() {
       'testString'
     ]);
   });
+  
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
-    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(true);
-    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(true);
-    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(true);
+
     //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
     expect(result.hasCircular()).to.equal(true);
-    //we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
+
+    // we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
     expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(false);
     expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
-    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].items().isCircular()).to.equal(true);
     expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].isCircular()).to.equal(false);
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].hasCircularProps()).to.equal(true);
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps()[0]).to.equal('test');
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps().length).to.equal(1);
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
     expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
-    //NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
-    //If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
-    //This is why it is important to check that NormalSchemaC is or sure not marked as circular
+
+    // NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
+    // If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
+    // This is why it is important to check that NormalSchemaC is or sure not marked as circular
     expect(result.components().schema('NormalSchemaC').isCircular()).to.equal(false);
+
+    // NestedAllOfSchema has circular reference
+    expect(result.components().schema('NestedAllOfSchema').allOf()[0].isCircular()).to.equal(false);
+    expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[0].isCircular()).to.equal(true);
+    expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[1].isCircular()).to.equal(false);
+
+    // OneOf has circular reference
+    expect(result.components().schema('OneOf').properties()['kind'].isCircular()).to.equal(false);
+    expect(result.components().schema('OneOf').properties()['kind'].oneOf()[0].isCircular()).to.equal(true);
+  
+    // AnyOf has circular reference
+    expect(result.components().schema('AnyOf').anyOf()[5].isCircular()).to.equal(false);
+    expect(result.components().schema('AnyOf').anyOf()[5].items().isCircular()).to.equal(true);
+
+    // external/file channel has deep circular reference
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(false);
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].items().isCircular()).to.equal(true);
+
+    // RecursiveSelf and RecursiveAncestor have deep circular references
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+
+    // RecursiveComplex has complex deep circular references
+    expect(result.components().schema('RecursiveComplex').contains().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').items()[0].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').items()[1].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').then().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^bar'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].items().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
   });
 
   /*

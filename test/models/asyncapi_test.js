@@ -434,7 +434,24 @@ describe('AsyncAPIDocument', function() {
         'testComponentSchemaNestedSchemaPropAllOfSchema2Prop1',
         'testComponentSchemaNestedSchemaPropArray',
         'testComponentSchemaNestedSchemaPropArrayProp1',
-        'testComponentSchemaNestedSchemaPropArrayProp2'
+        'testComponentSchemaNestedSchemaPropArrayProp2',
+        'testComponentSchemaNestedSchemaPropPatternProperties',
+        'testComponentSchemaNestedSchemaPropPatternPropertiesProp1',
+        'testComponentSchemaNestedSchemaPropPatternPropertiesProp2',
+        'testComponentSchemaNestedSchemaPropConditional',
+        'testComponentSchemaNestedSchemaPropConditionalIf',
+        'testComponentSchemaNestedSchemaPropConditionalThen',
+        'testComponentSchemaNestedSchemaPropConditionalElse',
+        'testComponentSchemaNestedSchemaPropDependencies',
+        'testComponentSchemaNestedSchemaPropDependenciesDep1',
+        'testComponentSchemaNestedSchemaPropDependenciesDep3',
+        'testComponentSchemaNestedSchemaPropDefinitions',
+        'testComponentSchemaNestedSchemaPropDefinitionsDef1',
+        'testComponentSchemaNestedSchemaPropDefinitionsDef2',
+        'testComponentSchemaNestedSchemaPropMisc',
+        'testComponentSchemaNestedSchemaPropMiscPropertyNames',
+        'testComponentSchemaNestedSchemaPropMiscContains',
+        'testComponentSchemaNestedSchemaPropMiscNot',
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
@@ -443,7 +460,8 @@ describe('AsyncAPIDocument', function() {
     });
   });
 
-  describe('#traverseSchemas()', function() {
+  /* eslint-disable sonarjs/cognitive-complexity */
+  describe('#traverseSchemas()', function() { // NOSONAR
     const parameterSchemas = [
       'testParamSchema',
       'testParamNestedSchemaProp',
@@ -470,6 +488,9 @@ describe('AsyncAPIDocument', function() {
     const payloadSchemas = [
       'testPayload'
     ];
+    const componentObjectAllOfSchema = [
+      'testComponentSchemaNestedSchemaPropAllOf',
+    ];
     const componentObjectAllOfSchemas = [
       'testComponentSchemaNestedSchemaPropAllOf',
       'testComponentSchemaNestedSchemaPropAllOfSchema1',
@@ -485,7 +506,49 @@ describe('AsyncAPIDocument', function() {
       'testComponentSchemaNestedSchemaPropArrayProp1',
       'testComponentSchemaNestedSchemaPropArrayProp2'
     ];
-    it('Should not include parameter schemas if defined', function() {
+    const componentPatternPropertiesSchema = [
+      'testComponentSchemaNestedSchemaPropPatternProperties',
+    ];
+    const componentPatternPropertiesSchemas = [
+      ...componentPatternPropertiesSchema,
+      'testComponentSchemaNestedSchemaPropPatternPropertiesProp1',
+      'testComponentSchemaNestedSchemaPropPatternPropertiesProp2',
+    ];
+    const componentConditionalSchema = [
+      'testComponentSchemaNestedSchemaPropConditional',
+    ];
+    const componentConditionalSchemas = [
+      ...componentConditionalSchema,
+      'testComponentSchemaNestedSchemaPropConditionalIf',
+      'testComponentSchemaNestedSchemaPropConditionalThen',
+      'testComponentSchemaNestedSchemaPropConditionalElse',
+    ];
+    const componentDependenciesSchema = [
+      'testComponentSchemaNestedSchemaPropDependencies',
+    ];
+    const componentDependenciesSchemas = [
+      ...componentDependenciesSchema,
+      'testComponentSchemaNestedSchemaPropDependenciesDep1',
+      'testComponentSchemaNestedSchemaPropDependenciesDep3',
+    ];
+    const componentDefinitionsSchema = [
+      'testComponentSchemaNestedSchemaPropDefinitions',
+    ];
+    const componentDefinitionsSchemas = [
+      ...componentDefinitionsSchema,
+      'testComponentSchemaNestedSchemaPropDefinitionsDef1',
+      'testComponentSchemaNestedSchemaPropDefinitionsDef2',
+    ];
+    const componentMiscSchema = [
+      'testComponentSchemaNestedSchemaPropMisc',
+    ];
+    const componentMiscSchemas = [
+      ...componentMiscSchema,
+      'testComponentSchemaNestedSchemaPropMiscPropertyNames',
+      'testComponentSchemaNestedSchemaPropMiscContains',
+      'testComponentSchemaNestedSchemaPropMiscNot',
+    ];
+    it('should not include parameter schemas if defined', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
@@ -500,7 +563,13 @@ describe('AsyncAPIDocument', function() {
         'allOfs',
         'anyOfs',
         'payloads',
-        'headers'
+        'headers',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'dependencies',
+        'definitions',
       ];
       d.traverseSchemas(cb, typesToTraverse);
 
@@ -514,14 +583,19 @@ describe('AsyncAPIDocument', function() {
         ...payloadSchemas,
         ...componentObjectSchemas,
         ...componentObjectAllOfSchemas,
-        ...componentArraySchemas
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchema,
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }
     });
-    it('Should not include payload schemas if defined', function() {
+    it('should not include payload schemas if defined', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
@@ -536,7 +610,13 @@ describe('AsyncAPIDocument', function() {
         'allOfs',
         'anyOfs',
         'parameters',
-        'headers'
+        'headers',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'dependencies',
+        'definitions',
       ];
       d.traverseSchemas(cb, typesToTraverse);
 
@@ -548,14 +628,19 @@ describe('AsyncAPIDocument', function() {
         ...headerArraySchemas,
         ...componentObjectSchemas,
         ...componentObjectAllOfSchemas,
-        ...componentArraySchemas
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchema,
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }
     });
-    it('Should not include header schemas if defined', function() {
+    it('should not include header schemas if defined', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
@@ -570,7 +655,13 @@ describe('AsyncAPIDocument', function() {
         'allOfs',
         'anyOfs',
         'parameters',
-        'payloads'
+        'payloads',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'dependencies',
+        'definitions',
       ];
       d.traverseSchemas(cb, typesToTraverse);
 
@@ -583,14 +674,19 @@ describe('AsyncAPIDocument', function() {
         ...payloadSchemas,
         ...componentObjectSchemas,
         ...componentObjectAllOfSchemas,
-        ...componentArraySchemas
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchema,
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }
     });
-    it('Should not include arrays if defined', function() {
+    it('should not include arrays if defined', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
@@ -605,7 +701,13 @@ describe('AsyncAPIDocument', function() {
         'anyOfs',
         'parameters',
         'payloads',
-        'headers'
+        'headers',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'dependencies',
+        'definitions',
       ];
       d.traverseSchemas(cb, typesToTraverse);
 
@@ -617,14 +719,231 @@ describe('AsyncAPIDocument', function() {
         ...payloadObjectSchemas,
         ...payloadSchemas,
         ...componentObjectSchemas,
-        ...componentObjectAllOfSchemas
+        ...componentObjectAllOfSchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
         expect(t.json().test).to.be.equal(true);
       }
     });
-    it('Should include all schemas', function() {
+    it('should not include components if defined', function() {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      const schemas = new Map();
+      const cb = (schema) => {
+        schemas.set(schema.uid(), schema);
+      };
+      const typesToTraverse = [
+        'objects',
+        'arrays',
+        'oneOfs', 
+        'allOfs',
+        'anyOfs',
+        'parameters',
+        'payloads',
+        'headers',
+      ];
+      d.traverseSchemas(cb, typesToTraverse);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        ...parameterSchemas,
+        ...headerObjectSchemas,
+        ...headerArraySchemas,
+        ...payloadObjectSchemas,
+        ...payloadArraySchemas,
+        ...payloadSchemas,
+      ]);
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should not include combined schemas if defined', function() {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      const schemas = new Map();
+      const cb = (schema) => {
+        schemas.set(schema.uid(), schema);
+      };
+      const typesToTraverse = [
+        'objects',
+        'arrays',
+        'parameters',
+        'payloads',
+        'headers',
+        'components',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'dependencies',
+        'definitions',
+      ];
+      d.traverseSchemas(cb, typesToTraverse);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        ...parameterSchemas,
+        ...headerObjectSchemas,
+        ...headerArraySchemas,
+        ...payloadObjectSchemas,
+        ...payloadArraySchemas,
+        ...payloadSchemas,
+        ...componentObjectSchemas,
+        ...componentObjectAllOfSchema,
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchema,
+      ]);
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should not include conditional schemas if defined', function() {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      const schemas = new Map();
+      const cb = (schema) => {
+        schemas.set(schema.uid(), schema);
+      };
+      const typesToTraverse = [
+        'objects',
+        'arrays',
+        'parameters',
+        'payloads',
+        'headers',
+        'components',
+        'patternProperties',
+        'dependencies',
+        'definitions',
+      ];
+      d.traverseSchemas(cb, typesToTraverse);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        ...parameterSchemas,
+        ...headerObjectSchemas,
+        ...headerArraySchemas,
+        ...payloadObjectSchemas,
+        ...payloadArraySchemas,
+        ...payloadSchemas,
+        ...componentObjectSchemas,
+        ...componentObjectAllOfSchema,
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchema,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchema,
+      ]);
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should not include dependencies schemas if defined', function() {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      const schemas = new Map();
+      const cb = (schema) => {
+        schemas.set(schema.uid(), schema);
+      };
+      const typesToTraverse = [
+        'objects',
+        'arrays',
+        'parameters',
+        'payloads',
+        'headers',
+        'components',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'definitions',
+      ];
+      d.traverseSchemas(cb, typesToTraverse);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        ...parameterSchemas,
+        ...headerObjectSchemas,
+        ...headerArraySchemas,
+        ...payloadObjectSchemas,
+        ...payloadArraySchemas,
+        ...payloadSchemas,
+        ...componentObjectSchemas,
+        ...componentObjectAllOfSchema,
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchema,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchema,
+      ]);
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should not include definitions schemas if defined', function() {
+      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
+      const d = new AsyncAPIDocument(doc);
+      const schemas = new Map();
+      const cb = (schema) => {
+        schemas.set(schema.uid(), schema);
+      };
+      const typesToTraverse = [
+        'objects',
+        'arrays',
+        'parameters',
+        'payloads',
+        'headers',
+        'components',
+        'patternProperties',
+        'ifs',
+        'thenes',
+        'elses',
+        'dependencies',
+      ];
+      d.traverseSchemas(cb, typesToTraverse);
+
+      //Ensure the actual keys are as expected
+      const schemaKeys = Array.from(schemas.keys());
+      expect(schemaKeys).to.deep.equal([
+        ...parameterSchemas,
+        ...headerObjectSchemas,
+        ...headerArraySchemas,
+        ...payloadObjectSchemas,
+        ...payloadArraySchemas,
+        ...payloadSchemas,
+        ...componentObjectSchemas,
+        ...componentObjectAllOfSchema,
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchema,
+        ...componentMiscSchema,
+      ]);
+      for (const t of schemas.values()) {
+        expect(t.constructor.name).to.be.equal('Schema');
+        expect(t.json().test).to.be.equal(true);
+      }
+    });
+    it('should include all schemas', function() {
       const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
       const d = new AsyncAPIDocument(doc);
       const schemas = new Map();
@@ -644,41 +963,12 @@ describe('AsyncAPIDocument', function() {
         ...payloadSchemas,
         ...componentObjectSchemas,
         ...componentObjectAllOfSchemas,
-        ...componentArraySchemas
-      ]);
-      for (const t of schemas.values()) {
-        expect(t.constructor.name).to.be.equal('Schema');
-        expect(t.json().test).to.be.equal(true);
-      }
-    });
-    it('Should not include components if defined', function() {
-      const doc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../good/nested-schemas.json'), 'utf8'));
-      const d = new AsyncAPIDocument(doc);
-      const schemas = new Map();
-      const cb = (schema) => {
-        schemas.set(schema.uid(), schema);
-      };
-      const typesToTraverse = [
-        'objects',
-        'arrays',
-        'oneOfs', 
-        'allOfs',
-        'anyOfs',
-        'parameters',
-        'payloads',
-        'headers'
-      ];
-      d.traverseSchemas(cb, typesToTraverse);
-
-      //Ensure the actual keys are as expected
-      const schemaKeys = Array.from(schemas.keys());
-      expect(schemaKeys).to.deep.equal([
-        ...parameterSchemas,
-        ...headerObjectSchemas,
-        ...headerArraySchemas,
-        ...payloadObjectSchemas,
-        ...payloadArraySchemas,
-        ...payloadSchemas
+        ...componentArraySchemas,
+        ...componentPatternPropertiesSchemas,
+        ...componentConditionalSchemas,
+        ...componentDependenciesSchemas,
+        ...componentDefinitionsSchemas,
+        ...componentMiscSchemas,
       ]);
       for (const t of schemas.values()) {
         expect(t.constructor.name).to.be.equal('Schema');
@@ -686,6 +976,7 @@ describe('AsyncAPIDocument', function() {
       }
     });
   });
+  /* eslint-enable sonarjs/cognitive-complexity */
 
   describe('mixins', function() {
     it('model should inherit from mixins', function() {

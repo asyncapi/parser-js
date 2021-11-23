@@ -93,3 +93,52 @@ components:
         - type: string
           enum:
             - ENUM_E
+    NestedAllOfSchema:
+      allOf:
+        - $ref: '#/components/schemas/NormalSchemaA'
+        - type: object
+          properties:
+            parent:
+              allOf:
+                - $ref: '#/components/schemas/NestedAllOfSchema'
+                - $ref: '#/components/schemas/NormalSchemaA'
+            name:
+              type: string
+          required:
+            - name
+    OneOf:
+      type: object
+      properties: 
+        kind: 
+          oneOf:
+            - $ref: '#/components/schemas/OneOf'
+            - type: string
+            - enum:
+              - boolean
+              - string 
+    AnyOf:
+      anyOf:
+        - type: integer
+        - type: number
+        - type: string
+        - type: boolean
+        - type: object
+        - type: array
+          items:
+            $ref: "#/components/schemas/AnyOf"
+    RecursiveComplex:
+        type: [object, array]
+        patternProperties:
+          ^foo: 
+            $ref: '#/components/schemas/RecursiveSelf'
+          ^bar: 
+            type: string
+        contains:
+          $ref: '#/components/schemas/RecursiveComplex'
+        items:
+          - type: string
+          - $ref: '#/components/schemas/RecursiveComplex'
+        if:
+          $ref: '#/components/schemas/RecursiveAncestor'
+        then:
+          $ref: '#/components/schemas/RecursiveComplex'

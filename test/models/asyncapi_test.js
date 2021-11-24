@@ -1019,7 +1019,7 @@ describe('AsyncAPIDocument', function() {
       let error;
       try {
         AsyncAPIDocument.parse(parsedDoc);
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
       expect(error.message).to.be.equal('Cannot parse invalid AsyncAPI document');

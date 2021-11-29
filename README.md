@@ -218,6 +218,16 @@ Parser dereferences all circular references by default. In addition, to simplify
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular()` function to check the document and provide a proper message to the user.
 - `isCircular()` function is added to the [Schema Model](./lib/models/schema.js) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
 
+## Stringify
+
+Converting a parsed document to a string may be necessary when saving the parsed document to a database or similar situations where you don't need to parse the document just once and save it somewhere. For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path.
+
+To parse a stringified document into an AsyncAPIDocument instance you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method. 
+
+A few advantages of the solution:
+- string is as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
+- all circular references are preserved.
+
 ## Develop
 
 1. Write code and tests.

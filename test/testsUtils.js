@@ -1,7 +1,5 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-// const { EOL } = require('os');
-// const eolLength = EOL.length;
 const ParserError = require('../lib/errors/parser-error');
 
 chai.use(chaiAsPromised);
@@ -19,7 +17,6 @@ const testsUtils = module.exports;
  * @returns {Number} calculated offset number
  */
 testsUtils.offset = (oset) => oset;
-// testsUtils.offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
 
 /* eslint-disable sonarjs/cognitive-complexity */
 /**

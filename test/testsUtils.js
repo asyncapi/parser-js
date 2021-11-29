@@ -13,7 +13,6 @@ const testsUtils = module.exports;
  * @function offset
  * @private
  * @param  {Number} oset end or start offset number
- * @param  {Number} line end or start line number
  * @returns {Number} calculated offset number
  */
 testsUtils.offset = (oset) => oset;

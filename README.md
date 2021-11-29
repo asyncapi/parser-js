@@ -145,7 +145,7 @@ import parser from '@asyncapi/parser';
 
 ## Custom message parsers
 
-AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
+AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it within the parser:
 
 1. Create custom parser module that exports two functions:
 

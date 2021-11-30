@@ -220,13 +220,15 @@ Parser dereferences all circular references by default. In addition, to simplify
 
 ## Stringify
 
-Converting a parsed document to a string may be necessary when saving the parsed document to a database or similar situations where you don't need to parse the document just once and save it somewhere. For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path.
+Converting a parsed document to a string may be necessary when saving the parsed document to a database, or similar situations where you need to parse the document just once and then reuse it.
 
-To parse a stringified document into an AsyncAPIDocument instance you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method. 
+For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation, in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path.
+		
+To parse a stringified document into an AsyncAPIDocument instance, you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method.
 
-A few advantages of the solution:
-- string is as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
-- all circular references are preserved.
+A few advantages of this solution:
+- The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
+- All circular references are preserved.
 
 ## Develop
 

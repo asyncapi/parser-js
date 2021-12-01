@@ -18,7 +18,7 @@ const testsUtils = module.exports;
  * @param {Number} line end or start line number
  * @returns {Number} calculated offset number
  */
-testsUtils.offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
+testsUtils.offset = (oset) => oset;
 
 /* eslint-disable sonarjs/cognitive-complexity */
 /**

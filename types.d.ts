@@ -197,6 +197,18 @@ declare module "@asyncapi/parser" {
          * By default all schemas are iterated
          */
         traverseSchemas(callback: TraverseSchemas, schemaTypesToIterate: SchemaTypesToIterate[]): void;
+        /**
+         * Converts a valid AsyncAPI document to a JavaScript Object Notation (JSON) string.
+         * A stringified AsyncAPI document using this function should be parsed via the AsyncAPIDocument.parse() function - the JSON.parse() function is not compatible.
+         * @param doc - A valid AsyncAPIDocument instance.
+         * @param [space] - Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+         */
+        static stringify(doc: AsyncAPIDocument, space?: number | string): string;
+        /**
+         * Converts a valid stringified AsyncAPIDocument instance into an AsyncAPIDocument instance.
+         * @param doc - A valid stringified AsyncAPIDocument instance.
+         */
+        static parse(doc: string): AsyncAPIDocument;
         hasTags(): boolean;
         tags(): Tag[];
         tagNames(): string[];

@@ -1,7 +1,5 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const { EOL } = require('os');
-const eolLength = EOL.length;
 const ParserError = require('../lib/errors/parser-error');
 
 chai.use(chaiAsPromised);
@@ -15,16 +13,9 @@ const testsUtils = module.exports;
  * @function offset
  * @private
  * @param {Number} oset end or start offset number
- * @param {Number} line end or start line number
  * @returns {Number} calculated offset number
  */
 testsUtils.offset = (oset) => {
-  // (oset + ((eolLength - 1) * (line - 1)))
-  return oset;
-};
-
-testsUtils.offset2 = (oset, line) => {
-  console.log(oset, line, eolLength);
   return oset;
 };
 

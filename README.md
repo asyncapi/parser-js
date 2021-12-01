@@ -29,6 +29,7 @@
 - [Error types](#error-types)
 - [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
+- [Stringify](#stringify)
 - [Develop](#develop)
 - [Contributing](#contributing)
 - [Contributors](#contributors)

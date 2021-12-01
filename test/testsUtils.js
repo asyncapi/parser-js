@@ -20,6 +20,11 @@ const testsUtils = module.exports;
  */
 testsUtils.offset = (oset, line) => (oset + ((eolLength - 1) * (line - 1)));
 
+testsUtils.offset2 = (oset, line) => {
+  console.log(oset, line, eolLength);
+  return oset;
+};
+
 /* eslint-disable sonarjs/cognitive-complexity */
 /**
  * Disabled the rule for this function as there is no way to make it shorter in a meaningfull way

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
 const { xParserSpecParsed } = require('../lib/constants');
-const { offset, checkErrorWrapper } = require('./testsUtils');
+const { offset, offset2, checkErrorWrapper } = require('./testsUtils');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -129,6 +129,8 @@ describe('parse()', function() {
   });
   
   it('should fail when asyncapi is not valid (yaml)', async function() {
+    console.log('INFO:::::::::::::::::::::::::::::', offset(305,15), offset2(305,15));
+
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/validation-errors',
       title: 'There were errors validating the AsyncAPI document.',

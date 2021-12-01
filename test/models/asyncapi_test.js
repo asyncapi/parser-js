@@ -2,12 +2,18 @@ const { expect } = require('chai');
 const fs = require('fs');
 const path = require('path');
 
+const parser = require('../../lib');
 const AsyncAPIDocument = require('../../lib/models/asyncapi');
 const { xParserMessageName, xParserSchemaId } = require('../../lib/constants');
 
 const { assertMixinTagsInheritance } = require('../mixins/tags_test');
 const { assertMixinExternalDocsInheritance } = require('../mixins/external-docs_test');
 const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+
+const simpleInputJSON = fs.readFileSync(path.resolve(__dirname, '../good/asyncapi.json'), 'utf8');
+const simpleOutputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":"$ref:$.components.messages.testMessage.payload"}},"x-parser-spec-parsed":true,"x-parser-spec-stringified":true}';
+const circularYAML = fs.readFileSync(path.resolve(__dirname, '../good/circular-refs.yaml'), 'utf8');
+const circularOutputYAML = '{"asyncapi":"2.0.0","info":{"title":"My Circular API","version":"1.0.0"},"channels":{"recursive":{"subscribe":{"message":{"payload":{"type":"object","properties":{"selfChildren":{"type":"array","items":"$ref:$.channels.recursive.subscribe.message.payload","x-parser-schema-id":"<anonymous-schema-1>"},"selfObjectChildren":{"type":"object","properties":{"test":"$ref:$.channels.recursive.subscribe.message.payload","nonRecursive":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"},"selfSomething":{"type":"object","properties":{"test":{"type":"object","properties":{"ancestorChildren":{"type":"array","items":"$ref:$.channels.recursive.subscribe.message.payload","x-parser-schema-id":"<anonymous-schema-5>"},"ancestorSomething":{"type":"string","x-parser-schema-id":"<anonymous-schema-6>"}},"x-parser-schema-id":"RecursiveAncestor"}},"x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"RecursiveSelf"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":"$ref:$.channels.recursive.subscribe.message.payload","schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}},"external/file":{"publish":{"message":{"payload":{"type":"object","properties":{"testExt":{"type":"object","properties":{"children":{"type":"array","items":"$ref:$.channels.external/file.publish.message.payload","x-parser-schema-id":"<anonymous-schema-9>"}},"x-parser-schema-id":"<anonymous-schema-8>"}},"x-parser-schema-id":"<anonymous-schema-7>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":"$ref:$.channels.external/file.publish.message.payload","schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-2>"}}},"nonRecursive":{"subscribe":{"message":{"payload":{"type":"object","properties":{"child":{"type":"object","properties":{"value":{"type":"string","x-parser-schema-id":"<anonymous-schema-10>"}},"x-parser-schema-id":"NonRecursiveChild"}},"x-parser-schema-id":"NonRecursive"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"child":{"type":"object","properties":{"value":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-3>"}}},"testChannel":{"subscribe":{"message":{"oneOf":[{"contentType":"application/json","payload":{"type":"object","properties":{"schemaBReference":{"type":"string","enum":["ENUM_A","ENUM_B","ENUM_C","ENUM_D"],"x-parser-schema-id":"NormalSchemaB"},"schemaCReference":{"allOf":["$ref:$.channels.testChannel.subscribe.message.oneOf[0].payload.properties.schemaBReference",{"type":"string","enum":["ENUM_E"],"x-parser-schema-id":"<anonymous-schema-11>"}],"x-parser-schema-id":"NormalSchemaC"},"commonEnumName":{"type":"string","enum":["ENUM_1","ENUM_2"],"x-parser-schema-id":"<anonymous-schema-12>"}},"x-parser-schema-id":"NormalSchemaA"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"schemaBReference":{"type":"string","enum":["ENUM_A","ENUM_B","ENUM_C","ENUM_D"]},"schemaCReference":{"allOf":["$ref:$.channels.testChannel.subscribe.message.oneOf[0].x-parser-original-payload.properties.schemaBReference",{"type":"string","enum":["ENUM_E"]}]},"commonEnumName":{"type":"string","enum":["ENUM_1","ENUM_2"]}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":"$ref:$.channels.testChannel.subscribe.message.oneOf[0]"},"schemas":{"NonRecursive":"$ref:$.channels.nonRecursive.subscribe.message.payload","NonRecursiveChild":"$ref:$.channels.nonRecursive.subscribe.message.payload.properties.child","RecursiveSelf":"$ref:$.channels.recursive.subscribe.message.payload","RecursiveAncestor":"$ref:$.channels.recursive.subscribe.message.payload.properties.selfSomething.properties.test","NormalSchemaA":"$ref:$.channels.testChannel.subscribe.message.oneOf[0].payload","NormalSchemaB":"$ref:$.channels.testChannel.subscribe.message.oneOf[0].payload.properties.schemaBReference","NormalSchemaC":"$ref:$.channels.testChannel.subscribe.message.oneOf[0].payload.properties.schemaCReference","NestedAllOfSchema":{"allOf":["$ref:$.channels.testChannel.subscribe.message.oneOf[0].payload",{"type":"object","properties":{"parent":{"allOf":["$ref:$.components.schemas.NestedAllOfSchema","$ref:$.channels.testChannel.subscribe.message.oneOf[0].payload"],"x-parser-schema-id":"<anonymous-schema-14>"},"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-15>"}},"required":["name"],"x-parser-schema-id":"<anonymous-schema-13>"}],"x-parser-schema-id":"NestedAllOfSchema"},"OneOf":{"type":"object","properties":{"kind":{"oneOf":["$ref:$.components.schemas.OneOf",{"type":"string","x-parser-schema-id":"<anonymous-schema-17>"},{"enum":["boolean","string"],"x-parser-schema-id":"<anonymous-schema-18>"}],"x-parser-schema-id":"<anonymous-schema-16>"}},"x-parser-schema-id":"OneOf"},"AnyOf":{"anyOf":[{"type":"integer","x-parser-schema-id":"<anonymous-schema-19>"},{"type":"number","x-parser-schema-id":"<anonymous-schema-20>"},{"type":"string","x-parser-schema-id":"<anonymous-schema-21>"},{"type":"boolean","x-parser-schema-id":"<anonymous-schema-22>"},{"type":"object","x-parser-schema-id":"<anonymous-schema-23>"},{"type":"array","items":"$ref:$.components.schemas.AnyOf","x-parser-schema-id":"<anonymous-schema-24>"}],"x-parser-schema-id":"AnyOf"},"RecursiveComplex":{"type":["object","array"],"patternProperties":{"^foo":"$ref:$.channels.recursive.subscribe.message.payload","^bar":{"type":"string","x-parser-schema-id":"<anonymous-schema-25>"}},"contains":"$ref:$.components.schemas.RecursiveComplex","items":[{"type":"string","x-parser-schema-id":"<anonymous-schema-26>"},"$ref:$.components.schemas.RecursiveComplex"],"if":"$ref:$.channels.recursive.subscribe.message.payload.properties.selfSomething.properties.test","then":"$ref:$.components.schemas.RecursiveComplex","x-parser-schema-id":"RecursiveComplex"}}},"x-parser-circular":true,"x-parser-spec-parsed":true,"x-parser-spec-stringified":true}';
 
 describe('AsyncAPIDocument', function() {
   describe('constructor', function() {
@@ -977,6 +983,108 @@ describe('AsyncAPIDocument', function() {
     });
   });
   /* eslint-enable sonarjs/cognitive-complexity */
+
+  describe('#stringify()', function() {
+    it('should stringify simple document', async function() {
+      const doc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const stringified = AsyncAPIDocument.stringify(doc);
+      expect(stringified).to.be.equal(simpleOutputJSON);
+    });
+
+    it('should stringify document with circular references', async function() {
+      const doc = await parser.parse(circularYAML, { path: path.join(__filename, '../../') });
+      const stringified = AsyncAPIDocument.stringify(doc);
+      expect(stringified).to.be.equal(circularOutputYAML);
+    });
+
+    it('should copy object', async function() {
+      const doc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const stringified = AsyncAPIDocument.stringify(doc);
+      expect(doc.json()['x-parser-spec-stringified']).to.be.equal(undefined);
+      expect(JSON.parse(stringified)['x-parser-spec-stringified']).to.be.equal(true);
+    });
+  });
+
+  describe('#parse()', function() {
+    it('should parse stringified simple document', async function() {
+      const parsedDoc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const doc = AsyncAPIDocument.parse(simpleOutputJSON);
+      expect(JSON.stringify(doc.json())).to.be.equal(JSON.stringify(parsedDoc.json()));
+    });
+
+    it('should not parse invalid document', async function() {
+      const parsedDoc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      delete parsedDoc.json()['x-parser-spec-parsed'];
+
+      let error;
+      try {
+        AsyncAPIDocument.parse(parsedDoc);
+      } catch (err) {
+        error = err;
+      }
+      expect(error.message).to.be.equal('Cannot parse invalid AsyncAPI document');
+    });
+
+    it('should parse stringified document with circular references', async function() {
+      // Test circular references to ensure that every circular reference has this same reference after parsing
+      const result = AsyncAPIDocument.parse(circularOutputYAML);
+
+      // not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
+      expect(result.hasCircular()).to.equal(true);
+
+      // we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
+      expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(false);
+      expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].items().isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
+      expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
+
+      // NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
+      // If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
+      // This is why it is important to check that NormalSchemaC is or sure not marked as circular
+      expect(result.components().schema('NormalSchemaC').isCircular()).to.equal(false);
+
+      // NestedAllOfSchema has circular reference
+      expect(result.components().schema('NestedAllOfSchema').allOf()[0].isCircular()).to.equal(false);
+      expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[0].isCircular()).to.equal(true);
+      expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[1].isCircular()).to.equal(false);
+
+      // OneOf has circular reference
+      expect(result.components().schema('OneOf').properties()['kind'].isCircular()).to.equal(false);
+      expect(result.components().schema('OneOf').properties()['kind'].oneOf()[0].isCircular()).to.equal(true);
+    
+      // AnyOf has circular reference
+      expect(result.components().schema('AnyOf').anyOf()[5].isCircular()).to.equal(false);
+      expect(result.components().schema('AnyOf').anyOf()[5].items().isCircular()).to.equal(true);
+
+      // external/file channel has deep circular reference
+      expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(false);
+      expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].items().isCircular()).to.equal(true);
+
+      // RecursiveSelf and RecursiveAncestor have deep circular references
+      expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+
+      // RecursiveComplex has complex deep circular references
+      expect(result.components().schema('RecursiveComplex').contains().isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveComplex').items()[0].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveComplex').items()[1].isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveComplex').then().isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^bar'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].items().isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+      expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
+    });
+  });
 
   describe('mixins', function() {
     it('model should inherit from mixins', function() {

@@ -1,7 +1,5 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const { EOL } = require('os');
-const eolLength = EOL.length;
 const ParserError = require('../lib/errors/parser-error');
 
 chai.use(chaiAsPromised);

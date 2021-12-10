@@ -223,7 +223,7 @@ Parser dereferences all circular references by default. In addition, to simplify
 
 Converting a parsed document to a string may be necessary when saving the parsed document to a database, or similar situations where you need to parse the document just once and then reuse it.
 
-For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation, in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path with `$ref:` prefix, like:
+For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation, in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path with a `$ref:` prefix:
 
 ```json
 {
@@ -231,7 +231,7 @@ For that, the Parser supports the ability to stringify a parsed AsyncAPI documen
 }
 ```
 		
-To parse a stringified document into an AsyncAPIDocument instance, you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path with `$ref:` prefix to the original objects.
+To parse a stringified document into an AsyncAPIDocument instance, you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path, with an `$ref:` prefix to the original objects.
 
 A few advantages of this solution:
 - The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).

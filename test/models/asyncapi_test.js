@@ -297,6 +297,25 @@ describe('AsyncAPIDocument', function() {
     });
   });
 
+  describe('#allChannels()', function() {
+    it('should return a map with all the channels used in the document and overwrite the channel from channels', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } }, components: { channels: { test2: { description: 'test2-overwrite' } } }};
+      const d = new AsyncAPIDocument(doc);
+      const allChannels = d.allChannels();
+      expect(allChannels.size).to.be.equal(2);
+      expect(allChannels.get('test2').constructor.name).to.be.equal('Channel');
+      expect(allChannels.get('test2').json().description).to.be.equal('test2-overwrite');
+    });
+    it('should return an array with all the channels used in the document', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } }, components: { channels: { test3: { description: 'test3' } } }};
+      const d = new AsyncAPIDocument(doc);
+      const allChannels = d.allChannels();
+      expect(allChannels.size).to.be.equal(3);
+      expect(allChannels.get('test1').constructor.name).to.be.equal('Channel');
+      expect(allChannels.get('test1').json().description).to.be.equal('test1');
+    });
+  });
+
   describe('#allMessages()', function() {
     it('should return an array with all the messages used in the document and overwrite the message from channel', function() {
       const doc = { channels: { test: { publish: { message: { name: 'test', test: false, k: 1 } } } }, components: { messages: { test: { test: true, k: 3 } } } };
@@ -314,6 +333,25 @@ describe('AsyncAPIDocument', function() {
         expect(t.constructor.name).to.be.equal('Message');
         expect(t.json().test).to.be.equal(true);
       });
+    });
+  });
+
+  describe('#allServers()', function() {
+    it('should return a map with all the servers used in the document and overwrite the server from servers', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } }, components: { servers: { test2: { url: 'test2-overwrite' } } }};
+      const d = new AsyncAPIDocument(doc);
+      const allServers = d.allServers();
+      expect(allServers.size).to.be.equal(2);
+      expect(allServers.get('test2').constructor.name).to.be.equal('Server');
+      expect(allServers.get('test2').json().url).to.be.equal('test2-overwrite');
+    });
+    it('should return an array with all the servers used in the document', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } }, components: { servers: { test3: { url: 'test3' } } }};
+      const d = new AsyncAPIDocument(doc);
+      const allServers = d.allServers();
+      expect(allServers.size).to.be.equal(3);
+      expect(allServers.get('test1').constructor.name).to.be.equal('Server');
+      expect(allServers.get('test1').json().url).to.be.equal('test1');
     });
   });
 

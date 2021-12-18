@@ -288,7 +288,10 @@ declare module "@asyncapi/parser" {
      */
     type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
     class Base {
-        json(): any;
+        /**
+         * @param [key] - A key to retrieve from the JSON object.
+         */
+        json(key?: string): any;
     }
     interface ChannelParameter extends MixinDescription, MixinSpecificationExtensions {
     }

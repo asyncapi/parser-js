@@ -402,7 +402,7 @@
                 * [.stringify(doc, [space])](#module_@asyncapi/parser+AsyncAPIDocument.stringify) ⇒ <code>string</code>
                 * [.parse(doc)](#module_@asyncapi/parser+AsyncAPIDocument.parse) ⇒ <code>AsyncAPIDocument</code>
         * [~Base](#module_@asyncapi/parser+Base)
-            * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
+            * [.json([key])](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
         * [~Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
             * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
             * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
@@ -3162,8 +3162,13 @@ Implements common functionality for all the models.
 **Kind**: inner class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 <a name="module_@asyncapi/parser+Base+json"></a>
 
-#### base.json() ⇒ <code>any</code>
+#### base.json([key]) ⇒ <code>any</code>
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [key] | <code>string</code> | A key to retrieve from the JSON object. |
+
 <a name="module_@asyncapi/parser+Schema"></a>
 
 ### @asyncapi/parser~Schema ⇐ <code>Base</code>

@@ -347,58 +347,62 @@
             * [new ParserError(definition)](#new_module_@asyncapi/parser+ParserError_new)
             * [.toJS()](#module_@asyncapi/parser+ParserError+toJS)
         * [~AsyncAPIDocument](#module_@asyncapi/parser+AsyncAPIDocument) ⇐ <code>Base</code>
-            * [.version()](#module_@asyncapi/parser+AsyncAPIDocument+version) ⇒ <code>string</code>
-            * [.info()](#module_@asyncapi/parser+AsyncAPIDocument+info) ⇒ <code>Info</code>
-            * [.id()](#module_@asyncapi/parser+AsyncAPIDocument+id) ⇒ <code>string</code>
-            * [.hasServers()](#module_@asyncapi/parser+AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
-            * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
-            * [.serverNames()](#module_@asyncapi/parser+AsyncAPIDocument+serverNames) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.server(name)](#module_@asyncapi/parser+AsyncAPIDocument+server) ⇒ <code>Server</code>
-            * [.hasDefaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+hasDefaultContentType) ⇒ <code>boolean</code>
-            * [.defaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+defaultContentType) ⇒ <code>string</code> \| <code>null</code>
-            * [.hasChannels()](#module_@asyncapi/parser+AsyncAPIDocument+hasChannels) ⇒ <code>boolean</code>
-            * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
-            * [.channelNames()](#module_@asyncapi/parser+AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.channel(name)](#module_@asyncapi/parser+AsyncAPIDocument+channel) ⇒ <code>Channel</code>
-            * [.hasComponents()](#module_@asyncapi/parser+AsyncAPIDocument+hasComponents) ⇒ <code>boolean</code>
-            * [.components()](#module_@asyncapi/parser+AsyncAPIDocument+components) ⇒ <code>Components</code>
-            * [.hasMessages()](#module_@asyncapi/parser+AsyncAPIDocument+hasMessages) ⇒ <code>boolean</code>
-            * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
-            * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
-            * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
-            * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
-            * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
-            * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
-            * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
-            * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
-            * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
-            * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-            * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-            * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
-            * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
-            * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
-            * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
-            * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
-            * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
-            * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
-            * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
-            * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
-            * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-            * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-            * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-            * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-            * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
-            * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
-            * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
-            * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
+            * _instance_
+                * [.version()](#module_@asyncapi/parser+AsyncAPIDocument+version) ⇒ <code>string</code>
+                * [.info()](#module_@asyncapi/parser+AsyncAPIDocument+info) ⇒ <code>Info</code>
+                * [.id()](#module_@asyncapi/parser+AsyncAPIDocument+id) ⇒ <code>string</code>
+                * [.hasServers()](#module_@asyncapi/parser+AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
+                * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
+                * [.serverNames()](#module_@asyncapi/parser+AsyncAPIDocument+serverNames) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.server(name)](#module_@asyncapi/parser+AsyncAPIDocument+server) ⇒ <code>Server</code>
+                * [.hasDefaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+hasDefaultContentType) ⇒ <code>boolean</code>
+                * [.defaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+defaultContentType) ⇒ <code>string</code> \| <code>null</code>
+                * [.hasChannels()](#module_@asyncapi/parser+AsyncAPIDocument+hasChannels) ⇒ <code>boolean</code>
+                * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+                * [.channelNames()](#module_@asyncapi/parser+AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.channel(name)](#module_@asyncapi/parser+AsyncAPIDocument+channel) ⇒ <code>Channel</code>
+                * [.hasComponents()](#module_@asyncapi/parser+AsyncAPIDocument+hasComponents) ⇒ <code>boolean</code>
+                * [.components()](#module_@asyncapi/parser+AsyncAPIDocument+components) ⇒ <code>Components</code>
+                * [.hasMessages()](#module_@asyncapi/parser+AsyncAPIDocument+hasMessages) ⇒ <code>boolean</code>
+                * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
+                * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
+                * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
+                * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
+                * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
+                * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
+                * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
+                * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
+                * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
+                * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+                * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
+                * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+                * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
+                * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
+                * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
+                * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
+                * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
+                * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
+                * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
+                * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
+                * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
+                * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+                * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
+                * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+                * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+                * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
+                * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
+                * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
+                * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
+            * _static_
+                * [.stringify(doc, [space])](#module_@asyncapi/parser+AsyncAPIDocument.stringify) ⇒ <code>string</code>
+                * [.parse(doc)](#module_@asyncapi/parser+AsyncAPIDocument.parse) ⇒ <code>AsyncAPIDocument</code>
         * [~Base](#module_@asyncapi/parser+Base)
-            * [.json()](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
+            * [.json([key])](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
         * [~Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
             * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
             * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
@@ -2762,56 +2766,60 @@ Implements functions to deal with the AsyncAPI document.
 **Mixes**: [<code>MixinTags</code>](#MixinTags), [<code>MixinExternalDocs</code>](#MixinExternalDocs), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
 * [~AsyncAPIDocument](#module_@asyncapi/parser+AsyncAPIDocument) ⇐ <code>Base</code>
-    * [.version()](#module_@asyncapi/parser+AsyncAPIDocument+version) ⇒ <code>string</code>
-    * [.info()](#module_@asyncapi/parser+AsyncAPIDocument+info) ⇒ <code>Info</code>
-    * [.id()](#module_@asyncapi/parser+AsyncAPIDocument+id) ⇒ <code>string</code>
-    * [.hasServers()](#module_@asyncapi/parser+AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
-    * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
-    * [.serverNames()](#module_@asyncapi/parser+AsyncAPIDocument+serverNames) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.server(name)](#module_@asyncapi/parser+AsyncAPIDocument+server) ⇒ <code>Server</code>
-    * [.hasDefaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+hasDefaultContentType) ⇒ <code>boolean</code>
-    * [.defaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+defaultContentType) ⇒ <code>string</code> \| <code>null</code>
-    * [.hasChannels()](#module_@asyncapi/parser+AsyncAPIDocument+hasChannels) ⇒ <code>boolean</code>
-    * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
-    * [.channelNames()](#module_@asyncapi/parser+AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.channel(name)](#module_@asyncapi/parser+AsyncAPIDocument+channel) ⇒ <code>Channel</code>
-    * [.hasComponents()](#module_@asyncapi/parser+AsyncAPIDocument+hasComponents) ⇒ <code>boolean</code>
-    * [.components()](#module_@asyncapi/parser+AsyncAPIDocument+components) ⇒ <code>Components</code>
-    * [.hasMessages()](#module_@asyncapi/parser+AsyncAPIDocument+hasMessages) ⇒ <code>boolean</code>
-    * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
-    * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
-    * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
-    * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
-    * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
-    * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
-    * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
-    * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
-    * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
-    * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-    * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-    * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
-    * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
-    * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
-    * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
-    * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
-    * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
-    * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
-    * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
-    * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
-    * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
-    * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
-    * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
-    * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
-    * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
-    * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
-    * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
-    * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
+    * _instance_
+        * [.version()](#module_@asyncapi/parser+AsyncAPIDocument+version) ⇒ <code>string</code>
+        * [.info()](#module_@asyncapi/parser+AsyncAPIDocument+info) ⇒ <code>Info</code>
+        * [.id()](#module_@asyncapi/parser+AsyncAPIDocument+id) ⇒ <code>string</code>
+        * [.hasServers()](#module_@asyncapi/parser+AsyncAPIDocument+hasServers) ⇒ <code>boolean</code>
+        * [.servers()](#module_@asyncapi/parser+AsyncAPIDocument+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
+        * [.serverNames()](#module_@asyncapi/parser+AsyncAPIDocument+serverNames) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.server(name)](#module_@asyncapi/parser+AsyncAPIDocument+server) ⇒ <code>Server</code>
+        * [.hasDefaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+hasDefaultContentType) ⇒ <code>boolean</code>
+        * [.defaultContentType()](#module_@asyncapi/parser+AsyncAPIDocument+defaultContentType) ⇒ <code>string</code> \| <code>null</code>
+        * [.hasChannels()](#module_@asyncapi/parser+AsyncAPIDocument+hasChannels) ⇒ <code>boolean</code>
+        * [.channels()](#module_@asyncapi/parser+AsyncAPIDocument+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+        * [.channelNames()](#module_@asyncapi/parser+AsyncAPIDocument+channelNames) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.channel(name)](#module_@asyncapi/parser+AsyncAPIDocument+channel) ⇒ <code>Channel</code>
+        * [.hasComponents()](#module_@asyncapi/parser+AsyncAPIDocument+hasComponents) ⇒ <code>boolean</code>
+        * [.components()](#module_@asyncapi/parser+AsyncAPIDocument+components) ⇒ <code>Components</code>
+        * [.hasMessages()](#module_@asyncapi/parser+AsyncAPIDocument+hasMessages) ⇒ <code>boolean</code>
+        * [.allMessages()](#module_@asyncapi/parser+AsyncAPIDocument+allMessages) ⇒ <code>Map.&lt;string, Message&gt;</code>
+        * [.allSchemas()](#module_@asyncapi/parser+AsyncAPIDocument+allSchemas) ⇒ <code>Map.&lt;string, Schema&gt;</code>
+        * [.hasCircular()](#module_@asyncapi/parser+AsyncAPIDocument+hasCircular) ⇒ <code>boolean</code>
+        * [.traverseSchemas(callback, schemaTypesToIterate)](#module_@asyncapi/parser+AsyncAPIDocument+traverseSchemas)
+        * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
+        * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
+        * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
+        * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
+        * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
+        * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+        * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
+        * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+        * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
+        * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
+        * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
+        * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
+        * [.hasTags()](#module_@asyncapi/parser+AsyncAPIDocument+hasTags) ⇒ <code>boolean</code>
+        * [.tags()](#module_@asyncapi/parser+AsyncAPIDocument+tags) ⇒ <code>Array.&lt;Tag&gt;</code>
+        * [.tagNames()](#module_@asyncapi/parser+AsyncAPIDocument+tagNames) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.hasTag(name)](#module_@asyncapi/parser+AsyncAPIDocument+hasTag) ⇒ <code>boolean</code>
+        * [.tag(name)](#module_@asyncapi/parser+AsyncAPIDocument+tag) ⇒ <code>Tag</code> \| <code>null</code>
+        * [.hasExternalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+hasExternalDocs) ⇒ <code>boolean</code>
+        * [.externalDocs()](#module_@asyncapi/parser+AsyncAPIDocument+externalDocs) ⇒ <code>ExternalDocs</code> \| <code>null</code>
+        * [.hasExtensions()](#module_@asyncapi/parser+AsyncAPIDocument+hasExtensions) ⇒ <code>boolean</code>
+        * [.extensions()](#module_@asyncapi/parser+AsyncAPIDocument+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
+        * [.extensionKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.extKeys()](#module_@asyncapi/parser+AsyncAPIDocument+extKeys) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.hasExtension(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExtension) ⇒ <code>boolean</code>
+        * [.extension(key)](#module_@asyncapi/parser+AsyncAPIDocument+extension) ⇒ <code>any</code>
+        * [.hasExt(key)](#module_@asyncapi/parser+AsyncAPIDocument+hasExt) ⇒ <code>boolean</code>
+        * [.ext(key)](#module_@asyncapi/parser+AsyncAPIDocument+ext) ⇒ <code>any</code>
+    * _static_
+        * [.stringify(doc, [space])](#module_@asyncapi/parser+AsyncAPIDocument.stringify) ⇒ <code>string</code>
+        * [.parse(doc)](#module_@asyncapi/parser+AsyncAPIDocument.parse) ⇒ <code>AsyncAPIDocument</code>
 
 <a name="module_@asyncapi/parser+AsyncAPIDocument+version"></a>
 
@@ -3122,6 +3130,30 @@ By default all schemas are iterated
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
+<a name="module_@asyncapi/parser+AsyncAPIDocument.stringify"></a>
+
+#### AsyncAPIDocument.stringify(doc, [space]) ⇒ <code>string</code>
+Converts a valid AsyncAPI document to a JavaScript Object Notation (JSON) string.
+A stringified AsyncAPI document using this function should be parsed via the AsyncAPIDocument.parse() function - the JSON.parse() function is not compatible.
+
+**Kind**: static method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| doc | <code>AsyncAPIDocument</code> | A valid AsyncAPIDocument instance. |
+| [space] | <code>number</code> \| <code>string</code> | Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read. |
+
+<a name="module_@asyncapi/parser+AsyncAPIDocument.parse"></a>
+
+#### AsyncAPIDocument.parse(doc) ⇒ <code>AsyncAPIDocument</code>
+Converts a valid stringified AsyncAPIDocument instance into an AsyncAPIDocument instance.
+
+**Kind**: static method of [<code>AsyncAPIDocument</code>](#module_@asyncapi/parser+AsyncAPIDocument)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| doc | <code>string</code> | A valid stringified AsyncAPIDocument instance. |
+
 <a name="module_@asyncapi/parser+Base"></a>
 
 ### @asyncapi/parser~Base
@@ -3130,8 +3162,13 @@ Implements common functionality for all the models.
 **Kind**: inner class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
 <a name="module_@asyncapi/parser+Base+json"></a>
 
-#### base.json() ⇒ <code>any</code>
+#### base.json([key]) ⇒ <code>any</code>
 **Kind**: instance method of [<code>Base</code>](#module_@asyncapi/parser+Base)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [key] | <code>string</code> | A key to retrieve from the JSON object. |
+
 <a name="module_@asyncapi/parser+Schema"></a>
 
 ### @asyncapi/parser~Schema ⇐ <code>Base</code>

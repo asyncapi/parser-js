@@ -298,13 +298,23 @@ describe('AsyncAPIDocument', function() {
   });
 
   describe('#allChannels()', function() {
-    it('should return a map with all the channels used in the document and overwrite the channel from channels', function() {
-      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } }, components: { channels: { test2: { description: 'test2-overwrite' } } }};
+    it('should return a map with all the channels used in the document and skip the channel from components when they are equal', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } }, components: { channels: { test2: { description: 'test2' } } }};
       const d = new AsyncAPIDocument(doc);
       const allChannels = d.allChannels();
       expect(allChannels.size).to.be.equal(2);
       expect(allChannels.get('test2').constructor.name).to.be.equal('Channel');
-      expect(allChannels.get('test2').json().description).to.be.equal('test2-overwrite');
+    });
+    it('should return a map with all the channels used in the document and add as new channels all those from components with the same name but with different values', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } }, components: { channels: { test2: { description: 'different-description' } } }};
+      const base64Hash = 'eyJkZXNjcmlwdGlvbiI6ImRpZmZlcmVudC1kZXNjcmlwdGlvbiJ9'; // This is the base64 of test2 channel in components
+      const d = new AsyncAPIDocument(doc);
+      const allChannels = d.allChannels();
+      expect(allChannels.size).to.be.equal(3);
+      expect(allChannels.get('test2').constructor.name).to.be.equal('Channel');
+      expect(allChannels.get('test2').json().description).to.be.equal('test2');
+      expect(allChannels.get(base64Hash).constructor.name).to.be.equal('Channel');
+      expect(allChannels.get(base64Hash).json().description).to.be.equal('different-description');
     });
     it('should return an array with all the channels used in the document', function() {
       const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } }, components: { channels: { test3: { description: 'test3' } } }};
@@ -350,6 +360,8 @@ describe('AsyncAPIDocument', function() {
       const d = new AsyncAPIDocument(doc);
       const allServers = d.allServers();
       expect(allServers.size).to.be.equal(3);
+      expect(allServers.get('test2').constructor.name).to.be.equal('Server');
+      expect(allServers.get('test2').json().url).to.be.equal('test2');
       expect(allServers.get(base64Hash).constructor.name).to.be.equal('Server');
       expect(allServers.get(base64Hash).json().url).to.be.equal('different-url');
     });

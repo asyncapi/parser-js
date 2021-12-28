@@ -337,13 +337,21 @@ describe('AsyncAPIDocument', function() {
   });
 
   describe('#allServers()', function() {
-    it('should return a map with all the servers used in the document and overwrite the server from servers', function() {
-      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } }, components: { servers: { test2: { url: 'test2-overwrite' } } }};
+    it('should return a map with all the servers used in the document and skip the server from components when they are equal', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } }, components: { servers: { test2: { url: 'test2' } } }};
       const d = new AsyncAPIDocument(doc);
       const allServers = d.allServers();
       expect(allServers.size).to.be.equal(2);
       expect(allServers.get('test2').constructor.name).to.be.equal('Server');
-      expect(allServers.get('test2').json().url).to.be.equal('test2-overwrite');
+    });
+    it('should return a map with all the servers used in the document and add as new servers all those from components with the same name but with different values', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } }, components: { servers: { test2: { url: 'different-url' } } }};
+      const base64Hash = 'eyJ1cmwiOiJkaWZmZXJlbnQtdXJsIn0='; // This is the base64 of test2 server in components
+      const d = new AsyncAPIDocument(doc);
+      const allServers = d.allServers();
+      expect(allServers.size).to.be.equal(3);
+      expect(allServers.get(base64Hash).constructor.name).to.be.equal('Server');
+      expect(allServers.get(base64Hash).json().url).to.be.equal('different-url');
     });
     it('should return an array with all the servers used in the document', function() {
       const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } }, components: { servers: { test3: { url: 'test3' } } }};

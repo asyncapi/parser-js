@@ -835,9 +835,14 @@ declare module "@asyncapi/parser" {
     interface Schema extends MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
     }
     /**
-     * Implements functions to deal with a Schema object.
+     * Instantiates a schema object
+     * @param json - Schema definition
+     * @param [options.parent] - Parent schema definition
      */
     class Schema extends Base implements MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
+        constructor(json: any, options?: {
+            parent?: Schema;
+        });
         uid(): string;
         $id(): string;
         multipleOf(): number;

@@ -279,6 +279,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/JQrdan"><img src="https://avatars.githubusercontent.com/u/25624685?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jordan Tucker</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=JQrdan" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/parser-js/commits?author=JQrdan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/vishesh13byte"><img src="https://avatars.githubusercontent.com/u/66796715?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vishesh13byte</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=vishesh13byte" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://iamdevelopergirl.github.io/Website-With-Animations/"><img src="https://avatars.githubusercontent.com/u/16351809?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Elakya</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=iamdevelopergirl" title="Code">💻</a></td>
+    <td align="center"><a href="https://schwank.cc"><img src="https://avatars.githubusercontent.com/u/8232196?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dominik Schwank</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/issues?q=author%3Adschwank" title="Bug reports">🐛</a> <a href="https://github.com/asyncapi/parser-js/commits?author=dschwank" title="Code">💻</a></td>
   </tr>
 </table>
 

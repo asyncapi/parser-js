@@ -404,6 +404,7 @@
         * [~Base](#module_@asyncapi/parser+Base)
             * [.json([key])](#module_@asyncapi/parser+Base+json) ⇒ <code>any</code>
         * [~Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
+            * [new Schema(json, [options])](#new_module_@asyncapi/parser+Schema_new)
             * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
             * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
             * [.multipleOf()](#module_@asyncapi/parser+Schema+multipleOf) ⇒ <code>number</code>
@@ -3179,6 +3180,7 @@ Implements functions to deal with a Schema object.
 **Mixes**: [<code>MixinDescription</code>](#MixinDescription), [<code>MixinExternalDocs</code>](#MixinExternalDocs), [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
 * [~Schema](#module_@asyncapi/parser+Schema) ⇐ <code>Base</code>
+    * [new Schema(json, [options])](#new_module_@asyncapi/parser+Schema_new)
     * [.uid()](#module_@asyncapi/parser+Schema+uid) ⇒ <code>string</code>
     * [.$id()](#module_@asyncapi/parser+Schema+$id) ⇒ <code>string</code>
     * [.multipleOf()](#module_@asyncapi/parser+Schema+multipleOf) ⇒ <code>number</code>
@@ -3254,6 +3256,18 @@ Implements functions to deal with a Schema object.
     * [.extension(key)](#module_@asyncapi/parser+Schema+extension) ⇒ <code>any</code>
     * [.hasExt(key)](#module_@asyncapi/parser+Schema+hasExt) ⇒ <code>boolean</code>
     * [.ext(key)](#module_@asyncapi/parser+Schema+ext) ⇒ <code>any</code>
+
+<a name="new_module_@asyncapi/parser+Schema_new"></a>
+
+#### new Schema(json, [options])
+Instantiates a schema object
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| json | <code>any</code> | Schema definition |
+| [options] | <code>Object</code> |  |
+| [options.parent] | <code>Schema</code> | Parent schema definition |
 
 <a name="module_@asyncapi/parser+Schema+uid"></a>
 

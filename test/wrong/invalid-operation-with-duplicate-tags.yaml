@@ -1,0 +1,23 @@
+asyncapi: 2.0.0
+
+info:
+  title: Signup service example (internal)
+  version: 0.1.0
+
+channels:
+  /user/signedup:
+    subscribe:
+      operationId: userSignedUp
+      summary: user signed up
+      description: user signed up to load some data
+      message:
+        payload:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+      tags:
+        - name: user
+          description: user signed up
+        - name: user

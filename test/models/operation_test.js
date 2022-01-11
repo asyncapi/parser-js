@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const js = { summary: 't', description: 'test', operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing' };
+const js = { summary: 't', description: 'test', traits: [{bindings: {kafka: {clientId: 'my-app-id'}}}], operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing' };
 
 const Operation = require('../../lib/models/operation');
 
@@ -16,7 +16,42 @@ describe('Operation', function() {
       expect(d.summary()).to.be.equal(js.summary);
     });
   });
-   
+
+  describe('#traits()', function() {
+    it('should return a list of traits', function() {
+      const d = new Operation(js);
+      expect(d.traits()[0].json()).to.equal(js.traits[0]);
+    });
+
+    it('should return a list of traits from x-parser-original-traits', function() {
+      const { traits, ...newJs } = js;
+      newJs['x-parser-original-traits'] = traits;
+      const d = new Operation(newJs);
+      expect(d.traits()[0].json()).to.be.equal(newJs['x-parser-original-traits'][0]);
+    });
+  });
+
+  describe('#hasTraits()', function() {
+    it('should return true', function() {
+      const d = new Operation(js);
+      expect(d.hasTraits()).to.equal(true);
+    });
+
+    it('should return true if in x-parser-original-traits', function() {
+      const { traits, ...newJs } = js;
+      newJs['x-parser-original-traits'] = traits;
+      const d = new Operation(newJs);
+      expect(d.hasTraits()).to.equal(true);
+    });
+
+    it('should return false', function() {
+      // eslint-disable-next-line no-unused-vars
+      const { traits, ...newJs } = js;
+      const d = new Operation(newJs);
+      expect(d.hasTraits()).to.equal(false);
+    });
+  });
+  
   describe('#id()', function() {
     it('should return a string', function() {
       const d = new Operation(js);

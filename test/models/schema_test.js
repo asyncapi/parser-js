@@ -226,6 +226,12 @@ describe('Schema', function() {
       expect(d.not().constructor.name).to.be.equal('Schema');
       expect(d.not().json()).to.be.equal(doc.not);
     });
+
+    it('should return null when not is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.not()).to.be.equal(null);
+    });
   });
 
   describe('#items()', function() {
@@ -367,6 +373,12 @@ describe('Schema', function() {
       expect(d.contains().constructor.name).to.be.equal('Schema');
       expect(d.contains().json()).to.be.equal(doc.contains);
     });
+
+    it('should return null when contains is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.contains()).to.be.equal(null);
+    });
   });
 
   describe('#dependencies()', function() {
@@ -391,6 +403,12 @@ describe('Schema', function() {
         expect(s.json()).to.be.equal(doc.dependencies[key]);
       });
     });
+
+    it('should return null when dependencies are omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.dependencies()).to.be.equal(null);
+    });
   });
 
   describe('#propertyNames()', function() {
@@ -399,6 +417,12 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(d.propertyNames().constructor.name).to.be.equal('Schema');
       expect(d.propertyNames().json()).to.be.equal(doc.propertyNames);
+    });
+
+    it('should return null when propertyNames are omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.propertyNames()).to.be.equal(null);
     });
   });
 
@@ -409,6 +433,12 @@ describe('Schema', function() {
       expect(d.if().constructor.name).to.be.equal('Schema');
       expect(d.if().json()).to.be.equal(doc.if);
     });
+
+    it('should return null when if is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.if()).to.be.equal(null);
+    });
   });
 
   describe('#then()', function() {
@@ -418,6 +448,12 @@ describe('Schema', function() {
       expect(d.then().constructor.name).to.be.equal('Schema');
       expect(d.then().json()).to.be.equal(doc.then);
     });
+
+    it('should return null when then is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.then()).to.be.equal(null);
+    });
   });
   
   describe('#else()', function() {
@@ -426,6 +462,12 @@ describe('Schema', function() {
       const d = new Schema(doc);
       expect(d.else().constructor.name).to.be.equal('Schema');
       expect(d.else().json()).to.be.equal(doc.else);
+    });
+
+    it('should return null when else is omitted from the json document', function() {
+      const doc = {};
+      const d = new Schema(doc);
+      expect(d.else()).to.be.equal(null);
     });
   });
 
@@ -531,12 +573,181 @@ describe('Schema', function() {
     });
   });
 
+  describe('#isBooleanSchema()', function() {
+    it('should return a true when schema is true', function() {
+      const d = new Schema(true);
+      expect(d.isBooleanSchema()).to.be.equal(true);
+    });
+
+    it('_json property should equal to true when schema is true', function() {
+      const d = new Schema(true);
+      expect(d.json()).to.be.equal(true);
+    });
+
+    it('should return a true when schema is false', function() {
+      const d = new Schema(false);
+      expect(d.isBooleanSchema()).to.be.equal(true);
+    });
+
+    it('_json property should equal to false when schema is false', function() {
+      const d = new Schema(false);
+      expect(d.json()).to.be.equal(false);
+    });
+  });
+
   describe('#isCircular()', function() {
-    it('should return a boolean', function() {
-      const doc = { 'x-parser-circular': true};
+    it('should return a true when appropriate extension is injected', function() {
+      const doc = { 'x-parser-circular': true };
       const d = new Schema(doc);
-      expect(typeof d.isCircular()).to.be.equal('boolean');
-      expect(d.isCircular()).to.be.equal(doc['x-parser-circular']);
+      expect(d.isCircular()).to.be.equal(true);
+    });
+
+    it('should return a true when schema has circular reference', function() {
+      const doc = {
+        properties: {
+          nonCircular: {
+            type: 'string',
+          },
+          circular: {},
+        }
+      };
+      doc.properties.circular = doc;
+      const d = new Schema(doc);
+      expect(d.isCircular()).to.be.equal(false);
+      expect(d.properties()['nonCircular'].isCircular()).to.be.equal(false);
+      expect(d.properties()['circular'].isCircular()).to.be.equal(true);
+    });
+  });
+
+  describe('#circularSchema()', function() {
+    it('should return a circular schema', function() {
+      const doc = {
+        properties: {
+          nonCircular: {
+            type: 'string',
+          },
+          circular: {},
+        }
+      };
+      doc.properties.circular = doc;
+      const d = new Schema(doc);
+      expect(d.isCircular()).to.be.equal(false);
+      expect(d.properties()['nonCircular'].circularSchema()).to.be.equal(undefined);
+      expect(d.properties()['circular'].circularSchema()).to.be.equal(d);
+    });
+  });
+
+  describe('#circularProps()', function() {
+    it('should return values from appropriate extenion', function() {
+      const doc = {
+        properties: {
+          nonCircular: {
+            type: 'string',
+          },
+          circular1: {},
+          circular2: {},
+        },
+        'x-parser-circular-props': [
+          'circular1',
+          'circular2',
+        ]
+      };
+      const d = new Schema(doc);
+      expect(d.circularProps()).to.deep.equal([
+        'circular1',
+        'circular2',
+      ]);
+    });
+
+    it('should return empty array if circular properties do not exist', function() {
+      const doc = {
+        properties: {
+          nonCircular1: {
+            type: 'string',
+          },
+          nonCircular2: {
+            type: 'number',
+          },
+          nonCircular3: {
+            type: 'integer',
+          },
+        }
+      };
+      const d = new Schema(doc);
+      expect(d.circularProps()).to.deep.equal([]);
+    });
+
+    it('should return names of circular properties', function() {
+      const doc = {
+        properties: {
+          nonCircular: {
+            type: 'string',
+          },
+          circular1: {},
+          circular2: {},
+        }
+      };
+      doc.properties.circular1 = doc;
+      doc.properties.circular2 = doc;
+      const d = new Schema(doc);
+      expect(d.circularProps()).to.deep.equal([
+        'circular1',
+        'circular2',
+      ]);
+    });
+  });
+
+  describe('#hasCircularProps()', function() {
+    it('should return true when appropriate extenion is injected', function() {
+      const doc = {
+        properties: {
+          nonCircular: {
+            type: 'string',
+          },
+          circular1: {},
+          circular2: {},
+        },
+        'x-parser-circular-props': [
+          'circular1',
+          'circular2',
+        ]
+      };
+      const d = new Schema(doc);
+      expect(d.hasCircularProps()).to.be.equal(true);
+    });
+
+    it('should return false when circular properties do not exist', function() {
+      const doc = {
+        properties: {
+          nonCircular1: {
+            type: 'string',
+          },
+          nonCircular2: {
+            type: 'number',
+          },
+          nonCircular3: {
+            type: 'integer',
+          },
+        }
+      };
+      const d = new Schema(doc);
+      expect(d.hasCircularProps()).to.be.equal(false);
+    });
+
+    it('should return true when circular properties exist', function() {
+      const doc = {
+        properties: {
+          nonCircular: {
+            type: 'string',
+          },
+          circular1: {},
+          circular2: {},
+        }
+      };
+      doc.properties.circular1 = doc;
+      doc.properties.circular2 = doc;
+      const d = new Schema(doc);
+      expect(d.hasCircularProps()).to.be.equal(true);
     });
   });
 

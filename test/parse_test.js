@@ -3,6 +3,7 @@ const chaiAsPromised = require('chai-as-promised');
 const fs = require('fs');
 const path = require('path');
 const parser = require('../lib');
+const { xParserSpecParsed } = require('../lib/constants');
 const { offset, checkErrorWrapper } = require('./testsUtils');
 
 chai.use(chaiAsPromised);
@@ -17,14 +18,38 @@ const inputYAMLCircular = fs.readFileSync(path.resolve(__dirname, './good/circul
 const inputJSON = fs.readFileSync(path.resolve(__dirname, './good/asyncapi.json'), 'utf8');
 const invalidAsyncapiYAML = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.yaml'), 'utf8');
 const invalidAsyncpiJSON = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi.json'), 'utf8');
-const outputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
-const outputJSONNoComponents = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"/test/tester":{"subscribe":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}}}';
+const outputJSONForObjectInput = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"testSchema"}}},"x-parser-spec-parsed":true}';
+const outputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
+const outputJSONNoComponents = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"/test/tester":{"subscribe":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}},"x-parser-spec-parsed":true}';
 const invalidYamlOutput = '{"asyncapi":"2.0.0","info":{"test": true,"version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}},"test":true,"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidJsonOutput = '{"asyncapi":"2.0.0","info":{"test":true,"version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"payload":{"type":"object","properties":{"name":{"type":"string"}}}}}}},"test":true,"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}}}}}';
 const outputJsonWithRefs = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string"},"test":null}}}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string"},"test":null}}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
 const invalidAsyncAPI = '{"asyncapi":"2.0.0","info":{}}';
-const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}}}';
-const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string"}}}}}}}';
+const outputJSONNoChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"<anonymous-schema-4>"}}}},"x-parser-spec-parsed":true}';
+const outputJSONMessagesChannels = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"message":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"}}}},"components":{"messages":{"channelMessage":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"channelMessage"},"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-4>"}},"x-parser-schema-id":"<anonymous-schema-3>"},"x-parser-original-traits":[{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-5>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension","headers":{"type":"object","properties":{"some-common-header":{"type":"string","x-parser-schema-id":"<anonymous-schema-7>"}},"x-parser-schema-id":"<anonymous-schema-6>"}}}},"x-parser-spec-parsed":true}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/AsyncAPI%20Object/invalid-duplicate-tags.yaml
+const invalidRootWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-root-with-duplicate-tags.yaml'), 'utf8');
+const invalidRootWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","tags":[{"name":"user","description":"user signed up"},{"name":"user"}],"info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"payload":{"type":"object","properties":{"email":{"type":"string","format":"email"}}}}}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Operation%20Object/invalid-duplicate-tags.yaml
+const invalidOperationWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-with-duplicate-tags.yaml'), 'utf8');
+const invalidOperationWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"operationId":"userSignedUp","summary":"user signed up","description":"user signed up to load some data","message":{"payload":{"type":"object","properties":{"email":{"type":"string","format":"email"}}}},"tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Operation%20Trait%20Object/invalid-duplicate-tags.yaml
+const invalidOperationTraitsWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-traits-with-duplicate-tags.yaml'), 'utf8');
+const invalidOperationTraitsWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"payload":{"type":"object","properties":{"email":{"type":"string","format":"email"}}}},"traits":[{"tags":[{"description":"user signed up","name":"user"},{"name":"user"}]}]}}},"components":{"operationTraits":{"userSignedUpTrait":{"tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Message%20Object/invalid-duplicate-tags.yaml
+const invalidMessageWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-message-with-duplicate-tags.yaml'), 'utf8');
+const invalidMessageWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"contentType":"application\/json","tags":[{"name":"user","description":"user signed up"},{"name":"user"}]}}}}}';
+
+const invalidMessageOneOfWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-operation-with-oneof-and-duplicate-tags.yaml'), 'utf8');
+const invalidMessageOneOfWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"publish":{"operationId":"userSignedUp","summary":"user signed up","description":"user signed up to load some data","message":{"oneOf":[{"tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"contentType":"application\/json","tags":[{"description":"Description for first tag","name":"user"},{"name":"user"},{"name":"user2"}]},{"payload":null,"tags":[{"description":"Description for user3 tag","name":"user3"},{"name":"user3"}]}]}}}},"components":{"messages":{"testMessage1":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}]},"testMessage2":{"tags":[{"name":"user","description":"Description for first tag"},{"name":"user"},{"name":"user2"}],"contentType":"application\/json"}}}}';
+
+// Source: https://github.com/asyncapi/tck/blob/master/tests/asyncapi-2.0/Message%20Trait%20Object/invalid-duplicate-tags.yaml
+const invalidMessageTraitWithDuplicateTags = fs.readFileSync(path.resolve(__dirname, './wrong/invalid-message-traits-with-duplicate-tags.yaml'), 'utf8');
+const invalidMessageTraitWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"title":"Signup service example (internal)","version":"0.1.0"},"channels":{"\/user\/signedup":{"subscribe":{"message":{"traits":[{"contentType":"application\/json","tags":[{"description":"user signed up","name":"user"},{"name":"user"}]}]}}}},"components":{"messageTraits":{"signedUpMessage":{"tags":[{"name":"user","description":"user signed up"},{"name":"user"}],"contentType":"application\/json"}}}}';
 
 describe('parse()', function() {
   it('should parse YAML', async function() {
@@ -32,6 +57,12 @@ describe('parse()', function() {
     expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
   
+  it('should parse AsyncAPI document passed as JS object', async function() {
+    const object = JSON.parse(inputJSON);
+    const result = await parser.parse(object, { path: __filename });
+    expect(JSON.stringify(result.json())).to.equal(outputJSONForObjectInput);
+  });
+
   it('should parse YAML correctly when no components object', async function() {
     const result = await parser.parse(inputYAMLNoComponents, { path: __filename });
     expect(JSON.stringify(result.json())).to.equal(outputJSONNoComponents);
@@ -562,40 +593,320 @@ describe('parse()', function() {
       'testString'
     ]);
   });
+  
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
-    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(true);
-    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(true);
-    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(true);
+
     //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
     expect(result.hasCircular()).to.equal(true);
-    //we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
+
+    // we want false here, even though this schema has some circular refs in some props, it is not circular, but just specific items
     expect(result.components().schema('RecursiveSelf').isCircular()).to.equal(false);
     expect(result.components().schema('NonRecursive').isCircular()).to.equal(false);
-    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfChildren'].items().isCircular()).to.equal(true);
     expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].isCircular()).to.equal(false);
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].hasCircularProps()).to.equal(true);
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps()[0]).to.equal('test');
-    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].circularProps().length).to.equal(1);
+    expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
     expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
-    //NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
-    //If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
-    //This is why it is important to check that NormalSchemaC is or sure not marked as circular
+
+    // NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
+    // If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
+    // This is why it is important to check that NormalSchemaC is or sure not marked as circular
     expect(result.components().schema('NormalSchemaC').isCircular()).to.equal(false);
+
+    // NestedAllOfSchema has circular reference
+    expect(result.components().schema('NestedAllOfSchema').allOf()[0].isCircular()).to.equal(false);
+    expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[0].isCircular()).to.equal(true);
+    expect(result.components().schema('NestedAllOfSchema').allOf()[1].properties()['parent'].allOf()[1].isCircular()).to.equal(false);
+
+    // OneOf has circular reference
+    expect(result.components().schema('OneOf').properties()['kind'].isCircular()).to.equal(false);
+    expect(result.components().schema('OneOf').properties()['kind'].oneOf()[0].isCircular()).to.equal(true);
+  
+    // AnyOf has circular reference
+    expect(result.components().schema('AnyOf').anyOf()[5].isCircular()).to.equal(false);
+    expect(result.components().schema('AnyOf').anyOf()[5].items().isCircular()).to.equal(true);
+
+    // external/file channel has deep circular reference
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].isCircular()).to.equal(false);
+    expect(result.channel('external/file').publish().messages()[0].payload().properties()['testExt'].properties()['children'].items().isCircular()).to.equal(true);
+
+    // RecursiveSelf and RecursiveAncestor have deep circular references
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveSelf').properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveAncestor').properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+
+    // RecursiveComplex has complex deep circular references
+    expect(result.components().schema('RecursiveComplex').contains().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').items()[0].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').items()[1].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').then().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').if().properties()['ancestorChildren'].items().properties()['selfSomething'].properties()['test'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^bar'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfChildren'].items().isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].isCircular()).to.equal(false);
+    expect(result.components().schema('RecursiveComplex').patternProperties()['^foo'].properties()['selfSomething'].properties()['test'].properties()['ancestorChildren'].items().isCircular()).to.equal(true);
+  });
+
+  /*
+   * Duplicate tags tests
+   */
+  it('should throw error that the provided root object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidRootWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: 'tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/tags',
+          startLine: 3,
+          startColumn: 1,
+          startOffset: offset(17, 3),
+          endLine: 8,
+          endColumn: 1,
+          endOffset: offset(86, 8),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidRootWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided operation object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidOperationWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: '/user/signedup/subscribe/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/subscribe/tags',
+          startLine: 20,
+          startColumn: 7,
+          startOffset: offset(398, 20),
+          endLine: 24,
+          endColumn: 1,
+          endOffset: offset(484, 24),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidOperationWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided operation trait object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidOperationTraitsWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: 'operationTraits/userSignedUpTrait/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/operationTraits/userSignedUpTrait/tags',
+          startLine: 23,
+          startColumn: 7,
+          startOffset: offset(418, 23),
+          endLine: 27,
+          endColumn: 1,
+          endOffset: offset(504, 27),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidOperationTraitsWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided message object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidMessageWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: '/user/signedup/subscribe/message/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/subscribe/message/tags',
+          startLine: 12,
+          startColumn: 9,
+          startOffset: offset(188, 12),
+          endLine: 16,
+          endColumn: 1,
+          endOffset: offset(280, 16),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidMessageWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided message objects in oneOf has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidMessageOneOfWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: '/user/signedup/publish/message/oneOf/0/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/0/tags',
+        }
+      },
+      {
+        title: '/user/signedup/publish/message/oneOf/1/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/1/tags',
+        }
+      },
+      {
+        title: '/user/signedup/publish/message/oneOf/2/tags contains duplicate tag names: user3',
+        location: {
+          jsonPointer: '/channels/~1user~1signedup/publish/message/oneOf/2/tags',
+          startLine: 18,
+          startColumn: 13,
+          startOffset: offset(412, 18),
+          endLine: 23,
+          endColumn: 1,
+          endOffset: offset(530, 23),
+        }
+      },
+      {
+        title: 'messages/testMessage1/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messages/testMessage1/tags',
+          startLine: 26,
+          startColumn: 7,
+          startOffset: offset(578, 26),
+          endLine: 31,
+          endColumn: 5,
+          endOffset: offset(701, 31),
+        }
+      },
+      {
+        title: 'messages/testMessage2/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messages/testMessage2/tags',
+          startLine: 32,
+          startColumn: 7,
+          startOffset: offset(721, 32),
+          endLine: 37,
+          endColumn: 7,
+          endOffset: offset(846, 37),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidMessageOneOfWithDuplicateTags);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that the provided message trait object has duplicate tags', async function () {
+    const parsedJSON = JSON.parse(invalidMessageTraitWithDuplicateTagsJSON);
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Tags validation failed',
+      parsedJSON,
+      validationErrors: [{
+        title: 'messageTraits/signedUpMessage/tags contains duplicate tag names: user',
+        location: {
+          jsonPointer: '/components/messageTraits/signedUpMessage/tags',
+          startLine: 17,
+          startColumn: 7,
+          startOffset: offset(278, 17),
+          endLine: 21,
+          endColumn: 7,
+          endOffset: offset(370, 21),
+        }
+      }]
+    };
+
+    await checkErrorWrapper(async () => {
+      await parser.parse(invalidMessageTraitWithDuplicateTags);
+    }, expectedErrorObject);
   });
 });
 
 it('should not apply traits', async function() {
-  const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
+  const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
   const result = await parser.parse(inputYAML, { path: __filename, applyTraits: false });
 
   await expect(JSON.stringify(result.json())).to.equal(outputJsonNoApplyTraits);
 });
 
 it('should apply traits', async function() {
-  const outputJsonApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}}}';
+  const outputJsonApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
   const result = await parser.parse(inputYAML, { path: __filename, applyTraits: true });
   await expect(JSON.stringify(result.json())).to.equal(outputJsonApplyTraits);
+});
+
+it('should apply `x-parser-spec-parsed` extension', async function() {
+  const parsedSpec = await parser.parse(inputYAML, { path: __filename });
+  await expect(parsedSpec.json()[String(xParserSpecParsed)]).to.equal(true);
+});
+
+it('should parse and include examples', async function() {
+  let result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-headers.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+
+  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-optional.yml'), 'utf8'), { path: __filename });
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal(undefined);
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal(undefined);
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
+  expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
+});
+
+it('should fail on invalid examples', async function() {
+  const expectedErrorObject = {
+    type: 'https://github.com/asyncapi/parser-js/validation-errors',
+    title: 'There were errors validating the AsyncAPI document.',
+  };
+
+  await checkErrorWrapper(async () => {
+    await parser.parse(fs.readFileSync(path.resolve(__dirname, './wrong/invalid-asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  }, expectedErrorObject);
+});
+
+describe('memory usage', function () {
+  it('should use this same instance of validation function in each call', async function() {
+    this.timeout(12500);
+    const asyncapi = fs.readFileSync(path.resolve(__dirname, './good/zbos_mqtt-all-asyncapi.json'), 'utf8');
+
+    for (let i = 0, l = 25; i < l; i++) {
+      await parser.parse(asyncapi);
+      const used = process.memoryUsage().heapUsed / 1024 / 1024;
+      expect(used < 100).to.equal(true); // less than 100 MB
+    }
+  });
 });
 
 describe('registerSchemaParser()', function() {
@@ -621,5 +932,15 @@ describe('registerSchemaParser()', function() {
     await checkErrorWrapper(async () => {
       parser.registerSchemaParser(parserModule);
     }, expectedErrorObject);
+  });
+
+  it('should show that for 2.0 default schema format is 2.0 and for 2.1 it is 2.1 and so on', async function() {
+    const result20 = await parser.parse(inputYAML, { path: __filename });
+    const result21 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename });
+    const result22 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+
+    expect(result20.channel('mychannel').publish().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.0.0');
+    expect(result21.channel('myChannel').subscribe().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.1.0');
+    expect(result22.channel('myChannel').subscribe().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.2.0');
   });
 });

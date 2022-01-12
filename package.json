@@ -90,6 +90,10 @@
       {
         "name": "2021-09-release",
         "prerelease": true
+      },
+      {
+        "name": "intent-api",
+        "prerelease": true
       }
     ],
     "plugins": [

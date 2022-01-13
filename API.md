@@ -259,6 +259,7 @@
             * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
             * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
             * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
+        * [.OperationSecurityRequirement](#module_@asyncapi/parser+OperationSecurityRequirement) ⇐ <code>Base</code>
         * [.PublishOperation](#module_@asyncapi/parser+PublishOperation) ⇐ <code>Operation</code>
             * [.isPublish()](#module_@asyncapi/parser+PublishOperation+isPublish) ⇒ <code>boolean</code>
             * [.isSubscribe()](#module_@asyncapi/parser+PublishOperation+isSubscribe) ⇒ <code>boolean</code>
@@ -2079,6 +2080,7 @@ Implements functions to deal with an Operation object.
     * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
     * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
     * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
+    * [.security()](#module_@asyncapi/parser+Operation+security) ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
 
 <a name="module_@asyncapi/parser+Operation+hasMultipleMessages"></a>
 
@@ -2099,6 +2101,10 @@ Implements functions to deal with an Operation object.
 <a name="module_@asyncapi/parser+Operation+message"></a>
 
 #### operation.message() ⇒ <code>Message</code>
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+<a name="module_@asyncapi/parser+Operation+security"></a>
+
+#### operation.security() ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
 **Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
 <a name="module_@asyncapi/parser+PublishOperation"></a>
 

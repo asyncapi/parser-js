@@ -1,0 +1,9 @@
+asyncapi: 2.1.0
+info:
+  version: "1.0.0"
+  title: "Test"
+channels:
+  mychannel:
+    publish:
+      message:
+        schemaFormat: "UnknownSchemaFormat"

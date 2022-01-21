@@ -53,18 +53,18 @@ const invalidMessageTraitWithDuplicateTagsJSON = '{"asyncapi":"2.0.0","info":{"t
 
 describe('parse()', function() {
   it('should parse YAML', async function() {
-    const result = await parser.parse(inputYAML, { path: __filename });
+    const result = (await parser.parse(inputYAML, { path: __filename })).rawDocument();
     expect(JSON.stringify(result.json())).to.equal(outputJSON);
   });
   
   it('should parse AsyncAPI document passed as JS object', async function() {
     const object = JSON.parse(inputJSON);
-    const result = await parser.parse(object, { path: __filename });
+    const result = (await parser.parse(object, { path: __filename })).rawDocument();
     expect(JSON.stringify(result.json())).to.equal(outputJSONForObjectInput);
   });
 
   it('should parse YAML correctly when no components object', async function() {
-    const result = await parser.parse(inputYAMLNoComponents, { path: __filename });
+    const result = (await parser.parse(inputYAMLNoComponents, { path: __filename })).rawDocument();
     expect(JSON.stringify(result.json())).to.equal(outputJSONNoComponents);
   });
 
@@ -74,18 +74,18 @@ describe('parse()', function() {
       parser.parse(inputYAML, { path: __filename })
     ];
     const result = await Promise.all(input);
-    expect(JSON.stringify(result[0].json())).to.equal(outputJSON);
-    expect(JSON.stringify(result[1].json())).to.equal(outputJSON);
+    expect(JSON.stringify(result[0].rawDocument().json())).to.equal(outputJSON);
+    expect(JSON.stringify(result[1].rawDocument().json())).to.equal(outputJSON);
   });
 
   it('should apply traits to messages even with empty channels object', async function() {
     const result = await parser.parse(inputYAMLNoChannels, { path: __filename });
-    expect(JSON.stringify(result.json())).to.equal(outputJSONNoChannels);
+    expect(JSON.stringify(result.rawDocument().json())).to.equal(outputJSONNoChannels);
   });  
   
   it('should apply traits to messages used and not used in a channel', async function() {
     const result = await parser.parse(inputYAMLMessagesChannels, { path: __filename });
-    expect(JSON.stringify(result.json())).to.equal(outputJSONMessagesChannels);
+    expect(JSON.stringify(result.rawDocument().json())).to.equal(outputJSONMessagesChannels);
   });
   
   it('should fail when asyncapi is not valid', async function() {
@@ -579,7 +579,7 @@ describe('parse()', function() {
 
   it('Should include schemas after circular property', async function() {
     const input = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"test":{"publish":{"message":{"payload":{"$ref":"#/components/schemas/testSchema"}}}}},"components":{"schemas":{"testSchema":{"$id":"testSchema","type":"object","test":true,"properties":{"recursiveTestProp":{"$ref":"#/components/schemas/testSchema"},"testProp":{"$id":"testString","type":"string"}}}}}}';
-    const result = await parser.parse(input, { path: __filename });
+    const result = (await parser.parse(input, { path: __filename })).rawDocument();
     const schemas = new Map();
     const cb = (schema) => {
       schemas.set(schema.uid(), schema);
@@ -595,7 +595,7 @@ describe('parse()', function() {
   });
   
   it('should properly mark circular references', async function() {
-    const result = await parser.parse(inputYAMLCircular, { path: __filename });
+    const result = (await parser.parse(inputYAMLCircular, { path: __filename })).rawDocument();
 
     //not testing on a model level as required xParserCircle value is added before model construction so we need to test through calling parser function
     expect(result.hasCircular()).to.equal(true);
@@ -847,38 +847,38 @@ it('should not apply traits', async function() {
   const outputJsonNoApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"traits":[{"externalDocs":{"url":"https://company.com/docs"}}],"externalDocs":{"x-extension":true,"url":"https://irrelevant.com"},"message":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"traits":[{"x-some-extension":"some extension"}],"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
   const result = await parser.parse(inputYAML, { path: __filename, applyTraits: false });
 
-  await expect(JSON.stringify(result.json())).to.equal(outputJsonNoApplyTraits);
+  await expect(JSON.stringify(result.rawDocument().json())).to.equal(outputJsonNoApplyTraits);
 });
 
 it('should apply traits', async function() {
   const outputJsonApplyTraits = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"mychannel":{"publish":{"externalDocs":{"x-extension":true,"url":"https://company.com/docs"},"message":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"},"x-parser-original-traits":[{"externalDocs":{"url":"https://company.com/docs"}}]}},"oneOfMessageChannel":{"publish":{"message":{"oneOf":[{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}]}}}},"components":{"messages":{"testMessage":{"payload":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"},"x-some-extension":"some extension","x-parser-original-traits":[{"x-some-extension":"some extension"}],"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-original-payload":{"type":"object","properties":{"name":{"type":"string"},"test":{"type":"object","properties":{"testing":{"type":"string"}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"testMessage"}},"schemas":{"testSchema":{"type":"object","properties":{"name":{"type":"string","x-parser-schema-id":"<anonymous-schema-1>"},"test":{"type":"object","properties":{"testing":{"type":"string","x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-2>"}},"x-parser-schema-id":"testSchema"}},"messageTraits":{"extension":{"x-some-extension":"some extension"}},"operationTraits":{"docs":{"externalDocs":{"url":"https://company.com/docs"}}}},"x-parser-spec-parsed":true}';
   const result = await parser.parse(inputYAML, { path: __filename, applyTraits: true });
-  await expect(JSON.stringify(result.json())).to.equal(outputJsonApplyTraits);
+  await expect(JSON.stringify(result.rawDocument().json())).to.equal(outputJsonApplyTraits);
 });
 
 it('should apply `x-parser-spec-parsed` extension', async function() {
-  const parsedSpec = await parser.parse(inputYAML, { path: __filename });
+  const parsedSpec = (await parser.parse(inputYAML, { path: __filename })).rawDocument();
   await expect(parsedSpec.json()[String(xParserSpecParsed)]).to.equal(true);
 });
 
 it('should parse and include examples', async function() {
-  let result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+  let result = (await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename })).rawDocument();
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
 
-  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename });
+  result = (await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename })).rawDocument();
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
 
-  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-headers.yml'), 'utf8'), { path: __filename });
+  result = (await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-headers.yml'), 'utf8'), { path: __filename })).rawDocument();
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal('Example1');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal('Example1 summary');
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].headers['some-common-header']).to.equal('My header');
 
-  result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-optional.yml'), 'utf8'), { path: __filename });
+  result = (await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-optional.yml'), 'utf8'), { path: __filename })).rawDocument();
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].name).to.equal(undefined);
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].summary).to.equal(undefined);
   expect(result.channel('myChannel').subscribe().messages()[0].examples()[0].payload.name).to.equal('My name');
@@ -935,9 +935,9 @@ describe('registerSchemaParser()', function() {
   });
 
   it('should show that for 2.0 default schema format is 2.0 and for 2.1 it is 2.1 and so on', async function() {
-    const result20 = await parser.parse(inputYAML, { path: __filename });
-    const result21 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename });
-    const result22 = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });
+    const result20 = (await parser.parse(inputYAML, { path: __filename })).rawDocument();
+    const result21 = (await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example-payload.yml'), 'utf8'), { path: __filename })).rawDocument();
+    const result22 = (await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename })).rawDocument();
 
     expect(result20.channel('mychannel').publish().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.0.0');
     expect(result21.channel('myChannel').subscribe().messages()[0].schemaFormat()).to.equal('application/vnd.aai.asyncapi;version=2.1.0');

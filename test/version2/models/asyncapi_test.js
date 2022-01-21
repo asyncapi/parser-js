@@ -986,19 +986,19 @@ describe('AsyncAPIDocument', function() {
 
   describe('#stringify()', function() {
     it('should stringify simple document', async function() {
-      const doc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const doc = (await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../../') })).rawDocument();
       const stringified = AsyncAPIDocument.stringify(doc);
       expect(stringified).to.be.equal(simpleOutputJSON);
     });
 
     it('should stringify document with circular references', async function() {
-      const doc = await parser.parse(circularYAML, { path: path.join(__filename, '../../') });
+      const doc = (await parser.parse(circularYAML, { path: path.join(__filename, '../../../') })).rawDocument();
       const stringified = AsyncAPIDocument.stringify(doc);
       expect(stringified).to.be.equal(circularOutputYAML);
     });
 
     it('should copy object', async function() {
-      const doc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const doc = (await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../../') })).rawDocument();
       const stringified = AsyncAPIDocument.stringify(doc);
       expect(doc.json()['x-parser-spec-stringified']).to.be.equal(undefined);
       expect(JSON.parse(stringified)['x-parser-spec-stringified']).to.be.equal(true);
@@ -1007,13 +1007,13 @@ describe('AsyncAPIDocument', function() {
 
   describe('#parse()', function() {
     it('should parse stringified simple document', async function() {
-      const parsedDoc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const parsedDoc = (await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../../') })).rawDocument();
       const doc = AsyncAPIDocument.parse(simpleOutputJSON);
       expect(JSON.stringify(doc.json())).to.be.equal(JSON.stringify(parsedDoc.json()));
     });
 
     it('should not parse invalid document', async function() {
-      const parsedDoc = await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../') });
+      const parsedDoc = (await parser.parse(simpleInputJSON, { path: path.join(__filename, '../../../') })).rawDocument();
       delete parsedDoc.json()['x-parser-spec-parsed'];
 
       let error;

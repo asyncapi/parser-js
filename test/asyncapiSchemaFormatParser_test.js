@@ -182,7 +182,7 @@ describe('asyncapiSchemaFormatParser', function() {
     const expectedOriginalSchemaFormat = 'application/vnd.aai.asyncapi;version=2.0.0';
     
     const parsedOutput = await parser.parse(asyncapi);
-    const parsedMessage = parsedOutput.channel('light/measured').publish().message().json();
+    const parsedMessage = parsedOutput.rawDocument().channel('light/measured').publish().message().json();
 
     expect(parsedMessage.payload).to.have.property('x-parser-schema-id');
     expect(parsedMessage).to.have.property('x-parser-original-payload');

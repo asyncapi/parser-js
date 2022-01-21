@@ -10,7 +10,7 @@ const validOutputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":
 
 describe('parseFromUrl()', function() {
   it('should parse YAML correctly from URL', async function() {
-    const result = await parser.parseFromUrl('http://localhost:8080/asyncapi.yaml');
+    const result = (await parser.parseFromUrl('http://localhost:8080/asyncapi.yaml')).rawDocument();
     expect(JSON.stringify(result.json())).to.equal(validOutputJSON);
   });
 
@@ -20,8 +20,8 @@ describe('parseFromUrl()', function() {
       parser.parseFromUrl('http://localhost:8080/asyncapi.yaml')
     ];
     const result = await Promise.all(input);
-    expect(JSON.stringify(result[0].json())).to.equal(validOutputJSON);
-    expect(JSON.stringify(result[1].json())).to.equal(validOutputJSON);
+    expect(JSON.stringify(result[0].rawDocument().json())).to.equal(validOutputJSON);
+    expect(JSON.stringify(result[1].rawDocument().json())).to.equal(validOutputJSON);
   });
 
   it('should fail when url is not absolute and not valid', async function() {

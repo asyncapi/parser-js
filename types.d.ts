@@ -50,44 +50,18 @@ declare type SchemaTypesToIterate = {
     definitions: string;
 };
 
-
-
-/**
- * Implements functions to deal with the common Bindings object.
- */
-declare interface MixinBindings {
+declare const enum Types {
+    ClientSubscribing = "ClientSubscribing",
+    ClientPublishing = "ClientPublishing",
+    ApplicationSubscribing = "ApplicationSubscribing",
+    ApplicationPublishing = "ApplicationPublishing"
 }
 
-
-
-/**
- * Implements functions to deal with the description field.
- */
-declare interface MixinDescription {
-}
-
-
-
-/**
- * Implements functions to deal with the ExternalDocs object.
- */
-declare interface MixinExternalDocs {
-}
-
-
-
-/**
- * Implements functions to deal with the SpecificationExtensions object.
- */
-declare interface MixinSpecificationExtensions {
-}
-
-
-
-/**
- * Implements functions to deal with the Tags object.
- */
-declare interface MixinTags {
+declare const enum Types {
+    ClientSubscribing = "ClientSubscribing",
+    ClientPublishing = "ClientPublishing",
+    ApplicationSubscribing = "ApplicationSubscribing",
+    ApplicationPublishing = "ApplicationPublishing"
 }
 
 declare module "@asyncapi/parser" {
@@ -157,12 +131,18 @@ declare module "@asyncapi/parser" {
          */
         toJS(): void;
     }
-    class IntentAsyncAPIDocument extends IntentBase {
+    class IntentAsyncAPIDocument {
+        constructor(document: AsyncAPIDocument);
+        version(): string;
+        hasContentType(contentType: string): boolean;
+        hasDefaultContentType(): boolean;
+        defaultContentType(): string | undefined;
         info(): IntentInfo;
         applicationPublishableChannels(): IntentChannel[];
         applicationSubscribableChannels(): IntentChannel[];
         clientPublishableChannels(): IntentChannel[];
         clientSubscribableChannels(): IntentChannel[];
+        hasChannels(): boolean;
         channels(): IntentChannel[];
         applicationPublishableMessages(): IntentMessage[];
         applicationSubscribableMessages(): IntentMessage[];
@@ -175,43 +155,133 @@ declare module "@asyncapi/parser" {
         clientSubscribeOperations(): IntentOperation[];
         operations(): IntentOperation[];
         schemas(): Schema[];
+        hasServers(): boolean;
         servers(): IntentServer[];
+        server(): IntentServer | undefined;
         securitySchemes(): SecurityScheme[];
     }
-    class IntentBase {
-        json(): any;
+    class IntentChannelParameter {
+        name(): string;
     }
-    class IntentChannel extends IntentBase {
+    class IntentChannel {
+        constructor(document: AsyncAPIDocument);
         operations(): IntentOperation[];
         path(): string;
         messages(): IntentMessage[];
-        extension(): any;
-        binding(): any;
-        description(): string;
+        hasBinding(bindingProtocol: string): boolean;
+        binding(bindingProtocol: string): any | undefined;
+        hasParameters(): boolean;
+        parameters(): IntentChannelParameter[] | undefined;
+        hasDescription(): boolean;
+        description(): string | undefined;
     }
-    class IntentInfo extends IntentBase {
+    class IntentContact {
+        hasName(): boolean;
+        name(): string | undefined;
+        hasUrl(): boolean;
+        url(): string | undefined;
+        hasEmail(): boolean;
+        email(): string | undefined;
+    }
+    /**
+     * Implements functions to deal with a CorrelationId object.
+     */
+    class IntentCorrelationId {
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasLocation(): boolean;
+        location(): string | undefined;
+    }
+    class IntentExternalDocument {
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasUrl(): boolean;
+        url(): string | undefined;
+    }
+    class IntentInfo {
+        constructor(document: AsyncAPIDocument);
         title(): string;
-        description(): string;
+        hasId(): boolean;
+        id(): string | undefined;
+        hasExternalDocs(): boolean;
+        externalDocs(): IntentExternalDocument | undefined;
         version(): string;
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasTermsOfService(): boolean;
+        termsOfService(): string | undefined;
+        hasContact(): boolean;
+        contact(): IntentContact[] | undefined;
+        hasLicense(): boolean;
+        license(): IntentLicense | undefined;
+        hasTags(): boolean;
+        tags(): IntentTag[] | undefined;
     }
-    class IntentMessage extends IntentBase {
-        uid(): string;
+    class IntentLicense {
         name(): string;
-        headers(): Schema;
-        payload(): Schema;
+        hasUrl(): boolean;
+        url(): string | undefined;
+    }
+    class IntentMessage {
+        constructor(document: AsyncAPIDocument);
+        uid(): string;
+        schemaFormat(): string;
+        hasKnownSchemaFormat(): boolean;
+        payload(): Schema | any;
         channels(): IntentChannel[];
         operations(): IntentOperation[];
-        extension(): any;
-        binding(): any;
+        hasName(): boolean;
+        name(): string | undefined;
+        hasSummary(): boolean;
+        summary(): string | undefined;
+        hasTitle(): boolean;
+        title(): string | undefined;
+        hasHeaders(): boolean;
+        headers(): Schema | undefined;
+        hasBinding(bindingProtocol: string): boolean;
+        binding(bindingProtocol: string): any | undefined;
         contentType(): string;
+        examples(): {
+            [key: string]: any;
+        }[];
+        hasCorrelationId(): boolean;
+        correlationId(): IntentCorrelationId | undefined;
+        hasTags(): boolean;
+        tags(): IntentTag[] | undefined;
+        hasDescription(): boolean;
+        description(): string | undefined;
     }
-    class IntentOperation extends IntentBase {
+    class IntentOAuthFlow extends Base {
+        authorizationUrl(): string | undefined;
+        tokenUrl(): string | undefined;
+        hasRefreshUrl(): boolean;
+        refreshUrl(): string | undefined;
+        scopes(): {
+            [key: string]: string;
+        } | undefined;
+    }
+    class IntentOAuthFlows {
+        hasImplicit(): boolean;
+        implicit(): IntentOAuthFlow | undefined;
+        hasPassword(): boolean;
+        password(): IntentOAuthFlow | undefined;
+        hasClientCredentials(): boolean;
+        clientCredentials(): IntentOAuthFlow | undefined;
+        hasAuthorizationCode(): boolean;
+        authorizationCode(): IntentOAuthFlow | undefined;
+    }
+    class IntentOperation {
+        constructor(document: AsyncAPIDocument);
         id(): string;
-        summary(): string;
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasSummary(): boolean;
+        summary(): string | undefined;
+        hasMultipleMessages(): boolean;
         messages(): IntentMessage[];
         channels(): IntentChannel[];
-        extension(): any;
-        binding(): any;
+        hasBinding(bindingProtocol: string): boolean;
+        binding(bindingProtocol: string): any | undefined;
         servers(): IntentServer[];
         server(): IntentServer;
         isClientSubscribing(): boolean;
@@ -219,13 +289,110 @@ declare module "@asyncapi/parser" {
         isApplicationSubscribing(): boolean;
         isApplicationPublishing(): boolean;
         type(): Types;
+        hasExternalDocs(): boolean;
+        externalDocs(): IntentExternalDocument | undefined;
+        hasTags(): boolean;
+        tags(): IntentTag[];
     }
-    class IntentServer extends IntentBase {
+    class IntentSecurityScheme {
+        constructor(document: AsyncAPIDocument);
+        type(): Types;
         name(): string;
-        protocol(): string;
-        url(): string;
-        operations(): IntentOperation[];
+        in(): any;
+        hasSchema(): boolean;
+        scheme(): string | undefined;
+        hasBearerFormat(): boolean;
+        bearerFormat(): string | undefined;
+        hasDescription(): boolean;
+        description(): string;
+        flows(): IntentOAuthFlows;
+        openIdConnectUrl(): string;
+        scopes(): string[];
     }
+    class IntentServerVariable {
+        hasName(): boolean;
+        name(): string | undefined;
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasAllowedValues(): boolean;
+        allowedValues(): any[];
+        hasDefaultValue(): boolean;
+        defaultValue(): string | undefined;
+        examples(): string[];
+    }
+    class IntentServer {
+        hasName(): boolean;
+        name(): string | undefined;
+        hasProtocol(): boolean;
+        protocol(): string | undefined;
+        hasUrl(): boolean;
+        url(): string | undefined;
+        operations(): IntentOperation[];
+        variables(): IntentServerVariable[];
+        security(): IntentSecurityScheme[];
+        hasProtocolVersion(): boolean;
+        protocolVersion(): string | undefined;
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasBinding(bindingProtocol: string): boolean;
+        binding(bindingProtocol: string): any | undefined;
+    }
+    class IntentTag {
+        name(): string;
+        hasDescription(): boolean;
+        description(): string | undefined;
+        hasExternalDocs(): boolean;
+        externalDocs(): IntentExternalDocument | undefined;
+    }
+    /**
+     * The complete list of parse configuration options used to parse the given data.
+     * @property [path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
+     * @property [parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [applyTraits] - Whether to resolve and apply traits or not. Defaults to true.
+     */
+    type ParserOptions = {
+        path?: string;
+        parse?: any;
+        resolve?: any;
+        applyTraits?: boolean;
+    };
+    /**
+     * Parses and validate an AsyncAPI document from YAML or JSON.
+     * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
+     * @param [options] - Configuration options object {@link ParserOptions}
+     * @returns The parsed AsyncAPI document.
+     */
+    function parseToJson(asyncapiYAMLorJSON: string | any, options?: ParserOptions): Promise<AsyncAPIDocument>;
+    /**
+     * Parses and validate an AsyncAPI document from YAML or JSON into an intents.
+     * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
+     * @param [options] - Configuration options.
+     * @param [options.path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
+     * @param [options.parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @param [options.resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @param [options.applyTraits = true] - Whether to resolve and apply traits or not.
+     * @returns The parsed AsyncAPI document wrapped in intents.
+     */
+    function parse(asyncapiYAMLorJSON: string, options?: {
+        path?: string;
+        parse?: any;
+        resolve?: any;
+        applyTraits?: any;
+    }): Promise<IntentAsyncAPIDocument>;
+    /**
+     * Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
+     * @param url - URL where the AsyncAPI document is located.
+     * @param [fetchOptions] - Configuration to pass to the {@link https://developer.mozilla.org/en-US/docs/Web/API/Request|fetch} call.
+     * @param [options] - Configuration to pass to the {@link ParserOptions} method.
+     * @returns The parsed AsyncAPI document.
+     */
+    function parseFromUrl(url: string, fetchOptions?: any, options?: ParserOptions): Promise<AsyncAPIDocument>;
+    /**
+     * Registers a new schema parser. Schema parsers are in charge of parsing and transforming payloads to AsyncAPI Schema format.
+     * @param parserModule - The schema parser module containing parse() and getMimeTypes() functions.
+     */
+    function registerSchemaParser(parserModule: any): void;
     interface AsyncAPIDocument extends MixinTags, MixinExternalDocs, MixinSpecificationExtensions {
     }
     /**
@@ -1208,38 +1375,45 @@ declare module "@asyncapi/parser" {
          */
         ext(key: string): any;
     }
-    /**
-     * The complete list of parse configuration options used to parse the given data.
-     * @property [path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
-     * @property [parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @property [resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @property [applyTraits] - Whether to resolve and apply traits or not. Defaults to true.
-     */
-    type ParserOptions = {
-        path?: string;
-        parse?: any;
-        resolve?: any;
-        applyTraits?: boolean;
-    };
-    /**
-     * Parses and validate an AsyncAPI document from YAML or JSON.
-     * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
-     * @param [options] - Configuration options object {@link ParserOptions}
-     * @returns The parsed AsyncAPI document.
-     */
-    function parse(asyncapiYAMLorJSON: string | any, options?: ParserOptions): Promise<AsyncAPIDocument>;
-    /**
-     * Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
-     * @param url - URL where the AsyncAPI document is located.
-     * @param [fetchOptions] - Configuration to pass to the {@link https://developer.mozilla.org/en-US/docs/Web/API/Request|fetch} call.
-     * @param [options] - Configuration to pass to the {@link ParserOptions} method.
-     * @returns The parsed AsyncAPI document.
-     */
-    function parseFromUrl(url: string, fetchOptions?: any, options?: ParserOptions): Promise<AsyncAPIDocument>;
-    /**
-     * Registers a new schema parser. Schema parsers are in charge of parsing and transforming payloads to AsyncAPI Schema format.
-     * @param parserModule - The schema parser module containing parse() and getMimeTypes() functions.
-     */
-    function registerSchemaParser(parserModule: any): void;
+}
+
+
+
+/**
+ * Implements functions to deal with the common Bindings object.
+ */
+declare interface MixinBindings {
+}
+
+
+
+/**
+ * Implements functions to deal with the description field.
+ */
+declare interface MixinDescription {
+}
+
+
+
+/**
+ * Implements functions to deal with the ExternalDocs object.
+ */
+declare interface MixinExternalDocs {
+}
+
+
+
+/**
+ * Implements functions to deal with the SpecificationExtensions object.
+ */
+declare interface MixinSpecificationExtensions {
+}
+
+
+
+/**
+ * Implements functions to deal with the Tags object.
+ */
+declare interface MixinTags {
 }
 

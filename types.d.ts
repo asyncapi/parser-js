@@ -50,18 +50,21 @@ declare type SchemaTypesToIterate = {
     definitions: string;
 };
 
-declare const enum Types {
-    ClientSubscribing = "ClientSubscribing",
-    ClientPublishing = "ClientPublishing",
-    ApplicationSubscribing = "ApplicationSubscribing",
-    ApplicationPublishing = "ApplicationPublishing"
+declare const enum OperationTypes {
+    sends = "sends",
+    receives = "receives"
 }
 
-declare const enum Types {
-    ClientSubscribing = "ClientSubscribing",
-    ClientPublishing = "ClientPublishing",
-    ApplicationSubscribing = "ApplicationSubscribing",
-    ApplicationPublishing = "ApplicationPublishing"
+declare const enum SecuritySchemeTypes {
+    UserPassword = "userPassword",
+    ApiKey = "apiKey",
+    X509 = "X509",
+    SymmetricEncryption = "symmetricEncryption",
+    AsymmetricEncryption = "asymmetricEncryption",
+    HttpApiKey = "httpApiKey",
+    Http = "http",
+    Oauth2 = "oauth2",
+    OpenIdConnect = "openIdConnect"
 }
 
 declare module "@asyncapi/parser" {
@@ -288,7 +291,7 @@ declare module "@asyncapi/parser" {
         isClientPublishing(): boolean;
         isApplicationSubscribing(): boolean;
         isApplicationPublishing(): boolean;
-        type(): Types;
+        type(): OperationTypes;
         hasExternalDocs(): boolean;
         externalDocs(): IntentExternalDocument | undefined;
         hasTags(): boolean;

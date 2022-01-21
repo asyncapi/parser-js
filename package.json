@@ -74,6 +74,7 @@
     "json-to-ast": "^2.1.0",
     "lodash.clonedeep": "^4.5.0",
     "node-fetch": "^2.6.0",
+    "sinon": "^12.0.1",
     "tiny-merge-patch": "^0.1.2"
   },
   "browserify": {

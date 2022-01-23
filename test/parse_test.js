@@ -172,7 +172,7 @@ describe('parse()', function () {
       parsedJSON: JSON.parse(invalidAsyncAPI),
       validationErrors: [
         {
-          title: "/info should have required property 'title'",
+          title: '/info should have required property \'title\'',
           location: {
             endColumn: 31,
             endLine: 1,
@@ -184,7 +184,7 @@ describe('parse()', function () {
           },
         },
         {
-          title: "/info should have required property 'version'",
+          title: '/info should have required property \'version\'',
           location: {
             endColumn: 31,
             endLine: 1,
@@ -196,7 +196,7 @@ describe('parse()', function () {
           },
         },
         {
-          title: "/ should have required property 'channels'",
+          title: '/ should have required property \'channels\'',
           location: { jsonPointer: '/' },
         },
       ],
@@ -238,7 +238,7 @@ describe('parse()', function () {
           },
         },
         {
-          title: "/info should have required property 'title'",
+          title: '/info should have required property \'title\'',
           location: {
             jsonPointer: '/info',
             startLine: 2,
@@ -326,7 +326,7 @@ describe('parse()', function () {
           },
         },
         {
-          title: "/info should have required property 'title'",
+          title: '/info should have required property \'title\'',
           location: {
             jsonPointer: '/info',
             startLine: 3,
@@ -668,7 +668,7 @@ describe('parse()', function () {
   it('should throw error if document is null or falsey', async function () {
     const expectedErrorObject = {
       type: 'https://github.com/asyncapi/parser-js/null-or-falsey-document',
-      title: "Document can't be null or falsey.",
+      title: 'Document can\'t be null or falsey.',
     };
     await checkErrorWrapper(async () => {
       await parser.parse('');
@@ -1244,7 +1244,7 @@ it('should throw schema-parser-not-registered error on unrecognized schema', asy
   const errorObject = {
     title: 'The specification has an unsupported schema format',
     type: 'https://github.com/asyncapi/parser-js/schema-parser-not-registered',
-    detail: `You shall not pass, no schema parser available that can parse this schema. The good news is that we have one for Avro, just install @asyncapi/avro-schema-parser and use registerSchemaParser to register it with the current parser`,
+    detail: 'You shall not pass, no schema parser available that can parse this schema. The good news is that we have one for Avro, just install @asyncapi/avro-schema-parser and use registerSchemaParser to register it with the current parser',
   };
   await checkErrorWrapper(async () => {
     await parser.parse(notRegisteredFormatFile, { path: __filename });

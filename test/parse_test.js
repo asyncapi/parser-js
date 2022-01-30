@@ -864,9 +864,9 @@ it('should apply `x-parser-spec-parsed` extension', async function() {
 it('should throw schema-parser-not-registered error on unrecognized schema', async function () {
   const notRegisteredFormatFile = fs.readFileSync(path.resolve(__dirname, './wrong/unknown-schema-format.yaml'), 'utf8');
   const errorObject = {
-    title: 'The specification has an unsupported schema format',
+    title: 'The document uses a schema format that parser does not support',
     type: 'https://github.com/asyncapi/parser-js/schema-parser-not-registered',
-    detail: 'You shall not pass, no schema parser available that can parse this schema. The good news is that we have one for Avro, just install @asyncapi/avro-schema-parser and use registerSchemaParser to register it with the current parser',
+    detail: 'Parser is not able to parse messages as they are provided in not supported schema. Parser can be extended to parse other schemas, you can also use existing custom schema parsers for Avro, RAML Data Types and OpenAPI Schema. Install one of them, @asyncapi/avro-schema-parser, @asyncapi/openapi-schema-parser or @asyncapi/ramldt-schema-parser and use registerSchemaParser function to register it with the this parser',
   };
   await checkErrorWrapper(async () => {
     await parser.parse(notRegisteredFormatFile, { path: __filename });

@@ -7,3 +7,10 @@ channels:
     publish:
       message:
         schemaFormat: "UnknownSchemaFormat"
+    subscribe:  
+      message:
+        oneOf:
+          - $ref: "#/components/messages/testMessage1"
+          - $ref: "#/components/messages/testMessage2"
+          
+

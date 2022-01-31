@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.14.0",
+  "version": "1.13.2",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -23,6 +23,7 @@
     "test:browser:cleanup": "rimraf \"test/sample_browser/bundle.js\"",
     "generate:readme:toc": "markdown-toc -i \"README.md\"",
     "generate:assets": "npm run docs && npm run generate:readme:toc && npm run types && npm run bundle",
+    "schema:precompile": "node scripts/generate-schema-validators.js",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
   },
   "bugs": {
@@ -43,6 +44,7 @@
     "@semantic-release/github": "7.2.3",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "ajv-formats": "^2.1.1",
     "browserify": "^16.3.0",
     "browserify-shim": "^3.8.14",
     "chai": "^4.2.0",
@@ -54,6 +56,7 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "http-server": "^0.12.3",
     "jsdoc-to-markdown": "^5.0.0",
+    "json-schema-migrate": "^2.0.0",
     "markdown-toc": "^1.2.0",
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",
@@ -67,9 +70,9 @@
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "^2.13.0",
+    "@asyncapi/specs": "^2.11.0",
     "@fmvilas/pseudo-yaml-ast": "^0.3.1",
-    "ajv": "^6.10.1",
+    "ajv": "8.9.0",
     "js-yaml": "^3.13.1",
     "json-to-ast": "^2.1.0",
     "lodash.clonedeep": "^4.5.0",
@@ -88,7 +91,7 @@
     "branches": [
       "master",
       {
-        "name": "2022-01-release",
+        "name": "2021-09-release",
         "prerelease": true
       }
     ],

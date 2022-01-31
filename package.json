@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "v2.13.0-2022-01-release.3",
+    "@asyncapi/specs": "v2.13.0",
     "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",

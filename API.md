@@ -82,6 +82,9 @@
             * [.hasExt(key)](#module_@asyncapi/parser+Channel+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+Channel+ext) ⇒ <code>any</code>
         * [.Components](#module_@asyncapi/parser+Components) ⇐ <code>Base</code>
+            * [.channels()](#module_@asyncapi/parser+Components+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+            * [.hasChannels()](#module_@asyncapi/parser+Components+hasChannels) ⇒ <code>boolean</code>
+            * [.channel(name)](#module_@asyncapi/parser+Components+channel) ⇒ <code>Channel</code>
             * [.messages()](#module_@asyncapi/parser+Components+messages) ⇒ <code>Object.&lt;string, Message&gt;</code>
             * [.hasMessages()](#module_@asyncapi/parser+Components+hasMessages) ⇒ <code>boolean</code>
             * [.message(name)](#module_@asyncapi/parser+Components+message) ⇒ <code>Message</code>
@@ -91,6 +94,9 @@
             * [.securitySchemes()](#module_@asyncapi/parser+Components+securitySchemes) ⇒ <code>Object.&lt;string, SecurityScheme&gt;</code>
             * [.hasSecuritySchemes()](#module_@asyncapi/parser+Components+hasSecuritySchemes) ⇒ <code>boolean</code>
             * [.securityScheme(name)](#module_@asyncapi/parser+Components+securityScheme) ⇒ <code>SecurityScheme</code>
+            * [.servers()](#module_@asyncapi/parser+Components+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
+            * [.hasServers()](#module_@asyncapi/parser+Components+hasServers) ⇒ <code>boolean</code>
+            * [.server(name)](#module_@asyncapi/parser+Components+server) ⇒ <code>Server</code>
             * [.parameters()](#module_@asyncapi/parser+Components+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
             * [.hasParameters()](#module_@asyncapi/parser+Components+hasParameters) ⇒ <code>boolean</code>
             * [.parameter(name)](#module_@asyncapi/parser+Components+parameter) ⇒ <code>ChannelParameter</code>
@@ -787,6 +793,9 @@ Implements functions to deal with a Components object.
 **Mixes**: [<code>MixinSpecificationExtensions</code>](#MixinSpecificationExtensions)  
 
 * [.Components](#module_@asyncapi/parser+Components) ⇐ <code>Base</code>
+    * [.channels()](#module_@asyncapi/parser+Components+channels) ⇒ <code>Object.&lt;string, Channel&gt;</code>
+    * [.hasChannels()](#module_@asyncapi/parser+Components+hasChannels) ⇒ <code>boolean</code>
+    * [.channel(name)](#module_@asyncapi/parser+Components+channel) ⇒ <code>Channel</code>
     * [.messages()](#module_@asyncapi/parser+Components+messages) ⇒ <code>Object.&lt;string, Message&gt;</code>
     * [.hasMessages()](#module_@asyncapi/parser+Components+hasMessages) ⇒ <code>boolean</code>
     * [.message(name)](#module_@asyncapi/parser+Components+message) ⇒ <code>Message</code>
@@ -796,6 +805,9 @@ Implements functions to deal with a Components object.
     * [.securitySchemes()](#module_@asyncapi/parser+Components+securitySchemes) ⇒ <code>Object.&lt;string, SecurityScheme&gt;</code>
     * [.hasSecuritySchemes()](#module_@asyncapi/parser+Components+hasSecuritySchemes) ⇒ <code>boolean</code>
     * [.securityScheme(name)](#module_@asyncapi/parser+Components+securityScheme) ⇒ <code>SecurityScheme</code>
+    * [.servers()](#module_@asyncapi/parser+Components+servers) ⇒ <code>Object.&lt;string, Server&gt;</code>
+    * [.hasServers()](#module_@asyncapi/parser+Components+hasServers) ⇒ <code>boolean</code>
+    * [.server(name)](#module_@asyncapi/parser+Components+server) ⇒ <code>Server</code>
     * [.parameters()](#module_@asyncapi/parser+Components+parameters) ⇒ <code>Object.&lt;string, ChannelParameter&gt;</code>
     * [.hasParameters()](#module_@asyncapi/parser+Components+hasParameters) ⇒ <code>boolean</code>
     * [.parameter(name)](#module_@asyncapi/parser+Components+parameter) ⇒ <code>ChannelParameter</code>
@@ -816,6 +828,23 @@ Implements functions to deal with a Components object.
     * [.extension(key)](#module_@asyncapi/parser+Components+extension) ⇒ <code>any</code>
     * [.hasExt(key)](#module_@asyncapi/parser+Components+hasExt) ⇒ <code>boolean</code>
     * [.ext(key)](#module_@asyncapi/parser+Components+ext) ⇒ <code>any</code>
+
+<a name="module_@asyncapi/parser+Components+channels"></a>
+
+#### components.channels() ⇒ <code>Object.&lt;string, Channel&gt;</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+hasChannels"></a>
+
+#### components.hasChannels() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+channel"></a>
+
+#### components.channel(name) ⇒ <code>Channel</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the channel. |
 
 <a name="module_@asyncapi/parser+Components+messages"></a>
 
@@ -867,6 +896,23 @@ Implements functions to deal with a Components object.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the security schema. |
+
+<a name="module_@asyncapi/parser+Components+servers"></a>
+
+#### components.servers() ⇒ <code>Object.&lt;string, Server&gt;</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+hasServers"></a>
+
+#### components.hasServers() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+server"></a>
+
+#### components.server(name) ⇒ <code>Server</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the server. |
 
 <a name="module_@asyncapi/parser+Components+parameters"></a>
 

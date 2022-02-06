@@ -12,5 +12,11 @@ channels:
         oneOf:
           - $ref: "#/components/messages/testMessage1"
           - $ref: "#/components/messages/testMessage2"
+components:
+  messages:
+    testMessage1:
+      schemaFormat: "UnknownSchemaFormat1"
+    testMessage2:
+      schemaFormat: "UnknownSchemaFormat2"
           
 

@@ -867,6 +867,29 @@ it('should throw schema-parser-not-registered error on unrecognized schema', asy
     title: 'The document uses a schema format that parser does not support',
     type: 'https://github.com/asyncapi/parser-js/schema-parser-not-registered',
     detail: 'Parser is not able to parse messages as they are provided in not supported schema. Parser can be extended to parse other schemas, you can also use existing custom schema parsers for Avro, RAML Data Types and OpenAPI Schema. Install one of them, @asyncapi/avro-schema-parser, @asyncapi/openapi-schema-parser or @asyncapi/ramldt-schema-parser and use registerSchemaParser function to register it with the this parser',
+    validationErrors: [
+      {
+        keyword: 'format',
+        dataPath: '',
+        schemaPath: '#/oneOf/0/format',
+        params: {
+          format: 'application/vnd.aai.asyncapi;version=2.0.0'
+        },
+        message: 'should be equal to one of the allowed values'
+      },
+      {
+        title: 'The document uses a schema format that parser does not support',
+        location:{
+          jsonPointer: '#/components/schemas/testSchema',
+          startLine: 5,
+          startColumn: 1,
+          endLine: 5,
+          endColumn: 1,
+          endOffset: 0,
+          startOffset: 0,
+        }
+      }
+    ],
   };
   await checkErrorWrapper(async () => {
     await parser.parse(notRegisteredFormatFile, { path: __filename });

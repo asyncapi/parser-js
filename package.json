@@ -90,6 +90,10 @@
       {
         "name": "2022-01-release",
         "prerelease": true
+      },
+      {
+        "name": "next-major",
+        "prerelease": true
       }
     ],
     "plugins": [

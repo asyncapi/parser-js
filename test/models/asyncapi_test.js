@@ -14,7 +14,7 @@ describe('IntentAsyncAPIDocument', function() {
         const document = new AsyncAPIVersion2Document(json);
         const intent = new IntentAsyncAPIDocument(document);
         const version = intent.version();
-        expect(version).to.be.equal(json.version);
+        expect(version).to.be.equal(json.asyncapi);
       });
     });
   });

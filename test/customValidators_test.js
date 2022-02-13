@@ -254,7 +254,7 @@ describe('validateServerVariables()', function () {
 
     checkErrorWrapper(() => {
       validateServerVariables(parsedInput, inputString, input);
-    } ,expectedErrorObject);
+    }, expectedErrorObject);
   });
 
   // server with a variable that has more than one example and only one of them match enum list,
@@ -831,7 +831,142 @@ describe('validateChannel()', function () {
       validateChannels(parsedInput, inputString, input);
     }, expectedErrorObject);
   });
+
+  it('should successfully validate channel with servers that are all declared in servers object', async function () {
+    const inputString = `{
+      "servers": {
+        "server1": {
+          "url": "http://localhost",
+          "protocol": "kafka"
+        },
+        "server2": {
+          "url": "http://test.org",
+          "protocol": "jms"
+        }
+      },
+      "channels": {
+        "jmsQueue": {
+          "servers": ["server2"]
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(validateChannels(parsedInput, inputString, input)).to.equal(true);
+  });
+
+  it('should throw error that servers list references an unknown server', async function () {
+    const inputString = `{
+      "servers": {
+        "server1": {
+          "url": "http://localhost",
+          "protocol": "kafka"
+        },
+        "server2": {
+          "url": "http://test.org",
+          "protocol": "jms"
+        }
+      },
+      "channels": {
+        "jmsQueue": {
+          "servers": ["server2", "unknownServer"]
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Channel validation failed',
+      parsedJSON: parsedInput,
+      validationErrors: [
+        {
+          title:
+            'jmsQueue channel contains servers that are not on the servers list in the root of the document: unknownServer',
+          location: {
+            endColumn: 11,
+            endLine: 15,
+            endOffset: 325,
+            jsonPointer: '/channels/jmsQueue',
+            startColumn: 22,
+            startLine: 13,
+            startOffset: 264,
+          }
+        }
+      ]
+    };
+
+    await checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that servers list references an unknown server in two channels, one is valid', async function () {
+    const inputString = `{
+      "servers": {
+        "server1": {
+          "url": "http://localhost",
+          "protocol": "kafka"
+        },
+        "server2": {
+          "url": "http://test.org",
+          "protocol": "jms"
+        }
+      },
+      "channels": {
+        "valid": {
+          "servers": ["server1", "server2"]
+        },
+        "invalid1": {
+          "servers": ["server1", "unknownServer1", "unknownServe2"]
+        },
+        "invalid2": {
+          "servers": ["server1", "unknownServer1"]
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'Channel validation failed',
+      parsedJSON: parsedInput,
+      validationErrors: [
+        {
+          title:
+            'invalid1 channel contains servers that are not on the servers list in the root of the document: unknownServer1,unknownServe2',
+          location: {
+            endColumn: 11,
+            endLine: 18,
+            endOffset: 417,
+            jsonPointer: '/channels/invalid1',
+            startColumn: 22,
+            startLine: 16,
+            startOffset: 338,
+          }
+        },
+        {
+          title:
+            'invalid2 channel contains servers that are not on the servers list in the root of the document: unknownServer1',
+          location: {
+            endColumn: 11,
+            endLine: 21,
+            endOffset: 501,
+            jsonPointer: '/channels/invalid2',
+            startColumn: 22,
+            startLine: 19,
+            startOffset: 439,
+          }
+        }
+      ]
+    };
+
+    await checkErrorWrapper(() => {
+      validateChannels(parsedInput, inputString, input);
+    }, expectedErrorObject);
+  });
 });
+
 describe('validateOperationId()', function () {
   const operations = ['subscribe', 'publish'];
 

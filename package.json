@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.5.1",
+  "version": "1.14.1",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -14,9 +14,8 @@
     "types": "jsdoc -t \"node_modules/tsd-jsdoc/dist\" -r lib -d \"./\" && node \"./scripts/fix-ts-types.js\"",
     "prepublishOnly": "npm run bundle && npm run docs && npm run types",
     "release": "semantic-release",
-    "get:version": "echo $npm_package_version",
-    "get:name": "echo $npm_package_name",
     "lint": "eslint --max-warnings 0 --config \".eslintrc\" \".\"",
+    "lint:fix": "eslint --max-warnings 0 --config \".eslintrc\" \".\" --fix",
     "test:lib": "nyc --silent --no-clean mocha --exclude \"test/browser_test.js\" --exclude \"test/parseFromUrl_test.js\" --recursive",
     "test:parseFromUrl": "nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",
     "cover:report": "nyc report --reporter=text --reporter=html",
@@ -68,7 +67,7 @@
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "^2.7.7",
+    "@asyncapi/specs": "^2.13.0",
     "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",
@@ -89,7 +88,11 @@
     "branches": [
       "master",
       {
-        "name": "2021-06-release",
+        "name": "2022-01-release",
+        "prerelease": true
+      },
+      {
+        "name": "next-major",
         "prerelease": true
       }
     ],

@@ -29,6 +29,7 @@
 - [Error types](#error-types)
 - [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
+- [Stringify](#stringify)
 - [Develop](#develop)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -40,6 +41,19 @@
 ```
 npm install @asyncapi/parser
 ```
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format. For additional formats, you need to install additional plugins. For example:
+- Avro schema
+  ```
+  npm install @asyncapi/avro-schema-parser
+  ```
+- OpenAPI Schema Object
+  ```
+  npm install @asyncapi/openapi-schema-parser
+  ```
+- RAML data type
+  ```
+  npm install @asyncapi/raml-dt-schema-parser
+  ```
 
 ## Examples 
 
@@ -49,7 +63,7 @@ npm install @asyncapi/parser
 const parser = require('@asyncapi/parser');
 
 const doc = await parser.parse(`
-  asyncapi: '2.0.0'
+  asyncapi: '2.1.0'
   info:
     title: Example
     version: '0.1.0'
@@ -78,7 +92,7 @@ console.log(doc.info().title());
 ```js
 const parser = require('@asyncapi/parser');
 
-const doc = await parser.parseUrl('https://my.server.com/example-asyncapi.yaml');
+const doc = await parser.parseFromUrl('https://my.server.com/example-asyncapi.yaml');
 
 console.log(doc.info().title());
 // => Example
@@ -132,7 +146,7 @@ import parser from '@asyncapi/parser';
 
 ## Custom message parsers
 
-AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it withing the parser:
+AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it within the parser:
 
 1. Create custom parser module that exports two functions:
 
@@ -182,7 +196,6 @@ This package throws a bunch of different error types. All errors contain a `type
 |`impossible-to-register-parser`| None | Registration of custom message parser failed.
 |`schema-validation-errors`| `parsedJSON`, `validationErrors` | Schema of the payload provided in the AsyncAPI document is not valid with AsyncAPI schema format.
 |`fetch-url-error`| None | The URL provided for fetching AsynAPI document is invalid.
-|`schema-parser-not-registered`| `detail` | At least, one of the schemas in the AsyncAPI document is in a format that the given parser instance doesn't support. Add a missed format parser through the `registerSchemaParser` function.
 
 For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
 
@@ -197,14 +210,32 @@ The parser uses custom extensions to define additional information about the spe
 - `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
 - [`x-parser-circular`](#circular-references)
-- [`x-parser-circular-props`](#circular-references)
+
+> **NOTE**: All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
 
 ## Circular references
 
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular()` function to check the document and provide a proper message to the user.
-- `x-parser-circular` property is added to every schema of array type that is circular. To check if schema is circular or not, you should use `isCircular()` function on a Schema model like `document.components().schema('RecursiveSelf').properties()['selfChildren'].isCircular()`.
-- `x-parser-circular-props` property is added to every schema of object type with a list of properties that are circular. To check if a schema has properties with circular references, you should use `hasCircularProps()` function. To get a list of properties with circular references, you should use `circularProps()` function.
+- `isCircular()` function is added to the [Schema Model](./lib/models/schema.js) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
+
+## Stringify
+
+Converting a parsed document to a string may be necessary when saving the parsed document to a database, or similar situations where you need to parse the document just once and then reuse it.
+
+For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation, in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path with a `$ref:` prefix:
+
+```json
+{
+  "foo": "$ref:$.some.path.to.the.bar"
+}
+```
+		
+To parse a stringified document into an AsyncAPIDocument instance, you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path, with an `$ref:` prefix to the original objects.
+
+A few advantages of this solution:
+- The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
+- All circular references are preserved.
 
 ## Develop
 
@@ -241,12 +272,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://www.linkedin.com/in/jbreitenbaumer/"><img src="https://avatars3.githubusercontent.com/u/683438?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jürgen B.</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=juergenbr" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/aeworxet"><img src="https://avatars.githubusercontent.com/u/16149591?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Viacheslav Turovskyi</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=aeworxet" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/KhudaDad414"><img src="https://avatars.githubusercontent.com/u/32505158?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Khuda Dad Nomani</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=KhudaDad414" title="Code">💻</a> <a href="https://github.com/asyncapi/parser-js/issues?q=author%3AKhudaDad414" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/KhudaDad414"><img src="https://avatars.githubusercontent.com/u/32505158?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Khuda Dad Nomani</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=KhudaDad414" title="Code">💻</a> <a href="https://github.com/asyncapi/parser-js/issues?q=author%3AKhudaDad414" title="Bug reports">🐛</a> <a href="https://github.com/asyncapi/parser-js/commits?author=KhudaDad414" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/aayushmau5"><img src="https://avatars.githubusercontent.com/u/54525741?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aayush Kumar Sahu</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=aayushmau5" title="Tests">⚠️</a></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/JQrdan"><img src="https://avatars.githubusercontent.com/u/25624685?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jordan Tucker</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=JQrdan" title="Tests">⚠️</a> <a href="https://github.com/asyncapi/parser-js/commits?author=JQrdan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/vishesh13byte"><img src="https://avatars.githubusercontent.com/u/66796715?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vishesh13byte</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=vishesh13byte" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://iamdevelopergirl.github.io/Website-With-Animations/"><img src="https://avatars.githubusercontent.com/u/16351809?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Elakya</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=iamdevelopergirl" title="Code">💻</a></td>
+    <td align="center"><a href="https://schwank.cc"><img src="https://avatars.githubusercontent.com/u/8232196?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dominik Schwank</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/issues?q=author%3Adschwank" title="Bug reports">🐛</a> <a href="https://github.com/asyncapi/parser-js/commits?author=dschwank" title="Code">💻</a></td>
   </tr>
 </table>
 

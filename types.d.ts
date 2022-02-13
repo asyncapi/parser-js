@@ -19,6 +19,15 @@ declare type SchemaIteratorCallbackType = {
  * @property oneOfs - Crawl all schemas in oneOf's
  * @property allOfs - Crawl all schemas in allOf's
  * @property anyOfs - Crawl all schemas in anyOf's
+ * @property nots - Crawl all schemas in not field
+ * @property propertyNames - Crawl all schemas in propertyNames field
+ * @property patternProperties - Crawl all schemas in patternProperties field
+ * @property contains - Crawl all schemas in contains field
+ * @property ifs - Crawl all schemas in if field
+ * @property thenes - Crawl all schemas in then field
+ * @property elses - Crawl all schemas in else field
+ * @property dependencies - Crawl all schemas in dependencies field
+ * @property definitions - Crawl all schemas in definitions field
  */
 declare type SchemaTypesToIterate = {
     parameters: string;
@@ -30,6 +39,15 @@ declare type SchemaTypesToIterate = {
     oneOfs: string;
     allOfs: string;
     anyOfs: string;
+    nots: string;
+    propertyNames: string;
+    patternProperties: string;
+    contains: string;
+    ifs: string;
+    thenes: string;
+    elses: string;
+    dependencies: string;
+    definitions: string;
 };
 
 
@@ -179,6 +197,18 @@ declare module "@asyncapi/parser" {
          * By default all schemas are iterated
          */
         traverseSchemas(callback: TraverseSchemas, schemaTypesToIterate: SchemaTypesToIterate[]): void;
+        /**
+         * Converts a valid AsyncAPI document to a JavaScript Object Notation (JSON) string.
+         * A stringified AsyncAPI document using this function should be parsed via the AsyncAPIDocument.parse() function - the JSON.parse() function is not compatible.
+         * @param doc - A valid AsyncAPIDocument instance.
+         * @param [space] - Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+         */
+        static stringify(doc: AsyncAPIDocument, space?: number | string): string;
+        /**
+         * Converts a valid stringified AsyncAPIDocument instance into an AsyncAPIDocument instance.
+         * @param doc - A valid stringified AsyncAPIDocument instance.
+         */
+        static parse(doc: string): AsyncAPIDocument;
         hasTags(): boolean;
         tags(): Tag[];
         tagNames(): string[];
@@ -258,7 +288,10 @@ declare module "@asyncapi/parser" {
      */
     type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
     class Base {
-        json(): any;
+        /**
+         * @param [key] - A key to retrieve from the JSON object.
+         */
+        json(key?: string): any;
     }
     interface ChannelParameter extends MixinDescription, MixinSpecificationExtensions {
     }
@@ -307,6 +340,12 @@ declare module "@asyncapi/parser" {
          */
         parameter(name: string): ChannelParameter;
         hasParameters(): boolean;
+        hasServers(): boolean;
+        servers(): String[];
+        /**
+         * @param index - Index of the server.
+         */
+        server(index: number): string;
         publish(): PublishOperation;
         subscribe(): SubscribeOperation;
         hasPublish(): boolean;
@@ -353,6 +392,14 @@ declare module "@asyncapi/parser" {
      * Implements functions to deal with a Components object.
      */
     class Components extends Base implements MixinSpecificationExtensions {
+        channels(): {
+            [key: string]: Channel;
+        };
+        hasChannels(): boolean;
+        /**
+         * @param name - Name of the channel.
+         */
+        channel(name: string): Channel;
         messages(): {
             [key: string]: Message;
         };
@@ -377,6 +424,14 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the security schema.
          */
         securityScheme(name: string): SecurityScheme;
+        servers(): {
+            [key: string]: Server;
+        };
+        hasServers(): boolean;
+        /**
+         * @param name - Name of the server.
+         */
+        server(name: string): Server;
         parameters(): {
             [key: string]: ChannelParameter;
         };
@@ -673,6 +728,8 @@ declare module "@asyncapi/parser" {
     class Message extends MessageTraitable {
         uid(): string;
         payload(): Schema;
+        traits(): MessageTrait[];
+        hasTraits(): boolean;
         originalPayload(): any;
         originalSchemaFormat(): string;
     }
@@ -778,6 +835,8 @@ declare module "@asyncapi/parser" {
      */
     class Operation extends OperationTraitable {
         hasMultipleMessages(): boolean;
+        traits(): OperationTrait[];
+        hasTraits(): boolean;
         messages(): Message[];
         message(): Message;
     }
@@ -792,9 +851,14 @@ declare module "@asyncapi/parser" {
     interface Schema extends MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
     }
     /**
-     * Implements functions to deal with a Schema object.
+     * Instantiates a schema object
+     * @param json - Schema definition
+     * @param [options.parent] - Parent schema definition
      */
     class Schema extends Base implements MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
+        constructor(json: any, options?: {
+            parent?: Schema;
+        });
         uid(): string;
         $id(): string;
         multipleOf(): number;
@@ -852,9 +916,37 @@ declare module "@asyncapi/parser" {
         readOnly(): boolean;
         writeOnly(): boolean;
         examples(): any[];
+        isBooleanSchema(): boolean;
         isCircular(): boolean;
+        circularSchema(): Schema;
         hasCircularProps(): boolean;
         circularProps(): string[];
+        hasDescription(): boolean;
+        description(): string | null;
+        hasExternalDocs(): boolean;
+        externalDocs(): ExternalDocs | null;
+        hasExtensions(): boolean;
+        extensions(): {
+            [key: string]: any;
+        };
+        extensionKeys(): string[];
+        extKeys(): string[];
+        /**
+         * @param key - Extension key.
+         */
+        hasExtension(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        extension(key: string): any;
+        /**
+         * @param key - Extension key.
+         */
+        hasExt(key: string): boolean;
+        /**
+         * @param key - Extension key.
+         */
+        ext(key: string): any;
         hasDescription(): boolean;
         description(): string | null;
         hasExternalDocs(): boolean;
@@ -1064,29 +1156,33 @@ declare module "@asyncapi/parser" {
         ext(key: string): any;
     }
     /**
-     * Parses and validate an AsyncAPI document from YAML or JSON.
-     * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
-     * @param [options] - Configuration options.
-     * @param [options.path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
-     * @param [options.parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @param [options.resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @param [options.applyTraits = true] - Whether to resolve and apply traits or not.
-     * @returns The parsed AsyncAPI document.
+     * The complete list of parse configuration options used to parse the given data.
+     * @property [path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
+     * @property [parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [applyTraits] - Whether to resolve and apply traits or not. Defaults to true.
      */
-    function parse(asyncapiYAMLorJSON: string | any, options?: {
+    type ParserOptions = {
         path?: string;
         parse?: any;
         resolve?: any;
-        applyTraits?: any;
-    }): Promise<AsyncAPIDocument>;
+        applyTraits?: boolean;
+    };
+    /**
+     * Parses and validate an AsyncAPI document from YAML or JSON.
+     * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
+     * @param [options] - Configuration options object {@link ParserOptions}
+     * @returns The parsed AsyncAPI document.
+     */
+    function parse(asyncapiYAMLorJSON: string | any, options?: ParserOptions): Promise<AsyncAPIDocument>;
     /**
      * Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
      * @param url - URL where the AsyncAPI document is located.
      * @param [fetchOptions] - Configuration to pass to the {@link https://developer.mozilla.org/en-US/docs/Web/API/Request|fetch} call.
-     * @param [options] - Configuration to pass to the {@link module:Parser#parse} method.
+     * @param [options] - Configuration to pass to the {@link ParserOptions} method.
      * @returns The parsed AsyncAPI document.
      */
-    function parseFromUrl(url: string, fetchOptions?: any, options?: any): Promise<AsyncAPIDocument>;
+    function parseFromUrl(url: string, fetchOptions?: any, options?: ParserOptions): Promise<AsyncAPIDocument>;
     /**
      * Registers a new schema parser. Schema parsers are in charge of parsing and transforming payloads to AsyncAPI Schema format.
      * @param parserModule - The schema parser module containing parse() and getMimeTypes() functions.

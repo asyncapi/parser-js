@@ -129,7 +129,8 @@
       "profile": "https://github.com/KhudaDad414",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "test"
       ]
     },
     {
@@ -158,6 +159,25 @@
       "profile": "https://github.com/vishesh13byte",
       "contributions": [
         "test"
+      ]
+    },
+    {
+      "login": "iamdevelopergirl",
+      "name": "Elakya",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16351809?v=4",
+      "profile": "https://iamdevelopergirl.github.io/Website-With-Animations/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dschwank",
+      "name": "Dominik Schwank",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8232196?v=4",
+      "profile": "https://schwank.cc",
+      "contributions": [
+        "bug",
+        "code"
       ]
     }
   ],

@@ -592,8 +592,7 @@ describe('parse()', function() {
       'testSchema',
       'testString'
     ]);
-  });
-
+  }); 
   it('should properly mark circular references', async function() {
     const result = await parser.parse(inputYAMLCircular, { path: __filename });
 
@@ -609,7 +608,7 @@ describe('parse()', function() {
     expect(result.components().schema('RecursiveSelf').properties()['selfObjectChildren'].properties()['test'].isCircular()).to.equal(true);
     expect(result.components().schema('NonRecursive').properties()['child'].isCircular()).to.equal(false);
 
-    // NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC.
+    // NormalSchemaB is referred twice, from NormalSchemaA and NormalSchemaC. 
     // If seenObjects array is not handled properly, once NormalSchemaB is seen for a second time while traversing NormalSchemaC, then NormalSchemaC is marked as object holding circular refs
     // This is why it is important to check that NormalSchemaC is or sure not marked as circular
     expect(result.components().schema('NormalSchemaC').isCircular()).to.equal(false);
@@ -623,6 +622,7 @@ describe('parse()', function() {
     expect(result.components().schema('OneOf').properties()['kind'].isCircular()).to.equal(false);
     expect(result.components().schema('OneOf').properties()['kind'].oneOf()[0].isCircular()).to.equal(true);
 
+  
     // AnyOf has circular reference
     expect(result.components().schema('AnyOf').anyOf()[5].isCircular()).to.equal(false);
     expect(result.components().schema('AnyOf').anyOf()[5].items().isCircular()).to.equal(true);
@@ -861,28 +861,6 @@ it('should apply `x-parser-spec-parsed` extension', async function() {
   await expect(parsedSpec.json()[String(xParserSpecParsed)]).to.equal(true);
 });
 
-it('should throw schema-parser-not-registered error on unrecognized schema', async function() {
-  const notRegisteredFormatFile = fs.readFileSync(path.resolve(__dirname, './wrong/unknown-schema-format.yaml'), 'utf8');
-  const errorObject = {
-    type: 'https://github.com/asyncapi/parser-js/schema-parser-not-registered',
-    title: 'The file does not correspond to a supported schema format',
-    detail: 'The following message payload "/channels/mychannel/publish/message/payload" has "UnknownSchemaFormat" schema format which isn\'t supported by parser instance. Add a missed format parser through the "registerSchemaParser" function.',
-    validationErrors: [
-      {
-        title: '/channels/mychannel/publish/message/payload unsupported format in message: UnknownSchemaFormat',
-        location: {
-          jsonPointer: '//channels/mychannel/publish/message/payload//channels/mychannel/publish/message/payload'
-        }
-      }
-    ],
-    message: 'The file does not correspond to a supported schema format'
-  };
-  await checkErrorWrapper(
-    async () => {
-      await parser.parse(notRegisteredFormatFile, {path: __filename});
-    },errorObject
-  );
-});
 
 it('should parse and include examples', async function() {
   let result = await parser.parse(fs.readFileSync(path.resolve(__dirname, './good/asyncapi-messages-example.yml'), 'utf8'), { path: __filename });

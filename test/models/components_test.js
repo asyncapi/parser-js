@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const { it } = require('mocha');
 
 const Components = require('../../lib/models/components');
 
@@ -467,6 +468,57 @@ describe('Components', function() {
   describe('#mixins', function() {
     it('model should inherit from mixins', function() {
       assertMixinSpecificationExtensionsInheritance(Components);
+    });
+  });
+
+  describe('#serverVariables()', function() {
+    it('should return a map of ServerVariable objects', function() {
+      const doc = { serverVariables: { test1: {test: 'test1'}, test2: {test: 'test2'} } };
+      const d = new Components(doc);
+      expect(typeof d.serverVariables()).to.be.equal('object');
+      expect(d.serverVariables().test1.constructor.name).to.equal('ServerVariable');
+      expect(d.serverVariables().test1.json()).to.equal(doc.serverVariables.test1);
+      expect(d.serverVariables().test2.constructor.name).to.equal('ServerVariable');
+      expect(d.serverVariables().test2.json()).to.equal(doc.serverVariables.test2);
+    });
+
+    it('should return an empty object if the components field has no defined serverVariables', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.serverVariables()).to.be.equal('object');
+      expect(d.serverVariables()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasServerVariables()', function() {
+    it('should return a boolean indicating if the components field has serverVariables', function() {
+      const doc = { serverVariables: { test1: {test: 'test1'}, test2: {test: 'test2'} } };
+      const docNoSchemas = { servers: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoSchemas);
+      expect(d.hasServerVariables()).to.equal(true);
+      expect(d2.hasServerVariables()).to.equal(false);
+    });
+  });
+
+  describe('#serverVariable()', function() {
+    it('should return a specific serverVariable object', function() {
+      const doc = { serverVariables: { test1: {test: 'test1'}, test2: {test: 'test2'} } };
+      const d = new Components(doc);
+      expect(d.serverVariable('test1').constructor.name).to.equal('ServerVariable');
+      expect(d.serverVariable('test1').json()).to.equal(doc.serverVariables.test1);
+    });
+
+    it('should return null if a serverVariable name is not provided', function() {
+      const doc = { serverVariables: { test1: {test: 'test1'}, test2: {test: 'test2'} } };
+      const d = new Components(doc);
+      expect(d.serverVariable()).to.equal(null);
+    });
+
+    it('should return null if a serverVariable name is not found', function() {
+      const doc = { serverVariables: { test1: {test: 'test1'}, test2: {test: 'test2'} } };
+      const d = new Components(doc);
+      expect(d.serverVariable('not found')).to.equal(null);
     });
   });
 });

@@ -112,9 +112,25 @@ Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/ra
 
 ## API documentation
 
-The parser API is generally structured the same way as the AsyncAPI specification, with additional support functions such as `has<Something>()`. The parser uses wrapped functions to get the properties stored in JSON. This means in order to get the info object you would use the function `doc.info()` and to get the title inside the info object you call `doc.info().title()`.
+Parser-JS API implements a global API definition for all AsyncAPI parser implementations known as the [Parser-API](https://github.com/asyncapi/parser-api). 
+This API is designed having in mind developer experience and resiliency to breaking changes. 
 
-See [API documentation](/API.md) for more example and full API reference information.
+The following table shows a compatibility matrix between this parser, and the [Parser-API](https://github.com/asyncapi/parser-api), as well as the AsyncAPI spec version supported by each release of this parser.
+
+Parser-JS | Parser-API                                                           | Spec 2.x | Spec 3.x
+----------|----------------------------------------------------------------------|----------|---------
+1.x       |                                                                      | ✓        |  
+2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) |          | ✓
+
+- `✓` Fully supported version.
+- `-` The AsyncAPI Spec version has features the Parser-JS can't use but the rest are fully supported.
+- Empty means not supported version.
+
+Additionally to all the methods declared in the [Parser-API](https://github.com/asyncapi/parser-api), this parser might introduce some helper functions.
+
+Direct access to the parsed JSON document is always available through the `doc.raw()` method.
+
+See [API documentation](/docs/api/v2.md) for more example and full API reference information.
 
 ## Using in the browser
 
@@ -197,7 +213,7 @@ This package throws a bunch of different error types. All errors contain a `type
 |`schema-validation-errors`| `parsedJSON`, `validationErrors` | Schema of the payload provided in the AsyncAPI document is not valid with AsyncAPI schema format.
 |`fetch-url-error`| None | The URL provided for fetching AsynAPI document is invalid.
 
-For more information about the `ParserError` class, [check out the documentation](./API.md#new_ParserError_new).
+For more information about the `ParserError` class, [check out the documentation](./docs/api/v1.md#new_ParserError_new).
 
 ## Custom extensions
 

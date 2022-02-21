@@ -631,6 +631,14 @@ declare module "@asyncapi/parser" {
      * Implements functions to deal with a Components object.
      */
     class Components extends Base implements MixinSpecificationExtensions {
+        channels(): {
+            [key: string]: Channel;
+        };
+        hasChannels(): boolean;
+        /**
+         * @param name - Name of the channel.
+         */
+        channel(name: string): Channel;
         messages(): {
             [key: string]: Message;
         };
@@ -655,6 +663,14 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the security schema.
          */
         securityScheme(name: string): SecurityScheme;
+        servers(): {
+            [key: string]: Server;
+        };
+        hasServers(): boolean;
+        /**
+         * @param name - Name of the server.
+         */
+        server(name: string): Server;
         parameters(): {
             [key: string]: ChannelParameter;
         };

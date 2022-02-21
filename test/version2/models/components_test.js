@@ -5,6 +5,57 @@ const Components = require('../../../lib/version2/models/components');
 const { assertMixinSpecificationExtensionsInheritance } = require('./mixins/specification-extensions_test');
 
 describe('Components', function() {
+  describe('#channels()', function() {
+    it('should return a map of Channel objects', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const d = new Components(doc);
+      expect(typeof d.channels()).to.be.equal('object');
+      expect(d.channels().test1.constructor.name).to.equal('Channel');
+      expect(d.channels().test1.json()).to.equal(doc.channels.test1);
+      expect(d.channels().test2.constructor.name).to.equal('Channel');
+      expect(d.channels().test2.json()).to.equal(doc.channels.test2);
+    });
+
+    it('should return an empty object if the components field has no defined channels', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.channels()).to.be.equal('object');
+      expect(d.channels()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasChannels()', function() {
+    it('should return a boolean indicating if the components field has channels', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const docNoChannels = { schemas: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoChannels);
+      expect(d.hasChannels()).to.equal(true);
+      expect(d2.hasChannels()).to.equal(false);
+    });
+  });
+  
+  describe('#channel()', function() {
+    it('should return a specific Channel object', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const d = new Components(doc);
+      expect(d.channel('test1').constructor.name).to.equal('Channel');
+      expect(d.channel('test1').json()).to.equal(doc.channels.test1);
+    });
+    
+    it('should return null if a channel name is not provided', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const d = new Components(doc);
+      expect(d.channel()).to.equal(null);
+    });
+    
+    it('should return null if a channel name is not found', function() {
+      const doc = { channels: { test1: { description: 'test1' }, test2: { description: 'test2' } } };
+      const d = new Components(doc);
+      expect(d.channel('not found')).to.equal(null);
+    });
+  });
+
   describe('#messages()', function() {
     it('should return a map of Message objects', function() {
       const doc = { messages: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
@@ -155,6 +206,57 @@ describe('Components', function() {
       const doc = { securitySchemes: { test1: { test: 'test1' }, test2: { test: 'test2' } } };
       const d = new Components(doc);
       expect(d.securityScheme('not found')).to.equal(null);
+    });
+  });
+
+  describe('#servers()', function() {
+    it('should return a map of Server objects', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const d = new Components(doc);
+      expect(typeof d.servers()).to.be.equal('object');
+      expect(d.servers().test1.constructor.name).to.equal('Server');
+      expect(d.servers().test1.json()).to.equal(doc.servers.test1);
+      expect(d.servers().test2.constructor.name).to.equal('Server');
+      expect(d.servers().test2.json()).to.equal(doc.servers.test2);
+    });
+
+    it('should return an empty object if the components field has no defined servers', function() {
+      const doc = {};
+      const d = new Components(doc);
+      expect(typeof d.servers()).to.be.equal('object');
+      expect(d.servers()).to.deep.equal({});
+    });
+  });
+
+  describe('#hasServers()', function() {
+    it('should return a boolean indicating if the components field has servers', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const docNoServers = { schemas: {} };
+      const d = new Components(doc);
+      const d2 = new Components(docNoServers);
+      expect(d.hasServers()).to.equal(true);
+      expect(d2.hasServers()).to.equal(false);
+    });
+  });
+  
+  describe('#server()', function() {
+    it('should return a specific Server object', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const d = new Components(doc);
+      expect(d.server('test1').constructor.name).to.equal('Server');
+      expect(d.server('test1').json()).to.equal(doc.servers.test1);
+    });
+    
+    it('should return null if a message name is not provided', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const d = new Components(doc);
+      expect(d.server()).to.equal(null);
+    });
+    
+    it('should return null if a message name is not found', function() {
+      const doc = { servers: { test1: { url: 'test1' }, test2: { url: 'test2' } } };
+      const d = new Components(doc);
+      expect(d.server('not found')).to.equal(null);
     });
   });
   

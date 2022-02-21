@@ -1,5 +1,4 @@
 const { expect } = require('chai');
-const { it } = require('mocha');
 
 const Components = require('../../lib/models/components');
 

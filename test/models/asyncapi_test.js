@@ -94,118 +94,6 @@ describe('IntentAsyncAPIDocument', function() {
       });
     });
   });
-  describe('#applicationPublishableChannels()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.applicationPublishableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(1);
-      });
-      it('should find no related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.applicationPublishableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(0);
-      });
-    });
-  });
-
-  describe('#applicationSubscribableChannels()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.applicationSubscribableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(1);
-      });
-      it('should find no related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.applicationSubscribableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(0);
-      });
-    });
-  });
-
-  describe('#clientPublishableChannels()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.clientPublishableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(1);
-      });
-      it('should find no related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.clientPublishableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(0);
-      });
-    });
-  });
-  describe('#clientSubscribableChannels()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.clientSubscribableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(1);
-      });
-      it('should find no related channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: {} } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const channels = intent.clientSubscribableChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(0);
-      });
-    });
-  });
-  describe('#hasChannels()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const hasCheck = intent.hasChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(hasCheck).to.be.equal(true);
-      });
-      it('should find no channels', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const hasCheck = intent.hasChannels();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(hasCheck).to.be.equal(false);
-      });
-    });
-  });
 
   describe('#channels()', function() {
     describe('for AsyncAPI version 2', function() {
@@ -216,7 +104,8 @@ describe('IntentAsyncAPIDocument', function() {
         const intent = new IntentAsyncAPIDocument(document);
         const channels = intent.channels();
         expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(1);
+        expect(channels.constructor.name).to.equal('IntentChannels');
+        expect(channels.all().length).to.be.equal(1);
       });
       it('should find no channels', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -225,97 +114,8 @@ describe('IntentAsyncAPIDocument', function() {
         const intent = new IntentAsyncAPIDocument(document);
         const channels = intent.channels();
         expect(version2CheckStub.called).to.equal(true);
-        expect(channels.length).to.be.equal(0);
-      });
-    });
-  });
-
-  describe('#applicationPublishableMessages()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.applicationPublishableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(1);
-      });
-      it('should find no messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.applicationPublishableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(0);
-      });
-    });
-  });
-  describe('#applicationSubscribableMessages()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.applicationSubscribableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(1);
-      });
-      it('should find no messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.applicationSubscribableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(0);
-      });
-    });
-  });
-  describe('#clientPublishableMessages()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.clientPublishableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(1);
-      });
-      it('should find no messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.clientPublishableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(0);
-      });
-    });
-  });
-
-  describe('#clientSubscribableMessages()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.clientSubscribableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(1);
-      });
-      it('should find no messages', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const messages = intent.clientSubscribableMessages();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(0);
+        expect(channels.constructor.name).to.equal('IntentChannels');
+        expect(channels.all().length).to.be.equal(0);
       });
     });
   });
@@ -329,7 +129,8 @@ describe('IntentAsyncAPIDocument', function() {
         const intent = new IntentAsyncAPIDocument(document);
         const messages = intent.messages();
         expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(2);
+        expect(messages.constructor.name).to.equal('IntentMessages');
+        expect(messages.all().length).to.be.equal(2);
       });
       it('should find no messages', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -338,99 +139,38 @@ describe('IntentAsyncAPIDocument', function() {
         const intent = new IntentAsyncAPIDocument(document);
         const messages = intent.messages();
         expect(version2CheckStub.called).to.equal(true);
-        expect(messages.length).to.be.equal(0);
+        expect(messages.constructor.name).to.equal('IntentMessages');
+        expect(messages.all().length).to.be.equal(0);
       });
     });
   });
 
-  describe('#applicationPublishOperations()', function() {
+  describe('#operations()', function() {
     describe('for AsyncAPI version 2', function() {
       it('should find operations', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
         const json = { channels: { test: { subscribe: { message: { } } } } };
         const document = new AsyncAPIVersion2Document(json);
         const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.applicationPublishOperations();
+        const operations = intent.operations();
         expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(1);
+        expect(operations.constructor.name).to.equal('IntentOperations');
+        console.log('OPERATIONS!!!!!!!!!!:', operations.all());
+        expect(operations.all().length).to.be.equal(1);
       });
       it('should find no operations', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
+        const json = { };
         const document = new AsyncAPIVersion2Document(json);
         const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.applicationPublishOperations();
+        const operations = intent.operations();
         expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(0);
+        expect(operations.constructor.name).to.equal('IntentOperations');
+        expect(operations.all().length).to.be.equal(0);
       });
     });
   });
-  describe('#applicationSubscribeOperations()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find operations', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.applicationSubscribeOperations();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(1);
-      });
-      it('should find no operations', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.applicationSubscribeOperations();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(0);
-      });
-    });
-  });
-  describe('#clientPublishOperations()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find operations', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.clientPublishOperations();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(1);
-      });
-      it('should find no operations', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.clientPublishOperations();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(0);
-      });
-    });
-  });
-  describe('#clientSubscribeOperations()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find operations', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { subscribe: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.clientSubscribeOperations();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(1);
-      });
-      it('should find no operations', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { channels: { test: { publish: { message: { } } } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const operations = intent.clientSubscribeOperations();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(operations.length).to.be.equal(0);
-      });
-    });
-  });
+
   describe('#hasServers()', function() {
     describe('for AsyncAPI version 2', function() {
       it('should find servers', function() {

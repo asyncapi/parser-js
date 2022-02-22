@@ -155,7 +155,6 @@ describe('IntentAsyncAPIDocument', function() {
         const operations = intent.operations();
         expect(version2CheckStub.called).to.equal(true);
         expect(operations.constructor.name).to.equal('IntentOperations');
-        console.log('OPERATIONS!!!!!!!!!!:', operations.all());
         expect(operations.all().length).to.be.equal(1);
       });
       it('should find no operations', function() {
@@ -202,7 +201,8 @@ describe('IntentAsyncAPIDocument', function() {
         const intent = new IntentAsyncAPIDocument(document);
         const servers = intent.servers();
         expect(version2CheckStub.called).to.equal(true);
-        expect(servers.length).to.equal(1);
+        expect(servers.constructor.name).to.equal('IntentServers');
+        expect(servers.all().length).to.be.equal(1);
       });
       it('should find no server', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -211,29 +211,8 @@ describe('IntentAsyncAPIDocument', function() {
         const intent = new IntentAsyncAPIDocument(document);
         const servers = intent.servers();
         expect(version2CheckStub.called).to.equal(true);
-        expect(servers.length).to.equal(0);
-      });
-    });
-  });
-  describe('#server(server_name)', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find server', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { servers: { test: { } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const server = intent.server('test');
-        expect(version2CheckStub.called).to.equal(true);
-        expect(server).to.not.equal(undefined);
-      });
-      it('should find no server', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { servers: { } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const server = intent.server('test');
-        expect(version2CheckStub.called).to.equal(true);
-        expect(server).to.be.equal(undefined);
+        expect(servers.constructor.name).to.equal('IntentServers');
+        expect(servers.all().length).to.equal(0);
       });
     });
   });

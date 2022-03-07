@@ -106,6 +106,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(channels.constructor.name).to.equal('IntentChannels');
         expect(channels.all().length).to.be.equal(1);
+        expect(channels.isEmpty()).to.equal(false);
       });
       it('should find no channels', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -116,6 +117,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(channels.constructor.name).to.equal('IntentChannels');
         expect(channels.all().length).to.be.equal(0);
+        expect(channels.isEmpty()).to.equal(true);
       });
     });
   });
@@ -131,6 +133,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(messages.constructor.name).to.equal('IntentMessages');
         expect(messages.all().length).to.be.equal(2);
+        expect(messages.isEmpty()).to.equal(false);
       });
       it('should find no messages', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -141,6 +144,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(messages.constructor.name).to.equal('IntentMessages');
         expect(messages.all().length).to.be.equal(0);
+        expect(messages.isEmpty()).to.equal(true);
       });
     });
   });
@@ -156,6 +160,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(operations.constructor.name).to.equal('IntentOperations');
         expect(operations.all().length).to.be.equal(1);
+        expect(operations.isEmpty()).to.equal(false);
       });
       it('should find no operations', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -166,32 +171,11 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(operations.constructor.name).to.equal('IntentOperations');
         expect(operations.all().length).to.be.equal(0);
+        expect(operations.isEmpty()).to.equal(true);
       });
     });
   });
 
-  describe('#hasServers()', function() {
-    describe('for AsyncAPI version 2', function() {
-      it('should find servers', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { servers: { test: { } } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const hasCheck = intent.hasServers();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(hasCheck).to.be.equal(true);
-      });
-      it('should find no servers', function() {
-        const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
-        const json = { servers: { } };
-        const document = new AsyncAPIVersion2Document(json);
-        const intent = new IntentAsyncAPIDocument(document);
-        const hasCheck = intent.hasServers();
-        expect(version2CheckStub.called).to.equal(true);
-        expect(hasCheck).to.be.equal(false);
-      });
-    });
-  });
   describe('#servers', function() {
     describe('for AsyncAPI version 2', function() {
       it('should find servers', function() {
@@ -203,6 +187,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(servers.constructor.name).to.equal('IntentServers');
         expect(servers.all().length).to.be.equal(1);
+        expect(servers.isEmpty()).to.equal(false);
       });
       it('should find no server', function() {
         const version2CheckStub = sinon.stub(utils, 'isVersion2').returns(true);
@@ -213,6 +198,7 @@ describe('IntentAsyncAPIDocument', function() {
         expect(version2CheckStub.called).to.equal(true);
         expect(servers.constructor.name).to.equal('IntentServers');
         expect(servers.all().length).to.equal(0);
+        expect(servers.isEmpty()).to.equal(true);
       });
     });
   });

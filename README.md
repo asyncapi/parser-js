@@ -38,64 +38,20 @@
 
 ## Install
 
-```
-npm install @asyncapi/parser
-```
-The parser by default supports AsyncAPI Schema Format and JSON Schema Format. For additional formats, you need to install additional plugins. For example:
-- Avro schema
-  ```
-  npm install @asyncapi/avro-schema-parser
-  ```
-- OpenAPI Schema Object
-  ```
-  npm install @asyncapi/openapi-schema-parser
-  ```
-- RAML data type
-  ```
-  npm install @asyncapi/raml-dt-schema-parser
-  ```
+TBD
 
 ## Examples 
 
 ### Example passing inline AsyncAPI
 
 ```js
-const parser = require('@asyncapi/parser');
-
-const doc = await parser.parse(`
-  asyncapi: '2.1.0'
-  info:
-    title: Example
-    version: '0.1.0'
-  channels:
-    example-channel:
-      subscribe:
-        message:
-          payload:
-            type: object
-            properties:
-              exampleField:
-                type: string
-              exampleNumber:
-                type: number
-              exampleDate:
-                type: string
-                format: date-time
-`);
-
-console.log(doc.info().title());
-// => Example
+// TBD
 ```
 
 ### Example passing a URL
 
 ```js
-const parser = require('@asyncapi/parser');
-
-const doc = await parser.parseFromUrl('https://my.server.com/example-asyncapi.yaml');
-
-console.log(doc.info().title());
-// => Example
+// TBD
 ```
 
 ### Example using Avro schemas
@@ -120,7 +76,7 @@ The following table shows a compatibility matrix between this parser, and the [P
 Parser-JS | Parser-API                                                           | Spec 2.x | Spec 3.x
 ----------|----------------------------------------------------------------------|----------|---------
 1.x       |                                                                      | ✓        |  
-2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) |          | ✓
+2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) | ✓        | ✓
 
 - `✓` Fully supported version.
 - `-` The AsyncAPI Spec version has features the Parser-JS can't use but the rest are fully supported.
@@ -130,34 +86,26 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 
 Direct access to the parsed JSON document is always available through the `doc.raw()` method.
 
-See [API documentation](/docs/api/v2.md) for more example and full API reference information.
+See [API documentation](/docs/api.md) for more example and full API reference information.
 
 ## Using in the browser
 
 The package contains a built-in version of the parser, which is created via [`browserify`](https://github.com/browserify/browserify). To use it, you need to import the parser into the HTML file as below:
 
 ```html
-<script src="https://unpkg.com/@asyncapi/parser@latest/dist/bundle.js"></script>
-
-<script>
-  const parser = window['AsyncAPIParser'];
-  ...
-</script>
+<! –– TBD ––> 
 ```
 
 Or, if you want to use a parser in a JS application of the SPA kind, import the parser as shown below:
 
 ```js
-import '@asyncapi/parser/dist/bundle';
-
-const parser = window['AsyncAPIParser'];
-...
+// TBD
 ```
 
 Otherwise, if your application is bundled via bundlers like `webpack`, you can import the parser like a regular package:
 
 ```js
-import parser from '@asyncapi/parser';
+// TBD
 ```
 
 ## Custom message parsers
@@ -167,99 +115,36 @@ AsyncAPI doesn't enforce one schema format for messages. You can have payload of
 1. Create custom parser module that exports two functions:
 
     ```js
-    module.exports = {
-      /*
-       * message {Object} is the object containing AsyncAPI Message property
-       * defaultSchemaFormat {String} information about the default schema format mime type
-       * schemaFormat {String} information about custom schemaFormat mime type provided in AsyncAPI Document
-       * fileFormat {String} information if provided AsyncAPI Document was JSON or YAML
-       * parsedAsyncAPIDocument {Object} Full AsyncAPI Document parsed into Object
-       * pathToPayload {String} path of the message passed to the parser, relative to the root of AsyncAPI Document
-      */
-      parse: ({ message, defaultSchemaFormat, originalAsyncAPIDocument, schemaFormat, fileFormat, parsedAsyncAPIDocument, pathToPayload }) => { /* custom parsing logic */ },
-      getMimeTypes: () => [
-        '//mime types that will be used as the `schemaFormat` property of the message to specify its mime type',
-        'application/vnd.custom.type;version=1.0.0',
-        'application/vnd.custom.type+json;version=1.0.0',
-      ]
-    }
+    // TBD
     ```
 
 2. Before parsing an AsyncAPI document with a parser, register the additional custom schema parser:
 
     ```js
-    const myCustomParser = require('mycustomParser');
-
-    parser.registerSchemaParser(myCustomParser);
+    // TBD
     ```
 
 ## Error types
 
-This package throws a bunch of different error types. All errors contain a `type` (prefixed by this repo URL) and a `title` field. The following table describes all the errors and the extra fields they include:
-
-|Type|Extra Fields|Description|
-|---|---|---|
-|`null-or-falsey-document`| None | The AsyncAPI document is null or a JS "falsey" value.
-|`invalid-document-type`| None | The AsyncAPI document is not a string nor a JS object.
-|`invalid-json`| `detail`, `location` | The AsyncAPI document is not valid JSON.
-|`invalid-yaml`| `detail`, `location` | The AsyncAPI document is not valid YAML.
-|`impossible-to-convert-to-json`|`detail`|Internally, this parser only handles JSON so it tries to immediately convert the YAML to JSON. This error means this process failed.
-|`missing-asyncapi-field`|`parsedJSON`|The AsyncAPI document doesn't have the mandatory `asyncapi` field.
-|`unsupported-version`|`detail`, `parsedJSON`, `validationErrors`|The version of the `asyncapi` field is not supported. Typically, this means that you're using a version below 2.0.0.
-|`dereference-error`|`parsedJSON`, `refs`|This means the parser tried to resolve and dereference $ref's and the process failed. Typically, this means the $ref it's pointing to doesn't exist.
-|`unexpected-error`|`parsedJSON`|We have our code covered with try/catch blocks and you should never see this error. If you see it, please open an issue to let us know.
-|`validation-errors`|`parsedJSON`, `validationErrors`|The AsyncAPI document contains errors. See `validationErrors` for more information.
-|`impossible-to-register-parser`| None | Registration of custom message parser failed.
-|`schema-validation-errors`| `parsedJSON`, `validationErrors` | Schema of the payload provided in the AsyncAPI document is not valid with AsyncAPI schema format.
-|`fetch-url-error`| None | The URL provided for fetching AsynAPI document is invalid.
-
-For more information about the `ParserError` class, [check out the documentation](./docs/api/v1.md#new_ParserError_new).
+TBD
 
 ## Custom extensions
 
-The parser uses custom extensions to define additional information about the spec. Each has a different purpose but all of them are there to make it much easier to work with the AsyncAPI document. These extensions are prefixed with `x-parser-`. The following extensions are used :
-- `x-parser-spec-parsed` is used to specify if the AsyncAPI document is already parsed by the parser. Property `x-parser-spec-parsed` is added to the root of the document with the `true` value.
-- `x-parser-message-parsed` is used to specify if the message is already parsed by the message parser. Property `x-parser-message-parsed` is added to the root of the document with the `true` value.
-- `x-parser-message-name` is used to specify the name of the message if it is not provided. For messages without names, the parser generates anonymous names. Property `x-parser-message-name` is added to a message object with a value that follows this pattern: `<anonymous-message-${number}>`. This value is returned by `message.uid()` when regular `name` property is not present.
-- `x-parser-schema-id` is used to specify the ID of the schema if it is not provided. For schemas without IDs, the parser generates anonymous names. Property `x-parser-schema-id` is added to every object of a schema with a value that follows this pattern: `<anonymous-schema-${number}>`. This value is returned by `schema.uid()` when regular `$id` property is not present.
-- `x-parser-original-traits` is where traits are stored after they are applied on the AsyncAPI document. The reason is because the original `traits` property is removed.
-- `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
-- `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
-- [`x-parser-circular`](#circular-references)
+TBD
 
 > **NOTE**: All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
 
 ## Circular references
 
-Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
-- `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. Tooling developer that doesn't want to support circular references can use the `hasCircular()` function to check the document and provide a proper message to the user.
-- `isCircular()` function is added to the [Schema Model](./lib/models/schema.js) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
+TBD
 
 ## Stringify
 
-Converting a parsed document to a string may be necessary when saving the parsed document to a database, or similar situations where you need to parse the document just once and then reuse it.
-
-For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the static `AsyncAPIDocument.stringify(...parsedDoc)` method. This method differs from the native `JSON.stringify(...json)` implementation, in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path with a `$ref:` prefix:
-
-```json
-{
-  "foo": "$ref:$.some.path.to.the.bar"
-}
-```
-		
-To parse a stringified document into an AsyncAPIDocument instance, you must use the static `AsyncAPIDocument.parse(...stringifiedDoc)` method. It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path, with an `$ref:` prefix to the original objects.
-
-A few advantages of this solution:
-- The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
-- All circular references are preserved.
+TBD
 
 ## Develop
 
-1. Write code and tests.
-1. Make sure all tests pass `npm test`
-1. Make sure code is well formatted and secure `npm run lint`
-
-Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
+TBD
 
 ## Contributing
 

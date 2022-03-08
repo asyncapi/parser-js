@@ -1,0 +1,20 @@
+import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
+import type { BaseModel } from './models';
+import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from './types';
+export declare function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI;
+export declare function getSemver(version: string): AsyncAPISemver;
+export declare function normalizeInput(asyncapi: string | MaybeAsyncAPI): string;
+export declare function unfreezeObject(data: unknown): any;
+export declare function hasErrorDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean;
+export declare function hasWarningDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean;
+export declare function hasInfoDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean;
+export declare function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean;
+export declare function setExtension(id: string, value: any, model: BaseModel): void;
+export declare function mergePatch<T = any>(origin: unknown, patch: unknown): T;
+export declare function isObject(value: unknown): value is Record<string, any>;
+export declare function hasRef(value: unknown): value is {
+    $ref: string;
+};
+export declare function tilde(str: string): string;
+export declare function untilde(str: string): string;
+export declare function retrievePossibleRef(data: any, pathOfData: string, spec?: any): any;

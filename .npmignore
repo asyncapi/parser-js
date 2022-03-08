@@ -5,3 +5,5 @@
 .editorconfig
 assets/logo.png
 vscode
+coverage
+node_modules

@@ -1,26 +1,13 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.14.1",
+  "version": "2.0.0",
   "description": "JavaScript AsyncAPI parser.",
-  "main": "lib/index.js",
-  "types": "types.d.ts",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "npm run test:browser:cleanup && npm run test:lib && npm run test:parseFromUrl && npm run cover:report && npm run test:browser",
-    "bundle": "browserify \"lib/browser.js\" | uglifyjs > \"dist/bundle.js\"",
     "docs": "jsdoc2md \"lib/parser.js\" -f \"lib/**/*.js\" > docs/api/v2.md",
-    "types": "jsdoc -t \"node_modules/tsd-jsdoc/dist\" -r lib -d \"./\" && node \"./scripts/fix-ts-types.js\"",
     "prepublishOnly": "npm run bundle && npm run docs && npm run types",
     "release": "semantic-release",
     "lint": "eslint --max-warnings 0 --config \".eslintrc\" \".\"",
     "lint:fix": "eslint --max-warnings 0 --config \".eslintrc\" \".\" --fix",
-    "test:lib": "nyc --silent --no-clean mocha --exclude \"test/browser_test.js\" --exclude \"test/parseFromUrl_test.js\" --recursive",
-    "test:parseFromUrl": "nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",
-    "cover:report": "nyc report --reporter=text --reporter=html",
-    "test:browser": "npm run test:browser:cleanup && npm run bundle && shx cp \"dist/bundle.js\" \"test/sample_browser/\"  && start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha --timeout 20000 test/browser_test.js\" && npm run test:browser:cleanup",
-    "test:browser:cleanup": "rimraf \"test/sample_browser/bundle.js\"",
     "generate:readme:toc": "markdown-toc -i \"README.md\"",
     "generate:assets": "npm run docs && npm run generate:readme:toc && npm run types && npm run bundle",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
@@ -32,7 +19,6 @@
     "type": "git",
     "url": "git://github.com/asyncapi/parser-js.git"
   },
-  "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "publishConfig": {
     "access": "public"
   },
@@ -43,46 +29,13 @@
     "@semantic-release/github": "7.2.3",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
-    "browserify": "^16.3.0",
-    "browserify-shim": "^3.8.14",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
     "conventional-changelog-conventionalcommits": "^4.2.3",
     "eslint": "^7.27.0",
     "eslint-plugin-mocha": "^7.0.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "http-server": "^0.12.3",
-    "jsdoc-to-markdown": "^5.0.0",
     "markdown-toc": "^1.2.0",
-    "mocha": "^6.1.4",
-    "nyc": "^15.1.0",
-    "puppeteer": "^7.0.1",
-    "rimraf": "^3.0.2",
-    "semantic-release": "17.4.3",
-    "shx": "^0.3.3",
-    "start-server-and-test": "^1.11.3",
-    "tsd-jsdoc": "^2.5.0",
-    "uglify-es": "^3.3.9"
-  },
-  "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "^2.13.0",
-    "@fmvilas/pseudo-yaml-ast": "^0.3.1",
-    "ajv": "^6.10.1",
-    "js-yaml": "^3.13.1",
-    "json-to-ast": "^2.1.0",
-    "lodash.clonedeep": "^4.5.0",
-    "node-fetch": "^2.6.0",
-    "tiny-merge-patch": "^0.1.2"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browserify-shim": {
-    "node-fetch": "global:fetch"
+    "semantic-release": "17.4.3"
   },
   "release": {
     "branches": [
@@ -121,12 +74,6 @@
           ]
         }
       ]
-    ]
-  },
-  "nyc": {
-    "exclude": [
-      "dist/bundle.js",
-      "test/**/*.js"
     ]
   }
 }

@@ -1,6 +1,3 @@
 node_modules
 .vscode
-.nyc_output
-coverage
 .DS_Store
-test/sample_browser/bundle.js

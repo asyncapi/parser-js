@@ -1,11 +1,7 @@
-test/
 .DS_Store
 *.swp
 .github
 .all-contributorsrc
 .editorconfig
-coverage
-.nyc_output
 assets/logo.png
-scripts
 vscode

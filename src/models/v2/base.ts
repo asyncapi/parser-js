@@ -1,4 +1,4 @@
-export class BaseModel {
+export class V2BaseModel {
   constructor(
     private readonly _json: Record<string, any>,
   ) {}

@@ -1,5 +1,5 @@
-import { AsyncAPIDocument } from '../../src/models/asyncapi';
-import { Info } from '../../src/models/info';
+import { AsyncAPIDocument } from '../../src/models/v2/asyncapi';
+import { Info } from '../../src/models/v2/info';
 
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {

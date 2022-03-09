@@ -1,12 +1,6 @@
-import { BaseModel } from "./base";
-import { Info } from "./info";
+import { InfoInterface } from "./info";
 
-export class AsyncAPIDocument extends BaseModel {
-    version(): string {
-        return this.json("asyncapi");
-    }
-
-    info(): Info {
-        return new Info(this.json("info"));
-    }
+export interface AsyncAPIDocumentInterface {
+    version(): string;
+    info(): InfoInterface
 }

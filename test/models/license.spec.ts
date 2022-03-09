@@ -1,4 +1,4 @@
-import { License } from '../../src/models/license';
+import { License } from '../../src/models/v2/license';
 
 describe('License model', function() {
   describe('.name()', function() {

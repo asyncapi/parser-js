@@ -1,4 +1,4 @@
-import { Contact } from '../../src/models/contact';
+import { Contact } from '../../src/models/v2/contact';
 
 describe('Contact model', function() {
   describe('.name()', function() {

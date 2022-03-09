@@ -1,4 +1,4 @@
-import { BaseModel } from '../../src/models/base';
+import { BaseModel } from '../../src/models/v2/base';
 
 describe('Base model', function() {
   describe('.json()', function() {

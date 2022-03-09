@@ -7,7 +7,6 @@ export class AsyncAPIDocument extends BaseModel {
     }
 
     info(): Info {
-        const doc = this.json("info");
-        return doc && new Info(doc);
+        return new Info(this.json("info"));
     }
 }

@@ -1,6 +1,6 @@
 import { DiagnosticSeverity } from '@stoplight/types';
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
-import { newAsyncAPIDocument, BaseModel, V2AsyncAPIDocument } from '../src/models';
+import { newAsyncAPIDocument, BaseModel, AsyncAPIDocumentV2 } from '../src/models';
 import { 
   toAsyncAPIDocument, 
   isAsyncAPIDocument, 
@@ -31,15 +31,15 @@ describe('utils', function() {
     });
 
     it('AsyncAPIDocument instance should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toBeInstanceOf(V2AsyncAPIDocument);
+      expect(toAsyncAPIDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
     it('parsed document should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true })).toBeInstanceOf(V2AsyncAPIDocument);
+      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true })).toBeInstanceOf(AsyncAPIDocumentV2);
     });
     
     it('stringified document should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toBeInstanceOf(V2AsyncAPIDocument);
+      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
     it('stringified document (with missed parsed extension) should not return AsyncAPIDocument instance', function() {

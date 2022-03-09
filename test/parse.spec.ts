@@ -1,4 +1,4 @@
-import { V2AsyncAPIDocument } from '../src/models';
+import { AsyncAPIDocumentV2 } from '../src/models';
 import { parse } from '../src/parse';
 
 describe('parse()', function() {
@@ -13,7 +13,7 @@ describe('parse()', function() {
     }
     const { parsed, diagnostics } = await parse(document);
     
-    expect(parsed).toBeInstanceOf(V2AsyncAPIDocument);
+    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
   });
 

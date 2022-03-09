@@ -1,5 +1,5 @@
 import { DiagnosticSeverity } from '@stoplight/types';
-import { newAsyncAPIDocument, AsyncAPIDocumentInterface, V2AsyncAPIDocument, V3AsyncAPIDocument } from './models';
+import { newAsyncAPIDocument, AsyncAPIDocumentInterface, AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from './models';
 import { unstringify } from './stringify';
 
 import { 
@@ -21,7 +21,7 @@ export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface
 }
 
 export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {
-  return maybeDoc instanceof V2AsyncAPIDocument || maybeDoc instanceof V3AsyncAPIDocument;
+  return maybeDoc instanceof AsyncAPIDocumentV2 || maybeDoc instanceof AsyncAPIDocumentV3;
 }
 
 export function isParsedDocument(maybeDoc: unknown): maybeDoc is Record<string, unknown> {

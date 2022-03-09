@@ -1,7 +1,7 @@
 import { InfoInterface } from "./info";
 import { BaseModel } from "./base";
-import { V2AsyncAPIDocument } from "./v2";
-import { V3AsyncAPIDocument } from "./v3";
+import { AsyncAPIDocumentV2 } from "./v2";
+import { AsyncAPIDocumentV3 } from "./v3";
 
 export interface AsyncAPIDocumentInterface extends BaseModel {
     version(): string;
@@ -17,9 +17,9 @@ export function newAsyncAPIDocument(json: Record<string, any>): AsyncAPIDocument
     const major = version.split(".")[0];
     switch (major) {
         case '2':
-            return new V2AsyncAPIDocument(json);
+            return new AsyncAPIDocumentV2(json);
         case '3':
-            return new V3AsyncAPIDocument(json);
+            return new AsyncAPIDocumentV3(json);
         default:
             throw new Error(`Unsupported version: ${version}`);
     }

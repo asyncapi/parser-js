@@ -1,9 +1,9 @@
-import { InfoInterface } from "models/info";
+import { InfoInterface } from "../../models/info";
 import { BaseModel } from "../base";
-import { V2Contact } from "./contact";
-import { V2License } from "./license";
+import { ContactV2 } from "./contact";
+import { LicenseV2 } from "./license";
 
-export class V2Info extends BaseModel implements InfoInterface {
+export class InfoV2 extends BaseModel implements InfoInterface {
     title(): string {
         return this.json("title");
     }
@@ -20,13 +20,13 @@ export class V2Info extends BaseModel implements InfoInterface {
         return this.json("termsOfService");
     }
 
-    contact(): V2Contact | undefined {
+    contact(): ContactV2 | undefined {
         const doc = this.json("contact");
-        return doc && new V2Contact(doc);
+        return doc && new ContactV2(doc);
     }
 
-    license(): V2License | undefined {
+    license(): LicenseV2 | undefined {
         const doc = this.json("license");
-        return doc &&  new V2License(doc);
+        return doc &&  new LicenseV2(doc);
     }
 }

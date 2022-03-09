@@ -3,8 +3,8 @@ export class BaseModel {
     private readonly _json: Record<string, any>,
   ) {}
 
-  json<T = Record<string, unknown>>(): T;
-  json<T = unknown>(key: string | number): T;
+  json<T = Record<string, any>>(): T;
+  json<T = any>(key: string | number): T;
   json(key?: string | number) {
     if (key === undefined) return this._json;
     if (!this._json) return;

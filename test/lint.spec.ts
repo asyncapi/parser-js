@@ -1,0 +1,68 @@
+import { lint, validate } from '../src/lint';
+
+describe('lint() & validate()', function() {
+  describe('lint()', function() {
+    it('should lint invalid document', async function() {
+      const document = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+      }
+
+      const diagnostics = await lint(document);
+      if (!diagnostics) {
+        return;
+      }
+
+      expect(diagnostics.length > 0).toEqual(true);
+    });
+  });
+
+  describe('validate()', function() {
+    it('should validate invalid document', async function() {
+      const document = JSON.stringify({
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+      }, undefined, 2);
+      const { validated, diagnostics } = await validate(document);
+
+      expect(validated).toBeUndefined();
+      expect(diagnostics.length > 0).toEqual(true);
+    });
+
+    it('should validate valid document', async function() {
+      const document = JSON.stringify({
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      }, undefined, 2);
+      const { validated, diagnostics } = await validate(document);
+      
+      expect(validated).not.toBeUndefined();
+      expect(diagnostics.length > 0).toEqual(true);
+    });
+
+    it('should validate valid document - do not allow warning severity', async function() {
+      const document = JSON.stringify({
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      }, undefined, 2);
+      const { validated, diagnostics } = await validate(document, { allowedSeverity: { warning: false } });
+      
+      expect(validated).toBeUndefined();
+      expect(diagnostics.length > 0).toEqual(true);
+    });
+  });
+});

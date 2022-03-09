@@ -1,4 +1,3 @@
-import { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import { DiagnosticSeverity } from '@stoplight/types';
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
 import { AsyncAPIDocument, BaseModel } from '../src/models';
@@ -10,6 +9,8 @@ import {
   hasErrorDiagnostic,
   hasWarningDiagnostic,
 } from '../src/utils';
+
+import type { Diagnostic } from '../src/types';
 
 describe('utils', function() {
   describe('toAsyncAPIDocument()', function() {
@@ -133,7 +134,7 @@ describe('utils', function() {
   });
 
   describe('hasErrorDiagnostic()', function() {
-    const simpleDiagnostic: ISpectralDiagnostic = {
+    const simpleDiagnostic: Diagnostic = {
       code: 'test-code',
       message: 'test-message',
       range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
@@ -142,7 +143,7 @@ describe('utils', function() {
     }
 
     it('should return true when diagnostics have at least one error', function() {
-      const diagnostics: ISpectralDiagnostic[] = [
+      const diagnostics: Diagnostic[] = [
         {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Error,
@@ -157,7 +158,7 @@ describe('utils', function() {
     });
 
     it('should return false when diagnostics have no error', function() {
-      const diagnostics: ISpectralDiagnostic[] = [
+      const diagnostics: Diagnostic[] = [
         {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Warning,
@@ -173,7 +174,7 @@ describe('utils', function() {
   });
 
   describe('hasErrorDiagnostic()', function() {
-    const simpleDiagnostic: ISpectralDiagnostic = {
+    const simpleDiagnostic: Diagnostic = {
       code: 'test-code',
       message: 'test-message',
       range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
@@ -182,7 +183,7 @@ describe('utils', function() {
     }
 
     it('should return true when diagnostics have at least one warning', function() {
-      const diagnostics: ISpectralDiagnostic[] = [
+      const diagnostics: Diagnostic[] = [
         {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Error,
@@ -197,7 +198,7 @@ describe('utils', function() {
     });
 
     it('should return false when diagnostics have no warning', function() {
-      const diagnostics: ISpectralDiagnostic[] = [
+      const diagnostics: Diagnostic[] = [
         {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Error,

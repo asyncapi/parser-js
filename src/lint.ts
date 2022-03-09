@@ -1,6 +1,5 @@
 import {
   IConstructorOpts,
-  ISpectralDiagnostic,
   IRunOpts,
   Spectral,
   Ruleset,
@@ -11,7 +10,7 @@ import { asyncapi as aasRuleset } from "@stoplight/spectral-rulesets";
 import { toAsyncAPIDocument, normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from "./utils";
 
 import type { AsyncAPIDocument } from "./models/asyncapi";
-import type { ParserInput } from "./types";
+import type { ParserInput, Diagnostic } from "./types";
 
 export interface LintOptions extends IConstructorOpts, IRunOpts {
   ruleset?: RulesetDefinition | Ruleset;
@@ -25,10 +24,10 @@ export interface ValidateOptions extends LintOptions {
 
 export interface ValidateOutput {
   validated: unknown;
-  diagnostics: ISpectralDiagnostic[];
+  diagnostics: Diagnostic[];
 }
 
-export async function lint(asyncapi: ParserInput, options?: LintOptions): Promise<ISpectralDiagnostic[] | undefined> {
+export async function lint(asyncapi: ParserInput, options?: LintOptions): Promise<Diagnostic[] | undefined> {
   if (toAsyncAPIDocument(asyncapi)) {
     return;
   }

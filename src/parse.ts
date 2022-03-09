@@ -1,5 +1,5 @@
 import { AsyncAPIDocument } from "./models";
-import { hasErrorDiagnostic, normalizeInput, toAsyncAPIDocument } from "./utils";
+import { normalizeInput, toAsyncAPIDocument } from "./utils";
 import { validate } from "./lint";
 
 import type { ParserInput, ParserOutput } from './types';

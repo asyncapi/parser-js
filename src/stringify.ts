@@ -3,7 +3,11 @@ import { AsyncAPIDocument } from './models';
 import { isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './utils';
 import { xParserSpecStringified } from './constants';
 
-export function stringify(document: unknown, space?: string | number): string | undefined {
+export interface StringifyOptions {
+  space?: string | number;
+}
+
+export function stringify(document: unknown, options: StringifyOptions = {}): string | undefined {
   if (isAsyncAPIDocument(document)) {
     document = document.json();
   } else if (isParsedDocument(document)) {
@@ -18,7 +22,7 @@ export function stringify(document: unknown, space?: string | number): string | 
   return JSON.stringify({ 
     ...document as Record<string, unknown>,
     [String(xParserSpecStringified)]: true,
-  }, refReplacer(), space);
+  }, refReplacer(), options.space || 2);
 }
 
 export function unstringify(document: unknown): AsyncAPIDocument | undefined {

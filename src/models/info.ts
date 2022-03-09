@@ -19,12 +19,12 @@ export class Info extends BaseModel {
         return this.json("termsOfService");
     }
 
-    contact(): Contact {
+    contact(): Contact | undefined {
         const doc = this.json("contact");
         return doc && new Contact(doc);
     }
 
-    license(): License {
+    license(): License | undefined {
         const doc = this.json("license");
         return doc &&  new License(doc);
     }

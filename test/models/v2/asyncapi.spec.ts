@@ -1,13 +1,6 @@
-import { newAsyncAPIDocument } from '../../../src/models';
-import { V2AsyncAPIDocument } from '../../../src/models/v2/asyncapi';
-import { V2Info } from '../../../src/models/v2/info';
+import { newAsyncAPIDocument, V2AsyncAPIDocument, V2Info, V3AsyncAPIDocument } from '../../../src/models';
 
 describe('AsyncAPIDocument model', function() {
-  it('should create a valid document', function() {
-    const doc = { asyncapi: "2.0.0" };
-    const d = newAsyncAPIDocument(doc)
-    expect(d.version()).toEqual(doc.asyncapi);
-  });
   describe('.version()', function() {
     it('should return the value', function() {
       const doc = { asyncapi: "3.0.0" };
@@ -28,5 +21,24 @@ describe('AsyncAPIDocument model', function() {
       const d = new V2AsyncAPIDocument(doc);
       expect(d.info() instanceof V2Info).toBeTruthy();
     });
+  });
+});
+
+describe('AsyncAPIDocument factory', function() {
+  it('should create a valid document from v2.0.0', function() {
+    const doc = { asyncapi: "2.0.0" };
+    const d = newAsyncAPIDocument(doc)
+    expect(d.version()).toEqual(doc.asyncapi);
+    expect(d).toBeInstanceOf(V2AsyncAPIDocument);
+  });
+  it('should create a valid document from v3.0.0', function() {
+    const doc = { asyncapi: "3.0.0" };
+    const d = newAsyncAPIDocument(doc)
+    expect(d.version()).toEqual(doc.asyncapi);
+    expect(d).toBeInstanceOf(V3AsyncAPIDocument);
+  });
+  it('should fail trying to create a document from a non supported spec version', function() {
+    const doc = { asyncapi: "99.99.99" };
+    expect(() => newAsyncAPIDocument(doc)).toThrow("Unsupported version: 99.99.99");
   });
 });

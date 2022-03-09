@@ -1,9 +1,9 @@
 import { InfoInterface } from "models/info";
-import { V2BaseModel } from "./base";
+import { BaseModel } from "../base";
 import { V2Contact } from "./contact";
 import { V2License } from "./license";
 
-export class V2Info extends V2BaseModel implements InfoInterface {
+export class V2Info extends BaseModel implements InfoInterface {
     title(): string {
         return this.json("title");
     }

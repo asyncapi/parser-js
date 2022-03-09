@@ -1,7 +1,7 @@
 import { ContactInterface } from "models/contact";
-import { V3BaseModel } from "./base";
+import { BaseModel } from "../base";
 
-export class V3Contact extends V3BaseModel implements ContactInterface {
+export class V3Contact extends BaseModel implements ContactInterface {
     name(): string {
         return this.json("name");
     }

@@ -1,8 +1,8 @@
 import { AsyncAPIDocumentInterface } from "models/asyncapi";
-import { V3BaseModel } from "./base";
+import { BaseModel } from "../base";
 import { V3Info } from "./info";
 
-export class V3AsyncAPIDocument extends V3BaseModel implements AsyncAPIDocumentInterface {
+export class V3AsyncAPIDocument extends BaseModel implements AsyncAPIDocumentInterface {
     version(): string {
         return this.json("asyncapi");
     }

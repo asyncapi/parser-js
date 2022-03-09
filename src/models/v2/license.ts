@@ -1,7 +1,7 @@
 import { LicenseInterface } from "models/license";
-import { V2BaseModel } from "./base";
+import { BaseModel } from "../base";
 
-export class V2License extends V2BaseModel implements LicenseInterface {
+export class V2License extends BaseModel implements LicenseInterface {
     name(): string {
         return this.json("name");
     }

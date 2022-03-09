@@ -22,11 +22,5 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.info() instanceof Info).toBeTruthy();
     });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = { };
-      const d = new AsyncAPIDocument(doc);
-      expect(d.info()).toBeUndefined();
-    });
   });
 });

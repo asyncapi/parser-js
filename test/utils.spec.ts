@@ -1,6 +1,15 @@
+import { ISpectralDiagnostic } from '@stoplight/spectral-core';
+import { DiagnosticSeverity } from '@stoplight/types';
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
 import { AsyncAPIDocument, BaseModel } from '../src/models';
-import { toAsyncAPIDocument, isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from '../src/utils';
+import { 
+  toAsyncAPIDocument, 
+  isAsyncAPIDocument, 
+  isParsedDocument, 
+  isStringifiedDocument,
+  hasErrorDiagnostic,
+  hasWarningDiagnostic,
+} from '../src/utils';
 
 describe('utils', function() {
   describe('toAsyncAPIDocument()', function() {
@@ -120,6 +129,86 @@ describe('utils', function() {
 
     it('object with proper extensions should be parsed document', function() {
       expect(isStringifiedDocument({ [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toEqual(true);
+    });
+  });
+
+  describe('hasErrorDiagnostic()', function() {
+    const simpleDiagnostic: ISpectralDiagnostic = {
+      code: 'test-code',
+      message: 'test-message',
+      range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
+      severity: DiagnosticSeverity.Error,
+      path: [],
+    }
+
+    it('should return true when diagnostics have at least one error', function() {
+      const diagnostics: ISpectralDiagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Warning,
+        }
+      ]
+
+      expect(hasErrorDiagnostic(diagnostics)).toEqual(true);
+    });
+
+    it('should return false when diagnostics have no error', function() {
+      const diagnostics: ISpectralDiagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Warning,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Warning,
+        }
+      ]
+
+      expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
+    });
+  });
+
+  describe('hasErrorDiagnostic()', function() {
+    const simpleDiagnostic: ISpectralDiagnostic = {
+      code: 'test-code',
+      message: 'test-message',
+      range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
+      severity: DiagnosticSeverity.Error,
+      path: [],
+    }
+
+    it('should return true when diagnostics have at least one warning', function() {
+      const diagnostics: ISpectralDiagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Warning,
+        }
+      ]
+
+      expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
+    });
+
+    it('should return false when diagnostics have no warning', function() {
+      const diagnostics: ISpectralDiagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        }
+      ]
+
+      expect(hasWarningDiagnostic(diagnostics)).toEqual(false);
     });
   });
 });

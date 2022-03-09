@@ -1,4 +1,5 @@
 import { lint, validate } from '../src/lint';
+import { hasErrorDiagnostic, hasWarningDiagnostic } from '../src/utils';
 
 describe('lint() & validate()', function() {
   describe('lint()', function() {
@@ -17,6 +18,28 @@ describe('lint() & validate()', function() {
       }
 
       expect(diagnostics.length > 0).toEqual(true);
+      expect(hasErrorDiagnostic(diagnostics)).toEqual(true);
+      expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
+    });
+
+    it('should lint valid document', async function() {
+      const document = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      }
+
+      const diagnostics = await lint(document);
+      if (!diagnostics) {
+        return;
+      }
+
+      expect(diagnostics.length > 0).toEqual(true);
+      expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
+      expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
     });
   });
 

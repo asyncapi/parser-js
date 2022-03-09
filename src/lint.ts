@@ -67,8 +67,6 @@ function normalizeOptions(options?: ValidateOptions): ValidateOptions {
   // shall copy
   options = { ...defaultOptions, ...options };
 
-  // ruleset
-  options.ruleset = options.ruleset || defaultOptions.ruleset;
   // severity
   options.allowedSeverity = { ...defaultOptions.allowedSeverity, ...(options.allowedSeverity || {}) };
 

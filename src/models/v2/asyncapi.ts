@@ -1,13 +1,13 @@
 import { AsyncAPIDocumentInterface } from "../../models";
 import { BaseModel } from "../base";
-import { InfoV2 } from "./info";
+import { Info } from "./info";
 
-export class AsyncAPIDocumentV2 extends BaseModel implements AsyncAPIDocumentInterface {
+export class AsyncAPIDocument extends BaseModel implements AsyncAPIDocumentInterface {
     version(): string {
         return this.json("asyncapi");
     }
 
-    info(): InfoV2 {
-        return new InfoV2(this.json("info"));
+    info(): Info {
+        return new Info(this.json("info"));
     }
 }

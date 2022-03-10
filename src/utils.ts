@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
-import type { MaybeAsyncAPI } from 'types';
+import type { AsyncAPISemver, DetailedAsyncAPI, MaybeAsyncAPI } from 'types';
 
 export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface | undefined {
   if (isAsyncAPIDocument(maybeDoc)) {
@@ -41,6 +41,27 @@ export function isStringifiedDocument(maybeDoc: unknown): maybeDoc is Record<str
   );
 }
 
+export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: Record<string, unknown>): DetailedAsyncAPI {
+  return {
+    source,
+    parsed,
+    semver: getSemver(parsed),
+  }
+}
+
+export function getSemver(asyncapi: unknown): AsyncAPISemver {
+  const version = (asyncapi as MaybeAsyncAPI).asyncapi as string;
+  const [major, minor, patchWithRc] = version.split('.');
+  const [patch, rc] = patchWithRc.split('-rc');
+  return {
+    version,
+    major: Number(major),
+    minor: Number(minor),
+    patch: Number(patch),
+    rc: rc && Number(rc),
+  } as AsyncAPISemver;
+}
+
 export function normalizeInput(asyncapi: string | MaybeAsyncAPI): string {
   return JSON.stringify(asyncapi, undefined, 2);
 };
@@ -51,4 +72,29 @@ export function hasErrorDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean 
 
 export function hasWarningDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Warning);
+}
+
+export function mergePatch(origin: unknown, patch: unknown) {
+  // If the patch is not an object, it replaces the origin.
+  if (!isObject(patch)) {
+    return patch;
+  }
+
+  const result = !isObject(origin)
+    ? {} // Non objects are being replaced.
+    : Object.assign({}, origin); // Make sure we never modify the origin.
+
+  Object.keys(patch).forEach(key => {
+    const patchVal = patch[key];
+    if (patchVal === null) {
+      delete result[key];
+    } else {
+      result[key] = mergePatch(result[key], patchVal);
+    }
+  });
+  return result;
+}
+
+export function isObject(value: unknown): value is Record<string, any> {
+  return Boolean(value) && typeof value === 'object' && Array.isArray(value) === false;
 }

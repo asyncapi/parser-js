@@ -1,4 +1,4 @@
-import { AsyncAPIDocument } from "./models";
+import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from "./models";
 import { normalizeInput, toAsyncAPIDocument } from "./utils";
 import { validate } from "./lint";
 
@@ -21,7 +21,7 @@ export async function parse(asyncapi: ParserInput, options?: ParseOptions): Prom
   }
 
   try {
-    const document = normalizeInput(asyncapi as Exclude<ParserInput, AsyncAPIDocument>);
+    const document = normalizeInput(asyncapi as Exclude<ParserInput, AsyncAPIDocumentInterface>);
     options = normalizeOptions(options);
 
     const { validated, diagnostics } = await validate(document, options.validateOptions);
@@ -33,7 +33,7 @@ export async function parse(asyncapi: ParserInput, options?: ParseOptions): Prom
       };
     }
 
-    const parsed = new AsyncAPIDocument(validated as Record<string, unknown>);
+    const parsed = newAsyncAPIDocument(validated as Record<string, unknown>);
     return { 
       source: asyncapi,
       parsed,

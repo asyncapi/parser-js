@@ -1,6 +1,6 @@
 import { DiagnosticSeverity } from '@stoplight/types';
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
-import { AsyncAPIDocument, BaseModel } from '../src/models';
+import { newAsyncAPIDocument, BaseModel, AsyncAPIDocumentV2 } from '../src/models';
 import { 
   toAsyncAPIDocument, 
   isAsyncAPIDocument, 
@@ -31,15 +31,15 @@ describe('utils', function() {
     });
 
     it('AsyncAPIDocument instance should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument(new AsyncAPIDocument({ asyncapi: '2.0.0' }))).toBeInstanceOf(AsyncAPIDocument);
+      expect(toAsyncAPIDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
     it('parsed document should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument({ [xParserSpecParsed]: true })).toBeInstanceOf(AsyncAPIDocument);
+      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true })).toBeInstanceOf(AsyncAPIDocumentV2);
     });
     
     it('stringified document should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument({ [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toBeInstanceOf(AsyncAPIDocument);
+      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
     it('stringified document (with missed parsed extension) should not return AsyncAPIDocument instance', function() {
@@ -65,7 +65,7 @@ describe('utils', function() {
     });
 
     it('AsyncAPIDocument instance should be AsyncAPI document', function() {
-      expect(isAsyncAPIDocument(new AsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(true);
+      expect(isAsyncAPIDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(true);
     });
   });
 
@@ -87,11 +87,11 @@ describe('utils', function() {
     });
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
-      expect(isParsedDocument(new AsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(false);
+      expect(isParsedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
-      expect(isParsedDocument(new AsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true }))).toEqual(false);
+      expect(isParsedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true }))).toEqual(false);
     });
 
     it('object with proper extension should be parsed document', function() {
@@ -117,11 +117,11 @@ describe('utils', function() {
     });
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
-      expect(isStringifiedDocument(new AsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(false);
+      expect(isStringifiedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
-      expect(isStringifiedDocument(new AsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true }))).toEqual(false);
+      expect(isStringifiedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true }))).toEqual(false);
     });
 
     it('object with only stringified extension should not be parsed document', function() {

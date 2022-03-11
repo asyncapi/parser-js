@@ -1,6 +1,6 @@
-import { Contact } from '../../src/models/contact';
-import { Info } from '../../src/models/info';
-import { License } from '../../src/models/license';
+import { Contact } from '../../../src/models/v2/contact';
+import { Info } from '../../../src/models/v2/info';
+import { License } from '../../../src/models/v2/license';
 
 describe('Info model', function() {
   describe('.title()', function() {

@@ -9,7 +9,7 @@ import { asyncapi as aasRuleset } from "@stoplight/spectral-rulesets";
 
 import { toAsyncAPIDocument, normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from "./utils";
 
-import type { AsyncAPIDocument } from "./models/asyncapi";
+import type { AsyncAPIDocumentInterface } from "./models/asyncapi";
 import type { ParserInput, Diagnostic } from "./types";
 
 export interface LintOptions extends IConstructorOpts, IRunOpts {
@@ -31,7 +31,7 @@ export async function lint(asyncapi: ParserInput, options?: LintOptions): Promis
   if (toAsyncAPIDocument(asyncapi)) {
     return;
   }
-  const document = normalizeInput(asyncapi as Exclude<ParserInput, AsyncAPIDocument>);
+  const document = normalizeInput(asyncapi as Exclude<ParserInput, AsyncAPIDocumentInterface>);
   return (await validate(document, options)).diagnostics;
 }
 

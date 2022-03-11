@@ -1,12 +1,26 @@
+import { InfoInterface } from "./info";
 import { BaseModel } from "./base";
-import { Info } from "./info";
+import { AsyncAPIDocumentV2 } from "./v2";
+import { AsyncAPIDocumentV3 } from "./v3";
 
-export class AsyncAPIDocument extends BaseModel {
-    version(): string {
-        return this.json("asyncapi");
+export interface AsyncAPIDocumentInterface extends BaseModel {
+    version(): string;
+    info(): InfoInterface
+}
+
+export function newAsyncAPIDocument(json: Record<string, any>): AsyncAPIDocumentInterface {
+    const version = json['asyncapi']; // Maybe this should be an arg.
+    if (version == undefined || version == null || version == '') {
+        throw new Error('Missing AsyncAPI version in document');
     }
 
-    info(): Info {
-        return new Info(this.json("info"));
+    const major = version.split(".")[0];
+    switch (major) {
+        case '2':
+            return new AsyncAPIDocumentV2(json);
+        case '3':
+            return new AsyncAPIDocumentV3(json);
+        default:
+            throw new Error(`Unsupported version: ${version}`);
     }
 }

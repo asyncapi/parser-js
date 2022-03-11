@@ -45,12 +45,11 @@ export function createDetailedAsyncAPI(source: string | Record<string, unknown>,
   return {
     source,
     parsed,
-    semver: getSemver(parsed),
+    semver: getSemver((parsed as MaybeAsyncAPI).asyncapi),
   }
 }
 
-export function getSemver(asyncapi: unknown): AsyncAPISemver {
-  const version = (asyncapi as MaybeAsyncAPI).asyncapi as string;
+export function getSemver(version: string): AsyncAPISemver {
   const [major, minor, patchWithRc] = version.split('.');
   const [patch, rc] = patchWithRc.split('-rc');
   return {

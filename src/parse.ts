@@ -1,12 +1,18 @@
 import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from "./models";
-import { normalizeInput, toAsyncAPIDocument } from "./utils";
+
+import { customOperations } from './custom-operations';
 import { validate } from "./lint";
+import { stringify, unstringify } from './stringify';
+import { createDetailedAsyncAPI, normalizeInput, toAsyncAPIDocument } from "./utils";
+
+import { xParserSpecParsed } from './constants';
 
 import type { ParserInput, ParserOutput } from './types';
 import type { ValidateOptions } from './lint';
 
 export interface ParseOptions {
   applyTraits?: boolean;
+  parseSchemas?: boolean;
   validateOptions?: ValidateOptions;
 }
 
@@ -33,15 +39,24 @@ export async function parse(asyncapi: ParserInput, options?: ParseOptions): Prom
       };
     }
 
-    const parsed = newAsyncAPIDocument(validated as Record<string, unknown>);
+    const doc = {
+      ...(validated as Record<string, any>),
+      [xParserSpecParsed]: true,
+    }
+    const parsed = unstringify(stringify(doc))?.json()!;
+    
+    const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, parsed);
+    await customOperations(detailed, options);
+    const parsedDoc = newAsyncAPIDocument(parsed);
+  
     return { 
       source: asyncapi,
-      parsed,
+      parsed: parsedDoc,
       diagnostics,
     };
   } catch(err) {
     // TODO: throw proper error
-    throw Error();
+    throw err;
   }
 }
 
@@ -55,9 +70,13 @@ function normalizeOptions(options?: ParseOptions): ParseOptions {
   // shall copy
   options = { ...defaultOptions, ...options };
 
-  // traits
+  // applyTraits
   if (options.applyTraits === undefined) {
     options.applyTraits = true;
+  }
+  // parseSchemas
+  if (options.parseSchemas === undefined) {
+    options.parseSchemas = true;
   }
 
   return options;

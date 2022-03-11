@@ -26,6 +26,14 @@ export function stringify(document: unknown, options: StringifyOptions = {}): st
 }
 
 export function unstringify(document: unknown): AsyncAPIDocumentInterface | undefined {
+  if (typeof document === 'string') {
+    try {
+      document = JSON.parse(document); 
+    } catch(_) {
+      return;
+    }
+  }
+
   if (!isStringifiedDocument(document)) {
     return;
   }

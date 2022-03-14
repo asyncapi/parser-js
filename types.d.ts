@@ -288,7 +288,10 @@ declare module "@asyncapi/parser" {
      */
     type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
     class Base {
-        json(): any;
+        /**
+         * @param [key] - A key to retrieve from the JSON object.
+         */
+        json(key?: string): any;
     }
     interface ChannelParameter extends MixinDescription, MixinSpecificationExtensions {
     }
@@ -389,6 +392,14 @@ declare module "@asyncapi/parser" {
      * Implements functions to deal with a Components object.
      */
     class Components extends Base implements MixinSpecificationExtensions {
+        channels(): {
+            [key: string]: Channel;
+        };
+        hasChannels(): boolean;
+        /**
+         * @param name - Name of the channel.
+         */
+        channel(name: string): Channel;
         messages(): {
             [key: string]: Message;
         };
@@ -413,6 +424,14 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the security schema.
          */
         securityScheme(name: string): SecurityScheme;
+        servers(): {
+            [key: string]: Server;
+        };
+        hasServers(): boolean;
+        /**
+         * @param name - Name of the server.
+         */
+        server(name: string): Server;
         parameters(): {
             [key: string]: ChannelParameter;
         };
@@ -832,9 +851,14 @@ declare module "@asyncapi/parser" {
     interface Schema extends MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
     }
     /**
-     * Implements functions to deal with a Schema object.
+     * Instantiates a schema object
+     * @param json - Schema definition
+     * @param [options.parent] - Parent schema definition
      */
     class Schema extends Base implements MixinDescription, MixinExternalDocs, MixinSpecificationExtensions {
+        constructor(json: any, options?: {
+            parent?: Schema;
+        });
         uid(): string;
         $id(): string;
         multipleOf(): number;

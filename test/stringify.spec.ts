@@ -1,6 +1,7 @@
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
 import { BaseModel, newAsyncAPIDocument } from '../src/models';
 import { stringify, unstringify } from '../src/stringify';
+import { createDetailedAsyncAPI } from '../src/utils';
 
 describe('stringify & unstringify', function() {
   class Model extends BaseModel {}
@@ -31,7 +32,9 @@ describe('stringify & unstringify', function() {
     });
 
     it('should stringify AsyncAPIDocument instance', function() {
-      expect(typeof stringify(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual('string');
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(typeof stringify(newAsyncAPIDocument(detailed))).toEqual('string');
     });
   });
 

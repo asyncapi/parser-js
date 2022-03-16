@@ -13,14 +13,13 @@ export interface AsyncAPIDocumentInterface extends BaseModel, ExtensionsMixinInt
   servers(): ServersInterface;
 }
 
-export function newAsyncAPIDocument(document: DetailedAsyncAPI): AsyncAPIDocumentInterface {
-  const majorVersion = document.semver.major;
-  switch (majorVersion) {
+export function newAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
+  switch (asyncapi.semver.major) {
     case 2:
-      return new AsyncAPIDocumentV2(document.parsed, { parent: null, asyncapi: document, pointer: '/' });
+      return new AsyncAPIDocumentV2(asyncapi.parsed, { parent: null, asyncapi, pointer: '/' });
     case 3:
-      return new AsyncAPIDocumentV3(document.parsed, { parent: null, asyncapi: document, pointer: '/' });
+      return new AsyncAPIDocumentV3(asyncapi.parsed, { parent: null, asyncapi, pointer: '/' });
     default:
-      throw new Error(`Unsupported AsyncAPI version: ${majorVersion}`);
+      throw new Error(`Unsupported AsyncAPI version: ${asyncapi.semver.version}`);
   }
 }

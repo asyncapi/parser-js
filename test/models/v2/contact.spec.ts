@@ -1,8 +1,13 @@
 import { Contact } from '../../../src/models/v2/contact';
 
 import { 
+<<<<<<< next-major
   assertExtensionsMixinInheritance,
 } from './mixins/inheritance';
+=======
+  assertSpecificationExtensionsMixinInheritance,
+} from '../mixins/inheritance';
+>>>>>>> refactor: add metadata of models
 
 describe('Contact model', function() {
   describe('.hasName()', function() {
@@ -89,7 +94,12 @@ describe('Contact model', function() {
     });
   });
 
+<<<<<<< next-major
   describe('mixins inheritance', function() {
     assertExtensionsMixinInheritance(Contact);
+=======
+  describe('mixins', function() {
+    assertSpecificationExtensionsMixinInheritance(Contact);
+>>>>>>> refactor: add metadata of models
   });
 });

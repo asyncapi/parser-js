@@ -1,8 +1,13 @@
 import { License } from '../../../src/models/v2/license';
 
 import { 
+<<<<<<< next-major
   assertExtensionsMixinInheritance,
 } from './mixins/inheritance';
+=======
+  assertSpecificationExtensionsMixinInheritance,
+} from '../mixins/inheritance';
+>>>>>>> refactor: add metadata of models
 
 describe('License model', function() {
   describe('.name()', function() {
@@ -41,7 +46,12 @@ describe('License model', function() {
     });
   });
 
+<<<<<<< next-major
   describe('mixins inheritance', function() {
     assertExtensionsMixinInheritance(License);
+=======
+  describe('mixins', function() {
+    assertSpecificationExtensionsMixinInheritance(License);
+>>>>>>> refactor: add metadata of models
   });
 });

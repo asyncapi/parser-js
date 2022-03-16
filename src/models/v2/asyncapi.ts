@@ -12,13 +12,13 @@ import { Server } from "./server";
 export class AsyncAPIDocument
   extends Mixin(BaseModel, ExtensionsMixin)
   implements AsyncAPIDocumentInterface {
-    
+
   version(): string {
     return this._json.asyncapi;
   }
 
   info(): InfoInterface {
-    return this.createModel(Info, this._json.info, 'info');
+    return this.createModel(Info, { value: this._json.info, pointer: 'info' });
   }
 
   servers(): ServersInterface {

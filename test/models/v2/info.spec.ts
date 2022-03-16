@@ -4,10 +4,15 @@ import { License } from '../../../src/models/v2/license';
 
 import { 
   assertDescriptionMixinInheritance,
+<<<<<<< next-major
   assertExtensionsMixinInheritance,
   assertExternalDocumentationMixinInheritance,
   assertTagsMixinInheritance
 } from './mixins/inheritance';
+=======
+  assertSpecificationExtensionsMixinInheritance,
+} from '../mixins/inheritance';
+>>>>>>> refactor: add metadata of models
 
 describe('Info model', function() {
   describe('.title()', function() {
@@ -110,10 +115,16 @@ describe('Info model', function() {
     });
   });
 
+<<<<<<< next-major
   describe('mixins inheritance', function() {
     assertDescriptionMixinInheritance(Info);
     assertExtensionsMixinInheritance(Info);
     assertExternalDocumentationMixinInheritance(Info);
     assertTagsMixinInheritance(Info);
+=======
+  describe('mixins', function() {
+    assertDescriptionMixinInheritance(Info);
+    assertSpecificationExtensionsMixinInheritance(Info);
+>>>>>>> refactor: add metadata of models
   });
 });

@@ -18,7 +18,7 @@ export class AsyncAPIDocument
   }
 
   info(): InfoInterface {
-    return this.createModel(Info, this._json.info, 'info');
+    return this.createModel(Info, { value: this._json.info, pointer: 'info' });
   }
 
   servers(): ServersInterface {

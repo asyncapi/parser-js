@@ -26,3 +26,7 @@ export interface ParserOutput {
   parsed: AsyncAPIDocumentInterface | undefined;
   diagnostics: Diagnostic[]; 
 }
+
+export interface Constructor<T> {
+  new (...args: any[]): T
+}

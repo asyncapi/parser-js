@@ -46,7 +46,7 @@ export class Info
 
   contact(): Contact | undefined {
     const contact = this._json.contact;
-    return contact && new Contact(contact);
+    return contact && this.createModel(Contact, contact, 'contact');
   }
 
   hasLicense(): boolean {
@@ -55,6 +55,6 @@ export class Info
 
   license(): License | undefined {
     const license = this._json.license;
-    return license &&  new License(license);
+    return license && this.createModel(License, license, 'license');
   }
 }

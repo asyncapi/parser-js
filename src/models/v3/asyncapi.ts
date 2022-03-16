@@ -1,4 +1,3 @@
-import { AsyncAPIDocumentInterface } from "../../models/asyncapi";
 import { BaseModel } from "../base";
 import { Info } from "./info";
 
@@ -8,16 +7,18 @@ import { ServersInterface } from "models/servers";
 import { Servers } from "./servers";
 import { Server } from "./server";
 
+import { AsyncAPIDocumentInterface, InfoInterface } from "../../models";
+
 export class AsyncAPIDocument 
   extends Mixin(BaseModel, ExtensionsMixin) 
   implements AsyncAPIDocumentInterface {
 
   version(): string {
-    return this.json("asyncapi");
+    return this._json.asyncapi;
   }
 
-  info(): Info {
-    return new Info(this.json("info"));
+  info(): InfoInterface {
+    return this.createModel(Info, this._json.info, 'info');
   }
 
   servers(): ServersInterface {

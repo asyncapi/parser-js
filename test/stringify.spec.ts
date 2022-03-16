@@ -3,6 +3,8 @@ import { BaseModel, newAsyncAPIDocument } from '../src/models';
 import { stringify, unstringify } from '../src/stringify';
 
 describe('stringify & unstringify', function() {
+  class Model extends BaseModel {}
+
   describe('stringify()', function() {
     it('should not stringify normal object', function() {
       expect(stringify({})).toEqual(undefined);
@@ -17,7 +19,7 @@ describe('stringify & unstringify', function() {
     });
 
     it('should not stringify BaseModel instance', function() {
-      expect(stringify(new BaseModel({}))).toEqual(undefined);
+      expect(stringify(new Model({}))).toEqual(undefined);
     });
 
     it('should stringify parsed document', function() {
@@ -47,7 +49,7 @@ describe('stringify & unstringify', function() {
     });
 
     it('should not stringify BaseModel instance', function() {
-      expect(unstringify(new BaseModel({}))).toEqual(undefined);
+      expect(unstringify(new Model({}))).toEqual(undefined);
     });
 
     it('should not unstringify parsed document', function() {

@@ -21,9 +21,9 @@ export function newAsyncAPIDocument(json: Record<string, any>): AsyncAPIDocument
   const major = version.split(".")[0];
   switch (major) {
     case '2':
-      return new AsyncAPIDocumentV2(json);
+      return new AsyncAPIDocumentV2(json, { parent: null, asyncapi: json as any, pointer: '/' });
     case '3':
-      return new AsyncAPIDocumentV3(json);
+      return new AsyncAPIDocumentV3(json, { parent: null, asyncapi: json as any, pointer: '/' });
     default:
       throw new Error(`Unsupported version: ${version}`);
   }

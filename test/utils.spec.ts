@@ -19,7 +19,10 @@ import {
 import type { Diagnostic } from '../src/types';
 
 describe('utils', function() {
+  class Model extends BaseModel {}
+
   describe('toAsyncAPIDocument()', function() {
+
     it('normal object should not return AsyncAPIDocument instance', function() {
       expect(toAsyncAPIDocument({})).toEqual(undefined);
     });
@@ -33,7 +36,7 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument(new BaseModel({}))).toEqual(undefined);
+      expect(toAsyncAPIDocument(new Model({}))).toEqual(undefined);
     });
 
     it('AsyncAPIDocument instance should return AsyncAPIDocument instance', function() {
@@ -67,7 +70,7 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not be AsyncAPI document', function() {
-      expect(isAsyncAPIDocument(new BaseModel({}))).toEqual(false);
+      expect(isAsyncAPIDocument(new Model({}))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance should be AsyncAPI document', function() {
@@ -89,7 +92,7 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not be AsyncAPI document', function() {
-      expect(isParsedDocument(new BaseModel({}))).toEqual(false);
+      expect(isParsedDocument(new Model({}))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
@@ -119,7 +122,7 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not be AsyncAPI document', function() {
-      expect(isStringifiedDocument(new BaseModel({}))).toEqual(false);
+      expect(isStringifiedDocument(new Model({}))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance should not be parsed document', function() {

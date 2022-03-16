@@ -47,7 +47,7 @@ export async function parse(asyncapi: ParserInput, options?: ParseOptions): Prom
     
     const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, parsed);
     await customOperations(detailed, options);
-    const parsedDoc = newAsyncAPIDocument(parsed);
+    const parsedDoc = newAsyncAPIDocument(detailed);
   
     return { 
       source: asyncapi,

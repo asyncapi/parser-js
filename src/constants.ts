@@ -8,3 +8,5 @@ export const xParserOriginalSchemaFormat = 'x-parser-original-schema-format';
 export const xParserOriginalTraits = 'x-parser-original-traits';
 
 export const xParserCircular = 'x-parser-circular';
+
+export const EXTENSION_REGEX = /^x-[\w\d\.\-\_]+$/;

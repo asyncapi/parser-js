@@ -1,5 +1,11 @@
 import { newAsyncAPIDocument, AsyncAPIDocumentV2, InfoV2, AsyncAPIDocumentV3 } from '../../../src/models';
 
+import { 
+  assertExternalDocsMixinInheritance,
+  assertSpecificationExtensionsMixinInheritance,
+  assertTagsMixinInheritance,
+} from '../mixins/inheritance';
+
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {
     it('should return the value', function() {
@@ -22,6 +28,12 @@ describe('AsyncAPIDocument model', function() {
       expect(d.info() instanceof InfoV2).toBeTruthy();
     });
   });
+
+  describe('mixins', function() {
+    assertExternalDocsMixinInheritance(AsyncAPIDocumentV2);
+    assertSpecificationExtensionsMixinInheritance(AsyncAPIDocumentV2);
+    assertTagsMixinInheritance(AsyncAPIDocumentV2);
+  });
 });
 
 describe('AsyncAPIDocument factory', function() {
@@ -31,12 +43,14 @@ describe('AsyncAPIDocument factory', function() {
     expect(d.version()).toEqual(doc.asyncapi);
     expect(d).toBeInstanceOf(AsyncAPIDocumentV2);
   });
+
   it('should create a valid document from v3.0.0', function() {
     const doc = { asyncapi: "3.0.0" };
     const d = newAsyncAPIDocument(doc)
     expect(d.version()).toEqual(doc.asyncapi);
     expect(d).toBeInstanceOf(AsyncAPIDocumentV3);
   });
+
   it('should fail trying to create a document from a non supported spec version', function() {
     const doc = { asyncapi: "99.99.99" };
     expect(() => newAsyncAPIDocument(doc)).toThrow("Unsupported version: 99.99.99");

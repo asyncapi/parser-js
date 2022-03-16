@@ -1,6 +1,6 @@
 export class BaseModel {
   constructor(
-    private readonly _json: Record<string, any>,
+    protected readonly _json: Record<string, any>,
   ) {}
 
   json<T = Record<string, any>>(): T;

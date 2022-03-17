@@ -1,6 +1,6 @@
 <h5 align="center">
   <br>
-  <a href="https://www.asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
+  <a href="https://www.asyncapi.org"><img src="https://raw.githubusercontent.com/asyncapi/parser-js/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
   <br>
   JavaScript Parser
 </h5>

@@ -5,10 +5,16 @@ import { AsyncAPIDocumentV2 } from "./v2";
 import { AsyncAPIDocumentV3 } from "./v3";
 
 import { ExternalDocsMixinInterface, SpecificationExtensionsMixinInterface, TagsMixinInterface } from "./mixins";
+import { ServerInterface } from "./server";
 
 export interface AsyncAPIDocumentInterface extends BaseModel, ExternalDocsMixinInterface, SpecificationExtensionsMixinInterface, TagsMixinInterface {
   version(): string;
   info(): InfoInterface;
+  servers(): Record<string, ServerInterface>;
+  hasServers(): boolean;
+  serverNames(): Array<string>;
+  server(name: string): ServerInterface;
+  
 }
 
 export function newAsyncAPIDocument(json: Record<string, any>): AsyncAPIDocumentInterface {

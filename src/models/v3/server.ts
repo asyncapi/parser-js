@@ -1,9 +1,9 @@
-import { BaseModel } from "models/base";
-import { BindingsMixin, DescriptionMixin, Mixin, SpecificationExtensionsMixin } from "models/mixins";
-import { ServerInterface } from "models/server";
-import { ServerSecurityRequirementInterface } from "models/server-security-requirement";
-import { ServerVariableInterface } from "models/server-variables";
-import { createMapOfTypes, getMapValueOfType } from "models/utils";
+import { BaseModel } from "../base";
+import { BindingsMixin, DescriptionMixin, Mixin, SpecificationExtensionsMixin } from "../mixins";
+import { ServerInterface } from "../server";
+import { ServerSecurityRequirementInterface } from "../server-security-requirement";
+import { ServerVariableInterface } from "../server-variables";
+import { createMapOfTypes, getMapValueOfType } from "../utils";
 import { ServerSecurityRequirement } from "./server-recurity-requirement";
 import { ServerVariable } from "./server-variable";
 

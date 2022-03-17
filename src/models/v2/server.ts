@@ -1,11 +1,11 @@
 import { createMapOfTypes, getMapValueOfType } from '../utils';
-import { ServerVariableInterface } from 'models/server-variables';
+import { ServerVariableInterface } from '../server-variables';
 import { BaseModel } from '../base';
 import { ServerInterface } from "../server";
 import { ServerVariable } from './server-variable';
-import { ServerSecurityRequirementInterface } from 'models/server-security-requirement';
+import { ServerSecurityRequirementInterface } from '../server-security-requirement';
 import { ServerSecurityRequirement } from './server-security-requirement';
-import { BindingsMixin, DescriptionMixin, Mixin, SpecificationExtensionsMixin } from 'models/mixins';
+import { BindingsMixin, DescriptionMixin, Mixin, SpecificationExtensionsMixin } from '../mixins';
 
 export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, SpecificationExtensionsMixin) implements ServerInterface {
     url(): string {

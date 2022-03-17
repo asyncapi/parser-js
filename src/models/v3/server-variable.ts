@@ -1,5 +1,5 @@
-import { BaseModel } from "models/base";
-import { ServerVariableInterface } from "models/server-variables";
+import { BaseModel } from "../base";
+import { ServerVariableInterface } from "../server-variables";
 
 export class ServerVariable extends BaseModel implements ServerVariableInterface {
     allowedValues(): any[] {

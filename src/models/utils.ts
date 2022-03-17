@@ -4,7 +4,7 @@ function getMapValue(obj: any, key: string, type: any, options?: any) {
     const v = obj[String(key)];
     if (v === undefined) return null;
     return type ? new type(v, options) : v;
-};
+}
 
 export function createMapOfTypes(obj: any, type: any, options?: any) {
     const result: Record<string, any> = {};

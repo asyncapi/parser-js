@@ -5,14 +5,13 @@ import { BindingsMixinInterface, DescriptionMixinInterface, SpecificationExtensi
 
 export interface ServerInterface extends BaseModel, BindingsMixinInterface, DescriptionMixinInterface, SpecificationExtensionsMixinInterface {
     url(): string;
-    hasUrl(): boolean;
     protocol(): string;
-    hasProtocol(): boolean;
     protocolVersion(): string | undefined;
     hasProtocolVersion(): boolean;
-    variables(): Record<string, ServerVariableInterface>;
     variables(): Record<string, ServerVariableInterface> | undefined;
-    variable(name: string): ServerVariableInterface | undefined;
+    variables(name: string): ServerVariableInterface | undefined;
     hasVariables(): boolean;
-    security(): [ServerSecurityRequirementInterface] | undefined;
+    hasVariables(name: string): boolean;
+    security(): ServerSecurityRequirementInterface[] | undefined;
+    hasSecurity(): boolean;
 }

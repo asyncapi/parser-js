@@ -33,7 +33,8 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Sp
         return !!this.json('protocolVersion');
     }
 
-    variables(): Record<string, ServerVariableInterface> {
+    variables(): undefined;
+    variables(): Record<string, ServerVariableInterface> | undefined {
         return createMapOfTypes(this.json('variables'), ServerVariable);
     }
 
@@ -47,5 +48,8 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Sp
 
     security(): [ServerSecurityRequirementInterface] | undefined {
         return this.json('security').map((sec: any) => new ServerSecurityRequirement(sec))
+    }
+    hasSecurity(): boolean {
+        return !!this.json('security');
     }
 }

@@ -12,15 +12,29 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Sp
         return this.json('url');
     }
 
+    hasUrl(): boolean {
+        return !!this.json('url');
+    }
+
     protocol(): string {
         return this.json('protocol');
+    }
+
+    hasProtocol(): boolean {
+        return !!this.json('protocol');
     }
 
     protocolVersion(): string {
         return this.json('protocolVersion');
     }
 
-    variables(): Record<string, ServerVariableInterface> {
+    hasProtocolVersion(): boolean {
+        return !!this.json('protocolVersion');
+    }
+
+    variables(): Record<string, ServerVariableInterface>;
+    variables(): Record<string, ServerVariableInterface> | undefined {
+        if(!this.json('variables')) return undefined;
         return createMapOfTypes(this.json('variables'), ServerVariable)
     }
 

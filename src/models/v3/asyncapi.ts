@@ -23,15 +23,6 @@ export class AsyncAPIDocument
     return createMapOfTypes(this.json('servers'), Server);
   }
 
-  hasServers(): boolean {
-    return !!this.json('servers');
-  }
-
-  serverNames(): string[] {
-    if(!this.json('servers')) return [];
-    return Object.keys(this.json('servers'));
-  }
-
   server(name: string): ServerInterface {
     return getMapValueOfType(this.json('servers'), name, Server);
   }

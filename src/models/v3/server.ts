@@ -13,12 +13,24 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Sp
         return this.json('url');
     }
 
+    hasUrl(): boolean {
+        return !!this.json('url');
+    }
+
     protocol(): string {
         return this.json('protocol');
     }
 
+    hasProtocol(): boolean {
+        return !!this.json('protocol');
+    }
+
     protocolVersion(): string {
         return this.json('protocolVersion');
+    }
+
+    hasProtocolVersion(): boolean {
+        return !!this.json('protocolVersion');
     }
 
     variables(): Record<string, ServerVariableInterface> {

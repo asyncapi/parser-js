@@ -11,7 +11,8 @@ export interface AsyncAPIDocumentInterface extends BaseModel, ExternalDocsMixinI
   version(): string;
   info(): InfoInterface;
   servers(): Record<string, ServerInterface>;
-  server(name: string): ServerInterface;
+  servers(name: string): ServerInterface;
+  hasServer(name:string): boolean;
 }
 
 export function newAsyncAPIDocument(json: Record<string, any>): AsyncAPIDocumentInterface {

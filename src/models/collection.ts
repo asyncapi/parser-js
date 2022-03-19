@@ -2,7 +2,7 @@ import type { BaseModel } from "./base";
 
 export abstract class Collection<T extends BaseModel> extends Array<T> {
   constructor(
-    protected readonly collections: T[],
+    protected readonly collections: T[]
   ) {
     super(...collections);
   }

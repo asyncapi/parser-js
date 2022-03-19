@@ -1,6 +1,13 @@
-import { Contact } from '../../../src/models/v2/contact';
 import { Info } from '../../../src/models/v2/info';
+import { Contact } from '../../../src/models/v2/contact';
 import { License } from '../../../src/models/v2/license';
+
+import { 
+  assertDescriptionMixinInheritance,
+  assertExtensionsMixinInheritance,
+  assertExternalDocumentationMixinInheritance,
+  assertTagsMixinInheritance
+} from './mixins/inheritance';
 
 describe('Info model', function() {
   describe('.title()', function() {
@@ -85,5 +92,12 @@ describe('Info model', function() {
       const d = new Info(doc);
       expect(d.license()).toBeUndefined();
     });
+  });
+
+  describe('mixins inheritance', function() {
+    assertDescriptionMixinInheritance(Info);
+    assertExtensionsMixinInheritance(Info);
+    assertExternalDocumentationMixinInheritance(Info);
+    assertTagsMixinInheritance(Info);
   });
 });

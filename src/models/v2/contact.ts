@@ -1,16 +1,32 @@
-import { ContactInterface } from "../../models/contact";
 import { BaseModel } from "../base";
 
-export class Contact extends BaseModel implements ContactInterface {
-    name(): string {
-        return this.json("name");
-    }
+import { Mixin } from '../utils';
+import { ExtensionsMixin } from './mixins/extensions';
 
-    url(): string {
-        return this.json("url");
-    }
+import type { ContactInterface } from "../../models/contact";
 
-    email(): string {
-        return this.json("email");
-    }
+export class Contact extends Mixin(BaseModel, ExtensionsMixin) implements ContactInterface {
+  hasName(): boolean {
+    return !!typeof this._json.name;
+  }
+
+  name(): string | undefined {
+    return this._json.name;
+  }
+
+  hasUrl(): boolean {
+    return !!typeof this._json.url;
+  }
+
+  url(): string | undefined {
+    return this._json.url;
+  }
+
+  hasEmail(): boolean {
+    return !!typeof this._json.email;
+  }
+
+  email(): string | undefined {
+    return this._json.email;
+  }
 }

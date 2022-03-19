@@ -11,7 +11,7 @@ export class License extends Mixin(BaseModel, ExtensionsMixin) implements Licens
   }
 
   hasUrl(): boolean {
-    return !!typeof this._json.url;
+    return !!this._json.url;
   }
 
   url(): string | undefined {

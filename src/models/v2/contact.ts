@@ -7,7 +7,7 @@ import type { ContactInterface } from "../../models/contact";
 
 export class Contact extends Mixin(BaseModel, ExtensionsMixin) implements ContactInterface {
   hasName(): boolean {
-    return !!typeof this._json.name;
+    return !!this._json.name;
   }
 
   name(): string | undefined {
@@ -15,7 +15,7 @@ export class Contact extends Mixin(BaseModel, ExtensionsMixin) implements Contac
   }
 
   hasUrl(): boolean {
-    return !!typeof this._json.url;
+    return !!this._json.url;
   }
 
   url(): string | undefined {
@@ -23,7 +23,7 @@ export class Contact extends Mixin(BaseModel, ExtensionsMixin) implements Contac
   }
 
   hasEmail(): boolean {
-    return !!typeof this._json.email;
+    return !!this._json.email;
   }
 
   email(): string | undefined {

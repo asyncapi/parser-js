@@ -1,10 +1,10 @@
 <h5 align="center">
   <br>
-  <a href="https://www.asyncapi.org"><img src="https://github.com/asyncapi/parser-nodejs/raw/master/assets/logo.png" alt="AsyncAPI logo" width="200"></a>
+  <a href="https://www.asyncapi.com"><img src="./assets/new-brand.png" alt="AsyncAPI logo" width="1000"></a>
   <br>
-  JavaScript Parser
+
 </h5>
-<p align="center">
+<p align="left">
   <em>Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application. Updated bundle for the browser is always attached to the GitHub Release.</em>
 </p>
 

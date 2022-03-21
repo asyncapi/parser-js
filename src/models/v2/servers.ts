@@ -1,5 +1,5 @@
-import { Collection } from 'models/collection';
-import { ServerInterface } from 'models/server';
+import { Collection } from '../collection';
+import { ServerInterface } from '../server';
 import { ServersInterface } from '../servers';
 
 export class Servers extends Collection<ServerInterface> implements ServersInterface {

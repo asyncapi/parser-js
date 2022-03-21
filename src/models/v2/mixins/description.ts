@@ -1,9 +1,6 @@
-import { BaseModel } from "../base";
+import { BaseModel } from "../../base";
 
-export interface DescriptionMixinInterface {
-  hasDescription(): boolean;
-  description(): string | undefined;
-}
+import type { DescriptionMixinInterface } from "../../mixins";
 
 export abstract class DescriptionMixin extends BaseModel implements DescriptionMixinInterface {
   hasDescription() {

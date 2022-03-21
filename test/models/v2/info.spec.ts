@@ -1,6 +1,13 @@
-import { Contact } from '../../../src/models/v2/contact';
 import { Info } from '../../../src/models/v2/info';
+import { Contact } from '../../../src/models/v2/contact';
 import { License } from '../../../src/models/v2/license';
+
+import { 
+  assertDescriptionMixinInheritance,
+  assertExtensionsMixinInheritance,
+  assertExternalDocumentationMixinInheritance,
+  assertTagsMixinInheritance
+} from './mixins/inheritance';
 
 describe('Info model', function() {
   describe('.title()', function() {
@@ -8,12 +15,6 @@ describe('Info model', function() {
       const doc = { title: "Example API" };
       const d = new Info(doc);
       expect(d.title()).toEqual(doc.title);
-    });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = { };
-      const d = new Info(doc);
-      expect(d.title()).toBeUndefined();
     });
   });
 
@@ -23,25 +24,19 @@ describe('Info model', function() {
       const d = new Info(doc);
       expect(d.version()).toEqual(doc.version);
     });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = { };
-      const d = new Info(doc);
-      expect(d.version()).toBeUndefined();
-    });
   });
 
-  describe('.description()', function() {
-    it('should return the value', function() {
-      const doc = { description: "This is the API of Example" };
+  describe('.hasTermsOfService()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { termsOfService: "These are the terms of service" };
       const d = new Info(doc);
-      expect(d.description()).toEqual(doc.description);
+      expect(d.hasTermsOfService()).toEqual(true);
     });
     
-    it('should return undefined when there is no value', function() {
-      const doc = { };
+    it('should return false when there is no value', function() {
+      const doc = {};
       const d = new Info(doc);
-      expect(d.description()).toBeUndefined();
+      expect(d.hasTermsOfService()).toEqual(false);
     });
   });
 
@@ -53,9 +48,23 @@ describe('Info model', function() {
     });
     
     it('should return undefined when there is no value', function() {
-      const doc = { };
+      const doc = {};
       const d = new Info(doc);
       expect(d.termsOfService()).toBeUndefined();
+    });
+  });
+  
+  describe('.hasContact()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { contact: { name: "LeChuck" } };
+      const d = new Info(doc);
+      expect(d.hasContact()).toEqual(true);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = {};
+      const d = new Info(doc);
+      expect(d.hasContact()).toEqual(false);
     });
   });
 
@@ -63,13 +72,27 @@ describe('Info model', function() {
     it('should return a Contact object', function() {
       const doc = { contact: { name: "LeChuck" } };
       const d = new Info(doc);
-      expect(d.contact() instanceof Contact).toBeTruthy();
+      expect(d.contact()).toBeInstanceOf(Contact);
     });
     
     it('should return undefined when there is no value', function() {
-      const doc = { };
+      const doc = {};
       const d = new Info(doc);
       expect(d.contact()).toBeUndefined();
+    });
+  });
+
+  describe('.hasLicense()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { license: { name: "Apache 2.0" } };
+      const d = new Info(doc);
+      expect(d.hasLicense()).toEqual(true);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = {};
+      const d = new Info(doc);
+      expect(d.hasLicense()).toEqual(false);
     });
   });
 
@@ -77,13 +100,20 @@ describe('Info model', function() {
     it('should return a License object', function() {
       const doc = { license: { name: "Apache 2.0" } };
       const d = new Info(doc);
-      expect(d.license() instanceof License).toBeTruthy();
+      expect(d.license()).toBeInstanceOf(License);
     });
     
     it('should return undefined when there is no value', function() {
-      const doc = { };
+      const doc = {};
       const d = new Info(doc);
       expect(d.license()).toBeUndefined();
     });
+  });
+
+  describe('mixins inheritance', function() {
+    assertDescriptionMixinInheritance(Info);
+    assertExtensionsMixinInheritance(Info);
+    assertExternalDocumentationMixinInheritance(Info);
+    assertTagsMixinInheritance(Info);
   });
 });

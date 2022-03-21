@@ -1,19 +1,20 @@
-import { AsyncAPIDocumentInterface } from "../../models";
 import { BaseModel } from "../base";
 import { Info } from "./info";
 
-import { Mixin, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin } from '../mixins';
-import { createMapOfTypes, getMapValueOfType } from "../utils";
+import { Mixin } from '../utils';
+import { ExtensionsMixin } from './mixins/extensions';
 
-export class AsyncAPIDocument
-  extends Mixin(BaseModel, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin)
+import { AsyncAPIDocumentInterface, InfoInterface } from "../../models";
+
+export class AsyncAPIDocument 
+  extends Mixin(BaseModel, ExtensionsMixin) 
   implements AsyncAPIDocumentInterface {
 
   version(): string {
-    return this.json("asyncapi");
+    return this._json.asyncapi;
   }
 
-  info(): Info {
-    return new Info(this.json("info"));
+  info(): InfoInterface {
+    return new Info(this._json.info);
   }
 }

@@ -1,6 +1,9 @@
-import { BaseModel } from "./base";
+import type { BaseModel } from "./base";
 
-export interface LicenseInterface extends BaseModel {
-    name(): string;
-    url(): string;
+import type { ExtensionsMixinInterface } from "./mixins";
+
+export interface LicenseInterface extends BaseModel, ExtensionsMixinInterface {
+  name(): string;
+	hasUrl(): boolean;
+  url(): string | undefined;
 }

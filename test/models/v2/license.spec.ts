@@ -1,5 +1,9 @@
 import { License } from '../../../src/models/v2/license';
 
+import { 
+  assertExtensionsMixinInheritance,
+} from './mixins/inheritance';
+
 describe('License model', function() {
   describe('.name()', function() {
     it('should return the value', function() {
@@ -7,11 +11,19 @@ describe('License model', function() {
       const d = new License(doc);
       expect(d.name()).toEqual(doc.name);
     });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = { };
+  });
+
+  describe('.hasUrl()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { url: "https://www.apache.org/licenses/LICENSE-2.0.html" };
       const d = new License(doc);
-      expect(d.name()).toBeUndefined();
+      expect(d.hasUrl()).toEqual(true);
+    });
+    
+    it('should return false when there is no value', function() {
+      const doc = {};
+      const d = new License(doc);
+      expect(d.hasUrl()).toEqual(false);
     });
   });
 
@@ -23,9 +35,13 @@ describe('License model', function() {
     });
     
     it('should return undefined when there is no value', function() {
-      const doc = { };
+      const doc = {};
       const d = new License(doc);
       expect(d.url()).toBeUndefined();
     });
+  });
+
+  describe('mixins inheritance', function() {
+    assertExtensionsMixinInheritance(License);
   });
 });

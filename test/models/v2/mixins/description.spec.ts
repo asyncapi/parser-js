@@ -1,16 +1,17 @@
-import { BaseModel } from '../../../src/models/base';
-import { DescriptionMixin, Mixin } from '../../../src/models/mixins';
-
-class Model extends Mixin(BaseModel, DescriptionMixin) {};
-
-const doc1 = { description: 'Testing' };
-const doc2 = { description: '' };
-const doc3 = {};
-const d1 = new Model(doc1);
-const d2 = new Model(doc2);
-const d3 = new Model(doc3);
+import { BaseModel } from '../../../../src/models/base';
+import { Mixin } from '../../../../src/models/utils';
+import { DescriptionMixin } from '../../../../src/models/v2/mixins/description';
 
 describe('Description mixin', function() {
+  class Model extends Mixin(BaseModel, DescriptionMixin) {};
+
+  const doc1 = { description: 'Testing' };
+  const doc2 = { description: '' };
+  const doc3 = {};
+  const d1 = new Model(doc1);
+  const d2 = new Model(doc2);
+  const d3 = new Model(doc3);
+
   describe('.hasDescription()', function() {
     it('should return a boolean indicating if the object has description', function() {
       expect(d1.hasDescription()).toEqual(true);  

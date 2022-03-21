@@ -3,9 +3,7 @@ import { BaseModel } from "../base";
 import { Info } from "./info";
 
 import { Mixin, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin } from '../mixins';
-import { ServerInterface } from "../server";
 import { createMapOfTypes, getMapValueOfType } from "../utils";
-import { Server } from "./server";
 
 export class AsyncAPIDocument 
   extends Mixin(BaseModel, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin) 
@@ -17,13 +15,5 @@ export class AsyncAPIDocument
 
   info(): Info {
     return new Info(this.json("info"));
-  }
-
-  servers(): Record<string, ServerInterface> {
-    return createMapOfTypes(this.json('servers'), Server);
-  }
-
-  server(name: string): ServerInterface {
-    return getMapValueOfType(this.json('servers'), name, Server);
   }
 }

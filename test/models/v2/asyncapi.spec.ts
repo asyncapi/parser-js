@@ -1,10 +1,8 @@
 import { newAsyncAPIDocument, AsyncAPIDocumentV2, InfoV2, AsyncAPIDocumentV3 } from '../../../src/models';
 
 import { 
-  assertExternalDocsMixinInheritance,
-  assertSpecificationExtensionsMixinInheritance,
-  assertTagsMixinInheritance,
-} from '../mixins/inheritance';
+  assertExtensionsMixinInheritance,
+} from './mixins/inheritance';
 
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {
@@ -29,10 +27,8 @@ describe('AsyncAPIDocument model', function() {
     });
   });
 
-  describe('mixins', function() {
-    assertExternalDocsMixinInheritance(AsyncAPIDocumentV2);
-    assertSpecificationExtensionsMixinInheritance(AsyncAPIDocumentV2);
-    assertTagsMixinInheritance(AsyncAPIDocumentV2);
+  describe('mixins inheritance', function() {
+    assertExtensionsMixinInheritance(AsyncAPIDocumentV2);
   });
 });
 

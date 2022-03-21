@@ -5,8 +5,8 @@ import { Info } from "./info";
 import { Mixin, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin } from '../mixins';
 import { createMapOfTypes, getMapValueOfType } from "../utils";
 
-export class AsyncAPIDocument 
-  extends Mixin(BaseModel, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin) 
+export class AsyncAPIDocument
+  extends Mixin(BaseModel, ExternalDocsMixin, SpecificationExtensionsMixin, TagsMixin)
   implements AsyncAPIDocumentInterface {
 
   version(): string {

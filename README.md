@@ -1,4 +1,4 @@
-[![AsyncAPI JavaScript Parser](./assets/new-brand.png)](https://www.asyncapi.com)
+[![AsyncAPI JavaScript Parser](./assets/logo.png)](https://www.asyncapi.com)
 
 Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application. Updated bundle for the browser is always attached to the GitHub Release.
 

@@ -89,7 +89,7 @@
     "branches": [
       "master",
       {
-        "name": "2022-01-release",
+        "name": "2022-04-release",
         "prerelease": true
       },
       {

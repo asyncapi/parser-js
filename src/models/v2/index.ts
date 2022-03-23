@@ -6,3 +6,5 @@ export { Bindings as BindingsV2, Binding as BindingV2 } from './mixins/bindings'
 export { Extensions as ExtensionsV2, Extension as ExtensionV2 } from './mixins/extensions';
 export { ExternalDocumentation as ExternalDocumentationV2 } from './mixins/external-docs';
 export { Tags as TagsV2, Tag as TagV2 } from './mixins/tags';
+export { Server as ServerV2 } from './server';
+export { Servers as ServersV2 } from './servers';

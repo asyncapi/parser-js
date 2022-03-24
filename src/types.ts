@@ -11,8 +11,8 @@ export interface AsyncAPISemver {
 }
 
 export interface DetailedAsyncAPI {
-  source: string | Record<string, unknown>;
-  parsed: Record<string, unknown>;
+  source: string | Record<string, any>;
+  parsed: Record<string, any>;
   semver: AsyncAPISemver;
 }
 

@@ -1,4 +1,5 @@
-import { DetailedAsyncAPI, Constructor } from "../types";
+import type { Constructor } from "./utils";
+import type { DetailedAsyncAPI } from "../types";
 
 export interface ModelMetadata<P = unknown> {
   asyncapi: DetailedAsyncAPI;
@@ -31,38 +32,11 @@ export abstract class BaseModel {
     return `${this._meta?.pointer}/${field}`;
   }
 
-  protected createModel<T>(Model: Constructor<T>, { value, pointer }: { value: any, pointer: string | number }): T {
-    return new Model(value, { asyncapi: this._meta.asyncapi, parent: this, pointer: `${this._meta.pointer}/${pointer}` } as ModelMetadata);
+  protected createModel<T extends BaseModel>(Model: Constructor<T>, value: any, { id, parent, pointer }: { id?: string, parent?: any, pointer: string | number }): T {
+    const meta = { asyncapi: this._meta.asyncapi, parent: parent || this, pointer } as ModelMetadata;
+    if (id) {
+      return new Model(id, value, meta);
+    }
+    return new Model(value, meta);
   }
-
-  protected createMapOfModel<T>(map: Record<string, unknown>, Model: Constructor<T>): Record<string, T> {
-    const result: Record<string, T> = {};
-    if (!map) return result;
-  
-    Object.entries(map).forEach(([key, value]) => {
-      result[String(key)] = this.createModel(Model, { value, pointer: key });
-    });
-    return result;
-  };
-
-  protected createListOfModel<T>(array: Array<unknown>, Model: Constructor<T>): Array<T> {
-    if (!array) return [];
-    return array.map((value, pointer) => this.createModel(Model, { value, pointer }));
-  };
-
-  protected createModelByKey<T>(collection: Record<string, unknown>, key: string, Model: Constructor<T>): T | undefined;
-  protected createModelByKey<T>(collection: Array<unknown>, index: number, Model: Constructor<T>): T | undefined;
-  protected createModelByKey<T>(collection: Record<string, unknown> | Array<unknown>, pointer: string | number, Model: Constructor<T>): T | undefined {
-    if (!collection) {
-      return;
-    }
-    if (
-      (typeof pointer === 'string' && !Array.isArray(collection)) ||
-      (typeof pointer === 'number' && Array.isArray(collection))
-    ) {
-      const value = (collection as Record<string, unknown>)[pointer] as any;
-      return value && this.createModel(Model, { value, pointer });
-    }
-    return;
-  };
 }

@@ -5,13 +5,15 @@ import { License } from "./license";
 import { Mixin } from '../utils';
 import { DescriptionMixin } from './mixins/description';
 import { ExtensionsMixin } from './mixins/extensions';
-import { ExternalDocumentationMixin } from './mixins/external-docs';
-import { TagsMixin } from './mixins/tags';
+import { ExternalDocumentation } from './mixins/external-docs';
+import { Tags, Tag } from './mixins/tags';
 
 import type { InfoInterface } from "../../models/info";
+import type { ExternalDocumentationInterface } from "../../models/external-docs";
+import type { TagsInterface } from "../../models/tags";
 
 export class Info 
-  extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin, ExternalDocumentationMixin, TagsMixin) 
+  extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) 
   implements InfoInterface {
 
   title(): string {
@@ -22,14 +24,12 @@ export class Info
     return this._json.version;
   }
 
-  // TODO: Implement it
   id(): string | undefined {
-    return;
+    return this._meta.asyncapi.parsed.id as string;
   }
 
-  // TODO: Implement it
   hasId(): boolean {
-    return true;
+    return !!this._meta.asyncapi.parsed.id;
   }
 
   hasTermsOfService(): boolean {
@@ -46,7 +46,7 @@ export class Info
 
   contact(): Contact | undefined {
     const contact = this._json.contact;
-    return contact && this.createModel(Contact, { value: contact, pointer: 'contact' });
+    return contact && this.createModel(Contact, contact, { pointer: '/info/contact' });
   }
 
   hasLicense(): boolean {
@@ -55,6 +55,22 @@ export class Info
 
   license(): License | undefined {
     const license = this._json.license;
-    return license && this.createModel(License, { value: license, pointer: 'license' });
+    return license && this.createModel(License, license, { pointer: `/info/license` });
+  }
+
+  hasExternalDocs(): boolean {
+    return Object.keys(this._meta.asyncapi.parsed.externalDocs || {}).length > 0;
+  };
+
+  externalDocs(): ExternalDocumentationInterface | undefined { 
+    if (this.hasExternalDocs()) {
+      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs, { pointer: `/externalDocs` });
+    }
+    return;
+  };
+
+  tags(): TagsInterface {
+    const tags = this._json.tags || [];
+    return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `/tags/${idx}` })));
   }
 }

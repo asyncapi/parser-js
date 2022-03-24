@@ -2,6 +2,7 @@ import { Info } from '../../../src/models/v2/info';
 import { Contact } from '../../../src/models/v2/contact';
 import { License } from '../../../src/models/v2/license';
 import { ExternalDocumentation } from '../../../src/models/v2/mixins/external-docs';
+import { Tags, Tag } from '../../../src/models/v2/mixins/tags';
 import { createDetailedAsyncAPI } from '../../../src/utils';
 
 import { 
@@ -186,6 +187,27 @@ describe('Info model', function() {
       const asyncapi = createDetailedAsyncAPI(doc, doc);
       const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
       expect(d.externalDocs()).toEqual(undefined);
+    });
+  });
+
+  describe('.tags()', function() {
+    it('should return the collection of tags', function() {
+      const tags = [{ name: 'one' }, { name: 'two' }];
+      const doc = { asyncapi: '2.0.0', tags };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.tags()).toBeInstanceOf(Tags);
+      expect(d.tags().length).toEqual(2);
+      expect(d.tags().all()[0]).toBeInstanceOf(Tag);
+      expect(d.tags().all()[1]).toBeInstanceOf(Tag);
+    });
+
+    it('should return empty array when there is an empty collection', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.tags()).toBeInstanceOf(Tags);
+      expect(d.tags().all()).toEqual([]);
     });
   });
 

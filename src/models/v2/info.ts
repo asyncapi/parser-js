@@ -70,7 +70,7 @@ export class Info
   };
 
   tags(): TagsInterface {
-    const tags = this._json.tags || [];
+    const tags = this._meta.asyncapi.parsed.tags || [];
     return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `/tags/${idx}` })));
   }
 }

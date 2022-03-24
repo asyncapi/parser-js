@@ -5,20 +5,19 @@ import { DescriptionMixin } from './mixins/description';
 import { BindingsMixin } from './mixins/bindings';
 
 export class Server extends Mixin(BaseModel, DescriptionMixin, BindingsMixin) implements ServerInterface {
-    id(): string {
-        return this.json('id');
+    constructor(
+        private readonly _name: string,
+        _json: Record<string, any>
+    ){
+        super(_json);
     }
 
     hasName(): boolean {
-        return !!this.json('name');
+        return !!this._name;
     }
 
     name(): string | undefined {
-        return this.json('name');
-    }
-
-    hasProtocol(): boolean {
-        return !!this.json('protocol');
+        return this._name
     }
 
     protocol(): string | undefined {
@@ -31,10 +30,6 @@ export class Server extends Mixin(BaseModel, DescriptionMixin, BindingsMixin) im
 
     protocolVersion(): string {
         return this.json('protocolVersion');
-    }
-
-    hasUrl(): boolean {
-        return !!this.json('url');
     }
 
     url(): string {

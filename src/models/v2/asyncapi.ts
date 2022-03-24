@@ -1,15 +1,16 @@
 import { BaseModel } from "../base";
 import { Info } from "./info";
 
-import { createArrayFromMap, Mixin } from '../utils';
+import { Mixin } from '../utils';
 import { ExtensionsMixin } from './mixins/extensions';
 
 import { AsyncAPIDocumentInterface, InfoInterface } from "../../models";
 import { ServersInterface } from "models/servers";
 import { Servers } from "./servers";
+import { Server } from "./server";
 
-export class AsyncAPIDocument 
-  extends Mixin(BaseModel, ExtensionsMixin) 
+export class AsyncAPIDocument
+  extends Mixin(BaseModel, ExtensionsMixin)
   implements AsyncAPIDocumentInterface {
 
   version(): string {
@@ -21,6 +22,8 @@ export class AsyncAPIDocument
   }
 
   servers(): ServersInterface {
-    return new Servers(createArrayFromMap(this._json.servers));
+    return new Servers(
+      Object.entries(this._json.servers).map(([serverName, server]) => new Server(serverName, server as Record<string, any>))
+    );
   }
 }

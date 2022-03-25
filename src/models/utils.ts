@@ -33,3 +33,13 @@ function mixin(derivedCtor: any, constructors: any[]): typeof BaseModel {
   });
   return derivedCtor;
 }
+
+export function createArrayFromMap(json: Record<string,any>){
+  const ArrayObject = [];
+  for (const [key, value] of Object.entries(json)) {
+    value['id'] = key;
+    ArrayObject.push(value);
+  };
+
+  return ArrayObject;
+}

@@ -52,13 +52,13 @@ describe('Servers model', function () {
 
 describe('Server Model', function () {
 
-    describe('.name()', function () {
+    describe('.id()', function () {
         it('should return name if present', function () {
-            expect(docItem.name()).toMatch('development');
+            expect(docItem.id()).toMatch('development');
         })
 
         it('should return undefined if name is not present', function () {
-            expect(emptyItem.name()).toMatch('');
+            expect(emptyItem.id()).toMatch('');
         })
     })
 

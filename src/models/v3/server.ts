@@ -6,14 +6,14 @@ import { BindingsMixin } from './mixins/bindings';
 
 export class Server extends Mixin(BaseModel, DescriptionMixin, BindingsMixin) implements ServerInterface {
     constructor(
-        private readonly _name: string,
+        private readonly _id: string,
         _json: Record<string, any>
     ){
         super(_json);
     }
 
-    name(): string | undefined {
-        return this._name
+    id(): string {
+        return this._id;
     }
 
     protocol(): string | undefined {

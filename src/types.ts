@@ -11,8 +11,8 @@ export interface AsyncAPISemver {
 }
 
 export interface DetailedAsyncAPI {
-  source: string | Record<string, unknown>;
-  parsed: Record<string, unknown>;
+  source: string | Record<string, any>;
+  parsed: Record<string, any>;
   semver: AsyncAPISemver;
 }
 
@@ -25,4 +25,8 @@ export interface ParserOutput {
   source: ParserInput;
   parsed: AsyncAPIDocumentInterface | undefined;
   diagnostics: Diagnostic[]; 
+}
+
+export interface Constructor<T> {
+  new (...args: any[]): T
 }

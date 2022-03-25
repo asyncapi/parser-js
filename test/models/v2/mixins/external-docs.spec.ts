@@ -21,7 +21,6 @@ describe('ExternalDocs mixin', function() {
     });
   });
 
-  // TODO: implement it when the ExternalDocs class will be implemented 
   describe('.externalDocs()', function() {
     it('should return a externalDocs object', function() {
       expect(d1.externalDocs()).toBeInstanceOf(ExternalDocumentationV2);

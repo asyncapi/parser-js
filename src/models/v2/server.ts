@@ -16,10 +16,6 @@ export class Server extends Mixin(BaseModel, DescriptionMixin, BindingsMixin) im
         return this._id;
     }
 
-    hasProtocol(): boolean {
-        return !!this.json('protocol');
-    }
-
     protocol(): string | undefined {
         return this.json('protocol');
     }
@@ -30,10 +26,6 @@ export class Server extends Mixin(BaseModel, DescriptionMixin, BindingsMixin) im
 
     protocolVersion(): string {
         return this.json('protocolVersion');
-    }
-
-    hasUrl(): boolean {
-        return !!this.json('url');
     }
 
     url(): string {

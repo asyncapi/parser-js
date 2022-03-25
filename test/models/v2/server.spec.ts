@@ -55,70 +55,38 @@ describe('Server Model', function () {
     describe('.id()', function () {
         it('should return name if present', function () {
             expect(docItem.id()).toMatch('development');
-        })
-
-        it('should return undefined if name is not present', function () {
-            expect(emptyItem.id()).toMatch('');
-        })
-    })
-
-    describe('.hasProtocol()', function () {
-        it('should return true if protocol is present', function () {
-            expect(docItem.hasProtocol()).toBeTruthy();
-        })
-
-        it('should return false if protocol is not present', function () {
-            expect(emptyItem.hasProtocol()).toBeFalsy();
-        })
-    })
+        });
+    });
 
     describe('protocol()', function () {
         it('should return protocol ', function () {
             expect(docItem.protocol()).toMatch(doc.development.protocol);
-        })
-
-        it('should return undefined when protocol is missing', function () {
-            expect(emptyItem.protocol()).toBeUndefined();
-        })
-    })
+        });
+    });
 
     describe('.hasProtocolVersion()', function () {
         it('should return true if protocolVersion is not missing', function () {
             expect(docItem.hasProtocolVersion()).toBeTruthy();
-        })
+        });
 
         it('should be false when protocolVersion is missing', function () {
             expect(emptyItem.hasProtocolVersion()).toBeFalsy();
-        })
+        });
     })
 
     describe('.protocolVersion()', function () {
         it('should return protocolVersion', function () {
             expect(docItem.protocolVersion()).toMatch(doc.development.protocolVersion);
-        })
+        });
 
         it('should return undefined protocolVersion when protocolVersion is missing', function () {
             expect(emptyItem.protocolVersion()).toBeUndefined();
         })
     })
 
-    describe('.hasUrl()', function () {
-        it('should return true if url is not missing', function () {
-            expect(docItem.hasUrl()).toBeTruthy();
-        })
-
-        it('should return false when url is missing', function () {
-            expect(emptyItem.hasUrl()).toBeFalsy();
-        })
-    })
-
     describe('.url()', function () {
         it('should return url', function () {
             expect(docItem.url()).toMatch(doc.development.url);
-        })
-
-        it('should return undefined when url is missing', function () {
-            expect(emptyItem.url()).toBeUndefined();
-        })
-    })
+        });
+    });
 })

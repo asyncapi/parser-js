@@ -17,7 +17,7 @@ export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface
   if (!isParsedDocument(maybeDoc)) {
     return;
   }
-  return unstringify(maybeDoc) || newAsyncAPIDocument(maybeDoc);
+  return unstringify(maybeDoc) || newAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc));
 }
 
 export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {

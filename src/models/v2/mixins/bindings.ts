@@ -4,6 +4,7 @@ import { Collection } from '../../collection';
 import { Mixin } from '../../utils';
 import { ExtensionsMixin } from './extensions';
 
+import type { ModelMetadata } from "../../base";
 import type { BindingsMixinInterface } from "../../mixins";
 import type { BindingsInterface } from "../../bindings";
 import type { BindingInterface } from "../../binding";
@@ -12,8 +13,9 @@ export class Binding extends Mixin(BaseModel, ExtensionsMixin) implements Bindin
   constructor(
     private readonly _protocol: string,
     _json: Record<string, any>,
+    _meta: ModelMetadata = {} as any,
   ) {
-    super(_json);
+    super(_json, _meta);
   }
 
   protocol(): string {
@@ -45,7 +47,9 @@ export abstract class BindingsMixin extends BaseModel implements BindingsMixinIn
   bindings(): BindingsInterface {
     const bindings: Record<string, any> = this._json.bindings || {};
     return new Bindings(
-      Object.entries(bindings).map(([protocol, binding]) => new Binding(protocol, binding))
+      Object.entries(bindings).map(([protocol, binding]) => 
+        this.createModel(Binding, binding, { id: protocol, pointer: `${this._meta.pointer}/bindings/${protocol}` })
+      )
     );
   }
 }

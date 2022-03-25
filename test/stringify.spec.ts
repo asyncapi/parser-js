@@ -1,8 +1,11 @@
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
 import { BaseModel, newAsyncAPIDocument } from '../src/models';
 import { stringify, unstringify } from '../src/stringify';
+import { createDetailedAsyncAPI } from '../src/utils';
 
 describe('stringify & unstringify', function() {
+  class Model extends BaseModel {}
+
   describe('stringify()', function() {
     it('should not stringify normal object', function() {
       expect(stringify({})).toEqual(undefined);
@@ -17,7 +20,7 @@ describe('stringify & unstringify', function() {
     });
 
     it('should not stringify BaseModel instance', function() {
-      expect(stringify(new BaseModel({}))).toEqual(undefined);
+      expect(stringify(new Model({}))).toEqual(undefined);
     });
 
     it('should stringify parsed document', function() {
@@ -29,7 +32,9 @@ describe('stringify & unstringify', function() {
     });
 
     it('should stringify AsyncAPIDocument instance', function() {
-      expect(typeof stringify(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual('string');
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(typeof stringify(newAsyncAPIDocument(detailed))).toEqual('string');
     });
   });
 
@@ -47,7 +52,7 @@ describe('stringify & unstringify', function() {
     });
 
     it('should not stringify BaseModel instance', function() {
-      expect(unstringify(new BaseModel({}))).toEqual(undefined);
+      expect(unstringify(new Model({}))).toEqual(undefined);
     });
 
     it('should not unstringify parsed document', function() {

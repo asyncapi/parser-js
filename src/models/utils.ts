@@ -1,6 +1,6 @@
 import type { BaseModel } from './base';
 
-export interface Constructor<T = any> extends Function {
+export interface Constructor<T> extends Function {
   new (...any: any[]): T;
 }
 

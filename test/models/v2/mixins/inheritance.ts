@@ -4,7 +4,9 @@ import { ExtensionsMixin } from '../../../../src/models/v2/mixins/extensions';
 import { ExternalDocumentationMixin } from '../../../../src/models/v2/mixins/external-docs';
 import { TagsMixin } from '../../../../src/models/v2/mixins/tags';
 
-export function assertBindingsMixinInheritance(model: typeof BindingsMixin) {
+import type { Constructor } from '../../../../src/models/utils';
+
+export function assertBindingsMixinInheritance(model: Constructor<BindingsMixin>) {
   describe('BindingsMixin inheritance', function() {
     it(`check if ${model.name} model has inherited methods from BindingsMixin`, function() {
       expect(model.prototype.bindings).not.toEqual(undefined);
@@ -14,7 +16,7 @@ export function assertBindingsMixinInheritance(model: typeof BindingsMixin) {
   });
 }
 
-export function assertDescriptionMixinInheritance(model: typeof DescriptionMixin) {
+export function assertDescriptionMixinInheritance(model: Constructor<DescriptionMixin>) {
   describe('DescriptionMixin inheritance', function() {
     it(`check if ${model.name} model has inherited methods from DescriptionMixin`, function() {
       expect(model.prototype.hasDescription).not.toEqual(undefined);
@@ -28,7 +30,7 @@ export function assertDescriptionMixinInheritance(model: typeof DescriptionMixin
   });
 }
 
-export function assertExtensionsMixinInheritance(model: typeof ExtensionsMixin) {
+export function assertExtensionsMixinInheritance(model: Constructor<ExtensionsMixin>) {
   describe('SpecificationExtensionsMixin inheritance', function() {
     it(`check if ${model.name} model has inherited methods from ExtensionsMixin`, function() {
       expect(model.prototype.extensions).not.toEqual(undefined);
@@ -38,7 +40,7 @@ export function assertExtensionsMixinInheritance(model: typeof ExtensionsMixin) 
   });
 }
 
-export function assertExternalDocumentationMixinInheritance(model: typeof ExternalDocumentationMixin) {
+export function assertExternalDocumentationMixinInheritance(model: Constructor<ExternalDocumentationMixin>) {
   describe('ExternalDocsMixin inheritance', function() {
     it(`check if ${model.name} model has inherited methods from ExternalDocumentationMixin`, function() {
       expect(model.prototype.hasExternalDocs).not.toEqual(undefined);
@@ -52,7 +54,7 @@ export function assertExternalDocumentationMixinInheritance(model: typeof Extern
   });
 }
 
-export function assertTagsMixinInheritance(model: typeof TagsMixin) {
+export function assertTagsMixinInheritance(model: Constructor<TagsMixin>) {
   describe('TagsMixin inheritance', function() {
     it(`check if ${model.name} model has inherited methods from TagsMixin`, function() {
       expect(model.prototype.tags).not.toEqual(undefined);

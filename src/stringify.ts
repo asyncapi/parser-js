@@ -1,6 +1,6 @@
 import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
 
-import { isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './utils';
+import { createDetailedAsyncAPI, isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './utils';
 import { xParserSpecStringified } from './constants';
 
 export interface StringifyOptions {
@@ -26,25 +26,26 @@ export function stringify(document: unknown, options: StringifyOptions = {}): st
 }
 
 export function unstringify(document: unknown): AsyncAPIDocumentInterface | undefined {
+  let parsed: unknown = document;
   if (typeof document === 'string') {
     try {
-      document = JSON.parse(document); 
+      parsed = JSON.parse(document); 
     } catch(_) {
       return;
     }
   }
 
-  if (!isStringifiedDocument(document)) {
+  if (!isStringifiedDocument(parsed)) {
     return;
   }
 
   // shall copy of whole JSON
-  document = { ...document };
+  parsed = { ...parsed };
   // remove `x-parser-spec-stringified` extension
-  delete (<Record<string, any>>document)[String(xParserSpecStringified)];
+  delete (<Record<string, any>>parsed)[String(xParserSpecStringified)];
 
   traverseStringifiedDoc(document, undefined, document, new Map(), new Map());
-  return newAsyncAPIDocument(<Record<string, any>>document);
+  return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as Record<string, unknown>));
 }
 
 function refReplacer() {

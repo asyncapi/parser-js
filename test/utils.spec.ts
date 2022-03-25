@@ -19,7 +19,10 @@ import {
 import type { Diagnostic } from '../src/types';
 
 describe('utils', function() {
+  class Model extends BaseModel {}
+
   describe('toAsyncAPIDocument()', function() {
+
     it('normal object should not return AsyncAPIDocument instance', function() {
       expect(toAsyncAPIDocument({})).toEqual(undefined);
     });
@@ -33,11 +36,13 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument(new BaseModel({}))).toEqual(undefined);
+      expect(toAsyncAPIDocument(new Model({}))).toEqual(undefined);
     });
 
     it('AsyncAPIDocument instance should return AsyncAPIDocument instance', function() {
-      expect(toAsyncAPIDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toBeInstanceOf(AsyncAPIDocumentV2);
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(toAsyncAPIDocument(newAsyncAPIDocument(detailed))).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
     it('parsed document should return AsyncAPIDocument instance', function() {
@@ -67,11 +72,13 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not be AsyncAPI document', function() {
-      expect(isAsyncAPIDocument(new BaseModel({}))).toEqual(false);
+      expect(isAsyncAPIDocument(new Model({}))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance should be AsyncAPI document', function() {
-      expect(isAsyncAPIDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(true);
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(isAsyncAPIDocument(newAsyncAPIDocument(detailed))).toEqual(true);
     });
   });
 
@@ -89,15 +96,19 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not be AsyncAPI document', function() {
-      expect(isParsedDocument(new BaseModel({}))).toEqual(false);
+      expect(isParsedDocument(new Model({}))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
-      expect(isParsedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(false);
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(isParsedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
-      expect(isParsedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true }))).toEqual(false);
+      const doc = { asyncapi: '2.0.0', [xParserSpecParsed]: true };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(isParsedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('object with proper extension should be parsed document', function() {
@@ -119,15 +130,19 @@ describe('utils', function() {
     });
 
     it('BaseModel instance should not be AsyncAPI document', function() {
-      expect(isStringifiedDocument(new BaseModel({}))).toEqual(false);
+      expect(isStringifiedDocument(new Model({}))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
-      expect(isStringifiedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0' }))).toEqual(false);
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(isStringifiedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
-      expect(isStringifiedDocument(newAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true }))).toEqual(false);
+      const doc = { asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true };
+      const detailed = createDetailedAsyncAPI(doc, doc);
+      expect(isStringifiedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('object with only stringified extension should not be parsed document', function() {

@@ -1,12 +1,13 @@
 import { Info } from '../../../src/models/v2/info';
 import { Contact } from '../../../src/models/v2/contact';
 import { License } from '../../../src/models/v2/license';
+import { ExternalDocumentation } from '../../../src/models/v2/mixins/external-docs';
+import { Tags, Tag } from '../../../src/models/v2/mixins/tags';
+import { createDetailedAsyncAPI } from '../../../src/utils';
 
 import { 
   assertDescriptionMixinInheritance,
   assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance,
-  assertTagsMixinInheritance
 } from './mixins/inheritance';
 
 describe('Info model', function() {
@@ -23,6 +24,38 @@ describe('Info model', function() {
       const doc = { version: "1.0.0" };
       const d = new Info(doc);
       expect(d.version()).toEqual(doc.version);
+    });
+  });
+
+  describe('.hasId()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { asyncapi: '2.0.0', id: 'someId' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.hasId()).toEqual(true);
+    });
+    
+    it('should return false when there is no value', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.hasId()).toEqual(false);
+    });
+  });
+
+  describe('.id()', function() {
+    it('should return the value', function() {
+      const doc = { asyncapi: '2.0.0', id: 'someId' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.id()).toEqual(doc.id);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.id()).toEqual(undefined);
     });
   });
 
@@ -61,7 +94,7 @@ describe('Info model', function() {
       expect(d.hasContact()).toEqual(true);
     });
     
-    it('should return undefined when there is no value', function() {
+    it('should return false when there is no value', function() {
       const doc = {};
       const d = new Info(doc);
       expect(d.hasContact()).toEqual(false);
@@ -89,7 +122,7 @@ describe('Info model', function() {
       expect(d.hasLicense()).toEqual(true);
     });
     
-    it('should return undefined when there is no value', function() {
+    it('should return false when there is no value', function() {
       const doc = {};
       const d = new Info(doc);
       expect(d.hasLicense()).toEqual(false);
@@ -110,10 +143,76 @@ describe('Info model', function() {
     });
   });
 
+  describe('.hasExternalDocs()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { asyncapi: '2.0.0', externalDocs: { url: 'https://example.com' } };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.hasExternalDocs()).toEqual(true);
+    });
+    
+    it('should return false when there is an empty object', function() {
+      const doc = { asyncapi: '2.0.0', externalDocs: {} };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.hasExternalDocs()).toEqual(false);
+    });
+
+    it('should return false when there is no value', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.hasExternalDocs()).toEqual(false);
+    });
+  });
+
+  describe('.externalDocs()', function() {
+    it('should return the value', function() {
+      const doc = { asyncapi: '2.0.0', externalDocs: { url: 'https://example.com' } };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.externalDocs()).toBeInstanceOf(ExternalDocumentation);
+      expect(d.externalDocs()!.json()).toEqual(doc.externalDocs);
+    });
+
+    it('should return undefined when there is an empty object', function() {
+      const doc = { asyncapi: '2.0.0', externalDocs: {} };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.externalDocs()).toEqual(undefined);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.externalDocs()).toEqual(undefined);
+    });
+  });
+
+  describe('.tags()', function() {
+    it('should return the collection of tags', function() {
+      const tags = [{ name: 'one' }, { name: 'two' }];
+      const doc = { asyncapi: '2.0.0', tags };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.tags()).toBeInstanceOf(Tags);
+      expect(d.tags().length).toEqual(2);
+      expect(d.tags().all()[0]).toBeInstanceOf(Tag);
+      expect(d.tags().all()[1]).toBeInstanceOf(Tag);
+    });
+
+    it('should return empty array when there is an empty collection', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const asyncapi = createDetailedAsyncAPI(doc, doc);
+      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      expect(d.tags()).toBeInstanceOf(Tags);
+      expect(d.tags().all()).toEqual([]);
+    });
+  });
+
   describe('mixins inheritance', function() {
     assertDescriptionMixinInheritance(Info);
     assertExtensionsMixinInheritance(Info);
-    assertExternalDocumentationMixinInheritance(Info);
-    assertTagsMixinInheritance(Info);
   });
 });

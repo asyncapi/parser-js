@@ -5,9 +5,12 @@ import { Mixin } from '../utils';
 import { ExtensionsMixin } from './mixins/extensions';
 
 import { AsyncAPIDocumentInterface, InfoInterface } from "../../models";
+import { ServersInterface } from "models/servers";
+import { Servers } from "./servers";
+import { Server } from "./server";
 
-export class AsyncAPIDocument 
-  extends Mixin(BaseModel, ExtensionsMixin) 
+export class AsyncAPIDocument
+  extends Mixin(BaseModel, ExtensionsMixin)
   implements AsyncAPIDocumentInterface {
 
   version(): string {
@@ -16,5 +19,11 @@ export class AsyncAPIDocument
 
   info(): InfoInterface {
     return new Info(this._json.info);
+  }
+
+  servers(): ServersInterface {
+    return new Servers(
+      Object.entries(this._json.servers).map(([serverName, server]) => new Server(serverName, server as Record<string, any>))
+    );
   }
 }

@@ -4,10 +4,12 @@ import { AsyncAPIDocumentV3 } from "./v3";
 import type { InfoInterface } from "./info";
 import type { BaseModel } from "./base";
 import type { ExtensionsMixinInterface } from "./mixins";
+import { ServersInterface } from "./servers";
 
 export interface AsyncAPIDocumentInterface extends BaseModel, ExtensionsMixinInterface {
   version(): string;
   info(): InfoInterface;
+  servers(): ServersInterface
 }
 
 export function newAsyncAPIDocument(json: Record<string, any>): AsyncAPIDocumentInterface {

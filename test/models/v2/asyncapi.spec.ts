@@ -1,4 +1,4 @@
-import { newAsyncAPIDocument, AsyncAPIDocumentV2, InfoV2, AsyncAPIDocumentV3 } from '../../../src/models';
+import { newAsyncAPIDocument, AsyncAPIDocumentV2, InfoV2, AsyncAPIDocumentV3, ServersV2 } from '../../../src/models';
 
 import { 
   assertExtensionsMixinInheritance,
@@ -26,6 +26,18 @@ describe('AsyncAPIDocument model', function() {
       expect(d.info() instanceof InfoV2).toBeTruthy();
     });
   });
+
+  describe('.servers()', function(){
+    it('should return an servers object', function(){
+      const doc = {servers: {
+        development: {
+
+        }
+      }};
+      const d = new AsyncAPIDocumentV2(doc);
+      expect(d.servers() instanceof ServersV2).toBeTruthy();
+    })
+  })
 
   describe('mixins inheritance', function() {
     assertExtensionsMixinInheritance(AsyncAPIDocumentV2);

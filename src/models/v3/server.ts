@@ -12,10 +12,6 @@ export class Server extends Mixin(BaseModel, DescriptionMixin, BindingsMixin) im
         super(_json);
     }
 
-    hasName(): boolean {
-        return !!this._name;
-    }
-
     name(): string | undefined {
         return this._name
     }

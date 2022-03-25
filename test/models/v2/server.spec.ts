@@ -52,17 +52,6 @@ describe('Servers model', function () {
 
 describe('Server Model', function () {
 
-
-    describe('.hasName()', function () {
-        it('should return true if name is present', function () {
-            expect(docItem.hasName()).toBeTruthy();
-        })
-
-        it('should return false if name is not present', function () {
-            expect(emptyItem.hasName()).toBeFalsy();
-        })
-    })
-
     describe('.name()', function () {
         it('should return name if present', function () {
             expect(docItem.name()).toMatch('development');

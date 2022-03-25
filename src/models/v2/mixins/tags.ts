@@ -32,6 +32,10 @@ export class Tags extends Collection<TagInterface> implements TagsInterface {
 export abstract class TagsMixin extends BaseModel implements TagsMixinInterface { 
   tags(): TagsInterface {
     const tags = this._json.tags || [];
-    return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `${this._meta.pointer}/tags/${idx}` })));
+    return new Tags(
+      tags.map((tag: any, idx: number) => 
+        this.createModel(Tag, tag, { pointer: `${this._meta.pointer}/tags/${idx}` })
+      )
+    );
   }
 }

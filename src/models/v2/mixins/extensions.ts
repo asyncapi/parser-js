@@ -12,7 +12,7 @@ export class Extension extends BaseModel implements ExtensionInterface {
   constructor(
     private readonly _id: string,
     _json: Record<string, any>,
-    _meta: ModelMetadata,
+    _meta: ModelMetadata = {} as any,
   ) {
     super(_json, _meta);
   }

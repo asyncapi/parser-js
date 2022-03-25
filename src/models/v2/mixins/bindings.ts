@@ -13,7 +13,7 @@ export class Binding extends Mixin(BaseModel, ExtensionsMixin) implements Bindin
   constructor(
     private readonly _protocol: string,
     _json: Record<string, any>,
-    _meta: ModelMetadata,
+    _meta: ModelMetadata = {} as any,
   ) {
     super(_json, _meta);
   }

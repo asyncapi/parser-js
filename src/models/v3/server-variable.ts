@@ -1,4 +1,4 @@
-import { BaseModel, ModelMetadata } from '../base';
+import { BaseModel } from '../base';
 import { Mixin } from '../utils';
 import { ServerVariableInterface } from '../server-variable';
 import { DescriptionMixin } from './mixins/description';
@@ -6,15 +6,8 @@ import { ExtensionsMixin } from './mixins/extensions';
 
 
 export class ServerVariable extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements ServerVariableInterface {
-    constructor(
-        private readonly _id: string,
-        _json: Record<string,any>,
-        _meta: ModelMetadata = {} as any
-    ){
-        super(_json, _meta);
-    }
     id(): string {
-        return this._id;
+        throw new Error('Method not implemented.');
     }
     hasDefaultValue(): boolean {
         return !!this._json.default

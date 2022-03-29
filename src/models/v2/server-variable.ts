@@ -23,10 +23,10 @@ export class ServerVariable extends Mixin(BaseModel, DescriptionMixin, Extension
         return this._json.default;
     }
     hasAllowedValue(): boolean {
-        throw new Error('Method not implemented.');
+        return !!this._json.enum;
     }
-    allowedValue(): string | undefined {
-        throw new Error('Method not implemented.');
+    allowedValue(): any[] {
+        return this._json.enum;
     }
     examples(): string[] {
         return this._json.examples

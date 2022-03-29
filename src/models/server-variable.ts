@@ -6,6 +6,6 @@ export interface ServerVariableInterface extends BaseModel, DescriptionMixinInte
     hasDefaultValue(): boolean;
     defaultValue(): string | undefined;
     hasAllowedValue(): boolean;
-    allowedValue(): string | undefined;
+    allowedValue(): any[]
     examples(): Array<string>
 }

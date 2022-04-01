@@ -3,6 +3,7 @@ const {
   validateOperationId,
   validateServerSecurity,
   validateChannels,
+  validateMessageId,
 } = require('../lib/customValidators.js');
 const { checkErrorWrapper } = require('./testsUtils');
 
@@ -1072,6 +1073,273 @@ describe('validateOperationId()', function () {
 
     await checkErrorWrapper(async () => {
       await validateOperationId(parsedInput, inputString, input, operations);
+    }, expectedErrorObject);
+  });
+});
+
+describe('validateMessageId()', function () {
+  const operations = ['subscribe', 'publish'];
+
+  it('should successfully validate messageId', async function () {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "message": {
+              "messageId": "test1"
+            }
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "message": {
+              "messageId": "test2"
+            }
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    expect(
+      validateMessageId(parsedInput, inputString, input, operations)
+    ).to.equal(true);
+  });
+
+  it('should throw error that messageIds are duplicated and that they duplicate', async function () {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "message": {
+              "messageId": "test"
+            }
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "message": {
+              "messageId": "test"
+            }
+          }
+        },
+        "test/3": {
+          "subscribe": {
+            "message": {
+              "messageId": "test"
+            }
+          }
+        },
+        "test/4": {
+          "subscribe": {
+            "operationId": "test4"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'messageId must be unique across all the messages.',
+      parsedJSON: parsedInput,
+      validationErrors: [
+        {
+          title:
+            'test/2/subscribe/message/messageId is a duplicate of: test/1/publish/message/messageId',
+          location: {
+            jsonPointer: '/channels/test~12/subscribe/message/messageId',
+            startLine: 17,
+            startColumn: 29,
+            startOffset: 337,
+            endLine: 17,
+            endColumn: 35,
+            endOffset: 343,
+          },
+        },
+        {
+          title:
+            'test/3/subscribe/message/messageId is a duplicate of: test/1/publish/message/messageId',
+          location: {
+            jsonPointer: '/channels/test~13/subscribe/message/messageId',
+            startLine: 24,
+            startColumn: 29,
+            startOffset: 478,
+            endLine: 24,
+            endColumn: 35,
+            endOffset: 484,
+          },
+        },
+      ],
+    };
+
+    await checkErrorWrapper(async () => {
+      await validateMessageId(parsedInput, inputString, input, operations);
+    }, expectedErrorObject);
+  });
+
+  it('should throw error that messageIds are duplicated and that they duplicate with oneOf', async function () {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "message": {
+              "oneOf": [{
+                "messageId": "test1"
+              }]
+            }
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "message": {
+              "messageId": "test1"
+            }
+          }
+        },
+        "test/3": {
+          "subscribe": {
+            "message": {
+              "oneOf": [
+                {
+                  "messageId": "test2"
+                },
+                {
+                  "messageId": "test2"
+                }
+              ]
+            }
+          }
+        },
+        "test/4": {
+          "subscribe": {
+            "operationId": "test4"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'messageId must be unique across all the messages.',
+      parsedJSON: parsedInput,
+      validationErrors: [
+        {
+          title:
+            'test/2/subscribe/message/messageId is a duplicate of: test/1/publish/message/oneOf/messageId',
+          location: {
+            jsonPointer: '/channels/test~12/subscribe/message/messageId',
+            startLine: 19,
+            startColumn: 29,
+            startOffset: 383,
+            endLine: 19,
+            endColumn: 36,
+            endOffset: 390,
+          },
+        },
+        {
+          title:
+            'test/3/subscribe/message/oneOf/messageId is a duplicate of: test/3/subscribe/message/oneOf/messageId',
+          location: {
+            jsonPointer: '/channels/test~13/subscribe/message/oneOf/messageId',
+            startLine: 28,
+            startColumn: 33,
+            startOffset: 572,
+            endLine: 28,
+            endColumn: 40,
+            endOffset: 579,
+          },
+        },
+      ],
+    };
+
+    await checkErrorWrapper(async () => {
+      await validateMessageId(parsedInput, inputString, input, operations);
+    }, expectedErrorObject);
+  });
+
+  it('should only throw error for message that have defined duplicate messageIds', async function () {
+    const inputString = `{
+      "asyncapi": "2.0.0",
+      "info": {
+        "version": "1.0.0"
+      },
+      "channels": {
+        "test/1": {
+          "publish": {
+            "message": {
+              "oneOf": [{
+                "messageId": "test1"
+              }]
+            }
+          }
+        },
+        "test/2": {
+          "subscribe": {
+            "message": {
+              "name": "test1"
+            }
+          }
+        },
+        "test/3": {
+          "subscribe": {
+            "message": {
+              "oneOf": [
+                {
+                  "messageId": "test2"
+                },
+                {
+                  "messageId": "test2"
+                }
+              ]
+            }
+          }
+        },
+        "test/4": {
+          "subscribe": {
+            "operationId": "test4"
+          }
+        }
+      }
+    }`;
+    const parsedInput = JSON.parse(inputString);
+
+    const expectedErrorObject = {
+      type: 'https://github.com/asyncapi/parser-js/validation-errors',
+      title: 'messageId must be unique across all the messages.',
+      parsedJSON: parsedInput,
+      validationErrors: [
+        {
+          title:
+            'test/3/subscribe/message/oneOf/messageId is a duplicate of: test/3/subscribe/message/oneOf/messageId',
+          location: {
+            jsonPointer: '/channels/test~13/subscribe/message/oneOf/messageId',
+            startLine: 28,
+            startColumn: 33,
+            startOffset: 567,
+            endLine: 28,
+            endColumn: 40,
+            endOffset: 574,
+          },
+        },
+      ],
+    };
+
+    await checkErrorWrapper(async () => {
+      await validateMessageId(parsedInput, inputString, input, operations);
     }, expectedErrorObject);
   });
 });

@@ -187,6 +187,7 @@
         * [.MessageTraitable](#module_@asyncapi/parser+MessageTraitable) ⇐ <code>Base</code>
             * [.headers()](#module_@asyncapi/parser+MessageTraitable+headers) ⇒ <code>Schema</code>
             * [.header(name)](#module_@asyncapi/parser+MessageTraitable+header) ⇒ <code>Schema</code>
+            * [.id()](#module_@asyncapi/parser+MessageTraitable+id) ⇒ <code>string</code>
             * [.correlationId()](#module_@asyncapi/parser+MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
             * [.schemaFormat()](#module_@asyncapi/parser+MessageTraitable+schemaFormat) ⇒ <code>string</code>
             * [.contentType()](#module_@asyncapi/parser+MessageTraitable+contentType) ⇒ <code>string</code>
@@ -1577,6 +1578,7 @@ Implements functions to deal with a the common properties that Message and Messa
 * [.MessageTraitable](#module_@asyncapi/parser+MessageTraitable) ⇐ <code>Base</code>
     * [.headers()](#module_@asyncapi/parser+MessageTraitable+headers) ⇒ <code>Schema</code>
     * [.header(name)](#module_@asyncapi/parser+MessageTraitable+header) ⇒ <code>Schema</code>
+    * [.id()](#module_@asyncapi/parser+MessageTraitable+id) ⇒ <code>string</code>
     * [.correlationId()](#module_@asyncapi/parser+MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
     * [.schemaFormat()](#module_@asyncapi/parser+MessageTraitable+schemaFormat) ⇒ <code>string</code>
     * [.contentType()](#module_@asyncapi/parser+MessageTraitable+contentType) ⇒ <code>string</code>
@@ -1620,6 +1622,10 @@ Implements functions to deal with a the common properties that Message and Messa
 | --- | --- | --- |
 | name | <code>string</code> | Name of the header. |
 
+<a name="module_@asyncapi/parser+MessageTraitable+id"></a>
+
+#### messageTraitable.id() ⇒ <code>string</code>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
 <a name="module_@asyncapi/parser+MessageTraitable+correlationId"></a>
 
 #### messageTraitable.correlationId() ⇒ <code>CorrelationId</code>

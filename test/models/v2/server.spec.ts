@@ -1,4 +1,5 @@
 import { Server } from '../../../src/models/v2/server';
+import {ServerVariables} from '../../../src/models/v2/server-variables';
 
 import { 
   assertDescriptionMixinInheritance,
@@ -9,7 +10,13 @@ const doc = {
   'development': {
     protocol: 'mqtt',
     protocolVersion: '1.0.0',
-    url: 'development.gigantic-server.com'
+    url: 'development.gigantic-server.com',
+    variables: {
+      username: {
+        default: 'demo',
+        description: 'This value is assigned by the service provider, in this example `gigantic-server.com`'
+      }
+    }
   }
 };
 const docItem = new Server('development', doc.development);
@@ -53,6 +60,12 @@ describe('Server Model', function () {
       expect(docItem.url()).toMatch(doc.development.url);
     });
   });
+
+  describe('.servers()', function(){
+    it('should return ServerVariables object', function(){
+      expect(docItem.variables() instanceof ServerVariables).toBeTruthy();
+    })
+  })
 
   describe('mixins inheritance', function() {
     assertDescriptionMixinInheritance(Server);

@@ -2,13 +2,20 @@ import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from "./models";
 
 import { customOperations } from './custom-operations';
 import { validate } from "./lint";
-import { stringify, unstringify } from './stringify';
 import { createDetailedAsyncAPI, normalizeInput, toAsyncAPIDocument } from "./utils";
 
 import { xParserSpecParsed } from './constants';
 
-import type { ParserInput, ParserOutput } from './types';
+import type { Parser } from './parser';
 import type { ValidateOptions } from './lint';
+import type { MaybeAsyncAPI, Diagnostic } from './types';
+
+export type ParseInput = string | MaybeAsyncAPI | AsyncAPIDocumentInterface;
+export interface ParseOutput {
+  source: ParseInput;
+  parsed: AsyncAPIDocumentInterface | undefined;
+  diagnostics: Diagnostic[]; 
+}
 
 export interface ParseOptions {
   applyTraits?: boolean;
@@ -16,7 +23,7 @@ export interface ParseOptions {
   validateOptions?: ValidateOptions;
 }
 
-export async function parse(asyncapi: ParserInput, options?: ParseOptions): Promise<ParserOutput> {
+export async function parse(parser: Parser, asyncapi: ParseInput, options?: ParseOptions): Promise<ParseOutput> {
   let maybeDocument = toAsyncAPIDocument(asyncapi);
   if (maybeDocument) {
     return { 
@@ -27,10 +34,10 @@ export async function parse(asyncapi: ParserInput, options?: ParseOptions): Prom
   }
 
   try {
-    const document = normalizeInput(asyncapi as Exclude<ParserInput, AsyncAPIDocumentInterface>);
+    const document = normalizeInput(asyncapi as Exclude<ParseInput, AsyncAPIDocumentInterface>);
     options = normalizeOptions(options);
 
-    const { validated, diagnostics } = await validate(document, options.validateOptions);
+    const { validated, diagnostics } = await validate(parser, document, options.validateOptions);
     if (validated === undefined) {
       return {
         source: asyncapi,
@@ -39,14 +46,12 @@ export async function parse(asyncapi: ParserInput, options?: ParseOptions): Prom
       };
     }
 
-    const doc = {
-      ...(validated as Record<string, any>),
-      [xParserSpecParsed]: true,
-    }
-    const parsed = unstringify(stringify(doc))?.json()!;
+    // unfreeze the object - Spectral makes resolved document "freezed" 
+    const validatedDoc = JSON.parse(JSON.stringify(validated));
+    validatedDoc[String(xParserSpecParsed)] = true;
     
-    const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, parsed);
-    await customOperations(detailed, options);
+    const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, validatedDoc);
+    await customOperations(parser, detailed, options);
     const parsedDoc = newAsyncAPIDocument(detailed);
   
     return { 

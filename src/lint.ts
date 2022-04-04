@@ -1,22 +1,19 @@
-import {
-  IConstructorOpts,
-  IRunOpts,
-  Spectral,
-  Ruleset,
-  RulesetDefinition,
-} from "@stoplight/spectral-core";
-import { asyncapi as aasRuleset } from "@stoplight/spectral-rulesets";
-
+import { Document } from "@stoplight/spectral-core";
+import { Yaml } from "@stoplight/spectral-parsers";
 import { toAsyncAPIDocument, normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from "./utils";
 
+import type { IRunOpts } from "@stoplight/spectral-core";
+import type { Parser } from './parser';
 import type { AsyncAPIDocumentInterface } from "./models/asyncapi";
-import type { ParserInput, Diagnostic } from "./types";
+import type { ParseInput } from "./parse";
+import type { Diagnostic } from "./types";
 
-export interface LintOptions extends IConstructorOpts, IRunOpts {
-  ruleset?: RulesetDefinition | Ruleset;
+export interface LintOptions extends IRunOpts {
+  path?: string;
 }
 
-export interface ValidateOptions extends LintOptions {
+export interface ValidateOptions extends IRunOpts {
+  path?: string;
   allowedSeverity?: {
     warning?: boolean;
   };
@@ -27,20 +24,24 @@ export interface ValidateOutput {
   diagnostics: Diagnostic[];
 }
 
-export async function lint(asyncapi: ParserInput, options?: LintOptions): Promise<Diagnostic[] | undefined> {
-  if (toAsyncAPIDocument(asyncapi)) {
-    return;
-  }
-  const document = normalizeInput(asyncapi as Exclude<ParserInput, AsyncAPIDocumentInterface>);
-  return (await validate(document, options)).diagnostics;
+export async function lint(parser: Parser, asyncapi: ParseInput, options?: LintOptions): Promise<Diagnostic[]> {
+  const result = await validate(parser, asyncapi, options);
+  return result.diagnostics;
 }
 
-export async function validate(asyncapi: string, options?: ValidateOptions): Promise<ValidateOutput> {
-  const { ruleset, allowedSeverity, ...restOptions } = normalizeOptions(options);
-  const spectral = new Spectral(restOptions);
+export async function validate(parser: Parser, asyncapi: ParseInput, options: ValidateOptions = {}): Promise<ValidateOutput> {
+  if (toAsyncAPIDocument(asyncapi)) {
+    return {
+      validated: asyncapi,
+      diagnostics: [],
+    }
+  }
 
-  spectral.setRuleset(ruleset!);
-  let { resolved, results } = await spectral.runWithResolved(asyncapi);
+  const stringifiedDocument = normalizeInput(asyncapi as Exclude<ParseInput, AsyncAPIDocumentInterface>);
+  const document = new Document(stringifiedDocument, Yaml, options.path);
+
+  const { allowedSeverity } = normalizeOptions(options);
+  let { resolved, results } = await parser.spectral.runWithResolved(document);
 
   if (
     hasErrorDiagnostic(results) ||
@@ -53,8 +54,6 @@ export async function validate(asyncapi: string, options?: ValidateOptions): Pro
 }
 
 const defaultOptions: ValidateOptions = {
-  // TODO: fix that type
-  ruleset: aasRuleset as any,
   allowedSeverity: {
     warning: true,
   }
@@ -65,7 +64,6 @@ function normalizeOptions(options?: ValidateOptions): ValidateOptions {
   }
   // shall copy
   options = { ...defaultOptions, ...options };
-
   // severity
   options.allowedSeverity = { ...defaultOptions.allowedSeverity, ...(options.allowedSeverity || {}) };
 

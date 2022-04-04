@@ -1,7 +1,10 @@
 import { lint, validate } from '../src/lint';
+import { Parser } from '../src/parser';
 import { hasErrorDiagnostic, hasWarningDiagnostic } from '../src/utils';
 
 describe('lint() & validate()', function() {
+  const parser = new Parser();
+
   describe('lint()', function() {
     it('should lint invalid document', async function() {
       const document = {
@@ -12,7 +15,7 @@ describe('lint() & validate()', function() {
         },
       }
 
-      const diagnostics = await lint(document);
+      const diagnostics = await lint(parser, document);
       if (!diagnostics) {
         return;
       }
@@ -32,7 +35,7 @@ describe('lint() & validate()', function() {
         channels: {}
       }
 
-      const diagnostics = await lint(document);
+      const diagnostics = await lint(parser, document);
       if (!diagnostics) {
         return;
       }
@@ -52,7 +55,7 @@ describe('lint() & validate()', function() {
           version: '1.0',
         },
       }, undefined, 2);
-      const { validated, diagnostics } = await validate(document);
+      const { validated, diagnostics } = await validate(parser, document);
 
       expect(validated).toBeUndefined();
       expect(diagnostics.length > 0).toEqual(true);
@@ -67,7 +70,7 @@ describe('lint() & validate()', function() {
         },
         channels: {}
       }, undefined, 2);
-      const { validated, diagnostics } = await validate(document);
+      const { validated, diagnostics } = await validate(parser, document);
       
       expect(validated).not.toBeUndefined();
       expect(diagnostics.length > 0).toEqual(true);
@@ -82,7 +85,7 @@ describe('lint() & validate()', function() {
         },
         channels: {}
       }, undefined, 2);
-      const { validated, diagnostics } = await validate(document, { allowedSeverity: { warning: false } });
+      const { validated, diagnostics } = await validate(parser, document, { allowedSeverity: { warning: false } });
       
       expect(validated).toBeUndefined();
       expect(diagnostics.length > 0).toEqual(true);

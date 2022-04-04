@@ -7,6 +7,9 @@ import { ExtensionsMixin } from './mixins/extensions';
 
 import type { ModelMetadata } from "../base";
 import type { ServerInterface } from '../server';
+import { ServerVariablesInterface } from '../server-variables';
+import { ServerVariables } from './server-variables';
+import { ServerVariable } from './server-variable';
 
 export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ServerInterface {
   constructor(
@@ -35,5 +38,19 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
 
   protocolVersion(): string {
     return this._json.protocolVersion;
+  }
+
+  variables(): ServerVariablesInterface {
+    return new ServerVariables(
+      Object.entries(
+        this._json.variables
+      ).map(
+        ([serverVariableName, serverVariable]) => this.createModel(
+          ServerVariable, serverVariable, {
+            id: serverVariableName,
+            pointer: `${this._meta.pointer}/variables/${serverVariableName}`
+        }
+        )
+      ))
   }
 }

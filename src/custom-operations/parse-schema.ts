@@ -4,6 +4,7 @@ import { toPath } from 'lodash';
 import { parseSchema, getDefaultSchemaFormat } from '../schema-parser';
 import { xParserOriginalSchemaFormat } from '../constants';
 
+import type { Parser } from '../parser';
 import type { ParseSchemaInput } from "../schema-parser";
 import type { DetailedAsyncAPI } from "../types";
 
@@ -20,7 +21,7 @@ const customSchemasPathsV2 = [
   '$.components.messages.*',
 ];
 
-export async function parseSchemasV2(detailed: DetailedAsyncAPI) {
+export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI) {
   const defaultSchemaFormat = getDefaultSchemaFormat(detailed.parsed.asyncapi as string);
   const parseItems: Array<ToParseItem> = [];
 
@@ -57,10 +58,10 @@ export async function parseSchemasV2(detailed: DetailedAsyncAPI) {
     });
   });
 
-  return Promise.all(parseItems.map(parseSchemaV2));
+  return Promise.all(parseItems.map(item => parseSchemaV2(parser, item)));
 }
 
-async function parseSchemaV2(item: ToParseItem) {
+async function parseSchemaV2(parser: Parser, item: ToParseItem) {
   item.value[xParserOriginalSchemaFormat] = item.input.schemaFormat;
-  item.value.payload = await parseSchema(item.input);
+  item.value.payload = await parseSchema(parser, item.input);
 }

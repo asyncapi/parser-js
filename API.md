@@ -233,6 +233,7 @@
             * [.extension(key)](#module_@asyncapi/parser+OAuthFlow+extension) ⇒ <code>any</code>
             * [.hasExt(key)](#module_@asyncapi/parser+OAuthFlow+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+OAuthFlow+ext) ⇒ <code>any</code>
+        * [.OperationSecurityRequirement](#module_@asyncapi/parser+OperationSecurityRequirement) ⇐ <code>Base</code>
         * [.OperationTrait](#module_@asyncapi/parser+OperationTrait) ⇐ <code>OperationTraitable</code>
         * [.OperationTraitable](#module_@asyncapi/parser+OperationTraitable) ⇐ <code>Base</code>
             * [.id()](#module_@asyncapi/parser+OperationTraitable+id) ⇒ <code>string</code>
@@ -265,7 +266,7 @@
             * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
             * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
             * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
-            * [.OperationSecurityRequirement](#module_@asyncapi/parser+OperationSecurityRequirement) ⇐ <code>Base</code>
+            * [.security()](#module_@asyncapi/parser+Operation+security) ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
         * [.PublishOperation](#module_@asyncapi/parser+PublishOperation) ⇐ <code>Operation</code>
             * [.isPublish()](#module_@asyncapi/parser+PublishOperation+isPublish) ⇒ <code>boolean</code>
             * [.isSubscribe()](#module_@asyncapi/parser+PublishOperation+isSubscribe) ⇒ <code>boolean</code>
@@ -1913,6 +1914,13 @@ Implements functions to deal with a OAuthFlow object.
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
+<a name="module_@asyncapi/parser+OperationSecurityRequirement"></a>
+
+### @asyncapi/parser.OperationSecurityRequirement ⇐ <code>Base</code>
+Implements functions to deal with a OperationSecurityRequirement object.
+
+**Kind**: instance class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Extends**: <code>Base</code>  
 <a name="module_@asyncapi/parser+OperationTrait"></a>
 
 ### @asyncapi/parser.OperationTrait ⇐ <code>OperationTraitable</code>
@@ -2152,7 +2160,7 @@ Implements functions to deal with an Operation object.
 <a name="module_@asyncapi/parser+Operation+security"></a>
 
 #### operation.security() ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
-**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
 <a name="module_@asyncapi/parser+PublishOperation"></a>
 
 ### @asyncapi/parser.PublishOperation ⇐ <code>Operation</code>

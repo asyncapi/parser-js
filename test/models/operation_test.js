@@ -127,6 +127,7 @@ describe('Operation', function() {
     it('should return an array of security requirements objects', function() {
       const d = new Operation(js);
       expect(Array.isArray(d.security())).to.equal(true);
+      expect(d.security().length > 0).to.equal(true);
       d.security().forEach((s, i) => {
         expect(s.constructor.name).to.equal('OperationSecurityRequirement');
         expect(s.json()).to.equal(js.security[i]);

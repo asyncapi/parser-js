@@ -62,6 +62,9 @@ export function getSemver(version: string): AsyncAPISemver {
 }
 
 export function normalizeInput(asyncapi: string | MaybeAsyncAPI): string {
+  if (typeof asyncapi === 'string') {
+    return asyncapi;
+  }
   return JSON.stringify(asyncapi, undefined, 2);
 };
 

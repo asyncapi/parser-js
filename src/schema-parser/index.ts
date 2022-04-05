@@ -1,3 +1,4 @@
+import type { Parser } from '../parser';
 import type { DetailedAsyncAPI, SchemaValidateResult } from '../types';
 
 export interface ValidateSchemaInput<D = unknown, M = unknown> {
@@ -24,42 +25,36 @@ export interface SchemaParser<D = unknown, M = unknown> {
   getMimeTypes: () => Array<string>;
 }
 
-const PARSERS = new Map<string, SchemaParser>();
-
-export async function validateSchema(input: ParseSchemaInput) {
-  const parser = getSchemaParser(input.schemaFormat);
-  if (parser === undefined) {
+export async function validateSchema(parser: Parser, input: ParseSchemaInput) {
+  const schemaParser = parser.parserRegistry.get(input.schemaFormat);
+  if (schemaParser === undefined) {
     // throw appropriate error
     throw new Error();
   }
-  return parser.validate(input);
+  return schemaParser.validate(input);
 }
 
-export async function parseSchema(input: ParseSchemaInput) {
-  const parser = getSchemaParser(input.schemaFormat);
-  if (parser === undefined) {
+export async function parseSchema(parser: Parser, input: ParseSchemaInput) {
+  const schemaParser = parser.parserRegistry.get(input.schemaFormat);
+  if (schemaParser === undefined) {
     return;
   }
-  return parser.parse(input);
+  return schemaParser.parse(input);
 }
 
-export function registerSchemaParser(parser: SchemaParser) {
+export function registerSchemaParser(parser: Parser, schemaParser: SchemaParser) {
   if (
-    typeof parser !== 'object' 
-      || typeof parser.validate !== 'function' 
-      || typeof parser.parse !== 'function' 
-      || typeof parser.getMimeTypes !== 'function'
+    typeof schemaParser !== 'object' 
+      || typeof schemaParser.validate !== 'function' 
+      || typeof schemaParser.parse !== 'function' 
+      || typeof schemaParser.getMimeTypes !== 'function'
   ) {
     throw new Error('custom parser must have "parse()", "validate()" and "getMimeTypes()" functions.');
   }
 
-  parser.getMimeTypes().forEach(schemaFormat => {
-    PARSERS.set(schemaFormat, parser);
+  schemaParser.getMimeTypes().forEach(schemaFormat => {
+    parser.parserRegistry.set(schemaFormat, schemaParser);
   });
-}
-
-export function getSchemaParser(mimeType: string) {
-  return PARSERS.get(mimeType);
 }
 
 export function getDefaultSchemaFormat(asyncapiVersion: string) {

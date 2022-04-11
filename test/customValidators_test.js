@@ -1239,7 +1239,7 @@ describe('validateMessageId()', function () {
       validationErrors: [
         {
           title:
-            'test/2/subscribe/message/messageId is a duplicate of: test/1/publish/message/oneOf/messageId',
+            'test/2/subscribe/message/messageId is a duplicate of: test/1/publish/message/oneOf/0/messageId',
           location: {
             jsonPointer: '/channels/test~12/subscribe/message/messageId',
             startLine: 19,
@@ -1252,15 +1252,9 @@ describe('validateMessageId()', function () {
         },
         {
           title:
-            'test/3/subscribe/message/oneOf/messageId is a duplicate of: test/3/subscribe/message/oneOf/messageId',
+            'test/3/subscribe/message/oneOf/1/messageId is a duplicate of: test/3/subscribe/message/oneOf/0/messageId',
           location: {
-            jsonPointer: '/channels/test~13/subscribe/message/oneOf/messageId',
-            startLine: 28,
-            startColumn: 33,
-            startOffset: 572,
-            endLine: 28,
-            endColumn: 40,
-            endOffset: 579,
+            jsonPointer: '/channels/test~13/subscribe/message/oneOf/1/messageId',
           },
         },
       ],
@@ -1324,15 +1318,9 @@ describe('validateMessageId()', function () {
       validationErrors: [
         {
           title:
-            'test/3/subscribe/message/oneOf/messageId is a duplicate of: test/3/subscribe/message/oneOf/messageId',
+            'test/3/subscribe/message/oneOf/1/messageId is a duplicate of: test/3/subscribe/message/oneOf/0/messageId',
           location: {
-            jsonPointer: '/channels/test~13/subscribe/message/oneOf/messageId',
-            startLine: 28,
-            startColumn: 33,
-            startOffset: 567,
-            endLine: 28,
-            endColumn: 40,
-            endOffset: 574,
+            jsonPointer: '/channels/test~13/subscribe/message/oneOf/1/messageId',
           },
         },
       ],

@@ -1,7 +1,8 @@
 import { Server } from '../../../src/models/v2/server';
-import {ServerVariables} from '../../../src/models/v2/server-variables';
+import { ServerVariables } from '../../../src/models/v2/server-variables';
+import {SecuritySchemes} from '../../../src/models/v2/security-schemes';
 
-import { 
+import {
   assertDescriptionMixinInheritance,
   assertExtensionsMixinInheritance,
 } from './mixins/inheritance';
@@ -16,11 +17,20 @@ const doc = {
         default: 'demo',
         description: 'This value is assigned by the service provider, in this example `gigantic-server.com`'
       }
+    },
+    security: {
+      api_key: {
+        type: 'http',
+        in: 'header',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        openIdConnectUrl: 'https://server.com/.well-known/openid-configuration'
+      }
     }
   }
 };
 const docItem = new Server('development', doc.development);
-const emptyItem = new Server('',{});
+const emptyItem = new Server('', {});
 
 describe('Server Model', function () {
   describe('.id()', function () {
@@ -61,13 +71,17 @@ describe('Server Model', function () {
     });
   });
 
-  describe('.servers()', function(){
-    it('should return ServerVariables object', function(){
+  describe('.servers()', function () {
+    it('should return ServerVariables object', function () {
       expect(docItem.variables() instanceof ServerVariables).toBeTruthy();
     })
   })
 
-  describe('mixins inheritance', function() {
+  describe('.security()', function() {
+    expect(docItem.securitySchemes() instanceof SecuritySchemes).toBeTruthy();
+  })
+
+  describe('mixins inheritance', function () {
     assertDescriptionMixinInheritance(Server);
     assertExtensionsMixinInheritance(Server);
   });

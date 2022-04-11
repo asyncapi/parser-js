@@ -8,3 +8,7 @@ export { ExternalDocumentation as ExternalDocumentationV2 } from './mixins/exter
 export { Tags as TagsV2, Tag as TagV2 } from './mixins/tags';
 export { Server as ServerV2 } from './server';
 export { Servers as ServersV2 } from './servers';
+export { SecurityScheme as SecuritySchemeV2 } from './security-scheme';
+export { SecuritySchemes as SecuritySchemesV2 } from './security-schemes';
+export { ServerVariable as ServerVariableV2 } from './server-variable';
+export { ServerVariables as ServerVariablesV2 } from './server-variables';

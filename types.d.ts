@@ -855,11 +855,6 @@ declare module "@asyncapi/parser" {
         security(): OperationSecurityRequirement[];
     }
     /**
-     * Implements functions to deal with a OperationSecurityRequirement object.
-    */
-    class OperationSecurityRequirement extends Base {
-    }
-    /**
      * Implements functions to deal with a PublishOperation object.
      */
     class PublishOperation extends Operation {

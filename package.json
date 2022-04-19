@@ -94,6 +94,10 @@
       {
         "name": "next-major",
         "prerelease": true
+      },
+      {
+        "name": "next-major-spec",
+        "prerelease": true
       }
     ],
     "plugins": [

@@ -464,6 +464,14 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the message trait.
          */
         messageTrait(name: string): MessageTrait;
+        serverVariables(): {
+            [key: string]: ServerVariable;
+        };
+        hasServerVariables(): boolean;
+        /**
+         * @param name - Name of the server variable.
+         */
+        serverVariable(name: string): ServerVariable;
         hasExtensions(): boolean;
         extensions(): {
             [key: string]: any;

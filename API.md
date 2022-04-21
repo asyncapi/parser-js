@@ -109,6 +109,9 @@
             * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
             * [.hasMessageTraits()](#module_@asyncapi/parser+Components+hasMessageTraits) ⇒ <code>boolean</code>
             * [.messageTrait(name)](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
+            * [.serverVariables()](#module_@asyncapi/parser+Components+serverVariables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+            * [.hasServerVariables()](#module_@asyncapi/parser+Components+hasServerVariables) ⇒ <code>boolean</code>
+            * [.serverVariable(name)](#module_@asyncapi/parser+Components+serverVariable) ⇒ <code>ServerVariable</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Components+hasExtensions) ⇒ <code>boolean</code>
             * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Components+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
@@ -822,6 +825,9 @@ Implements functions to deal with a Components object.
     * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
     * [.hasMessageTraits()](#module_@asyncapi/parser+Components+hasMessageTraits) ⇒ <code>boolean</code>
     * [.messageTrait(name)](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
+    * [.serverVariables()](#module_@asyncapi/parser+Components+serverVariables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+    * [.hasServerVariables()](#module_@asyncapi/parser+Components+hasServerVariables) ⇒ <code>boolean</code>
+    * [.serverVariable(name)](#module_@asyncapi/parser+Components+serverVariable) ⇒ <code>ServerVariable</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Components+hasExtensions) ⇒ <code>boolean</code>
     * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Components+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
@@ -983,6 +989,23 @@ Implements functions to deal with a Components object.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the message trait. |
+
+<a name="module_@asyncapi/parser+Components+serverVariables"></a>
+
+#### components.serverVariables() ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+hasServerVariables"></a>
+
+#### components.hasServerVariables() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+serverVariable"></a>
+
+#### components.serverVariable(name) ⇒ <code>ServerVariable</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the server variable. |
 
 <a name="module_@asyncapi/parser+Components+hasExtensions"></a>
 

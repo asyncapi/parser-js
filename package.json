@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.14.1",
+  "version": "1.15.0-2022-04-release.2",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -88,11 +88,15 @@
     "branches": [
       "master",
       {
-        "name": "2022-01-release",
+        "name": "2022-04-release",
         "prerelease": true
       },
       {
         "name": "next-major",
+        "prerelease": true
+      },
+      {
+        "name": "next-major-spec",
         "prerelease": true
       }
     ],

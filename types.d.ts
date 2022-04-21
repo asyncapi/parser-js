@@ -769,6 +769,11 @@ declare module "@asyncapi/parser" {
         ext(key: string): any;
     }
     /**
+     * Implements functions to deal with a OperationSecurityRequirement object.
+     */
+    class OperationSecurityRequirement extends Base {
+    }
+    /**
      * Implements functions to deal with a OperationTrait object.
      */
     class OperationTrait extends OperationTraitable {
@@ -839,6 +844,7 @@ declare module "@asyncapi/parser" {
         hasTraits(): boolean;
         messages(): Message[];
         message(): Message;
+        security(): OperationSecurityRequirement[];
     }
     /**
      * Implements functions to deal with a PublishOperation object.

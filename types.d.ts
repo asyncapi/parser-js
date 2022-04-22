@@ -674,6 +674,7 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the header.
          */
         header(name: string): Schema;
+        id(): string;
         correlationId(): CorrelationId;
         schemaFormat(): string;
         contentType(): string;

@@ -40,6 +40,13 @@ describe('MessageTrait', function() {
     });
   });
 
+  describe('#id()', function() {
+    it('should return a string', function() {
+      const d = new MessageTrait(js);
+      expect(d.id()).to.be.equal(js.id);
+    });
+  });
+
   describe('#correlationId()', function() {
     it('should return a CorrelationId object', function() {
       const d = new MessageTrait(js);

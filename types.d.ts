@@ -464,6 +464,14 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the message trait.
          */
         messageTrait(name: string): MessageTrait;
+        serverVariables(): {
+            [key: string]: ServerVariable;
+        };
+        hasServerVariables(): boolean;
+        /**
+         * @param name - Name of the server variable.
+         */
+        serverVariable(name: string): ServerVariable;
         hasExtensions(): boolean;
         extensions(): {
             [key: string]: any;
@@ -666,6 +674,7 @@ declare module "@asyncapi/parser" {
          * @param name - Name of the header.
          */
         header(name: string): Schema;
+        id(): string;
         correlationId(): CorrelationId;
         schemaFormat(): string;
         contentType(): string;
@@ -769,6 +778,11 @@ declare module "@asyncapi/parser" {
         ext(key: string): any;
     }
     /**
+     * Implements functions to deal with a OperationSecurityRequirement object.
+     */
+    class OperationSecurityRequirement extends Base {
+    }
+    /**
      * Implements functions to deal with a OperationTrait object.
      */
     class OperationTrait extends OperationTraitable {
@@ -839,6 +853,7 @@ declare module "@asyncapi/parser" {
         hasTraits(): boolean;
         messages(): Message[];
         message(): Message;
+        security(): OperationSecurityRequirement[];
     }
     /**
      * Implements functions to deal with a PublishOperation object.

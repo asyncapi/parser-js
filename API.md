@@ -109,6 +109,9 @@
             * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
             * [.hasMessageTraits()](#module_@asyncapi/parser+Components+hasMessageTraits) ⇒ <code>boolean</code>
             * [.messageTrait(name)](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
+            * [.serverVariables()](#module_@asyncapi/parser+Components+serverVariables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+            * [.hasServerVariables()](#module_@asyncapi/parser+Components+hasServerVariables) ⇒ <code>boolean</code>
+            * [.serverVariable(name)](#module_@asyncapi/parser+Components+serverVariable) ⇒ <code>ServerVariable</code>
             * [.hasExtensions()](#module_@asyncapi/parser+Components+hasExtensions) ⇒ <code>boolean</code>
             * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
             * [.extensionKeys()](#module_@asyncapi/parser+Components+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
@@ -184,6 +187,7 @@
         * [.MessageTraitable](#module_@asyncapi/parser+MessageTraitable) ⇐ <code>Base</code>
             * [.headers()](#module_@asyncapi/parser+MessageTraitable+headers) ⇒ <code>Schema</code>
             * [.header(name)](#module_@asyncapi/parser+MessageTraitable+header) ⇒ <code>Schema</code>
+            * [.id()](#module_@asyncapi/parser+MessageTraitable+id) ⇒ <code>string</code>
             * [.correlationId()](#module_@asyncapi/parser+MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
             * [.schemaFormat()](#module_@asyncapi/parser+MessageTraitable+schemaFormat) ⇒ <code>string</code>
             * [.contentType()](#module_@asyncapi/parser+MessageTraitable+contentType) ⇒ <code>string</code>
@@ -233,6 +237,7 @@
             * [.extension(key)](#module_@asyncapi/parser+OAuthFlow+extension) ⇒ <code>any</code>
             * [.hasExt(key)](#module_@asyncapi/parser+OAuthFlow+hasExt) ⇒ <code>boolean</code>
             * [.ext(key)](#module_@asyncapi/parser+OAuthFlow+ext) ⇒ <code>any</code>
+        * [.OperationSecurityRequirement](#module_@asyncapi/parser+OperationSecurityRequirement) ⇐ <code>Base</code>
         * [.OperationTrait](#module_@asyncapi/parser+OperationTrait) ⇐ <code>OperationTraitable</code>
         * [.OperationTraitable](#module_@asyncapi/parser+OperationTraitable) ⇐ <code>Base</code>
             * [.id()](#module_@asyncapi/parser+OperationTraitable+id) ⇒ <code>string</code>
@@ -265,6 +270,7 @@
             * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
             * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
             * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
+            * [.security()](#module_@asyncapi/parser+Operation+security) ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
         * [.PublishOperation](#module_@asyncapi/parser+PublishOperation) ⇐ <code>Operation</code>
             * [.isPublish()](#module_@asyncapi/parser+PublishOperation+isPublish) ⇒ <code>boolean</code>
             * [.isSubscribe()](#module_@asyncapi/parser+PublishOperation+isSubscribe) ⇒ <code>boolean</code>
@@ -820,6 +826,9 @@ Implements functions to deal with a Components object.
     * [.messageTraits()](#module_@asyncapi/parser+Components+messageTraits) ⇒ <code>Object.&lt;string, MessageTrait&gt;</code>
     * [.hasMessageTraits()](#module_@asyncapi/parser+Components+hasMessageTraits) ⇒ <code>boolean</code>
     * [.messageTrait(name)](#module_@asyncapi/parser+Components+messageTrait) ⇒ <code>MessageTrait</code>
+    * [.serverVariables()](#module_@asyncapi/parser+Components+serverVariables) ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+    * [.hasServerVariables()](#module_@asyncapi/parser+Components+hasServerVariables) ⇒ <code>boolean</code>
+    * [.serverVariable(name)](#module_@asyncapi/parser+Components+serverVariable) ⇒ <code>ServerVariable</code>
     * [.hasExtensions()](#module_@asyncapi/parser+Components+hasExtensions) ⇒ <code>boolean</code>
     * [.extensions()](#module_@asyncapi/parser+Components+extensions) ⇒ <code>Object.&lt;string, any&gt;</code>
     * [.extensionKeys()](#module_@asyncapi/parser+Components+extensionKeys) ⇒ <code>Array.&lt;string&gt;</code>
@@ -981,6 +990,23 @@ Implements functions to deal with a Components object.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the message trait. |
+
+<a name="module_@asyncapi/parser+Components+serverVariables"></a>
+
+#### components.serverVariables() ⇒ <code>Object.&lt;string, ServerVariable&gt;</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+hasServerVariables"></a>
+
+#### components.hasServerVariables() ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+<a name="module_@asyncapi/parser+Components+serverVariable"></a>
+
+#### components.serverVariable(name) ⇒ <code>ServerVariable</code>
+**Kind**: instance method of [<code>Components</code>](#module_@asyncapi/parser+Components)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | Name of the server variable. |
 
 <a name="module_@asyncapi/parser+Components+hasExtensions"></a>
 
@@ -1552,6 +1578,7 @@ Implements functions to deal with a the common properties that Message and Messa
 * [.MessageTraitable](#module_@asyncapi/parser+MessageTraitable) ⇐ <code>Base</code>
     * [.headers()](#module_@asyncapi/parser+MessageTraitable+headers) ⇒ <code>Schema</code>
     * [.header(name)](#module_@asyncapi/parser+MessageTraitable+header) ⇒ <code>Schema</code>
+    * [.id()](#module_@asyncapi/parser+MessageTraitable+id) ⇒ <code>string</code>
     * [.correlationId()](#module_@asyncapi/parser+MessageTraitable+correlationId) ⇒ <code>CorrelationId</code>
     * [.schemaFormat()](#module_@asyncapi/parser+MessageTraitable+schemaFormat) ⇒ <code>string</code>
     * [.contentType()](#module_@asyncapi/parser+MessageTraitable+contentType) ⇒ <code>string</code>
@@ -1595,6 +1622,10 @@ Implements functions to deal with a the common properties that Message and Messa
 | --- | --- | --- |
 | name | <code>string</code> | Name of the header. |
 
+<a name="module_@asyncapi/parser+MessageTraitable+id"></a>
+
+#### messageTraitable.id() ⇒ <code>string</code>
+**Kind**: instance method of [<code>MessageTraitable</code>](#module_@asyncapi/parser+MessageTraitable)  
 <a name="module_@asyncapi/parser+MessageTraitable+correlationId"></a>
 
 #### messageTraitable.correlationId() ⇒ <code>CorrelationId</code>
@@ -1912,6 +1943,13 @@ Implements functions to deal with a OAuthFlow object.
 | --- | --- | --- |
 | key | <code>string</code> | Extension key. |
 
+<a name="module_@asyncapi/parser+OperationSecurityRequirement"></a>
+
+### @asyncapi/parser.OperationSecurityRequirement ⇐ <code>Base</code>
+Implements functions to deal with a OperationSecurityRequirement object.
+
+**Kind**: instance class of [<code>@asyncapi/parser</code>](#module_@asyncapi/parser)  
+**Extends**: <code>Base</code>  
 <a name="module_@asyncapi/parser+OperationTrait"></a>
 
 ### @asyncapi/parser.OperationTrait ⇐ <code>OperationTraitable</code>
@@ -2126,6 +2164,7 @@ Implements functions to deal with an Operation object.
     * [.hasTraits()](#module_@asyncapi/parser+Operation+hasTraits) ⇒ <code>boolean</code>
     * [.messages()](#module_@asyncapi/parser+Operation+messages) ⇒ <code>Array.&lt;Message&gt;</code>
     * [.message()](#module_@asyncapi/parser+Operation+message) ⇒ <code>Message</code>
+    * [.security()](#module_@asyncapi/parser+Operation+security) ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
 
 <a name="module_@asyncapi/parser+Operation+hasMultipleMessages"></a>
 
@@ -2146,6 +2185,10 @@ Implements functions to deal with an Operation object.
 <a name="module_@asyncapi/parser+Operation+message"></a>
 
 #### operation.message() ⇒ <code>Message</code>
+**Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
+<a name="module_@asyncapi/parser+Operation+security"></a>
+
+#### operation.security() ⇒ <code>Array.&lt;OperationSecurityRequirement&gt;</code>
 **Kind**: instance method of [<code>Operation</code>](#module_@asyncapi/parser+Operation)  
 <a name="module_@asyncapi/parser+PublishOperation"></a>
 

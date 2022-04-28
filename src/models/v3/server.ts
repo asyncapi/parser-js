@@ -7,9 +7,6 @@ import { ExtensionsMixin } from './mixins/extensions';
 import { ServerVariable } from './server-variable';
 import { ServerVariables } from './server-variables';
 import { ServerVariablesInterface } from '../server-variables';
-import { SecurityScheme } from './security-scheme';
-import { SecuritySchemesInterface } from '../security-schemes';
-import { SecuritySchemes } from './security-schemes';
 
 import type { ModelMetadata } from "../base";
 import type { ServerInterface } from '../server';
@@ -56,21 +53,6 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
         }
         )
       ))
-  }
-
-  securitySchemes(): SecuritySchemesInterface {
-    return new SecuritySchemes(
-      Object.entries(
-        this._json.security
-      ).map(
-        ([securitySchemeName, securityScheme]) => this.createModel(
-          SecurityScheme, securityScheme, {
-          id: securitySchemeName,
-          pointer: `${this._meta.pointer}/security/${securitySchemeName}`
-        }
-        )
-      )
-    )
   }
 
 }

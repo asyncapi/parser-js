@@ -1,4 +1,4 @@
-import { Collection } from "./collection";
-import {ServerInterface} from "./server";
+import type { Collection } from "./collection";
+import type { ServerInterface } from "./server";
 
 export interface ServersInterface extends Collection<ServerInterface> {}

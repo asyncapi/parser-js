@@ -1,6 +1,6 @@
 import type { BaseModel } from "./base";
 
-export abstract class Collection<T extends BaseModel> extends Array<T> {
+export abstract class Collection<T extends BaseModel | Collection<any>> extends Array<T> {
   constructor(
     protected readonly collections: T[]
   ) {

@@ -11,6 +11,7 @@ import { ServerVariablesInterface } from '../server-variables';
 import type { ModelMetadata } from "../base";
 import type { ServerInterface } from '../server';
 
+
 export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ServerInterface {
   constructor(
     private readonly _id: string,
@@ -47,10 +48,11 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
       ).map(
         ([serverVariableName, serverVariable]) => this.createModel(
           ServerVariable, serverVariable, {
-            id: serverVariableName,
-            pointer: `${this._meta.pointer}/variables/${serverVariableName}`
+          id: serverVariableName,
+          pointer: `${this._meta.pointer}/variables/${serverVariableName}`
         }
         )
       ))
   }
+
 }

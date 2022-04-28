@@ -47,10 +47,11 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
       ).map(
         ([serverVariableName, serverVariable]) => this.createModel(
           ServerVariable, serverVariable, {
-            id: serverVariableName,
-            pointer: `${this._meta.pointer}/variables/${serverVariableName}`
+          id: serverVariableName,
+          pointer: `${this._meta.pointer}/variables/${serverVariableName}`
         }
         )
       ))
   }
+
 }

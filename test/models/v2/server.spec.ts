@@ -1,7 +1,7 @@
 import { Server } from '../../../src/models/v2/server';
-import {ServerVariables} from '../../../src/models/v2/server-variables';
+import { ServerVariables } from '../../../src/models/v2/server-variables';
 
-import { 
+import {
   assertDescriptionMixinInheritance,
   assertExtensionsMixinInheritance,
 } from './mixins/inheritance';
@@ -20,7 +20,7 @@ const doc = {
   }
 };
 const docItem = new Server('development', doc.development);
-const emptyItem = new Server('',{});
+const emptyItem = new Server('', {});
 
 describe('Server Model', function () {
   describe('.id()', function () {
@@ -61,13 +61,13 @@ describe('Server Model', function () {
     });
   });
 
-  describe('.servers()', function(){
-    it('should return ServerVariables object', function(){
+  describe('.servers()', function () {
+    it('should return ServerVariables object', function () {
       expect(docItem.variables() instanceof ServerVariables).toBeTruthy();
     })
   })
 
-  describe('mixins inheritance', function() {
+  describe('mixins inheritance', function () {
     assertDescriptionMixinInheritance(Server);
     assertExtensionsMixinInheritance(Server);
   });

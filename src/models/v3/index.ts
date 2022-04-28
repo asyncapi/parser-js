@@ -8,3 +8,9 @@ export { ExternalDocumentation as ExternalDocumentationV3 } from './mixins/exter
 export { Tags as TagsV3, Tag as TagV3 } from './mixins/tags';
 export { Server as ServerV3 } from './server';
 export { Servers as ServersV3 } from './servers';
+export { SecurityScheme as SecuritySchemeV3 } from './security-scheme';
+export { SecuritySchemes as SecuritySchemesV3 } from './security-schemes';
+export { ServerVariable as ServerVariableV3 } from './server-variable';
+export { ServerVariables as ServerVariablesV3 } from './server-variables';
+export {OAuthFlow as OAuthFlowV3} from './oauth-flow';
+export {OAuthFlows as OAuthFlowsV3} from './oauth-flows';

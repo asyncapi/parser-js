@@ -1,5 +1,4 @@
 import type { BaseModel } from "./base";
-
 import type { ExtensionsMixinInterface } from "./mixins";
 
 export interface ContactInterface extends BaseModel, ExtensionsMixinInterface {

@@ -1,4 +1,6 @@
 import { BaseModel } from '../base';
+import { ServerVariables } from './server-variables';
+import { ServerVariable } from './server-variable';
 
 import { Mixin } from '../utils';
 import { BindingsMixin } from './mixins/bindings';
@@ -7,9 +9,7 @@ import { ExtensionsMixin } from './mixins/extensions';
 
 import type { ModelMetadata } from "../base";
 import type { ServerInterface } from '../server';
-import { ServerVariablesInterface } from '../server-variables';
-import { ServerVariables } from './server-variables';
-import { ServerVariable } from './server-variable';
+import type { ServerVariablesInterface } from '../server-variables';
 
 export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ServerInterface {
   constructor(
@@ -53,5 +53,4 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
         )
       ))
   }
-
 }

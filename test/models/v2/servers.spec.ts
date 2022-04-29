@@ -14,17 +14,17 @@ describe('Servers model', function () {
   describe('.isEmpty()', function () {
     it('should return true if collection is empty', function () {
       const servers = new Servers([]);
-      expect(servers.isEmpty()).toBeTruthy();
+      expect(servers.isEmpty()).toEqual(true);
     });
 
     it('should return false if collection is not empty', function () {
       const servers = new Servers([docItem]);
-      expect(servers.isEmpty()).toBeFalsy();
+      expect(servers.isEmpty()).toEqual(false);
     });
   });
 
   describe('.get(id)', function () {
-    it('should return a specific server Object if it is present', function () {
+    it('should return a specific Server Object if it is present', function () {
       const servers = new Servers([docItem]);
       expect(servers.get('development')).toBeTruthy();
     });
@@ -36,14 +36,14 @@ describe('Servers model', function () {
   });
 
   describe('.has(id)', function () {
-    const servers = new Servers([docItem]);
-
     it('should return true if the said name is available', function () {
-      expect(servers.has('development')).toBeTruthy();
+      const servers = new Servers([docItem]);
+      expect(servers.has('development')).toEqual(true);
     })
 
     it('should return false if the server name is missing', function () {
-      expect(servers.has('production')).toBeFalsy();
+      const servers = new Servers([docItem]);
+      expect(servers.has('production')).toEqual(false);
     })
   })
 })

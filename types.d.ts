@@ -1173,8 +1173,8 @@ declare module "@asyncapi/parser" {
     /**
      * The complete list of parse configuration options used to parse the given data.
      * @property [path] - Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir.
-     * @property [parse] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
-     * @property [resolve] - Options object to pass to {@link https://apidevtools.org/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [parse] - Options object to pass to {@link https://apitools.dev/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
+     * @property [resolve] - Options object to pass to {@link https://apitools.dev/json-schema-ref-parser/docs/options.html|json-schema-ref-parser}.
      * @property [applyTraits] - Whether to resolve and apply traits or not. Defaults to true.
      */
     type ParserOptions = {
@@ -1186,7 +1186,7 @@ declare module "@asyncapi/parser" {
     /**
      * Parses and validate an AsyncAPI document from YAML or JSON.
      * @param asyncapiYAMLorJSON - An AsyncAPI document in JSON or YAML format.
-     * @param [options] - Configuration options object {@link ParserOptions}
+     * @param [options] - Configuration options object {@link #asyncapiparserparseroptions--object|ParserOptions}
      * @returns The parsed AsyncAPI document.
      */
     function parse(asyncapiYAMLorJSON: string | any, options?: ParserOptions): Promise<AsyncAPIDocument>;
@@ -1194,7 +1194,7 @@ declare module "@asyncapi/parser" {
      * Fetches an AsyncAPI document from the given URL and passes its content to the `parse` method.
      * @param url - URL where the AsyncAPI document is located.
      * @param [fetchOptions] - Configuration to pass to the {@link https://developer.mozilla.org/en-US/docs/Web/API/Request|fetch} call.
-     * @param [options] - Configuration to pass to the {@link ParserOptions} method.
+     * @param [options] - Configuration to pass to the {@link #asyncapiparserparseroptions--object|ParserOptions} method.
      * @returns The parsed AsyncAPI document.
      */
     function parseFromUrl(url: string, fetchOptions?: any, options?: ParserOptions): Promise<AsyncAPIDocument>;

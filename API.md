@@ -3742,7 +3742,7 @@ Parses and validate an AsyncAPI document from YAML or JSON.
 | Param | Type | Description |
 | --- | --- | --- |
 | asyncapiYAMLorJSON | <code>String</code> \| <code>Object</code> | An AsyncAPI document in JSON or YAML format. |
-| [options] | <code>ParserOptions</code> | Configuration options object [ParserOptions](ParserOptions) |
+| [options] | <code>ParserOptions</code> | Configuration options object [ParserOptions](#asyncapiparserparseroptions--object) |
 
 <a name="module_@asyncapi/parser..parseFromUrl"></a>
 
@@ -3756,7 +3756,7 @@ Fetches an AsyncAPI document from the given URL and passes its content to the `p
 | --- | --- | --- |
 | url | <code>String</code> | URL where the AsyncAPI document is located. |
 | [fetchOptions] | <code>Object</code> | Configuration to pass to the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Request) call. |
-| [options] | <code>ParserOptions</code> | Configuration to pass to the [ParserOptions](ParserOptions) method. |
+| [options] | <code>ParserOptions</code> | Configuration to pass to the [ParserOptions](#asyncapiparserparseroptions--object) method. |
 
 <a name="module_@asyncapi/parser..registerSchemaParser"></a>
 
@@ -3780,8 +3780,8 @@ The complete list of parse configuration options used to parse the given data.
 | Name | Type | Description |
 | --- | --- | --- |
 | [path] | <code>String</code> | Path to the AsyncAPI document. It will be used to resolve relative references. Defaults to current working dir. |
-| [parse] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
-| [resolve] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apidevtools.org/json-schema-ref-parser/docs/options.html). |
+| [parse] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apitools.dev/json-schema-ref-parser/docs/options.html). |
+| [resolve] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apitools.dev/json-schema-ref-parser/docs/options.html). |
 | [applyTraits] | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
 
 <a name="MixinBindings"></a>

@@ -879,7 +879,7 @@ it('should throw schema-parser-not-registered error on unrecognized schema', asy
       },
       {
         title: 'The document uses a schema format that parser does not support',
-        location:{
+        location: {
           jsonPointer: '#/components/schemas/testSchema',
           startLine: 5,
           startColumn: 1,

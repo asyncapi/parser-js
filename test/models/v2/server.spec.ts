@@ -1,7 +1,10 @@
 import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/v2/server-variables';
+import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
+import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 import {
+  assertBindingsMixinInheritance,
   assertDescriptionMixinInheritance,
   assertExtensionsMixinInheritance,
 } from './mixins/inheritance';
@@ -61,13 +64,31 @@ describe('Server Model', function () {
     });
   });
 
-  describe('.servers()', function () {
+  describe('.variables()', function () {
     it('should return ServerVariables object', function () {
-      expect(docItem.variables() instanceof ServerVariables).toBeTruthy();
+      expect(docItem.variables()).toBeInstanceOf(ServerVariables);
     })
   })
 
+  describe('.security()', function() {
+    it('should return collection of security requirements', function() {
+      const doc = { security: [ { requirement: '...' } ] };
+      const d = new Server('trait', doc);
+      expect(d.security()).toBeInstanceOf(SecurityRequirements);
+      expect(d.security().all()).toHaveLength(1);
+      expect(d.security().all()[0]).toBeInstanceOf(SecurityRequirement);
+    });
+    
+    it('should return collection of security requirements when value is undefined', function() {
+      const doc = {};
+      const d = new Server('trait', doc);
+      expect(d.security()).toBeInstanceOf(SecurityRequirements);
+      expect(d.security().all()).toHaveLength(0);
+    });
+  });
+
   describe('mixins inheritance', function () {
+    assertBindingsMixinInheritance(Server);
     assertDescriptionMixinInheritance(Server);
     assertExtensionsMixinInheritance(Server);
   });

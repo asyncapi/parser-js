@@ -13,6 +13,7 @@ import { TagsMixin } from './mixins/tags';
 
 import type { ModelMetadata } from "../base";
 import type { CorrelationIdInterface } from "../correlation-id";
+import type { MessageExamplesInterface } from "../message-examples";
 import type { MessageTraitInterface } from "../message-trait";
 import type { SchemaInterface } from "../schema";
 
@@ -87,7 +88,7 @@ export class MessageTrait extends Mixin(BaseModel, BindingsMixin, DescriptionMix
     return this._json.summary;
   }
 
-  examples(): MessageExamples {
+  examples(): MessageExamplesInterface {
     return new MessageExamples(
       (this._json.examples || []).map((example: any, index: number) => {
         return this.createModel(MessageExample, example, { pointer: `${this._meta.pointer}/examples/${index}` })

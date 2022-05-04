@@ -3,6 +3,7 @@ import { MessageTrait } from "./message-trait";
 import { Schema } from './schema';
 
 import type { MessageInterface } from "../message";
+import type { MessageTraitsInterface } from "../message-traits";
 import type { SchemaInterface } from "../schema";
 
 export class Message extends MessageTrait implements MessageInterface {
@@ -15,7 +16,7 @@ export class Message extends MessageTrait implements MessageInterface {
     return this.createModel(Schema, this._json.payload, { pointer: `${this._meta.pointer}/payload` });
   }
 
-  traits(): MessageTraits {
+  traits(): MessageTraitsInterface {
     return new MessageTraits(
       (this._json.traits || []).map((trait: any, index: number) => {
         return this.createModel(MessageTrait, trait, { pointer: `${this._meta.pointer}/traits/${index}` })

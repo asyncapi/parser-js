@@ -7,7 +7,7 @@ import { ExtensionsMixin } from './mixins/extensions';
 
 import type { ModelMetadata } from '../base';
 import type { SecuritySchemaType, SecuritySchemeInterface } from '../security-scheme';
-import type { OAuthFlowsInterface } from 'models/oauth-flows';
+import type { OAuthFlowsInterface } from '../oauth-flows';
 
 export class SecurityScheme extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements SecuritySchemeInterface {
   constructor(

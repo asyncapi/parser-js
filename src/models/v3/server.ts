@@ -1,16 +1,16 @@
 import { BaseModel } from '../base';
+import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirement } from './security-requirement';
+import { ServerVariable } from './server-variable';
+import { ServerVariables } from './server-variables';
 
 import { Mixin } from '../utils';
 import { BindingsMixin } from './mixins/bindings';
 import { DescriptionMixin } from './mixins/description';
 import { ExtensionsMixin } from './mixins/extensions';
-import { ServerVariable } from './server-variable';
-import { ServerVariables } from './server-variables';
-import { ServerVariablesInterface } from '../server-variables';
 
 import type { ModelMetadata } from "../base";
 import type { ServerInterface } from '../server';
-
 
 export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ServerInterface {
   constructor(
@@ -29,7 +29,7 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
     return this._json.url;
   }
 
-  protocol(): string | undefined {
+  protocol(): string {
     return this._json.protocol;
   }
 
@@ -41,7 +41,7 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
     return this._json.protocolVersion;
   }
 
-  variables(): ServerVariablesInterface {
+  variables(): ServerVariables {
     return new ServerVariables(
       Object.entries(
         this._json.variables
@@ -55,4 +55,9 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
       ))
   }
 
+  security(): SecurityRequirements {
+    return new SecurityRequirements(this._json.security.map((security: any, index: number) => {
+      return this.createModel(SecurityRequirement, security, { pointer: `${this._meta.pointer}/security/${index}` })
+    }));
+  }
 }

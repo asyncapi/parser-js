@@ -5,7 +5,7 @@ import { Mixin } from '../utils';
 import { ExtensionsMixin } from './mixins/extensions';
 
 import type { OAuthFlowsInterface } from '../oauth-flows';
-import type { OAuthFlowInterface } from 'models/oauth-flow';
+import type { OAuthFlowInterface } from '../oauth-flow';
 
 export class OAuthFlows extends Mixin(BaseModel, ExtensionsMixin) implements OAuthFlowsInterface {
   hasAuthorizationCode(): boolean {

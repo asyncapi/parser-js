@@ -31,14 +31,14 @@ describe('Info model', function() {
     it('should return true when there is a value', function() {
       const doc = { asyncapi: '2.0.0', id: 'someId' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.hasId()).toEqual(true);
     });
     
     it('should return false when there is no value', function() {
       const doc = { asyncapi: '2.0.0' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.hasId()).toEqual(false);
     });
   });
@@ -47,14 +47,14 @@ describe('Info model', function() {
     it('should return the value', function() {
       const doc = { asyncapi: '2.0.0', id: 'someId' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.id()).toEqual(doc.id);
     });
     
     it('should return undefined when there is no value', function() {
       const doc = { asyncapi: '2.0.0' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.id()).toEqual(undefined);
     });
   });
@@ -147,21 +147,21 @@ describe('Info model', function() {
     it('should return true when there is a value', function() {
       const doc = { asyncapi: '2.0.0', externalDocs: { url: 'https://example.com' } };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.hasExternalDocs()).toEqual(true);
     });
     
     it('should return false when there is an empty object', function() {
       const doc = { asyncapi: '2.0.0', externalDocs: {} };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.hasExternalDocs()).toEqual(false);
     });
 
     it('should return false when there is no value', function() {
       const doc = { asyncapi: '2.0.0' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.hasExternalDocs()).toEqual(false);
     });
   });
@@ -170,7 +170,7 @@ describe('Info model', function() {
     it('should return the value', function() {
       const doc = { asyncapi: '2.0.0', externalDocs: { url: 'https://example.com' } };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.externalDocs()).toBeInstanceOf(ExternalDocumentation);
       expect(d.externalDocs()!.json()).toEqual(doc.externalDocs);
     });
@@ -178,14 +178,14 @@ describe('Info model', function() {
     it('should return undefined when there is an empty object', function() {
       const doc = { asyncapi: '2.0.0', externalDocs: {} };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.externalDocs()).toEqual(undefined);
     });
     
     it('should return undefined when there is no value', function() {
       const doc = { asyncapi: '2.0.0' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.externalDocs()).toEqual(undefined);
     });
   });
@@ -195,7 +195,7 @@ describe('Info model', function() {
       const tags = [{ name: 'one' }, { name: 'two' }];
       const doc = { asyncapi: '2.0.0', tags };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.tags()).toBeInstanceOf(Tags);
       expect(d.tags().length).toEqual(2);
       expect(d.tags().all()[0]).toBeInstanceOf(Tag);
@@ -205,7 +205,7 @@ describe('Info model', function() {
     it('should return empty array when there is an empty collection', function() {
       const doc = { asyncapi: '2.0.0' };
       const asyncapi = createDetailedAsyncAPI(doc, doc);
-      const d = new Info({}, { asyncapi, parent: null, pointer: '/info' });
+      const d = new Info({}, { asyncapi, pointer: '/info' });
       expect(d.tags()).toBeInstanceOf(Tags);
       expect(d.tags().all()).toEqual([]);
     });

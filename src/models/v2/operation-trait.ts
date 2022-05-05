@@ -1,6 +1,5 @@
 import { BaseModel } from "../base";
-import { SecurityRequirements } from './security-requirements';
-import { SecurityRequirement } from './security-requirement';
+import { SecurityScheme } from './security-scheme';
 
 import { Mixin } from '../utils';
 import { BindingsMixin } from './mixins/bindings';
@@ -10,15 +9,15 @@ import { ExternalDocumentationMixin } from './mixins/external-docs';
 import { TagsMixin } from './mixins/tags';
 
 import type { ModelMetadata } from "../base";
-import type { OperationKind } from "../operation";
+import type { OperationAction } from "../operation";
 import type { OperationTraitInterface } from "../operation-trait";
-import type { SecurityRequirementsInterface } from "../security-requirements";
+import type { SecuritySchemeInterface } from "../security-scheme";
 
 export class OperationTrait extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin, ExternalDocumentationMixin, TagsMixin) implements OperationTraitInterface {
   constructor(
     private readonly _id: string,
     _json: Record<string,any>,
-    public readonly _meta: ModelMetadata & { kind: OperationKind } = {} as any,
+    public readonly _meta: ModelMetadata & { action: OperationAction } = {} as any,
   ) {
     super(_json, _meta);
   }
@@ -27,8 +26,8 @@ export class OperationTrait extends Mixin(BaseModel, BindingsMixin, DescriptionM
     return this.operationId() || this._id;
   }
 
-  kind(): OperationKind {
-    return this._meta.kind;
+  action(): OperationAction {
+    return this._meta.action;
   }
 
   hasOperationId(): boolean {
@@ -47,9 +46,17 @@ export class OperationTrait extends Mixin(BaseModel, BindingsMixin, DescriptionM
     return this._json.summary;
   }
 
-  security(): SecurityRequirementsInterface {
-    return new SecurityRequirements((this._json.security || []).map((security: any, index: number) => {
-      return this.createModel(SecurityRequirement, security, { pointer: `${this._meta.pointer}/security/${index}` })
-    }));
+  security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>> {
+    const securitySchemes = this._meta?.asyncapi?.parsed.components.securitySchemes || {};
+    return (this._json.security || []).map((requirement: any) => {
+      const requirements: Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }> = {};
+      Object.entries(requirement).forEach(([security, scopes]) => {
+        requirements[security] = {
+          schema: this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` }),
+          scopes: scopes as Array<string>,
+        }
+      });
+      return requirements;
+    })
   }
 }

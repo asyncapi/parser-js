@@ -1,7 +1,6 @@
 import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/v2/server-variables';
-import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
-import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
+import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 import {
   assertBindingsMixinInheritance,
@@ -72,18 +71,20 @@ describe('Server Model', function () {
 
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
-      const doc = { security: [ { requirement: '...' } ] };
+      const doc = { security: [ { requirement: [] } ] };
       const d = new Server('trait', doc);
-      expect(d.security()).toBeInstanceOf(SecurityRequirements);
-      expect(d.security().all()).toHaveLength(1);
-      expect(d.security().all()[0]).toBeInstanceOf(SecurityRequirement);
+      expect(Array.isArray(d.security())).toEqual(true);
+      expect(d.security()).toHaveLength(1);
+      expect(typeof d.security()[0]).toEqual('object');
+      expect(d.security()[0]['requirement'].schema).toBeInstanceOf(SecurityScheme);
+      expect(d.security()[0]['requirement'].scopes).toEqual([]);
     });
     
     it('should return collection of security requirements when value is undefined', function() {
       const doc = {};
       const d = new Server('trait', doc);
-      expect(d.security()).toBeInstanceOf(SecurityRequirements);
-      expect(d.security().all()).toHaveLength(0);
+      expect(Array.isArray(d.security())).toEqual(true);
+      expect(d.security()).toHaveLength(0);
     });
   });
 

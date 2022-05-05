@@ -1,6 +1,5 @@
 import { BaseModel } from '../base';
-import { SecurityRequirements } from './security-requirements';
-import { SecurityRequirement } from './security-requirement';
+import { SecurityScheme } from './security-scheme';
 import { ServerVariable } from './server-variable';
 import { ServerVariables } from './server-variables';
 
@@ -11,6 +10,7 @@ import { ExtensionsMixin } from './mixins/extensions';
 
 import type { ModelMetadata } from "../base";
 import type { ServerInterface } from '../server';
+import type { SecuritySchemeInterface } from '../security-scheme';
 
 export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ServerInterface {
   constructor(
@@ -55,9 +55,17 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
       ))
   }
 
-  security(): SecurityRequirements {
-    return new SecurityRequirements(this._json.security.map((security: any, index: number) => {
-      return this.createModel(SecurityRequirement, security, { pointer: `${this._meta.pointer}/security/${index}` })
-    }));
+  security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>> {
+    const securitySchemes = this._meta?.asyncapi?.parsed.components.securitySchemes || {};
+    return (this._json.security || []).map((requirement: any) => {
+      const requirements: Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }> = {};
+      Object.entries(requirement).forEach(([security, scopes]) => {
+        requirements[security] = {
+          schema: this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` }),
+          scopes: scopes as Array<string>,
+        }
+      });
+      return requirements;
+    })
   }
 }

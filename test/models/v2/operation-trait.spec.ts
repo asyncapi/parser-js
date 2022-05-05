@@ -1,6 +1,5 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
-import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
-import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
+import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 import { 
   assertBindingsMixinInheritance,
@@ -25,11 +24,11 @@ describe('OperationTrait model', function() {
     });
   });
 
-  describe('.kind()', function() {
-    it('should return kind of operation', function() {
+  describe('.action()', function() {
+    it('should return kind/action of operation', function() {
       const doc = {};
-      const d = new OperationTrait('trait', doc, { asyncapi: {} as any, pointer: '', kind: 'publish' });
-      expect(d.kind()).toEqual('publish');
+      const d = new OperationTrait('trait', doc, { asyncapi: {} as any, pointer: '', action: 'publish' });
+      expect(d.action()).toEqual('publish');
     });
   });
 
@@ -91,18 +90,20 @@ describe('OperationTrait model', function() {
 
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
-      const doc = { security: [ { requirement: '...' } ] };
+      const doc = { security: [ { requirement: [] } ] };
       const d = new OperationTrait('trait', doc);
-      expect(d.security()).toBeInstanceOf(SecurityRequirements);
-      expect(d.security().all()).toHaveLength(1);
-      expect(d.security().all()[0]).toBeInstanceOf(SecurityRequirement);
+      expect(Array.isArray(d.security())).toEqual(true);
+      expect(d.security()).toHaveLength(1);
+      expect(typeof d.security()[0]).toEqual('object');
+      expect(d.security()[0]['requirement'].schema).toBeInstanceOf(SecurityScheme);
+      expect(d.security()[0]['requirement'].scopes).toEqual([]);
     });
     
     it('should return collection of security requirements when value is undefined', function() {
       const doc = {};
       const d = new OperationTrait('trait', doc);
-      expect(d.security()).toBeInstanceOf(SecurityRequirements);
-      expect(d.security().all()).toHaveLength(0);
+      expect(Array.isArray(d.security())).toEqual(true);
+      expect(d.security()).toHaveLength(0);
     });
   });
 

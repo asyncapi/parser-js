@@ -1,7 +1,7 @@
 import type { BaseModel } from "./base";
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
 import type { ServerVariablesInterface } from "./server-variables";
-import type { SecurityRequirementsInterface } from "./security-requirements";
+import type { SecuritySchemeInterface } from "./security-scheme";
 
 export interface ServerInterface extends BaseModel, DescriptionMixinInterface, BindingsMixinInterface, ExtensionsMixinInterface {
   id(): string
@@ -10,5 +10,5 @@ export interface ServerInterface extends BaseModel, DescriptionMixinInterface, B
   protocolVersion(): string;
   hasProtocolVersion(): boolean;
   variables(): ServerVariablesInterface;
-  security(): SecurityRequirementsInterface;
+  security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>>;
 }

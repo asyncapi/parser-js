@@ -9,15 +9,14 @@ import type { SchemaInterface } from "../schema";
 
 export class Schema extends Mixin(BaseModel, ExtensionsMixin, ExternalDocumentationMixin) implements SchemaInterface {
   constructor(
-    private readonly _id: string,
     _json: Record<string,any>,
-    protected readonly _meta: ModelMetadata & { parent: Schema } = {} as any
+    protected readonly _meta: ModelMetadata & { id: string, parent: Schema | null } = {} as any
   ) {
     super(_json, _meta);
   }
 
   uid(): string {
-    return this._id;
+    return this._meta.id;
   }
 
   $comment(): string | undefined {

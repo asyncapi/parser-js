@@ -4,7 +4,7 @@ import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 const channelParameter = {
   location: '...',
 };
-const channelParameterItem = new ChannelParameter('parameter', channelParameter);
+const channelParameterItem = new ChannelParameter(channelParameter, { asyncapi: {} as any, pointer: '', id: 'parameter' });
 
 describe('ChannelParameters model', function () {
   describe('.isEmpty()', function () {

@@ -11,15 +11,14 @@ import type { SchemaInterface } from "../schema";
 
 export class ChannelParameter extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements ChannelParameterInterface {
   constructor(
-    private readonly _id: string,
     _json: Record<string,any>,
-    _meta: ModelMetadata = {} as any
+    protected readonly _meta: ModelMetadata & { id: string } = {} as any
   ) {
     super(_json, _meta);
   }
 
   id(): string {
-    return this._id
+    return this._meta.id;
   }
 
   hasSchema(): boolean {

@@ -16,13 +16,13 @@ describe('Operation model', function() {
   describe('.id()', function() {
     it('should return id of model', function() {
       const doc = {};
-      const d = new Operation('message', doc);
-      expect(d.id()).toEqual('message');
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'operation', action: 'publish' });
+      expect(d.id()).toEqual('operation');
     });
 
     it('should reuse operationId', function() {
       const doc = { operationId: '...' };
-      const d = new Operation('message', doc);
+      const d = new Operation(doc);
       expect(d.id()).toEqual(doc.operationId);
     });
   });
@@ -30,7 +30,7 @@ describe('Operation model', function() {
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
       const doc = { message: { messageId: '...' } };
-      const d = new Operation('message', doc);
+      const d = new Operation(doc);
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
@@ -38,7 +38,7 @@ describe('Operation model', function() {
 
     it('should return collection of messages - oneOf messages', function() {
       const doc = { message: { oneOf: [ { messageId: '...' }, { messageId: '...' } ] } };
-      const d = new Operation('message', doc);
+      const d = new Operation(doc);
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
@@ -47,7 +47,7 @@ describe('Operation model', function() {
     
     it('should return undefined when there is no value', function() {
       const doc = {};
-      const d = new Operation('message', doc);
+      const d = new Operation(doc);
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(0);
     });
@@ -56,7 +56,7 @@ describe('Operation model', function() {
   describe('.traits()', function() {
     it('should return collection of traits', function() {
       const doc = { traits: [ { operationId: '...' } ] };
-      const d = new Operation('message', doc);
+      const d = new Operation(doc);
       expect(d.traits()).toBeInstanceOf(OperationTraits);
       expect(d.traits().all()).toHaveLength(1);
       expect(d.traits().all()[0]).toBeInstanceOf(OperationTrait);
@@ -64,7 +64,7 @@ describe('Operation model', function() {
     
     it('should return collection of traits when value is undefined', function() {
       const doc = {};
-      const d = new Operation('message', doc);
+      const d = new Operation(doc);
       expect(d.traits()).toBeInstanceOf(OperationTraits);
       expect(d.traits().all()).toHaveLength(0);
     });

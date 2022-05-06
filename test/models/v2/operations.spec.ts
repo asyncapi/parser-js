@@ -2,9 +2,9 @@ import { Operations } from '../../../src/models/v2/operations';
 import { Operation } from '../../../src/models/v2/operation';
 
 const operation = {
-  messageId: 'test',
+  operationId: 'test',
 };
-const operationItem = new Operation('test', operation);
+const operationItem = new Operation(operation, { asyncapi: {} as any, pointer: '', id: 'test', action: 'publish' });
 
 describe('Operations model', function () {
   describe('.isEmpty()', function () {

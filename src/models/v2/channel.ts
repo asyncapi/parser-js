@@ -15,8 +15,6 @@ import { ExtensionsMixin } from './mixins/extensions';
 import type { ModelMetadata } from "../base";
 import type { ChannelInterface } from "../channel";
 import type { ChannelParametersInterface } from "../channel-parameters";
-import type { MessagesInterface } from "../messages";
-import type { MessageInterface } from "../message";
 import type { OperationsInterface } from "../operations";
 import type { OperationInterface } from "../operation";
 import type { ServersInterface } from "../servers";
@@ -24,15 +22,14 @@ import type { ServerInterface } from "../server";
 
 export class Channel extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ChannelInterface {
   constructor(
-    private readonly _id: string,
     _json: Record<string,any>,
-    protected readonly _meta: ModelMetadata & { address: string } = {} as any
+    protected readonly _meta: ModelMetadata & { id: string, address: string } = {} as any
   ) {
     super(_json, _meta);
   }
 
   id(): string {
-    return this._id
+    return this._meta.id;
   }
 
   address(): string {

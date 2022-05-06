@@ -10,15 +10,14 @@ import { EXTENSION_REGEX } from '../../../constants';
 
 export class Extension extends BaseModel implements ExtensionInterface {
   constructor(
-    private readonly _id: string,
     _json: Record<string, any>,
-    _meta: ModelMetadata = {} as any,
+    protected readonly _meta: ModelMetadata & { name: string } = {} as any,
   ) {
     super(_json, _meta);
   }
 
-  id(): string {
-    return this._id;
+  name(): string {
+    return this._meta.name;
   }
 
   version(): string {
@@ -33,12 +32,12 @@ export class Extension extends BaseModel implements ExtensionInterface {
 export class Extensions extends Collection<ExtensionInterface> implements ExtensionsInterface {
   override get(name: string): ExtensionInterface | undefined {
     name = name.startsWith('x-') ? name : `x-${name}`;
-    return this.collections.find(ext => ext.id() === name);
+    return this.collections.find(ext => ext.name() === name);
   };
 
   override has(name: string): boolean {
     name = name.startsWith('x-') ? name : `x-${name}`;
-    return this.collections.some(ext => ext.id() === name);
+    return this.collections.some(ext => ext.name() === name);
   };
 }
 

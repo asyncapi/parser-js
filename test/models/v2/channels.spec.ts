@@ -4,7 +4,7 @@ import { Channel } from '../../../src/models/v2/channel';
 const channel = {
   publish: {},
 };
-const channelItem = new Channel('channel', channel);
+const channelItem = new Channel(channel, { asyncapi: {} as any, pointer: '', id: 'channel', address: '' });
 
 describe('Channels model', function () {
   describe('.isEmpty()', function () {

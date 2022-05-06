@@ -16,15 +16,15 @@ describe('Channel model', function() {
   describe('.id()', function() {
     it('should return id of model', function() {
       const doc = {};
-      const d = new Channel('channel', doc);
+      const d = new Channel(doc, { asyncapi: {} as any, pointer: '', id: 'channel', address: '' });
       expect(d.id()).toEqual('channel');
     });
   });
 
   describe('.address()', function() {
     it('should return the value', function() {
-      const doc = { location: "..." };
-      const d = new Channel('channel', doc, { asyncapi: {} as any, pointer: '', address: 'user/signup' });
+      const doc = {};
+      const d = new Channel(doc, { asyncapi: {} as any, pointer: '', id: 'channel', address: 'user/signup' });
       expect(d.address()).toEqual('user/signup');
     });
   });
@@ -32,7 +32,7 @@ describe('Channel model', function() {
   describe('.servers()', function() {
     it('should return collection of servers - available on all servers', function() {
       const doc = {};
-      const d = new Channel('parameter', doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', address: 'user/signup' });
+      const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel', address: 'user/signup' });
       expect(d.servers()).toBeInstanceOf(Servers);
       expect(d.servers().all()).toHaveLength(2);
       expect(d.servers().all()[0]).toBeInstanceOf(Server);
@@ -43,7 +43,7 @@ describe('Channel model', function() {
 
     it('should return collection of servers - available on all servers (empty servers array)', function() {
       const doc = { servers: [] };
-      const d = new Channel('parameter', doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', address: 'user/signup' });
+      const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel', address: 'user/signup' });
       expect(d.servers()).toBeInstanceOf(Servers);
       expect(d.servers().all()).toHaveLength(2);
       expect(d.servers().all()[0]).toBeInstanceOf(Server);
@@ -54,7 +54,7 @@ describe('Channel model', function() {
 
     it('should return collection of servers - available only on particular ones', function() {
       const doc = { servers: ['someServer2'] };
-      const d = new Channel('parameter', doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', address: 'user/signup' });
+      const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel', address: 'user/signup' });
       expect(d.servers()).toBeInstanceOf(Servers);
       expect(d.servers().all()).toHaveLength(1);
       expect(d.servers().all()[0]).toBeInstanceOf(Server);
@@ -65,7 +65,7 @@ describe('Channel model', function() {
   describe('.operations()', function() {
     it('should return collection of operations - publish operation', function() {
       const doc = { publish: {} };
-      const d = new Channel('parameter', doc);
+      const d = new Channel(doc);
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -74,7 +74,7 @@ describe('Channel model', function() {
     
     it('should return collection of operations - subscribe operation', function() {
       const doc = { subscribe: {} };
-      const d = new Channel('parameter', doc);
+      const d = new Channel(doc);
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -83,7 +83,7 @@ describe('Channel model', function() {
 
     it('should return collection of operations - both operations', function() {
       const doc = { publish: {}, subscribe: {} };
-      const d = new Channel('parameter', doc);
+      const d = new Channel(doc);
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(2);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -96,7 +96,7 @@ describe('Channel model', function() {
   describe('.parameters()', function() {
     it('should return collection of channel parameters', function() {
       const doc = { parameters: { parameter1: {}, parameter2: {} } };
-      const d = new Channel('parameter', doc);
+      const d = new Channel(doc);
       expect(d.parameters()).toBeInstanceOf(ChannelParameters);
       expect(d.parameters().all()).toHaveLength(2);
       expect(d.parameters().all()[0]).toBeInstanceOf(ChannelParameter);

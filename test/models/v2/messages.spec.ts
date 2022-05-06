@@ -4,7 +4,7 @@ import { Message } from '../../../src/models/v2/message';
 const message = {
   messageId: 'test',
 };
-const messageItem = new Message('test', message);
+const messageItem = new Message(message, { asyncapi: {} as any, pointer: '', id: 'test' });
 
 describe('Messages model', function () {
   describe('.isEmpty()', function () {

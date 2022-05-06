@@ -11,15 +11,14 @@ import type { BindingInterface } from "../../binding";
 
 export class Binding extends Mixin(BaseModel, ExtensionsMixin) implements BindingInterface {
   constructor(
-    private readonly _protocol: string,
     _json: Record<string, any>,
-    _meta: ModelMetadata = {} as any,
+    protected readonly _meta: ModelMetadata & { protocol: string } = {} as any,
   ) {
     super(_json, _meta);
   }
 
   protocol(): string {
-    return this._protocol;
+    return this._meta.protocol;
   }
 
   version(): string {

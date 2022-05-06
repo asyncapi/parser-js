@@ -32,10 +32,12 @@ export class Extension extends BaseModel implements ExtensionInterface {
 
 export class Extensions extends Collection<ExtensionInterface> implements ExtensionsInterface {
   override get(name: string): ExtensionInterface | undefined {
+    name = name.startsWith('x-') ? name : `x-${name}`;
     return this.collections.find(ext => ext.id() === name);
   };
 
   override has(name: string): boolean {
+    name = name.startsWith('x-') ? name : `x-${name}`;
     return this.collections.some(ext => ext.id() === name);
   };
 }

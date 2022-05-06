@@ -3,7 +3,7 @@ import { OAuthFlowsInterface } from '../oauth-flows';
 import { BaseModel } from '../base';
 import { Mixin } from '../utils';
 import { ExtensionsMixin } from './mixins/extensions';
-import { OAuthFlowInterface } from 'models/oauth-flow';
+import { OAuthFlowInterface } from '../oauth-flow';
 import { OAuthFlow } from './oauth-flow';
 
 export class OAuthFlows extends Mixin(BaseModel, ExtensionsMixin) implements OAuthFlowsInterface {

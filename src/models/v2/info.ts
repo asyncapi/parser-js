@@ -8,14 +8,13 @@ import { ExtensionsMixin } from './mixins/extensions';
 import { ExternalDocumentation } from './mixins/external-docs';
 import { Tags, Tag } from './mixins/tags';
 
-import type { InfoInterface } from "../../models/info";
-import type { ExternalDocumentationInterface } from "../../models/external-docs";
-import type { TagsInterface } from "../../models/tags";
+import type { ContactInterface } from "../contact";
+import type { InfoInterface } from "../info";
+import type { ExternalDocumentationInterface } from "../external-docs";
+import type { LicenseInterface } from "../license";
+import type { TagsInterface } from "../tags";
 
-export class Info 
-  extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) 
-  implements InfoInterface {
-
+export class Info extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements InfoInterface {
   title(): string {
     return this._json.title;
   }
@@ -24,12 +23,12 @@ export class Info
     return this._json.version;
   }
 
-  id(): string | undefined {
-    return this._meta.asyncapi.parsed.id as string;
-  }
-
   hasId(): boolean {
     return !!this._meta.asyncapi.parsed.id;
+  }
+
+  id(): string | undefined {
+    return this._meta.asyncapi.parsed.id;
   }
 
   hasTermsOfService(): boolean {
@@ -44,7 +43,7 @@ export class Info
     return Object.keys(this._json.contact || {}).length > 0;
   }
 
-  contact(): Contact | undefined {
+  contact(): ContactInterface | undefined {
     const contact = this._json.contact;
     return contact && this.createModel(Contact, contact, { pointer: '/info/contact' });
   }
@@ -53,7 +52,7 @@ export class Info
     return Object.keys(this._json.license || {}).length > 0;
   }
 
-  license(): License | undefined {
+  license(): LicenseInterface | undefined {
     const license = this._json.license;
     return license && this.createModel(License, license, { pointer: `/info/license` });
   }

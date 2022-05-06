@@ -12,5 +12,5 @@ export { SecurityScheme as SecuritySchemeV2 } from './security-scheme';
 export { SecuritySchemes as SecuritySchemesV2 } from './security-schemes';
 export { ServerVariable as ServerVariableV2 } from './server-variable';
 export { ServerVariables as ServerVariablesV2 } from './server-variables';
-export {OAuthFlow as OAuthFlowV2} from './oauth-flow';
-export {OAuthFlows as OAuthFlowsV2} from './oauth-flows';
+export { OAuthFlow as OAuthFlowV2 } from './oauth-flow';
+export { OAuthFlows as OAuthFlowsV2 } from './oauth-flows';

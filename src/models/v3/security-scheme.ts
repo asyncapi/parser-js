@@ -3,7 +3,7 @@ import { Mixin } from '../utils';
 import { DescriptionMixin } from './mixins/description';
 import { ExtensionsMixin } from './mixins/extensions';
 import { SecuritySchemaType, SecuritySchemeInterface } from '../security-scheme';
-import { OAuthFlowsInterface } from 'models/oauth-flows';
+import { OAuthFlowsInterface } from '../oauth-flows';
 import { OAuthFlows } from './oauth-flows';
 
 export class SecurityScheme extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements SecuritySchemeInterface {

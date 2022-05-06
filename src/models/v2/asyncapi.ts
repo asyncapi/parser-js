@@ -9,10 +9,7 @@ import { ExtensionsMixin } from './mixins/extensions';
 import type { AsyncAPIDocumentInterface, InfoInterface } from "../../models";
 import type { ServersInterface } from "models/servers";
 
-export class AsyncAPIDocument
-  extends Mixin(BaseModel, ExtensionsMixin)
-  implements AsyncAPIDocumentInterface {
-
+export class AsyncAPIDocument extends Mixin(BaseModel, ExtensionsMixin) implements AsyncAPIDocumentInterface {
   version(): string {
     return this._json.asyncapi;
   }

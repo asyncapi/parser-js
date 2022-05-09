@@ -9,15 +9,14 @@ import type { ServerVariableInterface } from '../server-variable';
 
 export class ServerVariable extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements ServerVariableInterface {
   constructor(
-    private readonly _id: string,
     _json: Record<string,any>,
-    _meta: ModelMetadata = {} as any
+    protected readonly _meta: ModelMetadata & { id: string } = {} as any
   ) {
     super(_json, _meta);
   }
   
   id(): string {
-    return this._id;  
+    return this._meta.id;
   }
 
   hasDefaultValue(): boolean {

@@ -11,15 +11,14 @@ import type { OAuthFlowsInterface } from '../oauth-flows';
 
 export class SecurityScheme extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements SecuritySchemeInterface {
   constructor(
-    private readonly _id: string,
     _json: Record<string, any>,
-    _meta: ModelMetadata = {} as any
+    protected readonly _meta: ModelMetadata & { id: string } = {} as any
   ) {
     super(_json, _meta);
   }
 
   id(): string {
-    return this._id;
+    return this._meta.id;
   }
 
   hasBearerFormat(): boolean {

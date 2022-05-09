@@ -17,7 +17,7 @@ export class Extension extends BaseModel implements ExtensionInterface {
     super(_json, _meta);
   }
 
-  id(): string {
+  name(): string {
     return this._id;
   }
 
@@ -32,11 +32,11 @@ export class Extension extends BaseModel implements ExtensionInterface {
 
 export class Extensions extends Collection<ExtensionInterface> implements ExtensionsInterface {
   override get(name: string): ExtensionInterface | undefined {
-    return this.collections.find(ext => ext.id() === name);
+    return this.collections.find(ext => ext.name() === name);
   };
 
   override has(name: string): boolean {
-    return this.collections.some(ext => ext.id() === name);
+    return this.collections.some(ext => ext.name() === name);
   };
 }
 

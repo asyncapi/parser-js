@@ -4,7 +4,7 @@ import { OperationTrait } from '../../../src/models/v2/operation-trait';
 const operationTrait = {
   operationId: 'test',
 };
-const operationTraitItem = new OperationTrait('test', operationTrait);
+const operationTraitItem = new OperationTrait(operationTrait, { asyncapi: {} as any, pointer: '', id: 'test', action: 'publish' });
 
 describe('OperationTraits model', function () {
   describe('.isEmpty()', function () {

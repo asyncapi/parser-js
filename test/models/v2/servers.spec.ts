@@ -8,7 +8,7 @@ const doc = {
     url: 'development.gigantic-server.com'
   }
 };
-const docItem = new Server('development', doc.development);
+const docItem = new Server(doc.development, { asyncapi: {} as any, pointer: '', id: 'development' });
 
 describe('Servers model', function () {
   describe('.isEmpty()', function () {

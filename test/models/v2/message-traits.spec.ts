@@ -4,7 +4,7 @@ import { MessageTrait } from '../../../src/models/v2/message-trait';
 const messageTrait = {
   messageId: 'test',
 };
-const messageTraitItem = new MessageTrait('test', messageTrait);
+const messageTraitItem = new MessageTrait(messageTrait, { asyncapi: {} as any, pointer: '', id: 'test' });
 
 describe('MessageTraits model', function () {
   describe('.isEmpty()', function () {

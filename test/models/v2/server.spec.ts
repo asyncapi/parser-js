@@ -21,8 +21,8 @@ const doc = {
     }
   }
 };
-const docItem = new Server('development', doc.development);
-const emptyItem = new Server('', {});
+const docItem = new Server(doc.development, { asyncapi: {} as any, pointer: '', id: 'development' });
+const emptyItem = new Server({}, { asyncapi: {} as any, pointer: '', id: '' });
 
 describe('Server Model', function () {
   describe('.id()', function () {
@@ -72,7 +72,7 @@ describe('Server Model', function () {
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
       const doc = { security: [ { requirement: [] } ] };
-      const d = new Server('trait', doc);
+      const d = new Server(doc);
       expect(Array.isArray(d.security())).toEqual(true);
       expect(d.security()).toHaveLength(1);
       expect(typeof d.security()[0]).toEqual('object');
@@ -82,7 +82,7 @@ describe('Server Model', function () {
     
     it('should return collection of security requirements when value is undefined', function() {
       const doc = {};
-      const d = new Server('trait', doc);
+      const d = new Server(doc);
       expect(Array.isArray(d.security())).toEqual(true);
       expect(d.security()).toHaveLength(0);
     });

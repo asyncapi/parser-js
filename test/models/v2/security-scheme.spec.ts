@@ -18,8 +18,8 @@ const doc1 = {
     }
 }
 
-const sc1 = new SecurityScheme('api_key', doc1);
-const emptyItem = new SecurityScheme('', {});
+const sc1 = new SecurityScheme(doc1, { asyncapi: {} as any, pointer: '', id: 'api_key' });
+const emptyItem = new SecurityScheme({});
 
 describe('Security Scheme', function () {
     describe('.id()', function () {

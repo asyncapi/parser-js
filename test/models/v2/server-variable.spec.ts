@@ -6,7 +6,7 @@ const doc = {
   enum: ['1883', '8883']
 }
 
-const sv = new ServerVariable('doc', doc);
+const sv = new ServerVariable(doc, { asyncapi: {} as any, pointer: '', id: 'doc' });
 
 describe('Server Variable ', function() {
   describe('.id()', function() {

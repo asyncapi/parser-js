@@ -32,11 +32,7 @@ export abstract class BaseModel {
     return `${this._meta?.pointer}/${field}`;
   }
 
-  protected createModel<T extends BaseModel>(Model: Constructor<T>, value: any, { id, parent, pointer, ...rest }: { id?: string, pointer: string | number, [key: string]: any }): T {
-    const meta = { ...rest, asyncapi: this._meta.asyncapi, pointer } as ModelMetadata;
-    if (id) {
-      return new Model(id, value, meta);
-    }
-    return new Model(value, meta);
+  protected createModel<T extends BaseModel>(Model: Constructor<T>, value: any, { pointer, ...rest }: { pointer: string | number, [key: string]: any }): T {
+    return new Model(value, { ...rest, asyncapi: this._meta.asyncapi, pointer });
   }
 }

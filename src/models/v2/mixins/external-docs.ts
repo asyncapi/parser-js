@@ -7,10 +7,7 @@ import { ExtensionsMixin } from './extensions';
 import type { ExternalDocumentationInterface } from '../../external-docs';
 import type { ExternalDocumentationMixinInterface } from "../../mixins";
 
-export class ExternalDocumentation 
-  extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) 
-  implements ExternalDocumentationInterface {
-
+export class ExternalDocumentation extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements ExternalDocumentationInterface {
   url(): string {
     return this._json.url;
   }

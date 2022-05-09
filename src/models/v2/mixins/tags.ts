@@ -10,10 +10,7 @@ import type { TagsMixinInterface } from "../../mixins";
 import type { TagsInterface } from "../../tags";
 import type { TagInterface } from "../../tag";
 
-export class Tag 
-  extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin, ExternalDocumentationMixin) 
-  implements TagInterface {
-
+export class Tag extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin, ExternalDocumentationMixin) implements TagInterface {
   name(): string {
     return this._json.name;
   }

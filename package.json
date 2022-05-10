@@ -88,15 +88,15 @@
     "branches": [
       "master",
       {
-        "name": "2022-04-release",
-        "prerelease": true
-      },
-      {
-        "name": "next-major",
+        "name": "next-spec",
         "prerelease": true
       },
       {
         "name": "next-major-spec",
+        "prerelease": true
+      },
+      {
+        "name": "next-major",
         "prerelease": true
       }
     ],

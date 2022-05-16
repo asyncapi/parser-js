@@ -20,7 +20,7 @@ export class AsyncAPIDocument extends Mixin(BaseModel, ExtensionsMixin) implemen
 
   servers(): ServersInterface {
     return new Servers(
-      Object.entries(this._json.servers).map(([serverName, server]) => 
+      Object.entries(this._json.servers || {}).map(([serverName, server]) => 
         this.createModel(Server, server, { id: serverName, pointer: `/servers/${serverName}` })
       )
     );

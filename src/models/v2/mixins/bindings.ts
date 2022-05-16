@@ -44,9 +44,8 @@ export class Bindings extends Collection<BindingInterface> implements BindingsIn
 
 export abstract class BindingsMixin extends BaseModel implements BindingsMixinInterface {
   bindings(): BindingsInterface {
-    const bindings: Record<string, any> = this._json.bindings || {};
     return new Bindings(
-      Object.entries(bindings).map(([protocol, binding]) => 
+      Object.entries(this._json.bindings || {}).map(([protocol, binding]) => 
         this.createModel(Binding, binding, { id: protocol, pointer: `${this._meta.pointer}/bindings/${protocol}` })
       )
     );

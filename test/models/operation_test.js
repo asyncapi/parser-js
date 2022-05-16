@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const js = { summary: 't', description: 'test', traits: [{bindings: {kafka: {clientId: 'my-app-id'}}}], operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing' };
+const js = { summary: 't', description: 'test', traits: [{bindings: {kafka: {clientId: 'my-app-id'}}}], operationId: 'test', tags: [{name: 'tag1'}], externalDocs: { url: 'somewhere' }, bindings: { amqp: { test: true } }, message: { test: true }, 'x-test': 'testing', security: [{ oauth2: ['user:read'] }]};
 
 const Operation = require('../../lib/models/operation');
 
@@ -120,6 +120,18 @@ describe('Operation', function() {
       assertMixinTagsInheritance(Operation);
       assertMixinBindingsInheritance(Operation);
       assertMixinSpecificationExtensionsInheritance(Operation);
+    });
+  });
+
+  describe('#security()', function() {
+    it('should return an array of security requirements objects', function() {
+      const d = new Operation(js);
+      expect(Array.isArray(d.security())).to.equal(true);
+      expect(d.security()).to.have.lengthOf(1);
+      d.security().forEach((s, i) => {
+        expect(s.constructor.name).to.equal('OperationSecurityRequirement');
+        expect(s.json()).to.equal(js.security[i]);
+      });
     });
   });
 });

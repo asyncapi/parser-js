@@ -4,7 +4,6 @@ import { ChannelParameter } from "./channel-parameter";
 import { CorrelationId } from "./correlation-id";
 import { Message } from "./message";
 import { MessageTrait } from "./message-trait";
-import { Operation } from "./operation";
 import { OperationTrait } from "./operation-trait";
 import { Schema } from "./schema";
 import { SecurityScheme } from "./security-scheme";
@@ -14,19 +13,14 @@ import { ServerVariable } from "./server-variable";
 import { Mixin } from '../utils';
 import { Bindings, Binding } from "./mixins/bindings";
 import { ExtensionsMixin } from './mixins/extensions';
-import { ExternalDocumentation } from './mixins/external-docs';
-import { Tag } from './mixins/tags';
 
 import type { BindingsInterface } from "../bindings";
 import type { ComponentsInterface } from "../components";
 import type { ChannelInterface } from "../channel";
 import type { ChannelParameterInterface } from "../channel-parameter";
 import type { CorrelationIdInterface } from "../correlation-id";
-import type { ExternalDocumentationInterface } from "../external-docs";
-import type { TagInterface } from "../tag";
 import type { MessageInterface } from "../message";
 import type { MessageTraitInterface } from "../message-trait";
-import type { OperationInterface } from "../operation";
 import type { OperationTraitInterface } from "../operation-trait";
 import type { SchemaInterface } from "../schema";
 import type { SecuritySchemeInterface } from "../security-scheme";
@@ -41,10 +35,6 @@ export class Components extends Mixin(BaseModel, ExtensionsMixin) implements Com
 
   channels(): Record<string, ChannelInterface> {
     return this.createMap('channels', Channel);
-  }
-
-  operations(): Record<string, OperationInterface> {
-    return this.createMap('channels', Operation);
   }
 
   messages(): Record<string, MessageInterface> {
@@ -73,14 +63,6 @@ export class Components extends Mixin(BaseModel, ExtensionsMixin) implements Com
 
   correlationIds(): Record<string, CorrelationIdInterface> {
     return this.createMap('correlationIds', CorrelationId);
-  }
-
-  externalDocs(): Record<string, ExternalDocumentationInterface> {
-    return this.createMap('externalDocs', ExternalDocumentation);
-  }
-
-  tags(): Record<string, TagInterface> {
-    return this.createMap('tags', Tag);
   }
 
   securitySchemes(): Record<string, SecuritySchemeInterface> {

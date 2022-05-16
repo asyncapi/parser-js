@@ -3,7 +3,6 @@ import { Bindings } from '../../../src/models/v2/mixins/bindings';
 import { Channel } from '../../../src/models/v2/channel';
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 import { CorrelationId } from '../../../src/models/v2/correlation-id';
-import { ExternalDocumentation } from '../../../src/models/v2/mixins/external-docs';
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 import { Message } from '../../../src/models/v2/message';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
@@ -11,7 +10,6 @@ import { Schema } from '../../../src/models/v2/schema';
 import { Server } from '../../../src/models/v2/server';
 import { ServerVariable } from '../../../src/models/v2/server-variable';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
-import { Tag } from '../../../src/models/v2/mixins/tags';
 
 import { 
   assertExtensionsMixinInheritance,
@@ -49,22 +47,6 @@ describe('Components model', function() {
       const d = new Components(doc);
       expect(typeof d.channels()).toEqual('object');
       expect(Object.keys(d.channels())).toHaveLength(0);
-    });
-  });
-
-  describe('.operations()', function() {
-    it('should return map of operations', function() {
-      const doc = { operations: { operation: {} } };
-      const d = new Components(doc);
-      expect(typeof d.operations()).toEqual('object');
-      expect(Object.keys(d.operations())).toHaveLength(0);
-    });
-
-    it('should return empty map when operations are not defined', function() {
-      const doc = {};
-      const d = new Components(doc);
-      expect(typeof d.operations()).toEqual('object');
-      expect(Object.keys(d.operations())).toHaveLength(0);
     });
   });
 
@@ -201,40 +183,6 @@ describe('Components model', function() {
       const d = new Components(doc);
       expect(typeof d.securitySchemes()).toEqual('object');
       expect(Object.keys(d.securitySchemes())).toHaveLength(0);
-    });
-  });
-
-  describe('.externalDocs()', function() {
-    it('should return map of externalDocs', function() {
-      const doc = { externalDocs: { doc: {} } };
-      const d = new Components(doc);
-      expect(typeof d.externalDocs()).toEqual('object');
-      expect(Object.keys(d.externalDocs())).toHaveLength(1);
-      expect(d.externalDocs()['doc']).toBeInstanceOf(ExternalDocumentation);
-    });
-
-    it('should return empty map when externalDocs are not defined', function() {
-      const doc = {};
-      const d = new Components(doc);
-      expect(typeof d.externalDocs()).toEqual('object');
-      expect(Object.keys(d.externalDocs())).toHaveLength(0);
-    });
-  });
-
-  describe('.tags()', function() {
-    it('should return map of tags', function() {
-      const doc = { tags: { tag: {} } };
-      const d = new Components(doc);
-      expect(typeof d.tags()).toEqual('object');
-      expect(Object.keys(d.tags())).toHaveLength(1);
-      expect(d.tags()['tag']).toBeInstanceOf(Tag);
-    });
-
-    it('should return empty map when tags are not defined', function() {
-      const doc = {};
-      const d = new Components(doc);
-      expect(typeof d.tags()).toEqual('object');
-      expect(Object.keys(d.tags())).toHaveLength(0);
     });
   });
 

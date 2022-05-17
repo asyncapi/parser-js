@@ -3,7 +3,6 @@ import {
   AsyncAPIDocumentV2, 
   InfoV2, 
   ServersV2, 
-  AsyncAPIDocumentV3
 } from '../../../src/models';
 import { createDetailedAsyncAPI } from '../../../src/utils';
 
@@ -14,7 +13,7 @@ import {
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {
     it('should return the value', function() {
-      const doc = { asyncapi: "3.0.0" };
+      const doc = { asyncapi: "2.0.0" };
       const d = new AsyncAPIDocumentV2(doc);
       expect(d.version()).toEqual(doc.asyncapi);
     });
@@ -54,14 +53,6 @@ describe('AsyncAPIDocument factory', function() {
     const d = newAsyncAPIDocument(detailed)
     expect(d.version()).toEqual(doc.asyncapi);
     expect(d).toBeInstanceOf(AsyncAPIDocumentV2);
-  });
-
-  it('should create a valid document from v3.0.0', function() {
-    const doc = { asyncapi: "3.0.0" };
-    const detailed = createDetailedAsyncAPI(doc, doc);
-    const d = newAsyncAPIDocument(detailed)
-    expect(d.version()).toEqual(doc.asyncapi);
-    expect(d).toBeInstanceOf(AsyncAPIDocumentV3);
   });
 
   it('should fail trying to create a document from a non supported spec version', function() {

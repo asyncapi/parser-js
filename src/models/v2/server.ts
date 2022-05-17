@@ -1,4 +1,8 @@
 import { BaseModel } from '../base';
+import { Channels } from './channels';
+import { Channel } from './channel';
+import { Messages } from './messages';
+import { Operations } from './operations';
 import { SecurityScheme } from './security-scheme';
 import { ServerVariables } from './server-variables';
 import { ServerVariable } from './server-variable';
@@ -8,7 +12,15 @@ import { BindingsMixin } from './mixins/bindings';
 import { DescriptionMixin } from './mixins/description';
 import { ExtensionsMixin } from './mixins/extensions';
 
+import { tilde } from "../../utils";
+
 import type { ModelMetadata } from "../base";
+import type { ChannelsInterface } from '../channels';
+import type { ChannelInterface } from '../channel';
+import type { OperationsInterface } from '../operations';
+import type { OperationInterface } from '../operation';
+import type { MessagesInterface } from '../messages';
+import type { MessageInterface } from '../message';
 import type { ServerInterface } from '../server';
 import type { ServerVariablesInterface } from '../server-variables';
 import type { SecuritySchemeInterface } from '../security-scheme';
@@ -39,6 +51,29 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
 
   protocolVersion(): string {
     return this._json.protocolVersion;
+  }
+
+  channels(): ChannelsInterface {
+    const channels: ChannelInterface[] = [];
+    Object.entries(this._meta.asyncapi?.parsed.channels || {}).map(([channelAddress, channel]: [string, any]) => {
+      const allowedServers: string[] = channel.servers || [];
+      if (allowedServers.length === 0 || allowedServers.includes(this._meta.id)) {
+        channels.push(this.createModel(Channel, channel, { id: channelAddress, address: channelAddress, pointer: `/channels/${tilde(channelAddress)}` }));
+      }
+    });
+    return new Channels(channels);
+  }
+
+  operations(): OperationsInterface {
+    const operations: OperationInterface[] = [];
+    this.channels().forEach(channel => operations.push(...channel.operations().all()));
+    return new Operations(operations);
+  }
+
+  messages(): MessagesInterface {
+    const messages: MessageInterface[] = [];
+    this.operations().forEach(operation => messages.push(...operation.messages().all()));
+    return new Messages(messages);
   }
 
   variables(): ServerVariablesInterface {

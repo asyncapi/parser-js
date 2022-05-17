@@ -15,6 +15,8 @@ import { ExtensionsMixin } from './mixins/extensions';
 import type { ModelMetadata } from "../base";
 import type { ChannelInterface } from "../channel";
 import type { ChannelParametersInterface } from "../channel-parameters";
+import type { MessagesInterface } from "../messages";
+import type { MessageInterface } from "../message";
 import type { OperationsInterface } from "../operations";
 import type { OperationInterface } from "../operation";
 import type { ServersInterface } from "../servers";
@@ -48,18 +50,19 @@ export class Channel extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, E
   }
 
   operations(): OperationsInterface {
-    const operations: OperationInterface[] = []
-    if (this._json.publish) {
-      operations.push(
-        this.createModel(Operation, this._json.publish, { id: 'publish', action: 'publish', pointer: `${this._meta.pointer}/publish` }),
+    const operations: OperationInterface[] = [];
+    ['publish', 'subscribe'].forEach(operationKind => {
+      this._json[operationKind] && operations.push(
+        this.createModel(Operation, this._json[operationKind], { id: operationKind, action: operationKind, pointer: `${this._meta.pointer}/${operationKind}` }),
       );
-    }
-    if (this._json.subscribe) {
-      operations.push(
-        this.createModel(Operation, this._json.subscribe, { id: 'subscribe', action: 'subscribe', pointer: `${this._meta.pointer}/subscribe` }),
-      );
-    }
+    });
     return new Operations(operations);
+  }
+
+  messages(): MessagesInterface {
+    const messages: MessageInterface[] = [];
+    this.operations().forEach(operation => messages.push(...operation.messages().all()));
+    return new Messages(messages);
   }
 
   parameters(): ChannelParametersInterface {

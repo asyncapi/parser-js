@@ -59,14 +59,14 @@ export class Message extends MessageTrait implements MessageInterface {
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     Object.entries(this._meta.asyncapi?.parsed.channels || {}).forEach(([channelAddress, channel]: [string, any]) => {
-      ['subscribe', 'publish'].forEach(operationKind => {
-        const operation = channel[operationKind];
+      ['subscribe', 'publish'].forEach(operationAction => {
+        const operation = channel[operationAction];
         if (operation && (
           operation.message === this._json ||
           (operation.message.oneOf || []).includes(this._json)
         )) {
           operations.push(
-            this.createModel(Operation, operation, { pointer: `/channels/${tilde(channelAddress)}/${operationKind}` })
+            this.createModel(Operation, operation, { pointer: `/channels/${tilde(channelAddress)}/${operationAction}`, action: operationAction })
           );
         }
       });

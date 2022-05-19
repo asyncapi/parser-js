@@ -66,7 +66,9 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
-    this.channels().forEach(channel => operations.push(...channel.operations().all()));
+    this.channels().forEach(channel => {
+      operations.push(...channel.operations().all())
+    });
     return new Operations(operations);
   }
 

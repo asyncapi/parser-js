@@ -3,6 +3,8 @@ import { ChannelParameters } from '../../../src/models/v2/channel-parameters';
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 import { Operations } from '../../../src/models/v2/operations';
 import { Operation } from '../../../src/models/v2/operation';
+import { Messages } from '../../../src/models/v2/messages';
+import { Message } from '../../../src/models/v2/message';
 import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
@@ -90,6 +92,35 @@ describe('Channel model', function() {
       expect(d.operations().all()[0].action()).toEqual('publish');
       expect(d.operations().all()[1]).toBeInstanceOf(Operation);
       expect(d.operations().all()[1].action()).toEqual('subscribe');
+    });
+  });
+
+  describe('.messages()', function() {
+    it('should return collection of messages - single message', function() {
+      const doc = { publish: { message: { messageId: '...' } } };
+      const d = new Channel(doc);
+      expect(d.messages()).toBeInstanceOf(Messages);
+      expect(d.messages().all()).toHaveLength(1);
+      expect(d.messages().all()[0]).toBeInstanceOf(Message);
+      expect(d.messages().all()[0].messageId()).toEqual(doc.publish.message.messageId);
+    });
+    
+    it('should return collection of messages - oneOf message', function() {
+      const doc = { subscribe: { message: { oneOf: [{ messageId: '1' }, { messageId: '2' }] } } };
+      const d = new Channel(doc);
+      expect(d.messages()).toBeInstanceOf(Messages);
+      expect(d.messages().all()).toHaveLength(2);
+      expect(d.messages().all()[0]).toBeInstanceOf(Message);
+      expect(d.messages().all()[0].messageId()).toEqual(doc.subscribe.message.oneOf[0].messageId);
+      expect(d.messages().all()[1]).toBeInstanceOf(Message);
+      expect(d.messages().all()[1].messageId()).toEqual(doc.subscribe.message.oneOf[1].messageId);
+    });
+
+    it('should return collection of messages - single message and oneOf', function() {
+      const doc = { publish: { message: {} }, subscribe: { message: { oneOf: [{ messageId: '1' }, { messageId: '2' }] } } };
+      const d = new Channel(doc);
+      expect(d.messages()).toBeInstanceOf(Messages);
+      expect(d.messages().all()).toHaveLength(3);
     });
   });
 

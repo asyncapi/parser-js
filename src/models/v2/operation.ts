@@ -36,7 +36,7 @@ export class Operation extends OperationTrait implements OperationInterface {
     Object.entries(this._meta.asyncapi.parsed.channels || {}).forEach(([channelAddress, channel]: [string, any]) => {
       if (channel.subscribe === this._json || channel.publish === this._json) {
         channels.push(
-          this.createModel(Channel, channel, { id: channelAddress, pointer: `/channels/${tilde(channelAddress)}` })
+          this.createModel(Channel, channel, { id: channelAddress, address: channelAddress, pointer: `/channels/${tilde(channelAddress)}` })
         );
       }
     });

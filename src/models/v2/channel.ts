@@ -51,9 +51,9 @@ export class Channel extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, E
 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
-    ['publish', 'subscribe'].forEach(operationKind => {
-      this._json[operationKind] && operations.push(
-        this.createModel(Operation, this._json[operationKind], { id: operationKind, action: operationKind, pointer: `${this._meta.pointer}/${operationKind}` }),
+    ['publish', 'subscribe'].forEach(operationAction => {
+      this._json[operationAction] && operations.push(
+        this.createModel(Operation, this._json[operationAction], { id: operationAction, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
       );
     });
     return new Operations(operations);

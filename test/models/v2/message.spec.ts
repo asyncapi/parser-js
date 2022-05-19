@@ -1,7 +1,13 @@
+import { Channels } from '../../../src/models/v2/channels';
+import { Channel } from '../../../src/models/v2/channel';
 import { Message } from '../../../src/models/v2/message';
 import { MessageTraits } from '../../../src/models/v2/message-traits';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
+import { Operations } from '../../../src/models/v2/operations';
+import { Operation } from '../../../src/models/v2/operation';
 import { Schema } from '../../../src/models/v2/schema';
+import { Servers } from '../../../src/models/v2/servers';
+import { Server } from '../../../src/models/v2/server';
 
 import { 
   assertBindingsMixinInheritance,
@@ -51,6 +57,101 @@ describe('Message model', function() {
       const doc = {};
       const d = new Message(doc);
       expect(d.payload()).toBeUndefined();
+    });
+  });
+
+  describe('.servers()', function() {
+    it('should return collection of servers - available on all servers', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { servers: { production: {}, development: {} }, channels: { 'user/signup': { publish: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.servers()).toBeInstanceOf(Servers);
+      expect(d.servers().all()).toHaveLength(2);
+      expect(d.servers().all()[0]).toBeInstanceOf(Server);
+      expect(d.servers().all()[0].id()).toEqual('production');
+      expect(d.servers().all()[1]).toBeInstanceOf(Server);
+      expect(d.servers().all()[1].id()).toEqual('development');
+    });
+
+    it('should return collection of servers - available on selected servers', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { servers: { production: {}, development: {} }, channels: { 'user/signup': { publish: { message: doc }, servers: ['production'] } } } } as any, pointer: '', id: 'message' });
+      expect(d.servers()).toBeInstanceOf(Servers);
+      expect(d.servers().all()).toHaveLength(1);
+      expect(d.servers().all()[0]).toBeInstanceOf(Server);
+      expect(d.servers().all()[0].id()).toEqual('production');
+    });
+
+    it('should return collection of servers - do not duplicate servers', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { servers: { production: {}, development: {} }, channels: { 'user/signup': { publish: { message: doc }, subscribe: { message: doc }, servers: ['production'] } } } } as any, pointer: '', id: 'message' });
+      expect(d.servers()).toBeInstanceOf(Servers);
+      expect(d.servers().all()).toHaveLength(1);
+      expect(d.servers().all()[0]).toBeInstanceOf(Server);
+      expect(d.servers().all()[0].id()).toEqual('production');
+    });
+  });
+
+  describe('.channels()', function() {
+    it('should return collection of channels - single channel', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.channels()).toBeInstanceOf(Channels);
+      expect(d.channels().all()).toHaveLength(1);
+      expect(d.channels().all()[0]).toBeInstanceOf(Channel);
+      expect(d.channels().all()[0].address()).toEqual('user/signup');
+    });
+
+    it('should return collection of channels - multiple channels', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: doc } }, 'user/logout': { subscribe: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.channels()).toBeInstanceOf(Channels);
+      expect(d.channels().all()).toHaveLength(2);
+      expect(d.channels().all()[0]).toBeInstanceOf(Channel);
+      expect(d.channels().all()[0].address()).toEqual('user/signup');
+      expect(d.channels().all()[1]).toBeInstanceOf(Channel);
+      expect(d.channels().all()[1].address()).toEqual('user/logout');
+    });
+
+    it('should return collection of channels - do not duplicate channels', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: doc }, subscribe: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.channels()).toBeInstanceOf(Channels);
+      expect(d.channels().all()).toHaveLength(1);
+      expect(d.channels().all()[0]).toBeInstanceOf(Channel);
+      expect(d.channels().all()[0].address()).toEqual('user/signup');
+    });
+  });
+
+  describe('.operations()', function() {
+    it('should return collection of operations - single operation', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.operations()).toBeInstanceOf(Operations);
+      expect(d.operations().all()).toHaveLength(1);
+      expect(d.operations().all()[0]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[0].action()).toEqual('publish');
+    });
+
+    it('should return collection of operations - multiple operations', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: doc }, subscribe: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.operations()).toBeInstanceOf(Operations);
+      expect(d.operations().all()).toHaveLength(2);
+      expect(d.operations().all()[0]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[0].action()).toEqual('subscribe');
+      expect(d.operations().all()[1]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[1].action()).toEqual('publish');
+    });
+
+    it('should return collection of operations - multiple operations on different channels', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: doc } }, 'user/logout': { subscribe: { message: doc } } } } } as any, pointer: '', id: 'message' });
+      expect(d.operations()).toBeInstanceOf(Operations);
+      expect(d.operations().all()).toHaveLength(2);
+      expect(d.operations().all()[0]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[0].action()).toEqual('publish');
+      expect(d.operations().all()[1]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[1].action()).toEqual('subscribe');
     });
   });
 

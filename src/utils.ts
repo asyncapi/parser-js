@@ -100,3 +100,24 @@ export function mergePatch(origin: unknown, patch: unknown) {
 export function isObject(value: unknown): value is Record<string, any> {
   return Boolean(value) && typeof value === 'object' && Array.isArray(value) === false;
 }
+
+export function tilde(str: string) {
+  return str.replace(/[~\/]{1}/g, (sub) => {
+    switch (sub) {
+      case '/': return '~1';
+      case '~': return '~0';
+    }
+    return sub;
+  });
+};
+
+export function untilde(str: string) {
+  if (!str.includes('~')) return str;
+  return str.replace(/~[01]/g, (sub) => {
+    switch (sub) {
+      case '~1': return '/';
+      case '~0': return '~';
+    }
+    return sub;
+  });
+};

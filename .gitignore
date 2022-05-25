@@ -4,3 +4,4 @@ node_modules
 coverage
 .DS_Store
 test/sample_browser/bundle.js
+dist/bundle.js

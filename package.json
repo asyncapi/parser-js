@@ -1,15 +1,23 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
   "directories": {
     "test": "test"
   },
+  "files": [
+    "dist/bundle.js",
+    "API.md",
+    "LICENSE",
+    "README.md",
+    "lib/",
+    "types.d.ts"
+  ],
   "scripts": {
     "test": "npm run test:browser:cleanup && npm run test:lib && npm run test:parseFromUrl && npm run cover:report && npm run test:browser",
-    "bundle": "browserify \"lib/browser.js\" | uglifyjs > \"dist/bundle.js\"",
+    "bundle": "mkdirp \"dist\" && browserify \"lib/browser.js\" | uglifyjs > \"dist/bundle.js\"",
     "docs": "jsdoc2md \"lib/parser.js\" -f \"lib/**/*.js\" > API.md",
     "types": "jsdoc -t \"node_modules/tsd-jsdoc/dist\" -r lib -d \"./\" && node \"./scripts/fix-ts-types.js\"",
     "prepublishOnly": "npm run bundle && npm run docs && npm run types",
@@ -55,6 +63,7 @@
     "http-server": "^0.12.3",
     "jsdoc-to-markdown": "^5.0.0",
     "markdown-toc": "^1.2.0",
+    "mkdirp": "^1.0.4",
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",
     "puppeteer": "^7.0.1",

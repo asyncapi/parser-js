@@ -93,6 +93,12 @@ describe('Operation', function() {
       expect(d.message(0).json()).to.be.deep.equal(doc.message.oneOf[0]);
       expect(d.message(1).json()).to.be.deep.equal(doc.message.oneOf[1]);
     });
+
+    it('should return a Message object if no index is provided and message is oneOf from one element', function() {
+      const doc = { message: { oneOf: [{ test: true }] } };
+      const d = new Operation(doc);
+      expect(d.message().json()).to.be.deep.equal(doc.message.oneOf[0]);
+    });
     
     it('should return null when index is out of bounds', function() {
       const doc = { message: { oneOf: [{ test: true }, { test: false }] } };

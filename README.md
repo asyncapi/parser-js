@@ -138,6 +138,8 @@ Otherwise, if your application is bundled via bundlers like `webpack`, you can i
 import parser from '@asyncapi/parser';
 ```
 
+In case you just want to check out the latest `bundle.js` without installing the package, we publish one on each GitHub release. You can find it under [this link to the latest release](https://github.com/asyncapi/parser-js/releases/latest/download/bundle.js).
+
 ## Custom message parsers
 
 AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it within the parser:

@@ -25,6 +25,14 @@
 </dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#upperFirst">upperFirst(word)</a></dt>
+<dd><p>returns a string with the first character of string capitalized, if that character is alphabetic.</p>
+</dd>
+</dl>
+
 ## Typedefs
 
 <dl>
@@ -3783,6 +3791,7 @@ The complete list of parse configuration options used to parse the given data.
 | [parse] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apitools.dev/json-schema-ref-parser/docs/options.html). |
 | [resolve] | <code>Object</code> | Options object to pass to [json-schema-ref-parser](https://apitools.dev/json-schema-ref-parser/docs/options.html). |
 | [applyTraits] | <code>Boolean</code> | Whether to resolve and apply traits or not. Defaults to true. |
+| [genererateIdInSchema] | <code>Boolean</code> | Genereate speaking $id where everver not given by schema. |
 
 <a name="MixinBindings"></a>
 
@@ -3978,6 +3987,17 @@ Implements functions to deal with the Tags object.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the tag. |
+
+<a name="upperFirst"></a>
+
+## upperFirst(word)
+returns a string with the first character of string capitalized, if that character is alphabetic.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| word | <code>String</code> | 
 
 <a name="SchemaIteratorCallbackType"></a>
 

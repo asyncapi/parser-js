@@ -1,0 +1,107 @@
+asyncapi: "2.0.0"
+info:
+  title: Streetlights API
+  version: "1.0.0"
+  description: |
+    The Smartylighting Streetlights API allows you
+    to remotely manage the city lights.
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+servers:
+  mosquitto:
+    url: mqtt://test.mosquitto.org
+    protocol: mqtt
+channels:
+  street/lights:
+    publish:
+      operationId: getStreetLights
+      message:
+        $ref: "#/components/messages/streetLights"
+
+components:
+  messages:
+    streetLights:
+      name: streetLights
+      title: Street light information
+      contentType: application/json
+      traits:
+        - $ref: "#/components/messageTraits/commonHeaders"
+      payload:
+        $ref: "#/components/schemas/streetLight"
+
+  schemas:
+    streetLight:
+      type: object
+      properties:
+        lumens:
+          type: integer
+          minimum: 0
+          description: Light intensity measured in lumens.
+        maintenance:
+          type: array
+          items:
+            type: object
+            properties:
+              year:
+                type: number
+              cost:
+                type: number
+        holder:
+          type: array
+          items:
+            $ref: "#/components/schemas/manufactor"
+        lightbulb:
+          allOf:
+            - $ref: "#/components/schemas/manufactor"
+            - type: object
+              properties:
+                ecologically:
+                  type: string
+                  enum:
+                    - A+++
+                    - A++
+                    - A+
+                    - A
+                    - B
+                    - C
+                    - D
+                    - E
+                    - F
+        socket:
+          anyOf:
+            - $ref: "#/components/schemas/manufactor"
+            - type: object
+              properties:
+                demo:
+                  type: string
+        vendor:
+          oneOf:
+            - $ref: "#/components/schemas/manufactor"
+            - type: object
+              properties:
+                demo:
+                  type: string
+        sentAt:
+          $ref: "#/components/schemas/sentAt"
+    sentAt:
+      type: string
+      format: date-time
+      description: Date and time when the message was sent.
+    manufactor:
+      type: object
+      properties:
+        country:
+          type: string
+        name:
+          type: string
+
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          my-app-header:
+            type: integer
+            minimum: 0
+            maximum: 100

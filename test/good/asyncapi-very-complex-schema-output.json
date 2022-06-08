@@ -1,0 +1,876 @@
+{
+  "asyncapi": "2.0.0",
+  "info": {
+    "title": "Streetlights API",
+    "version": "1.0.0",
+    "description": "The Smartylighting Streetlights API allows you\nto remotely manage the city lights.\n",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": {
+    "mosquitto": {
+      "url": "mqtt://test.mosquitto.org",
+      "protocol": "mqtt"
+    }
+  },
+  "channels": {
+    "street/lights": {
+      "publish": {
+        "operationId": "getStreetLights",
+        "message": {
+          "name": "streetLights",
+          "title": "Street light information",
+          "contentType": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "lumens": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Light intensity measured in lumens.",
+                "x-parser-schema-id": "<anonymous-schema-3>"
+              },
+              "maintenance": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "year": {
+                      "type": "number",
+                      "x-parser-schema-id": "<anonymous-schema-4>"
+                    },
+                    "cost": {
+                      "type": "number",
+                      "x-parser-schema-id": "<anonymous-schema-5>"
+                    }
+                  },
+                  "x-parser-schema-id": "streetLightMaintenance",
+                  "x-parser-schema-id-level": 3
+                },
+                "x-parser-schema-id": "streetLightMaintenanceArray",
+                "x-parser-schema-id-level": 2
+              },
+              "holder": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-6>"
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-7>"
+                    }
+                  },
+                  "x-parser-schema-id": "manufactor",
+                  "x-parser-schema-id-level": 1
+                },
+                "x-parser-schema-id": "streetLightHolderArray",
+                "x-parser-schema-id-level": 2
+              },
+              "lightbulb": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-6>"
+                      },
+                      "name": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-7>"
+                      }
+                    },
+                    "x-parser-schema-id": "manufactor",
+                    "x-parser-schema-id-level": 1
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "ecologically": {
+                        "type": "string",
+                        "enum": [
+                          "A+++",
+                          "A++",
+                          "A+",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F"
+                        ],
+                        "x-parser-schema-id": "<anonymous-schema-9>"
+                      }
+                    },
+                    "x-parser-schema-id": "<anonymous-schema-8>"
+                  }
+                ],
+                "x-parser-schema-id": "streetLightLightbulb",
+                "x-parser-schema-id-level": 2
+              },
+              "socket": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-6>"
+                      },
+                      "name": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-7>"
+                      }
+                    },
+                    "x-parser-schema-id": "manufactor",
+                    "x-parser-schema-id-level": 1
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "demo": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-11>"
+                      }
+                    },
+                    "x-parser-schema-id": "<anonymous-schema-10>"
+                  }
+                ],
+                "x-parser-schema-id": "streetLightSocket",
+                "x-parser-schema-id-level": 2
+              },
+              "vendor": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-6>"
+                      },
+                      "name": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-7>"
+                      }
+                    },
+                    "x-parser-schema-id": "manufactor",
+                    "x-parser-schema-id-level": 1
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "demo": {
+                        "type": "string",
+                        "x-parser-schema-id": "<anonymous-schema-13>"
+                      }
+                    },
+                    "x-parser-schema-id": "<anonymous-schema-12>"
+                  }
+                ],
+                "x-parser-schema-id": "streetLightVendor",
+                "x-parser-schema-id-level": 2
+              },
+              "sentAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Date and time when the message was sent.",
+                "x-parser-schema-id": "<anonymous-schema-14>"
+              }
+            },
+            "x-parser-schema-id": "streetLight",
+            "x-parser-schema-id-level": 1
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "my-app-header": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100,
+                "x-parser-schema-id": "<anonymous-schema-2>"
+              }
+            },
+            "x-parser-schema-id": "<anonymous-schema-1>"
+          },
+          "x-parser-original-traits": [
+            {
+              "headers": {
+                "type": "object",
+                "properties": {
+                  "my-app-header": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "x-parser-schema-id": "<anonymous-schema-16>"
+                  }
+                },
+                "x-parser-schema-id": "<anonymous-schema-15>"
+              }
+            }
+          ],
+          "x-parser-original-schema-format": "application/vnd.aai.asyncapi;version=2.0.0",
+          "x-parser-original-payload": {
+            "type": "object",
+            "properties": {
+              "lumens": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Light intensity measured in lumens."
+              },
+              "maintenance": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "year": {
+                      "type": "number"
+                    },
+                    "cost": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "holder": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "lightbulb": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "ecologically": {
+                        "type": "string",
+                        "enum": [
+                          "A+++",
+                          "A++",
+                          "A+",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "socket": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "demo": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              },
+              "vendor": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "demo": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              },
+              "sentAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Date and time when the message was sent."
+              }
+            }
+          },
+          "schemaFormat": "application/vnd.aai.asyncapi;version=2.0.0",
+          "x-parser-message-parsed": true
+        }
+      }
+    }
+  },
+  "components": {
+    "messages": {
+      "streetLights": {
+        "name": "streetLights",
+        "title": "Street light information",
+        "contentType": "application/json",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "lumens": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Light intensity measured in lumens.",
+              "x-parser-schema-id": "<anonymous-schema-3>"
+            },
+            "maintenance": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "year": {
+                    "type": "number",
+                    "x-parser-schema-id": "<anonymous-schema-4>"
+                  },
+                  "cost": {
+                    "type": "number",
+                    "x-parser-schema-id": "<anonymous-schema-5>"
+                  }
+                },
+                "x-parser-schema-id": "streetLightMaintenance",
+                "x-parser-schema-id-level": 3
+              },
+              "x-parser-schema-id": "streetLightMaintenanceArray",
+              "x-parser-schema-id-level": 2
+            },
+            "holder": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "country": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-6>"
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-7>"
+                  }
+                },
+                "x-parser-schema-id": "manufactor",
+                "x-parser-schema-id-level": 1
+              },
+              "x-parser-schema-id": "streetLightHolderArray",
+              "x-parser-schema-id-level": 2
+            },
+            "lightbulb": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-6>"
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-7>"
+                    }
+                  },
+                  "x-parser-schema-id": "manufactor",
+                  "x-parser-schema-id-level": 1
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "ecologically": {
+                      "type": "string",
+                      "enum": [
+                        "A+++",
+                        "A++",
+                        "A+",
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-9>"
+                    }
+                  },
+                  "x-parser-schema-id": "<anonymous-schema-8>"
+                }
+              ],
+              "x-parser-schema-id": "streetLightLightbulb",
+              "x-parser-schema-id-level": 2
+            },
+            "socket": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-6>"
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-7>"
+                    }
+                  },
+                  "x-parser-schema-id": "manufactor",
+                  "x-parser-schema-id-level": 1
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "demo": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-11>"
+                    }
+                  },
+                  "x-parser-schema-id": "<anonymous-schema-10>"
+                }
+              ],
+              "x-parser-schema-id": "streetLightSocket",
+              "x-parser-schema-id-level": 2
+            },
+            "vendor": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-6>"
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-7>"
+                    }
+                  },
+                  "x-parser-schema-id": "manufactor",
+                  "x-parser-schema-id-level": 1
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "demo": {
+                      "type": "string",
+                      "x-parser-schema-id": "<anonymous-schema-13>"
+                    }
+                  },
+                  "x-parser-schema-id": "<anonymous-schema-12>"
+                }
+              ],
+              "x-parser-schema-id": "streetLightVendor",
+              "x-parser-schema-id-level": 2
+            },
+            "sentAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time when the message was sent.",
+              "x-parser-schema-id": "<anonymous-schema-14>"
+            }
+          },
+          "x-parser-schema-id": "streetLight",
+          "x-parser-schema-id-level": 1
+        },
+        "headers": {
+          "type": "object",
+          "properties": {
+            "my-app-header": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "x-parser-schema-id": "<anonymous-schema-2>"
+            }
+          },
+          "x-parser-schema-id": "<anonymous-schema-1>"
+        },
+        "x-parser-original-traits": [
+          {
+            "headers": {
+              "type": "object",
+              "properties": {
+                "my-app-header": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "x-parser-schema-id": "<anonymous-schema-16>"
+                }
+              },
+              "x-parser-schema-id": "<anonymous-schema-15>"
+            }
+          }
+        ],
+        "x-parser-original-schema-format": "application/vnd.aai.asyncapi;version=2.0.0",
+        "x-parser-original-payload": {
+          "type": "object",
+          "properties": {
+            "lumens": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Light intensity measured in lumens."
+            },
+            "maintenance": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "year": {
+                    "type": "number"
+                  },
+                  "cost": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "holder": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "country": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "lightbulb": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "ecologically": {
+                      "type": "string",
+                      "enum": [
+                        "A+++",
+                        "A++",
+                        "A+",
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "socket": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "demo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            },
+            "vendor": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "demo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            },
+            "sentAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time when the message was sent."
+            }
+          }
+        },
+        "schemaFormat": "application/vnd.aai.asyncapi;version=2.0.0",
+        "x-parser-message-parsed": true
+      }
+    },
+    "schemas": {
+      "streetLight": {
+        "type": "object",
+        "properties": {
+          "lumens": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Light intensity measured in lumens.",
+            "x-parser-schema-id": "<anonymous-schema-3>"
+          },
+          "maintenance": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "year": {
+                  "type": "number",
+                  "x-parser-schema-id": "<anonymous-schema-4>"
+                },
+                "cost": {
+                  "type": "number",
+                  "x-parser-schema-id": "<anonymous-schema-5>"
+                }
+              },
+              "x-parser-schema-id": "streetLightMaintenance",
+              "x-parser-schema-id-level": 3
+            },
+            "x-parser-schema-id": "streetLightMaintenanceArray",
+            "x-parser-schema-id-level": 2
+          },
+          "holder": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "x-parser-schema-id": "<anonymous-schema-6>"
+                },
+                "name": {
+                  "type": "string",
+                  "x-parser-schema-id": "<anonymous-schema-7>"
+                }
+              },
+              "x-parser-schema-id": "manufactor",
+              "x-parser-schema-id-level": 1
+            },
+            "x-parser-schema-id": "streetLightHolderArray",
+            "x-parser-schema-id-level": 2
+          },
+          "lightbulb": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "country": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-6>"
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-7>"
+                  }
+                },
+                "x-parser-schema-id": "manufactor",
+                "x-parser-schema-id-level": 1
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "ecologically": {
+                    "type": "string",
+                    "enum": [
+                      "A+++",
+                      "A++",
+                      "A+",
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "E",
+                      "F"
+                    ],
+                    "x-parser-schema-id": "<anonymous-schema-9>"
+                  }
+                },
+                "x-parser-schema-id": "<anonymous-schema-8>"
+              }
+            ],
+            "x-parser-schema-id": "streetLightLightbulb",
+            "x-parser-schema-id-level": 2
+          },
+          "socket": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "country": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-6>"
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-7>"
+                  }
+                },
+                "x-parser-schema-id": "manufactor",
+                "x-parser-schema-id-level": 1
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "demo": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-11>"
+                  }
+                },
+                "x-parser-schema-id": "<anonymous-schema-10>"
+              }
+            ],
+            "x-parser-schema-id": "streetLightSocket",
+            "x-parser-schema-id-level": 2
+          },
+          "vendor": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "country": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-6>"
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-7>"
+                  }
+                },
+                "x-parser-schema-id": "manufactor",
+                "x-parser-schema-id-level": 1
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "demo": {
+                    "type": "string",
+                    "x-parser-schema-id": "<anonymous-schema-13>"
+                  }
+                },
+                "x-parser-schema-id": "<anonymous-schema-12>"
+              }
+            ],
+            "x-parser-schema-id": "streetLightVendor",
+            "x-parser-schema-id-level": 2
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the message was sent.",
+            "x-parser-schema-id": "<anonymous-schema-14>"
+          }
+        },
+        "x-parser-schema-id": "streetLight",
+        "x-parser-schema-id-level": 1
+      },
+      "sentAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Date and time when the message was sent.",
+        "x-parser-schema-id": "<anonymous-schema-14>"
+      },
+      "manufactor": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "x-parser-schema-id": "<anonymous-schema-6>"
+          },
+          "name": {
+            "type": "string",
+            "x-parser-schema-id": "<anonymous-schema-7>"
+          }
+        },
+        "x-parser-schema-id": "manufactor",
+        "x-parser-schema-id-level": 1
+      }
+    },
+    "messageTraits": {
+      "commonHeaders": {
+        "headers": {
+          "type": "object",
+          "properties": {
+            "my-app-header": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "x-parser-schema-id": "<anonymous-schema-16>"
+            }
+          },
+          "x-parser-schema-id": "<anonymous-schema-15>"
+        }
+      }
+    }
+  },
+  "x-parser-spec-parsed": true
+}

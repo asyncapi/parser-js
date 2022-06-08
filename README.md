@@ -206,6 +206,7 @@ The parser uses custom extensions to define additional information about the spe
 - `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
 - [`x-parser-circular`](#circular-references)
+- `x-parser-schema-id-level` is internally used to generate use friendly `x-parser-schema-id` if `genererateIdInSchema` option is passed to the parser. It indicates the traversal level of a schema. This is used to prepare the name of well-defined schemas.
 
 > **NOTE**: All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
 

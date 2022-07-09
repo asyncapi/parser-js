@@ -24,51 +24,27 @@ describe('asyncapiSchemaFormatParser', function() {
       title: 'This is not a valid AsyncAPI Schema Object.',
       parsedJSON,
       validationErrors: [{
-        title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
+        title: '/channels/mychannel/publish/message/payloadundefined must be object,boolean',
         location: {
-          jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
-          startLine: 13,
-          startColumn: 38,
-          startOffset: offset(252, 13),
-          endLine: 15,
-          endColumn: 15,
-          endOffset: offset(297, 15)
+          jsonPointer: "/channels/mychannel/publish/message/payloadundefined"
         }
       },
       {
-        title: '/channels/mychannel/publish/message/payload/additionalProperties should be object,boolean',
+        title: '/channels/mychannel/publish/message/payloadundefined must be object,boolean',
         location: {
-          jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
-          startLine: 13,
-          startColumn: 38,
-          startOffset: offset(252, 13),
-          endLine: 15,
-          endColumn: 15,
-          endOffset: offset(297, 15)
+          jsonPointer: "/channels/mychannel/publish/message/payloadundefined"
         }
       },
       {
-        title: '/channels/mychannel/publish/message/payload/additionalProperties should be boolean',
+        title: '/channels/mychannel/publish/message/payloadundefined must be boolean',
         location: {
-          jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
-          startLine: 13,
-          startColumn: 38,
-          startOffset: offset(252, 13),
-          endLine: 15,
-          endColumn: 15,
-          endOffset: offset(297, 15)
+          jsonPointer: '/channels/mychannel/publish/message/payloadundefined'
         }
       },
       {
-        title: '/channels/mychannel/publish/message/payload/additionalProperties should match some schema in anyOf',
+        title: '/channels/mychannel/publish/message/payloadundefined must match a schema in anyOf',
         location: {
-          jsonPointer: '/channels/mychannel/publish/message/payload/additionalProperties',
-          startLine: 13,
-          startColumn: 38,
-          startOffset: offset(252, 13),
-          endLine: 15,
-          endColumn: 15,
-          endOffset: offset(297, 15)
+          jsonPointer: '/channels/mychannel/publish/message/payloadundefined'
         }
       }]
     };

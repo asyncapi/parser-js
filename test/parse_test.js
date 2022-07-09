@@ -94,31 +94,19 @@ describe('parse()', function() {
       title: 'There were errors validating the AsyncAPI document.',
       parsedJSON: JSON.parse(invalidAsyncAPI),
       validationErrors: [{
-        title: '/info should have required property \'title\'',
+        title: '/ must have required property \'channels\'',
         location: { 
-          endColumn: 31,
-          endLine: 1,
-          endOffset: 29,
-          jsonPointer: '/info',
-          startColumn: 29,
-          startLine: 1,
-          startOffset: 27
+          jsonPointer: '/'
         }
       },
       {
-        title: '/info should have required property \'version\'',
+        title: '/ must have required property \'version\'',
         location: { 
-          endColumn: 31,
-          endLine: 1,
-          endOffset: 29,
-          jsonPointer: '/info',
-          startColumn: 29,
-          startLine: 1,
-          startOffset: 27 
+          jsonPointer: '/'
         }
       },
       {
-        title: '/ should have required property \'channels\'',
+        title: '/ must have required property \'title\'',
         location: { jsonPointer: '/' }
       }]
     };
@@ -135,39 +123,33 @@ describe('parse()', function() {
       parsedJSON: JSON.parse(invalidYamlOutput),
       validationErrors: [
         {
-          title: '/ should NOT have additional properties',
+          title: '/ must NOT have additional properties',
           location: {
-            jsonPointer: '/test',
-            startLine: 15,
-            startColumn: 1,
-            startOffset: offset(305,15),
-            endLine: 15,
             endColumn: 11,
-            endOffset: offset(315,15)
-          }
-        },
-        {
-          title: '/info should NOT have additional properties',
-          location: {
-            jsonPointer: '/info/test',
-            startLine: 3,
-            startColumn: 3,
-            startOffset: offset(24,3),
-            endLine: 3,
-            endColumn: 13,
-            endOffset: offset(34,3)
-          }
-        },
-        {
-          title: '/info should have required property \'title\'',
-          location: {
-            jsonPointer: '/info',
-            startLine: 2,
+            endLine: 15,
+            endOffset: 315,
+            jsonPointer: '/test',
             startColumn: 1,
-            startOffset: offset(16,2),
-            endLine: 4,
-            endColumn: 19,
-            endOffset: offset(53,4)
+            startLine: 15,
+            startOffset: 305
+          }
+        },
+        {
+          title: '/ must have required property \'title\'',
+          location: {
+            jsonPointer: '/'
+          }
+        },
+        {
+          title: '/ must NOT have additional properties',
+          location: {
+            endColumn: 11,
+            endLine: 15,
+            endOffset: 315,
+            jsonPointer: '/test',
+            startColumn: 1,
+            startLine: 15,
+            startOffset: 305
           }
         }
       ]
@@ -185,15 +167,9 @@ describe('parse()', function() {
       title: 'There were errors validating the AsyncAPI document.',
       validationErrors: [
         {
-          title: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref should match format \"uri-reference\"',
+          title: '/ must match format \"uri-reference\"',
           location: {
-            jsonPointer: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref',
-            startLine: 67,
-            startColumn: 9,
-            startOffset: offset(1970, 67),
-            endLine: 68,
-            endColumn: 46,
-            endOffset: offset(2024, 68),
+            jsonPointer: '/'
           }
         }
       ]
@@ -213,39 +189,33 @@ describe('parse()', function() {
       parsedJSON: JSON.parse(invalidJsonOutput),
       validationErrors: [
         {
-          title: '/ should NOT have additional properties',
+          title: '/ must NOT have additional properties',
           location: {
-            jsonPointer: '/test',
-            startLine: 23,
-            startColumn: 11,
-            startOffset: offset(299,23),
-            endLine: 23,
             endColumn: 15,
-            endOffset: offset(303,23)
-          }
-        },
-        {
-          title: '/info should NOT have additional properties',
-          location: {
-            jsonPointer: '/info/test',
-            startLine: 4,
-            startColumn: 12,
-            startOffset: offset(45,4),
-            endLine: 4,
-            endColumn: 16,
-            endOffset: offset(49,4)
-          }
-        },
-        {
-          title: '/info should have required property \'title\'',
-          location: {
-            jsonPointer: '/info',
-            startLine: 3,
+            endLine: 23,
+            endOffset: 303,
+            jsonPointer: '/test',
             startColumn: 11,
-            startOffset: offset(33,3),
-            endLine: 6,
-            endColumn: 4,
-            endOffset: offset(74,6)
+            startLine: 23,
+            startOffset: 299
+          }
+        },
+        {
+          title: '/ must have required property \'title\'',
+          location: {
+            jsonPointer: '/'
+          }
+        },
+        {
+          title: '/ must NOT have additional properties',
+          location: {
+            endColumn: 15,
+            endLine: 23,
+            endOffset: 303,
+            jsonPointer: '/test',
+            startColumn: 11,
+            startLine: 23,
+            startOffset: 299
           }
         }
       ]

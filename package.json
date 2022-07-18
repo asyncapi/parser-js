@@ -52,6 +52,8 @@
     "@stoplight/spectral-functions": "^1.5.1",
     "@stoplight/spectral-parsers": "^1.0.1",
     "@stoplight/spectral-rulesets": "^1.4.3",
+    "@types/json-schema": "^7.0.11",
+    "ajv": "^8.11.0",
     "jsonpath-plus": "^6.0.1",
     "lodash": "^4.17.21"
   },

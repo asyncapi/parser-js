@@ -23,7 +23,7 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
     ajv.compile(schema);
   } catch (error: any) {
     if (error! instanceof Error) {
-      errors = AjvToSpectralErrors(error);
+      errors = ajvToSpectralErrors(error);
     } else {
       // Unknown and unexpected error
       throw error;
@@ -33,11 +33,13 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
   return errors;
 }
 
-function AjvToSpectralErrors(error: Error): SchemaValidateError[] {
+function ajvToSpectralErrors(error: Error): SchemaValidateError[] {
   let errors: SchemaValidateError[] = [];
   let errorMessage = error.message;
 
-  // Validation errors
+  // Validation errors. 
+  // See related AJV function where the error message is generated: 
+  // https://github.com/ajv-validator/ajv/blob/99e884dc4bbb828cf47771b7bbdb14f23193b0b1/lib/core.ts#L501-L522
   const validationErrorPrefix = "schema is invalid: ";
   if (error.message.startsWith(validationErrorPrefix)) {
     // remove prefix
@@ -45,12 +47,15 @@ function AjvToSpectralErrors(error: Error): SchemaValidateError[] {
 
     // message can contain multiple validation errors separated by ',' (comma)
     errorMessage.split(", ").forEach((message: string) => {
-      const path = message.slice(0, message.indexOf(" "));
-      const error = message.slice(message.indexOf(" ") + 1);
+      const splitIndex = message.indexOf(" ");
+      const path = message.slice(0, splitIndex);
+      const error = message.slice(splitIndex + 1);
+
       const resultErr: SchemaValidateError = {
         message: error,
         path: path.split("/")
       };
+
       errors.push(resultErr);
     });
   } else {
@@ -58,6 +63,7 @@ function AjvToSpectralErrors(error: Error): SchemaValidateError[] {
     const resultErr: SchemaValidateError = {
       message: error.message,
     };
+
     errors.push(resultErr);
   }
 

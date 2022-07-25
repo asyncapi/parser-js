@@ -1,6 +1,6 @@
 import { ParseSchemaInput, ValidateSchemaInput } from '../../src/schema-parser/index';
 import { AsyncAPISchemaParser } from '../../src/schema-parser/asyncapi-schema-parser';
-import { SchemaValidateError } from '../../src/types';
+import { SchemaValidateResult } from '../../src/types';
 
 describe('AsyncAPISchemaParser', function () {
 
@@ -59,7 +59,7 @@ describe('AsyncAPISchemaParser', function () {
     };
 
     const result = await parser.validate(schema);
-    const expectedResult: SchemaValidateError[] = [
+    const expectedResult: SchemaValidateResult[] = [
       { "message": "must be object,boolean", "path": ["data", "properties", "name", "if"] },
       { "message": "must be array", "path": ["data", "oneOf"] }
     ];
@@ -80,7 +80,7 @@ describe('AsyncAPISchemaParser', function () {
     };
 
     const result = await parser.validate(schema);
-    const expectedResult: SchemaValidateError[] = [
+    const expectedResult: SchemaValidateResult[] = [
       { "message": "no schema with key or ref \"non-existent-meta-schema\"" },
     ];
 

@@ -1,7 +1,7 @@
 import { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
 import Ajv from "ajv";
 import { JSONSchema7 } from "json-schema"
-import type { AsyncAPISchema, SchemaValidateError } from '../types';
+import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
 const ajv = new Ajv({
   allErrors: true,
@@ -15,9 +15,9 @@ export function AsyncAPISchemaParser(): SchemaParser {
   }
 }
 
-async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateError[]> {
+async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
   const schema = input.data as JSONSchema7;
-  let errors: SchemaValidateError[] = [];
+  let errors: SchemaValidateResult[] = [];
 
   try {
     ajv.compile(schema);
@@ -33,8 +33,8 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
   return errors;
 }
 
-function ajvToSpectralErrors(error: Error): SchemaValidateError[] {
-  let errors: SchemaValidateError[] = [];
+function ajvToSpectralErrors(error: Error): SchemaValidateResult[] {
+  let errors: SchemaValidateResult[] = [];
   let errorMessage = error.message;
 
   // Validation errors. 
@@ -51,7 +51,7 @@ function ajvToSpectralErrors(error: Error): SchemaValidateError[] {
       const path = message.slice(0, splitIndex);
       const error = message.slice(splitIndex + 1);
 
-      const resultErr: SchemaValidateError = {
+      const resultErr: SchemaValidateResult = {
         message: error,
         path: path.split("/")
       };
@@ -60,7 +60,7 @@ function ajvToSpectralErrors(error: Error): SchemaValidateError[] {
     });
   } else {
     // Not a validation error
-    const resultErr: SchemaValidateError = {
+    const resultErr: SchemaValidateResult = {
       message: error.message,
     };
 

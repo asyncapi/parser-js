@@ -17,5 +17,5 @@ export interface DetailedAsyncAPI {
 }
 
 export type Diagnostic = ISpectralDiagnostic;
-export type SchemaValidateError = IFunctionResult;
+export type SchemaValidateResult = IFunctionResult;
 export type AsyncAPISchema = JSONSchema7;

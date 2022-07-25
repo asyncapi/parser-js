@@ -1,5 +1,5 @@
 import type { Parser } from '../parser';
-import type { AsyncAPISchema, DetailedAsyncAPI, SchemaValidateError } from '../types';
+import type { AsyncAPISchema, DetailedAsyncAPI, SchemaValidateResult } from '../types';
 
 export interface ValidateSchemaInput<D = unknown, M = unknown> {
   readonly asyncapi: DetailedAsyncAPI;
@@ -20,7 +20,7 @@ export interface ParseSchemaInput<D = unknown, M = unknown> {
 }
 
 export interface SchemaParser<D = unknown, M = unknown> {
-  validate: (input: ValidateSchemaInput<D, M>) => void | SchemaValidateError[] | Promise<void | SchemaValidateError[]>;
+  validate: (input: ValidateSchemaInput<D, M>) => void | SchemaValidateResult[] | Promise<void | SchemaValidateResult[]>;
   parse: (input: ParseSchemaInput<D, M>) => AsyncAPISchema | Promise<AsyncAPISchema>;
   getMimeTypes: () => Array<string>;
 }

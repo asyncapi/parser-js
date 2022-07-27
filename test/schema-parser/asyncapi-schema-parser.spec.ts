@@ -65,8 +65,22 @@ describe('AsyncAPISchemaParser', function () {
 
     const result = await parser.validate(schema);
     const expectedResult: SchemaValidateResult[] = [
-      { "message": "must be object,boolean", "path": ["components", "schemas", "schema1", "payload", "properties", "name", "if"] },
-      { "message": "must be array", "path": ["components", "schemas", "schema1", "payload", "oneOf"] }
+      {
+        message: 'must be object,boolean',
+        path: ['components', 'schemas', 'schema1', 'payload', 'properties', 'name', 'if']
+      },
+      {
+        message: 'must be array',
+        path: ['components', 'schemas', 'schema1', 'payload', 'oneOf']
+      },
+      {
+        message: 'must be array',
+        path: ['components', 'schemas', 'schema1', 'payload', 'oneOf']
+      },
+      {
+        message: 'must be object,boolean',
+        path: ['components', 'schemas', 'schema1', 'payload', 'properties', 'name', 'if']
+      }
     ];
 
     expect(result).toEqual(expectedResult);

@@ -1,11 +1,15 @@
 import { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
-import Ajv from "ajv";
-import { JSONSchema7 } from "json-schema"
+import Ajv, { ErrorObject, ValidateFunction } from "ajv";
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
+// @ts-ignore
+import specs from '@asyncapi/specs';
 
 const ajv = new Ajv({
   allErrors: true,
-})
+  strict: false,
+});
+
+const specVersions = Object.keys(specs).filter((version: string) => !['1.0.0', '1.1.0', '1.2.0', '2.0.0-rc1', '2.0.0-rc2'].includes(version));
 
 export function AsyncAPISchemaParser(): SchemaParser {
   return {
@@ -16,62 +20,72 @@ export function AsyncAPISchemaParser(): SchemaParser {
 }
 
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-  const schema = input.data as JSONSchema7;
-  let errors: SchemaValidateResult[] = [];
+  const version = input.asyncapi.semver.version
+  const validator = findSchemaValidator(version);
 
-  try {
-    ajv.compile(schema);
-  } catch (error: any) {
-    if (error! instanceof Error) {
-      errors = ajvToSpectralErrors(error);
-    } else {
-      // Unknown and unexpected error
-      throw error;
-    }
+  let result: SchemaValidateResult[] = []
+  const valid = validator(input.data);
+  if (!valid && validator.errors) {
+    result = ajvToSpectralResult(validator.errors, input.path);
   }
 
-  return errors;
+  return result;
 }
 
-function ajvToSpectralErrors(error: Error): SchemaValidateResult[] {
-  let errors: SchemaValidateResult[] = [];
-  let errorMessage = error.message;
-
-  // Validation errors. 
-  // See related AJV function where the error message is generated: 
-  // https://github.com/ajv-validator/ajv/blob/99e884dc4bbb828cf47771b7bbdb14f23193b0b1/lib/core.ts#L501-L522
-  const validationErrorPrefix = "schema is invalid: ";
-  if (error.message.startsWith(validationErrorPrefix)) {
-    // remove prefix
-    errorMessage = errorMessage.substring(validationErrorPrefix.length);
-
-    // message can contain multiple validation errors separated by ',' (comma)
-    errorMessage.split(", ").forEach((message: string) => {
-      const splitIndex = message.indexOf(" ");
-      const path = message.slice(0, splitIndex);
-      const error = message.slice(splitIndex + 1);
-
-      const resultErr: SchemaValidateResult = {
-        message: error,
-        path: path.split("/")
-      };
-
-      errors.push(resultErr);
-    });
-  } else {
-    // Not a validation error
-    const resultErr: SchemaValidateResult = {
-      message: error.message,
-    };
-
-    errors.push(resultErr);
+function ajvToSpectralResult(errors: ErrorObject[], parentPath: Array<string | number>): SchemaValidateResult[] {
+  if (parentPath === undefined) {
+    parentPath = [];
   }
 
-  return errors;
+  return errors.map(error => {
+    const errorPath = error.instancePath.replace(/^\//, '').split('/'); // TODO: Instance Path or Schema Path?
+
+    return {
+      message: error.message,
+      path: parentPath.concat(errorPath),
+    } as SchemaValidateResult;
+  });
+}
+
+function findSchemaValidator(version: string): ValidateFunction {
+  let validator = ajv.getSchema(version);
+  if (!validator) {
+    const schema = preparePayloadSchema2(specs[version], version);
+
+    ajv.addSchema(schema, version);
+    validator = ajv.getSchema(version);
+  }
+
+  return validator as ValidateFunction;
 }
 
 async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<AsyncAPISchema> {
-  return input.data as JSONSchema7;
+  return input.data as AsyncAPISchema;
+}
+
+/**
+ * To validate schema of the payload we just need a small portion of official AsyncAPI spec JSON Schema, the definition of the schema must be
+ * a main part of the JSON Schema
+ * 
+ * @private
+ * @param {Object} asyncapiSchema AsyncAPI specification JSON Schema
+ * @param {Object} version AsyncAPI version.
+ * @returns {Object} valid JSON Schema document describing format of AsyncAPI-valid schema for message payload
+ */
+function preparePayloadSchema2(asyncapiSchema: AsyncAPISchema, version: string) {
+  const payloadSchema = `http://asyncapi.com/definitions/${version}/schema.json`;
+  const definitions = asyncapiSchema.definitions;
+  if (definitions === undefined) {
+    throw new Error("AsyncAPI schema must contain definitions");
+  }
+
+  // Remove the meta schemas because it is already present within Ajv, and it's not possible to add duplicate schemas.
+  delete definitions['http://json-schema.org/draft-07/schema'];
+  delete definitions['http://json-schema.org/draft-04/schema'];
+  return {
+    $ref: payloadSchema,
+    definitions
+  };
 }
 
 function getMimeTypes() {
@@ -80,7 +94,8 @@ function getMimeTypes() {
     'application/schema+json;version=draft-07',
     'application/schema+yaml;version=draft-07',
   ];
-  ['2.0.0', '2.1.0', '2.2.0', '2.3.0'].forEach(version => {
+
+  specVersions.forEach((version: string) => {
     mimeTypes.push(
       `application/vnd.aai.asyncapi;version=${version}`,
       `application/vnd.aai.asyncapi+json;version=${version}`,

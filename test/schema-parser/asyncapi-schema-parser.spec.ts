@@ -7,7 +7,7 @@ describe('AsyncAPISchemaParser', function () {
   const validSchema = {
     asyncapi: {
       semver: {
-        major: 2
+        version: "2.4.0",
       }
     },
     data: {
@@ -28,6 +28,10 @@ describe('AsyncAPISchemaParser', function () {
 
   const parser = AsyncAPISchemaParser();
 
+  it('should return Mime Types', async function () {
+    expect(parser.getMimeTypes()).not.toEqual([]);
+  });
+
   it('should parse valid AsyncAPI Schema', async function () {
     const schema = <ParseSchemaInput<object>>validSchema;
     const parsed = await parser.parse(schema);
@@ -45,9 +49,10 @@ describe('AsyncAPISchemaParser', function () {
     const schema = <ValidateSchemaInput<object>>{
       asyncapi: {
         semver: {
-          major: 2
+          version: "2.4.0",
         }
       },
+      path: ["components", "schemas", "schema1", "payload"],
       data: {
         oneOf: "this should be an array",
         properties: {
@@ -60,28 +65,8 @@ describe('AsyncAPISchemaParser', function () {
 
     const result = await parser.validate(schema);
     const expectedResult: SchemaValidateResult[] = [
-      { "message": "must be object,boolean", "path": ["data", "properties", "name", "if"] },
-      { "message": "must be array", "path": ["data", "oneOf"] }
-    ];
-
-    expect(result).toEqual(expectedResult);
-  });
-
-  it('should validate invalid AsyncAPI Schema with invalid meta schema', async function () {
-    const schema = <ValidateSchemaInput<object>>{
-      asyncapi: {
-        semver: {
-          major: 2
-        }
-      },
-      data: {
-        $schema: "non-existent-meta-schema",
-      }
-    };
-
-    const result = await parser.validate(schema);
-    const expectedResult: SchemaValidateResult[] = [
-      { "message": "no schema with key or ref \"non-existent-meta-schema\"" },
+      { "message": "must be object,boolean", "path": ["components", "schemas", "schema1", "payload", "properties", "name", "if"] },
+      { "message": "must be array", "path": ["components", "schemas", "schema1", "payload", "oneOf"] }
     ];
 
     expect(result).toEqual(expectedResult);

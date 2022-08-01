@@ -236,8 +236,14 @@ A few advantages of this solution:
 ## Develop
 
 1. Write code and tests.
-1. Make sure all tests pass `npm test`
-1. Make sure code is well formatted and secure `npm run lint`
+2. Make sure all tests pass `npm test`
+
+If in-case some tests still fails randomly during local development, the reason to it might be when you develop something in the parser and even though you did not make any changes affects tests, and the tests are failing then you can run:
+```
+git config --global core.autocrlf false
+git config --global core.eol lf
+```
+3. Make sure code is well formatted and secure `npm run lint`
 
 Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
 

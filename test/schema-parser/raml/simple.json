@@ -1,0 +1,21 @@
+{
+    "schemaFormat": "application/raml+yaml;version=1.0",
+    "payload": {
+      "type": "object",
+      "properties": {
+        "title": "string",
+        "author": {
+          "type": "string",
+          "examples": {
+            "anExample": "Eva"
+          }
+        }
+      },
+      "examples": {
+        "exampleOne": {
+          "title": "A book",
+          "author": "An author"
+        }
+      }
+    }
+}

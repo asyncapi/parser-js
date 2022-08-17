@@ -235,6 +235,8 @@ A few advantages of this solution:
 
 ## Develop
 
+### Windows
+
 1. Write code and tests.
 2. Make sure all tests pass `npm test`
 

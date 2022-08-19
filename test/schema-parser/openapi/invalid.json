@@ -1,0 +1,11 @@
+{
+   "schemaFormat":"application/vnd.oai.openapi;version=3.0.0",
+   "payload":{
+      "oneOf":"this should be an array",
+      "properties":{
+         "name":{
+            "if":"this should be an if"
+         }
+      }
+   }
+}

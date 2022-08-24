@@ -16,7 +16,9 @@ interface ToParseItem {
 const customSchemasPathsV2 = [
   // operations
   '$.channels.*.[publish,subscribe].message',
+  '$.channels.*.[publish,subscribe].message.oneOf.*',
   '$.components.channels.*.[publish,subscribe].message',
+  '$.components.channels.*.[publish,subscribe].message.oneOf.*',
   // messages
   '$.components.messages.*',
 ];

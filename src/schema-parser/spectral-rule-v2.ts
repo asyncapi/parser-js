@@ -23,7 +23,9 @@ export function aas2schemaParserRule(parser: Parser): RuleDefinition {
     given: [
       // operations
       '$.channels.*.[publish,subscribe].message',
+      '$.channels.*.[publish,subscribe].message.oneOf.*',
       '$.components.channels.*.[publish,subscribe].message',
+      '$.components.channels.*.[publish,subscribe].message.oneOf.*',
       // messages
       '$.components.messages.*',
     ],

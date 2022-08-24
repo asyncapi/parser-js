@@ -24,10 +24,32 @@ describe('OpenAPISchemaParser', function () {
 
   it('should validate invalid OpenAPI 3', async function() {
     const result = await parser.validate(inputWithInvalidOpenApi3);
-    expect(result).toHaveLength(2);
+    expect(result).toHaveLength(6);
     expect(result).toEqual([
-        {message: "\"oneOf\" property type must be array.", path: inputWithInvalidOpenApi3.path.concat(["oneOf"])}, 
-        {message: "Property \"if\" is not expected to be here.", path: inputWithInvalidOpenApi3.path.concat(["properties", "name", "if"])},
+      {
+          "message": "must be equal to one of the allowed values",
+          "path": ["properties", "name", "type"]
+      },
+      {
+          "message": "must have required property '$ref'",
+          "path": ["properties", "name"]
+      },
+      {
+          "message": "must match exactly one schema in oneOf",
+          "path": ["properties","name"]
+      },
+      {
+          "message": "must be string",
+          "path": ["properties","surname","format"]
+      },
+      {
+          "message": "must have required property '$ref'",
+          "path": ["properties","surname"]
+      },
+      {
+          "message": "must match exactly one schema in oneOf",
+          "path": ["properties","surname"]
+      }
     ]);
   });
 

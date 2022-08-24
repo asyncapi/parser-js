@@ -1,9 +1,20 @@
 import { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
-import {Spectral, Document, type RuleDefinition, type RulesetDefinition } from "@stoplight/spectral-core";
-import { Json } from "@stoplight/spectral-parsers";
-import { oas as oasRuleset } from "@stoplight/spectral-rulesets";
+import Ajv, { ErrorObject, ValidateFunction } from "ajv";
+import * as fs from 'fs';
+import * as path from 'path';
 const toJsonSchema = require('@openapi-contrib/openapi-schema-to-json-schema');
+
+const schemaV3 = JSON.parse(fs.readFileSync(path.resolve(__dirname, './openapi/schema_v3.json'), 'utf8'));
+
+const ajv = new Ajv({
+  allErrors: true,
+  strict: false,
+  logger: false,
+});
+
+ajv.addSchema(schemaV3, "openapi");
+
 
 export function OpenAPISchemaParser(): SchemaParser {
   return {
@@ -13,38 +24,16 @@ export function OpenAPISchemaParser(): SchemaParser {
   }
 }
 
-const spectral = new(Spectral)
-let rule = {...oasRuleset};
-// Unnecessary rules
-[
-    'oas3-unused-component',
-    'info-contact',
-    'info-description',
-    'info-license',
-    'oas3-api-servers',
-
-].forEach(function(name) {
-    delete (rule.rules as Record<string, Readonly<RuleDefinition>>)[name];
-});
-spectral.setRuleset(rule as RulesetDefinition);
-
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-    const oas = {"openapi":"3.0.0","info":{"title":"a","description":"a","version":"1"},"paths":{},"components":{"schemas":{"schema":input.data}}};
-    let result: SchemaValidateResult[] = []
-    try {
-        const document = new Document(JSON.stringify(oas), Json);
-        let { results } = await spectral.runWithResolved(document);
-        results.forEach(r => {
-            result.push({
-                message: r.message,
-                path: input.path.concat(r.path.filter(p => !["components", "schemas", "schema"].includes(p.toString()))),
-            });
-        });
-    } catch(err) {
-      console.error(err);
-    } 
+  const validator = ajv.getSchema("openapi") as ValidateFunction;
 
-    return result;
+  let result: SchemaValidateResult[] = []
+  const valid = validator(input.data);
+  if (!valid && validator.errors) {
+    result = ajvToSpectralResult([...validator.errors]);
+  }
+
+  return result;
 }
 
 async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<AsyncAPISchema> {
@@ -81,6 +70,16 @@ function getMimeTypes() {
   ];
 }
 
+function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
+  return errors.map(error => {
+    const errorPath = error.instancePath.replace(/^\//, '').split('/');
+
+    return {
+      message: error.message,
+      path: errorPath,
+    } as SchemaValidateResult;
+  });
+}
 function iterateSchema(schema: any) {
   if (schema.example !== undefined) {
     const examples = schema.examples || [];

@@ -1,8 +1,8 @@
 import { JSONPath } from 'jsonpath-plus';
 import { toPath } from 'lodash';
 
-import { parseSchema, getDefaultSchemaFormat } from '../schema-parser';
-import { xParserOriginalSchemaFormat } from '../constants';
+import { parseSchema, getSchemaFormat, getDefaultSchemaFormat } from '../schema-parser';
+import { xParserOriginalSchemaFormat, xParserOriginalPayload } from '../constants';
 
 import type { Parser } from '../parser';
 import type { ParseSchemaInput } from "../schema-parser";
@@ -14,15 +14,15 @@ interface ToParseItem {
 }
 
 const customSchemasPathsV2 = [
+  // operations
   '$.channels.*.[publish,subscribe].message',
-  '$.channels.*.[publish,subscribe].message.oneOf.*',
   '$.components.channels.*.[publish,subscribe].message',
-  '$.components.channels.*.[publish,subscribe].message.oneOf.*',
+  // messages
   '$.components.messages.*',
 ];
 
 export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI) {
-  const defaultSchemaFormat = getDefaultSchemaFormat(detailed.parsed.asyncapi as string);
+  const defaultSchemaFormat = getDefaultSchemaFormat(detailed.semver.version);
   const parseItems: Array<ToParseItem> = [];
 
   const visited: Set<unknown> = new Set();
@@ -43,13 +43,16 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
           return;
         }
 
+        const schemaFormat = getSchemaFormat(value.schemaFormat, detailed.semver.version);
         parseItems.push({
           input: {
             asyncapi: detailed,
             data: payload,
-            meta: undefined,
+            meta: {
+              message: value,
+            },
             path: [...toPath(result.path.slice(1)), 'payload'],
-            schemaFormat: value.schemaFormat || defaultSchemaFormat,
+            schemaFormat,
             defaultSchemaFormat,
           },
           value,
@@ -63,5 +66,6 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
 
 async function parseSchemaV2(parser: Parser, item: ToParseItem) {
   item.value[xParserOriginalSchemaFormat] = item.input.schemaFormat;
+  item.value[xParserOriginalPayload] = item.input;
   item.value.payload = await parseSchema(parser, item.input);
 }

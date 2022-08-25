@@ -1,9 +1,6 @@
-import { ExternalDocumentation } from '../../../src/models/v2/mixins/external-docs';
+import { ExternalDocumentation } from '../../../src/models/v2/external-docs';
 
-import { 
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertDescription, assertExtensions } from './assert-mixins';
 
 describe('ExternalDocumentation model', function() {
   describe('.name()', function() {
@@ -14,8 +11,8 @@ describe('ExternalDocumentation model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertDescriptionMixinInheritance(ExternalDocumentation);
-    assertExtensionsMixinInheritance(ExternalDocumentation);
+  describe('mixins', function() {
+    assertDescription(ExternalDocumentation);
+    assertExtensions(ExternalDocumentation);
   });
 });

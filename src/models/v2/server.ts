@@ -7,14 +7,9 @@ import { SecurityScheme } from './security-scheme';
 import { ServerVariables } from './server-variables';
 import { ServerVariable } from './server-variable';
 
-import { Mixin } from '../utils';
-import { BindingsMixin } from './mixins/bindings';
-import { DescriptionMixin } from './mixins/description';
-import { ExtensionsMixin } from './mixins/extensions';
-
+import { bindings, hasDescription, description, extensions } from './mixins';
 import { tilde } from "../../utils";
 
-import type { ModelMetadata } from "../base";
 import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
 import type { OperationsInterface } from '../operations';
@@ -24,15 +19,12 @@ import type { MessageInterface } from '../message';
 import type { ServerInterface } from '../server';
 import type { ServerVariablesInterface } from '../server-variables';
 import type { SecuritySchemeInterface } from '../security-scheme';
+import type { ExtensionsInterface } from '../extensions';
+import type { BindingsInterface } from '../bindings';
 
-export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ServerInterface {
-  constructor(
-    _json: Record<string, any>,
-    protected readonly _meta: ModelMetadata & { id: string } = {} as any,
-  ) {
-    super(_json, _meta);
-  }
+import type { v2 } from "../../interfaces";
 
+export class Server extends BaseModel<v2.ServerObject, { id: string }> implements ServerInterface {
   id(): string {
     return this._meta.id;
   }
@@ -49,8 +41,16 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
     return !!this._json.protocolVersion;
   }
 
-  protocolVersion(): string {
+  protocolVersion(): string | undefined {
     return this._json.protocolVersion;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
   }
 
   channels(): ChannelsInterface {
@@ -90,7 +90,7 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
   }
 
   security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>> {
-    const securitySchemes = this._meta?.asyncapi?.parsed.components.securitySchemes || {};
+    const securitySchemes = this._meta?.asyncapi?.parsed?.components?.securitySchemes || {};
     return (this._json.security || []).map((requirement: any) => {
       const requirements: Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }> = {};
       Object.entries(requirement).forEach(([security, scopes]) => {
@@ -101,5 +101,13 @@ export class Server extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, Ex
       });
       return requirements;
     })
+  }
+
+  bindings(): BindingsInterface {
+    return bindings(this);
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

@@ -1,10 +1,6 @@
-import { Tag } from '../../../src/models/v2/mixins/tags';
+import { Tag } from '../../../src/models/v2/tag';
 
-import { 
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance
-} from './mixins/inheritance';
+import { assertDescription, assertExtensions, assertExternalDocumentation } from './assert-mixins';
 
 describe('Tag model', function() {
   describe('.name()', function() {
@@ -16,8 +12,8 @@ describe('Tag model', function() {
   });
 
   describe('mixins inheritance', function() {
-    assertDescriptionMixinInheritance(Tag);
-    assertExtensionsMixinInheritance(Tag);
-    assertExternalDocumentationMixinInheritance(Tag);
+    assertDescription(Tag);
+    assertExtensions(Tag);
+    assertExternalDocumentation(Tag);
   });
 });

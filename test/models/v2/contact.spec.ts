@@ -1,8 +1,6 @@
 import { Contact } from '../../../src/models/v2/contact';
 
-import { 
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertExtensions } from './assert-mixins';
 
 describe('Contact model', function() {
   describe('.hasName()', function() {
@@ -89,7 +87,7 @@ describe('Contact model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertExtensionsMixinInheritance(Contact);
+  describe('mixins', function() {
+    assertExtensions(Contact);
   });
 });

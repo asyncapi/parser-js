@@ -1,4 +1,6 @@
 import { BaseModel } from "../base";
+import { Bindings } from "./bindings";
+import { Binding } from "./binding";
 import { Channel } from "./channel";
 import { ChannelParameter } from "./channel-parameter";
 import { CorrelationId } from "./correlation-id";
@@ -10,15 +12,14 @@ import { SecurityScheme } from "./security-scheme";
 import { Server } from "./server";
 import { ServerVariable } from "./server-variable";
 
-import { Mixin } from '../utils';
-import { Bindings, Binding } from "./mixins/bindings";
-import { ExtensionsMixin } from './mixins/extensions';
+import { extensions } from './mixins';
 
 import type { BindingsInterface } from "../bindings";
 import type { ComponentsInterface } from "../components";
 import type { ChannelInterface } from "../channel";
 import type { ChannelParameterInterface } from "../channel-parameter";
 import type { CorrelationIdInterface } from "../correlation-id";
+import type { ExtensionsInterface } from "../extensions";
 import type { MessageInterface } from "../message";
 import type { MessageTraitInterface } from "../message-trait";
 import type { OperationTraitInterface } from "../operation-trait";
@@ -28,7 +29,9 @@ import type { ServerInterface } from "../server";
 import type { ServerVariableInterface } from "../server-variable";
 import type { Constructor } from "../utils";
 
-export class Components extends Mixin(BaseModel, ExtensionsMixin) implements ComponentsInterface {
+import type { v2 } from "../../interfaces";
+
+export class Components extends BaseModel<v2.ComponentsObject> implements ComponentsInterface {
   servers(): Record<string, ServerInterface> {
     return this.createMap('servers', Server);
   }
@@ -85,14 +88,18 @@ export class Components extends Mixin(BaseModel, ExtensionsMixin) implements Com
     return this.createBindings('messageBindings');
   }
 
-  protected createMap<M extends BaseModel>(itemsName: string, model: Constructor<M>): Record<string, M> {
+  extensions(): ExtensionsInterface {
+    return extensions(this);
+  }
+
+  protected createMap<M extends BaseModel>(itemsName: keyof v2.ComponentsObject, model: Constructor<M>): Record<string, M> {
     return Object.entries(this._json[itemsName] || {}).reduce((items, [itemName, item]) => {
       items[itemName] = this.createModel(model, item, { id: itemName, pointer: `/components/${itemsName}/${itemName}` })
       return items;
     }, {} as Record<string, M>);
   }
 
-  protected createBindings(itemsName: string): Record<string, BindingsInterface> {
+  protected createBindings(itemsName: 'serverBindings' | 'channelBindings' | 'operationBindings' | 'messageBindings'): Record<string, BindingsInterface> {
     return Object.entries(this._json[itemsName] || {}).reduce((bindings, [name, item]) => {
       bindings[name] = new Bindings(
         Object.entries(item as any || {}).map(([protocol, binding]) => 

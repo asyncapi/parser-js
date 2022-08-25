@@ -1,8 +1,6 @@
 import { License } from '../../../src/models/v2/license';
 
-import { 
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertExtensions } from './assert-mixins';
 
 describe('License model', function() {
   describe('.name()', function() {
@@ -41,7 +39,7 @@ describe('License model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertExtensionsMixinInheritance(License);
+  describe('mixins', function() {
+    assertExtensions(License);
   });
 });

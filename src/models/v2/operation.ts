@@ -16,7 +16,9 @@ import type { OperationTraitsInterface } from "../operation-traits";
 import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 
-export class Operation extends OperationTrait implements OperationInterface {
+import type { v2 } from "../../interfaces";
+
+export class Operation extends OperationTrait<v2.OperationObject> implements OperationInterface {
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const serversData: any[] = [];

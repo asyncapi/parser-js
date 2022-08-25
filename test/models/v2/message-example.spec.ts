@@ -1,8 +1,6 @@
 import { MessageExample } from '../../../src/models/v2/message-example';
 
-import { 
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertExtensions } from './assert-mixins';
 
 describe('MessageExample model', function() {
   describe('.hasName()', function() {
@@ -117,7 +115,7 @@ describe('MessageExample model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertExtensionsMixinInheritance(MessageExample);
+  describe('mixins', function() {
+    assertExtensions(MessageExample);
   });
 });

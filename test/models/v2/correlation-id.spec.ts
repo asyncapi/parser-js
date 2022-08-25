@@ -1,9 +1,6 @@
 import { CorrelationId } from '../../../src/models/v2/correlation-id';
 
-import { 
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertDescription, assertExtensions } from './assert-mixins';
 
 describe('CorrelationId model', function() {
   describe('.hasLocation()', function() {
@@ -34,8 +31,8 @@ describe('CorrelationId model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertDescriptionMixinInheritance(CorrelationId);
-    assertExtensionsMixinInheritance(CorrelationId);
+  describe('mixins', function() {
+    assertDescription(CorrelationId);
+    assertExtensions(CorrelationId);
   });
 });

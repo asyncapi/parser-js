@@ -1,16 +1,18 @@
 import { BaseModel } from "../base";
 
-import { Mixin } from '../utils';
-import { ExtensionsMixin } from './mixins/extensions';
+import { extensions } from './mixins';
 
+import type { ExtensionsInterface } from "../extensions";
 import type { MessageExampleInterface } from "../message-example";
 
-export class MessageExample extends Mixin(BaseModel, ExtensionsMixin) implements MessageExampleInterface {
+import type { v2 } from "../../interfaces";
+
+export class MessageExample extends BaseModel<v2.MessageExampleObject> implements MessageExampleInterface {
   hasName(): boolean {
     return !!this._json.name;
   }
 
-  name(): string {
+  name(): string | undefined {
     return this._json.name;
   }
 
@@ -18,7 +20,7 @@ export class MessageExample extends Mixin(BaseModel, ExtensionsMixin) implements
     return !!this._json.summary;
   }
 
-  summary(): string {
+  summary(): string | undefined {
     return this._json.summary;
   }
 
@@ -36,5 +38,9 @@ export class MessageExample extends Mixin(BaseModel, ExtensionsMixin) implements
 
   payload(): Record<string, any> | undefined {
     return this._json.payload;
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

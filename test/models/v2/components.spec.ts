@@ -1,5 +1,5 @@
 import { Components } from '../../../src/models/v2/components';
-import { Bindings } from '../../../src/models/v2/mixins/bindings';
+import { Bindings } from '../../../src/models/v2/bindings';
 import { Channel } from '../../../src/models/v2/channel';
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 import { CorrelationId } from '../../../src/models/v2/correlation-id';
@@ -11,9 +11,7 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariable } from '../../../src/models/v2/server-variable';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { 
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertExtensions } from './assert-mixins';
 
 describe('Components model', function() {
   describe('.servers()', function() {
@@ -254,7 +252,7 @@ describe('Components model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertExtensionsMixinInheritance(Components);
+  describe('mixins', function() {
+    assertExtensions(Components);
   });
 });

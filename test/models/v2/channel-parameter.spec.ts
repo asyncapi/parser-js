@@ -1,10 +1,7 @@
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 import { Schema } from '../../../src/models/v2/schema';
 
-import { 
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertDescription, assertExtensions } from './assert-mixins';
 
 describe('ChannelParameter model', function() {
   describe('.id()', function() {
@@ -71,8 +68,8 @@ describe('ChannelParameter model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertDescriptionMixinInheritance(ChannelParameter);
-    assertExtensionsMixinInheritance(ChannelParameter);
+  describe('mixins', function() {
+    assertDescription(ChannelParameter);
+    assertExtensions(ChannelParameter);
   });
 });

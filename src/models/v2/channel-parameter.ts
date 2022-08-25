@@ -1,22 +1,15 @@
 import { BaseModel } from "../base";
 import { Schema } from "./schema";
 
-import { Mixin } from '../utils';
-import { DescriptionMixin } from './mixins/description';
-import { ExtensionsMixin } from './mixins/extensions';
+import { hasDescription, description, extensions } from './mixins';
 
-import type { ModelMetadata } from "../base";
 import type { ChannelParameterInterface } from "../channel-parameter";
 import type { SchemaInterface } from "../schema";
+import type { ExtensionsInterface } from "../extensions";
 
-export class ChannelParameter extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements ChannelParameterInterface {
-  constructor(
-    _json: Record<string,any>,
-    protected readonly _meta: ModelMetadata & { id: string } = {} as any
-  ) {
-    super(_json, _meta);
-  }
+import type { v2 } from "../../interfaces";
 
+export class ChannelParameter extends BaseModel<v2.ParameterObject, { id: string }> implements ChannelParameterInterface {
   id(): string {
     return this._meta.id;
   }
@@ -36,5 +29,17 @@ export class ChannelParameter extends Mixin(BaseModel, DescriptionMixin, Extensi
 
   location(): string | undefined {
     return this._json.location;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

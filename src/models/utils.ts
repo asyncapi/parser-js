@@ -33,3 +33,7 @@ function mixin(derivedCtor: any, constructors: any[]): typeof BaseModel {
   });
   return derivedCtor;
 }
+
+export function createModel<T>(Model: Constructor<T>, value: any, meta: { pointer: string | number, [key: string]: any }, parent: BaseModel) {
+  return new Model(value, { ...meta, asyncapi: parent?.meta().asyncapi });
+}

@@ -1,22 +1,23 @@
 import { BaseModel } from '../base';
 
-import { Mixin } from '../utils';
-import { DescriptionMixin } from './mixins/description';
-import { ExtensionsMixin } from './mixins/extensions';
+import { hasDescription, description, extensions } from './mixins';
 
-import type { ModelMetadata } from '../base';
+import type { ExtensionsInterface } from '../extensions';
 import type { ServerVariableInterface } from '../server-variable';
 
-export class ServerVariable extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements ServerVariableInterface {
-  constructor(
-    _json: Record<string,any>,
-    protected readonly _meta: ModelMetadata & { id: string } = {} as any
-  ) {
-    super(_json, _meta);
-  }
-  
+import type { v2 } from "../../interfaces";
+
+export class ServerVariable extends BaseModel<v2.ServerVariableObject, { id: string }> implements ServerVariableInterface {  
   id(): string {
     return this._meta.id;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
   }
 
   hasDefaultValue(): boolean {
@@ -32,10 +33,14 @@ export class ServerVariable extends Mixin(BaseModel, DescriptionMixin, Extension
   }
 
   allowedValues(): Array<string> {
-    return this._json.enum;
+    return this._json.enum || [];
   }
   
   examples(): Array<string> {
-    return this._json.examples
+    return this._json.examples || [];
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

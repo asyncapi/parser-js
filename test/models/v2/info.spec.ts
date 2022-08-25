@@ -1,14 +1,12 @@
 import { Info } from '../../../src/models/v2/info';
 import { Contact } from '../../../src/models/v2/contact';
 import { License } from '../../../src/models/v2/license';
-import { ExternalDocumentation } from '../../../src/models/v2/mixins/external-docs';
-import { Tags, Tag } from '../../../src/models/v2/mixins/tags';
+import { ExternalDocumentation } from '../../../src/models/v2/external-docs';
+import { Tags } from '../../../src/models/v2/tags';
+import { Tag } from '../../../src/models/v2/tag';
 import { createDetailedAsyncAPI } from '../../../src/utils';
 
-import { 
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertDescription, assertExtensions } from './assert-mixins';
 
 describe('Info model', function() {
   describe('.title()', function() {
@@ -211,8 +209,8 @@ describe('Info model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertDescriptionMixinInheritance(Info);
-    assertExtensionsMixinInheritance(Info);
+  describe('mixins', function() {
+    assertDescription(Info);
+    assertExtensions(Info);
   });
 });

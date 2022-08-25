@@ -1,9 +1,6 @@
 import { Schema } from '../../../src/models/v2/schema';
 
-import { 
-  assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance,
-} from './mixins/inheritance';
+import { assertExtensions, assertExternalDocumentation } from './assert-mixins';
 
 describe('Channel model', function() {
   describe('.id()', function() {
@@ -796,8 +793,8 @@ describe('Channel model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertExtensionsMixinInheritance(Schema);
-    assertExternalDocumentationMixinInheritance(Schema);
+  describe('mixins', function() {
+    assertExtensions(Schema);
+    assertExternalDocumentation(Schema);
   });
 });

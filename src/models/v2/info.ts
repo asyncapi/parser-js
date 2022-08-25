@@ -1,20 +1,22 @@
 import { BaseModel } from "../base";
 import { Contact } from "./contact";
+import { ExternalDocumentation } from "./external-docs";
 import { License } from "./license";
+import { Tags } from "./tags";
+import { Tag } from "./tag";
 
-import { Mixin } from '../utils';
-import { DescriptionMixin } from './mixins/description';
-import { ExtensionsMixin } from './mixins/extensions';
-import { ExternalDocumentation } from './mixins/external-docs';
-import { Tags, Tag } from './mixins/tags';
+import { hasDescription, description, extensions } from './mixins';
 
 import type { ContactInterface } from "../contact";
 import type { InfoInterface } from "../info";
+import type { ExtensionsInterface } from "../extensions";
 import type { ExternalDocumentationInterface } from "../external-docs";
 import type { LicenseInterface } from "../license";
 import type { TagsInterface } from "../tags";
 
-export class Info extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements InfoInterface {
+import type { v2 } from "../../interfaces";
+
+export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
   title(): string {
     return this._json.title;
   }
@@ -29,6 +31,14 @@ export class Info extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) im
 
   id(): string | undefined {
     return this._meta.asyncapi.parsed.id;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
   }
 
   hasTermsOfService(): boolean {
@@ -71,5 +81,9 @@ export class Info extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) im
   tags(): TagsInterface {
     const tags = this._meta.asyncapi.parsed.tags || [];
     return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `/tags/${idx}` })));
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

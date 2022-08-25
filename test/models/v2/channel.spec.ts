@@ -8,11 +8,7 @@ import { Message } from '../../../src/models/v2/message';
 import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { 
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertBindings, assertDescription, assertExtensions } from './assert-mixins';
 
 describe('Channel model', function() {
   describe('.id()', function() {
@@ -137,9 +133,9 @@ describe('Channel model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertBindingsMixinInheritance(Channel);
-    assertDescriptionMixinInheritance(Channel);
-    assertExtensionsMixinInheritance(Channel);
+  describe('mixins', function() {
+    assertBindings(Channel);
+    assertDescription(Channel);
+    assertExtensions(Channel);
   });
 });

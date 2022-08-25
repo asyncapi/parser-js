@@ -8,11 +8,7 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/v2/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import {
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertBindings, assertDescription, assertExtensions } from './assert-mixins';
 
 const doc = {
   'development': {
@@ -200,8 +196,8 @@ describe('Server Model', function () {
   });
 
   describe('mixins inheritance', function () {
-    assertBindingsMixinInheritance(Server);
-    assertDescriptionMixinInheritance(Server);
-    assertExtensionsMixinInheritance(Server);
+    assertBindings(Server);
+    assertDescription(Server);
+    assertExtensions(Server);
   });
 })

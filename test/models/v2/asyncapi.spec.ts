@@ -8,9 +8,7 @@ import { Schemas } from '../../../src/models/v2/schemas';
 import { SecuritySchemes } from '../../../src/models/v2/security-schemes';
 import { Servers } from '../../../src/models/v2/servers';
 
-import { 
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { assertExtensions } from './assert-mixins';
 
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {
@@ -158,7 +156,7 @@ describe('AsyncAPIDocument model', function() {
     })
   })
 
-  describe('mixins inheritance', function() {
-    assertExtensionsMixinInheritance(AsyncAPIDocument);
+  describe('mixins', function() {
+    assertExtensions(AsyncAPIDocument);
   });
 });

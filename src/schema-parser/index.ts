@@ -2,7 +2,7 @@ import type { Parser } from '../parser';
 import type { AsyncAPISchema, DetailedAsyncAPI, SchemaValidateResult } from '../types';
 
 export interface ValidateSchemaInput<D = unknown, M = unknown> {
-  readonly asyncapi: Exclude<DetailedAsyncAPI, 'parsed'>;
+  readonly asyncapi: DetailedAsyncAPI;
   readonly data: D;
   readonly meta: M;
   readonly path: Array<string | number>;

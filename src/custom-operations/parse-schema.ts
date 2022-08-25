@@ -2,7 +2,7 @@ import { JSONPath } from 'jsonpath-plus';
 import { toPath } from 'lodash';
 
 import { parseSchema, getSchemaFormat, getDefaultSchemaFormat } from '../schema-parser';
-import { xParserOriginalSchemaFormat, xParserOriginalPayload } from '../constants';
+import { xParserOriginalPayload } from '../constants';
 
 import type { Parser } from '../parser';
 import type { ParseSchemaInput } from "../schema-parser";
@@ -67,7 +67,6 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
 }
 
 async function parseSchemaV2(parser: Parser, item: ToParseItem) {
-  item.value[xParserOriginalSchemaFormat] = item.input.schemaFormat;
-  item.value[xParserOriginalPayload] = item.input;
+  item.value[xParserOriginalPayload] = item.input.data;
   item.value.payload = await parseSchema(parser, item.input);
 }

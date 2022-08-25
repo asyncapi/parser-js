@@ -3,6 +3,7 @@ import { Spectral } from "@stoplight/spectral-core";
 import { parse } from "./parse";
 import { lint, validate } from "./lint";
 import { registerSchemaParser } from './schema-parser';
+import { AsyncAPISchemaParser } from "./schema-parser/asyncapi-schema-parser";
 import { configureSpectral } from "./spectral";
 
 import type { IConstructorOpts } from "@stoplight/spectral-core";
@@ -28,6 +29,7 @@ export class Parser {
       this.spectral = new Spectral(spectral);
     }
 
+    this.registerSchemaParser(AsyncAPISchemaParser());
     configureSpectral(this);
   }
 

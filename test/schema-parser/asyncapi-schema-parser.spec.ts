@@ -4,7 +4,6 @@ import { AsyncAPISchemaParser } from '../../src/schema-parser/asyncapi-schema-pa
 import type { SchemaValidateResult } from '../../src/types';
 
 describe('AsyncAPISchemaParser', function () {
-
   const validSchema = {
     asyncapi: {
       semver: {

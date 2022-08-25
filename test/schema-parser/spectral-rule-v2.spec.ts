@@ -1,13 +1,11 @@
 import { Parser } from '../../src/parser';
 import { validate } from '../../src/lint';
-import { AsyncAPISchemaParser } from '../../src/schema-parser/asyncapi-schema-parser';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import type { SchemaValidateResult } from '../../src/types';
 
 describe('aas2schemaParserRule', function() {
   const parser = new Parser();
-  parser.registerSchemaParser(AsyncAPISchemaParser()); // use that parser for testing
 
   it('should validate AsyncAPI Schema with valid schema', async function() {
     const document = {
@@ -37,7 +35,7 @@ describe('aas2schemaParserRule', function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
-        title: 'Valid AsyncApi document',
+        title: 'Invalid AsyncApi document',
         version: '1.0',
       },
       channels: {
@@ -78,7 +76,7 @@ describe('aas2schemaParserRule', function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
-        title: 'Valid AsyncApi document',
+        title: 'Invalid AsyncApi document',
         version: '1.0',
       },
       channels: {},
@@ -118,7 +116,7 @@ describe('aas2schemaParserRule', function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
-        title: 'Valid AsyncApi document',
+        title: 'Invalid AsyncApi document',
         version: '1.0',
       },
       channels: {},
@@ -162,7 +160,7 @@ describe('aas2schemaParserRule', function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
-        title: 'Valid AsyncApi document',
+        title: 'Invalid AsyncApi document',
         version: '1.0',
       },
       channels: {
@@ -212,7 +210,7 @@ describe('aas2schemaParserRule', function() {
     expect(filteredDiagnostics).toEqual(expectedResult.map(e => expect.objectContaining(e)));
   });
 
-  it('should validate AsyncAPI Schema with non supported schema format', async function() {
+  it('should validate AsyncAPI Schema with supported schema format', async function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
@@ -223,14 +221,34 @@ describe('aas2schemaParserRule', function() {
         channel: {
           publish: {
             message: {
+              schemaFormat: 'application/vnd.aai.asyncapi;version=2.0.0',
+              payload: {
+                type: 'object',
+              }
+            }
+          }
+        }
+      }
+    }
+    const { diagnostics } = await validate(parser, document);
+    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
+    expect(filteredDiagnostics).toHaveLength(0);
+  });
+
+  it('should validate AsyncAPI Schema with non supported schema format', async function() {
+    const document = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Invalid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            message: {
               schemaFormat: 'not existing',
               payload: {
-                oneOf: "this should be an array",
-                properties: {
-                  name: {
-                    if: "this should be an if"
-                  }
-                }
+                type: 'object',
               }
             }
           }
@@ -254,7 +272,7 @@ describe('aas2schemaParserRule', function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
-        title: 'Valid AsyncApi document',
+        title: 'Invalid AsyncApi document',
         version: '1.0',
       },
       channels: {

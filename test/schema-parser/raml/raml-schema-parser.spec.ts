@@ -49,7 +49,7 @@ describe('validate()', function() {
     
     const result = (results as SchemaValidateResult[])[0];
     expect(result.message).toEqual("Property 'examples' should be a map");
-    expect(result.path).toEqual(inputWithInvalidRAML.path);
+    expect(result.path).toEqual([]); // Validator doesn't provide info about the error path
   });
 });
 

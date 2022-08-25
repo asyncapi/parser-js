@@ -7,15 +7,12 @@ import { createDetailedAsyncAPI } from '../utils';
 import type { RuleDefinition } from "@stoplight/spectral-core";
 import type { Parser } from '../parser';
 import type { ValidateSchemaInput } from './index';
-import { SchemaValidateResult } from 'types';
+import type { SchemaValidateResult } from '../types';
 
-const aas2Formats = [aas2_0, aas2_1, aas2_2, aas2_3, aas2_4];
-
-export const aas2schemaParserRuleName = 'asyncapi-custom-schema';
 export function aas2schemaParserRule(parser: Parser): RuleDefinition {
   return {
     description: 'Custom schema must be correctly formatted from the point of view of the used format.',
-    formats: aas2Formats,
+    formats: [aas2_0, aas2_1, aas2_2, aas2_3, aas2_4],
     message: '{{error}}',
     severity: 'error',
     type: 'validation',
@@ -59,7 +56,7 @@ function rulesetFunction(parser: Parser) {
       const schemaFormat = getSchemaFormat(targetVal.schematFormat, spec.asyncapi);
       const defaultSchemaFormat = getDefaultSchemaFormat(spec.asyncapi);
       // we don't have a parsed specification yet because we are still executing code in the context of spectral
-      const asyncapi = createDetailedAsyncAPI(spec, undefined as any);
+      const asyncapi = createDetailedAsyncAPI(ctx.document.source as string, spec);
 
       const input: ValidateSchemaInput = {
         asyncapi,

@@ -22,8 +22,7 @@ describe('Parser class', function() {
 
   it('should register schema parser', async function() {
     const parser = new Parser();
-    const schemaParser = AsyncAPISchemaParser();
-    parser.registerSchemaParser(schemaParser);
+    parser.registerSchemaParser(AsyncAPISchemaParser());
     expect(parser.parserRegistry.size).toBeGreaterThan(1);
   });
 });

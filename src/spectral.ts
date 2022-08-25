@@ -11,10 +11,10 @@ export function configureSpectral(parser: Parser) {
 }
 
 function configureRuleset(parser: Parser): RulesetDefinition {
-  // We do not use these two given rules from the official ruleset due to the fact that the given rules validate only AsyncAPI Schemas and prevent defining schemas in other formats 
   const rules = {
     ...aasRuleset.rules,
     'asyncapi-schemas-v2': aas2schemaParserRule(parser),
+    // We do not use these two given rules from the official ruleset due to the fact that the given rules validate only AsyncAPI Schemas and prevent defining schemas in other formats 
     'asyncapi-payload-unsupported-schemaFormat': undefined,
     'asyncapi-payload': undefined,
   };

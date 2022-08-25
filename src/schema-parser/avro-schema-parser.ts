@@ -341,6 +341,5 @@ async function processUnionSchema(jsonSchema: AsyncAPISchema, avroDefinition: Av
 }
 
 export async function avroToJsonSchema(avroDefinition: AvroSchema) {
-  validateAvroSchema(avroDefinition);
   return convertAvroToJsonSchema(avroDefinition, true);
 };

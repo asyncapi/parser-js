@@ -57,7 +57,7 @@ export function registerSchemaParser(parser: Parser, schemaParser: SchemaParser)
 }
 
 export function getSchemaFormat(schematFormat: string | undefined, asyncapiVersion: string) {
-  if (schematFormat) {
+  if (typeof schematFormat === 'string') {
     return schematFormat;
   }
   return getDefaultSchemaFormat(asyncapiVersion);

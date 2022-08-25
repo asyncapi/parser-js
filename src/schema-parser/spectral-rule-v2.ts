@@ -33,7 +33,7 @@ export function aas2schemaParserRule(parser: Parser): RuleDefinition {
 }
 
 function rulesetFunction(parser: Parser) {
-  return createRulesetFunction<{ schematFormat?: string, payload?: any }, null>(
+  return createRulesetFunction<{ schemaFormat?: string, payload?: any }, null>(
     {
       input: {
         type: 'object',
@@ -53,7 +53,7 @@ function rulesetFunction(parser: Parser) {
 
       const path = [...ctx.path, 'payload'];
       const spec = ctx.document.data as { asyncapi: string };
-      const schemaFormat = getSchemaFormat(targetVal.schematFormat, spec.asyncapi);
+      const schemaFormat = getSchemaFormat(targetVal.schemaFormat, spec.asyncapi);
       const defaultSchemaFormat = getDefaultSchemaFormat(spec.asyncapi);
       // we don't have a parsed specification yet because we are still executing code in the context of spectral
       const asyncapi = createDetailedAsyncAPI(ctx.document.source as string, spec);
@@ -77,7 +77,7 @@ function rulesetFunction(parser: Parser) {
             path.push('schemaFormat');
             return [
               {
-                message: `Unknown schema format: ${schemaFormat}`,
+                message: `Unknown schema format: "${schemaFormat}"`,
                 path,
               }
             ] as SchemaValidateResult[];

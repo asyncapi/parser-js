@@ -28,7 +28,7 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
   let result: SchemaValidateResult[] = []
   const valid = validator(input.data);
   if (!valid && validator.errors) {
-    result = ajvToSpectralResult([...validator.errors], input.path);
+    result = ajvToSpectralResult([...validator.errors]);
   }
 
   return result;
@@ -55,17 +55,11 @@ function getMimeTypes() {
   return mimeTypes;
 }
 
-function ajvToSpectralResult(errors: ErrorObject[], parentPath: Array<string | number>): SchemaValidateResult[] {
-  if (parentPath === undefined) {
-    parentPath = [];
-  }
-
+function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
   return errors.map(error => {
-    const errorPath = error.instancePath.replace(/^\//, '').split('/');
-
     return {
       message: error.message,
-      path: parentPath.concat(errorPath),
+      path: error.instancePath.replace(/^\//, '').split('/'),
     } as SchemaValidateResult;
   });
 }

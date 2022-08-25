@@ -1,11 +1,8 @@
 import { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 import Ajv, { ErrorObject, ValidateFunction } from "ajv";
-import * as fs from 'fs';
-import * as path from 'path';
+import { schemaV3 } from './openapi/schema_v3'
 const toJsonSchema = require('@openapi-contrib/openapi-schema-to-json-schema');
-
-const schemaV3 = JSON.parse(fs.readFileSync(path.resolve(__dirname, './openapi/schema_v3.json'), 'utf8'));
 
 const ajv = new Ajv({
   allErrors: true,
@@ -14,7 +11,6 @@ const ajv = new Ajv({
 });
 
 ajv.addSchema(schemaV3, "openapi");
-
 
 export function OpenAPISchemaParser(): SchemaParser {
   return {

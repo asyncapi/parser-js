@@ -14,22 +14,18 @@ export function RamlSchemaParser(): SchemaParser {
   }
 
 async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<AsyncAPISchema> {
-    const message = (input.meta as any).message
-    try {
-        const payload = formatPayload(input.data);
+    const message = (input.meta as any).message;
+    const payload = formatPayload(input.data);
 
-        // Draft 6 is compatible with 7.
-        const jsonModel = await r2j.dt2js(payload, 'tmpType', { draft: '06' });
-        const convertedType = jsonModel.definitions.tmpType;
+    // Draft 6 is compatible with 7.
+    const jsonModel = await r2j.dt2js(payload, 'tmpType', { draft: '06' });
+    const convertedType = jsonModel.definitions.tmpType;
 
-        message['x-parser-original-schema-format'] = input.schemaFormat || input.defaultSchemaFormat;
-        message['x-parser-original-payload'] = payload;
-        message.payload = convertedType;
-        delete message.schemaFormat;
-    } catch (e) {
-        console.error(e);
-    }
-
+    message['x-parser-original-schema-format'] = input.schemaFormat || input.defaultSchemaFormat;
+    message['x-parser-original-payload'] = payload;
+    message.payload = convertedType;
+    delete message.schemaFormat;
+  
     return message.payload;
 }
 

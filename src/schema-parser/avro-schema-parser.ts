@@ -19,11 +19,10 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
   try {
     validateAvroSchema(input.data as AvroSchema);  
   } catch (error) {
-    // TODO try to parse errors: https://github.com/mtth/avsc/blob/c639014507f08dbbdffecae8ccae0118390d13f8/lib/types.js#L118
     if (error instanceof Error) {
       result.push({
         message: error.message,
-        path: [], // TODO how to get the path?
+        path: [], // avsc doesn't throw errors with meaningful paths
       });
     }
   }
@@ -143,7 +142,7 @@ function extractNonNullableTypeIfNeeded(typeInput: any, jsonSchemaInput: AsyncAP
     const pickSecondType = typeInput.length > 1 && typeInput[0] === 'null';
     type = typeInput[+pickSecondType];
     if (jsonSchema.oneOf !== undefined) {
-      jsonSchema = jsonSchema.oneOf[0] as AsyncAPISchema; // TODO we lose boolean type?
+      jsonSchema = jsonSchema.oneOf[0] as AsyncAPISchema;
     }
   }
   return {type, jsonSchema};
@@ -342,6 +341,6 @@ async function processUnionSchema(jsonSchema: AsyncAPISchema, avroDefinition: Av
 }
 
 export async function avroToJsonSchema(avroDefinition: AvroSchema) {
-  validateAvroSchema(avroDefinition); // TODO: this is done in 'validate()', so I don't think we need to do it here
+  validateAvroSchema(avroDefinition);
   return convertAvroToJsonSchema(avroDefinition, true);
 };

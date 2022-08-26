@@ -1,0 +1,13 @@
+{
+  "schemaFormat": "application/raml+yaml;version=1.0",
+  "payload": {
+    "type": "object",
+    "properties": {
+      "title": "string",
+      "author": {
+        "type": "string",
+        "examples": "test"
+      }
+    }
+  }
+}

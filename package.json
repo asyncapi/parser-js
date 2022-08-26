@@ -55,6 +55,7 @@
     "@stoplight/spectral-parsers": "^1.0.1",
     "@stoplight/spectral-rulesets": "^1.4.3",
     "ajv": "^8.11.0",
+    "avsc": "^5.7.4",
     "js-yaml": "^3.14.1",
     "jsonpath-plus": "^6.0.1",
     "lodash": "^4.17.21",

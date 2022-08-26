@@ -18,4 +18,4 @@ export interface DetailedAsyncAPI {
 
 export type Diagnostic = ISpectralDiagnostic;
 export type SchemaValidateResult = IFunctionResult;
-export type AsyncAPISchema = JSONSchema7;
+export type AsyncAPISchema = JSONSchema7 & { [key: string]: any };

@@ -56,8 +56,11 @@
     "@stoplight/spectral-rulesets": "^1.4.3",
     "ajv": "^8.11.0",
     "avsc": "^5.7.4",
+    "js-yaml": "^3.14.1",
     "jsonpath-plus": "^6.0.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "ramldt2jsonschema": "^1.2.3",
+    "webapi-parser": "^0.5.0"
   },
   "release": {
     "branches": [

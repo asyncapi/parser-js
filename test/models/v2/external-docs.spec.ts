@@ -1,11 +1,13 @@
 import { ExternalDocumentation } from '../../../src/models/v2/external-docs';
 
-import { assertDescription, assertExtensions } from './assert-mixins';
+import { serializeInput, assertDescription, assertExtensions } from './assert-mixins';
+
+import type { v2 } from '../../../src/interfaces';
 
 describe('ExternalDocumentation model', function() {
   describe('.name()', function() {
     it('should return the value', function() {
-      const doc = { url: 'somewhere' };
+      const doc = serializeInput<v2.ExternalDocumentationObject>({ url: 'somewhere' });
       const d = new ExternalDocumentation(doc);
       expect(d.url()).toEqual(doc.url);
     });

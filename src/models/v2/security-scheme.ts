@@ -30,7 +30,7 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
     return this._json.bearerFormat;
   }
 
-  openIdConnectUrl(): string {
+  openIdConnectUrl(): string | undefined {
     return this._json.openIdConnectUrl;
   }
 
@@ -41,10 +41,6 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
   flows(): OAuthFlowsInterface | undefined {
     if(!this._json.flows) return undefined;
     return new OAuthFlows(this._json.flows);
-  }
-
-  scopes(): string[] {
-    return this._json.scopes;
   }
 
   type(): SecuritySchemaType {

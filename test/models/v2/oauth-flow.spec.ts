@@ -1,5 +1,7 @@
 import { OAuthFlow } from '../../../src/models/v2/oauth-flow';
 
+import type { v2 } from '../../../src/interfaces';
+
 const flowObject = {
   "authorizationUrl": "https://example.com/api/oauth/dialog",
   "scopes": {
@@ -9,7 +11,7 @@ const flowObject = {
 }
 
 const flow = new OAuthFlow(flowObject);
-const emptyObject = new OAuthFlow({});
+const emptyObject = new OAuthFlow({} as v2.OAuthFlowObject);
 
 describe('OAuth Flow', function(){
   describe('.authorizationUrl()', function(){

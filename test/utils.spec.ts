@@ -41,7 +41,7 @@ describe('utils', function() {
 
     it('AsyncAPIDocument instance should return AsyncAPIDocument instance', function() {
       const doc = { asyncapi: '2.0.0' };
-      const detailed = createDetailedAsyncAPI(doc, doc);
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
       expect(toAsyncAPIDocument(newAsyncAPIDocument(detailed))).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
@@ -77,7 +77,7 @@ describe('utils', function() {
 
     it('AsyncAPIDocument instance should be AsyncAPI document', function() {
       const doc = { asyncapi: '2.0.0' };
-      const detailed = createDetailedAsyncAPI(doc, doc);
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
       expect(isAsyncAPIDocument(newAsyncAPIDocument(detailed))).toEqual(true);
     });
   });
@@ -101,13 +101,13 @@ describe('utils', function() {
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0' };
-      const detailed = createDetailedAsyncAPI(doc, doc);
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
       expect(isParsedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0', [xParserSpecParsed]: true };
-      const detailed = createDetailedAsyncAPI(doc, doc);
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
       expect(isParsedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
@@ -135,13 +135,13 @@ describe('utils', function() {
 
     it('AsyncAPIDocument instance should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0' };
-      const detailed = createDetailedAsyncAPI(doc, doc);
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
       expect(isStringifiedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true };
-      const detailed = createDetailedAsyncAPI(doc, doc);
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
       expect(isStringifiedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
     });
 
@@ -238,7 +238,7 @@ describe('utils', function() {
     it('should create detailed object', function () {
       const source = "{ asyncapi: '2.1.37' }";
       const parsed = { asyncapi: '2.1.37' };
-      const detailed = createDetailedAsyncAPI(source, parsed);
+      const detailed = createDetailedAsyncAPI(source, parsed as any);
       expect(detailed.source).toEqual(source);
       expect(detailed.parsed).toEqual(parsed);
       expect(detailed.semver.version).toEqual('2.1.37');

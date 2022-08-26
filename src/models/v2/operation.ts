@@ -47,12 +47,14 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
 
   messages(): MessagesInterface {
     let isOneOf = false;
-    let messages = this._json.message || [];
-    if (Array.isArray(messages.oneOf)) {
-      messages = messages.oneOf;
-      isOneOf = true;
-    } else if (!Array.isArray(messages)) {
-      messages = [messages];
+    let messages: Array<v2.MessageObject> = [];
+    if (this._json.message) {
+      if (Array.isArray((this._json.message as { oneOf?: Array<v2.MessageObject> }).oneOf)) {
+        messages = (this._json.message as unknown as { oneOf: Array<v2.MessageObject> }).oneOf;
+        isOneOf = true;
+      } else {
+        messages = [this._json.message as unknown as v2.MessageObject];
+      }
     }
 
     return new Messages(

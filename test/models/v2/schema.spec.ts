@@ -2,6 +2,8 @@ import { Schema } from '../../../src/models/v2/schema';
 
 import { assertExtensions, assertExternalDocumentation } from './assert-mixins';
 
+import type { v2 } from '../../../src/interfaces';
+
 describe('Channel model', function() {
   describe('.id()', function() {
     it('should return id of model', function() {
@@ -415,7 +417,7 @@ describe('Channel model', function() {
 
   describe('.isCircular()', function() {
     it('should return a true when schema has circular reference', function() {
-      const doc = {
+      const doc: v2.AsyncAPISchemaObject = {
         properties: {
           nonCircular: {
             type: 'string',
@@ -423,7 +425,7 @@ describe('Channel model', function() {
           circular: {},
         }
       };
-      doc.properties.circular = doc;
+      doc.properties!.circular = doc;
       const d = new Schema(doc);
       expect(d.isCircular()).toEqual(false);
       expect((d.properties() as any)['nonCircular'].isCircular()).toEqual(false);
@@ -747,13 +749,13 @@ describe('Channel model', function() {
 
   describe('.type()', function() {
     it('should return single type', function() {
-      const doc = { type: 'object' };
+      const doc: v2.AsyncAPISchemaObject = { type: 'object' };
       const d = new Schema(doc);
       expect(d.type()).toEqual(doc.type);
     });
 
     it('should return array of type', function() {
-      const doc = { type: ['object', 'array'] };
+      const doc: v2.AsyncAPISchemaObject = { type: ['object', 'array'] };
       const d = new Schema(doc);
       expect(d.type()).toEqual(doc.type);
     });

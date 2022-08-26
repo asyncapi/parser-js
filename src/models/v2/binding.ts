@@ -16,10 +16,10 @@ export class Binding extends BaseModel<v2.Binding, { protocol: string }> impleme
     return this._json.bindingVersion;
   }
 
-  value(): any {
+  value<T extends Record<string, any> = Record<string, any>>(): T {
     const value = { ...this._json };
     delete (value as any).bindingVersion;
-    return value;
+    return value as unknown as T;
   }
 
   extensions(): ExtensionsInterface {

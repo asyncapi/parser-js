@@ -3,6 +3,12 @@ import { BindingsV2, ExtensionsV2, ExternalDocumentationV2, TagsV2 } from '../..
 import type { Constructor } from '../../../src/models/utils';
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface } from '../../../src/models/mixins';
 
+type DeepPartial<T> = T extends object ? { [P in keyof T]?: DeepPartial<T[P]> } : T;
+
+export function serializeInput<T>(data: DeepPartial<T>): T {
+  return data as T;
+}
+
 export function assertBindings(model: Constructor<BindingsMixinInterface>) {
   describe('.bindings()', function() {
     const doc1 = { bindings: { amqp: { test: 'test1' } } };

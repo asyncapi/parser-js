@@ -65,7 +65,7 @@ describe('MessageTrait model', function() {
 
   describe('.hasCorrelationId()', function() {
     it('should return true when there is a value', function() {
-      const doc = { correlationId: {} };
+      const doc = { correlationId: { location: '...' } };
       const d = new MessageTrait(doc);
       expect(d.hasCorrelationId()).toEqual(true);
     });
@@ -79,7 +79,7 @@ describe('MessageTrait model', function() {
 
   describe('.correlationId()', function() {
     it('should return the value', function() {
-      const doc = { correlationId: {} };
+      const doc = { correlationId: { location: '...' } };
       const d = new MessageTrait(doc);
       expect(d.correlationId()).toBeInstanceOf(CorrelationId);
     });

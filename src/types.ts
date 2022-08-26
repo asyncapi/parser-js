@@ -1,5 +1,4 @@
 import type { ISpectralDiagnostic, IFunctionResult } from '@stoplight/spectral-core';
-import type { JSONSchema7 } from "json-schema";
 import type { v2 } from "./interfaces";
 
 export type MaybeAsyncAPI = { asyncapi: string } & Record<string, unknown>;
@@ -13,10 +12,11 @@ export interface AsyncAPISemver {
 
 export interface DetailedAsyncAPI {
   source: string | Record<string, any>;
-  parsed: v2.AsyncAPIObject;
+  parsed: AsyncAPIObject;
   semver: AsyncAPISemver;
 }
 
 export type Diagnostic = ISpectralDiagnostic;
 export type SchemaValidateResult = IFunctionResult;
-export type AsyncAPISchema = JSONSchema7 & { [key: string]: any };
+export type AsyncAPIObject = v2.AsyncAPIObject;
+export type AsyncAPISchema = v2.AsyncAPISchemaObject;

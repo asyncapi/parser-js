@@ -232,20 +232,16 @@ export interface AsyncAPISchemaObject extends JSONSchema7, SpecificationExtensio
   examples?: Array<JSONSchema7Type> | undefined;
 }
 
-export type SecuritySchemeObject =
-  & SecuritySchemeObjectUserPassword
-  & SecuritySchemeObjectApiKey
-  & SecuritySchemeObjectX509
-  & SecuritySchemeObjectSymetricEncryption
-  & SecuritySchemeObjectAsymetricEncryption
-  & SecuritySchemeObjectHttpApiKey
-  & SecuritySchemeObjectHttp
-  & SecuritySchemeObjectOauth2
-  & SecuritySchemeObjectOpenIdConnect
-  & SecuritySchemeObjectPlain
-  & SecuritySchemeObjectScramSha256
-  & SecuritySchemeObjectScramSha512
-  & SecuritySchemeObjectGssapi;
+export interface SecuritySchemeObject extends SpecificationExtensions {
+  type: SecuritySchemeType;
+  description?: string;
+  name?: string;
+  in?: 'user' | 'password' | 'query' | 'header' | 'cookie';
+  scheme?: string;
+  bearerFormat?: string;
+  flows?: OAuthFlowsObject;
+  openIdConnectUrl?: string;
+}
 
 export type SecuritySchemeType =
   | 'userPassword'

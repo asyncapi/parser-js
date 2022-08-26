@@ -21,8 +21,12 @@ export abstract class BaseModel<J extends Record<string, any> = Record<string, a
     return this._json[String(key)];
   }
 
-  meta(): ModelMetadata {
-    return this._meta!;
+  meta(): ModelMetadata & M;
+  meta<K extends keyof ModelMetadata & M>(key: K): (ModelMetadata & M)[K];
+  meta(key?: keyof ModelMetadata & M) {
+    if (key === undefined) return this._meta;
+    if (!this._meta) return;
+    return this._meta[String(key)];
   }
 
   jsonPath(field?: string | undefined): string {

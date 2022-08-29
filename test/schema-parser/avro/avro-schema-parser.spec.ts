@@ -1,8 +1,9 @@
-import { ParseSchemaInput } from '../../../src/schema-parser/index';
 import { AvroSchemaParser, avroToJsonSchema } from '../../../src/schema-parser/avro-schema-parser';
-import { type Schema as AvroSchema} from "avsc";
 import * as fs from 'fs';
 import * as path from 'path';
+
+import type { Schema as AvroSchema } from "avsc";
+import type { ParseSchemaInput } from '../../../src/schema-parser';
 
 const inputWithAvro182 = toParseInput(fs.readFileSync(path.resolve(__dirname, './asyncapi-avro-1.8.2.json'), 'utf8'));
 const outputWithAvro182 = '{"type":"object","required":["name","favoriteProgrammingLanguage","address"],"properties":{"name":{"type":"string","examples":["Donkey"]},"age":{"oneOf":[{"type":"integer","minimum":-2147483648,"maximum":2147483647},{"type":"null"}],"default":null},"favoriteProgrammingLanguage":{"type":"string","enum":["JS","Java","Go","Rust","C"]},"address":{"type":"object","required":["zipcode"],"properties":{"zipcode":{"type":"integer","minimum":-2147483648,"maximum":2147483647,"examples":[53003]}}}}}';

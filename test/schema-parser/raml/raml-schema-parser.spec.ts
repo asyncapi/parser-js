@@ -1,8 +1,9 @@
-import { ParseSchemaInput, ValidateSchemaInput } from '../../../src/schema-parser/index';
 import { RamlSchemaParser } from '../../../src/schema-parser/raml-schema-parser';
-import { SchemaValidateResult } from '../../../src/types';
 import * as fs from 'fs';
 import * as path from 'path';
+
+import type { ParseSchemaInput, ValidateSchemaInput } from '../../../src/schema-parser';
+import type { SchemaValidateResult } from '../../../src/types';
 
 const inputWithSimpleRAML = toInput(fs.readFileSync(path.resolve(__dirname, './simple.json'), 'utf8'));
 const outputWithSimpleRAML = '{"type":"object","examples":[{"title":"A book","author":"An author"}],"additionalProperties":true,"required":["title","author"],"properties":{"title":{"type":"string"},"author":{"type":"string","examples":["Eva"]}}}';

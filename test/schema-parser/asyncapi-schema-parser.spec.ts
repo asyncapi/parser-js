@@ -1,6 +1,6 @@
-import { ParseSchemaInput, ValidateSchemaInput } from '../../src/schema-parser/index';
 import { AsyncAPISchemaParser } from '../../src/schema-parser/asyncapi-schema-parser';
 
+import type { ParseSchemaInput, ValidateSchemaInput } from '../../src/schema-parser';
 import type { SchemaValidateResult } from '../../src/types';
 
 describe('AsyncAPISchemaParser', function () {

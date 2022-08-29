@@ -11,7 +11,6 @@ const ajv = new Ajv({
   strict: false,
   logger: false,
 });
-
 // Only versions compatible with JSON Schema Draf-07 are supported.
 const specVersions = Object.keys(specs).filter((version: string) => !['1.0.0', '1.1.0', '1.2.0', '2.0.0-rc1', '2.0.0-rc2'].includes(version));
 

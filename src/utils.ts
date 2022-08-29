@@ -68,6 +68,10 @@ export function normalizeInput(asyncapi: string | MaybeAsyncAPI): string {
   return JSON.stringify(asyncapi, undefined, 2);
 };
 
+export function unfreezeObject(data: unknown) {
+  return JSON.parse(JSON.stringify(data))
+}
+
 export function hasErrorDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Error);
 }

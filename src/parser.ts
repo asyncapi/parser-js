@@ -1,9 +1,10 @@
 import { Spectral } from "@stoplight/spectral-core";
-import { asyncapi as aasRuleset } from "@stoplight/spectral-rulesets";
 
 import { parse } from "./parse";
 import { lint, validate } from "./lint";
 import { registerSchemaParser } from './schema-parser';
+import { AsyncAPISchemaParser } from "./schema-parser/asyncapi-schema-parser";
+import { configureSpectral } from "./spectral";
 
 import type { IConstructorOpts } from "@stoplight/spectral-core";
 import type { ParseInput, ParseOptions } from "./parse";
@@ -18,16 +19,18 @@ export class Parser {
   public readonly parserRegistry = new Map<string, SchemaParser>();
   public readonly spectral: Spectral;
 
-  constructor(options?: ParserOptions) {
-    const { spectral } = options || {};
+  constructor(
+    private readonly options?: ParserOptions
+  ) {
+    const { spectral } = this.options || {};
     if (spectral instanceof Spectral) {
       this.spectral = spectral;
     } else {
       this.spectral = new Spectral(spectral);
     }
 
-    // TODO: fix type
-    this.spectral.setRuleset(aasRuleset as any);
+    this.registerSchemaParser(AsyncAPISchemaParser());
+    configureSpectral(this);
   }
 
   parse(asyncapi: ParseInput, options?: ParseOptions) {

@@ -28,8 +28,7 @@ export interface SchemaParser<D = unknown, M = unknown> {
 export async function validateSchema(parser: Parser, input: ValidateSchemaInput) {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
   if (schemaParser === undefined) {
-    // throw appropriate error
-    throw new Error();
+    throw new Error('Unknown schema format');
   }
   return schemaParser.validate(input);
 }
@@ -37,7 +36,7 @@ export async function validateSchema(parser: Parser, input: ValidateSchemaInput)
 export async function parseSchema(parser: Parser, input: ParseSchemaInput) {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
   if (schemaParser === undefined) {
-    return;
+    throw new Error('Unknown schema format');
   }
   return schemaParser.parse(input);
 }
@@ -49,12 +48,19 @@ export function registerSchemaParser(parser: Parser, schemaParser: SchemaParser)
       || typeof schemaParser.parse !== 'function' 
       || typeof schemaParser.getMimeTypes !== 'function'
   ) {
-    throw new Error('custom parser must have "parse()", "validate()" and "getMimeTypes()" functions.');
+    throw new Error('Custom parser must have "parse()", "validate()" and "getMimeTypes()" functions.');
   }
 
   schemaParser.getMimeTypes().forEach(schemaFormat => {
     parser.parserRegistry.set(schemaFormat, schemaParser);
   });
+}
+
+export function getSchemaFormat(schematFormat: string | undefined, asyncapiVersion: string) {
+  if (typeof schematFormat === 'string') {
+    return schematFormat;
+  }
+  return getDefaultSchemaFormat(asyncapiVersion);
 }
 
 export function getDefaultSchemaFormat(asyncapiVersion: string) {

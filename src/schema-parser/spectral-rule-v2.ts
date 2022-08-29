@@ -8,6 +8,7 @@ import type { RuleDefinition } from "@stoplight/spectral-core";
 import type { Parser } from '../parser';
 import type { ValidateSchemaInput } from './index';
 import type { SchemaValidateResult } from '../types';
+import type { v2 } from '../interfaces';
 
 export function aas2schemaParserRule(parser: Parser): RuleDefinition {
   return {
@@ -52,7 +53,7 @@ function rulesetFunction(parser: Parser) {
       }
 
       const path = [...ctx.path, 'payload'];
-      const spec = ctx.document.data as { asyncapi: string };
+      const spec = ctx.document.data as v2.AsyncAPIObject;
       const schemaFormat = getSchemaFormat(targetVal.schemaFormat, spec.asyncapi);
       const defaultSchemaFormat = getDefaultSchemaFormat(spec.asyncapi);
       // we don't have a parsed specification yet because we are still executing code in the context of spectral

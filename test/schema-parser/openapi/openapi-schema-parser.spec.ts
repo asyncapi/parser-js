@@ -76,7 +76,7 @@ function toParseInput(raw: string): ParseSchemaInput | ValidateSchemaInput {
         patch: 0
       }, 
       source: "",
-      parsed: {},
+      parsed: {} as any,
     },
     data: message.payload,
     meta: {

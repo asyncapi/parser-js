@@ -230,6 +230,7 @@ export interface AsyncAPISchemaObject extends JSONSchema7, SpecificationExtensio
   externalDocs?: ExternalDocumentationObject;
   deprecated?: boolean;
   examples?: Array<JSONSchema7Type> | undefined;
+  [keyword: string]: any;
 }
 
 export interface SecuritySchemeObject extends SpecificationExtensions {

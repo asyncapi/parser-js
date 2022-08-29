@@ -1,7 +1,7 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './assert-mixins';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('OperationTrait model', function() {
   describe('.id()', function() {

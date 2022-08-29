@@ -8,7 +8,7 @@ import { Message } from '../../../src/models/v2/message';
 import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './assert-mixins';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Operation model', function() {
   describe('.id()', function() {

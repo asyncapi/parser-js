@@ -1,6 +1,6 @@
 import { Contact } from '../../../src/models/v2/contact';
 
-import { serializeInput, assertExtensions } from './assert-mixins';
+import { serializeInput, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

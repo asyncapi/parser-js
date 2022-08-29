@@ -4,11 +4,10 @@ import { Components } from '../../../src/models/v2/components';
 import { Info } from '../../../src/models/v2/info';
 import { Messages } from '../../../src/models/v2/messages';
 import { Operations } from '../../../src/models/v2/operations';
-import { Schemas } from '../../../src/models/v2/schemas';
 import { SecuritySchemes } from '../../../src/models/v2/security-schemes';
 import { Servers } from '../../../src/models/v2/servers';
 
-import { serializeInput, assertExtensions } from './assert-mixins';
+import { serializeInput, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

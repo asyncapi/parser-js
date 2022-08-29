@@ -1,6 +1,6 @@
 import { Schema } from '../../../src/models/v2/schema';
 
-import { assertExtensions, assertExternalDocumentation } from './assert-mixins';
+import { assertExtensions, assertExternalDocumentation } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

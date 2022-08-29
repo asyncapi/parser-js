@@ -8,7 +8,7 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/v2/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { serializeInput, assertBindings, assertDescription, assertExtensions } from './assert-mixins';
+import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

@@ -4,7 +4,7 @@ import { MessageExample } from '../../../src/models/v2/message-example';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
 import { Schema } from '../../../src/models/v2/schema';
 
-import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './assert-mixins';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('MessageTrait model', function() {
   describe('.id()', function() {

@@ -11,7 +11,7 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariable } from '../../../src/models/v2/server-variable';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { serializeInput, assertExtensions } from './assert-mixins';
+import { serializeInput, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

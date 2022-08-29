@@ -1,6 +1,6 @@
 import { Tag } from '../../../src/models/v2/tag';
 
-import { assertDescription, assertExtensions, assertExternalDocumentation } from './assert-mixins';
+import { assertDescription, assertExtensions, assertExternalDocumentation } from './utils';
 
 describe('Tag model', function() {
   describe('.name()', function() {

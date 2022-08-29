@@ -1,6 +1,6 @@
 import { CorrelationId } from '../../../src/models/v2/correlation-id';
 
-import { serializeInput, assertDescription, assertExtensions } from './assert-mixins';
+import { serializeInput, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

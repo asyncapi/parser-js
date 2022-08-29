@@ -1,7 +1,7 @@
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 import { Schema } from '../../../src/models/v2/schema';
 
-import { serializeInput, assertDescription, assertExtensions } from './assert-mixins';
+import { serializeInput, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

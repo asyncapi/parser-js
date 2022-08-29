@@ -1,6 +1,6 @@
 import { MessageExample } from '../../../src/models/v2/message-example';
 
-import { assertExtensions } from './assert-mixins';
+import { assertExtensions } from './utils';
 
 describe('MessageExample model', function() {
   describe('.hasName()', function() {

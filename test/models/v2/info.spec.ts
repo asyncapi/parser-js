@@ -6,7 +6,7 @@ import { Tags } from '../../../src/models/v2/tags';
 import { Tag } from '../../../src/models/v2/tag';
 import { createDetailedAsyncAPI } from '../../../src/utils';
 
-import { serializeInput, assertDescription, assertExtensions } from './assert-mixins';
+import { serializeInput, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/interfaces';
 

@@ -1,15 +1,17 @@
-import { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
-import type { AsyncAPISchema, SchemaValidateResult } from '../types';
-import Ajv, { ErrorObject, ValidateFunction } from "ajv";
-import { schemaV3 } from './openapi/schema_v3'
+import Ajv from "ajv";
+import { schemaV3 } from './openapi/schema_v3';
+
 const toJsonSchema = require('@openapi-contrib/openapi-schema-to-json-schema');
+
+import type { ErrorObject, ValidateFunction } from "ajv";
+import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
+import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
 const ajv = new Ajv({
   allErrors: true,
   strict: false,
   logger: false,
 });
-
 ajv.addSchema(schemaV3, "openapi");
 
 export function OpenAPISchemaParser(): SchemaParser {
@@ -33,29 +35,20 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
 }
 
 async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<AsyncAPISchema> {
-    const transformed = toJsonSchema(input.data, {
-      cloneSchema: true,
-      keepNotSupported: [
-          'discriminator',
-          'readOnly',
-          'writeOnly',
-          'deprecated',
-          'xml',
-          'example',
-      ],
-    });
+  const transformed = toJsonSchema(input.data, {
+    cloneSchema: true,
+    keepNotSupported: [
+      'discriminator',
+      'readOnly',
+      'writeOnly',
+      'deprecated',
+      'xml',
+      'example',
+    ],
+  });
     
-    iterateSchema(transformed);
-
-    const message = (input.meta as any).message
-    if (message !== undefined) {
-      message['x-parser-original-schema-format'] = input.schemaFormat || input.defaultSchemaFormat;
-      message['x-parser-original-payload'] = message.payload;
-      message.payload = transformed;
-      delete message.schemaFormat;
-    };
-
-    return transformed;
+  iterateSchema(transformed);
+  return transformed;
 }
 
 function getMimeTypes() {
@@ -76,6 +69,7 @@ function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
     } as SchemaValidateResult;
   });
 }
+
 function iterateSchema(schema: any) {
   if (schema.example !== undefined) {
     const examples = schema.examples || [];

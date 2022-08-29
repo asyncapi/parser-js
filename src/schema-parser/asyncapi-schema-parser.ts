@@ -1,15 +1,16 @@
-import { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
-import Ajv, { ErrorObject, ValidateFunction } from "ajv";
-import type { AsyncAPISchema, SchemaValidateResult } from '../types';
+import Ajv from "ajv";
 // @ts-ignore
 import specs from '@asyncapi/specs';
+
+import type { ErrorObject, ValidateFunction } from "ajv";
+import type { AsyncAPISchema, SchemaValidateResult } from '../types';
+import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
 
 const ajv = new Ajv({
   allErrors: true,
   strict: false,
   logger: false,
 });
-
 // Only versions compatible with JSON Schema Draf-07 are supported.
 const specVersions = Object.keys(specs).filter((version: string) => !['1.0.0', '1.1.0', '1.2.0', '2.0.0-rc1', '2.0.0-rc2'].includes(version));
 

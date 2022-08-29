@@ -365,7 +365,7 @@ export interface CorrelationIDObject extends SpecificationExtensions {
 }
 
 export interface Binding {
-  bindingVersion: string;
+  bindingVersion?: string;
   [key: string]: any;
 }
 

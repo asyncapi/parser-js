@@ -13,7 +13,7 @@ export class Binding extends BaseModel<v2.Binding, { protocol: string }> impleme
   }
 
   version(): string {
-    return this._json.bindingVersion;
+    return this._json.bindingVersion || 'latest';
   }
 
   value<T extends Record<string, any> = Record<string, any>>(): T {

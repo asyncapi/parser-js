@@ -4,7 +4,7 @@ import { MessageExamples } from './message-examples';
 import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
-import { getDefaultSchemaFormat } from '../../schema-parser/index';
+import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import { Mixin } from '../utils';
 import { BindingsMixin } from './mixins/bindings';

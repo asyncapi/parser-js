@@ -238,6 +238,7 @@ A few advantages of this solution:
 1. Write code and tests.
 1. Make sure all tests pass `npm test`
 1. Make sure code is well formatted and secure `npm run lint`
+1. Make sure you are using the latest version of both Node.js and npm.
 
 Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
 

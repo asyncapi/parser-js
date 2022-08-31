@@ -1,7 +1,7 @@
 import { createRulesetFunction } from '@stoplight/spectral-core';
 import { asyncapi as aasRuleset } from "@stoplight/spectral-rulesets";
 
-import { aas2SchemaParserRule } from './schema-parser/spectral-rule-v2';
+import { asyncApi2SchemaParserRule } from './schema-parser/spectral-rule-v2';
 import { specVersions } from './constants';
 import { isObject } from './utils';
 
@@ -18,8 +18,8 @@ function configureRuleset(parser: Parser): RulesetDefinition {
   return {
     extends: [aasRuleset],
     rules: {
-      'asyncapi-is-asyncapi': asyncApi2IsAsyncAPI(),
-      'asyncapi-schemas-v2': aas2SchemaParserRule(parser),
+      'asyncapi-is-asyncapi': asyncApi2IsAsyncApi(),
+      'asyncapi-schemas-v2': asyncApi2SchemaParserRule(parser),
       // We do not use these rules from the official ruleset due to the fact 
       // that the given rules validate only AsyncAPI Schemas and prevent defining schemas in other formats 
       'asyncapi-payload-unsupported-schemaFormat': 'off',

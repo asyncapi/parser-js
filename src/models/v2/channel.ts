@@ -7,14 +7,12 @@ import { Operation } from './operation';
 import { Servers } from './servers';
 import { Server } from './server';
 
-import { Mixin } from '../utils';
-import { BindingsMixin } from './mixins/bindings';
-import { DescriptionMixin } from './mixins/description';
-import { ExtensionsMixin } from './mixins/extensions';
+import { bindings, hasDescription, description, extensions } from './mixins';
 
-import type { ModelMetadata } from "../base";
+import type { BindingsInterface } from "models/bindings";
 import type { ChannelInterface } from "../channel";
 import type { ChannelParametersInterface } from "../channel-parameters";
+import type { ExtensionsInterface } from "models/extensions";
 import type { MessagesInterface } from "../messages";
 import type { MessageInterface } from "../message";
 import type { OperationsInterface } from "../operations";
@@ -22,20 +20,23 @@ import type { OperationInterface } from "../operation";
 import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 
-export class Channel extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, ExtensionsMixin) implements ChannelInterface {
-  constructor(
-    _json: Record<string,any>,
-    protected readonly _meta: ModelMetadata & { id: string, address: string } = {} as any
-  ) {
-    super(_json, _meta);
-  }
+import type { v2 } from "../../spec-types";
 
+export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: string }> implements ChannelInterface {
   id(): string {
     return this._meta.id;
   }
 
   address(): string {
     return this._meta.address;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
   }
 
   servers(): ServersInterface {
@@ -52,8 +53,8 @@ export class Channel extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, E
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     ['publish', 'subscribe'].forEach(operationAction => {
-      this._json[operationAction] && operations.push(
-        this.createModel(Operation, this._json[operationAction], { id: operationAction, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
+      this._json[operationAction as 'publish' | 'subscribe'] && operations.push(
+        this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'], { id: operationAction, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
       );
     });
     return new Operations(operations);
@@ -74,5 +75,13 @@ export class Channel extends Mixin(BaseModel, BindingsMixin, DescriptionMixin, E
         })
       })
     );
+  }
+
+  bindings(): BindingsInterface {
+    return bindings(this); 
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

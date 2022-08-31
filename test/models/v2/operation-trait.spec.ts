@@ -1,13 +1,7 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { 
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance,
-  assertTagsMixinInheritance,
-} from './mixins/inheritance';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('OperationTrait model', function() {
   describe('.id()', function() {
@@ -107,11 +101,11 @@ describe('OperationTrait model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertBindingsMixinInheritance(OperationTrait);
-    assertDescriptionMixinInheritance(OperationTrait);
-    assertExtensionsMixinInheritance(OperationTrait);
-    assertExternalDocumentationMixinInheritance(OperationTrait);
-    assertTagsMixinInheritance(OperationTrait);
+  describe('mixins', function() {
+    assertBindings(OperationTrait);
+    assertDescription(OperationTrait);
+    assertExtensions(OperationTrait);
+    assertExternalDocumentation(OperationTrait);
+    assertTags(OperationTrait);
   });
 });

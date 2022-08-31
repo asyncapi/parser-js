@@ -1,21 +1,20 @@
-import { ExternalDocumentation } from '../../../src/models/v2/mixins/external-docs';
+import { ExternalDocumentation } from '../../../src/models/v2/external-docs';
 
-import { 
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { serializeInput, assertDescription, assertExtensions } from './utils';
+
+import type { v2 } from '../../../src/spec-types';
 
 describe('ExternalDocumentation model', function() {
   describe('.name()', function() {
     it('should return the value', function() {
-      const doc = { url: 'somewhere' };
+      const doc = serializeInput<v2.ExternalDocumentationObject>({ url: 'somewhere' });
       const d = new ExternalDocumentation(doc);
       expect(d.url()).toEqual(doc.url);
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertDescriptionMixinInheritance(ExternalDocumentation);
-    assertExtensionsMixinInheritance(ExternalDocumentation);
+  describe('mixins', function() {
+    assertDescription(ExternalDocumentation);
+    assertExtensions(ExternalDocumentation);
   });
 });

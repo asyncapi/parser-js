@@ -18,7 +18,9 @@ import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 import type { SchemaInterface } from "../schema";
 
-export class Message extends MessageTrait implements MessageInterface {
+import type { v2 } from "../../spec-types";
+
+export class Message extends MessageTrait<v2.MessageObject> implements MessageInterface {
   hasPayload(): boolean {
     return !!this._json.payload;
   }

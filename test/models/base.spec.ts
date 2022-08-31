@@ -19,7 +19,7 @@ describe('Base model', function() {
     it('should return the value of a given key, even when this is falsy', function() {
       const doc = { 0: 'testing' };
       const d = new Model(doc);
-      expect(d.json(0)).toEqual(doc[0]);
+      expect(d.json('0')).toEqual(doc[0]);
     });
   });
 });

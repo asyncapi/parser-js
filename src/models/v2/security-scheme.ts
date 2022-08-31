@@ -1,24 +1,25 @@
 import { BaseModel } from '../base';
-
 import { OAuthFlows } from './oauth-flows';
-import { Mixin } from '../utils';
-import { DescriptionMixin } from './mixins/description';
-import { ExtensionsMixin } from './mixins/extensions';
 
-import type { ModelMetadata } from '../base';
+import { hasDescription, description, extensions } from './mixins';
+
+import type { ExtensionsInterface } from '../extensions';
 import type { SecuritySchemaType, SecuritySchemeInterface } from '../security-scheme';
 import type { OAuthFlowsInterface } from '../oauth-flows';
 
-export class SecurityScheme extends Mixin(BaseModel, DescriptionMixin, ExtensionsMixin) implements SecuritySchemeInterface {
-  constructor(
-    _json: Record<string, any>,
-    protected readonly _meta: ModelMetadata & { id: string } = {} as any
-  ) {
-    super(_json, _meta);
-  }
+import type { v2 } from "../../spec-types";
 
+export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: string }> implements SecuritySchemeInterface {
   id(): string {
     return this._meta.id;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
   }
 
   hasBearerFormat(): boolean {
@@ -29,7 +30,7 @@ export class SecurityScheme extends Mixin(BaseModel, DescriptionMixin, Extension
     return this._json.bearerFormat;
   }
 
-  openIdConnectUrl(): string {
+  openIdConnectUrl(): string | undefined {
     return this._json.openIdConnectUrl;
   }
 
@@ -42,15 +43,15 @@ export class SecurityScheme extends Mixin(BaseModel, DescriptionMixin, Extension
     return new OAuthFlows(this._json.flows);
   }
 
-  scopes(): string[] {
-    return this._json.scopes;
-  }
-
   type(): SecuritySchemaType {
     return this._json.type;
   }
 
   in(): string | undefined {
     return this._json.in;
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

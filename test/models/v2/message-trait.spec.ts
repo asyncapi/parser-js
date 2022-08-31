@@ -27,6 +27,20 @@ describe('MessageTrait model', function() {
     });
   });
 
+  describe('.schemaFormat()', function() {
+    it('should return defined schemaFormat', function() {
+      const doc = { schemaFormat: 'customSchemaFormat' };
+      const d = new MessageTrait(doc, { asyncapi: {} as any, pointer: '', id: 'message' });
+      expect(d.schemaFormat()).toEqual('customSchemaFormat');
+    });
+
+    it('should return default schemaFormat if schemaFormat field is absent', function() {
+      const doc = {};
+      const d = new MessageTrait(doc, { asyncapi: { semver: { version: '2.0.0' } } as any, pointer: '', id: 'message' });
+      expect(d.schemaFormat()).toEqual('application/vnd.aai.asyncapi;version=2.0.0');
+    });
+  });
+
   describe('.hasMessageId()', function() {
     it('should return true when there is a value', function() {
       const doc = { messageId: '...' };

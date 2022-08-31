@@ -4,6 +4,8 @@ import { MessageExamples } from './message-examples';
 import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
+import { getDefaultSchemaFormat } from '../../schema-parser';
+
 import { Mixin } from '../utils';
 import { BindingsMixin } from './mixins/bindings';
 import { DescriptionMixin } from './mixins/description';
@@ -27,6 +29,10 @@ export class MessageTrait extends Mixin(BaseModel, BindingsMixin, DescriptionMix
 
   id(): string {
     return this.messageId() || this._meta.id;
+  }
+
+  schemaFormat(): string {
+    return this._json.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }
 
   hasMessageId(): boolean {

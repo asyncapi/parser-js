@@ -28,7 +28,7 @@ function configureRuleset(parser: Parser): RulesetDefinition {
   } as RulesetDefinition;
 }
 
-function asyncApi2IsAsyncAPI(): RuleDefinition {
+function asyncApi2IsAsyncApi(): RuleDefinition {
   return {
     description: 'Custom schema must be correctly formatted from the point of view of the used format.',
     formats: [(_: unknown) => true], // run rule for all inputs

@@ -21,7 +21,6 @@ import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 
 import type { v2 } from "../../spec-types";
-import { OperationObject } from "spec-types/v2";
 
 export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: string }> implements ChannelInterface {
   id(): string {
@@ -54,7 +53,7 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     ['publish', 'subscribe'].forEach(operationAction => {
-      const id =  this._json[operationAction as 'publish' | 'subscribe'] && (this._json[operationAction as 'publish' | 'subscribe'] as OperationObject).operationId || this.meta().id + "_" + operationAction;
+      const id =  this._json[operationAction as 'publish' | 'subscribe'] && (this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject).operationId || this.meta().id + "_" + operationAction;
       this._json[operationAction as 'publish' | 'subscribe'] && operations.push(
         this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'], { id, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
       );

@@ -1,4 +1,4 @@
-import type { JSONSchema7, JSONSchema7Type } from "json-schema";
+import type { JSONSchema7Version, JSONSchema7TypeName, JSONSchema7Type } from "json-schema";
 
 export type AsyncAPIVersion = string;
 export type Identifier = string;
@@ -225,11 +225,76 @@ export interface ComponentsObject extends SpecificationExtensions {
 
 export type SchemaObject = AsyncAPISchemaObject | ReferenceObject;
 
-export interface AsyncAPISchemaObject extends JSONSchema7, SpecificationExtensions {
+export type AsyncAPISchemaObject = AsyncAPISchemaDefinition | boolean;
+export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
+  $id?: string;
+  $schema?: JSONSchema7Version;
+  $comment?: string;
+
+  type?: JSONSchema7TypeName | JSONSchema7TypeName[];
+  enum?: JSONSchema7Type[];
+  const?: JSONSchema7Type;
+
+  multipleOf?: number;
+  maximum?: number;
+  exclusiveMaximum?: number;
+  minimum?: number;
+  exclusiveMinimum?: number;
+
+  maxLength?: number;
+  minLength?: number;
+  pattern?: string;
+
+  items?: AsyncAPISchemaObject | AsyncAPISchemaObject[];
+  additionalItems?: AsyncAPISchemaObject;
+  maxItems?: number;
+  minItems?: number;
+  uniqueItems?: boolean;
+  contains?: AsyncAPISchemaObject;
+
+  maxProperties?: number;
+  minProperties?: number;
+  required?: string[];
+  properties?: {
+    [key: string]: AsyncAPISchemaObject;
+  };
+  patternProperties?: {
+    [key: string]: AsyncAPISchemaObject;
+  };
+  additionalProperties?: AsyncAPISchemaObject;
+  dependencies?: {
+    [key: string]: AsyncAPISchemaObject | string[];
+  };
+  propertyNames?: AsyncAPISchemaObject;
+
+  if?: AsyncAPISchemaObject;
+  then?: AsyncAPISchemaObject;
+  else?: AsyncAPISchemaObject;
+
+  allOf?: AsyncAPISchemaObject[];
+  anyOf?: AsyncAPISchemaObject[];
+  oneOf?: AsyncAPISchemaObject[];
+  not?: AsyncAPISchemaObject;
+
+  format?: string;
+
+  contentMediaType?: string;
+  contentEncoding?: string;
+
+  definitions?: {
+    [key: string]: AsyncAPISchemaObject;
+  };
+
+  title?: string;
+  description?: string;
+  default?: JSONSchema7Type;
+  readOnly?: boolean;
+  writeOnly?: boolean;
+  examples?: Array<JSONSchema7Type> | undefined;
+
   discriminator?: string;
   externalDocs?: ExternalDocumentationObject;
   deprecated?: boolean;
-  examples?: Array<JSONSchema7Type> | undefined;
   [keyword: string]: any;
 }
 
@@ -366,15 +431,14 @@ export interface CorrelationIDObject extends SpecificationExtensions {
 
 export interface Binding {
   bindingVersion?: string;
-  [key: string]: any;
 }
 
 export interface SpecificationExtensions {
   [extension: `x-${string}`]: SpecificationExtension;
 }
 
-export type SpecificationExtension = any;
+export type SpecificationExtension<T = any> = T;
 
 export interface ReferenceObject {
-  '$ref': string;
+  $ref: string;
 }

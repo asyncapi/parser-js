@@ -1,14 +1,28 @@
 import type { BaseModel } from "./base";
+import type { DetailedAsyncAPI } from "../types";
 
-export abstract class Collection<T extends BaseModel | Collection<any>> extends Array<T> {
+export interface CollectionMetadata<T = any> {
+  originalData?: Record<string, T>; // TODO: I don't know if we wanna have such a data in all collections?
+  asyncapi?: DetailedAsyncAPI;
+  pointer?: string;
+}
+
+export abstract class Collection<T extends BaseModel = BaseModel, M extends Record<string, any> = Record<string, any>> extends Array<T> {
   constructor(
-    protected readonly collections: T[]
+    protected readonly collections: T[],
+    protected readonly _meta: CollectionMetadata<T> & M = {} as CollectionMetadata<T> & M,
   ) {
     super(...collections);
   }
 
-  abstract get(id: string): T | undefined;
-  abstract has(id: string): boolean;
+  get(id: string): T | undefined {
+    const possibleItem = this._meta.originalData?.[id];
+    return typeof possibleItem === 'undefined' ? this.__get(id) : possibleItem;
+  }
+
+  has(id: string): boolean {
+    return typeof this.get(id) !== 'undefined';
+  }
 
   all(): T[] {
     return this.collections;
@@ -21,4 +35,14 @@ export abstract class Collection<T extends BaseModel | Collection<any>> extends 
   filterBy(filter: (item: T) => boolean): T[] {
     return this.collections.filter(filter);
   }
+
+  meta(): CollectionMetadata<T> & M;
+  meta<K extends keyof (CollectionMetadata<T> & M)>(key: K): (CollectionMetadata<T> & M)[K];
+  meta(key?: keyof (CollectionMetadata<T> & M)) {
+    if (key === undefined) return this._meta;
+    if (!this._meta) return;
+    return this._meta[String(key)];
+  }
+
+  protected abstract __get(id: string): T | undefined;
 }

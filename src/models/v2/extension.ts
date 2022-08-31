@@ -4,7 +4,7 @@ import type { ExtensionInterface } from "../extension";
 
 import type { v2 } from "../../spec-types";
 
-export class Extension extends BaseModel<v2.SpecificationExtension, { name: string }> implements ExtensionInterface {
+export class Extension<T = any> extends BaseModel<v2.SpecificationExtension<T>, { name: string }> implements ExtensionInterface<T> {
   name(): string {
     return this._meta.name;
   }
@@ -13,7 +13,7 @@ export class Extension extends BaseModel<v2.SpecificationExtension, { name: stri
     return 'to implement';
   }
 
-  value(): any {
-    return this._json;
+  value<V = T>(): V {
+    return this._json as unknown as V;
   }
 }

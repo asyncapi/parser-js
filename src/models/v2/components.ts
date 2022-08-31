@@ -117,7 +117,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
     const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([itemName, item]) => {
-      collectionItems.push(this.createModel(itemModel, item, { id: itemName, pointer: `/components/${itemsName}/${itemName}` }))
+      collectionItems.push(this.createModel(itemModel, item as any, { id: itemName, pointer: `/components/${itemsName}/${itemName}` } as any))
     });
 
     return new collectionModel(collectionItems);
@@ -126,8 +126,8 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   protected createBindings(itemsName: 'serverBindings' | 'channelBindings' | 'operationBindings' | 'messageBindings'): Record<string, BindingsInterface> {
     return Object.entries(this._json[itemsName] || {}).reduce((bindings, [name, item]) => {
       bindings[name] = new Bindings(
-        Object.entries(item as any || {}).map(([protocol, binding]) => 
-          this.createModel(Binding, binding, { id: protocol, pointer: `components/${itemsName}/${name}/${protocol}` })
+        Object.entries(item || {}).map(([protocol, binding]) => 
+          this.createModel(Binding, binding, { protocol, pointer: `components/${itemsName}/${name}/${protocol}` })
         )
       );
       return bindings;

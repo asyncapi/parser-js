@@ -19,15 +19,17 @@ import type { TagsInterface } from "../tags";
 import type { v2 } from "../../spec-types";
 
 export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): BindingsInterface {
+  const bindings = model.json('bindings') || {};
   return new Bindings(
-    Object.entries(model.json('bindings') || {}).map(([protocol, binding]) => 
-      createModel(Binding, binding, { id: protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
-    )
+    Object.entries(bindings || {}).map(([protocol, binding]) => 
+      createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
+    ),
+    { originalData: bindings, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }
   );
 }
 
 export function hasDescription(model: BaseModel<{ description?: string }>) {
-  return Boolean(model.json('description'));
+  return Boolean(description(model));
 };
 
 export function description(model: BaseModel<{ description?: string }>): string | undefined {
@@ -36,10 +38,10 @@ export function description(model: BaseModel<{ description?: string }>): string 
 
 export function extensions(model: BaseModel<v2.SpecificationExtensions>): ExtensionsInterface {
   const extensions: ExtensionInterface[] = [];
-  Object.entries(model.json()).forEach(([key, value]) => {
-    if (EXTENSION_REGEX.test(key)) {
+  Object.entries(model.json()).forEach(([name, value]: [string, any]) => {
+    if (EXTENSION_REGEX.test(name)) {
       extensions.push(
-        createModel(Extension, value, { id: key, pointer: model.jsonPath(key) }, model)
+        createModel(Extension, value, { name, pointer: model.jsonPath(name) } as any, model) as Extension
       );
     }
   });
@@ -59,7 +61,7 @@ export function externalDocs(model: BaseModel): ExternalDocumentationInterface |
 
 export function tags(model: BaseModel<{ tags?: v2.TagsObject }>): TagsInterface {
   return new Tags(
-    (model.json('tags') || []).map((tag: any, idx: number) => 
+    (model.json('tags') || []).map((tag, idx) => 
       createModel(Tag, tag, { pointer: model.jsonPath(`tags/${idx}`) }, model)
     )
   );

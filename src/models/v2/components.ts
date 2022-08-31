@@ -4,72 +4,94 @@ import { Binding } from "./binding";
 import { Channel } from "./channel";
 import { ChannelParameter } from "./channel-parameter";
 import { CorrelationId } from "./correlation-id";
-import { Message } from "./message";
 import { MessageTrait } from "./message-trait";
 import { OperationTrait } from "./operation-trait";
 import { Schema } from "./schema";
 import { SecurityScheme } from "./security-scheme";
 import { Server } from "./server";
 import { ServerVariable } from "./server-variable";
-
 import { extensions } from './mixins';
-
 import type { BindingsInterface } from "../bindings";
 import type { ComponentsInterface } from "../components";
-import type { ChannelInterface } from "../channel";
-import type { ChannelParameterInterface } from "../channel-parameter";
-import type { CorrelationIdInterface } from "../correlation-id";
 import type { ExtensionsInterface } from "../extensions";
-import type { MessageInterface } from "../message";
-import type { MessageTraitInterface } from "../message-trait";
-import type { OperationTraitInterface } from "../operation-trait";
-import type { SchemaInterface } from "../schema";
-import type { SecuritySchemeInterface } from "../security-scheme";
-import type { ServerInterface } from "../server";
-import type { ServerVariableInterface } from "../server-variable";
 import type { Constructor } from "../utils";
-
+import type { ServersInterface } from "models/servers";
+import { Servers } from "./servers";
+import { Channels } from "./channels";
+import type { ChannelsInterface } from "models/channels";
+import type { MessagesInterface } from "models/messages";
+import type { SchemasInterface } from "models/schemas";
+import type { ChannelParametersInterface } from "models/channel-parameters";
+import type { ServerVariablesInterface } from "models/server-variables";
+import type { OperationTraitsInterface } from "models/operation-traits";
+import type { SecuritySchemesInterface } from "models/security-schemes";
+import { Messages } from "./messages";
+import { Schemas } from "./schemas";
+import { ChannelParameters } from "./channel-parameters";
+import { ServerVariables } from "./server-variables";
+import { OperationTraits } from "./operation-traits";
+import { MessageTraits } from "./message-traits";
+import type { MessageTraitsInterface } from "models/message-traits";
+import { SecuritySchemes } from "./security-schemes";
+import { Collection } from "models/collection";
+import { CorrelationIds } from "./correlation-ids";
+import { tilde } from '../../utils';
+import type { OperationsInterface } from "models/operations";
+import type { OperationInterface } from "models/operation";
+import { Operations } from "./operations";
+import { Message } from "./message";
 import type { v2 } from "../../spec-types";
+import { ComponentsObject } from "spec-types/v2";
 
 export class Components extends BaseModel<v2.ComponentsObject> implements ComponentsInterface {
-  servers(): Record<string, ServerInterface> {
-    return this.createMap('servers', Server);
+  servers(): ServersInterface {
+    return this.createCollection('servers', Servers, Server);
   }
 
-  channels(): Record<string, ChannelInterface> {
-    return this.createMap('channels', Channel);
+  channels(): ChannelsInterface {
+    return new Channels(
+      Object.entries(this._json.channels || {}).map(([channelAddress, channel]) => 
+        this.createModel(Channel, channel, { id: channelAddress, address: channelAddress, pointer: `/components/channels/${tilde(channelAddress)}` })
+      )
+    );
   }
 
-  messages(): Record<string, MessageInterface> {
-    return this.createMap('messages', Message);
+  messages(): MessagesInterface {
+    return this.createCollection('messages', Messages, Message);
   }
 
-  schemas(): Record<string, SchemaInterface> {
-    return this.createMap('schemas', Schema);
+  schemas(): SchemasInterface {
+    return this.createCollection('schemas', Schemas, Schema);
   }
 
-  channelParameters(): Record<string, ChannelParameterInterface> {
-    return this.createMap('parameters', ChannelParameter);
+  channelParameters(): ChannelParametersInterface {
+    return this.createCollection('parameters', ChannelParameters, ChannelParameter);
   }
 
-  serverVariables(): Record<string, ServerVariableInterface> {
-    return this.createMap('serverVariables', ServerVariable);
+  serverVariables(): ServerVariablesInterface {
+    return this.createCollection('serverVariables', ServerVariables, ServerVariable);
   }
 
-  operationTraits(): Record<string, OperationTraitInterface> {
-    return this.createMap('operationTraits', OperationTrait);
+  operations(): OperationsInterface {
+    const operations: OperationInterface[] = [];
+    this.channels().forEach(channel => operations.push(...channel.operations().all()));
+    return new Operations(operations);
   }
 
-  messageTraits(): Record<string, MessageTraitInterface> {
-    return this.createMap('messageTraits', MessageTrait);
+  operationTraits(): OperationTraitsInterface {
+    return this.createCollection('operationTraits', OperationTraits, OperationTrait);
   }
 
-  correlationIds(): Record<string, CorrelationIdInterface> {
-    return this.createMap('correlationIds', CorrelationId);
+  messageTraits(): MessageTraitsInterface {
+    return this.createCollection('messageTraits', MessageTraits, MessageTrait);
   }
 
-  securitySchemes(): Record<string, SecuritySchemeInterface> {
-    return this.createMap('securitySchemes', SecurityScheme);
+  correlationIds(): CorrelationIds {
+    return this.createCollection('correlationIds', CorrelationIds, CorrelationId);
+  }
+
+  securitySchemes(): SecuritySchemesInterface {
+    return this.createCollection('securitySchemes', SecuritySchemes, SecurityScheme);
   }
 
   serverBindings(): Record<string, BindingsInterface> {
@@ -92,11 +114,13 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return extensions(this);
   }
 
-  protected createMap<M extends BaseModel>(itemsName: keyof v2.ComponentsObject, model: Constructor<M>): Record<string, M> {
-    return Object.entries(this._json[itemsName] || {}).reduce((items, [itemName, item]) => {
-      items[itemName] = this.createModel(model, item, { id: itemName, pointer: `/components/${itemsName}/${itemName}` })
-      return items;
-    }, {} as Record<string, M>);
+  protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
+    let collectionItems: T[] = [];
+    Object.entries(this._json[itemsName] || {}).forEach(([itemName, item]) => {
+      collectionItems.push(this.createModel(itemModel, item, { id: itemName, pointer: `/components/${itemsName}/${itemName}` }))
+    });
+
+    return new collectionModel(collectionItems);
   }
 
   protected createBindings(itemsName: 'serverBindings' | 'channelBindings' | 'operationBindings' | 'messageBindings'): Record<string, BindingsInterface> {
@@ -107,6 +131,6 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
         )
       );
       return bindings;
-    }, {} as Record<string, BindingsInterface>);
+    }, {} as  Record<string, Bindings>);
   }
 }

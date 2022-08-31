@@ -5,7 +5,7 @@ import { extensions } from './mixins';
 import type { ExtensionsInterface } from '../extensions';
 import type { OAuthFlowInterface } from '../oauth-flow';
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class OAuthFlow<F extends v2.OAuthFlowObjectBase> extends BaseModel<F> implements OAuthFlowInterface {
   authorizationUrl(): string | undefined {

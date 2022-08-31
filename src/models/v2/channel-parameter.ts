@@ -7,7 +7,7 @@ import type { ChannelParameterInterface } from "../channel-parameter";
 import type { SchemaInterface } from "../schema";
 import type { ExtensionsInterface } from "../extensions";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class ChannelParameter extends BaseModel<v2.ParameterObject, { id: string }> implements ChannelParameterInterface {
   id(): string {

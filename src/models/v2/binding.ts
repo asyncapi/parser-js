@@ -5,7 +5,7 @@ import { extensions } from "./mixins";
 import type { BindingInterface } from "../binding";
 import type { ExtensionsInterface } from "../extensions";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Binding extends BaseModel<v2.Binding, { protocol: string }> implements BindingInterface {
   protocol(): string {

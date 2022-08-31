@@ -22,7 +22,7 @@ import type { SecuritySchemeInterface } from '../security-scheme';
 import type { ExtensionsInterface } from '../extensions';
 import type { BindingsInterface } from '../bindings';
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Server extends BaseModel<v2.ServerObject, { id: string }> implements ServerInterface {
   id(): string {

@@ -6,7 +6,7 @@ import type { ExtensionsInterface } from "../extensions";
 import type { ExternalDocumentationInterface } from "../external-docs";
 import type { SchemaInterface } from "../schema";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id: string, parent: Schema | null }> implements SchemaInterface {
   uid(): string {

@@ -8,7 +8,7 @@ import type { RuleDefinition } from "@stoplight/spectral-core";
 import type { Parser } from '../parser';
 import type { ValidateSchemaInput } from './index';
 import type { SchemaValidateResult } from '../types';
-import type { v2 } from '../interfaces';
+import type { v2 } from '../spec-types';
 
 export function aas2schemaParserRule(parser: Parser): RuleDefinition {
   return {

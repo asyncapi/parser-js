@@ -29,7 +29,7 @@ import type { ServerInterface } from "../server";
 import type { ServerVariableInterface } from "../server-variable";
 import type { Constructor } from "../utils";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Components extends BaseModel<v2.ComponentsObject> implements ComponentsInterface {
   servers(): Record<string, ServerInterface> {

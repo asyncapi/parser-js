@@ -1,6 +1,6 @@
 import type { JSONSchema7, JSONSchema7Type } from "json-schema";
 
-export type AsyncAPIVersion = '2.0.0' | '2.1.0' | '2.2.0' | '2.3.0' | '2.4.0';
+export type AsyncAPIVersion = string;
 export type Identifier = string;
 export type DefaultContentType = string;
 

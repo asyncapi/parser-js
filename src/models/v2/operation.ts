@@ -16,7 +16,7 @@ import type { OperationTraitsInterface } from "../operation-traits";
 import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Operation extends OperationTrait<v2.OperationObject> implements OperationInterface {
   servers(): ServersInterface {

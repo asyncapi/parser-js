@@ -20,7 +20,7 @@ import type { OperationInterface } from "../operation";
 import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: string }> implements ChannelInterface {
   id(): string {

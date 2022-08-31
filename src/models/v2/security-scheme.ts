@@ -7,7 +7,7 @@ import type { ExtensionsInterface } from '../extensions';
 import type { SecuritySchemaType, SecuritySchemeInterface } from '../security-scheme';
 import type { OAuthFlowsInterface } from '../oauth-flows';
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: string }> implements SecuritySchemeInterface {
   id(): string {

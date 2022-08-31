@@ -28,7 +28,7 @@ import type { SchemasInterface } from "../schemas";
 import type { SecuritySchemesInterface } from "../security-schemes";
 import type { ExtensionsInterface } from "../extensions";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements AsyncAPIDocumentInterface {
   version(): string {

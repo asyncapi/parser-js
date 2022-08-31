@@ -12,7 +12,7 @@ import type { SecuritySchemesInterface } from "./security-schemes";
 import type { ServersInterface } from "./servers";
 import type { DetailedAsyncAPI } from "../types";
 
-import type { v2 } from "../interfaces";
+import type { v2 } from "../spec-types";
 
 export interface AsyncAPIDocumentInterface extends BaseModel<v2.AsyncAPIObject>, ExtensionsMixinInterface {
   version(): string;

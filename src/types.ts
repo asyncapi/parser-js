@@ -1,5 +1,5 @@
 import type { ISpectralDiagnostic, IFunctionResult } from '@stoplight/spectral-core';
-import type { v2 } from "./interfaces";
+import type { v2 } from "./spec-types";
 
 export type MaybeAsyncAPI = { asyncapi: string } & Record<string, unknown>;
 export interface AsyncAPISemver {

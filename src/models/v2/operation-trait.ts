@@ -11,7 +11,7 @@ import type { OperationTraitInterface } from "../operation-trait";
 import type { SecuritySchemeInterface } from "../security-scheme";
 import type { TagsInterface } from "../tags";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string, action: OperationAction }> implements OperationTraitInterface {
   id(): string {

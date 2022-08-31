@@ -16,7 +16,7 @@ import type { ExtensionInterface } from "../extension";
 import type { ExternalDocumentationInterface } from "../external-docs";
 import type { TagsInterface } from "../tags";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): BindingsInterface {
   return new Bindings(

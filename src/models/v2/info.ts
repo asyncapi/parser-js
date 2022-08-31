@@ -14,7 +14,7 @@ import type { ExternalDocumentationInterface } from "../external-docs";
 import type { LicenseInterface } from "../license";
 import type { TagsInterface } from "../tags";
 
-import type { v2 } from "../../interfaces";
+import type { v2 } from "../../spec-types";
 
 export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
   title(): string {

@@ -1,7 +1,7 @@
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 import { OAuthFlows } from '../../../src/models/v2/oauth-flows';
 
-import type { v2 } from '../../../src/interfaces';
+import type { v2 } from '../../../src/spec-types';
 
 const doc1: v2.SecuritySchemeObject = {
     type: 'http',

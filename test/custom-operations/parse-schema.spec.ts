@@ -3,7 +3,7 @@ import { Parser } from '../../src/parser';
 import { parse } from '../../src/parse';
 import { xParserOriginalPayload } from '../../src/constants';
 
-import type { v2 } from '../../src/interfaces';
+import type { v2 } from '../../src/spec-types';
 
 describe('custom operations - parse schemas', function() {
   const parser = new Parser();

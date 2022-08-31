@@ -3,7 +3,7 @@ import { Schema } from '../../../src/models/v2/schema';
 
 import { serializeInput, assertDescription, assertExtensions } from './utils';
 
-import type { v2 } from '../../../src/interfaces';
+import type { v2 } from '../../../src/spec-types';
 
 describe('ChannelParameter model', function() {
   describe('.id()', function() {

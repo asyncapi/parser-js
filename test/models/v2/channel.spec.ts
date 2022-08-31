@@ -10,7 +10,7 @@ import { Server } from '../../../src/models/v2/server';
 
 import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
 
-import type { v2 } from '../../../src/interfaces';
+import type { v2 } from '../../../src/spec-types';
 
 describe('Channel model', function() {
   describe('.id()', function() {

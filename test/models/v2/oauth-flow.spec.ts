@@ -1,6 +1,6 @@
 import { OAuthFlow } from '../../../src/models/v2/oauth-flow';
 
-import type { v2 } from '../../../src/interfaces';
+import type { v2 } from '../../../src/spec-types';
 
 const flowObject = {
   "authorizationUrl": "https://example.com/api/oauth/dialog",

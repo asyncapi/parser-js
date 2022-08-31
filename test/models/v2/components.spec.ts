@@ -13,7 +13,7 @@ import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 import { serializeInput, assertExtensions } from './utils';
 
-import type { v2 } from '../../../src/interfaces';
+import type { v2 } from '../../../src/spec-types';
 
 describe('Components model', function() {
   describe('.servers()', function() {

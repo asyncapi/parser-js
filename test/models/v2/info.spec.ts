@@ -8,7 +8,7 @@ import { createDetailedAsyncAPI } from '../../../src/utils';
 
 import { serializeInput, assertDescription, assertExtensions } from './utils';
 
-import type { v2 } from '../../../src/interfaces';
+import type { v2 } from '../../../src/spec-types';
 
 describe('Info model', function() {
   describe('.title()', function() {

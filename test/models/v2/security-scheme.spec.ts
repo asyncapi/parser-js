@@ -1,7 +1,9 @@
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
-import {OAuthFlows} from '../../../src/models/v2/oauth-flows';
+import { OAuthFlows } from '../../../src/models/v2/oauth-flows';
 
-const doc1 = {
+import type { v2 } from '../../../src/spec-types';
+
+const doc1: v2.SecuritySchemeObject = {
     type: 'http',
     in: 'header',
     scheme: 'bearer',
@@ -19,7 +21,7 @@ const doc1 = {
 }
 
 const sc1 = new SecurityScheme(doc1, { asyncapi: {} as any, pointer: '', id: 'api_key' });
-const emptyItem = new SecurityScheme({});
+const emptyItem = new SecurityScheme({ type: 'X509' });
 
 describe('Security Scheme', function () {
     describe('.id()', function () {
@@ -46,14 +48,14 @@ describe('Security Scheme', function () {
 
     describe('.in()', function () {
         it('should return in if present', function () {
-            expect(sc1.in()).toMatch(doc1.in);
+            expect(sc1.in()).toMatch(doc1.in as string);
             expect(emptyItem.in()).toBeUndefined();
         })
     })
 
     describe('.openIdConnectUrl()', function () {
         it('should return openIdConnectUrl value', function () {
-            expect(sc1.openIdConnectUrl()).toMatch(doc1.openIdConnectUrl);
+            expect(sc1.openIdConnectUrl()).toMatch(doc1.openIdConnectUrl as string);
         })
     })
     describe('.flows()', function () {

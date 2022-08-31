@@ -10,7 +10,7 @@ export interface ServerInterface extends BaseModel, DescriptionMixinInterface, B
   id(): string
   url(): string;
   protocol(): string;
-  protocolVersion(): string;
+  protocolVersion(): string | undefined;
   hasProtocolVersion(): boolean;
   channels(): ChannelsInterface;
   operations(): OperationsInterface;

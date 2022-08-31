@@ -4,13 +4,7 @@ import { MessageExample } from '../../../src/models/v2/message-example';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
 import { Schema } from '../../../src/models/v2/schema';
 
-import { 
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance,
-  assertTagsMixinInheritance,
-} from './mixins/inheritance';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('MessageTrait model', function() {
   describe('.id()', function() {
@@ -71,7 +65,7 @@ describe('MessageTrait model', function() {
 
   describe('.hasCorrelationId()', function() {
     it('should return true when there is a value', function() {
-      const doc = { correlationId: {} };
+      const doc = { correlationId: { location: '...' } };
       const d = new MessageTrait(doc);
       expect(d.hasCorrelationId()).toEqual(true);
     });
@@ -85,7 +79,7 @@ describe('MessageTrait model', function() {
 
   describe('.correlationId()', function() {
     it('should return the value', function() {
-      const doc = { correlationId: {} };
+      const doc = { correlationId: { location: '...' } };
       const d = new MessageTrait(doc);
       expect(d.correlationId()).toBeInstanceOf(CorrelationId);
     });
@@ -260,11 +254,11 @@ describe('MessageTrait model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertBindingsMixinInheritance(MessageTrait);
-    assertDescriptionMixinInheritance(MessageTrait);
-    assertExtensionsMixinInheritance(MessageTrait);
-    assertExternalDocumentationMixinInheritance(MessageTrait);
-    assertTagsMixinInheritance(MessageTrait);
+  describe('mixins', function() {
+    assertBindings(MessageTrait);
+    assertDescription(MessageTrait);
+    assertExtensions(MessageTrait);
+    assertExternalDocumentation(MessageTrait);
+    assertTags(MessageTrait);
   });
 });

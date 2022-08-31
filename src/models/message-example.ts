@@ -3,9 +3,9 @@ import type { ExtensionsMixinInterface } from './mixins';
 
 export interface MessageExampleInterface extends BaseModel, ExtensionsMixinInterface {
   hasName(): boolean;
-  name(): string;
+  name(): string | undefined;
   hasSummary(): boolean;
-  summary(): string;
+  summary(): string | undefined;
   hasHeaders(): boolean;
   headers(): Record<string, any> | undefined;
   hasPayload(): boolean;

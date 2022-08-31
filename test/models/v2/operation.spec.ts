@@ -8,13 +8,7 @@ import { Message } from '../../../src/models/v2/message';
 import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { 
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance,
-  assertTagsMixinInheritance,
-} from './mixins/inheritance';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Operation model', function() {
   describe('.id()', function() {
@@ -138,11 +132,11 @@ describe('Operation model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertBindingsMixinInheritance(Operation);
-    assertDescriptionMixinInheritance(Operation);
-    assertExtensionsMixinInheritance(Operation);
-    assertExternalDocumentationMixinInheritance(Operation);
-    assertTagsMixinInheritance(Operation);
+  describe('mixins', function() {
+    assertBindings(Operation);
+    assertDescription(Operation);
+    assertExtensions(Operation);
+    assertExternalDocumentation(Operation);
+    assertTags(Operation);
   });
 });

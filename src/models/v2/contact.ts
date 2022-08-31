@@ -1,11 +1,13 @@
 import { BaseModel } from "../base";
 
-import { Mixin } from '../utils';
-import { ExtensionsMixin } from './mixins/extensions';
+import { extensions } from './mixins';
 
-import type { ContactInterface } from "../../models/contact";
+import type { ContactInterface } from "../contact";
+import type { ExtensionsInterface } from "../extensions";
 
-export class Contact extends Mixin(BaseModel, ExtensionsMixin) implements ContactInterface {
+import type { v2 } from "../../spec-types";
+
+export class Contact extends BaseModel<v2.ContactObject> implements ContactInterface {
   hasName(): boolean {
     return !!this._json.name;
   }
@@ -28,5 +30,9 @@ export class Contact extends Mixin(BaseModel, ExtensionsMixin) implements Contac
 
   email(): string | undefined {
     return this._json.email;
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

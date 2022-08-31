@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
-import type { AsyncAPISemver, DetailedAsyncAPI, MaybeAsyncAPI } from 'types';
+import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from 'types';
 
 export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface | undefined {
   if (isAsyncAPIDocument(maybeDoc)) {
@@ -17,7 +17,7 @@ export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface
   if (!isParsedDocument(maybeDoc)) {
     return;
   }
-  return unstringify(maybeDoc) || newAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc));
+  return unstringify(maybeDoc) || newAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc as any));
 }
 
 export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {
@@ -41,11 +41,11 @@ export function isStringifiedDocument(maybeDoc: unknown): maybeDoc is Record<str
   );
 }
 
-export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: Record<string, unknown>): DetailedAsyncAPI {
+export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
   return {
     source,
     parsed,
-    semver: getSemver((parsed as MaybeAsyncAPI).asyncapi),
+    semver: getSemver(parsed.asyncapi),
   }
 }
 

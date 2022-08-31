@@ -1,20 +1,14 @@
 import { BaseModel } from "../base";
 
-import { Mixin } from '../utils';
-import { ExtensionsMixin } from './mixins/extensions';
-import { ExternalDocumentationMixin } from './mixins/external-docs';
+import { extensions, hasExternalDocs, externalDocs } from './mixins';
 
-import type { ModelMetadata } from "../base";
+import type { ExtensionsInterface } from "../extensions";
+import type { ExternalDocumentationInterface } from "../external-docs";
 import type { SchemaInterface } from "../schema";
 
-export class Schema extends Mixin(BaseModel, ExtensionsMixin, ExternalDocumentationMixin) implements SchemaInterface {
-  constructor(
-    _json: Record<string,any>,
-    protected readonly _meta: ModelMetadata & { id: string, parent: Schema | null } = {} as any
-  ) {
-    super(_json, _meta);
-  }
+import type { v2 } from "../../spec-types";
 
+export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id: string, parent: Schema | null }> implements SchemaInterface {
   uid(): string {
     return this._meta.id;
   }
@@ -256,5 +250,17 @@ export class Schema extends Mixin(BaseModel, ExtensionsMixin, ExternalDocumentat
 
   writeOnly(): boolean | undefined {
     return this._json.writeOnly || false;
+  }
+
+  hasExternalDocs(): boolean {
+    return hasExternalDocs(this);
+  }
+
+  externalDocs(): ExternalDocumentationInterface | undefined {
+    return externalDocs(this);
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

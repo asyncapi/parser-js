@@ -9,13 +9,7 @@ import { Schema } from '../../../src/models/v2/schema';
 import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { 
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-  assertExternalDocumentationMixinInheritance,
-  assertTagsMixinInheritance,
-} from './mixins/inheritance';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Message model', function() {
   describe('.id()', function() {
@@ -186,11 +180,11 @@ describe('Message model', function() {
     });
   });
 
-  describe('mixins inheritance', function() {
-    assertBindingsMixinInheritance(MessageTrait);
-    assertDescriptionMixinInheritance(MessageTrait);
-    assertExtensionsMixinInheritance(MessageTrait);
-    assertExternalDocumentationMixinInheritance(MessageTrait);
-    assertTagsMixinInheritance(MessageTrait);
+  describe('mixins', function() {
+    assertBindings(MessageTrait);
+    assertDescription(MessageTrait);
+    assertExtensions(MessageTrait);
+    assertExternalDocumentation(MessageTrait);
+    assertTags(MessageTrait);
   });
 });

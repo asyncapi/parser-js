@@ -8,11 +8,9 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/v2/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import {
-  assertBindingsMixinInheritance,
-  assertDescriptionMixinInheritance,
-  assertExtensionsMixinInheritance,
-} from './mixins/inheritance';
+import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
+
+import type { v2 } from '../../../src/spec-types';
 
 const doc = {
   'development': {
@@ -28,7 +26,7 @@ const doc = {
   }
 };
 const docItem = new Server(doc.development, { asyncapi: {} as any, pointer: '', id: 'development' });
-const emptyItem = new Server({}, { asyncapi: {} as any, pointer: '', id: '' });
+const emptyItem = new Server(serializeInput<v2.ServerObject>({}), { asyncapi: {} as any, pointer: '', id: '' });
 
 describe('Server Model', function () {
   describe('.id()', function () {
@@ -71,7 +69,7 @@ describe('Server Model', function () {
 
   describe('.channels()', function() {
     it('should return collection of channels - single channel', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': {} } } } as any, pointer: '', id: 'production' });
       expect(d.channels()).toBeInstanceOf(Channels);
       expect(d.channels().all()).toHaveLength(1);
@@ -80,7 +78,7 @@ describe('Server Model', function () {
     });
 
     it('should return collection of channels - multiple channels', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': {}, 'user/logout': {} } } } as any, pointer: '', id: 'production' });
       expect(d.channels()).toBeInstanceOf(Channels);
       expect(d.channels().all()).toHaveLength(2);
@@ -91,7 +89,7 @@ describe('Server Model', function () {
     });
 
     it('should return collection of channels - server available only in particular channel', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { servers: ['production'] }, 'user/logout': { servers: ['development'] }, 'user/create': {} } } } as any, pointer: '', id: 'production', });
       expect(d.channels()).toBeInstanceOf(Channels);
       expect(d.channels().all()).toHaveLength(2);
@@ -104,7 +102,7 @@ describe('Server Model', function () {
 
   describe('.operations()', function() {
     it('should return collection of operations - single channel', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { operationId: '1' } } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
@@ -113,7 +111,7 @@ describe('Server Model', function () {
     });
 
     it('should return collection of channels - multiple channels', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { operationId: '1' } }, 'user/logout': { subscribe: { operationId: '2' } } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(2);
@@ -124,7 +122,7 @@ describe('Server Model', function () {
     });
 
     it('should return collection of channels - server available only in particular channel', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { servers: ['production'], publish: { operationId: '1' } }, 'user/logout': { servers: ['development'] }, 'user/create': { subscribe: { operationId: '3' }, publish: { operationId: '2' } } } } } as any, pointer: '', id: 'production', });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(3);
@@ -139,7 +137,7 @@ describe('Server Model', function () {
 
   describe('.messages()', function() {
     it('should return collection of messages - single channel', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: { messageId: '1' } } } } } } as any, pointer: '', id: 'production' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
@@ -148,7 +146,7 @@ describe('Server Model', function () {
     });
 
     it('should return collection of messages - multiple channels', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { publish: { message: { messageId: '1' } } }, 'user/logout': { subscribe: { message: { oneOf: [{ messageId: '2' }, { messageId: '3' }] } } } } } } as any, pointer: '', id: 'production' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(3);
@@ -161,7 +159,7 @@ describe('Server Model', function () {
     });
 
     it('should return collection of messages - server available only in particular channel', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc, { asyncapi: { parsed: { channels: { 'user/signup': { servers: ['production'], publish: { message: { messageId: '1' } } }, 'user/logout': { servers: ['development'] }, 'user/create': { subscribe: { message: { messageId: '3' } }, publish: { message: { messageId: '2' } } } } } } as any, pointer: '', id: 'production', });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(3);
@@ -182,7 +180,7 @@ describe('Server Model', function () {
 
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
-      const doc = { security: [ { requirement: [] } ] };
+      const doc = serializeInput<v2.ServerObject>({ security: [ { requirement: [] } ] });
       const d = new Server(doc);
       expect(Array.isArray(d.security())).toEqual(true);
       expect(d.security()).toHaveLength(1);
@@ -192,7 +190,7 @@ describe('Server Model', function () {
     });
     
     it('should return collection of security requirements when value is undefined', function() {
-      const doc = {};
+      const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc);
       expect(Array.isArray(d.security())).toEqual(true);
       expect(d.security()).toHaveLength(0);
@@ -200,8 +198,8 @@ describe('Server Model', function () {
   });
 
   describe('mixins inheritance', function () {
-    assertBindingsMixinInheritance(Server);
-    assertDescriptionMixinInheritance(Server);
-    assertExtensionsMixinInheritance(Server);
+    assertBindings(Server);
+    assertDescription(Server);
+    assertExtensions(Server);
   });
 })

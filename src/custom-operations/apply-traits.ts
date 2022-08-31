@@ -3,6 +3,8 @@ import { JSONPath } from 'jsonpath-plus';
 import { xParserOriginalTraits } from '../constants';
 import { mergePatch } from '../utils';
 
+import type { v2 } from "../spec-types";
+
 const v2TraitPaths = [
   // operations
   '$.channels.*.[publish,subscribe]',
@@ -15,7 +17,7 @@ const v2TraitPaths = [
   '$.components.messages.*',
 ];
 
-export function applyTraitsV2(asyncapi: Record<string, unknown>) {
+export function applyTraitsV2(asyncapi: v2.AsyncAPIObject) {
   applyAllTraits(asyncapi, v2TraitPaths);
 }
 
@@ -31,11 +33,11 @@ const v3TraitPaths = [
   '$.components.messages.*',
 ];
 
-export function applyTraitsV3(asyncapi: Record<string, unknown>) {
+export function applyTraitsV3(asyncapi: v2.AsyncAPIObject) { // TODO: Change type when we will have implemented types for v3
   applyAllTraits(asyncapi, v3TraitPaths);
 }
 
-function applyAllTraits(asyncapi: Record<string, unknown>, paths: string[]) {
+function applyAllTraits(asyncapi: Record<string, any>, paths: string[]) {
   paths.forEach(path => {
     JSONPath({
       path,

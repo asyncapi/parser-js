@@ -1,7 +1,7 @@
 import { BaseModel } from './base';
 import { ExtensionsMixinInterface } from './mixins';
 
-export interface OAuthFlowInterface extends BaseModel, ExtensionsMixinInterface {
+export interface OAuthFlowInterface<J extends Record<string, any> = Record<string, any>> extends BaseModel<J>, ExtensionsMixinInterface {
   authorizationUrl(): string | undefined;
   hasRefreshUrl(): boolean;
   refreshUrl(): string | undefined;

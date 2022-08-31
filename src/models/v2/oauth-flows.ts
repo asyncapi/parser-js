@@ -1,18 +1,20 @@
 import { BaseModel } from '../base';
-
 import { OAuthFlow } from './oauth-flow';
-import { Mixin } from '../utils';
-import { ExtensionsMixin } from './mixins/extensions';
 
+import { extensions } from './mixins';
+
+import type { ExtensionsInterface } from '../extensions';
 import type { OAuthFlowsInterface } from '../oauth-flows';
 import type { OAuthFlowInterface } from '../oauth-flow';
 
-export class OAuthFlows extends Mixin(BaseModel, ExtensionsMixin) implements OAuthFlowsInterface {
+import type { v2 } from "../../spec-types";
+
+export class OAuthFlows extends BaseModel<v2.OAuthFlowsObject> implements OAuthFlowsInterface {
   hasAuthorizationCode(): boolean {
     return !!this._json.authorizationCode;
   }
   
-  authorizationCode(): OAuthFlowInterface | undefined {
+  authorizationCode(): OAuthFlowInterface<v2.OAuthFlowObjectAuthorizationCode> | undefined {
     if (!this._json.authorizationCode) return undefined;
     return new OAuthFlow(this._json.authorizationCode);
   }
@@ -21,7 +23,7 @@ export class OAuthFlows extends Mixin(BaseModel, ExtensionsMixin) implements OAu
     return !!this._json.clientCredentials;
   }
   
-  clientCredentials(): OAuthFlowInterface | undefined {
+  clientCredentials(): OAuthFlowInterface<v2.OAuthFlowObjectClientCredentials> | undefined {
     if (!this._json.clientCredentials) return undefined;
     return new OAuthFlow(this._json.clientCredentials);
   }
@@ -30,7 +32,7 @@ export class OAuthFlows extends Mixin(BaseModel, ExtensionsMixin) implements OAu
     return !!this._json.implicit;
   }
   
-  implicit(): OAuthFlowInterface | undefined {
+  implicit(): OAuthFlowInterface<v2.OAuthFlowObjectImplicit> | undefined {
     if (!this._json.implicit) return undefined;
     return new OAuthFlow(this._json.implicit);
   }
@@ -39,8 +41,12 @@ export class OAuthFlows extends Mixin(BaseModel, ExtensionsMixin) implements OAu
     return !!this._json.password;
   }
   
-  password(): OAuthFlowInterface | undefined {
+  password(): OAuthFlowInterface<v2.OAuthFlowObjectPassword> | undefined {
     if (!this._json.password) return undefined;
     return new OAuthFlow(this._json.password);
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

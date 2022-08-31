@@ -11,6 +11,8 @@ import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
+import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
+import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 const doc = {
   'development': {
@@ -179,17 +181,22 @@ describe('Server Model', function () {
   })
 
   describe('.security()', function() {
-    it('should return collection of security requirements', function() {
+    it('should return SecurityRequirements', function() {
       const doc = serializeInput<v2.ServerObject>({ security: [ { requirement: [] } ] });
       const d = new Server(doc);
-      expect(Array.isArray(d.security())).toEqual(true);
-      expect(d.security()).toHaveLength(1);
-      expect(typeof d.security()[0]).toEqual('object');
-      expect(d.security()[0]['requirement'].schema).toBeInstanceOf(SecurityScheme);
-      expect(d.security()[0]['requirement'].scopes).toEqual([]);
+
+      const security = d.security();
+      expect(Array.isArray(security)).toEqual(true);
+      expect(security).toHaveLength(1);
+      expect(security[0]).toBeInstanceOf(SecurityRequirements);
+      
+      const requirement = security[0].get('requirement') as SecurityRequirement;
+      expect(requirement).toBeInstanceOf(SecurityRequirement);
+      expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
+      expect(requirement.scopes()).toEqual([]);
     });
     
-    it('should return collection of security requirements when value is undefined', function() {
+    it('should return SecurityRequirements when value is undefined', function() {
       const doc = serializeInput<v2.ServerObject>({});
       const d = new Server(doc);
       expect(Array.isArray(d.security())).toEqual(true);

@@ -23,6 +23,8 @@ import type { ExtensionsInterface } from '../extensions';
 import type { BindingsInterface } from '../bindings';
 
 import type { v2 } from "../../spec-types";
+import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirement } from './security-requirement';
 
 export class Server extends BaseModel<v2.ServerObject, { id: string }> implements ServerInterface {
   id(): string {
@@ -89,17 +91,17 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
     );
   }
 
-  security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>> {
+  security(): SecurityRequirements[] {
     const securitySchemes = this._meta?.asyncapi?.parsed?.components?.securitySchemes || {};
     return (this._json.security || []).map((requirement: any) => {
-      const requirements: Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }> = {};
+      const requirements: SecurityRequirement[] = [];
       Object.entries(requirement).forEach(([security, scopes]) => {
-        requirements[security] = {
-          schema: this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` }),
-          scopes: scopes as Array<string>,
-        }
+        const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
+        requirements.push(
+          this.createModel(SecurityRequirement, scopes, { id: security, scheme: scheme, pointer: `` }) // TODO pointer??
+        );
       });
-      return requirements;
+      return new SecurityRequirements(requirements);
     })
   }
 

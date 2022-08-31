@@ -67,7 +67,7 @@ const INT_MAX = Math.pow(2, 31) - 1;
 const LONG_MIN = Math.pow(-2, 63);
 const LONG_MAX = Math.pow(2, 63) - 1;
 
-const typeMappings: { [key: string]: JSONSchema7TypeName } = {
+const typeMappings: Record<string, JSONSchema7TypeName> = {
   null: 'null',
   boolean: 'boolean',
   int: 'integer',

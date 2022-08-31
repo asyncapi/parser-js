@@ -1,11 +1,13 @@
 import { BaseModel } from "../base";
 
-import { Mixin } from '../utils';
-import { ExtensionsMixin } from './mixins/extensions';
+import { extensions } from './mixins';
 
-import type { LicenseInterface } from "../../models/license";
+import type { ExtensionsInterface } from "../extensions";
+import type { LicenseInterface } from "../license";
 
-export class License extends Mixin(BaseModel, ExtensionsMixin) implements LicenseInterface {
+import type { v2 } from "../../spec-types";
+
+export class License extends BaseModel<v2.LicenseObject> implements LicenseInterface {
   name(): string {
     return this._json.name;
   }
@@ -16,5 +18,9 @@ export class License extends Mixin(BaseModel, ExtensionsMixin) implements Licens
 
   url(): string | undefined {
     return this._json.url;
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

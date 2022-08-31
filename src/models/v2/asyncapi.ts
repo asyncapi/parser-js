@@ -11,8 +11,7 @@ import { SecuritySchemes } from "./security-schemes";
 import { SecurityScheme } from "./security-scheme";
 import { Schemas } from "./schemas";
 
-import { Mixin } from '../utils';
-import { ExtensionsMixin } from './mixins/extensions';
+import { extensions } from './mixins';
 
 import { tilde } from '../../utils';
 
@@ -27,8 +26,11 @@ import type { MessagesInterface } from "../messages";
 import type { MessageInterface } from "../message";
 import type { SchemasInterface } from "../schemas";
 import type { SecuritySchemesInterface } from "../security-schemes";
+import type { ExtensionsInterface } from "../extensions";
 
-export class AsyncAPIDocument extends Mixin(BaseModel, ExtensionsMixin) implements AsyncAPIDocumentInterface {
+import type { v2 } from "../../spec-types";
+
+export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements AsyncAPIDocumentInterface {
   version(): string {
     return this._json.asyncapi;
   }
@@ -87,5 +89,9 @@ export class AsyncAPIDocument extends Mixin(BaseModel, ExtensionsMixin) implemen
 
   components(): ComponentsInterface {
     return new Components(this._json.components || {});
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

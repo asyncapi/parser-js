@@ -1,4 +1,5 @@
-import { Tags, Tag } from '../../../src/models/v2/mixins/tags';
+import { Tags } from '../../../src/models/v2/tags';
+import { Tag } from '../../../src/models/v2/tag';
 
 const tag = {
   name: 'test',

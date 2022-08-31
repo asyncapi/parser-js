@@ -115,7 +115,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   }
 
   protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
-    let collectionItems: T[] = [];
+    const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([itemName, item]) => {
       collectionItems.push(this.createModel(itemModel, item, { id: itemName, pointer: `/components/${itemsName}/${itemName}` }))
     });

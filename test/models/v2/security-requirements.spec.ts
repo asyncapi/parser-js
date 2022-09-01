@@ -1,7 +1,7 @@
 import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
-const requirementItem = new SecurityRequirement({ schemaId: 'test' } as any);
+const requirementItem = new SecurityRequirement({} as any, { id: 'test' } as any);
 
 describe('SecurityRequirements model', function () {
   describe('.isEmpty()', function () {

@@ -98,7 +98,7 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
       Object.entries(requirement).forEach(([security, scopes]) => {
         const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
         requirements.push(
-          this.createModel(SecurityRequirement, { schemaId: security, scheme: scheme, scopes }, { pointer: `${this.meta().pointer}/security/${index}/${security}` })
+          this.createModel(SecurityRequirement, { scheme: scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
         );
       });
       return new SecurityRequirements(requirements);

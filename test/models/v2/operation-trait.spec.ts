@@ -88,7 +88,7 @@ describe('OperationTrait model', function() {
       
       const requirement = security[0].get('requirement') as SecurityRequirement;
       expect(requirement).toBeInstanceOf(SecurityRequirement);
-      expect(requirement.json().schemaId).toEqual('requirement');
+      expect(requirement.meta().id).toEqual('requirement');
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
     });

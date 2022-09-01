@@ -5,9 +5,9 @@ describe('SecurityRequirement model', function() {
   describe('.scheme()', function() {
     it('should return scheme', function() {
       const expectedScheme = new SecurityScheme({ type: "oauth2" });
-      const d = new SecurityRequirement({ schemaId: "test", scheme: expectedScheme });
+      const d = new SecurityRequirement({ scheme: expectedScheme }, { id: 'test' } as any);
 
-      expect(d.json('schemaId')).toEqual('test');
+      expect(d.meta('id')).toEqual('test');
       expect(d.scheme()).toBeInstanceOf(SecurityScheme);
       expect(d.scheme()).toEqual(expectedScheme);   
     });
@@ -19,6 +19,12 @@ describe('SecurityRequirement model', function() {
       const scheme = new SecurityScheme({ type: "oauth2" });
       const d = new SecurityRequirement({ scheme, scopes })
       expect(d.scopes()).toEqual(scopes);     
+    });
+
+    it('should return empty array when scopes are omit', function() {
+      const scheme = new SecurityScheme({ type: "oauth2" });
+      const d = new SecurityRequirement({ scheme })
+      expect(d.scopes()).toEqual([]);     
     });
   });
 });

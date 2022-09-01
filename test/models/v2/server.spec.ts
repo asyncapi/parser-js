@@ -194,7 +194,7 @@ describe('Server Model', function () {
       expect(requirement).toBeInstanceOf(SecurityRequirement);
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
-      expect(requirement.json().schemaId).toEqual("requirement");
+      expect(requirement.meta().id).toEqual("requirement");
       expect(requirement.meta().pointer).toEqual("/servers/test/security/0/requirement");
     });
     

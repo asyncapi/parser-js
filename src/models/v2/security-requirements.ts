@@ -5,6 +5,6 @@ import type { SecurityRequirementInterface } from '../security-requirement';
 
 export class SecurityRequirements extends Collection<SecurityRequirementInterface> implements SecurityRequirementsInterface {
   protected override __get(id: string): SecurityRequirementInterface | undefined {
-    return this.collections.find(securityRequirement => securityRequirement.json('schemaId') === id);
+    return this.collections.find(securityRequirement => securityRequirement.meta('id' as any) === id);
   }
 }

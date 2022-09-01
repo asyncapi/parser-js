@@ -16,5 +16,5 @@ export interface ServerInterface extends BaseModel, DescriptionMixinInterface, B
   operations(): OperationsInterface;
   messages(): MessagesInterface;
   variables(): ServerVariablesInterface;
-  security(): SecurityRequirements[];
+  security(): SecurityRequirementsInterface[];
 }

@@ -4,7 +4,7 @@ import type { MessagesInterface } from './messages'
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
 import type { OperationsInterface } from './operations'
 import type { ServerVariablesInterface } from "./server-variables";
-import { SecurityRequirements } from "./v2/security-requirements";
+import type { SecurityRequirementsInterface } from "./security-requirements";
 
 export interface ServerInterface extends BaseModel, DescriptionMixinInterface, BindingsMixinInterface, ExtensionsMixinInterface {
   id(): string

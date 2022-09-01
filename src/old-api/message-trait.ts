@@ -25,7 +25,7 @@ export class MessageTrait<T> extends SpecificationExtensionsModel<T & v2.Message
   }
 
   schemaFormat(): string {
-    return this._json.schemaFormat as string;
+    return this._json.schemaFormat as string; // Old API points always to the default schema format for given AsyncAPI version, so we need to force returned type as string.
   }
 
   contentType() {

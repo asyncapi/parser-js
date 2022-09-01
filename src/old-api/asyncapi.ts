@@ -137,6 +137,7 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
     return messages;
   }
 
+  // TODO: Retrieve all schemas
   allSchemas(): Map<string, Schema> {
     const schemas = new Map<string, Schema>();
 
@@ -147,9 +148,10 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
     return !!this._json[xParserCircular];
   }
 
-  traverseSchemas(callback, schemaTypesToIterate) {
-    traverseAsyncApiDocument(this, callback, schemaTypesToIterate);
-  }
+  // TODO: Make traversing for old API and enable that function
+  // traverseSchemas(callback, schemaTypesToIterate) {
+  //   traverseAsyncApiDocument(this, callback, schemaTypesToIterate);
+  // }
 
   static stringify(doc: AsyncAPIDocument, space: number): string | undefined {
     return stringify(doc, { space });

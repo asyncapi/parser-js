@@ -10,7 +10,7 @@ import type { ValidateSchemaInput } from './index';
 import type { SchemaValidateResult } from '../types';
 import type { v2 } from '../spec-types';
 
-export function aas2schemaParserRule(parser: Parser): RuleDefinition {
+export function asyncApi2SchemaParserRule(parser: Parser): RuleDefinition {
   return {
     description: 'Custom schema must be correctly formatted from the point of view of the used format.',
     formats: [aas2_0, aas2_1, aas2_2, aas2_3, aas2_4],

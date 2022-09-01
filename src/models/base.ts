@@ -6,7 +6,7 @@ export interface ModelMetadata {
   pointer: string;
 }
 
-export abstract class BaseModel<J = any, M extends Record<string, any> = Record<string, any>> {
+export abstract class BaseModel<J = any, M extends Record<string, any> = {}> {
   constructor(
     protected readonly _json: J,
     protected readonly _meta: ModelMetadata & M = {} as ModelMetadata & M,

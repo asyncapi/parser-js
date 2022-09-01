@@ -2,12 +2,12 @@ import type { BaseModel } from "./base";
 import type { DetailedAsyncAPI } from "../types";
 
 export interface CollectionMetadata<T = any> {
-  originalData?: Record<string, T>; // TODO: I don't know if we wanna have such a data in all collections?
+  originalData?: Record<string, T>;
   asyncapi?: DetailedAsyncAPI;
   pointer?: string;
 }
 
-export abstract class Collection<T extends BaseModel = BaseModel, M extends Record<string, any> = Record<string, any>> extends Array<T> {
+export abstract class Collection<T extends BaseModel = BaseModel, M extends Record<string, any> = {}> extends Array<T> {
   constructor(
     protected readonly collections: T[],
     protected readonly _meta: CollectionMetadata<T> & M = {} as CollectionMetadata<T> & M,

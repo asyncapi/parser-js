@@ -1,13 +1,7 @@
 import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
-import { Operation } from '../../../src/models/v2/operation';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
-const operation = {
-  operationId: 'test',
-};
-const operationItem = new Operation(operation, { asyncapi: {} as any, pointer: '', id: 'test', action: 'publish' });
-
-const requirementItem = new SecurityRequirement({}, {id: "test"} as any);
+const requirementItem = new SecurityRequirement({ schemaId: 'test' } as any);
 
 describe('SecurityRequirements model', function () {
   describe('.isEmpty()', function () {

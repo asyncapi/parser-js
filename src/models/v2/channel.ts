@@ -53,8 +53,9 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     ['publish', 'subscribe'].forEach(operationAction => {
+      const id =  this._json[operationAction as 'publish' | 'subscribe'] && (this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject).operationId || this.meta().id + "_" + operationAction;
       this._json[operationAction as 'publish' | 'subscribe'] && operations.push(
-        this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'], { id: operationAction, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
+        this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'], { id, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
       );
     });
     return new Operations(operations);

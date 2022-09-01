@@ -183,7 +183,7 @@ describe('Server Model', function () {
   describe('.security()', function() {
     it('should return SecurityRequirements', function() {
       const doc = serializeInput<v2.ServerObject>({ security: [ { requirement: [] } ] });
-      const d = new Server(doc);
+      const d = new Server(doc, {pointer: "/servers/test"} as any);
 
       const security = d.security();
       expect(Array.isArray(security)).toEqual(true);
@@ -194,6 +194,8 @@ describe('Server Model', function () {
       expect(requirement).toBeInstanceOf(SecurityRequirement);
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
+      expect(requirement.meta().id).toEqual("requirement");
+      expect(requirement.meta().pointer).toEqual("/servers/test/security/0/requirement");
     });
     
     it('should return SecurityRequirements when value is undefined', function() {

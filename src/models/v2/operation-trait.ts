@@ -58,12 +58,12 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
 
   security(): SecurityRequirements[] {
     const securitySchemes = this._meta?.asyncapi?.parsed?.components?.securitySchemes || {};
-    return (this._json.security || []).map((requirement: any) => {
+    return (this._json.security as any[] || []).map((requirementKey: string, requirement: any) => {
       const requirements: SecurityRequirement[] = [];
       Object.entries(requirement).forEach(([security, scopes]) => {
         const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
         requirements.push(
-          this.createModel(SecurityRequirement, scopes, { id: security, scheme: scheme, pointer: `` }) // TODO pointer??
+          this.createModel(SecurityRequirement, scopes, { id: security, scheme: scheme, pointer: `${this.meta().pointer}/security/${requirementKey}/${security}` })
         );
       });
       return new SecurityRequirements(requirements);

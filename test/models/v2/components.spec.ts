@@ -55,7 +55,7 @@ describe('Components model', function() {
       const items = d.channels();
       expect(items).toBeInstanceOf(Channels);
       expect(items.all()).toEqual([
-        new Channel(doc.channels?.channel as ChannelObject, {id: "channel", address: "channel", pointer: "/components/channels/channel"} as ModelMetadata & { id: string, address: string } | undefined)
+        new Channel(doc.channels?.channel as ChannelObject, {id: "channel", pointer: "/components/channels/channel"} as ModelMetadata & { id: string, address: string } | undefined)
       ]);
     });
 

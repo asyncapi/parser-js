@@ -51,7 +51,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   channels(): ChannelsInterface {
     return new Channels(
       Object.entries(this._json.channels || {}).map(([channelAddress, channel]) => 
-        this.createModel(Channel, channel, { id: channelAddress, address: channelAddress, pointer: `/components/channels/${tilde(channelAddress)}` })
+        this.createModel(Channel, channel, { id: channelAddress, pointer: `/components/channels/${tilde(channelAddress)}` })
       )
     );
   }

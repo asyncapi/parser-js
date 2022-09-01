@@ -43,12 +43,12 @@ export class Channel extends SpecificationExtensionsModel<v2.ChannelObject> {
 
   publish() {
     if (!this._json.publish) return null;
-    return new Operation(this._json.publish);
+    return new Operation(this._json.publish, { kind: 'publish' });
   }
 
   subscribe() {
     if (!this._json.subscribe) return null;
-    return new Operation(this._json.subscribe);
+    return new Operation(this._json.subscribe, { kind: 'subscribe' });
   }
 
   hasPublish() {

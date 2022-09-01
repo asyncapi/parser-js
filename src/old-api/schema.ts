@@ -1,5 +1,6 @@
-import { Base } from './base';
+import { SpecificationExtensionsModel } from './mixins';
 
 import type { v2 } from '../spec-types';
 
-export class Schema extends Base<v2.AsyncAPISchemaObject> {}
+export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject, { parent?: Schema }> {
+}

@@ -12,6 +12,8 @@ import type { SecuritySchemeInterface } from "../security-scheme";
 import type { TagsInterface } from "../tags";
 
 import type { v2 } from "../../spec-types";
+import { SecurityRequirements } from "./security-requirements";
+import { SecurityRequirement } from "./security-requirement";
 
 export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string, action: OperationAction }> implements OperationTraitInterface {
   id(): string {
@@ -54,17 +56,17 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
     return externalDocs(this);
   }
 
-  security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>> {
-    const securitySchemes = this._meta.asyncapi?.parsed?.components?.securitySchemes || {};
-    return (this._json.security || []).map((requirement: any) => {
-      const requirements: Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }> = {};
+  security(): SecurityRequirements[] {
+    const securitySchemes = (this._meta?.asyncapi?.parsed?.components?.securitySchemes || {}) as Record<string, v2.SecuritySchemeObject>;
+    return (this._json.security || []).map((requirement, index) => {
+      const requirements: SecurityRequirement[] = [];
       Object.entries(requirement).forEach(([security, scopes]) => {
-        requirements[security] = {
-          schema: this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` }),
-          scopes: scopes as Array<string>,
-        }
+        const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
+        requirements.push(
+          this.createModel(SecurityRequirement, scopes, { id: security, scheme: scheme, pointer: `${this.meta().pointer}/security/${index}/${security}` })
+        );
       });
-      return requirements;
+      return new SecurityRequirements(requirements);
     })
   }
 

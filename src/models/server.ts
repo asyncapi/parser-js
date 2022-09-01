@@ -4,7 +4,7 @@ import type { MessagesInterface } from './messages'
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
 import type { OperationsInterface } from './operations'
 import type { ServerVariablesInterface } from "./server-variables";
-import type { SecuritySchemeInterface } from "./security-scheme";
+import type { SecurityRequirementsInterface } from "./security-requirements";
 
 export interface ServerInterface extends BaseModel, DescriptionMixinInterface, BindingsMixinInterface, ExtensionsMixinInterface {
   id(): string
@@ -16,5 +16,5 @@ export interface ServerInterface extends BaseModel, DescriptionMixinInterface, B
   operations(): OperationsInterface;
   messages(): MessagesInterface;
   variables(): ServerVariablesInterface;
-  security(): Array<Record<string, { schema: SecuritySchemeInterface; scopes: string[]; }>>;
+  security(): SecurityRequirementsInterface[];
 }

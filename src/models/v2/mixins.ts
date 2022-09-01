@@ -52,9 +52,9 @@ export function hasExternalDocs(model: BaseModel<{ externalDocs?: v2.ExternalDoc
   return Object.keys(model.json('externalDocs') || {}).length > 0;
 };
 
-export function externalDocs(model: BaseModel): ExternalDocumentationInterface | undefined { 
+export function externalDocs(model: BaseModel<{ externalDocs?: v2.ExternalDocumentationObject }>): ExternalDocumentationInterface | undefined { 
   if (hasExternalDocs(model)) {
-    return new ExternalDocumentation(model.json('externalDocs'));
+    return new ExternalDocumentation(model.json('externalDocs') as v2.ExternalDocumentationObject);
   }
   return;
 };

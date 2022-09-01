@@ -1,4 +1,6 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
+import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
+import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
@@ -86,11 +88,16 @@ describe('OperationTrait model', function() {
     it('should return collection of security requirements', function() {
       const doc = { security: [ { requirement: [] } ] };
       const d = new OperationTrait(doc);
-      expect(Array.isArray(d.security())).toEqual(true);
-      expect(d.security()).toHaveLength(1);
-      expect(typeof d.security()[0]).toEqual('object');
-      expect(d.security()[0]['requirement'].schema).toBeInstanceOf(SecurityScheme);
-      expect(d.security()[0]['requirement'].scopes).toEqual([]);
+
+      const security = d.security();
+      expect(Array.isArray(security)).toEqual(true);
+      expect(security).toHaveLength(1);
+      expect(security[0]).toBeInstanceOf(SecurityRequirements);
+      
+      const requirement = security[0].get('requirement') as SecurityRequirement;
+      expect(requirement).toBeInstanceOf(SecurityRequirement);
+      expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
+      expect(requirement.scopes()).toEqual([]);
     });
     
     it('should return collection of security requirements when value is undefined', function() {

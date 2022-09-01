@@ -30,7 +30,7 @@ function configureRuleset(parser: Parser): RulesetDefinition {
 
 function asyncApi2IsAsyncApi(): RuleDefinition {
   return {
-    description: 'Custom schema must be correctly formatted from the point of view of the used format.',
+    description: 'The input must be a document with a supported version of AsyncAPI.',
     formats: [(_: unknown) => true], // run rule for all inputs
     message: '{{error}}',
     severity: 'error',

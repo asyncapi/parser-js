@@ -52,6 +52,14 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
     return hasExternalDocs(this);
   }
 
+  isSend(): boolean {
+    return this.action() === 'subscribe';
+  }
+
+  isReceive(): boolean {
+    return this.action() === 'publish';
+  }
+
   externalDocs(): ExternalDocumentationInterface | undefined {
     return externalDocs(this);
   }

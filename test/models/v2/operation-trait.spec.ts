@@ -20,14 +20,6 @@ describe('OperationTrait model', function() {
     });
   });
 
-  describe('.action()', function() {
-    it('should return kind/action of operation', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
-      expect(d.action()).toEqual('publish');
-    });
-  });
-
   describe('.hasOperationId()', function() {
     it('should return true when there is a value', function() {
       const doc = { operationId: '...' };

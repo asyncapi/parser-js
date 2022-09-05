@@ -1,6 +1,7 @@
-import { Document } from '@stoplight/spectral-core';
-import { Yaml } from '@stoplight/spectral-parsers';
-import { toAsyncAPIDocument, normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from './utils';
+import { Document } from "@stoplight/spectral-core";
+import { Yaml } from "@stoplight/spectral-parsers";
+import { toAsyncAPIDocument } from "./document";
+import { normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from "./utils";
 
 import type { IRunOpts } from '@stoplight/spectral-core';
 import type { Parser } from './parser';

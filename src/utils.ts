@@ -1,45 +1,7 @@
 import { DiagnosticSeverity } from '@stoplight/types';
-import { newAsyncAPIDocument, AsyncAPIDocumentInterface, AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from './models';
-import { unstringify } from './stringify';
-
-import { 
-  xParserSpecParsed,
-  xParserSpecStringified,
-} from './constants';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
-import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from 'types';
-
-export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface | undefined {
-  if (isAsyncAPIDocument(maybeDoc)) {
-    return maybeDoc;
-  }
-  if (!isParsedDocument(maybeDoc)) {
-    return;
-  }
-  return unstringify(maybeDoc) || newAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc as any));
-}
-
-export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {
-  return maybeDoc instanceof AsyncAPIDocumentV2 || maybeDoc instanceof AsyncAPIDocumentV3;
-}
-
-export function isParsedDocument(maybeDoc: unknown): maybeDoc is Record<string, unknown> {
-  if (typeof maybeDoc !== 'object' || maybeDoc === null) {
-    return false;
-  }
-  return Boolean((maybeDoc as Record<string, unknown>)[xParserSpecParsed]);
-}
-
-export function isStringifiedDocument(maybeDoc: unknown): maybeDoc is Record<string, unknown> {
-  if (typeof maybeDoc !== 'object' || maybeDoc === null) {
-    return false;
-  }
-  return (
-    Boolean((maybeDoc as Record<string, unknown>)[xParserSpecParsed]) &&
-    Boolean((maybeDoc as Record<string, unknown>)[xParserSpecStringified])
-  );
-}
+import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from './types';
 
 export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
   return {
@@ -130,7 +92,7 @@ export function untilde(str: string) {
   });
 };
 
-export function retrievePossibleRef(data: any & { $ref?: string }, pathOfData: string, spec: any): any {
+export function retrievePossibleRef(data: any & { $ref?: string }, pathOfData: string, spec: any = {}): any {
   if (!hasRef(data)) {
     return data;
   }

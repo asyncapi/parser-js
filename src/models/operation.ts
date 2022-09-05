@@ -8,6 +8,9 @@ import type { ServersInterface } from "./servers";
 export type OperationAction = 'send' | 'receive' | 'publish' | 'subscribe';
 
 export interface OperationInterface extends BaseModel, OperationTraitInterface {
+  action(): OperationAction;
+  isSend(): boolean;
+  isReceive(): boolean;
   servers(): ServersInterface;
   channels(): ChannelsInterface;
   messages(): MessagesInterface;

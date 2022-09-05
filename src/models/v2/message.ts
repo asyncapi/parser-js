@@ -68,7 +68,7 @@ export class Message extends MessageTrait<v2.MessageObject> implements MessageIn
           (operation.message.oneOf || []).includes(this._json)
         )) {
           operations.push(
-            this.createModel(Operation, operation, { id: '', pointer: `/channels/${tilde(channelAddress)}/${operationAction}`, action: operationAction as 'subscribe' | 'publish' })
+            this.createModel(Operation, operation, { id: '', pointer: `/channels/${tilde(channelAddress)}/${operationAction}`, action: operationAction as OperationAction })
           );
         }
       });

@@ -1,8 +1,6 @@
 import type { BaseModel, ModelMetadata } from './base';
 import type { DetailedAsyncAPI } from '../types';
 
-import { untilde } from '../utils';
-
 export interface Constructor<T> extends Function {
   new (...any: any[]): T;
 }

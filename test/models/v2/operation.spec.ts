@@ -89,6 +89,42 @@ describe('Operation model', function() {
     });
   });
 
+  describe('.action()', function() {
+    it('should return kind/action of operation', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.action()).toEqual('publish');
+    });
+  });
+
+  describe('.isSend()', function() {
+    it('should return true when operation is subscribe', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      expect(d.isSend()).toBeTruthy();
+    });
+
+    it('should return false when operation is publish', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.isSend()).toBeFalsy();
+    });
+  });
+
+  describe('.isReceive()', function() {
+    it('should return true when operation is publish', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.isReceive()).toBeTruthy();
+    });
+
+    it('should return false when operation is subscribe', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      expect(d.isReceive()).toBeFalsy();
+    });
+  });
+
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
       const doc = { message: { messageId: '...' } };

@@ -8,11 +8,13 @@ import { createSpectral } from './spectral';
 import type { Spectral } from '@stoplight/spectral-core';
 import type { ParseOptions, ParseOutput } from './parse';
 import type { ValidateOptions } from './validate';
+import type { ResolverOptions } from './resolver';
 import type { SchemaParser } from './schema-parser';
 import type { Diagnostic, Input } from './types';
 
 export interface ParserOptions {
   schemaParsers?: Array<SchemaParser>;
+  __unstableResolver?: ResolverOptions;
 }
 
 export class Parser {
@@ -22,7 +24,7 @@ export class Parser {
   constructor(
     private readonly options: ParserOptions = {}
   ) {
-    this.spectral = createSpectral(this);
+    this.spectral = createSpectral(this, options);
     this.registerSchemaParser(AsyncAPISchemaParser());
     this.options.schemaParsers?.forEach(parser => this.registerSchemaParser(parser));
   }

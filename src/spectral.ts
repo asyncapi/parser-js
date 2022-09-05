@@ -1,17 +1,18 @@
 import { Spectral, createRulesetFunction } from '@stoplight/spectral-core';
 import aasRuleset from '@stoplight/spectral-rulesets/dist/asyncapi';
 
+import { createResolver } from './resolver';
 import { asyncApi2SchemaParserRule } from './schema-parser/spectral-rule-v2';
 import { specVersions } from './constants';
 import { isObject } from './utils';
 
 import type { RuleDefinition, RulesetDefinition } from '@stoplight/spectral-core';
-import type { Parser } from './parser';
+import type { Parser, ParserOptions } from './parser';
 import type { MaybeAsyncAPI } from './types';
 
-export function createSpectral(parser: Parser): Spectral {
+export function createSpectral(parser: Parser, options: ParserOptions): Spectral {
+  const spectral = new Spectral({ resolver: createResolver(options.__unstableResolver) });
   const ruleset = configureRuleset(parser);
-  const spectral = new Spectral();
   spectral.setRuleset(ruleset);
   return spectral;
 }

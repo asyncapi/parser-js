@@ -45,8 +45,15 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   // remove `x-parser-spec-stringified` extension
   delete (<Record<string, any>>parsed)[String(xParserSpecStringified)];
 
-  traverseStringifiedDoc(document, undefined, document, new Map(), new Map());
-  return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed']));
+  traverseStringifiedData(document, undefined, document, new Map(), new Map());
+  return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed'] ));
+}
+
+export function unfreeze(data: Record<string, any>) {
+  const stringifiedData = JSON.stringify(data, refReplacer());
+  const unstringifiedData = JSON.parse(stringifiedData);
+  traverseStringifiedData(unstringifiedData, undefined, unstringifiedData, new Map(), new Map());
+  return unstringifiedData;
 }
 
 function refReplacer() {
@@ -82,7 +89,7 @@ function refReplacer() {
 }
 
 const refRoot = '$ref:$';
-function traverseStringifiedDoc(parent: any, field: string | undefined, root: any, objToPath: Map<unknown, unknown>, pathToObj: Map<unknown, unknown>) {
+function traverseStringifiedData(parent: any, field: string | undefined, root: any, objToPath: Map<unknown, unknown>, pathToObj: Map<unknown, unknown>) {
   let objOrPath = parent;
   let path = refRoot;
 
@@ -107,7 +114,7 @@ function traverseStringifiedDoc(parent: any, field: string | undefined, root: an
   // traverse all keys, only if object is array/object
   if (objOrPath === Object(objOrPath)) {
     for (const f in objOrPath) {
-      traverseStringifiedDoc(objOrPath, f, root, objToPath, pathToObj);
+      traverseStringifiedData(objOrPath, f, root, objToPath, pathToObj);
     }
   }
 }

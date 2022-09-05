@@ -105,6 +105,10 @@ export function isObject(value: unknown): value is Record<string, any> {
   return Boolean(value) && typeof value === 'object' && Array.isArray(value) === false;
 }
 
+export function hasRef(value: unknown): value is { $ref: string } {
+  return isObject(value) && '$ref' in value && typeof value.$ref === 'string';
+}
+
 export function tilde(str: string) {
   return str.replace(/[~/]{1}/g, (sub) => {
     switch (sub) {
@@ -124,4 +128,38 @@ export function untilde(str: string) {
     }
     return sub;
   });
+};
+
+export function retrievePossibleRef(data: any & { $ref?: string }, pathOfData: string, spec: any): any {
+  if (!hasRef(data)) {
+    return data;
+  }
+
+  const refPath = serializePath(data.$ref);
+  if (pathOfData.startsWith(refPath)) { // starts by given path
+    return retrieveDeepData(spec, splitPath(refPath)) || data;
+  } else if (pathOfData.includes(refPath)) { // circular path in substring of path
+    const substringPath = pathOfData.split(refPath)[0];
+    return retrieveDeepData(spec, splitPath(`${substringPath}${refPath}`)) || data;
+  }
+  return data;
+}
+
+function retrieveDeepData(value: Record<string, any>, path: string[]) {
+  let index = 0;
+  const length = path.length;
+
+  while (typeof value === 'object' && value && index < length) {
+    value = value[path[index++]];
+  }
+  return index == length ? value : undefined;
+}
+
+function serializePath(path: string) {
+  if (path.startsWith('#')) return path.substring(1);
+  return path;
+}
+
+function splitPath(path: string): string[] {
+  return path.split('/').filter(Boolean).map(untilde);
 }

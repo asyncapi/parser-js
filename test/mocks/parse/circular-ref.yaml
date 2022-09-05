@@ -1,0 +1,9 @@
+type: 'object'
+properties:
+  deepProperty: 
+    type: 'object'
+    properties:
+      property:
+        type: 'number'
+      circular:
+        $ref: '#/properties/deepProperty'

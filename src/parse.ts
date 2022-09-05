@@ -1,8 +1,9 @@
 import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
 
 import { customOperations } from './custom-operations';
-import { validate } from './lint';
-import { createDetailedAsyncAPI, normalizeInput, toAsyncAPIDocument, unfreezeObject } from './utils';
+import { validate } from "./lint";
+import { unfreeze } from './stringify';
+import { createDetailedAsyncAPI, normalizeInput, toAsyncAPIDocument } from "./utils";
 
 import { xParserSpecParsed } from './constants';
 
@@ -47,7 +48,7 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
     }
 
     // unfreeze the object - Spectral makes resolved document "freezed" 
-    const validatedDoc = unfreezeObject(validated);
+    const validatedDoc = unfreeze(validated as Record<string, any>);
     validatedDoc[String(xParserSpecParsed)] = true;
     
     const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, validatedDoc);

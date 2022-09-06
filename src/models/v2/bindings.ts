@@ -14,7 +14,7 @@ import type  { v2 } from "../../spec-types";
 
 export class Bindings extends Collection<BindingInterface> implements BindingsInterface {
   override get<T extends Record<string, any> = Record<string, any>>(name: string): BindingInterface<T> | undefined {
-    return super.get(name);
+    return this.collections.find(binding => binding.protocol() === name);
   }
 
   extensions(): ExtensionsInterface {
@@ -27,9 +27,5 @@ export class Bindings extends Collection<BindingInterface> implements BindingsIn
       }
     });
     return new Extensions(extensions);
-  }
-
-  protected override __get(name: string): BindingInterface | undefined {
-    return this.collections.find(binding => binding.protocol() === name);
   }
 }

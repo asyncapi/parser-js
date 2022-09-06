@@ -4,7 +4,7 @@ import type { ServerVariablesInterface } from '../server-variables';
 import type { ServerVariableInterface } from '../server-variable';
 
 export class ServerVariables extends Collection<ServerVariableInterface> implements ServerVariablesInterface {
-  protected override __get(id: string): ServerVariableInterface | undefined {
+  override get(id: string): ServerVariableInterface | undefined {
     return this.collections.find(variable => variable.id() === id);
   }
 }

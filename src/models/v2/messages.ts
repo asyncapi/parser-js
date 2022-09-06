@@ -4,7 +4,7 @@ import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 
 export class Messages extends Collection<MessageInterface> implements MessagesInterface {
-  protected override __get(name: string): MessageInterface | undefined {
+  override get(name: string): MessageInterface | undefined {
     return this.collections.find(message => message.id() === name);
   }
 

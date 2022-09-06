@@ -4,7 +4,7 @@ import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
 
 export class Channels extends Collection<ChannelInterface> implements ChannelsInterface {
-  protected override __get(id: string): ChannelInterface | undefined {
+  override get(id: string): ChannelInterface | undefined {
     return this.collections.find(channel => channel.id() === id);
   }
 

@@ -15,10 +15,7 @@ export abstract class Collection<T extends BaseModel = BaseModel, M extends Reco
     super(...collections);
   }
 
-  get(id: string): T | undefined {
-    const possibleItem = this._meta.originalData?.[id];
-    return typeof possibleItem === 'undefined' ? this.__get(id) : possibleItem;
-  }
+  abstract get(id: string): T | undefined;
 
   has(id: string): boolean {
     return typeof this.get(id) !== 'undefined';
@@ -43,6 +40,4 @@ export abstract class Collection<T extends BaseModel = BaseModel, M extends Reco
     if (!this._meta) return;
     return this._meta[String(key)];
   }
-
-  protected abstract __get(id: string): T | undefined;
 }

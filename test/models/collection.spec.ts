@@ -9,7 +9,7 @@ describe('Collection model', function() {
   };
 
   class Model extends Collection<ItemModel> {
-    protected override __get(name: string): ItemModel | undefined {
+    override get(name: string): ItemModel | undefined {
       return this.collections.find(item => item.name() === name);
     }
   };

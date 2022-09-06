@@ -3,7 +3,7 @@ import { ServerInterface } from '../server';
 import { ServersInterface } from '../servers';
 
 export class Servers extends Collection<ServerInterface> implements ServersInterface {
-  protected override __get(id: string): ServerInterface | undefined {
+  override get(id: string): ServerInterface | undefined {
     return this.collections.find(server => server.id() === id);
   }
 

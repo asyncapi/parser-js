@@ -11,4 +11,12 @@ export class Channels extends Collection<ChannelInterface> implements ChannelsIn
   override has(id: string): boolean {
     return this.collections.some(channel => channel.id() === id);
   }
+
+  filterBySend(): ChannelInterface[] {
+    return this.filterBy(channel => channel.operations().filterBySend().length > 0);
+  }
+
+  filterByReceive(): ChannelInterface[] {
+    return this.filterBy(channel => channel.operations().filterByReceive().length > 0);
+  }
 }

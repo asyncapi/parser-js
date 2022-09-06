@@ -1,8 +1,8 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 
-import type { ExtensionInterface } from "../extension";
+import type { ExtensionInterface } from '../extension';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Extension<T = any> extends BaseModel<v2.SpecificationExtension<T>, { name: string }> implements ExtensionInterface<T> {
   name(): string {

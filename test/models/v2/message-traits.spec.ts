@@ -35,11 +35,11 @@ describe('MessageTraits model', function () {
     it('should return true if the said id is available', function () {
       const servers = new MessageTraits([messageTraitItem]);
       expect(servers.has('test')).toEqual(true);
-    })
+    });
 
     it('should return false if the Message Trait id is missing', function () {
       const servers = new MessageTraits([messageTraitItem]);
       expect(servers.has('anotherId')).toEqual(false);
-    })
-  })
-})
+    });
+  });
+});

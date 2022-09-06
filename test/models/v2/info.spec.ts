@@ -13,7 +13,7 @@ import type { v2 } from '../../../src/spec-types';
 describe('Info model', function() {
   describe('.title()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.InfoObject>({ title: "Example API" });
+      const doc = serializeInput<v2.InfoObject>({ title: 'Example API' });
       const d = new Info(doc);
       expect(d.title()).toEqual(doc.title);
     });
@@ -21,7 +21,7 @@ describe('Info model', function() {
 
   describe('.version()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.InfoObject>({ version: "1.0.0" });
+      const doc = serializeInput<v2.InfoObject>({ version: '1.0.0' });
       const d = new Info(doc);
       expect(d.version()).toEqual(doc.version);
     });
@@ -61,7 +61,7 @@ describe('Info model', function() {
 
   describe('.hasTermsOfService()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.InfoObject>({ termsOfService: "These are the terms of service" });
+      const doc = serializeInput<v2.InfoObject>({ termsOfService: 'These are the terms of service' });
       const d = new Info(doc);
       expect(d.hasTermsOfService()).toEqual(true);
     });
@@ -75,7 +75,7 @@ describe('Info model', function() {
 
   describe('.termsOfService()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.InfoObject>({ termsOfService: "These are the terms of service" });
+      const doc = serializeInput<v2.InfoObject>({ termsOfService: 'These are the terms of service' });
       const d = new Info(doc);
       expect(d.termsOfService()).toEqual(doc.termsOfService);
     });
@@ -89,7 +89,7 @@ describe('Info model', function() {
   
   describe('.hasContact()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.InfoObject>({ contact: { name: "LeChuck" } });
+      const doc = serializeInput<v2.InfoObject>({ contact: { name: 'LeChuck' } });
       const d = new Info(doc);
       expect(d.hasContact()).toEqual(true);
     });
@@ -103,7 +103,7 @@ describe('Info model', function() {
 
   describe('.contact()', function() {
     it('should return a Contact object', function() {
-      const doc = serializeInput<v2.InfoObject>({ contact: { name: "LeChuck" } });
+      const doc = serializeInput<v2.InfoObject>({ contact: { name: 'LeChuck' } });
       const d = new Info(doc);
       expect(d.contact()).toBeInstanceOf(Contact);
     });
@@ -117,7 +117,7 @@ describe('Info model', function() {
 
   describe('.hasLicense()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.InfoObject>({ license: { name: "Apache 2.0" } });
+      const doc = serializeInput<v2.InfoObject>({ license: { name: 'Apache 2.0' } });
       const d = new Info(doc);
       expect(d.hasLicense()).toEqual(true);
     });
@@ -131,7 +131,7 @@ describe('Info model', function() {
 
   describe('.license()', function() {
     it('should return a License object', function() {
-      const doc = serializeInput<v2.InfoObject>({ license: { name: "Apache 2.0" } });
+      const doc = serializeInput<v2.InfoObject>({ license: { name: 'Apache 2.0' } });
       const d = new Info(doc);
       expect(d.license()).toBeInstanceOf(License);
     });

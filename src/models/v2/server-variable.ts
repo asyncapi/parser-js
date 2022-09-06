@@ -5,7 +5,7 @@ import { hasDescription, description, extensions } from './mixins';
 import type { ExtensionsInterface } from '../extensions';
 import type { ServerVariableInterface } from '../server-variable';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class ServerVariable extends BaseModel<v2.ServerVariableObject, { id: string }> implements ServerVariableInterface {  
   id(): string {
@@ -21,7 +21,7 @@ export class ServerVariable extends BaseModel<v2.ServerVariableObject, { id: str
   }
 
   hasDefaultValue(): boolean {
-    return !!this._json.default
+    return !!this._json.default;
   }
   
   defaultValue(): string | undefined {

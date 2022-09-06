@@ -1,11 +1,11 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 
 import { hasDescription, description, extensions } from './mixins';
 
-import type { CorrelationIdInterface } from "../correlation-id";
-import type { ExtensionsInterface } from "../extensions";
+import type { CorrelationIdInterface } from '../correlation-id';
+import type { ExtensionsInterface } from '../extensions';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class CorrelationId extends BaseModel<v2.CorrelationIDObject> implements CorrelationIdInterface {
   hasDescription(): boolean {

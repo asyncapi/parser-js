@@ -1,5 +1,5 @@
-import type { BaseModel } from "./base";
-import type { DetailedAsyncAPI } from "../types";
+import type { BaseModel } from './base';
+import type { DetailedAsyncAPI } from '../types';
 
 export interface CollectionMetadata<T = any> {
   originalData?: Record<string, T>;

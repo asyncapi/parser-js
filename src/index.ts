@@ -8,4 +8,4 @@ export type { AsyncAPISemver, Diagnostic, SchemaValidateResult } from './types';
 export type { LintOptions, ValidateOptions, ValidateOutput } from './lint';
 export type { ParseInput, ParseOptions, ParseOutput } from './parse';
 export type { StringifyOptions } from './stringify';
-export type { ValidateSchemaInput, ParseSchemaInput, SchemaParser } from './schema-parser'
+export type { ValidateSchemaInput, ParseSchemaInput, SchemaParser } from './schema-parser';

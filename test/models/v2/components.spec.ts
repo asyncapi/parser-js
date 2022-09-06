@@ -36,7 +36,7 @@ describe('Components model', function() {
       const doc = serializeInput<v2.ComponentsObject>({ servers: { server: {} } });
 
       const d = new Components(doc);
-      testCollection(doc, d.servers(), "servers", Servers, Server);
+      testCollection(doc, d.servers(), 'servers', Servers, Server);
     });
 
     it('should return Servers with empty server objects when servers are not defined', function() {
@@ -55,10 +55,9 @@ describe('Components model', function() {
       const items = d.channels();
       expect(items).toBeInstanceOf(Channels);
       expect(items.all()).toEqual([
-        new Channel(doc.channels?.channel as ChannelObject, {id: "channel", address: '', pointer: "/components/channels/channel"} as ModelMetadata & { id: string, address: string } | undefined)
+        new Channel(doc.channels?.channel as ChannelObject, {id: 'channel', address: '', pointer: '/components/channels/channel'} as ModelMetadata & { id: string, address: string } | undefined)
       ]);
     });
-
 
     it('should return Channels with empty channel objects when channels are not defined', function() {
       const doc = serializeInput<v2.ComponentsObject>({});
@@ -73,7 +72,7 @@ describe('Components model', function() {
     it('should return Messages with Message Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ messages: { message: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.messages(), "messages", Messages, Message);
+      testCollection(doc, d.messages(), 'messages', Messages, Message);
     });
 
     it('should return Messages with empty message objects when messages are not defined', function() {
@@ -89,7 +88,7 @@ describe('Components model', function() {
     it('should return Schemas with Schema Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ schemas: { schema: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.schemas(), "schemas", Schemas, Schema);
+      testCollection(doc, d.schemas(), 'schemas', Schemas, Schema);
     });
 
     it('should return Schemas with empty schema objects when schemas are not defined', function() {
@@ -105,7 +104,7 @@ describe('Components model', function() {
     it('should return ChannelParameters with ChannelParameter Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ parameters: { parameter: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.channelParameters(), "parameters", ChannelParameters, ChannelParameter);
+      testCollection(doc, d.channelParameters(), 'parameters', ChannelParameters, ChannelParameter);
     });
 
     it('should return Schemas with empty schema objects when schemas are not defined', function() {
@@ -121,7 +120,7 @@ describe('Components model', function() {
     it('should return ServerVariables with ServerVariable Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ serverVariables: { variable: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.serverVariables(), "serverVariables", ServerVariables, ServerVariable);
+      testCollection(doc, d.serverVariables(), 'serverVariables', ServerVariables, ServerVariable);
     });
 
     it('should return ServerVariables with empty serverVariable objects when serverVariables are not defined', function() {
@@ -137,7 +136,7 @@ describe('Components model', function() {
     it('should return OperationTraits with OperationTrait Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ operationTraits: { trait: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.operationTraits(), "operationTraits", OperationTraits, OperationTrait);
+      testCollection(doc, d.operationTraits(), 'operationTraits', OperationTraits, OperationTrait);
     });
 
     it('should return OperationTraits with empty operationTrait objects when operationTraits are not defined', function() {
@@ -153,7 +152,7 @@ describe('Components model', function() {
     it('should return MessageTraits with MessageTrait Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ messageTraits: { trait: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.messageTraits(), "messageTraits", MessageTraits, MessageTrait);
+      testCollection(doc, d.messageTraits(), 'messageTraits', MessageTraits, MessageTrait);
     });
 
     it('should return MessageTraits with empty messageTrait objects when messageTraits are not defined', function() {
@@ -169,7 +168,7 @@ describe('Components model', function() {
     it('should return CorrelationIds with CorrelationId Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ correlationIds: { id: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.correlationIds(), "correlationIds", CorrelationIds, CorrelationId);
+      testCollection(doc, d.correlationIds(), 'correlationIds', CorrelationIds, CorrelationId);
     });
 
     it('should return CorrelationIds with empty correlationId objects when correlationIds are not defined', function() {
@@ -185,8 +184,8 @@ describe('Components model', function() {
     it('should return Operations with Operation Object', function() {
       const doc = { channels: { channel: { publish: {} } } };
       const d = new Components(doc);
-      let expectedOperations: Operation[] = [
-        new Operation({}, {action: "publish", id: "channel_publish", "pointer": "/components/channels/channel/publish"} as ModelMetadata & { id: string, action: OperationAction } )
+      const expectedOperations: Operation[] = [
+        new Operation({}, {action: 'publish', id: 'channel_publish', pointer: '/components/channels/channel/publish'} as ModelMetadata & { id: string, action: OperationAction })
       ];
       
       const operations = d.operations();
@@ -207,7 +206,7 @@ describe('Components model', function() {
     it('should return SecuritySchemes with SecurityScheme Object', function() {
       const doc = serializeInput<v2.ComponentsObject>({ securitySchemes: { scheme: {} } });
       const d = new Components(doc);
-      testCollection(doc, d.securitySchemes(), "securitySchemes", SecuritySchemes, SecurityScheme);
+      testCollection(doc, d.securitySchemes(), 'securitySchemes', SecuritySchemes, SecurityScheme);
     });
 
     it('should return SecuritySchemes with empty securityScheme objects when securitySchemes are not defined', function() {
@@ -287,7 +286,6 @@ describe('Components model', function() {
     });
   });
 
-
   describe('mixins', function() {
     assertExtensions(Components);
   });
@@ -295,7 +293,7 @@ describe('Components model', function() {
 
 function testCollection<M extends Collection<any>, T extends BaseModel>(doc: any, items: M, componentName: string, collectionModel: Constructor<M>, itemModel: Constructor<T>) {
   expect(items).toBeInstanceOf(collectionModel);
-  let expectedItems: T[] = [];
+  const expectedItems: T[] = [];
   Object.entries((doc[componentName] as M)).forEach(([itemName, item]) => {
     expectedItems.push(new itemModel(item, {id: itemName, pointer: `/components/${componentName}/${itemName}`}));
   });

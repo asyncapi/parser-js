@@ -13,7 +13,7 @@ describe('lint() & validate()', function() {
           title: 'Valid AsyncApi document',
           version: '1.0',
         },
-      }
+      };
 
       const diagnostics = await lint(parser, document);
       if (!diagnostics) {
@@ -33,7 +33,7 @@ describe('lint() & validate()', function() {
           version: '1.0',
         },
         channels: {}
-      }
+      };
 
       const diagnostics = await lint(parser, document);
       if (!diagnostics) {

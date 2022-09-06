@@ -15,7 +15,7 @@ describe('Channel model', function() {
 
   describe('.$comment()', function() {
     it('should return the value', function() {
-      const doc = { $comment: "..." };
+      const doc = { $comment: '...' };
       const d = new Schema(doc);
       expect(d.$comment()).toEqual(doc.$comment);
     });
@@ -29,7 +29,7 @@ describe('Channel model', function() {
 
   describe('.$id()', function() {
     it('should return the value', function() {
-      const doc = { $id: "..." };
+      const doc = { $id: '...' };
       const d = new Schema(doc);
       expect(d.$id()).toEqual(doc.$id);
     });
@@ -43,7 +43,7 @@ describe('Channel model', function() {
 
   describe('.$schema()', function() {
     it('should return the value', function() {
-      const doc = { $schema: "..." };
+      const doc = { $schema: '...' };
       const d = new Schema(doc);
       expect(d.$schema()).toEqual(doc.$schema);
     });
@@ -109,7 +109,7 @@ describe('Channel model', function() {
 
   describe('.allOf()', function() {
     it('should return collection of schemas', function() {
-      const doc = { allOf: [ {}, {} ] };
+      const doc = { allOf: [{}, {}] };
       const d = new Schema(doc);
       expect(Array.isArray(d.allOf())).toEqual(true);
       expect(d.allOf()).toHaveLength(2);
@@ -126,7 +126,7 @@ describe('Channel model', function() {
 
   describe('.anyOf()', function() {
     it('should return collection of schemas', function() {
-      const doc = { anyOf: [ {}, {} ] };
+      const doc = { anyOf: [{}, {}] };
       const d = new Schema(doc);
       expect(Array.isArray(d.anyOf())).toEqual(true);
       expect(d.anyOf()).toHaveLength(2);
@@ -441,7 +441,7 @@ describe('Channel model', function() {
     });
 
     it('should return collection of schemas', function() {
-      const doc = { items: [ {}, {} ] };
+      const doc = { items: [{}, {}] };
       const d = new Schema(doc);
       expect(Array.isArray(d.items())).toEqual(true);
       expect(d.items()).toHaveLength(2);
@@ -598,7 +598,7 @@ describe('Channel model', function() {
 
   describe('.oneOf()', function() {
     it('should return collection of schemas', function() {
-      const doc = { oneOf: [ {}, {} ] };
+      const doc = { oneOf: [{}, {}] };
       const d = new Schema(doc);
       expect(Array.isArray(d.oneOf())).toEqual(true);
       expect(d.oneOf()).toHaveLength(2);

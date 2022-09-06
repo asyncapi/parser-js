@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
     'text'
   ],
   transform: {
-    "^.+\\.(t|j)sx?$": "@swc/jest",
+    '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   // The root of your source code, typically /src
   // `<rootDir>` is a token Jest substitutes

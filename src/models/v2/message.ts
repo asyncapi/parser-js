@@ -1,24 +1,24 @@
 import { Channels } from './channels';
 import { Operations } from './operations';
 import { Operation } from './operation';
-import { MessageTraits } from "./message-traits";
-import { MessageTrait } from "./message-trait";
+import { MessageTraits } from './message-traits';
+import { MessageTrait } from './message-trait';
 import { Servers } from './servers';
 import { Schema } from './schema';
 
 import { tilde } from '../../utils';
 
-import type { ChannelsInterface } from "../channels";
-import type { ChannelInterface } from "../channel";
-import type { MessageInterface } from "../message";
-import type { MessageTraitsInterface } from "../message-traits";
-import type { OperationsInterface } from "../operations";
-import type { OperationAction, OperationInterface } from "../operation";
-import type { ServersInterface } from "../servers";
-import type { ServerInterface } from "../server";
-import type { SchemaInterface } from "../schema";
+import type { ChannelsInterface } from '../channels';
+import type { ChannelInterface } from '../channel';
+import type { MessageInterface } from '../message';
+import type { MessageTraitsInterface } from '../message-traits';
+import type { OperationsInterface } from '../operations';
+import type { OperationAction, OperationInterface } from '../operation';
+import type { ServersInterface } from '../servers';
+import type { ServerInterface } from '../server';
+import type { SchemaInterface } from '../schema';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Message extends MessageTrait<v2.MessageObject> implements MessageInterface {
   hasPayload(): boolean {
@@ -39,7 +39,7 @@ export class Message extends MessageTrait<v2.MessageObject> implements MessageIn
           serversData.push(server.json());
           servers.push(server);
         }
-      })
+      });
     });
     return new Servers(servers);
   }
@@ -53,7 +53,7 @@ export class Message extends MessageTrait<v2.MessageObject> implements MessageIn
           channelsData.push(channel.json());
           channels.push(channel);
         }
-      })
+      });
     });
     return new Channels(channels);
   }
@@ -79,7 +79,7 @@ export class Message extends MessageTrait<v2.MessageObject> implements MessageIn
   traits(): MessageTraitsInterface {
     return new MessageTraits(
       (this._json.traits || []).map((trait: any, index: number) => {
-        return this.createModel(MessageTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}` })
+        return this.createModel(MessageTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}` });
       })
     );
   }

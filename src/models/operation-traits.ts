@@ -1,4 +1,4 @@
-import type { Collection } from "./collection";
-import type { OperationTraitInterface } from "./operation-trait";
+import type { Collection } from './collection';
+import type { OperationTraitInterface } from './operation-trait';
 
-export interface OperationTraitsInterface extends Collection<OperationTraitInterface> {}
+export type OperationTraitsInterface = Collection<OperationTraitInterface>

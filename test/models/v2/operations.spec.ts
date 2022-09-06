@@ -41,35 +41,35 @@ describe('Operations model', function () {
     it('should return true if the said id is available', function () {
       const operations = new Operations([operationItem]);
       expect(operations.has('test')).toEqual(true);
-    })
+    });
 
     it('should return false if the Operation id is missing', function () {
       const operations = new Operations([operationItem]);
       expect(operations.has('anotherId')).toEqual(false);
-    })
-  })
+    });
+  });
 
   describe('.filterBySend()', function () {
     it('should return all operations with subscribe action', function () {
       const operations = new Operations(operationItems);
       expect(operations.filterBySend()).toEqual([operationItems[2], operationItems[3]]);
-    })
+    });
 
     it('should return empty if there are no operations with subscribe action', function () {
       const operations = new Operations([operationItems[0], operationItems[1]]);
       expect(operations.filterBySend()).toEqual([]);
-    })
-  })
+    });
+  });
 
   describe('.filterByReceive()', function () {
     it('should return all operations with publish action', function () {
       const operations = new Operations(operationItems);
       expect(operations.filterByReceive()).toEqual([operationItems[0], operationItems[1]]);
-    })
+    });
 
     it('should return empty if there are no operations with publish action', function () {
       const operations = new Operations([operationItems[2], operationItems[3]]);
       expect(operations.filterByReceive()).toEqual([]);
-    })
-  })
-})
+    });
+  });
+});

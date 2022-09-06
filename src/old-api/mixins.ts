@@ -15,7 +15,7 @@ export abstract class SpecificationExtensionsModel<J = any, M extends Record<str
     const result: v2.SpecificationExtensions = {};
     Object.entries(this._json).forEach(([key, value]) => {
       if (EXTENSION_REGEX.test(key)) {
-        result[key as `x-`] = value;
+        result[key as 'x-'] = value;
       }
     });
     return result;
@@ -54,7 +54,7 @@ export abstract class SpecificationExtensionsModel<J = any, M extends Record<str
 
 export function hasDescription(model: Base<{ description?: string }>) {
   return Boolean(model.json('description'));
-};
+}
 
 export function description(model: Base<{ description?: string }>): string | undefined {
   return model.json('description');
@@ -62,14 +62,13 @@ export function description(model: Base<{ description?: string }>): string | und
 
 export function hasExternalDocs(model: Base<{ externalDocs?: v2.ExternalDocumentationObject }>): boolean {
   return Object.keys(model.json('externalDocs') || {}).length > 0;
-};
+}
 
 export function externalDocs(model: Base<{ externalDocs?: v2.ExternalDocumentationObject }>): ExternalDocs | undefined { 
   if (hasExternalDocs(model)) {
     return new ExternalDocs(model.json('externalDocs') as v2.ExternalDocumentationObject);
   }
-  return;
-};
+}
 
 export const bindingsMixins = {
   hasBindings(model: Base<{ bindings?: Record<string, v2.Binding> }>) {
@@ -91,7 +90,7 @@ export const bindingsMixins = {
   binding(model: Base<{ bindings?: Record<string, v2.Binding> }>, name: string) {
     return getMapValue(model.json('bindings'), name);
   },
-}
+};
 
 export const tagsMixins = {
   hasTags(model: Base<{ tags?: Array<v2.TagObject> }>): boolean {
@@ -116,12 +115,13 @@ export const tagsMixins = {
     const tg = (model.json('tags') || []).find(t => t.name === name);
     return tg ? new Tag(tg) : null;
   },
-}
+};
 
 interface Constructor<T> extends Function {
   new (...any: any[]): T;
 }
 type InferModelData<T> = T extends Base<infer J> ? J : never;
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 type InferModelMetadata<T> = T extends Base<infer J, infer M> ? M : never;
 
 export function getMapValue<T extends Record<string, any>, K extends keyof T>(obj: T | undefined, key: K): T[K] | null;
@@ -131,7 +131,7 @@ export function getMapValue<T extends Base>(obj: Record<string, InferModelData<T
   const v = obj[String(key)];
   if (v === undefined) return null;
   return Type ? new Type(v, meta) : v;
-};
+}
 
 export function createMapOfType<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, Type: Constructor<T>, meta?: InferModelMetadata<T>): Record<string, T> {
   const result: Record<string, T> = {};
@@ -142,4 +142,4 @@ export function createMapOfType<T extends Base>(obj: Record<string, InferModelDa
   });
 
   return result;
-};
+}

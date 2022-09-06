@@ -5,7 +5,7 @@ import { assertExtensions } from './utils';
 describe('MessageExample model', function() {
   describe('.hasName()', function() {
     it('should return true when there is a value', function() {
-      const doc = { name: "..." };
+      const doc = { name: '...' };
       const d = new MessageExample(doc);
       expect(d.hasName()).toEqual(true);
     });
@@ -19,7 +19,7 @@ describe('MessageExample model', function() {
 
   describe('.name()', function() {
     it('should return the value', function() {
-      const doc = { name: "..." };
+      const doc = { name: '...' };
       const d = new MessageExample(doc);
       expect(d.name()).toEqual(doc.name);
     });
@@ -33,7 +33,7 @@ describe('MessageExample model', function() {
 
   describe('.hasSummary()', function() {
     it('should return true when there is a value', function() {
-      const doc = { summary: "..." };
+      const doc = { summary: '...' };
       const d = new MessageExample(doc);
       expect(d.hasSummary()).toEqual(true);
     });
@@ -47,7 +47,7 @@ describe('MessageExample model', function() {
 
   describe('.summary()', function() {
     it('should return the value', function() {
-      const doc = { summary: "..." };
+      const doc = { summary: '...' };
       const d = new MessageExample(doc);
       expect(d.summary()).toEqual(doc.summary);
     });

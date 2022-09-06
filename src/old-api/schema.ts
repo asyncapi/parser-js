@@ -236,7 +236,7 @@ export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject
   }
 
   isCircular() {
-    if (!!this.ext(xParserCircular)) {
+    if (this.ext(xParserCircular)) {
       return true;
     }
 
@@ -285,6 +285,6 @@ export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject
   }
 
   protected __createChild(s: v2.AsyncAPISchemaObject) {
-    return new Schema(s as any, { parent: this })
+    return new Schema(s as any, { parent: this });
   }
 }

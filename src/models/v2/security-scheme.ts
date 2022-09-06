@@ -7,7 +7,7 @@ import type { ExtensionsInterface } from '../extensions';
 import type { SecuritySchemaType, SecuritySchemeInterface } from '../security-scheme';
 import type { OAuthFlowsInterface } from '../oauth-flows';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: string }> implements SecuritySchemeInterface {
   id(): string {
@@ -35,11 +35,11 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
   }
 
   scheme(): string | undefined {
-    return this._json.scheme
+    return this._json.scheme;
   }
 
   flows(): OAuthFlowsInterface | undefined {
-    if(!this._json.flows) return undefined;
+    if (!this._json.flows) return undefined;
     return new OAuthFlows(this._json.flows);
   }
 

@@ -1,12 +1,12 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 
 import { extensions, hasExternalDocs, externalDocs } from './mixins';
 
-import type { ExtensionsInterface } from "../extensions";
-import type { ExternalDocumentationInterface } from "../external-docs";
-import type { SchemaInterface } from "../schema";
+import type { ExtensionsInterface } from '../extensions';
+import type { ExternalDocumentationInterface } from '../external-docs';
+import type { SchemaInterface } from '../schema';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, parent?: Schema }> implements SchemaInterface {
   uid(): string {

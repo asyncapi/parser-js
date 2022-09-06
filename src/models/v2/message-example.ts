@@ -1,11 +1,11 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 
 import { extensions } from './mixins';
 
-import type { ExtensionsInterface } from "../extensions";
-import type { MessageExampleInterface } from "../message-example";
+import type { ExtensionsInterface } from '../extensions';
+import type { MessageExampleInterface } from '../message-example';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class MessageExample extends BaseModel<v2.MessageExampleObject> implements MessageExampleInterface {
   hasName(): boolean {

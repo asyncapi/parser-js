@@ -29,7 +29,7 @@ describe('Custom Spectral instance', function() {
     it('should throw error when input is not an AsyncAPI document (another spec case)', async function() {
       const document = {
         openapi: '3.0.0',
-      }
+      };
       const { diagnostics } = await validate(parser, document as any);
       
       expect(diagnostics.length > 0).toEqual(true);
@@ -48,7 +48,7 @@ describe('Custom Spectral instance', function() {
     it('should throw error when input is an unsupported version of AsyncAPI', async function() {
       const document = {
         asyncapi: '2.1.37',
-      }
+      };
       const { diagnostics } = await validate(parser, document as any);
       
       expect(diagnostics.length > 0).toEqual(true);

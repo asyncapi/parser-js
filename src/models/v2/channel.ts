@@ -1,4 +1,4 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 import { ChannelParameters } from './channel-parameters';
 import { ChannelParameter } from './channel-parameter';
 import { Messages } from './messages';
@@ -9,18 +9,18 @@ import { Server } from './server';
 
 import { bindings, hasDescription, description, extensions } from './mixins';
 
-import type { BindingsInterface } from "models/bindings";
-import type { ChannelInterface } from "../channel";
-import type { ChannelParametersInterface } from "../channel-parameters";
-import type { ExtensionsInterface } from "models/extensions";
-import type { MessagesInterface } from "../messages";
-import type { MessageInterface } from "../message";
-import type { OperationsInterface } from "../operations";
-import type { OperationAction, OperationInterface } from "../operation";
-import type { ServersInterface } from "../servers";
-import type { ServerInterface } from "../server";
+import type { BindingsInterface } from 'models/bindings';
+import type { ChannelInterface } from '../channel';
+import type { ChannelParametersInterface } from '../channel-parameters';
+import type { ExtensionsInterface } from 'models/extensions';
+import type { MessagesInterface } from '../messages';
+import type { MessageInterface } from '../message';
+import type { OperationsInterface } from '../operations';
+import type { OperationAction, OperationInterface } from '../operation';
+import type { ServersInterface } from '../servers';
+import type { ServerInterface } from '../server';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: string }> implements ChannelInterface {
   id(): string {
@@ -53,10 +53,12 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     ['publish', 'subscribe'].forEach(operationAction => {
-      const id =  this._json[operationAction as 'publish' | 'subscribe'] && (this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject).operationId || this.meta().id + "_" + operationAction;
-      this._json[operationAction as 'publish' | 'subscribe'] && operations.push(
-        this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject, { id, action: operationAction as OperationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
-      );
+      const id =  this._json[operationAction as 'publish' | 'subscribe'] && (this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject).operationId || `${this.meta().id  }_${  operationAction}`;
+      if (this._json[operationAction as 'publish' | 'subscribe']) {
+        operations.push(
+          this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject, { id, action: operationAction as OperationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
+        );
+      }
     });
     return new Operations(operations);
   }
@@ -73,7 +75,7 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
         return this.createModel(ChannelParameter, channelParameter as v2.ParameterObject, {
           id: channelParameterName,
           pointer: `${this._meta.pointer}/parameters/${channelParameterName}`
-        })
+        });
       })
     );
   }

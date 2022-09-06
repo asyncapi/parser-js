@@ -16,7 +16,6 @@ export function stringify(document: unknown, options: StringifyOptions = {}): st
     if (isStringifiedDocument(document)) {
       return JSON.stringify(document);
     }
-    document = document;
   } else {
     return;
   }
@@ -32,7 +31,7 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   if (typeof document === 'string') {
     try {
       parsed = JSON.parse(document); 
-    } catch(_) {
+    } catch (_) {
       return;
     }
   }
@@ -47,7 +46,7 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   delete (<Record<string, any>>parsed)[String(xParserSpecStringified)];
 
   traverseStringifiedDoc(document, undefined, document, new Map(), new Map());
-  return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed'] ));
+  return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed']));
 }
 
 function refReplacer() {

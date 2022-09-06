@@ -15,20 +15,21 @@ export class Operation extends OperationTrait<v2.OperationObject> {
   }
 
   hasMultipleMessages() {
-    const message = this._json.message as v2.MessageObject | { oneOf: v2.MessageObject[] }
+    const message = this._json.message as v2.MessageObject | { oneOf: v2.MessageObject[] };
+    // eslint-disable-next-line sonarjs/prefer-single-boolean-return
     if (message && (message as { oneOf: v2.MessageObject[] }).oneOf && (message as { oneOf: v2.MessageObject[] }).oneOf.length > 1) return true;
     return false;
   }
 
   messages() {
-    const message = this._json.message as { oneOf: v2.MessageObject[] }
+    const message = this._json.message as { oneOf: v2.MessageObject[] };
     if (!message) return [];
     if (message.oneOf) return message.oneOf.map(m => new Message(m));
     return [new Message(message)];
   }
 
   message(index?: number | string) {
-    const message = this._json.message as v2.MessageObject | { oneOf: v2.MessageObject[] }
+    const message = this._json.message as v2.MessageObject | { oneOf: v2.MessageObject[] };
     if (!message) return null;
     if ((message as { oneOf: v2.MessageObject[] }).oneOf && (message as { oneOf: v2.MessageObject[] }).oneOf.length === 1) return new Message((message as { oneOf: v2.MessageObject[] }).oneOf[0]);
     if (!(message as { oneOf: v2.MessageObject[] }).oneOf) return new Message(message);

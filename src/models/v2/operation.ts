@@ -1,22 +1,22 @@
-import { Channels } from "./channels";
-import { Channel } from "./channel";
-import { Messages } from "./messages";
-import { Message } from "./message";
-import { OperationTraits } from "./operation-traits";
-import { OperationTrait } from "./operation-trait";
-import { Servers } from "./servers";
+import { Channels } from './channels';
+import { Channel } from './channel';
+import { Messages } from './messages';
+import { Message } from './message';
+import { OperationTraits } from './operation-traits';
+import { OperationTrait } from './operation-trait';
+import { Servers } from './servers';
 
-import { tilde } from "../../utils";
+import { tilde } from '../../utils';
 
-import type { ChannelsInterface } from "../channels";
-import type { ChannelInterface } from "../channel";
-import type { MessagesInterface } from "../messages";
-import type { OperationInterface } from "../operation";
-import type { OperationTraitsInterface } from "../operation-traits";
-import type { ServersInterface } from "../servers";
-import type { ServerInterface } from "../server";
+import type { ChannelsInterface } from '../channels';
+import type { ChannelInterface } from '../channel';
+import type { MessagesInterface } from '../messages';
+import type { OperationInterface } from '../operation';
+import type { OperationTraitsInterface } from '../operation-traits';
+import type { ServersInterface } from '../servers';
+import type { ServerInterface } from '../server';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Operation extends OperationTrait<v2.OperationObject> implements OperationInterface {
   servers(): ServersInterface {
@@ -28,7 +28,7 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
           serversData.push(server.json());
           servers.push(server);
         }
-      })
+      });
     });
     return new Servers(servers);
   }
@@ -59,7 +59,7 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
 
     return new Messages(
       messages.map((message: any, index: number) => {
-        return this.createModel(Message, message, { id: '', pointer: `${this._meta.pointer}/message${isOneOf ? `/oneOf/${index}` : ''}` })
+        return this.createModel(Message, message, { id: '', pointer: `${this._meta.pointer}/message${isOneOf ? `/oneOf/${index}` : ''}` });
       })
     );
   }
@@ -67,7 +67,7 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
   traits(): OperationTraitsInterface {
     return new OperationTraits(
       (this._json.traits || []).map((trait: any, index: number) => {
-        return this.createModel(OperationTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}`, action: '' as 'publish' | 'subscribe' })
+        return this.createModel(OperationTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}`, action: '' as 'publish' | 'subscribe' });
       })
     );
   }

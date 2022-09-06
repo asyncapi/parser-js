@@ -7,10 +7,6 @@ export class Servers extends Collection<ServerInterface> implements ServersInter
     return this.collections.find(server => server.id() === id);
   }
 
-  override has(id: string): boolean {
-    return this.collections.some(server => server.id() === id);
-  }
-
   filterBySend(): ServerInterface[] {
     return this.filterBy(server => server.operations().filterBySend().length > 0);
   }

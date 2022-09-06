@@ -8,7 +8,6 @@ import type { ExtensionsInterface } from "../extensions";
 import type { ExternalDocumentationInterface } from "../external-docs";
 import type { OperationAction } from "../operation";
 import type { OperationTraitInterface } from "../operation-trait";
-import type { SecuritySchemeInterface } from "../security-scheme";
 import type { TagsInterface } from "../tags";
 
 import type { v2 } from "../../spec-types";
@@ -71,7 +70,7 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
       Object.entries(requirement).forEach(([security, scopes]) => {
         const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
         requirements.push(
-          this.createModel(SecurityRequirement, scopes, { id: security, scheme: scheme, pointer: `${this.meta().pointer}/security/${index}/${security}` })
+          this.createModel(SecurityRequirement, { scheme: scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
         );
       });
       return new SecurityRequirements(requirements);

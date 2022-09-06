@@ -7,6 +7,7 @@ import { specVersions } from '../constants';
 import type { ErrorObject, ValidateFunction } from "ajv";
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
+import type { v2 } from "../spec-types";
 
 const ajv = new Ajv({
   allErrors: true,
@@ -81,7 +82,7 @@ function getSchemaValidator(version: string): ValidateFunction {
  * To validate the schema of the payload we just need a small portion of official AsyncAPI spec JSON Schema, the Schema Object in particular. The definition of Schema Object must be
  * included in the returned JSON Schema.
  */
-function preparePayloadSchema(asyncapiSchema: AsyncAPISchema, version: string): AsyncAPISchema {
+function preparePayloadSchema(asyncapiSchema: v2.AsyncAPISchemaDefinition, version: string): v2.AsyncAPISchemaDefinition {
   const payloadSchema = `http://asyncapi.com/definitions/${version}/schema.json`;
   const definitions = asyncapiSchema.definitions;
   if (definitions === undefined) {

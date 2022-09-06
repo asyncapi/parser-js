@@ -73,7 +73,7 @@ export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
 
   externalDocs(): ExternalDocumentationInterface | undefined { 
     if (this.hasExternalDocs()) {
-      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs, { pointer: `/externalDocs` });
+      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs as v2.ExternalDocumentationObject, { pointer: `/externalDocs` });
     }
     return;
   };

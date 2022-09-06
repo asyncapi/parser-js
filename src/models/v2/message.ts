@@ -13,7 +13,7 @@ import type { ChannelInterface } from "../channel";
 import type { MessageInterface } from "../message";
 import type { MessageTraitsInterface } from "../message-traits";
 import type { OperationsInterface } from "../operations";
-import type { OperationInterface } from "../operation";
+import type { OperationAction, OperationInterface } from "../operation";
 import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 import type { SchemaInterface } from "../schema";
@@ -68,7 +68,7 @@ export class Message extends MessageTrait<v2.MessageObject> implements MessageIn
           (operation.message.oneOf || []).includes(this._json)
         )) {
           operations.push(
-            this.createModel(Operation, operation, { pointer: `/channels/${tilde(channelAddress)}/${operationAction}`, action: operationAction })
+            this.createModel(Operation, operation, { id: '', pointer: `/channels/${tilde(channelAddress)}/${operationAction}`, action: operationAction as OperationAction })
           );
         }
       });
@@ -79,7 +79,7 @@ export class Message extends MessageTrait<v2.MessageObject> implements MessageIn
   traits(): MessageTraitsInterface {
     return new MessageTraits(
       (this._json.traits || []).map((trait: any, index: number) => {
-        return this.createModel(MessageTrait, trait, { pointer: `${this._meta.pointer}/traits/${index}` })
+        return this.createModel(MessageTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}` })
       })
     );
   }

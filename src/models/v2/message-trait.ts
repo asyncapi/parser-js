@@ -41,7 +41,7 @@ export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObjec
 
   correlationId(): CorrelationIdInterface | undefined {
     if (!this._json.correlationId) return undefined;
-    return this.createModel(CorrelationId, this._json.correlationId, { pointer: `${this._meta.pointer}/correlationId` });
+    return this.createModel(CorrelationId, this._json.correlationId as v2.CorrelationIDObject, { pointer: `${this._meta.pointer}/correlationId` });
   }
 
   hasContentType(): boolean {

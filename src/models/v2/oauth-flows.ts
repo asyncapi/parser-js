@@ -7,7 +7,7 @@ import type { ExtensionsInterface } from '../extensions';
 import type { OAuthFlowsInterface } from '../oauth-flows';
 import type { OAuthFlowInterface } from '../oauth-flow';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class OAuthFlows extends BaseModel<v2.OAuthFlowsObject> implements OAuthFlowsInterface {
   hasAuthorizationCode(): boolean {

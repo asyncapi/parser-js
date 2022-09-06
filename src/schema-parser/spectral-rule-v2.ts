@@ -4,7 +4,7 @@ import { aas2_0, aas2_1, aas2_2, aas2_3, aas2_4 } from '@stoplight/spectral-form
 import { validateSchema, getSchemaFormat, getDefaultSchemaFormat } from './index';
 import { createDetailedAsyncAPI } from '../utils';
 
-import type { RuleDefinition } from "@stoplight/spectral-core";
+import type { RuleDefinition } from '@stoplight/spectral-core';
 import type { Parser } from '../parser';
 import type { ValidateSchemaInput } from './index';
 import type { SchemaValidateResult } from '../types';
@@ -30,7 +30,7 @@ export function asyncApi2SchemaParserRule(parser: Parser): RuleDefinition {
     then: {
       function: rulesetFunction(parser),
     },
-  }
+  };
 }
 
 function rulesetFunction(parser: Parser) {
@@ -47,7 +47,7 @@ function rulesetFunction(parser: Parser) {
       },
       options: null
     },
-    async function asyncApi2CustomSchema(targetVal = {}, _, ctx) {
+    async (targetVal = {}, _, ctx) => {
       if (!targetVal.payload) {
         return [];
       }
@@ -66,12 +66,12 @@ function rulesetFunction(parser: Parser) {
         path,
         schemaFormat,
         defaultSchemaFormat,
-      } 
+      }; 
 
       let result: SchemaValidateResult[] | void;
       try {
         result = await validateSchema(parser, input);
-      } catch(err: any) {
+      } catch (err: any) {
         if (err instanceof Error) {
           if (err.message === 'Unknown schema format') {
             path.pop(); // remove 'payload' as last element of path
@@ -82,14 +82,13 @@ function rulesetFunction(parser: Parser) {
                 path,
               }
             ] as SchemaValidateResult[];
-          } else {
-            return [
-              {
-                message: `Error thrown during schema validation, name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
-                path,
-              }
-            ] as SchemaValidateResult[];
-          }
+          } 
+          return [
+            {
+              message: `Error thrown during schema validation, name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+              path,
+            }
+          ] as SchemaValidateResult[];
         }
       }
 
@@ -98,5 +97,5 @@ function rulesetFunction(parser: Parser) {
         path: r.path ? [...path, ...r.path] : path,
       }));
     }
-  )
+  );
 }

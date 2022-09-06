@@ -22,7 +22,6 @@ describe('utils', function() {
   class Model extends BaseModel {}
 
   describe('toAsyncAPIDocument()', function() {
-
     it('normal object should not return AsyncAPIDocument instance', function() {
       expect(toAsyncAPIDocument({})).toEqual(undefined);
     });
@@ -161,7 +160,7 @@ describe('utils', function() {
       range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
       severity: DiagnosticSeverity.Error,
       path: [],
-    }
+    };
 
     it('should return true when diagnostics have at least one error', function() {
       const diagnostics: Diagnostic[] = [
@@ -173,7 +172,7 @@ describe('utils', function() {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Warning,
         }
-      ]
+      ];
 
       expect(hasErrorDiagnostic(diagnostics)).toEqual(true);
     });
@@ -188,7 +187,7 @@ describe('utils', function() {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Warning,
         }
-      ]
+      ];
 
       expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
     });
@@ -201,7 +200,7 @@ describe('utils', function() {
       range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
       severity: DiagnosticSeverity.Error,
       path: [],
-    }
+    };
 
     it('should return true when diagnostics have at least one warning', function() {
       const diagnostics: Diagnostic[] = [
@@ -213,7 +212,7 @@ describe('utils', function() {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Warning,
         }
-      ]
+      ];
 
       expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
     });
@@ -228,7 +227,7 @@ describe('utils', function() {
           ...simpleDiagnostic,
           severity: DiagnosticSeverity.Error,
         }
-      ]
+      ];
 
       expect(hasWarningDiagnostic(diagnostics)).toEqual(false);
     });
@@ -236,7 +235,7 @@ describe('utils', function() {
 
   describe('createDetailedAsyncAPI()', function() {
     it('should create detailed object', function () {
-      const source = "{ asyncapi: '2.1.37' }";
+      const source = '{ asyncapi: \'2.1.37\' }';
       const parsed = { asyncapi: '2.1.37' };
       const detailed = createDetailedAsyncAPI(source, parsed as any);
       expect(detailed.source).toEqual(source);

@@ -7,7 +7,7 @@ import type { v2 } from '../../../src/spec-types';
 describe('CorrelationId model', function() {
   describe('.hasLocation()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.CorrelationIDObject>({ location: "..." });
+      const doc = serializeInput<v2.CorrelationIDObject>({ location: '...' });
       const d = new CorrelationId(doc);
       expect(d.hasLocation()).toEqual(true);
     });
@@ -21,7 +21,7 @@ describe('CorrelationId model', function() {
 
   describe('.location()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.CorrelationIDObject>({ location: "..." });
+      const doc = serializeInput<v2.CorrelationIDObject>({ location: '...' });
       const d = new CorrelationId(doc);
       expect(d.location()).toEqual(doc.location);
     });

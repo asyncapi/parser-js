@@ -32,11 +32,11 @@ describe('SecurityRequirements model', function () {
     it('should return true if the said id is available', function () {
       const requirements = new SecurityRequirements([requirementItem]);
       expect(requirements.has('test')).toEqual(true);
-    })
+    });
 
     it('should return false if the SecurityRequirement id is missing', function () {
       const requirements = new SecurityRequirements([requirementItem]);
       expect(requirements.has('anotherId')).toEqual(false);
-    })
-  })
-})
+    });
+  });
+});

@@ -1,12 +1,12 @@
-import { Document } from "@stoplight/spectral-core";
-import { Yaml } from "@stoplight/spectral-parsers";
-import { toAsyncAPIDocument, normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from "./utils";
+import { Document } from '@stoplight/spectral-core';
+import { Yaml } from '@stoplight/spectral-parsers';
+import { toAsyncAPIDocument, normalizeInput, hasWarningDiagnostic, hasErrorDiagnostic } from './utils';
 
-import type { IRunOpts } from "@stoplight/spectral-core";
+import type { IRunOpts } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
-import type { AsyncAPIDocumentInterface } from "./models/asyncapi";
-import type { ParseInput } from "./parse";
-import type { Diagnostic } from "./types";
+import type { AsyncAPIDocumentInterface } from './models/asyncapi';
+import type { ParseInput } from './parse';
+import type { Diagnostic } from './types';
 
 export interface LintOptions extends IRunOpts {
   path?: string;
@@ -34,13 +34,14 @@ export async function validate(parser: Parser, asyncapi: ParseInput, options: Va
     return {
       validated: asyncapi,
       diagnostics: [],
-    }
+    };
   }
 
   const stringifiedDocument = normalizeInput(asyncapi as Exclude<ParseInput, AsyncAPIDocumentInterface>);
   const document = new Document(stringifiedDocument, Yaml, options.path);
 
   const { allowedSeverity } = normalizeOptions(options);
+  // eslint-disable-next-line prefer-const
   let { resolved, results } = await parser.spectral.runWithResolved(document);
 
   if (

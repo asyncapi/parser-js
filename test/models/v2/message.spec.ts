@@ -165,7 +165,7 @@ describe('Message model', function() {
 
   describe('.traits()', function() {
     it('should return collection of traits', function() {
-      const doc = { traits: [ { messageId: '...' } ] };
+      const doc = { traits: [{ messageId: '...' }] };
       const d = new Message(doc);
       expect(d.traits()).toBeInstanceOf(MessageTraits);
       expect(d.traits().all()).toHaveLength(1);

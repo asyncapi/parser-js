@@ -1,10 +1,11 @@
-import Ajv from "ajv";
+import Ajv from 'ajv';
 import { schemaV3 } from './openapi/schema_v3';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const toJsonSchema = require('@openapi-contrib/openapi-schema-to-json-schema');
 
-import type { ErrorObject, ValidateFunction } from "ajv";
-import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
+import type { ErrorObject, ValidateFunction } from 'ajv';
+import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
 const ajv = new Ajv({
@@ -12,20 +13,20 @@ const ajv = new Ajv({
   strict: false,
   logger: false,
 });
-ajv.addSchema(schemaV3, "openapi");
+ajv.addSchema(schemaV3, 'openapi');
 
 export function OpenAPISchemaParser(): SchemaParser {
   return {
     validate,
     parse,
     getMimeTypes,
-  }
+  };
 }
 
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-  const validator = ajv.getSchema("openapi") as ValidateFunction;
+  const validator = ajv.getSchema('openapi') as ValidateFunction;
 
-  let result: SchemaValidateResult[] = []
+  let result: SchemaValidateResult[] = [];
   const valid = validator(input.data);
   if (!valid && validator.errors) {
     result = ajvToSpectralResult([...validator.errors]);

@@ -1,18 +1,18 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 import { SecurityScheme } from './security-scheme';
 
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
 
-import type { BindingsInterface } from "../bindings";
-import type { ExtensionsInterface } from "../extensions";
-import type { ExternalDocumentationInterface } from "../external-docs";
-import type { OperationAction } from "../operation";
-import type { OperationTraitInterface } from "../operation-trait";
-import type { TagsInterface } from "../tags";
+import type { BindingsInterface } from '../bindings';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExternalDocumentationInterface } from '../external-docs';
+import type { OperationAction } from '../operation';
+import type { OperationTraitInterface } from '../operation-trait';
+import type { TagsInterface } from '../tags';
 
-import type { v2 } from "../../spec-types";
-import { SecurityRequirements } from "./security-requirements";
-import { SecurityRequirement } from "./security-requirement";
+import type { v2 } from '../../spec-types';
+import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirement } from './security-requirement';
 
 export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string, action: OperationAction }> implements OperationTraitInterface {
   id(): string {
@@ -70,11 +70,11 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
       Object.entries(requirement).forEach(([security, scopes]) => {
         const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
         requirements.push(
-          this.createModel(SecurityRequirement, { scheme: scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
+          this.createModel(SecurityRequirement, { scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
         );
       });
       return new SecurityRequirements(requirements);
-    })
+    });
   }
 
   tags(): TagsInterface {

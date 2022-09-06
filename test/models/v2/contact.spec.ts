@@ -7,7 +7,7 @@ import type { v2 } from '../../../src/spec-types';
 describe('Contact model', function() {
   describe('.hasName()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.ContactObject>({ name: "LeChuck" });
+      const doc = serializeInput<v2.ContactObject>({ name: 'LeChuck' });
       const d = new Contact(doc);
       expect(d.hasName()).toEqual(true);
     });
@@ -21,7 +21,7 @@ describe('Contact model', function() {
 
   describe('.name()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.ContactObject>({ name: "LeChuck" });
+      const doc = serializeInput<v2.ContactObject>({ name: 'LeChuck' });
       const d = new Contact(doc);
       expect(d.name()).toEqual(doc.name);
     });
@@ -35,7 +35,7 @@ describe('Contact model', function() {
 
   describe('.hasUrl()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.ContactObject>({ url: "https://example.com" });
+      const doc = serializeInput<v2.ContactObject>({ url: 'https://example.com' });
       const d = new Contact(doc);
       expect(d.hasUrl()).toEqual(true);
     });
@@ -49,7 +49,7 @@ describe('Contact model', function() {
 
   describe('.url()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.ContactObject>({ url: "https://example.com" });
+      const doc = serializeInput<v2.ContactObject>({ url: 'https://example.com' });
       const d = new Contact(doc);
       expect(d.url()).toEqual(doc.url);
     });
@@ -63,7 +63,7 @@ describe('Contact model', function() {
 
   describe('.hasEmail()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.ContactObject>({ email: "lechuck@example.com" });
+      const doc = serializeInput<v2.ContactObject>({ email: 'lechuck@example.com' });
       const d = new Contact(doc);
       expect(d.hasEmail()).toEqual(true);
     });
@@ -77,7 +77,7 @@ describe('Contact model', function() {
 
   describe('.email()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.ContactObject>({ email: "lechuck@example.com" });
+      const doc = serializeInput<v2.ContactObject>({ email: 'lechuck@example.com' });
       const d = new Contact(doc);
       expect(d.email()).toEqual(doc.email);
     });

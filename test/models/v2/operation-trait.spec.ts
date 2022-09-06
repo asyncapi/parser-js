@@ -50,7 +50,7 @@ describe('OperationTrait model', function() {
 
   describe('.hasSummary()', function() {
     it('should return true when there is a value', function() {
-      const doc = { summary: "..." };
+      const doc = { summary: '...' };
       const d = new OperationTrait(doc);
       expect(d.hasSummary()).toEqual(true);
     });
@@ -64,7 +64,7 @@ describe('OperationTrait model', function() {
 
   describe('.summary()', function() {
     it('should return the value', function() {
-      const doc = { summary: "..." };
+      const doc = { summary: '...' };
       const d = new OperationTrait(doc);
       expect(d.summary()).toEqual(doc.summary);
     });
@@ -78,7 +78,7 @@ describe('OperationTrait model', function() {
 
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
-      const doc = { security: [ { requirement: [] } ] };
+      const doc = { security: [{ requirement: [] }] };
       const d = new OperationTrait(doc);
 
       const security = d.security();

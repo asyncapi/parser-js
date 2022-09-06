@@ -1,50 +1,50 @@
-import { BaseModel } from "../base";
-import { Collection } from "../collection";
+import { BaseModel } from '../base';
+import { Collection } from '../collection';
 
-import { Bindings } from "./bindings";
-import { Binding } from "./binding";
-import { Channel } from "./channel";
-import { ChannelParameter } from "./channel-parameter";
-import { CorrelationId } from "./correlation-id";
-import { MessageTrait } from "./message-trait";
-import { OperationTrait } from "./operation-trait";
-import { Schema } from "./schema";
-import { SecurityScheme } from "./security-scheme";
-import { Server } from "./server";
-import { ServerVariable } from "./server-variable";
+import { Bindings } from './bindings';
+import { Binding } from './binding';
+import { Channel } from './channel';
+import { ChannelParameter } from './channel-parameter';
+import { CorrelationId } from './correlation-id';
+import { MessageTrait } from './message-trait';
+import { OperationTrait } from './operation-trait';
+import { Schema } from './schema';
+import { SecurityScheme } from './security-scheme';
+import { Server } from './server';
+import { ServerVariable } from './server-variable';
 import { extensions } from './mixins';
-import { Servers } from "./servers";
-import { Channels } from "./channels";
-import { Messages } from "./messages";
-import { Schemas } from "./schemas";
-import { ChannelParameters } from "./channel-parameters";
-import { ServerVariables } from "./server-variables";
-import { OperationTraits } from "./operation-traits";
-import { MessageTraits } from "./message-traits";
-import { SecuritySchemes } from "./security-schemes";
-import { CorrelationIds } from "./correlation-ids";
-import { Operations } from "./operations";
-import { Message } from "./message";
+import { Servers } from './servers';
+import { Channels } from './channels';
+import { Messages } from './messages';
+import { Schemas } from './schemas';
+import { ChannelParameters } from './channel-parameters';
+import { ServerVariables } from './server-variables';
+import { OperationTraits } from './operation-traits';
+import { MessageTraits } from './message-traits';
+import { SecuritySchemes } from './security-schemes';
+import { CorrelationIds } from './correlation-ids';
+import { Operations } from './operations';
+import { Message } from './message';
 
 import { tilde } from '../../utils';
 
-import type { BindingsInterface } from "../bindings";
-import type { ComponentsInterface } from "../components";
-import type { ExtensionsInterface } from "../extensions";
-import type { Constructor } from "../utils";
-import type { ServersInterface } from "../servers";
-import type { ChannelsInterface } from "../channels";
-import type { MessagesInterface } from "../messages";
-import type { SchemasInterface } from "../schemas";
-import type { ChannelParametersInterface } from "../channel-parameters";
-import type { ServerVariablesInterface } from "../server-variables";
-import type { OperationTraitsInterface } from "../operation-traits";
-import type { SecuritySchemesInterface } from "../security-schemes";
-import type { MessageTraitsInterface } from "../message-traits";
-import type { OperationsInterface } from "../operations";
-import type { OperationInterface } from "../operation";
+import type { BindingsInterface } from '../bindings';
+import type { ComponentsInterface } from '../components';
+import type { ExtensionsInterface } from '../extensions';
+import type { Constructor } from '../utils';
+import type { ServersInterface } from '../servers';
+import type { ChannelsInterface } from '../channels';
+import type { MessagesInterface } from '../messages';
+import type { SchemasInterface } from '../schemas';
+import type { ChannelParametersInterface } from '../channel-parameters';
+import type { ServerVariablesInterface } from '../server-variables';
+import type { OperationTraitsInterface } from '../operation-traits';
+import type { SecuritySchemesInterface } from '../security-schemes';
+import type { MessageTraitsInterface } from '../message-traits';
+import type { OperationsInterface } from '../operations';
+import type { OperationInterface } from '../operation';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Components extends BaseModel<v2.ComponentsObject> implements ComponentsInterface {
   servers(): ServersInterface {
@@ -120,7 +120,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v2.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
     const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([id, item]) => {
-      collectionItems.push(this.createModel(itemModel, item as any, { id, pointer: `/components/${itemsName}/${id}` } as any))
+      collectionItems.push(this.createModel(itemModel, item as any, { id, pointer: `/components/${itemsName}/${id}` } as any));
     });
     return new collectionModel(collectionItems);
   }

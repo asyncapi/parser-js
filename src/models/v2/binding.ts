@@ -1,11 +1,11 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 
-import { extensions } from "./mixins";
+import { extensions } from './mixins';
 
-import type { BindingInterface } from "../binding";
-import type { ExtensionsInterface } from "../extensions";
+import type { BindingInterface } from '../binding';
+import type { ExtensionsInterface } from '../extensions';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Binding<T extends Record<string, any> = Record<string, any>> extends BaseModel<v2.Binding & T, { protocol: string }> implements BindingInterface<T> {
   protocol(): string {

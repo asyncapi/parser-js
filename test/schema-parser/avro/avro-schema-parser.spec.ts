@@ -2,7 +2,7 @@ import { AvroSchemaParser, avroToJsonSchema } from '../../../src/schema-parser/a
 import * as fs from 'fs';
 import * as path from 'path';
 
-import type { Schema as AvroSchema } from "avsc";
+import type { Schema as AvroSchema } from 'avsc';
 import type { ParseSchemaInput } from '../../../src/schema-parser';
 
 const inputWithAvro182 = toParseInput(fs.readFileSync(path.resolve(__dirname, './asyncapi-avro-1.8.2.json'), 'utf8'));
@@ -69,7 +69,7 @@ describe('AvroSchemaParser', function () {
 
   it('should validate invalid Avro schemas as invalid', async function() {
     const result = await parser.validate(inputWithInvalidAvro);
-    expect(result).toEqual([{"message": "unknown type: undefined", "path": []}]);
+    expect(result).toEqual([{message: 'unknown type: undefined', path: []}]);
   });
 
   it('should validate valid Avro schemas', async function() {
@@ -79,7 +79,7 @@ describe('AvroSchemaParser', function () {
 
   it('should identify bugs in Avro schemas', async function() {
     const result = await parser.validate(inputWithBrokenAvro);
-    expect(result).toEqual([{"message": "undefined type name: notAValidAvroType", "path": []}]);
+    expect(result).toEqual([{message: 'undefined type name: notAValidAvroType', path: []}]);
   });
 
   it('Issue #111 should handle pre defined records in schemas', async function() {
@@ -250,27 +250,25 @@ describe('avroToJsonSchema()', function () {
 
 function toParseInput(raw: string): ParseSchemaInput {
   const message = JSON.parse(raw);
-  const schemaInput = {
+  return {
     asyncapi: {
       semver: {
-        version: "2.4.0",
+        version: '2.4.0',
         major: 2,
         minor: 4,
         patch: 0
       }, 
-      source: "",
+      source: '',
       parsed: {} as any,
     },
     data: message.payload,
     meta: {
-      message: message,
+      message,
     },
     path: [],
     schemaFormat: message.schemaFormat,
-    defaultSchemaFormat: "application/vnd.aai.asyncapi;version=2.4.0",
+    defaultSchemaFormat: 'application/vnd.aai.asyncapi;version=2.4.0',
   };
-
-  return schemaInput;
 }
 
 describe('supportExampleAttribute', function () {

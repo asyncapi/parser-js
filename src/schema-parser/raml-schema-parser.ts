@@ -1,10 +1,12 @@
 import yaml from 'js-yaml';
-import * as lib from "webapi-parser";
+import * as lib from 'webapi-parser';
 
+/* eslint-disable */
 const wap = lib.WebApiParser;
 const r2j = require('ramldt2jsonschema');
+/* eslint-enable */
 
-import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
+import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
 export function RamlSchemaParser(): SchemaParser {
@@ -12,7 +14,7 @@ export function RamlSchemaParser(): SchemaParser {
     validate,
     parse,
     getMimeTypes,
-  }
+  };
 }
 
 async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<AsyncAPISchema> {
@@ -38,7 +40,7 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
     return [];
   }
   
-  let validateResult: SchemaValidateResult[] = [];
+  const validateResult: SchemaValidateResult[] = [];
   report.results.forEach(result => {
     validateResult.push({
       message: result.message,

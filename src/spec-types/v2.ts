@@ -1,4 +1,4 @@
-import type { JSONSchema7Version, JSONSchema7TypeName, JSONSchema7Type } from "json-schema";
+import type { JSONSchema7Version, JSONSchema7TypeName, JSONSchema7Type } from 'json-schema';
 
 export type AsyncAPIVersion = string;
 export type Identifier = string;

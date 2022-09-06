@@ -1,5 +1,5 @@
-import type { Constructor, InferModelData, InferModelMetadata } from "./utils";
-import type { DetailedAsyncAPI } from "../types";
+import type { Constructor, InferModelData, InferModelMetadata } from './utils';
+import type { DetailedAsyncAPI } from '../types';
 
 export interface ModelMetadata {
   asyncapi: DetailedAsyncAPI;

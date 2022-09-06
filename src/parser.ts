@@ -1,14 +1,14 @@
-import { Spectral } from "@stoplight/spectral-core";
+import { Spectral } from '@stoplight/spectral-core';
 
-import { parse } from "./parse";
-import { lint, validate } from "./lint";
+import { parse } from './parse';
+import { lint, validate } from './lint';
 import { registerSchemaParser } from './schema-parser';
-import { AsyncAPISchemaParser } from "./schema-parser/asyncapi-schema-parser";
-import { configureSpectral } from "./spectral";
+import { AsyncAPISchemaParser } from './schema-parser/asyncapi-schema-parser';
+import { configureSpectral } from './spectral';
 
-import type { IConstructorOpts } from "@stoplight/spectral-core";
-import type { ParseInput, ParseOptions } from "./parse";
-import type { LintOptions, ValidateOptions } from "./lint";
+import type { IConstructorOpts } from '@stoplight/spectral-core';
+import type { ParseInput, ParseOptions } from './parse';
+import type { LintOptions, ValidateOptions } from './lint';
 import type { SchemaParser } from './schema-parser';
 
 export interface ParserOptions {

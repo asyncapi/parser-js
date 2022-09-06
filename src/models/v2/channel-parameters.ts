@@ -7,8 +7,4 @@ export class ChannelParameters extends Collection<ChannelParameterInterface> imp
   override get(id: string): ChannelParameterInterface | undefined {
     return this.collections.find(parameter => parameter.id() === id);
   }
-
-  override has(id: string): boolean {
-    return this.collections.some(parameter => parameter.id() === id);
-  }
 }

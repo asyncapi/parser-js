@@ -59,7 +59,7 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
 
     return new Messages(
       messages.map((message: any, index: number) => {
-        return this.createModel(Message, message, { pointer: `${this._meta.pointer}/message${isOneOf ? `/oneOf/${index}` : ''}` })
+        return this.createModel(Message, message, { id: '', pointer: `${this._meta.pointer}/message${isOneOf ? `/oneOf/${index}` : ''}` })
       })
     );
   }
@@ -67,7 +67,7 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
   traits(): OperationTraitsInterface {
     return new OperationTraits(
       (this._json.traits || []).map((trait: any, index: number) => {
-        return this.createModel(OperationTrait, trait, { pointer: `${this._meta.pointer}/traits/${index}` })
+        return this.createModel(OperationTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}`, action: '' as 'publish' | 'subscribe' })
       })
     );
   }

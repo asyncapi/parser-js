@@ -10,4 +10,12 @@ export class Servers extends Collection<ServerInterface> implements ServersInter
   override has(id: string): boolean {
     return this.collections.some(server => server.id() === id);
   }
+
+  filterBySend(): ServerInterface[] {
+    return this.filterBy(server => server.operations().filterBySend().length > 0);
+  }
+
+  filterByReceive(): ServerInterface[] {
+    return this.filterBy(server => server.operations().filterByReceive().length > 0);
+  }
 }

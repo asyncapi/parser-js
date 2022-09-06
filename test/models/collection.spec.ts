@@ -76,4 +76,28 @@ describe('Collection model', function() {
       expect(d.get('name1')).toEqual(undefined);
     });
   });
+
+  describe('.filterBy()', function() {
+    it('should return array of ItemModel if filter function matches', function() {
+      const doc = { name: 'name' };
+      const item = new ItemModel(doc);
+      const d = new Model([item]);
+
+      const filter = function (_: ItemModel): boolean {
+        return true;
+      }
+      expect(d.filterBy(filter)).toEqual([item]);
+    });
+
+    it('should return empty array of ItemModel if filter function does not match', function() {
+      const doc = { name: 'name' };
+      const item = new ItemModel(doc);
+      const d = new Model([item]);
+
+      const filter = function (_: ItemModel): boolean {
+        return false;
+      }
+      expect(d.filterBy(filter)).toEqual([]);
+    });
+  });
 });

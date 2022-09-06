@@ -15,8 +15,8 @@ export abstract class BaseModel<J extends any = any, M extends Record<string, an
   json<T = J>(): T;
   json<K extends keyof J>(key: K): J[K];
   json(key?: keyof J) {
-    if (key === undefined || typeof this._json !== 'object') return this._json;
-    if (!this._json) return;
+    if (key === undefined) return this._json;
+    if (this._json === null || this._json === undefined) return this._json;
     return this._json[key];
   }
 

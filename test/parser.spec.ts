@@ -1,4 +1,4 @@
-import { Spectral } from "@stoplight/spectral-core";
+import { Spectral } from '@stoplight/spectral-core';
 import { Parser } from '../src/parser';
 import { AsyncAPISchemaParser } from '../src/schema-parser/asyncapi-schema-parser';
 

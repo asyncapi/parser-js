@@ -1,22 +1,22 @@
-import { Bindings } from "./bindings";
-import { Binding } from "./binding";
-import { Extensions } from "./extensions";
-import { Extension } from "./extension";
-import { ExternalDocumentation } from "./external-docs";
-import { Tags } from "./tags";
-import { Tag } from "./tag";
+import { Bindings } from './bindings';
+import { Binding } from './binding';
+import { Extensions } from './extensions';
+import { Extension } from './extension';
+import { ExternalDocumentation } from './external-docs';
+import { Tags } from './tags';
+import { Tag } from './tag';
 
-import { createModel } from "../utils";
+import { createModel } from '../utils';
 import { EXTENSION_REGEX } from '../../constants';
 
-import type { BaseModel } from "../base";
-import type { BindingsInterface } from "../bindings";
-import type { ExtensionsInterface } from "../extensions";
-import type { ExtensionInterface } from "../extension";
-import type { ExternalDocumentationInterface } from "../external-docs";
-import type { TagsInterface } from "../tags";
+import type { BaseModel } from '../base';
+import type { BindingsInterface } from '../bindings';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExtensionInterface } from '../extension';
+import type { ExternalDocumentationInterface } from '../external-docs';
+import type { TagsInterface } from '../tags';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): BindingsInterface {
   const bindings = model.json('bindings') || {};
@@ -30,7 +30,7 @@ export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): 
 
 export function hasDescription(model: BaseModel<{ description?: string }>) {
   return Boolean(description(model));
-};
+}
 
 export function description(model: BaseModel<{ description?: string }>): string | undefined {
   return model.json('description');
@@ -46,18 +46,17 @@ export function extensions(model: BaseModel<v2.SpecificationExtensions>): Extens
     }
   });
   return new Extensions(extensions);
-};
+}
 
 export function hasExternalDocs(model: BaseModel<{ externalDocs?: v2.ExternalDocumentationObject }>): boolean {
   return Object.keys(model.json('externalDocs') || {}).length > 0;
-};
+}
 
 export function externalDocs(model: BaseModel<{ externalDocs?: v2.ExternalDocumentationObject }>): ExternalDocumentationInterface | undefined { 
   if (hasExternalDocs(model)) {
     return new ExternalDocumentation(model.json('externalDocs') as v2.ExternalDocumentationObject);
   }
-  return;
-};
+}
 
 export function tags(model: BaseModel<{ tags?: v2.TagsObject }>): TagsInterface {
   return new Tags(

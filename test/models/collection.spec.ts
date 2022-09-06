@@ -6,13 +6,13 @@ describe('Collection model', function() {
     name(): string | undefined {
       return this._json.name;
     }
-  };
+  }
 
   class Model extends Collection<ItemModel> {
     override get(name: string): ItemModel | undefined {
       return this.collections.find(item => item.name() === name);
     }
-  };
+  }
 
   describe('.isEmpty()', function() {
     it('should return true if collection is empty', function() {
@@ -81,7 +81,7 @@ describe('Collection model', function() {
 
       const filter = function (_: ItemModel): boolean {
         return true;
-      }
+      };
       expect(d.filterBy(filter)).toEqual([item]);
     });
 
@@ -92,7 +92,7 @@ describe('Collection model', function() {
 
       const filter = function (_: ItemModel): boolean {
         return false;
-      }
+      };
       expect(d.filterBy(filter)).toEqual([]);
     });
   });

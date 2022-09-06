@@ -46,7 +46,7 @@ export function createDetailedAsyncAPI(source: string | Record<string, unknown>,
     source,
     parsed,
     semver: getSemver(parsed.asyncapi),
-  }
+  };
 }
 
 export function getSemver(version: string): AsyncAPISemver {
@@ -66,10 +66,10 @@ export function normalizeInput(asyncapi: string | MaybeAsyncAPI): string {
     return asyncapi;
   }
   return JSON.stringify(asyncapi, undefined, 2);
-};
+}
 
 export function unfreezeObject(data: unknown) {
-  return JSON.parse(JSON.stringify(data))
+  return JSON.parse(JSON.stringify(data));
 }
 
 export function hasErrorDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
@@ -106,22 +106,22 @@ export function isObject(value: unknown): value is Record<string, any> {
 }
 
 export function tilde(str: string) {
-  return str.replace(/[~\/]{1}/g, (sub) => {
+  return str.replace(/[~/]{1}/g, (sub) => {
     switch (sub) {
-      case '/': return '~1';
-      case '~': return '~0';
+    case '/': return '~1';
+    case '~': return '~0';
     }
     return sub;
   });
-};
+}
 
 export function untilde(str: string) {
   if (!str.includes('~')) return str;
   return str.replace(/~[01]/g, (sub) => {
     switch (sub) {
-      case '~1': return '/';
-      case '~0': return '~';
+    case '~1': return '/';
+    case '~0': return '~';
     }
     return sub;
   });
-};
+}

@@ -1,13 +1,13 @@
 import { createRulesetFunction } from '@stoplight/spectral-core';
-import { asyncapi as aasRuleset } from "@stoplight/spectral-rulesets";
+import { asyncapi as aasRuleset } from '@stoplight/spectral-rulesets';
 
 import { asyncApi2SchemaParserRule } from './schema-parser/spectral-rule-v2';
 import { specVersions } from './constants';
 import { isObject } from './utils';
 
-import type { RuleDefinition, RulesetDefinition } from "@stoplight/spectral-core";
-import type { Parser } from "./parser";
-import type { MaybeAsyncAPI } from "./types";
+import type { RuleDefinition, RulesetDefinition } from '@stoplight/spectral-core';
+import type { Parser } from './parser';
+import type { MaybeAsyncAPI } from './types';
 
 export function configureSpectral(parser: Parser) {
   const ruleset = configureRuleset(parser);
@@ -31,7 +31,7 @@ function configureRuleset(parser: Parser): RulesetDefinition {
 function asyncApi2IsAsyncApi(): RuleDefinition {
   return {
     description: 'The input must be a document with a supported version of AsyncAPI.',
-    formats: [(_: unknown) => true], // run rule for all inputs
+    formats: [() => true], // run rule for all inputs
     message: '{{error}}',
     severity: 'error',
     type: 'validation',
@@ -43,7 +43,7 @@ function asyncApi2IsAsyncApi(): RuleDefinition {
           input: null,
           options: null,
         },
-        function asyncApi2IsAsyncAPI(targetVal) {
+        (targetVal) => {
           if (!isObject(targetVal) || typeof targetVal.asyncapi !== 'string') {
             return [
               {
@@ -62,5 +62,5 @@ function asyncApi2IsAsyncApi(): RuleDefinition {
         }
       ),
     },
-  }
+  };
 }

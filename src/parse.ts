@@ -1,8 +1,8 @@
-import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from "./models";
+import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
 
 import { customOperations } from './custom-operations';
-import { validate } from "./lint";
-import { createDetailedAsyncAPI, normalizeInput, toAsyncAPIDocument, unfreezeObject } from "./utils";
+import { validate } from './lint';
+import { createDetailedAsyncAPI, normalizeInput, toAsyncAPIDocument, unfreezeObject } from './utils';
 
 import { xParserSpecParsed } from './constants';
 
@@ -24,7 +24,7 @@ export interface ParseOptions {
 }
 
 export async function parse(parser: Parser, asyncapi: ParseInput, options?: ParseOptions): Promise<ParseOutput> {
-  let maybeDocument = toAsyncAPIDocument(asyncapi);
+  const maybeDocument = toAsyncAPIDocument(asyncapi);
   if (maybeDocument) {
     return { 
       source: asyncapi,
@@ -59,9 +59,9 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
       parsed: parsedDoc,
       diagnostics,
     };
-  } catch(err) {
+  } catch (err: any) {
     // TODO: throw proper error
-    throw err;
+    throw new Error(err.message);
   }
 }
 

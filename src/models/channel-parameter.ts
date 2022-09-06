@@ -1,6 +1,6 @@
-import type { BaseModel } from "./base";
-import type { DescriptionMixinInterface, ExtensionsMixinInterface } from "./mixins";
-import type { SchemaInterface } from "./schema";
+import type { BaseModel } from './base';
+import type { DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
+import type { SchemaInterface } from './schema';
 
 export interface ChannelParameterInterface extends BaseModel, DescriptionMixinInterface, ExtensionsMixinInterface {
   id(): string;

@@ -1,4 +1,4 @@
-import type { Collection } from "./collection";
-import type { SchemaInterface } from "./schema";
+import type { Collection } from './collection';
+import type { SchemaInterface } from './schema';
 
-export interface SchemasInterface extends Collection<SchemaInterface> {}
+export type SchemasInterface = Collection<SchemaInterface>

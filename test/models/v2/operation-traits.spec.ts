@@ -35,11 +35,11 @@ describe('OperationTraits model', function () {
     it('should return true if the said id is available', function () {
       const servers = new OperationTraits([operationTraitItem]);
       expect(servers.has('test')).toEqual(true);
-    })
+    });
 
     it('should return false if the Operation Trait id is missing', function () {
       const servers = new OperationTraits([operationTraitItem]);
       expect(servers.has('anotherId')).toEqual(false);
-    })
-  })
-})
+    });
+  });
+});

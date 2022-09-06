@@ -135,7 +135,7 @@ describe('Operation model', function() {
     });
 
     it('should return collection of messages - oneOf messages', function() {
-      const doc = { message: { oneOf: [ { messageId: '...' }, { messageId: '...' } ] } };
+      const doc = { message: { oneOf: [{ messageId: '...' }, { messageId: '...' }] } };
       const d = new Operation(doc);
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
@@ -153,7 +153,7 @@ describe('Operation model', function() {
 
   describe('.traits()', function() {
     it('should return collection of traits', function() {
-      const doc = { traits: [ { operationId: '...' } ] };
+      const doc = { traits: [{ operationId: '...' }] };
       const d = new Operation(doc);
       expect(d.traits()).toBeInstanceOf(OperationTraits);
       expect(d.traits().all()).toHaveLength(1);

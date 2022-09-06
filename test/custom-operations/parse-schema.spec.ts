@@ -28,7 +28,7 @@ describe('custom operations - parse schemas', function() {
           }
         }
       }
-    }
+    };
     const { parsed, diagnostics } = await parse(parser, document);
     
     expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
@@ -58,7 +58,7 @@ describe('custom operations - parse schemas', function() {
           }
         }
       }
-    }
+    };
     const { parsed, diagnostics } = await parse(parser, document);
     
     expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
@@ -89,7 +89,7 @@ describe('custom operations - parse schemas', function() {
           }
         }
       }
-    }
+    };
     const { parsed, diagnostics } = await parse(parser, document);
     
     expect(parsed).toBeUndefined();

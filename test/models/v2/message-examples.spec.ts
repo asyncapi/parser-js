@@ -35,11 +35,11 @@ describe('MessageExamples model', function () {
     it('should return true if the said name is available', function () {
       const servers = new MessageExamples([messageExampleItem]);
       expect(servers.has('test')).toEqual(true);
-    })
+    });
 
     it('should return false if the Message Example name is missing', function () {
       const servers = new MessageExamples([messageExampleItem]);
       expect(servers.has('anotherName')).toEqual(false);
-    })
-  })
-})
+    });
+  });
+});

@@ -25,7 +25,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
     expect(filteredDiagnostics).toHaveLength(0);
@@ -43,10 +43,10 @@ describe('aas2schemaParserRule', function() {
           publish: {
             message: {
               payload: {
-                oneOf: "this should be an array",
+                oneOf: 'this should be an array',
                 properties: {
                   name: {
-                    if: "this should be an if"
+                    if: 'this should be an if'
                   }
                 }
               }
@@ -54,7 +54,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
@@ -84,17 +84,17 @@ describe('aas2schemaParserRule', function() {
         messages: {
           message: {
             payload: {
-              oneOf: "this should be an array",
+              oneOf: 'this should be an array',
               properties: {
                 name: {
-                  if: "this should be an if"
+                  if: 'this should be an if'
                 }
               }
             }
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
@@ -126,10 +126,10 @@ describe('aas2schemaParserRule', function() {
             publish: {
               message: {
                 payload: {
-                  oneOf: "this should be an array",
+                  oneOf: 'this should be an array',
                   properties: {
                     name: {
-                      if: "this should be an if"
+                      if: 'this should be an if'
                     }
                   }
                 }
@@ -138,7 +138,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
@@ -170,17 +170,17 @@ describe('aas2schemaParserRule', function() {
               oneOf: [
                 {
                   payload: {
-                    oneOf: "this should be an array",
+                    oneOf: 'this should be an array',
                     properties: {
                       name: {
-                        if: "this should be an if"
+                        if: 'this should be an if'
                       }
                     }
                   }
                 },
                 {
                   payload: {
-                    oneOf: "this should be an array",
+                    oneOf: 'this should be an array',
                   }
                 }
               ]
@@ -188,7 +188,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
@@ -229,7 +229,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
     expect(filteredDiagnostics).toHaveLength(0);
@@ -254,7 +254,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
     const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
@@ -280,10 +280,10 @@ describe('aas2schemaParserRule', function() {
           publish: {
             message: {
               payload: {
-                oneOf: "this should be an array",
+                oneOf: 'this should be an array',
                 properties: {
                   name: {
-                    if: "this should be an if"
+                    if: 'this should be an if'
                   }
                 }
               }
@@ -291,7 +291,7 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    }
+    };
     const { diagnostics } = await validate(parser, document);
 
     expect(filterDiagnostics(diagnostics, 'asyncapi-schemas-v2')).toHaveLength(2);

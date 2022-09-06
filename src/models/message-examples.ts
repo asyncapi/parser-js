@@ -1,4 +1,4 @@
-import type { Collection } from "./collection";
-import type { MessageExampleInterface } from "./message-example";
+import type { Collection } from './collection';
+import type { MessageExampleInterface } from './message-example';
 
-export interface MessageExamplesInterface extends Collection<MessageExampleInterface> {}
+export type MessageExamplesInterface = Collection<MessageExampleInterface>

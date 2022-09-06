@@ -6,9 +6,11 @@ import { Operations } from './operations';
 import { SecurityScheme } from './security-scheme';
 import { ServerVariables } from './server-variables';
 import { ServerVariable } from './server-variable';
+import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirement } from './security-requirement';
 
 import { bindings, hasDescription, description, extensions } from './mixins';
-import { tilde } from "../../utils";
+import { tilde } from '../../utils';
 
 import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
@@ -18,13 +20,10 @@ import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { ServerInterface } from '../server';
 import type { ServerVariablesInterface } from '../server-variables';
-import type { SecuritySchemeInterface } from '../security-scheme';
 import type { ExtensionsInterface } from '../extensions';
 import type { BindingsInterface } from '../bindings';
 
-import type { v2 } from "../../spec-types";
-import { SecurityRequirements } from './security-requirements';
-import { SecurityRequirement } from './security-requirement';
+import type { v2 } from '../../spec-types';
 
 export class Server extends BaseModel<v2.ServerObject, { id: string }> implements ServerInterface {
   id(): string {
@@ -69,7 +68,7 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     this.channels().forEach(channel => {
-      operations.push(...channel.operations().all())
+      operations.push(...channel.operations().all());
     });
     return new Operations(operations);
   }
@@ -86,7 +85,7 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
         return this.createModel(ServerVariable, serverVariable, {
           id: serverVariableName,
           pointer: `${this._meta.pointer}/variables/${serverVariableName}`
-        })
+        });
       })
     );
   }
@@ -98,11 +97,11 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
       Object.entries(requirement).forEach(([security, scopes]) => {
         const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
         requirements.push(
-          this.createModel(SecurityRequirement, { scheme: scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
+          this.createModel(SecurityRequirement, { scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
         );
       });
       return new SecurityRequirements(requirements);
-    })
+    });
   }
 
   bindings(): BindingsInterface {

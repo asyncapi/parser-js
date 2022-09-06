@@ -1,8 +1,8 @@
-import type { BaseModel } from "./base";
-import type { CorrelationIdInterface } from "./correlation-id";
-import type { MessageExamplesInterface } from "./message-examples";
+import type { BaseModel } from './base';
+import type { CorrelationIdInterface } from './correlation-id';
+import type { MessageExamplesInterface } from './message-examples';
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface } from './mixins';
-import type { SchemaInterface } from "./schema";
+import type { SchemaInterface } from './schema';
 
 export interface MessageTraitInterface extends BaseModel, BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface {
   id(): string;

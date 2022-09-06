@@ -35,11 +35,11 @@ describe('ChannelParameters model', function () {
     it('should return true if the said name is available', function () {
       const servers = new ChannelParameters([channelParameterItem]);
       expect(servers.has('parameter')).toEqual(true);
-    })
+    });
 
     it('should return false if the Channel Parameter name is missing', function () {
       const servers = new ChannelParameters([channelParameterItem]);
       expect(servers.has('anotherName')).toEqual(false);
-    })
-  })
-})
+    });
+  });
+});

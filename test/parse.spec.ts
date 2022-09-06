@@ -13,7 +13,7 @@ describe('parse()', function() {
         version: '1.0',
       },
       channels: {}
-    }
+    };
     const { parsed, diagnostics } = await parse(parser, document);
     
     expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
@@ -27,7 +27,7 @@ describe('parse()', function() {
         title: 'Valid AsyncApi document',
         version: '1.0',
       },
-    }
+    };
     const { parsed, diagnostics } = await parse(parser, document);
     
     expect(parsed).toEqual(undefined);

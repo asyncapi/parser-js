@@ -5,8 +5,8 @@ import { parseSchema, getSchemaFormat, getDefaultSchemaFormat } from '../schema-
 import { xParserOriginalPayload } from '../constants';
 
 import type { Parser } from '../parser';
-import type { ParseSchemaInput } from "../schema-parser";
-import type { DetailedAsyncAPI } from "../types";
+import type { ParseSchemaInput } from '../schema-parser';
+import type { DetailedAsyncAPI } from '../types';
 
 interface ToParseItem {
   input: ParseSchemaInput;

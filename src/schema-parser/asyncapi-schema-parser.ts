@@ -1,13 +1,13 @@
-import Ajv from "ajv";
+import Ajv from 'ajv';
 // @ts-ignore
 import specs from '@asyncapi/specs';
 
 import { specVersions } from '../constants';
 
-import type { ErrorObject, ValidateFunction } from "ajv";
+import type { ErrorObject, ValidateFunction } from 'ajv';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
-import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
-import type { v2 } from "../spec-types";
+import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
+import type { v2 } from '../spec-types';
 
 const ajv = new Ajv({
   allErrors: true,
@@ -20,14 +20,14 @@ export function AsyncAPISchemaParser(): SchemaParser {
     validate,
     parse,
     getMimeTypes,
-  }
+  };
 }
 
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-  const version = input.asyncapi.semver.version
+  const version = input.asyncapi.semver.version;
   const validator = getSchemaValidator(version);
 
-  let result: SchemaValidateResult[] = []
+  let result: SchemaValidateResult[] = [];
   const valid = validator(input.data);
   if (!valid && validator.errors) {
     result = ajvToSpectralResult([...validator.errors]);
@@ -86,7 +86,7 @@ function preparePayloadSchema(asyncapiSchema: v2.AsyncAPISchemaDefinition, versi
   const payloadSchema = `http://asyncapi.com/definitions/${version}/schema.json`;
   const definitions = asyncapiSchema.definitions;
   if (definitions === undefined) {
-    throw new Error("AsyncAPI schema must contain definitions");
+    throw new Error('AsyncAPI schema must contain definitions');
   }
 
   // Remove the meta schemas because they are already present within Ajv, and it's not possible to add duplicated schemas.

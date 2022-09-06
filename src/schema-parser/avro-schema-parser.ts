@@ -1,8 +1,8 @@
-import avsc from "avsc";
+import avsc from 'avsc';
 
-import type { JSONSchema7TypeName } from "json-schema";
-import type { Schema } from "avsc";
-import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
+import type { JSONSchema7TypeName } from 'json-schema';
+import type { Schema } from 'avsc';
+import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
 import type { v2 } from '../spec-types';
@@ -14,11 +14,11 @@ export function AvroSchemaParser(): SchemaParser {
     validate,
     parse,
     getMimeTypes,
-  }
+  };
 }
 
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-  let result: SchemaValidateResult[] = []
+  const result: SchemaValidateResult[] = [];
   
   try {
     validateAvroSchema(input.data as AvroSchema);  
@@ -39,7 +39,7 @@ async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<AsyncAP
 
   // TODO: Should the following modifications to the message object be done in the caller and for all parsers rather than here?
   // remove that function when https://github.com/asyncapi/spec/issues/622 will be introduced in AsyncAPI spec
-  const message = (input.meta as any).message
+  const message = (input.meta as any).message;
   const key = message?.bindings?.kafka?.key;
   if (key) {
     const bindingsTransformed = await avroToJsonSchema(key);
@@ -59,7 +59,7 @@ function getMimeTypes() {
     'application/vnd.apache.avro+json;version=1.8.2',
     'application/vnd.apache.avro+yaml;version=1.8.2'
   ];
-};
+}
 
 const BYTES_PATTERN = '^[\u0000-\u00ff]*$';
 const INT_MIN = Math.pow(-2, 31);
@@ -92,7 +92,7 @@ function commonAttributesMapping(avroDefinition: AvroSchema, jsonSchema: v2.Asyn
   if (isTopLevel && fullyQualifiedName !== undefined) {
     jsonSchema['x-parser-schema-id'] = fullyQualifiedName;
   }
-};
+}
 
 function getFullyQualifiedName(avroDefinition: AvroSchema) {
   let name;
@@ -122,7 +122,7 @@ function requiredAttributesMapping(fieldDefinition: any, parentJsonSchema: v2.As
     parentJsonSchema.required = parentJsonSchema.required || [];
     parentJsonSchema.required.push(fieldDefinition.name);
   }
-};
+}
 
 function extractNonNullableTypeIfNeeded(typeInput: any, jsonSchemaInput: v2.AsyncAPISchemaDefinition): { type: string, jsonSchema: v2.AsyncAPISchemaDefinition } {
   let type = typeInput;
@@ -151,7 +151,7 @@ function exampleAttributeMapping(type: any, example: any, jsonSchema: v2.AsyncAP
   default:
     jsonSchema.examples = [example];
   }
-};
+}
 
 function additionalAttributesMapping(typeInput: any, avroDefinition: AvroSchema, jsonSchemaInput: v2.AsyncAPISchemaDefinition): void {
   const __ret = extractNonNullableTypeIfNeeded(typeInput, jsonSchemaInput);
@@ -189,7 +189,7 @@ function additionalAttributesMapping(typeInput: any, avroDefinition: AvroSchema,
   default:
     break;
   }
-};
+}
 
 function validateAvroSchema(avroDefinition: AvroSchema): void | never {
   // don't need to use the output from parsing the
@@ -227,39 +227,48 @@ async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: 
   jsonSchema.type = typeMappings[type];
 
   switch (type) {
-  case 'int':
+  case 'int': {
     jsonSchema.minimum = INT_MIN;
     jsonSchema.maximum = INT_MAX;
     break;
-  case 'long':
+  }
+  case 'long': {
     jsonSchema.minimum = LONG_MIN;
     jsonSchema.maximum = LONG_MAX;
     break;
-  case 'bytes':
+  }
+  case 'bytes': {
     jsonSchema.pattern = BYTES_PATTERN;
     break;
-  case 'fixed':
+  }
+  case 'fixed': {
     jsonSchema.pattern = BYTES_PATTERN;
     jsonSchema.minLength = avroDefinition.size;
     jsonSchema.maxLength = avroDefinition.size;
     break;
-  case 'map':
+  }
+  case 'map': {
     jsonSchema.additionalProperties = await convertAvroToJsonSchema(avroDefinition.values, false);
     break;
-  case 'array':
+  }
+  case 'array': {
     jsonSchema.items = await convertAvroToJsonSchema(avroDefinition.items, false);
     break;
-  case 'enum':
+  }
+  case 'enum': {
     jsonSchema.enum = avroDefinition.symbols;
     break;
-  case 'float':   // float and double must support the format attribute from the avro type
-  case 'double':
+  }
+  case 'float': // float and double must support the format attribute from the avro type
+  case 'double': {
     jsonSchema.format = type;
     break;
-  case 'record':
+  }
+  case 'record': {
     const propsMap = await processRecordSchema(avroDefinition, recordCache, jsonSchema);
     jsonSchema.properties = Object.fromEntries(propsMap.entries());
     break;
+  }
   }
 
   commonAttributesMapping(avroDefinition, jsonSchema, isTopLevel);
@@ -332,4 +341,4 @@ async function processUnionSchema(jsonSchema: v2.AsyncAPISchemaDefinition, avroD
 
 export async function avroToJsonSchema(avroDefinition: AvroSchema) {
   return convertAvroToJsonSchema(avroDefinition, true);
-};
+}

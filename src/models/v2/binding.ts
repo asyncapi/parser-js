@@ -7,7 +7,7 @@ import type { ExtensionsInterface } from "../extensions";
 
 import type { v2 } from "../../spec-types";
 
-export class Binding extends BaseModel<v2.Binding, { protocol: string }> implements BindingInterface {
+export class Binding<T extends Record<string, any> = Record<string, any>> extends BaseModel<v2.Binding & T, { protocol: string }> implements BindingInterface<T> {
   protocol(): string {
     return this._meta.protocol;
   }
@@ -16,10 +16,10 @@ export class Binding extends BaseModel<v2.Binding, { protocol: string }> impleme
     return this._json.bindingVersion || 'latest';
   }
 
-  value<T extends Record<string, any> = Record<string, any>>(): T {
+  value<V = T>(): V {
     const value = { ...this._json };
     delete (value as any).bindingVersion;
-    return value as unknown as T;
+    return value as unknown as V;
   }
 
   extensions(): ExtensionsInterface {

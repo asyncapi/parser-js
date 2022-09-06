@@ -85,7 +85,7 @@ function rulesetFunction(parser: Parser) {
           } else {
             return [
               {
-                message: `Error thrown during schema validation: name: ${err.name}, message:, ${err.message}, stack: ${err.stack}`,
+                message: `Error thrown during schema validation, name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
                 path,
               }
             ] as SchemaValidateResult[];

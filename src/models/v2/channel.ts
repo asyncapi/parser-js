@@ -16,7 +16,7 @@ import type { ExtensionsInterface } from "models/extensions";
 import type { MessagesInterface } from "../messages";
 import type { MessageInterface } from "../message";
 import type { OperationsInterface } from "../operations";
-import type { OperationInterface } from "../operation";
+import type { OperationAction, OperationInterface } from "../operation";
 import type { ServersInterface } from "../servers";
 import type { ServerInterface } from "../server";
 
@@ -55,7 +55,7 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
     ['publish', 'subscribe'].forEach(operationAction => {
       const id =  this._json[operationAction as 'publish' | 'subscribe'] && (this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject).operationId || this.meta().id + "_" + operationAction;
       this._json[operationAction as 'publish' | 'subscribe'] && operations.push(
-        this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'], { id, action: operationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
+        this.createModel(Operation, this._json[operationAction as 'publish' | 'subscribe'] as v2.OperationObject, { id, action: operationAction as OperationAction, pointer: `${this._meta.pointer}/${operationAction}` }),
       );
     });
     return new Operations(operations);
@@ -70,7 +70,7 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
   parameters(): ChannelParametersInterface {
     return new ChannelParameters(
       Object.entries(this._json.parameters || {}).map(([channelParameterName, channelParameter]) => {
-        return this.createModel(ChannelParameter, channelParameter, {
+        return this.createModel(ChannelParameter, channelParameter as v2.ParameterObject, {
           id: channelParameterName,
           pointer: `${this._meta.pointer}/parameters/${channelParameterName}`
         })

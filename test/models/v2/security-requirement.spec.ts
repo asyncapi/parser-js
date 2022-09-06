@@ -1,15 +1,13 @@
-import { ModelMetadata } from '../../../src/models/base';
-import { SecuritySchemeInterface } from '../../../src/models/security-scheme';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement'
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 describe('SecurityRequirement model', function() {
   describe('.scheme()', function() {
     it('should return scheme', function() {
-      const doc = {};
-      const expectedScheme = new SecurityScheme({type: "oauth2"}, {id: "test"} as any);
-      const d = new SecurityRequirement(doc, ({ id: "test", scheme: expectedScheme } as any)); // TODO Pointer
+      const expectedScheme = new SecurityScheme({ type: "oauth2" });
+      const d = new SecurityRequirement({ scheme: expectedScheme }, { id: 'test' } as any);
 
+      expect(d.meta('id')).toEqual('test');
       expect(d.scheme()).toBeInstanceOf(SecurityScheme);
       expect(d.scheme()).toEqual(expectedScheme);   
     });
@@ -17,10 +15,16 @@ describe('SecurityRequirement model', function() {
   })
   describe('.scopes()', function() {
     it('should return scopes', function() {
-      const doc = ["scope_one"];
-      const d = new SecurityRequirement(doc); // TODO Pointer
+      const scopes = ["scope_one"];
+      const scheme = new SecurityScheme({ type: "oauth2" });
+      const d = new SecurityRequirement({ scheme, scopes })
+      expect(d.scopes()).toEqual(scopes);     
+    });
 
-      expect(d.scopes()).toEqual(doc);     
+    it('should return empty array when scopes are omit', function() {
+      const scheme = new SecurityScheme({ type: "oauth2" });
+      const d = new SecurityRequirement({ scheme })
+      expect(d.scopes()).toEqual([]);     
     });
   });
 });

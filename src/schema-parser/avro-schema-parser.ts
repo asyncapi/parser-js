@@ -5,6 +5,8 @@ import type { Schema } from "avsc";
 import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from "../schema-parser";
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
+import type { v2 } from '../spec-types';
+
 type AvroSchema = Schema & { [key: string]: any } & any;
 
 export function AvroSchemaParser(): SchemaParser {
@@ -65,7 +67,7 @@ const INT_MAX = Math.pow(2, 31) - 1;
 const LONG_MIN = Math.pow(-2, 63);
 const LONG_MAX = Math.pow(2, 63) - 1;
 
-const typeMappings: { [key: string]: JSONSchema7TypeName } = {
+const typeMappings: Record<string, JSONSchema7TypeName> = {
   null: 'null',
   boolean: 'boolean',
   int: 'integer',
@@ -82,7 +84,7 @@ const typeMappings: { [key: string]: JSONSchema7TypeName } = {
   uuid: 'string',
 };
 
-function commonAttributesMapping(avroDefinition: AvroSchema, jsonSchema: AsyncAPISchema, isTopLevel: boolean): void {
+function commonAttributesMapping(avroDefinition: AvroSchema, jsonSchema: v2.AsyncAPISchemaDefinition, isTopLevel: boolean): void {
   if (avroDefinition.doc) jsonSchema.description = avroDefinition.doc;
   if (avroDefinition.default !== undefined) jsonSchema.default = avroDefinition.default;
 
@@ -112,7 +114,7 @@ function getFullyQualifiedName(avroDefinition: AvroSchema) {
  * @param parentJsonSchema the parent json schema which contains the required property to enrich
  * @param haveDefaultValue we assure that a required field does not have a default value
  */
-function requiredAttributesMapping(fieldDefinition: any, parentJsonSchema: AsyncAPISchema, haveDefaultValue: boolean): void {
+function requiredAttributesMapping(fieldDefinition: any, parentJsonSchema: v2.AsyncAPISchemaDefinition, haveDefaultValue: boolean): void {
   const isUnionWithNull = Array.isArray(fieldDefinition.type) && fieldDefinition.type.includes('null');
 
   // we assume that a union type without null and a field without default value is required
@@ -122,7 +124,7 @@ function requiredAttributesMapping(fieldDefinition: any, parentJsonSchema: Async
   }
 };
 
-function extractNonNullableTypeIfNeeded(typeInput: any, jsonSchemaInput: AsyncAPISchema): { type: string, jsonSchema: AsyncAPISchema } {
+function extractNonNullableTypeIfNeeded(typeInput: any, jsonSchemaInput: v2.AsyncAPISchemaDefinition): { type: string, jsonSchema: v2.AsyncAPISchemaDefinition } {
   let type = typeInput;
   let jsonSchema = jsonSchemaInput;
   // Map example to first non-null type
@@ -130,13 +132,13 @@ function extractNonNullableTypeIfNeeded(typeInput: any, jsonSchemaInput: AsyncAP
     const pickSecondType = typeInput.length > 1 && typeInput[0] === 'null';
     type = typeInput[+pickSecondType];
     if (jsonSchema.oneOf !== undefined) {
-      jsonSchema = jsonSchema.oneOf[0] as AsyncAPISchema;
+      jsonSchema = jsonSchema.oneOf[0] as v2.AsyncAPISchemaDefinition;
     }
   }
   return { type, jsonSchema };
 }
 
-function exampleAttributeMapping(type: any, example: any, jsonSchema: AsyncAPISchema): void {
+function exampleAttributeMapping(type: any, example: any, jsonSchema: v2.AsyncAPISchemaDefinition): void {
   if (example === undefined || jsonSchema.examples || Array.isArray(type)) return;
 
   switch (type) {
@@ -151,7 +153,7 @@ function exampleAttributeMapping(type: any, example: any, jsonSchema: AsyncAPISc
   }
 };
 
-function additionalAttributesMapping(typeInput: any, avroDefinition: AvroSchema, jsonSchemaInput: AsyncAPISchema): void {
+function additionalAttributesMapping(typeInput: any, avroDefinition: AvroSchema, jsonSchemaInput: v2.AsyncAPISchemaDefinition): void {
   const __ret = extractNonNullableTypeIfNeeded(typeInput, jsonSchemaInput);
   const type = __ret.type;
   const jsonSchema = __ret.jsonSchema;
@@ -211,8 +213,8 @@ function cacheAvroRecordDef(cache: {[key:string]: AsyncAPISchema}, key: string, 
   }
 }
 
-async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: boolean, recordCache: Map<string, AsyncAPISchema> | any = {}): Promise<AsyncAPISchema> {
-  const jsonSchema: AsyncAPISchema = {};
+async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: boolean, recordCache: Map<string, v2.AsyncAPISchemaDefinition> | any = {}): Promise<v2.AsyncAPISchemaDefinition> {
+  const jsonSchema: v2.AsyncAPISchemaDefinition = {};
   const isUnion = Array.isArray(avroDefinition);
 
   if (isUnion) {
@@ -275,7 +277,7 @@ async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: 
  * @param jsonSchema the schema for the record.
  * @returns {Promise<Map<string, any>>}
  */
-async function processRecordSchema(avroDefinition: AvroSchema, recordCache: {[key:string]: AsyncAPISchema}, jsonSchema: AsyncAPISchema): Promise<Map<string, any>> {
+async function processRecordSchema(avroDefinition: AvroSchema, recordCache: Record<string, v2.AsyncAPISchemaDefinition>, jsonSchema: v2.AsyncAPISchemaDefinition): Promise<Map<string, any>> {
   const propsMap = new Map<string, any>();
   for (const field of avroDefinition.fields) {
     // If the type is a sub schema it will have been stored in the cache.
@@ -307,7 +309,7 @@ async function processRecordSchema(avroDefinition: AvroSchema, recordCache: {[ke
  * @param recordCache the cache of previously processed record types
  * @returns {Promise<AsyncAPISchema>} the mutated jsonSchema that was provided to the function
  */
-async function processUnionSchema(jsonSchema: AsyncAPISchema, avroDefinition: AvroSchema, isTopLevel: boolean, recordCache: {[key:string]: AsyncAPISchema}): Promise<AsyncAPISchema> {
+async function processUnionSchema(jsonSchema: v2.AsyncAPISchemaDefinition, avroDefinition: AvroSchema, isTopLevel: boolean, recordCache: Record<string, v2.AsyncAPISchemaDefinition>): Promise<v2.AsyncAPISchemaDefinition> {
   jsonSchema.oneOf = [];
   let nullDef = null;
   for (const avroDef of avroDefinition) {

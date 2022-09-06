@@ -7,8 +7,4 @@ export class OperationTraits extends Collection<OperationTraitInterface> impleme
   override get(id: string): OperationTraitInterface | undefined {
     return this.collections.find(trait => trait.id() === id);
   }
-
-  override has(id: string): boolean {
-    return this.collections.some(trait => trait.id() === id);
-  }
 }

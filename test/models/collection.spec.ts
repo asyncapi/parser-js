@@ -11,11 +11,7 @@ describe('Collection model', function() {
   class Model extends Collection<ItemModel> {
     override get(name: string): ItemModel | undefined {
       return this.collections.find(item => item.name() === name);
-    };
-  
-    override has(name: string): boolean {
-      return this.collections.some(item => item.name() === name);
-    };
+    }
   };
 
   describe('.isEmpty()', function() {

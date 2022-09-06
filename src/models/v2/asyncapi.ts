@@ -82,7 +82,7 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
   securitySchemes(): SecuritySchemesInterface {
     return new SecuritySchemes(
       Object.entries(this._json.components?.securitySchemes || {}).map(([securitySchemeName, securityScheme]) => 
-        this.createModel(SecurityScheme, securityScheme, { id: securitySchemeName, pointer: `/components/securitySchemes/${securitySchemeName}` })
+        this.createModel(SecurityScheme, securityScheme as v2.SecuritySchemeObject, { id: securitySchemeName, pointer: `/components/securitySchemes/${securitySchemeName}` })
       )
     );
   }

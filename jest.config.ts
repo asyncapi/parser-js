@@ -2,11 +2,11 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   coverageReporters: [
-    'json-summary',
-    'lcov',
     'text'
   ],
-  preset: 'ts-jest',
+  transform: {
+    "^.+\\.(t|j)sx?$": "@swc/jest",
+  },
   // The root of your source code, typically /src
   // `<rootDir>` is a token Jest substitutes
   roots: ['<rootDir>'],

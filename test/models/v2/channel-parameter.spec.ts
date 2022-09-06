@@ -16,7 +16,7 @@ describe('ChannelParameter model', function() {
 
   describe('.hasLocation()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.ParameterObject>({ location: "..." });
+      const doc = serializeInput<v2.ParameterObject>({ location: '...' });
       const d = new ChannelParameter(doc);
       expect(d.hasLocation()).toEqual(true);
     });
@@ -30,7 +30,7 @@ describe('ChannelParameter model', function() {
 
   describe('.location()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.ParameterObject>({ location: "..." });
+      const doc = serializeInput<v2.ParameterObject>({ location: '...' });
       const d = new ChannelParameter(doc);
       expect(d.location()).toEqual(doc.location);
     });

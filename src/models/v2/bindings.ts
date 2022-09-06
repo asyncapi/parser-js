@@ -1,16 +1,16 @@
-import { Collection } from "../collection";
-import { Extensions } from "./extensions";
-import { Extension } from "./extension";
+import { Collection } from '../collection';
+import { Extensions } from './extensions';
+import { Extension } from './extension';
 
-import { createModel } from "../utils";
+import { createModel } from '../utils';
 import { EXTENSION_REGEX } from '../../constants';
 
-import type { BindingsInterface } from "../bindings";
-import type { BindingInterface } from "../binding";
-import type { ExtensionsInterface } from "../extensions";
-import type { ExtensionInterface } from "../extension";
+import type { BindingsInterface } from '../bindings';
+import type { BindingInterface } from '../binding';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExtensionInterface } from '../extension';
 
-import type  { v2 } from "../../spec-types";
+import type  { v2 } from '../../spec-types';
 
 export class Bindings extends Collection<BindingInterface> implements BindingsInterface {
   override get<T extends Record<string, any> = Record<string, any>>(name: string): BindingInterface<T> | undefined {

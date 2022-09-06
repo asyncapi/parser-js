@@ -1,4 +1,4 @@
-import { BaseModel } from "../base";
+import { BaseModel } from '../base';
 import { CorrelationId } from './correlation-id';
 import { MessageExamples } from './message-examples';
 import { MessageExample } from './message-example';
@@ -7,16 +7,16 @@ import { Schema } from './schema';
 import { getDefaultSchemaFormat } from '../../schema-parser';
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
 
-import type { BindingsInterface } from "../bindings";
-import type { CorrelationIdInterface } from "../correlation-id";
-import type { ExtensionsInterface } from "../extensions";
-import type { ExternalDocumentationInterface } from "../external-docs";
-import type { MessageExamplesInterface } from "../message-examples";
-import type { MessageTraitInterface } from "../message-trait";
-import type { SchemaInterface } from "../schema";
-import type { TagsInterface } from "../tags";
+import type { BindingsInterface } from '../bindings';
+import type { CorrelationIdInterface } from '../correlation-id';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExternalDocumentationInterface } from '../external-docs';
+import type { MessageExamplesInterface } from '../message-examples';
+import type { MessageTraitInterface } from '../message-trait';
+import type { SchemaInterface } from '../schema';
+import type { TagsInterface } from '../tags';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends BaseModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {
@@ -104,7 +104,7 @@ export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObjec
   examples(): MessageExamplesInterface {
     return new MessageExamples(
       (this._json.examples || []).map((example: any, index: number) => {
-        return this.createModel(MessageExample, example, { pointer: `${this._meta.pointer}/examples/${index}` })
+        return this.createModel(MessageExample, example, { pointer: `${this._meta.pointer}/examples/${index}` });
       })
     );
   }

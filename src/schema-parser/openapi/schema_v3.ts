@@ -1,274 +1,275 @@
+/* eslint-disable */
 // From https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json
 export const schemaV3 ={
-  "type": "object",
-  "definitions": {
-    "Reference": {
-      "type": "object",
-      "required": ["$ref"],
-      "patternProperties": {
-        "^\\$ref$": {
-          "type": "string",
-          "format": "uri-reference"
+  type: 'object',
+  definitions: {
+    Reference: {
+      type: 'object',
+      required: ['$ref'],
+      patternProperties: {
+        '^\\$ref$': {
+          type: 'string',
+          format: 'uri-reference'
         }
       }
     },
-    "Discriminator": {
-      "type": "object",
-      "required": ["propertyName"],
-      "properties": {
-        "propertyName": {
-          "type": "string"
+    Discriminator: {
+      type: 'object',
+      required: ['propertyName'],
+      properties: {
+        propertyName: {
+          type: 'string'
         },
-        "mapping": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
+        mapping: {
+          type: 'object',
+          additionalProperties: {
+            type: 'string'
           }
         }
       }
     },
-    "ExternalDocumentation": {
-      "type": "object",
-      "required": ["url"],
-      "properties": {
-        "description": {
-          "type": "string"
+    ExternalDocumentation: {
+      type: 'object',
+      required: ['url'],
+      properties: {
+        description: {
+          type: 'string'
         },
-        "url": {
-          "type": "string",
-          "format": "uri-reference"
+        url: {
+          type: 'string',
+          format: 'uri-reference'
         }
       },
-      "patternProperties": {
-        "^x-": {}
+      patternProperties: {
+        '^x-': {}
       },
-      "additionalProperties": false
+      additionalProperties: false
     },
-    "XML": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+    XML: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string'
         },
-        "namespace": {
-          "type": "string",
-          "format": "uri"
+        namespace: {
+          type: 'string',
+          format: 'uri'
         },
-        "prefix": {
-          "type": "string"
+        prefix: {
+          type: 'string'
         },
-        "attribute": {
-          "type": "boolean",
-          "default": false
+        attribute: {
+          type: 'boolean',
+          default: false
         },
-        "wrapped": {
-          "type": "boolean",
-          "default": false
+        wrapped: {
+          type: 'boolean',
+          default: false
         }
       },
-      "patternProperties": {
-        "^x-": {}
+      patternProperties: {
+        '^x-': {}
       },
-      "additionalProperties": false
+      additionalProperties: false
     }
   },
-  "properties": {
-    "title": {
-      "type": "string"
+  properties: {
+    title: {
+      type: 'string'
     },
-    "multipleOf": {
-      "type": "number",
-      "exclusiveMinimum": 0
+    multipleOf: {
+      type: 'number',
+      exclusiveMinimum: 0
     },
-    "maximum": {
-      "type": "number"
+    maximum: {
+      type: 'number'
     },
-    "exclusiveMaximum": {
-      "type": "boolean",
-      "default": false
+    exclusiveMaximum: {
+      type: 'boolean',
+      default: false
     },
-    "minimum": {
-      "type": "number"
+    minimum: {
+      type: 'number'
     },
-    "exclusiveMinimum": {
-      "type": "boolean",
-      "default": false
+    exclusiveMinimum: {
+      type: 'boolean',
+      default: false
     },
-    "maxLength": {
-      "type": "integer",
-      "minimum": 0
+    maxLength: {
+      type: 'integer',
+      minimum: 0
     },
-    "minLength": {
-      "type": "integer",
-      "minimum": 0,
-      "default": 0
+    minLength: {
+      type: 'integer',
+      minimum: 0,
+      default: 0
     },
-    "pattern": {
-      "type": "string",
-      "format": "regex"
+    pattern: {
+      type: 'string',
+      format: 'regex'
     },
-    "maxItems": {
-      "type": "integer",
-      "minimum": 0
+    maxItems: {
+      type: 'integer',
+      minimum: 0
     },
-    "minItems": {
-      "type": "integer",
-      "minimum": 0,
-      "default": 0
+    minItems: {
+      type: 'integer',
+      minimum: 0,
+      default: 0
     },
-    "uniqueItems": {
-      "type": "boolean",
-      "default": false
+    uniqueItems: {
+      type: 'boolean',
+      default: false
     },
-    "maxProperties": {
-      "type": "integer",
-      "minimum": 0
+    maxProperties: {
+      type: 'integer',
+      minimum: 0
     },
-    "minProperties": {
-      "type": "integer",
-      "minimum": 0,
-      "default": 0
+    minProperties: {
+      type: 'integer',
+      minimum: 0,
+      default: 0
     },
-    "required": {
-      "type": "array",
-      "items": {
-        "type": "string"
+    required: {
+      type: 'array',
+      items: {
+        type: 'string'
       },
-      "minItems": 1,
-      "uniqueItems": true
+      minItems: 1,
+      uniqueItems: true
     },
-    "enum": {
-      "type": "array",
-      "items": {},
-      "minItems": 1,
-      "uniqueItems": false
+    enum: {
+      type: 'array',
+      items: {},
+      minItems: 1,
+      uniqueItems: false
     },
-    "type": {
-      "type": "string",
-      "enum": ["array", "boolean", "integer", "number", "object", "string"]
+    type: {
+      type: 'string',
+      enum: ['array', 'boolean', 'integer', 'number', 'object', 'string']
     },
-    "not": {
-      "oneOf": [
+    not: {
+      oneOf: [
         {
-          "$ref": "#"
+          $ref: '#'
         },
         {
-          "$ref": "#/definitions/Reference"
+          $ref: '#/definitions/Reference'
         }
       ]
     },
-    "allOf": {
-      "type": "array",
-      "items": {
-        "oneOf": [
+    allOf: {
+      type: 'array',
+      items: {
+        oneOf: [
           {
-            "$ref": "#"
+            $ref: '#'
           },
           {
-            "$ref": "#/definitions/Reference"
+            $ref: '#/definitions/Reference'
           }
         ]
       }
     },
-    "oneOf": {
-      "type": "array",
-      "items": {
-        "oneOf": [
+    oneOf: {
+      type: 'array',
+      items: {
+        oneOf: [
           {
-            "$ref": "#"
+            $ref: '#'
           },
           {
-            "$ref": "#/definitions/Reference"
+            $ref: '#/definitions/Reference'
           }
         ]
       }
     },
-    "anyOf": {
-      "type": "array",
-      "items": {
-        "oneOf": [
+    anyOf: {
+      type: 'array',
+      items: {
+        oneOf: [
           {
-            "$ref": "#"
+            $ref: '#'
           },
           {
-            "$ref": "#/definitions/Reference"
+            $ref: '#/definitions/Reference'
           }
         ]
       }
     },
-    "items": {
-      "oneOf": [
+    items: {
+      oneOf: [
         {
-          "$ref": "#"
+          $ref: '#'
         },
         {
-          "$ref": "#/definitions/Reference"
+          $ref: '#/definitions/Reference'
         }
       ]
     },
-    "properties": {
-      "type": "object",
-      "additionalProperties": {
-        "oneOf": [
+    properties: {
+      type: 'object',
+      additionalProperties: {
+        oneOf: [
           {
-            "$ref": "#"
+            $ref: '#'
           },
           {
-            "$ref": "#/definitions/Reference"
+            $ref: '#/definitions/Reference'
           }
         ]
       }
     },
-    "additionalProperties": {
-      "oneOf": [
+    additionalProperties: {
+      oneOf: [
         {
-          "$ref": "#"
+          $ref: '#'
         },
         {
-          "$ref": "#/definitions/Reference"
+          $ref: '#/definitions/Reference'
         },
         {
-          "type": "boolean"
+          type: 'boolean'
         }
       ],
-      "default": true
+      default: true
     },
-    "description": {
-      "type": "string"
+    description: {
+      type: 'string'
     },
-    "format": {
-      "type": "string"
+    format: {
+      type: 'string'
     },
-    "default": {},
-    "nullable": {
-      "type": "boolean",
-      "default": false
+    default: {},
+    nullable: {
+      type: 'boolean',
+      default: false
     },
-    "discriminator": {
-      "$ref": "#/definitions/Discriminator"
+    discriminator: {
+      $ref: '#/definitions/Discriminator'
     },
-    "readOnly": {
-      "type": "boolean",
-      "default": false
+    readOnly: {
+      type: 'boolean',
+      default: false
     },
-    "writeOnly": {
-      "type": "boolean",
-      "default": false
+    writeOnly: {
+      type: 'boolean',
+      default: false
     },
-    "example": {},
-    "externalDocs": {
-      "$ref": "#/definitions/ExternalDocumentation"
+    example: {},
+    externalDocs: {
+      $ref: '#/definitions/ExternalDocumentation'
     },
-    "deprecated": {
-      "type": "boolean",
-      "default": false
+    deprecated: {
+      type: 'boolean',
+      default: false
     },
-    "xml": {
-      "$ref": "#/definitions/XML"
+    xml: {
+      $ref: '#/definitions/XML'
     }
   },
-  "patternProperties": {
-    "^x-": {}
+  patternProperties: {
+    '^x-': {}
   },
-  "additionalProperties": false
-}
+  additionalProperties: false
+};

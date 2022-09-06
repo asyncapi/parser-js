@@ -14,7 +14,7 @@ import type { v2 } from '../../../src/spec-types';
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.AsyncAPIObject>({ asyncapi: "2.0.0" });
+      const doc = serializeInput<v2.AsyncAPIObject>({ asyncapi: '2.0.0' });
       const d = new AsyncAPIDocument(doc);
       expect(d.version()).toEqual(doc.asyncapi);
     });
@@ -28,7 +28,7 @@ describe('AsyncAPIDocument model', function() {
 
   describe('.hasDefaultContentType()', function() {
     it('should return true when there is a value', function() {
-      const doc = serializeInput<v2.AsyncAPIObject>({ defaultContentType: "..." });
+      const doc = serializeInput<v2.AsyncAPIObject>({ defaultContentType: '...' });
       const d = new AsyncAPIDocument(doc);
       expect(d.hasDefaultContentType()).toEqual(true);
     });
@@ -42,7 +42,7 @@ describe('AsyncAPIDocument model', function() {
 
   describe('.defaultContentType()', function() {
     it('should return the value', function() {
-      const doc = serializeInput<v2.AsyncAPIObject>({ defaultContentType: "..." });
+      const doc = serializeInput<v2.AsyncAPIObject>({ defaultContentType: '...' });
       const d = new AsyncAPIDocument(doc);
       expect(d.defaultContentType()).toEqual(doc.defaultContentType);
     });
@@ -69,14 +69,14 @@ describe('AsyncAPIDocument model', function() {
       expect(d.servers()).toBeInstanceOf(Servers);
       expect(d.servers()).toHaveLength(1);
       expect(d.servers().all()[0].id()).toEqual('development');
-    })
+    });
 
     it('should return a collection of servers even if servers are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.servers()).toBeInstanceOf(Servers);
-    })
-  })
+    });
+  });
 
   describe('.channels()', function() {
     it('should return a collection of channels', function() {
@@ -85,14 +85,14 @@ describe('AsyncAPIDocument model', function() {
       expect(d.channels()).toBeInstanceOf(Channels);
       expect(d.channels()).toHaveLength(1);
       expect(d.channels().all()[0].address()).toEqual('user/signup');
-    })
+    });
 
     it('should return a collection of channels even if channels are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.channels()).toBeInstanceOf(Channels);
-    })
-  })
+    });
+  });
 
   describe('.operations()', function() {
     it('should return a collection of operations', function() {
@@ -100,14 +100,14 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations()).toHaveLength(3);
-    })
+    });
 
     it('should return a collection of operations even if operations are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.operations()).toBeInstanceOf(Operations);
-    })
-  })
+    });
+  });
 
   describe('.messages()', function() {
     it('should return a collection of messages', function() {
@@ -115,18 +115,18 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages()).toHaveLength(4);
-    })
+    });
 
     it('should return a collection of messages even if messages are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.messages()).toBeInstanceOf(Messages);
-    })
-  })
+    });
+  });
 
   describe('.schemas()', function() {
-    it.todo('should return a collection of schemas')
-  })
+    it.todo('should return a collection of schemas');
+  });
 
   describe('.securitySchemes()', function() {
     it('should return a collection of securitySchemes', function() {
@@ -134,28 +134,28 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.securitySchemes()).toBeInstanceOf(SecuritySchemes);
       expect(d.securitySchemes()).toHaveLength(2);
-    })
+    });
 
     it('should return a collection of securitySchemes even if securitySchemes are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.securitySchemes()).toBeInstanceOf(SecuritySchemes);
-    })
-  })
+    });
+  });
 
   describe('.components()', function() {
     it('should return a components model', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({ components: {} });
       const d = new AsyncAPIDocument(doc);
       expect(d.components()).toBeInstanceOf(Components);
-    })
+    });
 
     it('should return a components model even if components are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.components()).toBeInstanceOf(Components);
-    })
-  })
+    });
+  });
 
   describe('mixins', function() {
     assertExtensions(AsyncAPIDocument);

@@ -7,20 +7,20 @@ describe('AsyncAPISchemaParser', function () {
   const validSchema = {
     asyncapi: {
       semver: {
-        version: "2.4.0",
+        version: '2.4.0',
       }
     },
     data: {
-      type: "object",
+      type: 'object',
       required: [
-        "name"
+        'name'
       ],
       properties: {
         name: {
-          type: "string"
+          type: 'string'
         },
         address: {
-          type: "string"
+          type: 'string'
         },
       }
     },
@@ -49,15 +49,15 @@ describe('AsyncAPISchemaParser', function () {
     const schema = <ValidateSchemaInput<object>>{
       asyncapi: {
         semver: {
-          version: "2.4.0",
+          version: '2.4.0',
         }
       },
-      path: ["components", "schemas", "schema1", "payload"],
+      path: ['components', 'schemas', 'schema1', 'payload'],
       data: {
-        oneOf: "this should be an array",
+        oneOf: 'this should be an array',
         properties: {
           name: {
-            if: "this should be an if"
+            if: 'this should be an if'
           }
         }
       }

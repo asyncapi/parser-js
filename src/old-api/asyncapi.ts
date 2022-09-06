@@ -139,9 +139,7 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
 
   // TODO: Retrieve all schemas
   allSchemas(): Map<string, Schema> {
-    const schemas = new Map<string, Schema>();
-
-    return schemas;
+    return new Map<string, Schema>();
   }
 
   hasCircular() {

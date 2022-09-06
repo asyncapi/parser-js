@@ -2,10 +2,9 @@ import { BaseModel } from '../../../src/models/base';
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from '../../../src/models/v2/mixins';
 import { BindingsV2, ExtensionsV2, ExternalDocumentationV2, TagsV2 } from '../../../src/models/v2';
 
-
 describe('mixins', function() {
   describe('bindings', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
 
     const doc1 = { bindings: { amqp: { test: 'test1' } } };
     const doc2 = { bindings: {} };
@@ -28,7 +27,7 @@ describe('mixins', function() {
   });
 
   describe('hasDescription', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
 
     const doc1 = { description: 'Testing' };
     const doc2 = { description: '' };
@@ -45,7 +44,7 @@ describe('mixins', function() {
   });
 
   describe('description', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
 
     const doc1 = { description: 'Testing' };
     const doc2 = { description: '' };
@@ -65,7 +64,7 @@ describe('mixins', function() {
   });
 
   describe('extensions', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
   
     const doc1 = { 'x-test': 'testing', test: 'testing' };
     const doc2 = { test: 'testing' };
@@ -88,7 +87,7 @@ describe('mixins', function() {
   });
 
   describe('hasExternalDocs', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
 
     const doc1 = { externalDocs: { url: 'test.com' } };
     const doc2 = { externalDocs: {} };
@@ -105,7 +104,7 @@ describe('mixins', function() {
   });
 
   describe('externalDocs', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
 
     const doc1 = { externalDocs: { url: 'test.com' } };
     const doc2 = { externalDocs: {} };
@@ -126,7 +125,7 @@ describe('mixins', function() {
   });
 
   describe('tags', function() {
-    class Model extends BaseModel {};
+    class Model extends BaseModel {}
 
     const doc1 = { tags: [{ name: 'test1' }, { name: 'test2' }] };
     const doc2 = { tags: [] };

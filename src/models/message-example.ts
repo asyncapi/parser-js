@@ -1,4 +1,4 @@
-import type { BaseModel } from "./base";
+import type { BaseModel } from './base';
 import type { ExtensionsMixinInterface } from './mixins';
 
 export interface MessageExampleInterface extends BaseModel, ExtensionsMixinInterface {

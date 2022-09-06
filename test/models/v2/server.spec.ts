@@ -15,7 +15,7 @@ import { SecurityRequirements } from '../../../src/models/v2/security-requiremen
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 const doc = {
-  'development': {
+  development: {
     protocol: 'mqtt',
     protocolVersion: '1.0.0',
     url: 'development.gigantic-server.com',
@@ -51,7 +51,7 @@ describe('Server Model', function () {
     it('should be false when protocolVersion is missing', function () {
       expect(emptyItem.hasProtocolVersion()).toBeFalsy();
     });
-  })
+  });
 
   describe('.protocolVersion()', function () {
     it('should return value', function () {
@@ -60,8 +60,8 @@ describe('Server Model', function () {
 
     it('should return undefined when protocolVersion is missing', function () {
       expect(emptyItem.protocolVersion()).toBeUndefined();
-    })
-  })
+    });
+  });
 
   describe('.url()', function () {
     it('should return value', function () {
@@ -177,13 +177,13 @@ describe('Server Model', function () {
   describe('.variables()', function () {
     it('should return ServerVariables object', function () {
       expect(docItem.variables()).toBeInstanceOf(ServerVariables);
-    })
-  })
+    });
+  });
 
   describe('.security()', function() {
     it('should return SecurityRequirements', function() {
-      const doc = serializeInput<v2.ServerObject>({ security: [ { requirement: [] } ] });
-      const d = new Server(doc, {pointer: "/servers/test"} as any);
+      const doc = serializeInput<v2.ServerObject>({ security: [{ requirement: [] }] });
+      const d = new Server(doc, {pointer: '/servers/test'} as any);
 
       const security = d.security();
       expect(Array.isArray(security)).toEqual(true);
@@ -194,8 +194,8 @@ describe('Server Model', function () {
       expect(requirement).toBeInstanceOf(SecurityRequirement);
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
-      expect(requirement.meta().id).toEqual("requirement");
-      expect(requirement.meta().pointer).toEqual("/servers/test/security/0/requirement");
+      expect(requirement.meta().id).toEqual('requirement');
+      expect(requirement.meta().pointer).toEqual('/servers/test/security/0/requirement');
     });
     
     it('should return SecurityRequirements when value is undefined', function() {
@@ -211,4 +211,4 @@ describe('Server Model', function () {
     assertDescription(Server);
     assertExtensions(Server);
   });
-})
+});

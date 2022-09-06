@@ -1,20 +1,20 @@
-import { BaseModel } from "../base";
-import { Contact } from "./contact";
-import { ExternalDocumentation } from "./external-docs";
-import { License } from "./license";
-import { Tags } from "./tags";
-import { Tag } from "./tag";
+import { BaseModel } from '../base';
+import { Contact } from './contact';
+import { ExternalDocumentation } from './external-docs';
+import { License } from './license';
+import { Tags } from './tags';
+import { Tag } from './tag';
 
 import { hasDescription, description, extensions } from './mixins';
 
-import type { ContactInterface } from "../contact";
-import type { InfoInterface } from "../info";
-import type { ExtensionsInterface } from "../extensions";
-import type { ExternalDocumentationInterface } from "../external-docs";
-import type { LicenseInterface } from "../license";
-import type { TagsInterface } from "../tags";
+import type { ContactInterface } from '../contact';
+import type { InfoInterface } from '../info';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExternalDocumentationInterface } from '../external-docs';
+import type { LicenseInterface } from '../license';
+import type { TagsInterface } from '../tags';
 
-import type { v2 } from "../../spec-types";
+import type { v2 } from '../../spec-types';
 
 export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
   title(): string {
@@ -64,19 +64,18 @@ export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
 
   license(): LicenseInterface | undefined {
     const license = this._json.license;
-    return license && this.createModel(License, license, { pointer: `/info/license` });
+    return license && this.createModel(License, license, { pointer: '/info/license' });
   }
 
   hasExternalDocs(): boolean {
     return Object.keys(this._meta.asyncapi.parsed.externalDocs || {}).length > 0;
-  };
+  }
 
   externalDocs(): ExternalDocumentationInterface | undefined { 
     if (this.hasExternalDocs()) {
-      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs as v2.ExternalDocumentationObject, { pointer: `/externalDocs` });
+      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
     }
-    return;
-  };
+  }
 
   tags(): TagsInterface {
     const tags = this._meta.asyncapi.parsed.tags || [];

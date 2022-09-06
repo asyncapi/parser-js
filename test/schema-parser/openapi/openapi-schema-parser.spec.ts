@@ -30,28 +30,28 @@ describe('OpenAPISchemaParser', function () {
     expect(result).toHaveLength(6);
     expect(result).toEqual([
       {
-          "message": "must be equal to one of the allowed values",
-          "path": ["properties", "name", "type"]
+        message: 'must be equal to one of the allowed values',
+        path: ['properties', 'name', 'type']
       },
       {
-          "message": "must have required property '$ref'",
-          "path": ["properties", "name"]
+        message: 'must have required property \'$ref\'',
+        path: ['properties', 'name']
       },
       {
-          "message": "must match exactly one schema in oneOf",
-          "path": ["properties","name"]
+        message: 'must match exactly one schema in oneOf',
+        path: ['properties','name']
       },
       {
-          "message": "must be string",
-          "path": ["properties","surname","format"]
+        message: 'must be string',
+        path: ['properties','surname','format']
       },
       {
-          "message": "must have required property '$ref'",
-          "path": ["properties","surname"]
+        message: 'must have required property \'$ref\'',
+        path: ['properties','surname']
       },
       {
-          "message": "must match exactly one schema in oneOf",
-          "path": ["properties","surname"]
+        message: 'must match exactly one schema in oneOf',
+        path: ['properties','surname']
       }
     ]);
   });
@@ -67,25 +67,23 @@ describe('OpenAPISchemaParser', function () {
 
 function toParseInput(raw: string): ParseSchemaInput | ValidateSchemaInput {
   const message = JSON.parse(raw);
-  const schemaInput = {
+  return {
     asyncapi: {
       semver: {
-        version: "2.4.0",
+        version: '2.4.0',
         major: 2,
         minor: 4,
         patch: 0
       }, 
-      source: "",
+      source: '',
       parsed: {} as any,
     },
     data: message.payload,
     meta: {
-      message: message,
+      message,
     },
-    path: ["channels", "myChannel", "publish", "message", "payload"],
+    path: ['channels', 'myChannel', 'publish', 'message', 'payload'],
     schemaFormat: message.schemaFormat,
-    defaultSchemaFormat: "application/vnd.aai.asyncapi;version=2.4.0",
+    defaultSchemaFormat: 'application/vnd.aai.asyncapi;version=2.4.0',
   };
-
-  return schemaInput;
 }

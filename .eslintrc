@@ -1,16 +1,21 @@
+parser: "@typescript-eslint/parser"
+
 env:
   node: true
   es6: true
-  mocha: true
+  jest: true
 
 plugins:
+  - "@typescript-eslint"
   - sonarjs
-  - mocha
   - security
+  - github
 
 extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
   - plugin:sonarjs/recommended
-  - plugin:mocha/recommended
   - plugin:security/recommended
 
 parserOptions:
@@ -23,6 +28,7 @@ rules:
   no-mixed-requires: 0
   no-process-exit: 0
   no-warning-comments: 0
+  no-use-before-define: 0
   curly: 0
   no-multi-spaces: 0
   no-alert: 0
@@ -31,6 +37,10 @@ rules:
   func-style: 0
   max-nested-callbacks: 0
   camelcase: 0
+  no-dupe-class-members: 0
+  security/detect-object-injection: 0
+  sonarjs/no-small-switch: 0
+  sonarjs/no-nested-template-literals: 0
 
   # Warnings
   no-debugger: 1
@@ -60,7 +70,6 @@ rules:
   radix: 2
   wrap-iife: [2, outside]
   no-shadow: 0
-  no-use-before-define: [2, nofunc]
   no-path-concat: 2
   valid-jsdoc: [0, {requireReturn: false, requireParamDescription: false, requireReturnDescription: false}]
 
@@ -91,7 +100,6 @@ rules:
   arrow-spacing: [2, {before: true, after: true}]
   no-class-assign: 2
   no-const-assign: 2
-  no-dupe-class-members: 2
   no-this-before-super: 2
   no-var: 2
   object-shorthand: [2, always]
@@ -100,10 +108,26 @@ rules:
   prefer-spread: 2
   prefer-template: 2
 
+  # TypeScript
+  "@typescript-eslint/no-empty-interface": "off"
+  "@typescript-eslint/no-use-before-define": ["off"]
+  "@typescript-eslint/no-empty-function": "off"
+  "@typescript-eslint/ban-ts-comment": "off"
+  "@typescript-eslint/no-explicit-any": "off"
+  "@typescript-eslint/explicit-module-boundary-types": "off"
+  "@typescript-eslint/no-this-alias": "off"
+  "@typescript-eslint/no-unnecessary-type-constraint": "off"
+  "@typescript-eslint/ban-types": "off"
+
 overrides:
-  - files: "test/**"
+  - files: 
+      - "test/**"
+      - "*.spec.ts"
+      - "*.test.ts"
     rules:
       prefer-arrow-callback: 0
       sonarjs/no-duplicate-string: 0
       security/detect-object-injection: 0
       security/detect-non-literal-fs-filename: 0
+      "@typescript-eslint/no-non-null-assertion": 0
+      "@typescript-eslint/no-unused-vars": 0

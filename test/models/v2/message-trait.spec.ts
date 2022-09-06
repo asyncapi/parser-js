@@ -155,7 +155,7 @@ describe('MessageTrait model', function() {
 
   describe('.hasName()', function() {
     it('should return true when there is a value', function() {
-      const doc = { name: "..." };
+      const doc = { name: '...' };
       const d = new MessageTrait(doc);
       expect(d.hasName()).toEqual(true);
     });
@@ -169,7 +169,7 @@ describe('MessageTrait model', function() {
 
   describe('.name()', function() {
     it('should return the value', function() {
-      const doc = { name: "..." };
+      const doc = { name: '...' };
       const d = new MessageTrait(doc);
       expect(d.name()).toEqual(doc.name);
     });
@@ -183,7 +183,7 @@ describe('MessageTrait model', function() {
 
   describe('.hasTitle()', function() {
     it('should return true when there is a value', function() {
-      const doc = { title: "..." };
+      const doc = { title: '...' };
       const d = new MessageTrait(doc);
       expect(d.hasTitle()).toEqual(true);
     });
@@ -197,7 +197,7 @@ describe('MessageTrait model', function() {
 
   describe('.title()', function() {
     it('should return the value', function() {
-      const doc = { title: "..." };
+      const doc = { title: '...' };
       const d = new MessageTrait(doc);
       expect(d.title()).toEqual(doc.title);
     });
@@ -211,7 +211,7 @@ describe('MessageTrait model', function() {
 
   describe('.hasSummary()', function() {
     it('should return true when there is a value', function() {
-      const doc = { summary: "..." };
+      const doc = { summary: '...' };
       const d = new MessageTrait(doc);
       expect(d.hasSummary()).toEqual(true);
     });
@@ -225,7 +225,7 @@ describe('MessageTrait model', function() {
 
   describe('.summary()', function() {
     it('should return the value', function() {
-      const doc = { summary: "..." };
+      const doc = { summary: '...' };
       const d = new MessageTrait(doc);
       expect(d.summary()).toEqual(doc.summary);
     });
@@ -239,7 +239,7 @@ describe('MessageTrait model', function() {
 
   describe('.examples()', function() {
     it('should return collection of examples', function() {
-      const doc = { examples: [ { name: '...' } ] };
+      const doc = { examples: [{ name: '...' }] };
       const d = new MessageTrait(doc);
       expect(d.examples()).toBeInstanceOf(MessageExamples);
       expect(d.examples().all()).toHaveLength(1);

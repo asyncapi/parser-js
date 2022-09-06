@@ -37,20 +37,20 @@ describe('Bindings model', function () {
     it('should return true if the said id is available', function () {
       const bindings = new Bindings([bindingItem]);
       expect(bindings.has('http')).toEqual(true);
-    })
+    });
 
     it('should return false if the Message Trait id is missing', function () {
       const bindings = new Bindings([bindingItem]);
       expect(bindings.has('anotherProtocol')).toEqual(false);
-    })
-  })
+    });
+  });
 
   describe('.extensions()', function () {
     it('should return empty collection of extensions', function () {
       const bindings = new Bindings([], {});
       expect(bindings.extensions()).toBeInstanceOf(Extensions);
       expect(bindings.extensions().isEmpty()).toEqual(true);
-    })
+    });
 
     it('should return collection of extensions', function () {
       const bindings = new Bindings([], { asyncapi: {} as any, originalData: { 'x-someExtension': { someKey: 'someValue' } as any, 'x-anotherOne': { someKey: 123 } as any } });
@@ -59,6 +59,6 @@ describe('Bindings model', function () {
       expect(bindings.extensions().get('x-someExtension')?.value()).toEqual({ someKey: 'someValue' });
       expect(bindings.extensions().get('x-anotherOne')).toBeInstanceOf(Extension);
       expect(bindings.extensions().get('x-anotherOne')?.value()).toEqual({ someKey: 123 });
-    })
-  })
-})
+    });
+  });
+});

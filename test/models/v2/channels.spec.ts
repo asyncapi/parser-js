@@ -41,35 +41,35 @@ describe('Channels model', function () {
     it('should return true if the said name is available', function () {
       const servers = new Channels([channelItem]);
       expect(servers.has('channel')).toEqual(true);
-    })
+    });
 
     it('should return false if the Channel name is missing', function () {
       const servers = new Channels([channelItem]);
       expect(servers.has('anotherName')).toEqual(false);
-    })
-  })
+    });
+  });
 
   describe('.filterBySend()', function () {
     it('should return all channels with subscribe operation', function () {
       const operations = new Channels(channelItems);
       expect(operations.filterBySend()).toEqual([channelItems[2], channelItems[3]]);
-    })
+    });
 
     it('should return empty if there are no channels with operations with subscribe action', function () {
       const operations = new Channels([channelItems[0], channelItems[1]]);
       expect(operations.filterBySend()).toEqual([]);
-    })
-  })
+    });
+  });
 
   describe('.filterByReceive()', function () {
     it('should return all channels with publish operation', function () {
       const operations = new Channels(channelItems);
       expect(operations.filterByReceive()).toEqual([channelItems[0], channelItems[1]]);
-    })
+    });
 
     it('should return empty if there are no channels with operations with publish action', function () {
       const operations = new Channels([channelItems[2], channelItems[3]]);
       expect(operations.filterByReceive()).toEqual([]);
-    })
-  })
-})
+    });
+  });
+});

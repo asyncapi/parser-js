@@ -5,7 +5,7 @@ import { SpecificationExtensionsModel, description, hasDescription } from './mix
 import type { v2 } from '../spec-types';
 
 export class Info extends SpecificationExtensionsModel<v2.InfoObject> {
-   title() {
+  title() {
     return this._json.title;
   }
   

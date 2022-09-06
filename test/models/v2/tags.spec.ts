@@ -35,11 +35,11 @@ describe('Tags model', function () {
     it('should return true if the said name is available', function () {
       const servers = new Tags([tagItem]);
       expect(servers.has('test')).toBeTruthy();
-    })
+    });
 
     it('should return false if the Tag name is missing', function () {
       const servers = new Tags([tagItem]);
       expect(servers.has('anotherName')).toBeFalsy();
-    })
-  })
-})
+    });
+  });
+});

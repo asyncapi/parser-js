@@ -1,6 +1,6 @@
-import type { BaseModel } from "./base";
-import type { ExtensionsMixinInterface, ExternalDocumentationMixinInterface } from "./mixins";
-import type { v2 } from "../spec-types";
+import type { BaseModel } from './base';
+import type { ExtensionsMixinInterface, ExternalDocumentationMixinInterface } from './mixins';
+import type { v2 } from '../spec-types';
 
 export interface SchemaInterface extends BaseModel<v2.AsyncAPISchemaObject>, ExtensionsMixinInterface, ExternalDocumentationMixinInterface {
   uid(): string;

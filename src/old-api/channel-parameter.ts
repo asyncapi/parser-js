@@ -14,7 +14,7 @@ export class ChannelParameter extends SpecificationExtensionsModel<v2.ParameterO
   
   schema() {
     if (!this._json.schema) return null;
-    return new Schema(this._json.schema);
+    return new Schema(this._json.schema as any);
   }
 
   location() {

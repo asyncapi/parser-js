@@ -11,7 +11,7 @@ export class MessageTrait<T> extends SpecificationExtensionsModel<T & v2.Message
 
   headers() {
     if (!this._json.headers) return null;
-    return new Schema(this._json.headers);
+    return new Schema(this._json.headers as any);
   }
 
   header(name: string) {
@@ -24,7 +24,7 @@ export class MessageTrait<T> extends SpecificationExtensionsModel<T & v2.Message
     return new CorrelationId(this._json.correlationId as v2.CorrelationIDObject);
   }
 
-  schemaFormat(): string {
+  schemaFormat() {
     return this._json.schemaFormat as string; // Old API points always to the default schema format for given AsyncAPI version, so we need to force returned type as string.
   }
 

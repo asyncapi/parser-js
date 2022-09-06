@@ -42,11 +42,11 @@ export class Components extends SpecificationExtensionsModel<v2.ComponentsObject
   }
 
   schemas() {
-    return createMapOfType(this._json.schemas, Schema);
+    return createMapOfType(this._json.schemas as any, Schema);
   }
 
   schema(name: string) {
-    return getMapValue(this._json.schemas, name, Schema);
+    return getMapValue(this._json.schemas as any, name, Schema);
   }
 
   hasSecuritySchemes() {

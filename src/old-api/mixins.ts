@@ -125,20 +125,20 @@ type InferModelData<T> = T extends Base<infer J> ? J : never;
 type InferModelMetadata<T> = T extends Base<infer J, infer M> ? M : never;
 
 export function getMapValue<T extends Record<string, any>, K extends keyof T>(obj: T | undefined, key: K): T[K] | null;
-export function getMapValue<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, key: string, Type: Constructor<T>, options?: InferModelMetadata<T>): T | null;
-export function getMapValue<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, key: string, Type?: Constructor<T>, options?: InferModelMetadata<T>) {
+export function getMapValue<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, key: string, Type: Constructor<T>, meta?: InferModelMetadata<T>): T | null;
+export function getMapValue<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, key: string, Type?: Constructor<T>, meta?: InferModelMetadata<T>) {
   if (typeof key !== 'string' || !obj) return null;
   const v = obj[String(key)];
   if (v === undefined) return null;
-  return Type ? new Type(v, options) : v;
+  return Type ? new Type(v, meta) : v;
 };
 
-export function createMapOfType<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, Type: Constructor<T>, options?: InferModelMetadata<T>): Record<string, T> {
+export function createMapOfType<T extends Base>(obj: Record<string, InferModelData<T>> | undefined, Type: Constructor<T>, meta?: InferModelMetadata<T>): Record<string, T> {
   const result: Record<string, T> = {};
   if (!obj) return result;
 
   Object.entries(obj).forEach(([key, value]) => {
-    result[key] = new Type(value, options);
+    result[key] = new Type(value, meta);
   });
 
   return result;

@@ -159,7 +159,6 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
 
   static parse(doc: string): AsyncAPIDocument | undefined {
     const possibleDocument = unstringify(doc);
-    if (!possibleDocument) return;
-    return new AsyncAPIDocument(possibleDocument.json());
+    return possibleDocument ? new AsyncAPIDocument(possibleDocument.json()) : undefined;
   }
 }

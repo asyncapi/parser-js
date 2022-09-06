@@ -31,6 +31,8 @@
     "@semantic-release/github": "7.2.3",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "@swc/core": "^1.2.248",
+    "@swc/jest": "^0.2.22",
     "@types/jest": "^27.4.1",
     "@types/js-yaml": "^4.0.5",
     "@types/json-schema": "^7.0.11",

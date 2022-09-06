@@ -13,14 +13,10 @@ export class Messages extends Collection<MessageInterface> implements MessagesIn
   }
 
   filterBySend(): MessageInterface[] {
-      return this.filterBy(function (messages: MessageInterface): boolean {
-        return messages.operations().filterBySend().length > 0;
-      })
+    return this.filterBy(message => message.operations().filterBySend().length > 0);
   }
 
   filterByReceive(): MessageInterface[] {
-    return this.filterBy(function (messages: MessageInterface): boolean {
-      return messages.operations().filterByReceive().length > 0;
-    });
+    return this.filterBy(message => message.operations().filterByReceive().length > 0);
   }
 }

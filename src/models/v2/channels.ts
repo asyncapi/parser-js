@@ -13,14 +13,10 @@ export class Channels extends Collection<ChannelInterface> implements ChannelsIn
   }
 
   filterBySend(): ChannelInterface[] {
-      return this.filterBy(function (channel: ChannelInterface): boolean {
-        return channel.operations().filterBySend().length > 0;
-      })
+    return this.filterBy(channel => channel.operations().filterBySend().length > 0);
   }
 
   filterByReceive(): ChannelInterface[] {
-    return this.filterBy(function (channel: ChannelInterface): boolean {
-      return channel.operations().filterByReceive().length > 0;
-    });
+    return this.filterBy(channel => channel.operations().filterByReceive().length > 0);
   }
 }

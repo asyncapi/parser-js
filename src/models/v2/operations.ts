@@ -13,14 +13,10 @@ export class Operations extends Collection<OperationInterface> implements Operat
   }
 
   filterBySend(): OperationInterface[] {
-    return this.filterBy(function (operation: OperationInterface): boolean {
-      return operation.isSend();
-    })
+    return this.filterBy(operation => operation.isSend());
   }
 
   filterByReceive(): OperationInterface[] {
-    return this.filterBy(function (operation: OperationInterface): boolean {
-      return operation.isReceive();
-    });
+    return this.filterBy(operation => operation.isReceive());
   }
 }

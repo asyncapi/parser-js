@@ -12,14 +12,10 @@ export class Servers extends Collection<ServerInterface> implements ServersInter
   }
 
   filterBySend(): ServerInterface[] {
-    return this.filterBy(function (server: ServerInterface): boolean {
-      return server.operations().filterBySend().length > 0;
-    })
+    return this.filterBy(server => server.operations().filterBySend().length > 0);
   }
 
   filterByReceive(): ServerInterface[] {
-    return this.filterBy(function (server: ServerInterface): boolean {
-      return server.operations().filterByReceive().length > 0;
-    });
+    return this.filterBy(server => server.operations().filterByReceive().length > 0);
   }
 }

@@ -12,6 +12,7 @@ export const xParserOriginalPayload = 'x-parser-original-payload';
 export const xParserOriginalTraits = 'x-parser-original-traits';
 
 export const xParserCircular = 'x-parser-circular';
+export const xParserCircularProps = 'x-parser-circular-props';
 
 export const EXTENSION_REGEX = /^x-[\w\d\.\-\_]+$/;
 

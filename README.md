@@ -209,6 +209,8 @@ const parser = new Parser();
 const { parsed, diagnostics } = parser.parse(...);
 ```
 
+> **NOTE**: The package uses some native NodeJS modules underneath. If you are building a front-end application you can find more information about the correct configuration for Webpack [here](#webpack).
+
 ## Custom schema parsers
 <<<<<<< next-major
 
@@ -303,6 +305,24 @@ A few advantages of this solution:
 - All references (also circular) are preserved.
 
 Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify).
+
+## Bundler configuration
+
+### Webpack
+
+Versions `<5` of Webpack should handle bundling without problems. Due to the fact that Webpack 5 no longer does fallbacks to native NodeJS modules by default we need to install `buffer` package and add fallbacks:
+
+```js
+{
+  resolve: {
+    fallback: {
+      "fs": false,
+      "path": false,
+      "buffer": require.resolve("buffer/"),
+    }
+  }
+}
+```
 
 ## Develop
 

@@ -6,6 +6,6 @@ import type { ExtensionInterface } from '../extension';
 export class Extensions extends Collection<ExtensionInterface> implements ExtensionsInterface {
   override get<T = any>(name: string): ExtensionInterface<T> | undefined {
     name = name.startsWith('x-') ? name : `x-${name}`;
-    return this.collections.find(ext => ext.name() === name);
+    return this.collections.find(ext => ext.id() === name);
   }
 }

@@ -176,29 +176,41 @@ Direct access to the parsed JSON document is always available through the `doc.j
 
 See [API documentation](./docs/api.md) for more examples and full API reference information.
 
-## Using in the browser
+## Using in the browser/SPA apps
 
-The package contains a built-in version of the parser, which is created via [`browserify`](https://github.com/browserify/browserify). To use it, you need to import the parser into the HTML file as below:
+The package contains a built-in version of the parser. To use it, you need to import the parser into the HTML file as below:
 
 ```html
-<! –– TBD ––> 
+<script src="https://unpkg.com/@asyncapi/parser@latest/browser/index.js"></script>
+
+<script>
+  const parser = new window.AsyncAPIParser();
+  const { parsed, diagnostics } = parser.parse(...);
+</script>
 ```
 
-Or, if you want to use a parser in a JS application of the SPA kind, import the parser as shown below:
+Or, if you want to use the parser in a JS SPA-type application where you have a predefined bundler configuration that is difficult to change (e.g. you use [`create-react-app`](https://github.com/facebook/create-react-app)) then you can import the parser as below:
 
 ```js
-// TBD
+import Parser from '@asyncapi/parser/browser';
+
+const parser = new Parser();
+const { parsed, diagnostics } = parser.parse(...);
 ```
 
-Otherwise, if your application is bundled via bundlers like `webpack`, you can import the parser like a regular package:
+> **NOTE**: Using the above code, we import the entire bundled parser into application. This may result in duplicate code in the final application bundle, only if the application uses the same dependencies what the parser. If, on the other hand, you want to have the smallest bundle possible, we recommend using the following import and properly configure bundler.
+
+Otherwise, if your application is bundled via bundlers like `webpack` and you can configure it, you can import the parser like a regular package:
 
 ```js
-// TBD
-```
+import { Parser } from '@asyncapi/parser';
 
-In case you just want to check out the latest `bundle.js` without installing the package, we publish one on each GitHub release. You can find it under [this link to the latest release](https://github.com/asyncapi/parser-js/releases/latest/download/bundle.js).
+const parser = new Parser();
+const { parsed, diagnostics } = parser.parse(...);
+```
 
 ## Custom schema parsers
+<<<<<<< next-major
 
 AsyncAPI doesn't enforce one schema format. The payload of the messages can be described with OpenAPI (3.0.0), Avro, etc. This parser by default parses only [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) (superset of JSON Schema Format). We can extend it by creating a custom parser and registering it within the parser:
 
@@ -222,6 +234,8 @@ AsyncAPI doesn't enforce one schema format. The payload of the messages can be d
       }
     }
     ```
+=======
+>>>>>>> add tests and docs
 
 2. Before parsing/validating an AsyncAPI document with a parser, register the additional custom schema parser:
 

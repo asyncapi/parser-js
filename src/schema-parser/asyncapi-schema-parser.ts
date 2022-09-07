@@ -1,6 +1,4 @@
 import Ajv from 'ajv';
-// @ts-ignore
-import specs from '@asyncapi/specs';
 
 import { specVersions } from '../constants';
 
@@ -8,6 +6,13 @@ import type { ErrorObject, ValidateFunction } from 'ajv';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
 import type { v2 } from '../spec-types';
+
+// import only 2.X.X AsyncAPI JSON Schemas for better treeshaking
+import * as asyncAPI2_0_0Schema from '@asyncapi/specs/schemas/2.0.0.json';
+import * as asyncAPI2_1_0Schema from '@asyncapi/specs/schemas/2.1.0.json';
+import * as asyncAPI2_2_0Schema from '@asyncapi/specs/schemas/2.2.0.json';
+import * as asyncAPI2_3_0Schema from '@asyncapi/specs/schemas/2.3.0.json';
+import * as asyncAPI2_4_0Schema from '@asyncapi/specs/schemas/2.4.0.json';
 
 const ajv = new Ajv({
   allErrors: true,
@@ -69,7 +74,7 @@ function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
 function getSchemaValidator(version: string): ValidateFunction {
   let validator = ajv.getSchema(version);
   if (!validator) {
-    const schema = preparePayloadSchema(specs[version], version);
+    const schema = preparePayloadSchema(getSchema(version), version);
 
     ajv.addSchema(schema, version);
     validator = ajv.getSchema(version);
@@ -97,4 +102,21 @@ function preparePayloadSchema(asyncapiSchema: v2.AsyncAPISchemaDefinition, versi
     $ref: payloadSchema,
     definitions
   };
+}
+
+function getSchema(version: string): Record<string, unknown> {
+  switch (version) {
+  case '2.0.0':
+    return asyncAPI2_0_0Schema;
+  case '2.1.0':
+    return asyncAPI2_1_0Schema;
+  case '2.2.0':
+    return asyncAPI2_2_0Schema;
+  case '2.3.0':
+    return asyncAPI2_3_0Schema;
+  case '2.4.0':
+    return asyncAPI2_4_0Schema;
+  default:
+    throw new Error(`Specification with "${version}" version does not exist.`);
+  }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="content"></div>
+    <div id="diagnostics"></div>
+  </body>
+
+  <script src="./parser.js"></script>
+  <script defer>
+    async function parse() {
+      try {
+        const parser = new window.AsyncAPIParser();
+        const spec = '{ "asyncapi": "2.0.0", "info": { "title": "My API", "version": "1.0.0" }, "channels": { "/test/tester": { "subscribe": { "operationId": "subscribeOperation", "message": { } } } } }';
+        const { parsed, diagnostics } = await parser.parse(spec);
+
+        document.getElementById('content').innerHTML = parsed.version();
+        document.getElementById('diagnostics').innerHTML = String(diagnostics.length);
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    parse();
+  </script>
+</html>

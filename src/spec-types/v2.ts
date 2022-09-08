@@ -290,7 +290,7 @@ export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
   default?: JSONSchema7Type;
   readOnly?: boolean;
   writeOnly?: boolean;
-  examples?: Array<JSONSchema7Type> | undefined;
+  examples?: Array<JSONSchema7Type>;
 
   discriminator?: string;
   externalDocs?: ExternalDocumentationObject;

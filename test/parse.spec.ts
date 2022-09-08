@@ -66,7 +66,7 @@ describe('parse()', function() {
           }
         }
       }
-    }
+    };
     const { parsed } = await parse(parser, document);
     
     const publishMessage = parsed?.channels().get('channel')?.operations().get('publishOperation')?.messages()[0];
@@ -106,7 +106,7 @@ describe('parse()', function() {
           }
         }
       }
-    }
+    };
     const { parsed } = await parse(parser, document);
 
     const messagePayload = parsed?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
@@ -141,7 +141,7 @@ describe('parse()', function() {
           }
         }
       }
-    }
+    };
     const { parsed } = await parse(parser, document, { validateOptions: { path: __filename } });
 
     const messagePayload = parsed?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();

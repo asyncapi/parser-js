@@ -12,7 +12,6 @@ describe('utils', function() {
   class Model extends BaseModel {}
 
   describe('toAsyncAPIDocument()', function() {
-
     it('normal object should not return AsyncAPIDocument instance', function() {
       expect(toAsyncAPIDocument({})).toEqual(undefined);
     });

@@ -90,7 +90,7 @@ export function untilde(str: string) {
     }
     return sub;
   });
-};
+}
 
 export function retrievePossibleRef(data: any & { $ref?: string }, pathOfData: string, spec: any = {}): any {
   if (!hasRef(data)) {
@@ -114,7 +114,7 @@ function retrieveDeepData(value: Record<string, any>, path: string[]) {
   while (typeof value === 'object' && value && index < length) {
     value = value[path[index++]];
   }
-  return index == length ? value : undefined;
+  return index === length ? value : undefined;
 }
 
 function serializePath(path: string) {

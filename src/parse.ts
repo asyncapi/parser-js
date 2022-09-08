@@ -1,10 +1,10 @@
 import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
 
 import { customOperations } from './custom-operations';
-import { validate } from "./lint";
+import { validate } from './lint';
 import { unfreeze } from './stringify';
-import { toAsyncAPIDocument } from "./document";
-import { createDetailedAsyncAPI, normalizeInput } from "./utils";
+import { toAsyncAPIDocument } from './document';
+import { createDetailedAsyncAPI, normalizeInput } from './utils';
 
 import { xParserSpecParsed } from './constants';
 

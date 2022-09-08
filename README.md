@@ -293,8 +293,8 @@ Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify
 ## Develop
 
 1. Write code and tests in the `test` folder.
-2. Make sure all tests pass `npm test`
-3. Make sure code is well formatted and secure by `npm run lint` command
+2. Make sure all tests pass `npm test`.
+3. Make sure code is well formatted and secure by `npm run lint` command.
 
 ## Contributing
 

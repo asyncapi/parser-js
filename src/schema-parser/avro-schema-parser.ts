@@ -7,7 +7,7 @@ import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 
 import type { v2 } from '../spec-types';
 
-type AvroSchema = Schema & { [key: string]: any } & any;
+type AvroSchema = Schema & { [key: string]: any };
 
 export function AvroSchemaParser(): SchemaParser {
   return {
@@ -321,7 +321,7 @@ async function processRecordSchema(avroDefinition: AvroSchema, recordCache: Reco
 async function processUnionSchema(jsonSchema: v2.AsyncAPISchemaDefinition, avroDefinition: AvroSchema, isTopLevel: boolean, recordCache: Record<string, v2.AsyncAPISchemaDefinition>): Promise<v2.AsyncAPISchemaDefinition> {
   jsonSchema.oneOf = [];
   let nullDef = null;
-  for (const avroDef of avroDefinition) {
+  for (const avroDef of avroDefinition as any) {
     const def = await convertAvroToJsonSchema(avroDef, isTopLevel, recordCache);
     // avroDef can be { type: 'int', default: 1 } and this is why avroDef.type has priority here
     const defType = avroDef.type || avroDef;

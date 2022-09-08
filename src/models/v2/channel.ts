@@ -42,7 +42,7 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const allowedServers: string[] = this._json.servers || [];
-    Object.entries(this._meta.asyncapi?.parsed.servers || {}).map(([serverName, server]) => {
+    Object.entries(this._meta.asyncapi?.parsed.servers || {}).forEach(([serverName, server]) => {
       if (allowedServers.length === 0 || allowedServers.includes(serverName)) {
         servers.push(this.createModel(Server, server, { id: serverName, pointer: `/servers/${serverName}` }));
       }

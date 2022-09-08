@@ -12,11 +12,11 @@ Use this package to parse and validate AsyncAPI documents —either YAML or JSON
 
 - [Install](#install)
 - [Examples](#examples)
-  * [Example passing inline AsyncAPI](#example-passing-inline-asyncapi)
-  * [Example passing a URL](#example-passing-a-url)
-  * [Example using Avro schemas](#example-using-avro-schemas)
-  * [Example using OpenAPI schemas](#example-using-openapi-schemas)
-  * [Example using RAML data types](#example-using-raml-data-types)
+  - [Example passing inline AsyncAPI](#example-passing-inline-asyncapi)
+  - [Example passing a URL](#example-passing-a-url)
+  - [Example using Avro schemas](#example-using-avro-schemas)
+  - [Example using OpenAPI schemas](#example-using-openapi-schemas)
+  - [Example using RAML data types](#example-using-raml-data-types)
 - [API documentation](#api-documentation)
 - [Using in the browser](#using-in-the-browser)
 - [Custom message parsers](#custom-message-parsers)
@@ -78,7 +78,7 @@ Parser-JS | Parser-API                                                          
 
 Additionally to all the methods declared in the [Parser-API](https://github.com/asyncapi/parser-api), this parser might introduce some helper functions.
 
-Direct access to the parsed JSON document is always available through the `doc.raw()` method.
+Direct access to the parsed JSON document is always available through the `doc.json()` method.
 
 See [API documentation](/docs/api.md) for more example and full API reference information.
 
@@ -101,6 +101,8 @@ Otherwise, if your application is bundled via bundlers like `webpack`, you can i
 ```js
 // TBD
 ```
+
+In case you just want to check out the latest `bundle.js` without installing the package, we publish one on each GitHub release. You can find it under [this link to the latest release](https://github.com/asyncapi/parser-js/releases/latest/download/bundle.js).
 
 ## Custom message parsers
 

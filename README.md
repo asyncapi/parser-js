@@ -38,7 +38,7 @@ npm install @asyncapi/parser
 yarn add @asyncapi/parser
 ```
 
-The parser by default supports AsyncAPI Schema Format and JSON Schema Format for schemas. For additional formats, check (Custom message parsers)[#custom-message-parsers] section.
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format for schemas. For additional formats, check [Custom message parsers](#custom-schema-parsers) section.
 
 ## Examples 
 
@@ -204,8 +204,8 @@ AsyncAPI doesn't enforce one schema format. We can have payload of your messages
 
 1. Create custom parser module that exports three functions:
 
-    - `validate` - function that validates (its syntax) the value of used schema.
-    - `parse` - function that parses the given scheme to the [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject).
+    - `validate` - function that validates (its syntax) used schema.
+    - `parse` - function that parses the given schema to the [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject).
     - `getMimeTypes` - function that returns the list of mime types that will be used as the `schemaFormat` property to determine the mime type of a given schema.
 
     Example:
@@ -287,6 +287,8 @@ To parse a stringified document into an AsyncAPIDocument instance, you must use 
 A few advantages of this solution:
 - The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
 - All references (also circular) are preserved.
+
+Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify).
 
 ## Develop
 

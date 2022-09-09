@@ -1,18 +1,12 @@
 import Ajv from 'ajv';
+import specs from '@asyncapi/specs/supported';
 
 import { specVersions } from '../constants';
 
 import type { ErrorObject, ValidateFunction } from 'ajv';
+import type { JSONSchema7 } from 'json-schema';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
-import type { v2 } from '../spec-types';
-
-// import only 2.X.X AsyncAPI JSON Schemas for better treeshaking
-import * as asyncAPI2_0_0Schema from '@asyncapi/specs/schemas/2.0.0.json';
-import * as asyncAPI2_1_0Schema from '@asyncapi/specs/schemas/2.1.0.json';
-import * as asyncAPI2_2_0Schema from '@asyncapi/specs/schemas/2.2.0.json';
-import * as asyncAPI2_3_0Schema from '@asyncapi/specs/schemas/2.3.0.json';
-import * as asyncAPI2_4_0Schema from '@asyncapi/specs/schemas/2.4.0.json';
 
 const ajv = new Ajv({
   allErrors: true,
@@ -29,7 +23,7 @@ export function AsyncAPISchemaParser(): SchemaParser {
 }
 
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-  const version = input.asyncapi.semver.version;
+  const version = input.asyncapi.semver.version as keyof typeof specs;
   const validator = getSchemaValidator(version);
 
   let result: SchemaValidateResult[] = [];
@@ -71,10 +65,10 @@ function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
   });
 }
 
-function getSchemaValidator(version: string): ValidateFunction {
+function getSchemaValidator(version: keyof typeof specs): ValidateFunction {
   let validator = ajv.getSchema(version);
   if (!validator) {
-    const schema = preparePayloadSchema(getSchema(version), version);
+    const schema = preparePayloadSchema(specs[version], version);
 
     ajv.addSchema(schema, version);
     validator = ajv.getSchema(version);
@@ -87,7 +81,7 @@ function getSchemaValidator(version: string): ValidateFunction {
  * To validate the schema of the payload we just need a small portion of official AsyncAPI spec JSON Schema, the Schema Object in particular. The definition of Schema Object must be
  * included in the returned JSON Schema.
  */
-function preparePayloadSchema(asyncapiSchema: v2.AsyncAPISchemaDefinition, version: string): v2.AsyncAPISchemaDefinition {
+function preparePayloadSchema(asyncapiSchema: JSONSchema7, version: string): JSONSchema7 {
   const payloadSchema = `http://asyncapi.com/definitions/${version}/schema.json`;
   const definitions = asyncapiSchema.definitions;
   if (definitions === undefined) {
@@ -102,21 +96,4 @@ function preparePayloadSchema(asyncapiSchema: v2.AsyncAPISchemaDefinition, versi
     $ref: payloadSchema,
     definitions
   };
-}
-
-function getSchema(version: string): Record<string, unknown> {
-  switch (version) {
-  case '2.0.0':
-    return asyncAPI2_0_0Schema;
-  case '2.1.0':
-    return asyncAPI2_1_0Schema;
-  case '2.2.0':
-    return asyncAPI2_2_0Schema;
-  case '2.3.0':
-    return asyncAPI2_3_0Schema;
-  case '2.4.0':
-    return asyncAPI2_4_0Schema;
-  default:
-    throw new Error(`Specification with "${version}" version does not exist.`);
-  }
 }

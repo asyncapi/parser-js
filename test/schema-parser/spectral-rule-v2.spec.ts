@@ -7,7 +7,7 @@ import type { SchemaValidateResult } from '../../src/types';
 describe('aas2schemaParserRule', function() {
   const parser = new Parser();
 
-  it('should validate AsyncAPI Schema with valid schema', async function() {
+  it.only('should validate AsyncAPI Schema with valid schema', async function() {
     const document = {
       asyncapi: '2.0.0',
       info: {

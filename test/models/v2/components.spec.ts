@@ -286,6 +286,20 @@ describe('Components model', function() {
     });
   });
 
+  describe('.isEmpty()', function() {
+    it('should return false when components is not empty', function() {
+      const doc = serializeInput<v2.ComponentsObject>({ messageBindings: { binding: {} } });
+      const d = new Components(doc);
+      expect(d.isEmpty()).toBeFalsy();
+    });
+
+    it('should return true when components is empty', function() {
+      const doc = serializeInput<v2.ComponentsObject>({});
+      const d = new Components(doc);
+      expect(d.isEmpty()).toBeTruthy();
+    });
+  });
+
   describe('mixins', function() {
     assertExtensions(Components);
   });

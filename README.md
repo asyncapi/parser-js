@@ -198,7 +198,8 @@ const parser = new Parser();
 const { parsed, diagnostics } = parser.parse(...);
 ```
 
-> **NOTE**: Using the above code, we import the entire bundled parser into application. This may result in duplicate code in the final application bundle, only if the application uses the same dependencies what the parser. If, on the other hand, you want to have the smallest bundle possible, we recommend using the following import and properly configure bundler.
+> **Note**
+> Using the above code, we import the entire bundled parser into application. This may result in duplicate code in the final application bundle, only if the application uses the same dependencies what the parser. If, on the other hand, you want to have the smallest bundle possible, we recommend using the following import and properly configure bundler.
 
 Otherwise, if your application is bundled via bundlers like `webpack` and you can configure it, you can import the parser like a regular package:
 
@@ -209,7 +210,8 @@ const parser = new Parser();
 const { parsed, diagnostics } = parser.parse(...);
 ```
 
-> **NOTE**: The package uses some native NodeJS modules underneath. If you are building a front-end application you can find more information about the correct configuration for Webpack [here](#webpack).
+> **Note**
+> The package uses some native NodeJS modules underneath. If you are building a front-end application you can find more information about the correct configuration for Webpack [here](#webpack).
 
 ## Custom schema parsers
 <<<<<<< next-major

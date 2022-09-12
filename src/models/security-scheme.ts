@@ -2,9 +2,6 @@ import type { BaseModel } from './base';
 import type { OAuthFlowsInterface } from './oauth-flows';
 import type { DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
 
-export type SecuritySchemaType = 'userPassword' | 'apiKey' | 'X509' | 'symmetricEncryption' | 'asymmetricEncryption' | 'httpApiKey' | 'http' | 'oauth2' | 'openIdConnect' | 'plain' | 'scramSha256' | 'scramSha512' | 'gssapi';
-export type SecuritySchemaLocation = 'user' | 'password' | 'query' | 'header' | 'header' | 'cookie';
-
 export interface SecuritySchemeInterface extends BaseModel, DescriptionMixinInterface, ExtensionsMixinInterface {
   id(): string
   hasBearerFormat(): boolean;
@@ -12,6 +9,6 @@ export interface SecuritySchemeInterface extends BaseModel, DescriptionMixinInte
   openIdConnectUrl(): string | undefined;
   scheme(): string | undefined;
   flows(): OAuthFlowsInterface | undefined;
-  type(): SecuritySchemaType;
-  in(): SecuritySchemaLocation | undefined;
+  type(): string;
+  in(): string | undefined;
 }

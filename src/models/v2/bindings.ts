@@ -19,10 +19,10 @@ export class Bindings extends Collection<BindingInterface> implements BindingsIn
 
   extensions(): ExtensionsInterface {
     const extensions: ExtensionInterface[] = [];
-    Object.entries(this._meta.originalData as v2.SpecificationExtensions || {}).forEach(([name, value]) => {
-      if (EXTENSION_REGEX.test(name)) {
+    Object.entries(this._meta.originalData as v2.SpecificationExtensions || {}).forEach(([id, value]) => {
+      if (EXTENSION_REGEX.test(id)) {
         extensions.push(
-          createModel(Extension, value, { name, pointer: `${this._meta.pointer}/${name}`, asyncapi: this._meta.asyncapi }) as Extension
+          createModel(Extension, value, { id, pointer: `${this._meta.pointer}/${id}`, asyncapi: this._meta.asyncapi }) as Extension
         );
       }
     });

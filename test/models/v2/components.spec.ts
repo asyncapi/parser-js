@@ -286,6 +286,18 @@ describe('Components model', function() {
     });
   });
 
+  describe('.isEmpty()', function() {
+    it('should return true if _json is empty', function() {
+      const d = new Components({});
+      expect(d.isEmpty()).toBeTruthy();
+    });
+
+    it('should return false if _json is not empty', function() {
+      const d = new Components({ schemas: { test: {} } });
+      expect(d.isEmpty()).toBeFalsy();
+    });
+  });
+
   describe('mixins', function() {
     assertExtensions(Components);
   });

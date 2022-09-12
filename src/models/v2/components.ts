@@ -117,6 +117,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return extensions(this);
   }
 
+  isEmpty(): boolean {
+    return Object.keys(this._json).length === 0;
+  }
+
   protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v2.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
     const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([id, item]) => {

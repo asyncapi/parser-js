@@ -324,6 +324,14 @@ export type SecuritySchemeType =
   | 'scramSha512'
   | 'gssapi';
 
+export type SecuritySchemaLocation = 
+  | 'user' 
+  | 'password' 
+  | 'query' 
+  | 'header' 
+  | 'header' 
+  | 'cookie';
+
 export interface SecuritySchemeObjectBase extends SpecificationExtensions {
   description?: string;
 }

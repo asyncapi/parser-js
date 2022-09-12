@@ -1,4 +1,7 @@
 node_modules
-coverage
-docs
-lib
+.vscode
+.DS_Store
+/docs
+/coverage
+/lib
+/browser

@@ -255,9 +255,9 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
     }, {});
   }
 
-  property(key: string): SchemaInterface | undefined {
-    if (typeof this._json === 'boolean' || typeof this._json.properties !== 'object' || typeof this._json.properties[key] !== 'object') return;
-    return this.createModel(Schema, this._json.properties[key], { pointer: `${this._meta.pointer}/properties/${key}`, parent: this });
+  property(name: string): SchemaInterface | undefined {
+    if (typeof this._json === 'boolean' || typeof this._json.properties !== 'object' || typeof this._json.properties[name] !== 'object') return;
+    return this.createModel(Schema, this._json.properties[name], { pointer: `${this._meta.pointer}/properties/${name}`, parent: this });
   }
 
   propertyNames(): SchemaInterface | undefined {

@@ -38,10 +38,10 @@ export function description(model: BaseModel<{ description?: string }>): string 
 
 export function extensions(model: BaseModel<v2.SpecificationExtensions>): ExtensionsInterface {
   const extensions: ExtensionInterface[] = [];
-  Object.entries(model.json()).forEach(([name, value]: [string, any]) => {
-    if (EXTENSION_REGEX.test(name)) {
+  Object.entries(model.json()).forEach(([id, value]: [string, any]) => {
+    if (EXTENSION_REGEX.test(id)) {
       extensions.push(
-        createModel(Extension, value, { name, pointer: model.jsonPath(name) } as any, model) as Extension
+        createModel(Extension, value, { id, pointer: model.jsonPath(id) } as any, model) as Extension
       );
     }
   });

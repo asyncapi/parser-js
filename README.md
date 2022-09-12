@@ -1,6 +1,6 @@
 [![AsyncAPI JavaScript Parser](./assets/logo.png)](https://www.asyncapi.com)
 
-Use this package to parse and validate AsyncAPI documents —either YAML or JSON— in your Node.js or browser application. Updated bundle for the browser is always attached to the GitHub Release.
+Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application. Validation is powered by [Spectral](https://github.com/stoplightio/spectral).
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/parser?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/parser?style=for-the-badge)
 
@@ -10,17 +10,18 @@ Use this package to parse and validate AsyncAPI documents —either YAML or JSON
 
 <!-- toc -->
 
-- [Install](#install)
+- [Installation](#installation)
 - [Examples](#examples)
-  - [Example passing inline AsyncAPI](#example-passing-inline-asyncapi)
-  - [Example passing a URL](#example-passing-a-url)
-  - [Example using Avro schemas](#example-using-avro-schemas)
-  - [Example using OpenAPI schemas](#example-using-openapi-schemas)
-  - [Example using RAML data types](#example-using-raml-data-types)
+  * [Example with parsing](#example-with-parsing)
+  * [Example with validation](#example-with-validation)
+  * [Example using Avro schemas](#example-using-avro-schemas)
+  * [Example using OpenAPI schemas](#example-using-openapi-schemas)
+  * [Example using RAML data types](#example-using-raml-data-types)
+  * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
 - [Using in the browser](#using-in-the-browser)
-- [Custom message parsers](#custom-message-parsers)
-- [Error types](#error-types)
+- [Custom schema parsers](#custom-schema-parsers)
+  * [Official supported custom schema parsers](#official-supported-custom-schema-parsers)
 - [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
 - [Stringify](#stringify)
@@ -30,35 +31,128 @@ Use this package to parse and validate AsyncAPI documents —either YAML or JSON
 
 <!-- tocstop -->
 
-## Install
+## Installation
 
-TBD
+```bash
+npm install @asyncapi/parser
+yarn add @asyncapi/parser
+```
+
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format for schemas. For additional formats, check [Custom schema parsers](#custom-schema-parsers) section.
 
 ## Examples 
 
-### Example passing inline AsyncAPI
+### Example with parsing
 
-```js
-// TBD
+```ts
+import { Parser } from '@asyncapi/parser';
+
+const parser = new Parser();
+
+const { document } = await parser.parse(`
+  asyncapi: '2.4.0'
+  info:
+    title: Example AsyncAPI specification
+    version: '0.1.0'
+  channels:
+    example-channel:
+      subscribe:
+        message:
+          payload:
+            type: object
+            properties:
+              exampleField:
+                type: string
+              exampleNumber:
+                type: number
+              exampleDate:
+                type: string
+                format: date-time
+`);
+
+if (document) {
+  // => Example AsyncAPI specification
+  console.log(document.info().title());
+}
 ```
 
-### Example passing a URL
+### Example with validation
 
-```js
-// TBD
+```ts
+import { Parser } from '@asyncapi/parser';
+
+const parser = new Parser();
+
+// One of the diagnostics will contain an error regarding an unsupported version of AsyncAPI (2.1.37)
+const diagnostics = await parser.validate(`
+  asyncapi: '2.1.37'
+  info:
+    title: Example AsyncAPI specification
+    version: '0.1.0'
+  channels:
+    example-channel:
+      subscribe:
+        message:
+          payload:
+            type: object
+            properties:
+              exampleField:
+                type: string
+              exampleNumber:
+                type: number
+              exampleDate:
+                type: string
+                format: date-time
+`);
 ```
 
-### Example using Avro schemas
+### [Example using Avro schemas](#custom-schema-parsers)
 
 Head over to [asyncapi/avro-schema-parser](https://www.github.com/asyncapi/avro-schema-parser) for more information.
 
-### Example using OpenAPI schemas
+### [Example using OpenAPI schemas](#custom-schema-parsers)
 
 Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/openapi-schema-parser) for more information.
 
-### Example using RAML data types
+### [Example using RAML data types](#custom-schema-parsers)
 
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
+
+### [Example with stringify and unstringify parsed document](#stringify)
+
+```ts
+import { Parser, stringify, unstringify } from '@asyncapi/parser';
+
+const parser = new Parser();
+
+const { document } = await parser.parse(`
+  asyncapi: '2.4.0'
+  info:
+    title: Example AsyncAPI specification
+    version: '0.1.0'
+  channels:
+    example-channel:
+      subscribe:
+        message:
+          payload:
+            type: object
+            properties:
+              exampleField:
+                type: string
+              exampleNumber:
+                type: number
+              exampleDate:
+                type: string
+                format: date-time
+`);
+
+if (document) {
+  // stringify function returns string type
+  const stringifiedDocument = stringify(document);
+  // unstringify function returns new AsyncAPIDocument instance
+  const unstringifiedDocument = unstringify(stringifiedDocument);
+}
+```
 
 ## API documentation
 
@@ -104,25 +198,67 @@ Otherwise, if your application is bundled via bundlers like `webpack`, you can i
 
 In case you just want to check out the latest `bundle.js` without installing the package, we publish one on each GitHub release. You can find it under [this link to the latest release](https://github.com/asyncapi/parser-js/releases/latest/download/bundle.js).
 
-## Custom message parsers
+## Custom schema parsers
 
-AsyncAPI doesn't enforce one schema format for messages. You can have payload of your messages described with OpenAPI, Avro, etc. This parser by default parses only AsyncAPI schema format. You can extend it by creating a custom parser and registering it within the parser:
+AsyncAPI doesn't enforce one schema format. The payload of the messages can be described with OpenAPI (3.0.0), Avro, etc. This parser by default parses only [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) (superset of JSON Schema Format). We can extend it by creating a custom parser and registering it within the parser:
 
-1. Create custom parser module that exports two functions:
+1. Create custom parser module that exports three functions:
 
-    ```js
-    // TBD
+    - `validate` - function that validates (its syntax) used schema.
+    - `parse` - function that parses the given schema to the [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject).
+    - `getMimeTypes` - function that returns the list of mime types that will be used as the `schemaFormat` property to determine the mime type of a given schema.
+
+    Example:
+    
+    ```ts
+    export default {
+      validate(input) { ... },
+      parse(input) { ... },
+      getMimeTypes() {
+        return [
+          'application/vnd.custom.type;version=1.0.0',
+          'application/vnd.custom.type+json;version=1.0.0',
+        ]
+      }
+    }
     ```
 
-2. Before parsing an AsyncAPI document with a parser, register the additional custom schema parser:
+2. Before parsing/validating an AsyncAPI document with a parser, register the additional custom schema parser:
 
-    ```js
-    // TBD
+    ```ts
+    import { Parser } from '@asyncapi/parser';
+    import myCustomSchemaParser from './my-custom-schema-parser';
+
+    const parser = new Parser();
+    parser.registerSchemaParser(myCustomSchemaParser);
     ```
 
-## Error types
+### Official supported custom schema parsers
 
-TBD
+In AsyncAPI Initiative we support below custom schema parsers. To install them, run below comamnds:
+
+- Avro schema:
+
+  ```bash
+  npm install @asyncapi/avro-schema-parser
+  yarn add @asyncapi/avro-schema-parser
+  ```
+
+- OpenAPI (3.0.0) Schema Object:
+
+  ```bash
+  npm install @asyncapi/openapi-schema-parser
+  yarn add @asyncapi/openapi-schema-parser
+  ```
+
+- RAML data type:
+
+  ```bash
+  npm install @asyncapi/raml-dt-schema-parser
+  yarn add @asyncapi/raml-dt-schema-parser
+  ```
+
+  > **NOTE**: That custom parser works only in the NodeJS environment. Do not use it in browser applications!
 
 ## Custom extensions
 
@@ -136,11 +272,29 @@ TBD
 
 ## Stringify
 
-TBD
+Converting a parsed document to a string may be necessary when saving the parsed document to a database, or similar situations where you need to parse the document just once and then reuse it, for optimisation cases.
+
+For that, the Parser supports the ability to stringify a parsed AsyncAPI document through the `stringify` function exposed by package. This method differs from the native `JSON.stringify(...json)` implementation, in that every reference that occurs (at least twice throughout the document) is converted into a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path with a `$ref:` prefix:
+
+```json
+{
+  "foo": "$ref:$.some.path.to.the.bar"
+}
+```
+		
+To parse a stringified document into an AsyncAPIDocument instance, you must use the `unstringify` function (also exposed by package). It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path, with an `$ref:` prefix to the original objects.
+
+A few advantages of this solution:
+- The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
+- All references (also circular) are preserved.
+
+Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify).
 
 ## Develop
 
-TBD
+1. Write code and tests in the `test` folder.
+2. Make sure all tests pass `npm test`.
+3. Make sure code is well formatted and secure by `npm run lint` command.
 
 ## Contributing
 

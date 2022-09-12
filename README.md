@@ -176,27 +176,42 @@ Direct access to the parsed JSON document is always available through the `doc.j
 
 See [API documentation](./docs/api.md) for more examples and full API reference information.
 
-## Using in the browser
+## Using in the browser/SPA apps
 
-The package contains a built-in version of the parser, which is created via [`browserify`](https://github.com/browserify/browserify). To use it, you need to import the parser into the HTML file as below:
+The package contains a built-in version of the parser. To use it, you need to import the parser into the HTML file as below:
 
 ```html
-<! –– TBD ––> 
+<script src="https://unpkg.com/@asyncapi/parser@latest/browser/index.js"></script>
+
+<script>
+  const parser = new window.AsyncAPIParser();
+  const { parsed, diagnostics } = parser.parse(...);
+</script>
 ```
 
-Or, if you want to use a parser in a JS application of the SPA kind, import the parser as shown below:
+Or, if you want to use the parser in a JS SPA-type application where you have a predefined bundler configuration that is difficult to change (e.g. you use [`create-react-app`](https://github.com/facebook/create-react-app)) then you can import the parser as below:
 
 ```js
-// TBD
+import Parser from '@asyncapi/parser/browser';
+
+const parser = new Parser();
+const { parsed, diagnostics } = parser.parse(...);
 ```
 
-Otherwise, if your application is bundled via bundlers like `webpack`, you can import the parser like a regular package:
+> **Note**
+> Using the above code, we import the entire bundled parser into application. This may result in duplicate code in the final application bundle, only if the application uses the same dependencies what the parser. If, on the other hand, you want to have the smallest bundle possible, we recommend using the following import and properly configure bundler.
+
+Otherwise, if your application is bundled via bundlers like `webpack` and you can configure it, you can import the parser like a regular package:
 
 ```js
-// TBD
+import { Parser } from '@asyncapi/parser';
+
+const parser = new Parser();
+const { parsed, diagnostics } = parser.parse(...);
 ```
 
-In case you just want to check out the latest `bundle.js` without installing the package, we publish one on each GitHub release. You can find it under [this link to the latest release](https://github.com/asyncapi/parser-js/releases/latest/download/bundle.js).
+> **Note**
+> The package uses some native NodeJS modules underneath. If you are building a front-end application you can find more information about the correct configuration for Webpack [here](#webpack).
 
 ## Custom schema parsers
 
@@ -289,6 +304,24 @@ A few advantages of this solution:
 - All references (also circular) are preserved.
 
 Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify).
+
+## Bundler configuration
+
+### Webpack
+
+Versions `<5` of Webpack should handle bundling without problems. Due to the fact that Webpack 5 no longer does fallbacks to native NodeJS modules by default we need to install `buffer` package and add fallbacks:
+
+```js
+{
+  resolve: {
+    fallback: {
+      "fs": false,
+      "path": false,
+      "buffer": require.resolve("buffer/"),
+    }
+  }
+}
+```
 
 ## Develop
 

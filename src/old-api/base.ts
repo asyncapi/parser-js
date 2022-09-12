@@ -1,4 +1,4 @@
-export abstract class Base<J = any, M extends Record<string, any> = Record<string, any>> {
+export abstract class Base<J extends any = any, M extends Record<string, any> = Record<string, any>> {
   constructor(
     protected readonly _json: J, // TODO: Add error here like in original codebase
     protected readonly _meta: M = {} as M,

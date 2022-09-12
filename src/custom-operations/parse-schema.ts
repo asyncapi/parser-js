@@ -1,8 +1,7 @@
 import { JSONPath } from 'jsonpath-plus';
-import { toPath } from 'lodash';
 
-import { parseSchema, getSchemaFormat, getDefaultSchemaFormat } from '../schema-parser';
 import { xParserOriginalPayload } from '../constants';
+import { parseSchema, getSchemaFormat, getDefaultSchemaFormat } from '../schema-parser';
 
 import type { Parser } from '../parser';
 import type { ParseSchemaInput } from '../schema-parser';
@@ -53,7 +52,7 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
             meta: {
               message: value,
             },
-            path: [...toPath(result.path.slice(1)), 'payload'],
+            path: [...splitPath(result.path), 'payload'],
             schemaFormat,
             defaultSchemaFormat,
           },
@@ -69,4 +68,9 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
 async function parseSchemaV2(parser: Parser, item: ToParseItem) {
   item.value[xParserOriginalPayload] = item.input.data;
   item.value.payload = await parseSchema(parser, item.input);
+}
+
+function splitPath(path: string): string[] {
+  // remove $[' from beginning and '] at the end and split by ']['
+  return path.slice(3).slice(0, -2).split('\'][\'');
 }

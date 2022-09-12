@@ -1,5 +1,5 @@
 import { createRulesetFunction } from '@stoplight/spectral-core';
-import { asyncapi as aasRuleset } from '@stoplight/spectral-rulesets';
+import aasRuleset from '@stoplight/spectral-rulesets/dist/asyncapi';
 
 import { asyncApi2SchemaParserRule } from './schema-parser/spectral-rule-v2';
 import { specVersions } from './constants';

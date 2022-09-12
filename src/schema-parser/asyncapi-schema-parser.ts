@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
-import specs from '@asyncapi/specs/supported';
+// @ts-ignore
+import specs from '@asyncapi/specs';
 
 import { specVersions } from '../constants';
 
@@ -23,7 +24,7 @@ export function AsyncAPISchemaParser(): SchemaParser {
 }
 
 async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<SchemaValidateResult[]> {
-  const version = input.asyncapi.semver.version as keyof typeof specs;
+  const version = input.asyncapi.semver.version;
   const validator = getSchemaValidator(version);
 
   let result: SchemaValidateResult[] = [];
@@ -65,7 +66,7 @@ function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
   });
 }
 
-function getSchemaValidator(version: keyof typeof specs): ValidateFunction {
+function getSchemaValidator(version: string): ValidateFunction {
   let validator = ajv.getSchema(version);
   if (!validator) {
     const schema = preparePayloadSchema(specs[version], version);

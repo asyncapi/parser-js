@@ -214,7 +214,6 @@ const { parsed, diagnostics } = parser.parse(...);
 > The package uses some native NodeJS modules underneath. If you are building a front-end application you can find more information about the correct configuration for Webpack [here](#webpack).
 
 ## Custom schema parsers
-<<<<<<< next-major
 
 AsyncAPI doesn't enforce one schema format. The payload of the messages can be described with OpenAPI (3.0.0), Avro, etc. This parser by default parses only [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) (superset of JSON Schema Format). We can extend it by creating a custom parser and registering it within the parser:
 
@@ -238,8 +237,6 @@ AsyncAPI doesn't enforce one schema format. The payload of the messages can be d
       }
     }
     ```
-=======
->>>>>>> add tests and docs
 
 2. Before parsing/validating an AsyncAPI document with a parser, register the additional custom schema parser:
 

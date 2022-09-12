@@ -29,4 +29,5 @@ export interface ComponentsInterface extends BaseModel, ExtensionsMixinInterface
   channelBindings(): Record<string, BindingsInterface>;
   operationBindings(): Record<string, BindingsInterface>;
   messageBindings(): Record<string, BindingsInterface>;
+  isEmpty(): boolean;
 }

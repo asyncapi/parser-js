@@ -4,9 +4,9 @@ import type { ExtensionInterface } from '../extension';
 
 import type { v2 } from '../../spec-types';
 
-export class Extension<T = any> extends BaseModel<v2.SpecificationExtension<T>, { name: string }> implements ExtensionInterface<T> {
-  name(): string {
-    return this._meta.name;
+export class Extension<T = any> extends BaseModel<v2.SpecificationExtension<T>, { id: string }> implements ExtensionInterface<T> {
+  id(): string {
+    return this._meta.id;
   }
 
   version(): string {

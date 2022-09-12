@@ -45,7 +45,7 @@ export interface SchemaInterface extends BaseModel<v2.AsyncAPISchemaObject>, Ext
   pattern(): string | undefined;
   patternProperties(): Record<string, SchemaInterface> | undefined;
   properties(): Record<string, SchemaInterface> | undefined;
-  property(key: string): SchemaInterface | undefined;
+  property(name: string): SchemaInterface | undefined;
   propertyNames(): SchemaInterface | undefined;
   readOnly(): boolean | undefined;
   required(): Array<string> | undefined;

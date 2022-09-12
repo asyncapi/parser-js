@@ -38,7 +38,7 @@ npm install @asyncapi/parser
 yarn add @asyncapi/parser
 ```
 
-The parser by default supports AsyncAPI Schema Format and JSON Schema Format for schemas. For additional formats, check [Custom message parsers](#custom-schema-parsers) section.
+The parser by default supports AsyncAPI Schema Format and JSON Schema Format for schemas. For additional formats, check [Custom schema parsers](#custom-schema-parsers) section.
 
 ## Examples 
 
@@ -200,7 +200,7 @@ In case you just want to check out the latest `bundle.js` without installing the
 
 ## Custom schema parsers
 
-AsyncAPI doesn't enforce one schema format. We can have payload of your messages described with OpenAPI (3.0.0), Avro, etc. This parser by default parses only [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) (superset of JSON Schema Format). We can extend it by creating a custom parser and registering it within the parser:
+AsyncAPI doesn't enforce one schema format. The payload of the messages can be described with OpenAPI (3.0.0), Avro, etc. This parser by default parses only [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject) (superset of JSON Schema Format). We can extend it by creating a custom parser and registering it within the parser:
 
 1. Create custom parser module that exports three functions:
 

@@ -174,7 +174,7 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 
 Direct access to the parsed JSON document is always available through the `doc.json()` method.
 
-See API documentation for more example and full API reference information.
+See [API documentation](./docs/api.md) for more examples and full API reference information.
 
 ## Using in the browser
 

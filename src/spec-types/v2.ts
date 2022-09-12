@@ -290,7 +290,7 @@ export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
   default?: JSONSchema7Type;
   readOnly?: boolean;
   writeOnly?: boolean;
-  examples?: Array<JSONSchema7Type> | undefined;
+  examples?: Array<JSONSchema7Type>;
 
   discriminator?: string;
   externalDocs?: ExternalDocumentationObject;
@@ -323,6 +323,14 @@ export type SecuritySchemeType =
   | 'scramSha256'
   | 'scramSha512'
   | 'gssapi';
+
+export type SecuritySchemaLocation = 
+  | 'user' 
+  | 'password' 
+  | 'query' 
+  | 'header' 
+  | 'header' 
+  | 'cookie';
 
 export interface SecuritySchemeObjectBase extends SpecificationExtensions {
   description?: string;

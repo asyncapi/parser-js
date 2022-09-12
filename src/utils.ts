@@ -92,7 +92,7 @@ export function untilde(str: string) {
   });
 }
 
-export function retrievePossibleRef(data: any & { $ref?: string }, pathOfData: string, spec: any = {}): any {
+export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {}): any {
   if (!hasRef(data)) {
     return data;
   }

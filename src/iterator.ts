@@ -43,7 +43,7 @@ export type TraverseOptions = {
    seenSchemas: Set<any>
 }   
   
-export type TraverseCallback = (schema: SchemaInterface, propOrIndex: String | Number | null, callbackType: SchemaIteratorCallbackType) => void
+export type TraverseCallback = (schema: SchemaInterface, propOrIndex: string | number | null, callbackType: SchemaIteratorCallbackType) => void
 
 /**
  * Go through each channel and for each parameter, and message payload and headers recursively call the callback for each schema.
@@ -82,7 +82,7 @@ export function traverseAsyncApiDocument(doc: AsyncAPIDocumentInterface, callbac
 /**
  * Traverse current schema and all nested schemas.
  */
-function traverseSchema(schema: SchemaInterface, propOrIndex: String | Number | null, options: TraverseOptions) { // NOSONAR
+function traverseSchema(schema: SchemaInterface, propOrIndex: string | number | null, options: TraverseOptions) { // NOSONAR
   if (!schema) return;
   
   const { schemaTypesToIterate, callback, seenSchemas } = options;

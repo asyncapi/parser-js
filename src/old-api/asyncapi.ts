@@ -6,11 +6,13 @@ import { Components } from './components';
 import { Message } from './message';
 import { Schema } from './schema';
 
+import { traverseAsyncApiDocument } from './iterator';
 import { xParserCircular } from '../constants';
 import { stringify, unstringify } from '../stringify';
 
 import type { v2 } from '../spec-types';
 import type { Operation } from './operation';
+import type { SchemaTypesToIterate, TraverseCallback } from './iterator';
 
 export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIObject> {
   version() {
@@ -137,19 +139,24 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
     return messages;
   }
 
-  // TODO: Retrieve all schemas
   allSchemas(): Map<string, Schema> {
-    return new Map<string, Schema>();
+    const schemas = new Map<string, Schema>();
+    function allSchemasCallback(schema: Schema) {
+      if (schema.uid()) {
+        schemas.set(schema.uid(), schema);
+      }
+    };
+    traverseAsyncApiDocument(this, allSchemasCallback);
+    return schemas;
   }
 
   hasCircular() {
     return !!this._json[xParserCircular];
   }
 
-  // TODO: Make traversing for old API and enable that function
-  // traverseSchemas(callback, schemaTypesToIterate) {
-  //   traverseAsyncApiDocument(this, callback, schemaTypesToIterate);
-  // }
+  traverseSchemas(callback: TraverseCallback, schemaTypesToIterate: SchemaTypesToIterate[]) {
+    traverseAsyncApiDocument(this, callback, schemaTypesToIterate);
+  }
 
   static stringify(doc: AsyncAPIDocument, space: number): string | undefined {
     return stringify(doc, { space });

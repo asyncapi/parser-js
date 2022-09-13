@@ -4,7 +4,7 @@ import { Schema } from './schema';
 
 import type { v2 } from '../spec-types';
 
-export class MessageTrait<T> extends SpecificationExtensionsModel<T & v2.MessageTraitObject> {
+export class MessageTrait<T = v2.MessageTraitObject> extends SpecificationExtensionsModel<T & v2.MessageTraitObject> {
   id() {
     return this._json.messageId;
   }

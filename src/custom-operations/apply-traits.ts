@@ -55,8 +55,5 @@ function applyTraits(value: Record<string, unknown>) {
         value[String(key)] = mergePatch(value[String(key)], trait[String(key)]);
       }
     }
-
-    value[xParserOriginalTraits] = value.traits;
-    delete value.traits;
   }
 }

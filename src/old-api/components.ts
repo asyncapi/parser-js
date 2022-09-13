@@ -113,12 +113,12 @@ export class Components extends SpecificationExtensionsModel<v2.ComponentsObject
     return !!this._json.messageTraits;
   }
 
-  messageTraits() {
-    return createMapOfType(this._json.messageTraits as Record<string, v2.MessageTraitObject>, MessageTrait);
+  messageTraits(): Record<string, MessageTrait<v2.MessageTraitObject>> {
+    return createMapOfType(this._json.messageTraits as Record<string, v2.MessageTraitObject>, MessageTrait) as Record<string, MessageTrait<v2.MessageTraitObject>>;
   }
 
-  messageTrait(name: string) {
-    return getMapValue(this._json.messageTraits as Record<string, v2.MessageTraitObject>, name, MessageTrait);
+  messageTrait(name: string): MessageTrait<v2.MessageTraitObject> {
+    return getMapValue(this._json.messageTraits as Record<string, v2.MessageTraitObject>, name, MessageTrait) as MessageTrait<v2.MessageTraitObject>;
   }
 
   hasServerVariables() {

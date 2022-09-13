@@ -1,5 +1,6 @@
 import { BaseModel } from '../base';
 
+import { xParserSchemaId } from '../../constants';
 import { extensions, hasExternalDocs, externalDocs } from './mixins';
 import { retrievePossibleRef, hasRef } from '../../utils';
 
@@ -20,7 +21,7 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
   }
 
   uid(): string {
-    return this._meta.id as any;
+    return this._meta.id || this.extensions().get(xParserSchemaId)?.value<string>() as string;
   }
 
   $comment(): string | undefined {

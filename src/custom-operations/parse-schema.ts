@@ -66,8 +66,11 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
 }
 
 async function parseSchemaV2(parser: Parser, item: ToParseItem) {
-  item.value[xParserOriginalPayload] = item.input.data;
-  item.value.payload = await parseSchema(parser, item.input);
+  const originalData = item.input.data;
+  const parsedData = item.value.payload = await parseSchema(parser, item.input);
+  if (originalData !== parsedData) {
+    item.value[xParserOriginalPayload] = originalData;
+  }
 }
 
 function splitPath(path: string): string[] {

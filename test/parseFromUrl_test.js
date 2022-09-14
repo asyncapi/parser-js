@@ -6,18 +6,18 @@ const { checkErrorWrapper } = require('./testsUtils');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const validOutputJSON = '{"asyncapi":"2.0.0","info":{"title":"My API","version":"1.0.0"},"channels":{"/test/tester":{"subscribe":{"message":{"schemaFormat":"application/vnd.aai.asyncapi;version=2.0.0","x-parser-message-parsed":true,"x-parser-message-name":"<anonymous-message-1>"}}}},"x-parser-spec-parsed":true}';
+const validOutputJSON = '{"asyncapi":"2.4.0","info":{"title":"Account Service","version":"1.0.0","description":"This service is in charge of processing user signups"},"channels":{"user/signedup":{"subscribe":{"message":{"payload":{"type":"object","properties":{"displayName":{"type":"string","description":"Name of the user","x-parser-schema-id":"<anonymous-schema-2>"},"email":{"type":"string","format":"email","description":"Email of the user","test":{"type":"object","properties":{"testing1":{"type":"string"},"testing2":{"type":"string"}}},"x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.4.0","x-parser-original-payload":{"type":"object","properties":{"displayName":{"type":"string","description":"Name of the user"},"email":{"type":"string","format":"email","description":"Email of the user","test":{"type":"object","properties":{"testing1":{"type":"string"},"testing2":{"type":"string"}}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.4.0","x-parser-message-parsed":true,"x-parser-message-name":"UserSignedUp"}}}},"components":{"messages":{"UserSignedUp":{"payload":{"type":"object","properties":{"displayName":{"type":"string","description":"Name of the user","x-parser-schema-id":"<anonymous-schema-2>"},"email":{"type":"string","format":"email","description":"Email of the user","test":{"type":"object","properties":{"testing1":{"type":"string"},"testing2":{"type":"string"}}},"x-parser-schema-id":"<anonymous-schema-3>"}},"x-parser-schema-id":"<anonymous-schema-1>"},"x-parser-original-schema-format":"application/vnd.aai.asyncapi;version=2.4.0","x-parser-original-payload":{"type":"object","properties":{"displayName":{"type":"string","description":"Name of the user"},"email":{"type":"string","format":"email","description":"Email of the user","test":{"type":"object","properties":{"testing1":{"type":"string"},"testing2":{"type":"string"}}}}}},"schemaFormat":"application/vnd.aai.asyncapi;version=2.4.0","x-parser-message-parsed":true,"x-parser-message-name":"UserSignedUp"}}},"x-parser-spec-parsed":true}';
 
 describe('parseFromUrl()', function() {
   it('should parse YAML correctly from URL', async function() {
-    const result = await parser.parseFromUrl('http://localhost:8080/asyncapi.yaml');
+    const result = await parser.parseFromUrl('http://localhost:8080/main/asyncapi.yaml');
     expect(JSON.stringify(result.json())).to.equal(validOutputJSON);
   });
 
   it('should parse 2 AsyncAPI specs in Promise.all() from URL', async function() {
     const input = [
-      parser.parseFromUrl('http://localhost:8080/asyncapi.yaml'), 
-      parser.parseFromUrl('http://localhost:8080/asyncapi.yaml')
+      parser.parseFromUrl('http://localhost:8080/main/asyncapi.yaml'),
+      parser.parseFromUrl('http://localhost:8080/main/asyncapi.yaml')
     ];
     const result = await Promise.all(input);
     expect(JSON.stringify(result[0].json())).to.equal(validOutputJSON);

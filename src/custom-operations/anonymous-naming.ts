@@ -47,7 +47,7 @@ function assignUidToChannelParameterSchemas(document: AsyncAPIDocumentInterface)
   document.channels().forEach(channel => {
     channel.parameters().forEach(parameter => {
       const schema = parameter.schema();
-      if (schema) {
+      if (schema && !schema.uid()) {
         setExtension(xParserSchemaId, parameter.id(), schema);
       }
     });

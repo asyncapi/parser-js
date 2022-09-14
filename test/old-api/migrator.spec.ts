@@ -38,7 +38,7 @@ describe('migrateToOldAPI()', function() {
               payload: {
                 properties: {
                   property: {
-                    $ref: '#/components/channels/channel/publish/message/payload',
+                    $ref: '#/channels/channel/publish/message/payload',
                   }
                 }
               }

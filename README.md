@@ -299,7 +299,7 @@ In addition, the [`migrateToOldAPI()` function](#convert-to-the-old-api) which c
 - `x-parser-original-traits` is where traits are stored after they are applied on the AsyncAPI document. The reason is because the original `traits` property is removed.
 - `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
 
-> **Note**
+> **Warning**
 > All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
 
 ## Circular references

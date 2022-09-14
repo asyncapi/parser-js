@@ -4,7 +4,7 @@ export * from './models';
 
 export { Parser };
 export { stringify, unstringify } from './stringify';
-export { AsyncAPISchemaParser } from './schema-parser/asyncapi-schema-parser';
+export { fromURL, fromFile } from './from';
 
 export { AsyncAPIDocument as OldAsyncAPIDocument } from './old-api/asyncapi';
 export { migrateToOldAPI } from './old-api/migrator';

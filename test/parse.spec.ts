@@ -142,7 +142,7 @@ describe('parse()', function() {
         }
       }
     };
-    const { document } = await parse(parser, documentRaw, { validateOptions: { path: __filename } });
+    const { document } = await parse(parser, documentRaw, { source: __filename });
 
     const messagePayload = document?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
     const circular = messagePayload?.properties()?.['circular'];

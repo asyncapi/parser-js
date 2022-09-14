@@ -4,7 +4,8 @@
     "baseUrl": "./src",
     "target": "es6",
     "lib": [
-      "esnext"
+      "esnext",
+      "DOM"
     ],
     "declaration": true,
     "allowJs": true,

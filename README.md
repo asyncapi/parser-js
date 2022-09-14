@@ -332,7 +332,7 @@ Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify
 
 ## Convert to the old API
 
-Version `2.0.0` of package introduced a lot of breaking changes, including changing the API of the returned parsed document (parser uses [Intent API](https://github.com/asyncapi/parser-api)). Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `migrateToOldAPI()` function to convert new API to old one:
+Version `2.0.0` of package introduced a lot of breaking changes, including changing the API of the returned parsed document (parser uses [New API](https://github.com/asyncapi/parser-api)). Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `migrateToOldAPI()` function to convert new API to old one:
 
 ```js
 import { Parser, migrateToOldAPI } from '@asyncapi/parser';

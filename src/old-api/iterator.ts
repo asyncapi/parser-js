@@ -229,7 +229,7 @@ function traverseChannel(channel: Channel, options: TraverseOptions) {
     });
   }
 
-  const subscribe = channel.publish();
+  const subscribe = channel.subscribe();
   if (subscribe) {
     subscribe.messages().forEach(message => {
       traverseMessage(message, options);

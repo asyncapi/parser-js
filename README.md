@@ -4,7 +4,11 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/parser?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/parser?style=for-the-badge)
 
-> :warning: This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
+> **Warning**
+> This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
+
+> **Warning**
+> This package has rewrited Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
@@ -19,12 +23,15 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
   * [Example using RAML data types](#example-using-raml-data-types)
   * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
-- [Using in the browser](#using-in-the-browser)
+- [Using in the browser/SPA applications](#using-in-the-browserspa-applications)
 - [Custom schema parsers](#custom-schema-parsers)
   * [Official supported custom schema parsers](#official-supported-custom-schema-parsers)
 - [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
 - [Stringify](#stringify)
+- [Convert to the old API](#convert-to-the-old-api)
+- [Bundler configuration](#bundler-configuration)
+  * [Webpack](#webpack)
 - [Develop](#develop)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -176,7 +183,7 @@ Direct access to the parsed JSON document is always available through the `doc.j
 
 See [API documentation](./docs/api.md) for more examples and full API reference information.
 
-## Using in the browser/SPA apps
+## Using in the browser/SPA applications
 
 The package contains a built-in version of the parser. To use it, you need to import the parser into the HTML file as below:
 
@@ -185,7 +192,7 @@ The package contains a built-in version of the parser. To use it, you need to im
 
 <script>
   const parser = new window.AsyncAPIParser();
-  const { parsed, diagnostics } = parser.parse(...);
+  const { document, diagnostics } = parser.parse(...);
 </script>
 ```
 
@@ -195,11 +202,11 @@ Or, if you want to use the parser in a JS SPA-type application where you have a 
 import Parser from '@asyncapi/parser/browser';
 
 const parser = new Parser();
-const { parsed, diagnostics } = parser.parse(...);
+const { document, diagnostics } = parser.parse(...);
 ```
 
 > **Note**
-> Using the above code, we import the entire bundled parser into application. This may result in duplicate code in the final application bundle, only if the application uses the same dependencies what the parser. If, on the other hand, you want to have the smallest bundle possible, we recommend using the following import and properly configure bundler.
+> Using the above code, we import the entire bundled parser into application. This may result in a duplicate code in the final application bundle, only if the application uses the same dependencies what the parser. If, on the other hand, you want to have the smallest bundle as possible, we recommend using the following import and properly configure bundler.
 
 Otherwise, if your application is bundled via bundlers like `webpack` and you can configure it, you can import the parser like a regular package:
 
@@ -207,7 +214,7 @@ Otherwise, if your application is bundled via bundlers like `webpack` and you ca
 import { Parser } from '@asyncapi/parser';
 
 const parser = new Parser();
-const { parsed, diagnostics } = parser.parse(...);
+const { document, diagnostics } = parser.parse(...);
 ```
 
 > **Note**
@@ -252,38 +259,55 @@ AsyncAPI doesn't enforce one schema format. The payload of the messages can be d
 
 In AsyncAPI Initiative we support below custom schema parsers. To install them, run below comamnds:
 
-- Avro schema:
+- [Avro schema](https://www.github.com/asyncapi/avro-schema-parser):
 
   ```bash
   npm install @asyncapi/avro-schema-parser
   yarn add @asyncapi/avro-schema-parser
   ```
 
-- OpenAPI (3.0.0) Schema Object:
+- [OpenAPI (3.0.0) Schema Object](https://www.github.com/asyncapi/openapi-schema-parser):
 
   ```bash
   npm install @asyncapi/openapi-schema-parser
   yarn add @asyncapi/openapi-schema-parser
   ```
 
-- RAML data type:
+- [RAML data type](https://www.github.com/asyncapi/raml-dt-schema-parser):
 
   ```bash
   npm install @asyncapi/raml-dt-schema-parser
   yarn add @asyncapi/raml-dt-schema-parser
   ```
 
-  > **NOTE**: That custom parser works only in the NodeJS environment. Do not use it in browser applications!
+  > **Note**
+  > That custom parser works only in the NodeJS environment. Do not use it in browser applications!
 
 ## Custom extensions
 
-TBD
+The parser uses custom extensions to define additional information about the spec. Each has a different purpose but all of them are there to make it much easier to work with the AsyncAPI document. These extensions are prefixed with `x-parser-`. The following extensions are used:
 
-> **NOTE**: All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
+- `x-parser-spec-parsed` is used to specify if the AsyncAPI document is already parsed by the parser. Property `x-parser-spec-parsed` is added to the root of the document with the `true` value.
+- `x-parser-message-name` is used to specify the name of the message if it is not provided. For messages without names, the parser generates anonymous names. Property `x-parser-message-name` is added to a message object with a value that follows this pattern: `<anonymous-message-${number}>`. This value is returned by `message.id()` (`message.uid()` in the [old API](#convert-to-the-old-api)) when regular `name` property is not present.
+- `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
+- [`x-parser-circular`](#circular-references).
+
+In addition, the [`migrateToOldAPI()` function](#convert-to-the-old-api) which converts new API to an old one adds additional extensions:
+
+- `x-parser-message-parsed` is used to specify if the message is already parsed by the message parser. Property `x-parser-message-parsed` is added to the message object with the `true` value.
+- `x-parser-schema-id` is used to specify the ID of the schema if it is not provided. For schemas without IDs, the parser generates anonymous names. Property `x-parser-schema-id` is added to every object of a schema with a value that follows this pattern: `<anonymous-schema-${number}>`. This value is returned by `schema.uid()` when regular `$id` property is not present.
+- `x-parser-original-traits` is where traits are stored after they are applied on the AsyncAPI document. The reason is because the original `traits` property is removed.
+- `x-parser-original-schema-format` holds information about the original schema format of the payload. You can use different schema formats with the AsyncAPI documents and the parser converts them to AsyncAPI schema. This is why different schema format is set, and the original one is preserved in the extension.
+
+> **Note**
+> All extensions added by the parser (including all properties) should be retrieved using special functions. Names of extensions and their location may change, and their eventual changes will not be announced.
 
 ## Circular references
 
-TBD
+Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
+
+- `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. In old API the Parser exposes `hasCircular()` function to check if given AsyncAPI document has circular references.
+- `isCircular()` function is added to the [Schema Model](./src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
 
 ## Stringify
 
@@ -300,10 +324,26 @@ For that, the Parser supports the ability to stringify a parsed AsyncAPI documen
 To parse a stringified document into an AsyncAPIDocument instance, you must use the `unstringify` function (also exposed by package). It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path, with an `$ref:` prefix to the original objects.
 
 A few advantages of this solution:
+
 - The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
 - All references (also circular) are preserved.
 
 Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify).
+
+## Convert to the old API
+
+Version `2.0.0` of package introduced a lot of breaking changes, including changing the API of the returned parsed document (parser uses [Intent API](https://github.com/asyncapi/parser-api)). Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `migrateToOldAPI()` function to convert new API to old one:
+
+```js
+import { Parser, migrateToOldAPI } from '@asyncapi/parser';
+
+const parser = new Parser();
+const { document } = parser.parse(...);
+const oldAsyncAPIDocument = migrateToOldAPI(document);
+```
+
+> **Note**
+> The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of January 2023.
 
 ## Bundler configuration
 

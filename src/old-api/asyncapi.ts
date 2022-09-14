@@ -145,7 +145,7 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
       if (schema.uid()) {
         schemas.set(schema.uid(), schema);
       }
-    };
+    }
     traverseAsyncApiDocument(this, allSchemasCallback);
     return schemas;
   }

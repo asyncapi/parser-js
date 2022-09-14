@@ -66,6 +66,6 @@ function assignUidToAnonymousSchemas(doc: AsyncAPIDocumentInterface) {
     if (!schema.uid()) {
       setExtension(xParserSchemaId, `<anonymous-schema-${++anonymousSchemaCounter}>`, schema);
     }
-  };
+  }
   traverseAsyncApiDocument(doc, callback);
 }

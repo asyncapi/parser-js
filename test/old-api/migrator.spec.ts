@@ -194,8 +194,8 @@ describe('migrateToOldAPI()', function() {
     // apply anonymous naming
     anonymousNaming(newApi);
     const oldApi = migrateToOldAPI(newApi);
-    expect(oldApi.json().channels.channel?.publish?.message?.[xParserOriginalPayload]).toEqual({ type: 'string', "x-parser-schema-id": "<anonymous-schema-1>" });
-    expect(oldApi.json().channels.channel?.subscribe?.message?.[xParserOriginalPayload]).toEqual({ type: 'number', "x-parser-schema-id": "<anonymous-schema-2>" });
+    expect(oldApi.json().channels.channel?.publish?.message?.[xParserOriginalPayload]).toEqual({ type: 'string', 'x-parser-schema-id': '<anonymous-schema-1>' });
+    expect(oldApi.json().channels.channel?.subscribe?.message?.[xParserOriginalPayload]).toEqual({ type: 'number', 'x-parser-schema-id': '<anonymous-schema-2>' });
   });
 
   it('should remove traits from message object and assign them to the extension', function() {

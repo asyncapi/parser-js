@@ -1,7 +1,7 @@
-import { setExtension } from "../utils";
-import { xParserCircular } from "../constants";
+import { setExtension } from '../utils';
+import { xParserCircular } from '../constants';
 
-import type { AsyncAPIDocumentInterface } from "../models";
+import type { AsyncAPIDocumentInterface } from '../models';
 
 export function checkCircularRefs(document: AsyncAPIDocumentInterface) {
   if (hasInlineRef(document.json())) {
@@ -11,7 +11,7 @@ export function checkCircularRefs(document: AsyncAPIDocumentInterface) {
 
 function hasInlineRef(data: Record<string, any>): boolean {
   if (data && typeof data === 'object' && !Array.isArray(data)) {
-    if (data.hasOwnProperty('$ref')) {
+    if (Object.prototype.hasOwnProperty.call(data, '$ref')) {
       return true;
     }
     for (const p in data) {

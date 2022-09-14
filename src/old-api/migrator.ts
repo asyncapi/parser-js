@@ -48,5 +48,5 @@ function handleOperations(document: AsyncAPIDocument) {
         delete json.traits;
       }
     }
-  })
+  });
 }

@@ -1,6 +1,5 @@
 import { JSONPath } from 'jsonpath-plus';
 
-import { xParserOriginalTraits } from '../constants';
 import { mergePatch } from '../utils';
 
 import type { v2 } from '../spec-types';

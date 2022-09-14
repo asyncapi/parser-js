@@ -68,7 +68,9 @@ export function traverseAsyncApiDocument(doc: AsyncAPIDocument, callback: Traver
     if (schemaTypesToIterate.includes(SchemaTypesToIterate.parameters)) {
       Object.values(components.parameters()).forEach(parameter => {
         const schema = parameter.schema();
-        schema && traverseSchema(schema, null, options);
+        if (schema) {
+          traverseSchema(schema, null, options);
+        }
       });
     }
     Object.values(components.messageTraits()).forEach(messageTrait => {
@@ -214,7 +216,9 @@ function traverseChannel(channel: Channel, options: TraverseOptions) {
   if (schemaTypesToIterate.includes(SchemaTypesToIterate.parameters)) {
     Object.values(channel.parameters() || {}).forEach(parameter => {
       const schema = parameter.schema();
-      schema && traverseSchema(schema, null, options);
+      if (schema) {
+        traverseSchema(schema, null, options);
+      }
     });
   }
 
@@ -241,11 +245,15 @@ function traverseMessage(message: Message, options: TraverseOptions) {
   const { schemaTypesToIterate } = options;
   if (schemaTypesToIterate.includes(SchemaTypesToIterate.headers)) {
     const headers = message.headers();
-    headers && traverseSchema(headers, null, options);
+    if (headers) {
+      traverseSchema(headers, null, options);
+    }
   }
   if (schemaTypesToIterate.includes(SchemaTypesToIterate.payloads)) {
     const payload = message.payload();
-    payload && traverseSchema(payload, null, options);
+    if (payload) {
+      traverseSchema(payload, null, options);
+    }
   }
 }
 
@@ -257,6 +265,8 @@ function traverseMessageTrait(messageTrait: MessageTrait, options: TraverseOptio
   const { schemaTypesToIterate } = options;
   if (schemaTypesToIterate.includes(SchemaTypesToIterate.headers)) {
     const headers = messageTrait.headers();
-    headers && traverseSchema(headers, null, options);
+    if (headers) {
+      traverseSchema(headers, null, options);
+    }
   }
 }

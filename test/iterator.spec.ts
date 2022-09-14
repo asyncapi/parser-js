@@ -4,7 +4,7 @@ import { parse } from '../src/parse';
 import { AsyncAPIDocumentInterface, AsyncAPIDocumentV2, SchemaV2 } from '../src/models';
 import { SchemaInterface } from '../src/models/schema';
 
-const document = {
+const documentRaw = {
   asyncapi: '2.0.0',
   info: {
     title: 'Valid AsyncApi document',
@@ -57,11 +57,11 @@ describe('Traverse AsyncAPI document', function() {
   const parser = new Parser();
   describe('traverseAsyncApiDocument()', function() {
     it('should traverse all possible schemas from a valid document', async function() {
-      const { parsed } = await parse(parser, document);
-      expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
+      const { document } = await parse(parser, documentRaw);
+      expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
 
-      const payload = parsed?.messages().all()[0].payload() as SchemaV2;
-      const componentsSchema = parsed?.components().schemas().all()[0] as SchemaV2;
+      const payload = document?.messages().all()[0].payload() as SchemaV2;
+      const componentsSchema = document?.components().schemas().all()[0] as SchemaV2;
       const expectedCalls = [
         // Schema from channels
         call(payload, SchemaIteratorCallbackType.NEW_SCHEMA),
@@ -79,14 +79,14 @@ describe('Traverse AsyncAPI document', function() {
         call(componentsSchema, SchemaIteratorCallbackType.END_SCHEMA)
       ];
 
-      testCallback(expectedCalls, parsed as AsyncAPIDocumentInterface, []);
+      testCallback(expectedCalls, document as AsyncAPIDocumentInterface, []);
     });
 
     it('should traverse few schemas from a valid document', async function() {
-      const { parsed } = await parse(parser, document);
-      expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
+      const { document } = await parse(parser, documentRaw);
+      expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
 
-      const componentsSchema = parsed?.components().schemas().all()[0] as SchemaV2;
+      const componentsSchema = document?.components().schemas().all()[0] as SchemaV2;
       const expectedCalls = [
         // Schema from components
         call(componentsSchema, SchemaIteratorCallbackType.NEW_SCHEMA),
@@ -97,7 +97,7 @@ describe('Traverse AsyncAPI document', function() {
         call(componentsSchema, SchemaIteratorCallbackType.END_SCHEMA)
       ];
 
-      testCallback(expectedCalls, parsed as AsyncAPIDocumentInterface, [SchemaTypesToIterate.Components, SchemaTypesToIterate.Objects]);
+      testCallback(expectedCalls, document as AsyncAPIDocumentInterface, [SchemaTypesToIterate.Components, SchemaTypesToIterate.Objects]);
     });
   });
 });

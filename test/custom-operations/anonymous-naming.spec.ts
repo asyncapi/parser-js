@@ -5,7 +5,7 @@ describe('custom operations - anonymous naming', function() {
   const parser = new Parser();
 
   it('should assign x-parser-message-name to anonymous message', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -23,12 +23,12 @@ describe('custom operations - anonymous naming', function() {
       }
     });
 
-    expect(parsed?.messages()).toHaveLength(1);
-    expect(parsed?.messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('<anonymous-message-1>');
+    expect(document?.messages()).toHaveLength(1);
+    expect(document?.messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('<anonymous-message-1>');
   });
 
   it('should assign x-parser-message-name to component messages', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -53,12 +53,12 @@ describe('custom operations - anonymous naming', function() {
       }
     });
 
-    expect(parsed?.components().messages()).toHaveLength(1);
-    expect(parsed?.components().messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('message');
+    expect(document?.components().messages()).toHaveLength(1);
+    expect(document?.components().messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('message');
   });
 
   it('should not override x-parser-message-name if it exists', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -83,12 +83,12 @@ describe('custom operations - anonymous naming', function() {
       }
     });
 
-    expect(parsed?.messages()).toHaveLength(1);
-    expect(parsed?.messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('message');
+    expect(document?.messages()).toHaveLength(1);
+    expect(document?.messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('message');
   });
 
   it('should assign x-parser-schema-id to anonymous schema', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -112,12 +112,12 @@ describe('custom operations - anonymous naming', function() {
       }
     });
 
-    expect(parsed?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('<anonymous-schema-1>');
-    expect(parsed?.messages()[1].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('<anonymous-schema-2>');
+    expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('<anonymous-schema-1>');
+    expect(document?.messages()[1].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('<anonymous-schema-2>');
   });
 
   it('should assign x-parser-schema-id to component schemas', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -141,13 +141,13 @@ describe('custom operations - anonymous naming', function() {
       }
     });
 
-    expect(parsed?.components().schemas()).toHaveLength(2);
-    expect(parsed?.components().schemas()[0].extensions().get(xParserSchemaId)?.value()).toEqual('schema1');
-    expect(parsed?.components().schemas()[1].extensions().get(xParserSchemaId)?.value()).toEqual('schema2');
+    expect(document?.components().schemas()).toHaveLength(2);
+    expect(document?.components().schemas()[0].extensions().get(xParserSchemaId)?.value()).toEqual('schema1');
+    expect(document?.components().schemas()[1].extensions().get(xParserSchemaId)?.value()).toEqual('schema2');
   });
 
   it('should not override x-parser-schema-id if it exists', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -172,6 +172,6 @@ describe('custom operations - anonymous naming', function() {
       }
     });
 
-    expect(parsed?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('schema');
+    expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('schema');
   });
 });

@@ -5,7 +5,7 @@ describe('custom operations - check circular references', function() {
   const parser = new Parser();
 
   it('should not assign x-parser-circular extension when document has not circular schemas', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -30,11 +30,11 @@ describe('custom operations - check circular references', function() {
       }
     });
 
-    expect(parsed?.extensions().get(xParserCircular)?.value()).toEqual(undefined);
+    expect(document?.extensions().get(xParserCircular)?.value()).toEqual(undefined);
   });
 
   it('should assign x-parser-circular extension when document has circular schemas', async function() {
-    const { parsed } = await parser.parse({
+    const { document } = await parser.parse({
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -56,6 +56,6 @@ describe('custom operations - check circular references', function() {
       }
     });
 
-    expect(parsed?.extensions().get(xParserCircular)?.value()).toEqual(true);
+    expect(document?.extensions().get(xParserCircular)?.value()).toEqual(true);
   });
 });

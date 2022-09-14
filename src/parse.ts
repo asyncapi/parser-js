@@ -15,7 +15,7 @@ import type { MaybeAsyncAPI, Diagnostic } from './types';
 export type ParseInput = string | MaybeAsyncAPI | AsyncAPIDocumentInterface;
 export interface ParseOutput {
   source: ParseInput;
-  parsed: AsyncAPIDocumentInterface | undefined;
+  document: AsyncAPIDocumentInterface | undefined;
   diagnostics: Diagnostic[]; 
 }
 
@@ -30,7 +30,7 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
   if (maybeDocument) {
     return { 
       source: asyncapi,
-      parsed: maybeDocument,
+      document: maybeDocument,
       diagnostics: [],
     };
   }
@@ -43,7 +43,7 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
     if (validated === undefined) {
       return {
         source: asyncapi,
-        parsed: undefined,
+        document: undefined,
         diagnostics,
       };
     }
@@ -58,7 +58,7 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
   
     return { 
       source: asyncapi,
-      parsed: parsedDoc,
+      document: parsedDoc,
       diagnostics,
     };
   } catch (err: any) {

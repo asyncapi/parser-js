@@ -68,6 +68,7 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
 async function parseSchemaV2(parser: Parser, item: ToParseItem) {
   const originalData = item.input.data;
   const parsedData = item.value.payload = await parseSchema(parser, item.input);
+  // save original payload only when data is different (returned by custom parsers)
   if (originalData !== parsedData) {
     item.value[xParserOriginalPayload] = originalData;
   }

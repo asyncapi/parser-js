@@ -1,5 +1,5 @@
 import { AsyncAPIDocument } from './asyncapi';
-import { xParserCircular, xParserOriginalPayload, xParserOriginalSchemaFormat, xParserOriginalTraits, xParserMessageParsed } from '../constants';
+import { xParserOriginalPayload, xParserOriginalSchemaFormat, xParserOriginalTraits, xParserMessageParsed } from '../constants';
 import { copy } from '../stringify';
 import { getDefaultSchemaFormat } from '../schema-parser';
 
@@ -9,9 +9,6 @@ export function migrateToOldAPI(newDocument: AsyncAPIDocumentInterface): AsyncAP
   const data = copy(newDocument.json());
   const document = new AsyncAPIDocument(data);
 
-  if (hasInlineRef(data)) {
-    data[xParserCircular] = true;
-  }
   handleMessages(document);
   handleOperations(document);
 
@@ -52,18 +49,4 @@ function handleOperations(document: AsyncAPIDocument) {
       }
     }
   })
-}
-
-function hasInlineRef(data: Record<string, any>): boolean {
-  if (data && typeof data === 'object' && !Array.isArray(data)) {
-    if (data.hasOwnProperty('$ref')) {
-      return true;
-    }
-    for (const p in data) {
-      if (hasInlineRef(data[p])) { 
-        return true;
-      }
-    }
-  }
-  return false; 
 }

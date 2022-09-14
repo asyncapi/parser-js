@@ -10,6 +10,9 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
 > **Warning**
 > This package has rewrited Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
 
+> **Note**
+> Read the [migration guide from v1 to v2](./migration-guide-v2.md).
+
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
 <!-- toc -->

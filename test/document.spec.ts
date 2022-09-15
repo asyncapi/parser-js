@@ -1,6 +1,7 @@
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
-import { newAsyncAPIDocument, BaseModel, AsyncAPIDocumentV2 } from '../src/models';
+import { BaseModel, AsyncAPIDocumentV2 } from '../src/models';
 import { 
+  createAsyncAPIDocument,
   toAsyncAPIDocument, 
   isAsyncAPIDocument, 
   isParsedDocument, 
@@ -10,6 +11,22 @@ import { createDetailedAsyncAPI } from '../src/utils';
 
 describe('utils', function() {
   class Model extends BaseModel {}
+
+  describe('createAsyncAPIDocument()', function() {
+    it('should create a valid document from v2.0.0', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
+      const d = createAsyncAPIDocument(detailed);
+      expect(d.version()).toEqual(doc.asyncapi);
+      expect(d).toBeInstanceOf(AsyncAPIDocumentV2);
+    });
+  
+    it('should fail trying to create a document from a non supported spec version', function() {
+      const doc = { asyncapi: '99.99.99' };
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
+      expect(() => createAsyncAPIDocument(detailed)).toThrow('Unsupported AsyncAPI version: 99.99.99');
+    });
+  });
 
   describe('toAsyncAPIDocument()', function() {
     it('normal object should not return AsyncAPIDocument instance', function() {
@@ -31,7 +48,7 @@ describe('utils', function() {
     it('AsyncAPIDocument instance should return AsyncAPIDocument instance', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
-      expect(toAsyncAPIDocument(newAsyncAPIDocument(detailed))).toBeInstanceOf(AsyncAPIDocumentV2);
+      expect(toAsyncAPIDocument(createAsyncAPIDocument(detailed))).toBeInstanceOf(AsyncAPIDocumentV2);
     });
 
     it('parsed document should return AsyncAPIDocument instance', function() {
@@ -67,7 +84,7 @@ describe('utils', function() {
     it('AsyncAPIDocument instance should be AsyncAPI document', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
-      expect(isAsyncAPIDocument(newAsyncAPIDocument(detailed))).toEqual(true);
+      expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
     });
   });
 
@@ -91,13 +108,13 @@ describe('utils', function() {
     it('AsyncAPIDocument instance should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
-      expect(isParsedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
+      expect(isParsedDocument(createAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0', [xParserSpecParsed]: true };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
-      expect(isParsedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
+      expect(isParsedDocument(createAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('object with proper extension should be parsed document', function() {
@@ -125,13 +142,13 @@ describe('utils', function() {
     it('AsyncAPIDocument instance should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
-      expect(isStringifiedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
+      expect(isStringifiedDocument(createAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('AsyncAPIDocument instance with proper extension should not be parsed document', function() {
       const doc = { asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
-      expect(isStringifiedDocument(newAsyncAPIDocument(detailed))).toEqual(false);
+      expect(isStringifiedDocument(createAsyncAPIDocument(detailed))).toEqual(false);
     });
 
     it('object with only stringified extension should not be parsed document', function() {

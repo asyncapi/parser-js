@@ -67,19 +67,19 @@ describe('AsyncAPISchemaParser', function () {
     const expectedResult: SchemaValidateResult[] = [
       {
         message: 'must be object,boolean',
-        path: ['properties', 'name', 'if']
+        path: ['components', 'schemas', 'schema1', 'payload', 'properties', 'name', 'if']
       },
       {
         message: 'must be array',
-        path: ['oneOf']
+        path: ['components', 'schemas', 'schema1', 'payload', 'oneOf']
       },
       {
         message: 'must be array',
-        path: ['oneOf']
+        path: ['components', 'schemas', 'schema1', 'payload', 'oneOf']
       },
       {
         message: 'must be object,boolean',
-        path: ['properties', 'name', 'if']
+        path: ['components', 'schemas', 'schema1', 'payload', 'properties', 'name', 'if']
       }
     ];
 

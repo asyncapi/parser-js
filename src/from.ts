@@ -2,16 +2,17 @@ import { readFile } from 'fs/promises';
 
 import type { RequestInit } from 'node-fetch';
 import type { Parser } from './parser';
-import type { ParseInput, ParseOptions, ParseOutput } from './parse';
-import type { ValidateOptions, ValidateOutput } from './lint';
+import type { ParseOptions, ParseOutput } from './parse';
+import type { ValidateOptions } from './validate';
+import type { Input, Diagnostic } from './types';
 
 interface FromResult {
   parse: (options?: ParseOptions) => Promise<ParseOutput>;
-  validate: (options?: ValidateOptions) => Promise<ValidateOutput>;
+  validate: (options?: ValidateOptions) => Promise<Diagnostic[]>;
 }
 
 export function fromURL(parser: Parser, source: string, options?: RequestInit): FromResult {
-  async function fetchUrl(): Promise<ParseInput> {
+  async function fetchUrl(): Promise<Input> {
     const fetchFn = await getFetch();
     return (await fetchFn(source, options as any)).text();
   }
@@ -29,7 +30,7 @@ export function fromURL(parser: Parser, source: string, options?: RequestInit): 
 }
 
 export function fromFile(parser: Parser, source: string, options?: Parameters<typeof readFile>[1]): FromResult {
-  async function readFileFn(): Promise<ParseInput> {
+  async function readFileFn(): Promise<Input> {
     return (await readFile(source, options)).toString();
   }
 

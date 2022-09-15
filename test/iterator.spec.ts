@@ -1,6 +1,5 @@
 import { SchemaIteratorCallbackType, SchemaTypesToIterate, traverseAsyncApiDocument } from '../src/iterator';
 import { Parser } from '../src/parser';
-import { parse } from '../src/parse';
 import { AsyncAPIDocumentInterface, AsyncAPIDocumentV2, SchemaV2 } from '../src/models';
 import { SchemaInterface } from '../src/models/schema';
 
@@ -55,9 +54,10 @@ type ExpectedCallback = {
 
 describe('Traverse AsyncAPI document', function() {
   const parser = new Parser();
+
   describe('traverseAsyncApiDocument()', function() {
     it('should traverse all possible schemas from a valid document', async function() {
-      const { document } = await parse(parser, documentRaw);
+      const { document } = await parser.parse(documentRaw);
       expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
 
       const payload = document?.messages().all()[0].payload() as SchemaV2;
@@ -83,7 +83,7 @@ describe('Traverse AsyncAPI document', function() {
     });
 
     it('should traverse few schemas from a valid document', async function() {
-      const { document } = await parse(parser, documentRaw);
+      const { document } = await parser.parse(documentRaw);
       expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
 
       const componentsSchema = document?.components().schemas().all()[0] as SchemaV2;

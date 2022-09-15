@@ -1,6 +1,6 @@
-import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
+import { AsyncAPIDocumentInterface } from './models';
 
-import { isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './document';
+import { createAsyncAPIDocument, isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './document';
 import { createDetailedAsyncAPI } from './utils';
 import { xParserSpecStringified } from './constants';
 
@@ -47,7 +47,7 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   delete (<Record<string, any>>parsed)[String(xParserSpecStringified)];
 
   traverseStringifiedData(document, undefined, document, new Map(), new Map());
-  return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed']));
+  return createAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed']));
 }
 
 export function copy(data: Record<string, any>) {

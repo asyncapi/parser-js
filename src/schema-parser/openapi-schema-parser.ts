@@ -29,7 +29,7 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
   let result: SchemaValidateResult[] = [];
   const valid = validator(input.data);
   if (!valid && validator.errors) {
-    result = ajvToSpectralResult([...validator.errors]);
+    result = ajvToSpectralResult(input.path, [...validator.errors]);
   }
 
   return result;
@@ -60,15 +60,13 @@ function getMimeTypes() {
   ];
 }
 
-function ajvToSpectralResult(errors: ErrorObject[]): SchemaValidateResult[] {
+function ajvToSpectralResult(path: Array<string | number>, errors: ErrorObject[]): SchemaValidateResult[] {
   return errors.map(error => {
-    const errorPath = error.instancePath.replace(/^\//, '').split('/');
-
     return {
       message: error.message,
-      path: errorPath,
-    } as SchemaValidateResult;
-  });
+      path: [...path, ...error.instancePath.replace(/^\//, '').split('/')],
+    };
+  }) as SchemaValidateResult[];
 }
 
 function iterateSchema(schema: any) {

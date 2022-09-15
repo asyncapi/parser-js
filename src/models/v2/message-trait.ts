@@ -4,6 +4,7 @@ import { MessageExamples } from './message-examples';
 import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
+import { xParserMessageName } from '../../constants';
 import { getDefaultSchemaFormat } from '../../schema-parser';
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
 
@@ -20,7 +21,7 @@ import type { v2 } from '../../spec-types';
 
 export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends BaseModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {
-    return this.messageId() || this._meta.id;
+    return this.messageId() || this._meta.id || this.extensions().get(xParserMessageName)?.value<string>() as string;
   }
 
   schemaFormat(): string {

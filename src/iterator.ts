@@ -1,54 +1,54 @@
-import { AsyncAPIDocumentInterface } from 'models';
-import { ChannelInterface } from 'models/channel';
-import { ChannelParameterInterface } from 'models/channel-parameter';
-import { MessageInterface } from 'models/message';
-import { MessageTraitInterface } from 'models/message-trait';
-import { SchemaInterface } from 'models/schema';
- 
+import type { AsyncAPIDocumentInterface } from './models/asyncapi';
+import type { ChannelInterface } from './models/channel';
+import type { ChannelParameterInterface } from './models/channel-parameter';
+import type { MessageInterface } from './models/message';
+import type { MessageTraitInterface } from './models/message-trait';
+import type { SchemaInterface } from './models/schema';
+
 /**
  * The different kind of stages when crawling a schema.  
  */
 export enum SchemaIteratorCallbackType {
-    NEW_SCHEMA = 'NEW_SCHEMA', // The crawler just started crawling a schema.
-    END_SCHEMA = 'END_SCHEMA', // The crawler just finished crawling a schema.
+  NEW_SCHEMA = 'NEW_SCHEMA', // The crawler just started crawling a schema.
+  END_SCHEMA = 'END_SCHEMA', // The crawler just finished crawling a schema.
 }
 
 /**
  * The different types of schemas you can iterate 
  */
 export enum SchemaTypesToIterate {
-    Parameters = 'parameters', // Crawl all schemas in payloads
-    Payloads = 'payloads', // Crawl all schemas in payloads
-    Headers = 'headers', // Crawl all schemas in headers
-    Components = 'components', // Crawl all schemas in components
-    Objects = 'objects', // Crawl all schemas of type object
-    Arrays = 'arrays', // Crawl all schemas of type array
-    OneOfs = 'oneOfs', // Crawl all schemas in oneOf's
-    AllOfs = 'allOfs', // Crawl all schemas in allOf's
-    AnyOfs = 'anyOfs', // Crawl all schemas in anyOf's
-    Nots = 'nots', // Crawl all schemas in not field
-    PropertyNames = 'propertyNames', // Crawl all schemas in propertyNames field
-    PatternProperties = 'patternProperties', // Crawl all schemas in patternProperties field
-    Contains = 'contains', // Crawl all schemas in contains field
-    Ifs = 'ifs', // Crawl all schemas in if field
-    Thenes = 'thenes', // Crawl all schemas in then field
-    Elses = 'elses', // Crawl all schemas in else field
-    Dependencies = 'dependencies', // Crawl all schemas in dependencies field
-    Definitions = 'definitions', // Crawl all schemas in definitions field
+  Parameters = 'parameters', // Crawl all schemas in payloads
+  Payloads = 'payloads', // Crawl all schemas in payloads
+  Headers = 'headers', // Crawl all schemas in headers
+  Components = 'components', // Crawl all schemas in components
+  Objects = 'objects', // Crawl all schemas of type object
+  Arrays = 'arrays', // Crawl all schemas of type array
+  OneOfs = 'oneOfs', // Crawl all schemas in oneOf's
+  AllOfs = 'allOfs', // Crawl all schemas in allOf's
+  AnyOfs = 'anyOfs', // Crawl all schemas in anyOf's
+  Nots = 'nots', // Crawl all schemas in not field
+  PropertyNames = 'propertyNames', // Crawl all schemas in propertyNames field
+  PatternProperties = 'patternProperties', // Crawl all schemas in patternProperties field
+  Contains = 'contains', // Crawl all schemas in contains field
+  Ifs = 'ifs', // Crawl all schemas in if field
+  Thenes = 'thenes', // Crawl all schemas in then field
+  Elses = 'elses', // Crawl all schemas in else field
+  Dependencies = 'dependencies', // Crawl all schemas in dependencies field
+  Definitions = 'definitions', // Crawl all schemas in definitions field
 }
-   
+
 export type TraverseOptions = {
-   callback: Function
-   schemaTypesToIterate: SchemaTypesToIterate[]
-   seenSchemas: Set<any>
+  callback: TraverseCallback
+  schemaTypesToIterate: SchemaTypesToIterate[]
+  seenSchemas: Set<any>
 }   
-  
-export type TraverseCallback = (schema: SchemaInterface, propOrIndex: string | number | null, callbackType: SchemaIteratorCallbackType) => void
+
+export type TraverseCallback = (schema: SchemaInterface, propOrIndex: string | number | null, callbackType: SchemaIteratorCallbackType) => boolean | void;
 
 /**
  * Go through each channel and for each parameter, and message payload and headers recursively call the callback for each schema.
  */
-export function traverseAsyncApiDocument(doc: AsyncAPIDocumentInterface, callback: TraverseCallback, schemaTypesToIterate: SchemaTypesToIterate[]) {
+export function traverseAsyncApiDocument(doc: AsyncAPIDocumentInterface, callback: TraverseCallback, schemaTypesToIterate: SchemaTypesToIterate[] = []) {
   if (schemaTypesToIterate.length === 0) {
     schemaTypesToIterate = Object.values(SchemaTypesToIterate);
   }
@@ -156,7 +156,7 @@ function traverseSchema(schema: SchemaInterface, propOrIndex: string | number | 
   seenSchemas.delete(jsonSchema);
 }
 /* eslint-enable sonarjs/cognitive-complexity */
-   
+
 /**
  * Recursively go through schema of object type and execute callback.
  */
@@ -180,7 +180,7 @@ function recursiveSchemaObject(schema: SchemaInterface, options: TraverseOptions
     });
   }
 }
-   
+
 /**
  * Recursively go through schema of array type and execute callback.
  */
@@ -205,7 +205,7 @@ function recursiveSchemaArray(schema: SchemaInterface, options: any) {
     traverseSchema(schema.contains() as SchemaInterface, null, options);
   }
 }
-   
+
 /**
  * Go through each schema in channel
  */
@@ -222,7 +222,7 @@ function traverseChannel(channel: ChannelInterface, options: TraverseOptions) {
     traverseMessage(message, options);
   });
 }
-   
+
 /**
  * Go through each schema in a message
  */
@@ -236,7 +236,7 @@ function traverseMessage(message: MessageInterface, options: TraverseOptions) {
     traverseSchema(message.payload() as SchemaInterface, null, options);
   }
 }
-   
+
 /**
  * Go through each schema in a messageTrait
  */

@@ -6,7 +6,7 @@ describe('parse()', function() {
   const parser = new Parser();
 
   it('should parse valid document', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -14,28 +14,28 @@ describe('parse()', function() {
       },
       channels: {}
     };
-    const { parsed, diagnostics } = await parse(parser, document);
+    const { document, diagnostics } = await parse(parser, documentRaw);
     
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
   });
 
   it('should parse invalid document', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Invalid AsyncApi document',
         version: '1.0',
       },
     };
-    const { parsed, diagnostics } = await parse(parser, document);
+    const { document, diagnostics } = await parse(parser, documentRaw);
     
-    expect(parsed).toEqual(undefined);
+    expect(document).toEqual(undefined);
     expect(diagnostics.length > 0).toEqual(true);
   });
 
   it('should preserve references', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -67,11 +67,11 @@ describe('parse()', function() {
         }
       }
     };
-    const { parsed } = await parse(parser, document);
+    const { document } = await parse(parser, documentRaw);
     
-    const publishMessage = parsed?.channels().get('channel')?.operations().get('publishOperation')?.messages()[0];
-    const subscribeMessage = parsed?.channels().get('channel')?.operations().get('subscribeOperation')?.messages()[0];
-    const componentsMessage = parsed?.components()?.messages()?.get('message');
+    const publishMessage = document?.channels().get('channel')?.operations().get('publishOperation')?.messages()[0];
+    const subscribeMessage = document?.channels().get('channel')?.operations().get('subscribeOperation')?.messages()[0];
+    const componentsMessage = document?.components()?.messages()?.get('message');
     expect(publishMessage?.json() !== undefined).toEqual(true);
     expect(subscribeMessage?.json() !== undefined).toEqual(true);
     expect(componentsMessage?.json() !== undefined).toEqual(true);
@@ -81,7 +81,7 @@ describe('parse()', function() {
   });
 
   it('should parse circular references (in this same document)', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -107,16 +107,16 @@ describe('parse()', function() {
         }
       }
     };
-    const { parsed } = await parse(parser, document);
+    const { document } = await parse(parser, documentRaw);
 
-    const messagePayload = parsed?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
+    const messagePayload = document?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
     expect(messagePayload?.json() !== undefined).toEqual(true);
     expect(messagePayload?.properties()?.['circular'].json() !== undefined).toEqual(true);
     expect(messagePayload?.properties()?.['circular'].json() === messagePayload?.json()).toEqual(true); // expect that same reference
   });
 
   it('should parse circular references (in external file)', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -142,9 +142,9 @@ describe('parse()', function() {
         }
       }
     };
-    const { parsed } = await parse(parser, document, { validateOptions: { path: __filename } });
+    const { document } = await parse(parser, documentRaw, { validateOptions: { path: __filename } });
 
-    const messagePayload = parsed?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
+    const messagePayload = document?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
     const circular = messagePayload?.properties()?.['circular'];
     const deepProperty = circular?.properties()?.['deepProperty'];
     const deepCircular = deepProperty?.properties()?.['circular'];

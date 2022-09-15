@@ -1,6 +1,7 @@
 import { DiagnosticSeverity } from '@stoplight/types';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
+import type { BaseModel } from './models';
 import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from './types';
 
 export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
@@ -40,6 +41,12 @@ export function hasErrorDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean 
 
 export function hasWarningDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Warning);
+}
+
+export function setExtension(id: string, value: any, model: BaseModel): void {
+  id = id.startsWith('x-') ? id : `x-${id}`;
+  const data = model.json();
+  data[id] = value;
 }
 
 export function mergePatch(origin: unknown, patch: unknown) {

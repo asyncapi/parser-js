@@ -1,6 +1,5 @@
 import { JSONPath } from 'jsonpath-plus';
 
-import { xParserOriginalTraits } from '../constants';
 import { mergePatch } from '../utils';
 
 import type { v2 } from '../spec-types';
@@ -55,8 +54,5 @@ function applyTraits(value: Record<string, unknown>) {
         value[String(key)] = mergePatch(value[String(key)], trait[String(key)]);
       }
     }
-
-    value[xParserOriginalTraits] = value.traits;
-    delete value.traits;
   }
 }

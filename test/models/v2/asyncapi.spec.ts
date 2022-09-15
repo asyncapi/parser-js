@@ -4,6 +4,7 @@ import { Components } from '../../../src/models/v2/components';
 import { Info } from '../../../src/models/v2/info';
 import { Messages } from '../../../src/models/v2/messages';
 import { Operations } from '../../../src/models/v2/operations';
+import { Schemas } from '../../../src/models/v2/schemas';
 import { SecuritySchemes } from '../../../src/models/v2/security-schemes';
 import { Servers } from '../../../src/models/v2/servers';
 
@@ -125,7 +126,18 @@ describe('AsyncAPIDocument model', function() {
   });
 
   describe('.schemas()', function() {
-    it.todo('should return a collection of schemas');
+    it('should return a collection of schemas', function() {
+      const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': { publish: { message: { payload: {} } }, subscribe: { message: { oneOf: [{ payload: {} }, {}, { payload: {} }] } } }, 'user/logout': { publish: { message: { payload: {} } } } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.schemas()).toBeInstanceOf(Schemas);
+      expect(d.schemas()).toHaveLength(4);
+    });
+
+    it('should return a collection of schemas even if messages are not defined', function() {
+      const doc = serializeInput<v2.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.schemas()).toBeInstanceOf(Schemas);
+    });
   });
 
   describe('.securitySchemes()', function() {

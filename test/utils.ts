@@ -1,8 +1,8 @@
-import type { ISpectralDiagnostic } from "@stoplight/spectral-core";
-import type { SchemaValidateResult } from "../src/types";
+import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
+import type { SchemaValidateResult } from '../src/types';
 
 export function filterDiagnostics(diagnostics: ISpectralDiagnostic[], code: string) {
-  return diagnostics.filter(d => d.code === code)
+  return diagnostics.filter(d => d.code === code);
 }
 
 export function expectDiagnostics(diagnostics: ISpectralDiagnostic[], code: string, results: SchemaValidateResult[]) {

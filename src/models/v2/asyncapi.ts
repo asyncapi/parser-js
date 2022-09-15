@@ -82,7 +82,7 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
       if (!schemas.has(schema.json())) {
         schemas.add(schema);
       }
-    };
+    }
     // return only schemas used in channels ("active" schemas)
     const toIterate = Object.values(SchemaTypesToIterate).filter(s => s !== SchemaTypesToIterate.Components);
     traverseAsyncApiDocument(this, callback, toIterate);

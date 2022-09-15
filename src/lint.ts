@@ -14,7 +14,7 @@ export interface LintOptions extends IRunOpts {
 }
 
 export interface ValidateOptions extends IRunOpts {
-  path?: string;
+  source?: string;
   allowedSeverity?: {
     warning?: boolean;
   };
@@ -39,7 +39,7 @@ export async function validate(parser: Parser, asyncapi: ParseInput, options: Va
   }
 
   const stringifiedDocument = normalizeInput(asyncapi as Exclude<ParseInput, AsyncAPIDocumentInterface>);
-  const document = new Document(stringifiedDocument, Yaml, options.path);
+  const document = new Document(stringifiedDocument, Yaml, options.source);
 
   const { allowedSeverity } = normalizeOptions(options);
   // eslint-disable-next-line prefer-const

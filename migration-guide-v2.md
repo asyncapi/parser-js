@@ -19,7 +19,12 @@ The old Document API based 1:1 on AsyncAPI Specification has been rewritten to s
 
 ### EcmaScript Modules
 
-The source code of the package was rewritten from CJS (CommonJS) to ESM (EcmaScript) modules. This allows the fully [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) and much better integration in browser-type environments like SPA applications.
+The source code of the package was rewritten from CJS (CommonJS) to ESM (EcmaScript) modules. This allows the fully [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) and much better integration in browser-type environments like SPA applications. In addition, the package is published with:
+
+- `esm` (ESM modules) folder mainly for browser applications and newer versions of NodeJS, to support fully [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) 
+- `cjs` (CJS modules) folder for old versions of NodeJS
+
+Both versions have support for Typescript types.
 
 ### Parser class
 

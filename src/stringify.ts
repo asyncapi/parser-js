@@ -1,6 +1,6 @@
-import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
+import { AsyncAPIDocumentInterface } from './models';
 
-import { isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './document';
+import { newAsyncAPIDocument, isAsyncAPIDocument, isParsedDocument, isStringifiedDocument } from './document';
 import { createDetailedAsyncAPI } from './utils';
 import { xParserSpecStringified } from './constants';
 

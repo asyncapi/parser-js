@@ -1,4 +1,5 @@
 import type { ISpectralDiagnostic, IFunctionResult } from '@stoplight/spectral-core';
+import type { AsyncAPIDocumentInterface } from './models';
 import type { v2 } from './spec-types';
 
 export type MaybeAsyncAPI = { asyncapi: string } & Record<string, unknown>;
@@ -16,6 +17,7 @@ export interface DetailedAsyncAPI {
   semver: AsyncAPISemver;
 }
 
+export type Input = string | MaybeAsyncAPI | AsyncAPIDocumentInterface;
 export type Diagnostic = ISpectralDiagnostic;
 export type SchemaValidateResult = IFunctionResult;
 export type AsyncAPIObject = v2.AsyncAPIObject;

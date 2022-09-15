@@ -8,21 +8,14 @@ describe('Parser class', function() {
     expect(parser).toBeInstanceOf(Parser);
   });
 
-  it('should have default Spectral instance if no instance is specified in the constructor', async function() {
-    const parser = new Parser();
-    expect(parser.spectral).toBeInstanceOf(Spectral);
-  });
-
   it('should have Spectral instance given in constructor', async function() {
-    const spectral = new Spectral();
-    const parser = new Parser({ spectral });
-    expect(parser.spectral).toBeInstanceOf(Spectral);
-    expect(parser.spectral).toEqual(spectral);
+    const parser = new Parser();
+    expect((parser as any).spectral).toBeInstanceOf(Spectral);
   });
 
   it('should register schema parser', async function() {
     const parser = new Parser();
     parser.registerSchemaParser(AsyncAPISchemaParser());
-    expect(parser.parserRegistry.size).toBeGreaterThan(1);
+    expect((parser as any).parserRegistry.size).toBeGreaterThan(1);
   });
 });

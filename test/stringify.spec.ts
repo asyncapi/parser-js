@@ -1,6 +1,7 @@
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
-import { BaseModel, newAsyncAPIDocument } from '../src/models';
+import { BaseModel } from '../src/models';
 import { stringify, unstringify } from '../src/stringify';
+import { newAsyncAPIDocument } from '../src/document';
 import { createDetailedAsyncAPI } from '../src/utils';
 
 describe('stringify & unstringify', function() {

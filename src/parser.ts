@@ -1,48 +1,47 @@
 import { Spectral } from '@stoplight/spectral-core';
 
+import { toAsyncAPIDocument } from './document';
 import { parse } from './parse';
-import { lint, validate } from './lint';
+import { validate } from './validate';
 import { registerSchemaParser } from './schema-parser';
 import { AsyncAPISchemaParser } from './schema-parser/asyncapi-schema-parser';
-import { configureSpectral } from './spectral';
+import { createSpectral } from './spectral';
 
-import type { IConstructorOpts } from '@stoplight/spectral-core';
-import type { ParseInput, ParseOptions } from './parse';
-import type { LintOptions, ValidateOptions } from './lint';
+import type { ParseOptions, ParseOutput } from './parse';
+import type { ValidateOptions } from './validate';
 import type { SchemaParser } from './schema-parser';
+import type { Diagnostic, Input } from './types';
 
-export interface ParserOptions {
-  spectral?: Spectral | IConstructorOpts;
-}
+export interface ParserOptions {}
 
 export class Parser {
-  public readonly parserRegistry = new Map<string, SchemaParser>();
-  public readonly spectral: Spectral;
+  protected readonly parserRegistry = new Map<string, SchemaParser>();
+  protected readonly spectral: Spectral;
 
   constructor(
-    private readonly options?: ParserOptions
+    private readonly _: ParserOptions = {}
   ) {
-    const { spectral } = this.options || {};
-    if (spectral instanceof Spectral) {
-      this.spectral = spectral;
-    } else {
-      this.spectral = new Spectral(spectral);
-    }
-
+    this.spectral = createSpectral(this);
     this.registerSchemaParser(AsyncAPISchemaParser());
-    configureSpectral(this);
   }
 
-  parse(asyncapi: ParseInput, options?: ParseOptions) {
-    return parse(this, asyncapi, options);
+  async parse(asyncapi: Input, options?: ParseOptions): Promise<ParseOutput> {
+    const maybeDocument = toAsyncAPIDocument(asyncapi);
+    if (maybeDocument) {
+      return { 
+        document: maybeDocument,
+        diagnostics: [],
+      };
+    }
+    return parse(this, this.spectral, asyncapi, options);
   }
 
-  lint(asyncapi: ParseInput, options?: LintOptions) {
-    return lint(this, asyncapi, options);
-  }
-
-  validate(asyncapi: ParseInput, options?: ValidateOptions) {
-    return validate(this, asyncapi, options);
+  async validate(asyncapi: Input, options?: ValidateOptions): Promise<Diagnostic[]> {
+    const maybeDocument = toAsyncAPIDocument(asyncapi);
+    if (maybeDocument) {
+      return [];
+    }
+    return (await validate(this.spectral, asyncapi, options)).diagnostics;
   }
 
   registerSchemaParser(parser: SchemaParser) {

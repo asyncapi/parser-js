@@ -50,7 +50,7 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   return newAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed']));
 }
 
-export function unfreeze(data: Record<string, any>) {
+export function copy(data: Record<string, any>) {
   const stringifiedData = JSON.stringify(data, refReplacer());
   const unstringifiedData = JSON.parse(stringifiedData);
   traverseStringifiedData(unstringifiedData, undefined, unstringifiedData, new Map(), new Map());

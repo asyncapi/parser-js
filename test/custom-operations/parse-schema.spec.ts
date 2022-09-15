@@ -9,7 +9,7 @@ describe('custom operations - parse schemas', function() {
   const parser = new Parser();
 
   it('should parse valid schema format', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -29,18 +29,16 @@ describe('custom operations - parse schemas', function() {
         }
       }
     };
-    const { parsed, diagnostics } = await parse(parser, document);
+    const { document, diagnostics } = await parse(parser, documentRaw);
     
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
 
-    expect((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual({ type: 'object' });
-    expect((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.[xParserOriginalPayload]).toEqual({ type: 'object' });
-    expect((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.[xParserOriginalPayload]);
+    expect((document?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual({ type: 'object', 'x-parser-schema-id': '<anonymous-schema-1>' });
   });
 
   it('should parse valid default schema format', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -59,18 +57,16 @@ describe('custom operations - parse schemas', function() {
         }
       }
     };
-    const { parsed, diagnostics } = await parse(parser, document);
+    const { document, diagnostics } = await parse(parser, documentRaw);
     
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
 
-    expect((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual({ type: 'object' });
-    expect((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.[xParserOriginalPayload]).toEqual({ type: 'object' });
-    expect((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual((parsed?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.[xParserOriginalPayload]);
+    expect((document?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual({ type: 'object', 'x-parser-schema-id': '<anonymous-schema-1>' });
   });
 
   it('should parse invalid schema format', async function() {
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -90,9 +86,9 @@ describe('custom operations - parse schemas', function() {
         }
       }
     };
-    const { parsed, diagnostics } = await parse(parser, document);
+    const { document, diagnostics } = await parse(parser, documentRaw);
     
-    expect(parsed).toBeUndefined();
+    expect(document).toBeUndefined();
     expect(diagnostics.length > 0).toEqual(true);
   });
 });

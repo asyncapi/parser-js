@@ -133,6 +133,13 @@ describe('AsyncAPIDocument model', function() {
       expect(d.schemas()).toHaveLength(4);
     });
 
+    it('should return only an "active" schemas (without schemas from components)', function() {
+      const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': { publish: { message: { payload: {} } }, subscribe: { message: { oneOf: [{ payload: {} }, {}] } } }, 'user/logout': { publish: { message: { payload: {} } } } }, components: { schemas: { someSchema1: {}, someSchema2: {} } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.schemas()).toBeInstanceOf(Schemas);
+      expect(d.schemas()).toHaveLength(3);
+    });
+
     it('should return a collection of schemas even if messages are not defined', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);

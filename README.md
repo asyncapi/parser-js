@@ -235,6 +235,7 @@ A few advantages of this solution:
 
 ## Develop
 
+1. Make sure you are using Node.js 14 or higher and npm 7 or higher
 1. Write code and tests.
 1. Make sure all tests pass `npm test`
 1. Make sure code is well formatted and secure `npm run lint`

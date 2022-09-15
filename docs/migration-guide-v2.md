@@ -1,6 +1,6 @@
 # Parser v1 to v2 Migration Guide
 
-## General
+## tl;dr
 
 1. The document's AsyncAPI API has been rewritten from old to new supporting the [Intent API](https://github.com/asyncapi/parser-api) - there is a function that converts the new API to the old one for backward compatibility. 
 2. Package source code has been rewritten to the TypeScript alongside with rewritten from CJS (CommonJS) to ESM (EcmaScript) modules.

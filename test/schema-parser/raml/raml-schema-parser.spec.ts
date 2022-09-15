@@ -46,7 +46,7 @@ describe('validate()', function() {
     
     const result = (results as SchemaValidateResult[])[0];
     expect(result.message).toEqual('Property \'examples\' should be a map');
-    expect(result.path).toEqual([]); // Validator doesn't provide info about the error path
+    expect(result.path).toEqual(['otherchannel', 'subscribe', 'message', 'payload']); // Validator doesn't provide info about the error path
   });
 });
 

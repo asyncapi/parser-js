@@ -26,7 +26,7 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
     if (error instanceof Error) {
       result.push({
         message: error.message,
-        path: [], // avsc doesn't throw errors with meaningful paths
+        path: input.path, // avsc doesn't throw errors with meaningful paths
       });
     }
   }

@@ -150,7 +150,7 @@ import { Parser, fromURL } from '@asyncapi/parser';
 
 const parser = new Parser();
 
-const { document, diagnostics } = await (await fromURL(parser, 'https://example.com/')).parse();
+const { document, diagnostics } = await fromURL(parser, 'https://example.com/').parse();
 ```
 
 ### Example with performing actions on file source
@@ -160,7 +160,7 @@ import { Parser, fromFile } from '@asyncapi/parser';
 
 const parser = new Parser();
 
-const { document, diagnostics } = await (await fromFile(parser, './asyncapi.yaml')).parse();
+const { document, diagnostics } = await fromFile(parser, './asyncapi.yaml').parse();
 ```
 
 ### [Example with stringify and unstringify parsed document](#stringify)

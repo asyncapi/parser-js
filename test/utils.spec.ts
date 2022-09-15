@@ -4,6 +4,8 @@ import { cloneDeep } from 'lodash';
 import { 
   hasErrorDiagnostic,
   hasWarningDiagnostic,
+  hasInfoDiagnostic,
+  hasHintDiagnostic,
   createDetailedAsyncAPI,
   getSemver,
   mergePatch,
@@ -53,7 +55,7 @@ describe('utils', function() {
     });
   });
 
-  describe('hasErrorDiagnostic()', function() {
+  describe('hasWarningDiagnostic()', function() {
     const simpleDiagnostic: Diagnostic = {
       code: 'test-code',
       message: 'test-message',
@@ -90,6 +92,86 @@ describe('utils', function() {
       ];
 
       expect(hasWarningDiagnostic(diagnostics)).toEqual(false);
+    });
+  });
+
+  describe('hasInfoDiagnostic()', function() {
+    const simpleDiagnostic: Diagnostic = {
+      code: 'test-code',
+      message: 'test-message',
+      range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
+      severity: DiagnosticSeverity.Error,
+      path: [],
+    };
+
+    it('should return true when diagnostics have at least one info', function() {
+      const diagnostics: Diagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Information,
+        }
+      ];
+
+      expect(hasInfoDiagnostic(diagnostics)).toEqual(true);
+    });
+
+    it('should return false when diagnostics have no info', function() {
+      const diagnostics: Diagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        }
+      ];
+
+      expect(hasInfoDiagnostic(diagnostics)).toEqual(false);
+    });
+  });
+
+  describe('hasHintDiagnostic()', function() {
+    const simpleDiagnostic: Diagnostic = {
+      code: 'test-code',
+      message: 'test-message',
+      range: { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } },
+      severity: DiagnosticSeverity.Error,
+      path: [],
+    };
+
+    it('should return true when diagnostics have at least one hint', function() {
+      const diagnostics: Diagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Hint,
+        }
+      ];
+
+      expect(hasHintDiagnostic(diagnostics)).toEqual(true);
+    });
+
+    it('should return false when diagnostics have no hint', function() {
+      const diagnostics: Diagnostic[] = [
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        },
+        {
+          ...simpleDiagnostic,
+          severity: DiagnosticSeverity.Error,
+        }
+      ];
+
+      expect(hasHintDiagnostic(diagnostics)).toEqual(false);
     });
   });
 

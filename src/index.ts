@@ -6,6 +6,9 @@ export { Parser };
 export { stringify, unstringify } from './stringify';
 export { AsyncAPISchemaParser } from './schema-parser/asyncapi-schema-parser';
 
+export { AsyncAPIDocument as OldAsyncAPIDocument } from './old-api/asyncapi';
+export { migrateToOldAPI } from './old-api/migrator';
+
 export type { AsyncAPISemver, Diagnostic, SchemaValidateResult } from './types';
 export type { LintOptions, ValidateOptions, ValidateOutput } from './lint';
 export type { ParseInput, ParseOptions, ParseOutput } from './parse';

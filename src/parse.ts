@@ -2,7 +2,7 @@ import { AsyncAPIDocumentInterface, newAsyncAPIDocument } from './models';
 
 import { customOperations } from './custom-operations';
 import { validate } from './lint';
-import { unfreeze } from './stringify';
+import { copy } from './stringify';
 import { toAsyncAPIDocument } from './document';
 import { createDetailedAsyncAPI, normalizeInput } from './utils';
 
@@ -15,7 +15,7 @@ import type { MaybeAsyncAPI, Diagnostic } from './types';
 export type ParseInput = string | MaybeAsyncAPI | AsyncAPIDocumentInterface;
 export interface ParseOutput {
   source: ParseInput;
-  parsed: AsyncAPIDocumentInterface | undefined;
+  document: AsyncAPIDocumentInterface | undefined;
   diagnostics: Diagnostic[]; 
 }
 
@@ -30,7 +30,7 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
   if (maybeDocument) {
     return { 
       source: asyncapi,
-      parsed: maybeDocument,
+      document: maybeDocument,
       diagnostics: [],
     };
   }
@@ -43,22 +43,22 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
     if (validated === undefined) {
       return {
         source: asyncapi,
-        parsed: undefined,
+        document: undefined,
         diagnostics,
       };
     }
 
     // unfreeze the object - Spectral makes resolved document "freezed" 
-    const validatedDoc = unfreeze(validated as Record<string, any>);
+    const validatedDoc = copy(validated as Record<string, any>);
     validatedDoc[String(xParserSpecParsed)] = true;
     
     const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, validatedDoc);
-    await customOperations(parser, detailed, options);
     const parsedDoc = newAsyncAPIDocument(detailed);
+    await customOperations(parser, parsedDoc, detailed, options);
   
     return { 
       source: asyncapi,
-      parsed: parsedDoc,
+      document: parsedDoc,
       diagnostics,
     };
   } catch (err: any) {

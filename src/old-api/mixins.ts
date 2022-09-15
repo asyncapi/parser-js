@@ -8,47 +8,35 @@ import type { v2 } from '../spec-types';
 
 export abstract class SpecificationExtensionsModel<J = any, M extends Record<string, any> = Record<string, any>> extends Base<J & v2.SpecificationExtensions, M> {
   hasExtensions() {
-    return !!this.extensionKeys().length;
+    return extensionsMixins.hasExtensions(this);
   }
 
   extensions(): v2.SpecificationExtensions {
-    const result: v2.SpecificationExtensions = {};
-    Object.entries(this._json).forEach(([key, value]) => {
-      if (EXTENSION_REGEX.test(key)) {
-        result[key as 'x-'] = value;
-      }
-    });
-    return result;
+    return extensionsMixins.extensions(this);
   }
 
   extensionKeys() {
-    return Object.keys(this.extensions());
+    return extensionsMixins.extensionKeys(this);
   }
 
   extKeys() {
-    return this.extensionKeys();
+    return extensionsMixins.extKeys(this);
   }
 
   hasExtension(extension: string) {
-    if (!extension.startsWith('x-')) {
-      return false;
-    }
-    return !!(this._json as Record<string, any>)[extension];
+    return extensionsMixins.hasExtension(this, extension);
   }
 
   extension(extension: string): v2.SpecificationExtension {
-    if (!extension.startsWith('x-')) {
-      return null;
-    }
-    return (this._json as Record<string, any>)[extension];
+    return extensionsMixins.extension(this, extension);
   }
 
   hasExt(extension: string) {
-    return this.hasExtension(extension);
+    return extensionsMixins.hasExt(this, extension);
   }
 
   ext(extension: string) {
-    return this.extension(extension);
+    return extensionsMixins.ext(this, extension);
   }
 }
 
@@ -69,6 +57,52 @@ export function externalDocs(model: Base<{ externalDocs?: v2.ExternalDocumentati
     return new ExternalDocs(model.json('externalDocs') as v2.ExternalDocumentationObject);
   }
 }
+
+export const extensionsMixins = {
+  hasExtensions(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>) {
+    return !!extensionsMixins.extensionKeys(model).length;
+  },
+
+  extensions(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>): v2.SpecificationExtensions {
+    const result: v2.SpecificationExtensions = {};
+    Object.entries(model.json()).forEach(([key, value]) => {
+      if (EXTENSION_REGEX.test(key)) {
+        result[key as 'x-'] = value;
+      }
+    });
+    return result;
+  },
+
+  extensionKeys(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>) {
+    return Object.keys(extensionsMixins.extensions(model));
+  },
+
+  extKeys(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>) {
+    return extensionsMixins.extensionKeys(model);
+  },
+
+  hasExtension(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>, extension: string) {
+    if (!extension.startsWith('x-')) {
+      return false;
+    }
+    return !!(model.json() as Record<string, any>)[extension];
+  },
+
+  extension(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>, extension: string): v2.SpecificationExtension | null {
+    if (!extension.startsWith('x-')) {
+      return null;
+    }
+    return (model.json() as Record<string, any>)[extension];
+  },
+
+  hasExt(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>, extension: string) {
+    return extensionsMixins.hasExtension(model, extension);
+  },
+
+  ext(model: Base<{ [extension: `x-${string}`]: v2.SpecificationExtension; }>, extension: string) {
+    return extensionsMixins.extension(model, extension);
+  },
+};
 
 export const bindingsMixins = {
   hasBindings(model: Base<{ bindings?: Record<string, v2.Binding> }>) {

@@ -1,7 +1,5 @@
 import { AsyncAPIDocumentV2 } from '../../src/models';
 import { Parser } from '../../src/parser';
-import { parse } from '../../src/parse';
-import { xParserOriginalPayload } from '../../src/constants';
 
 import type { v2 } from '../../src/spec-types';
 
@@ -29,7 +27,7 @@ describe('custom operations - parse schemas', function() {
         }
       }
     };
-    const { document, diagnostics } = await parse(parser, documentRaw);
+    const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
@@ -57,7 +55,7 @@ describe('custom operations - parse schemas', function() {
         }
       }
     };
-    const { document, diagnostics } = await parse(parser, documentRaw);
+    const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
@@ -86,7 +84,7 @@ describe('custom operations - parse schemas', function() {
         }
       }
     };
-    const { document, diagnostics } = await parse(parser, documentRaw);
+    const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toBeUndefined();
     expect(diagnostics.length > 0).toEqual(true);

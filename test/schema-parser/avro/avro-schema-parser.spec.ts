@@ -152,7 +152,7 @@ describe('avroToJsonSchema()', function () {
 
   it('transforms fixed values', async function () {
     const schema = {type: 'fixed', size: 5};
-    const result = await avroToJsonSchema(schema as AvroSchema);
+    const result = await avroToJsonSchema(schema as any);
     expect(result).toEqual({type: 'string', pattern: BYTES_PATTERN, minLength: 5, maxLength: 5});
   });
 
@@ -182,7 +182,7 @@ describe('avroToJsonSchema()', function () {
       default: 'one'
     };
 
-    const result = await avroToJsonSchema(schema as AvroSchema);
+    const result = await avroToJsonSchema(schema as any);
     expect(result).toEqual({
       type: 'string',
       enum: ['one', 'two', 'three'],
@@ -229,7 +229,7 @@ describe('avroToJsonSchema()', function () {
 
     const schema = {type: 'record', fields: [{name: 'field1', type: 'string', default: 'AsyncAPI rocks!'}]};
     expect(
-      await avroToJsonSchema(schema as AvroSchema)
+      await avroToJsonSchema(schema as any)
     ).toEqual({
       type: 'object',
       properties: {field1: {type: 'string', default: 'AsyncAPI rocks!'}}
@@ -280,7 +280,7 @@ describe('supportExampleAttribute', function () {
         {name: 'example', type: ['null', 'int'], example: 3}
       ]
     };
-    const result = await avroToJsonSchema(schema as AvroSchema);
+    const result = await avroToJsonSchema(schema as any);
     expect(result).toEqual({
       type: 'object',
       'x-parser-schema-id': 'MyName',

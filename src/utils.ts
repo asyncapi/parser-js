@@ -43,16 +43,24 @@ export function hasWarningDiagnostic(diagnostics: ISpectralDiagnostic[]): boolea
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Warning);
 }
 
+export function hasInfoDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
+  return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Information);
+}
+
+export function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
+  return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Hint);
+}
+
 export function setExtension(id: string, value: any, model: BaseModel): void {
   id = id.startsWith('x-') ? id : `x-${id}`;
   const data = model.json();
   data[id] = value;
 }
 
-export function mergePatch(origin: unknown, patch: unknown) {
+export function mergePatch<T = any>(origin: unknown, patch: unknown): T {
   // If the patch is not an object, it replaces the origin.
   if (!isObject(patch)) {
-    return patch;
+    return patch as T;
   }
 
   const result = !isObject(origin)
@@ -67,7 +75,7 @@ export function mergePatch(origin: unknown, patch: unknown) {
       result[key] = mergePatch(result[key], patchVal);
     }
   });
-  return result;
+  return result as T;
 }
 
 export function isObject(value: unknown): value is Record<string, any> {

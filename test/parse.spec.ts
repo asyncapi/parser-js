@@ -1,6 +1,5 @@
 import { AsyncAPIDocumentV2 } from '../src/models';
 import { Parser } from '../src/parser';
-import { parse } from '../src/parse';
 
 describe('parse()', function() {
   const parser = new Parser();
@@ -14,7 +13,7 @@ describe('parse()', function() {
       },
       channels: {}
     };
-    const { document, diagnostics } = await parse(parser, documentRaw);
+    const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
@@ -28,7 +27,7 @@ describe('parse()', function() {
         version: '1.0',
       },
     };
-    const { document, diagnostics } = await parse(parser, documentRaw);
+    const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toEqual(undefined);
     expect(diagnostics.length > 0).toEqual(true);
@@ -67,7 +66,7 @@ describe('parse()', function() {
         }
       }
     };
-    const { document } = await parse(parser, documentRaw);
+    const { document } = await parser.parse(documentRaw);
     
     const publishMessage = document?.channels().get('channel')?.operations().get('publishOperation')?.messages()[0];
     const subscribeMessage = document?.channels().get('channel')?.operations().get('subscribeOperation')?.messages()[0];
@@ -107,7 +106,7 @@ describe('parse()', function() {
         }
       }
     };
-    const { document } = await parse(parser, documentRaw);
+    const { document } = await parser.parse(documentRaw);
 
     const messagePayload = document?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
     expect(messagePayload?.json() !== undefined).toEqual(true);
@@ -142,7 +141,7 @@ describe('parse()', function() {
         }
       }
     };
-    const { document } = await parse(parser, documentRaw, { source: __filename });
+    const { document } = await parser.parse(documentRaw, { source: __filename });
 
     const messagePayload = document?.channels().get('channel')?.operations().get('someId')?.messages()[0].payload();
     const circular = messagePayload?.properties()?.['circular'];

@@ -44,8 +44,8 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
   report.results.forEach(result => {
     validateResult.push({
       message: result.message,
-      path: [], // RAML parser doesn't provide a path to the error.
-    } as SchemaValidateResult);
+      path: input.path, // RAML parser doesn't provide a path to the error.
+    });
   });
 
   return validateResult;

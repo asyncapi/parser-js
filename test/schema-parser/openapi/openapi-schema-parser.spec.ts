@@ -31,27 +31,27 @@ describe('OpenAPISchemaParser', function () {
     expect(result).toEqual([
       {
         message: 'must be equal to one of the allowed values',
-        path: ['properties', 'name', 'type']
+        path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties', 'name', 'type']
       },
       {
         message: 'must have required property \'$ref\'',
-        path: ['properties', 'name']
+        path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties', 'name']
       },
       {
         message: 'must match exactly one schema in oneOf',
-        path: ['properties','name']
+        path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties','name']
       },
       {
         message: 'must be string',
-        path: ['properties','surname','format']
+        path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties','surname','format']
       },
       {
         message: 'must have required property \'$ref\'',
-        path: ['properties','surname']
+        path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties','surname']
       },
       {
         message: 'must match exactly one schema in oneOf',
-        path: ['properties','surname']
+        path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties','surname']
       }
     ]);
   });

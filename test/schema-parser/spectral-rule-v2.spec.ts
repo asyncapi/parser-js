@@ -1,13 +1,11 @@
 import { Parser } from '../../src/parser';
-import { validate } from '../../src/lint';
 
-import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
-import type { SchemaValidateResult } from '../../src/types';
+import { filterDiagnostics, expectDiagnostics } from '../utils';
 
 describe('aas2schemaParserRule', function() {
   const parser = new Parser();
 
-  it.only('should validate AsyncAPI Schema with valid schema', async function() {
+  it('should validate AsyncAPI Schema with valid schema', async function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
@@ -26,9 +24,9 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
-    expect(filteredDiagnostics).toHaveLength(0);
+
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', []);
   });
 
   it('should validate AsyncAPI Schema with invalid schema', async function() {
@@ -55,10 +53,9 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
-    const expectedResult: SchemaValidateResult[] = [
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
       {
         message: 'must be array',
         path: ['channels', 'channel', 'publish', 'message', 'payload', 'oneOf']
@@ -67,9 +64,7 @@ describe('aas2schemaParserRule', function() {
         message: 'must be object,boolean',
         path: ['channels', 'channel', 'publish', 'message', 'payload', 'properties', 'name', 'if']
       }
-    ];
-
-    expect(filteredDiagnostics).toEqual(expectedResult.map(e => expect.objectContaining(e)));
+    ]);
   });
 
   it('should validate AsyncAPI Schema with invalid schema (components.messages case)', async function() {
@@ -95,10 +90,9 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
-    const expectedResult: SchemaValidateResult[] = [
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
       {
         message: 'must be array',
         path: ['components', 'messages', 'message', 'payload', 'oneOf']
@@ -107,9 +101,7 @@ describe('aas2schemaParserRule', function() {
         message: 'must be object,boolean',
         path: ['components', 'messages', 'message', 'payload', 'properties', 'name', 'if']
       }
-    ];
-
-    expect(filteredDiagnostics).toEqual(expectedResult.map(e => expect.objectContaining(e)));
+    ]);
   });
 
   it('should validate AsyncAPI Schema with invalid schema (components.channels case)', async function() {
@@ -139,10 +131,9 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
-    const expectedResult: SchemaValidateResult[] = [
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
       {
         message: 'must be array',
         path: ['components', 'channels', 'channel', 'publish', 'message', 'payload', 'oneOf']
@@ -151,9 +142,7 @@ describe('aas2schemaParserRule', function() {
         message: 'must be object,boolean',
         path: ['components', 'channels', 'channel', 'publish', 'message', 'payload', 'properties', 'name', 'if']
       }
-    ];
-
-    expect(filteredDiagnostics).toEqual(expectedResult.map(e => expect.objectContaining(e)));
+    ]);
   });
 
   it('should validate AsyncAPI Schema with invalid schema (oneOf case)', async function() {
@@ -189,10 +178,9 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
-    const expectedResult: SchemaValidateResult[] = [
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
       {
         message: 'must be array',
         path: ['channels', 'channel', 'publish', 'message', 'oneOf', '0', 'payload', 'oneOf']
@@ -205,9 +193,7 @@ describe('aas2schemaParserRule', function() {
         message: 'must be array',
         path: ['channels', 'channel', 'publish', 'message', 'oneOf', '1', 'payload', 'oneOf']
       }
-    ];
-
-    expect(filteredDiagnostics).toEqual(expectedResult.map(e => expect.objectContaining(e)));
+    ]);
   });
 
   it('should validate AsyncAPI Schema with supported schema format', async function() {
@@ -230,9 +216,9 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
-    expect(filteredDiagnostics).toHaveLength(0);
+
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', []);
   });
 
   it('should validate AsyncAPI Schema with non supported schema format', async function() {
@@ -255,17 +241,18 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
-    const filteredDiagnostics = filterDiagnostics(diagnostics, 'asyncapi-schemas-v2');
 
-    const expectedResult: SchemaValidateResult[] = [
+    const diagnostics = await parser.validate(document);
+    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
       {
         message: 'Unknown schema format: "not existing"',
         path: ['channels', 'channel', 'publish', 'message', 'schemaFormat']
       },
-    ];
-
-    expect(filteredDiagnostics).toEqual(expectedResult.map(e => expect.objectContaining(e)));
+      {
+        message: 'Cannot validate and parse given schema due to unknown schema format: "not existing"',
+        path: ['channels', 'channel', 'publish', 'message', 'payload']
+      },
+    ]);
   });
 
   it('should not contain errors from asyncapi-payload-unsupported-schemaFormat and asyncapi-payload rules', async function() {
@@ -292,14 +279,10 @@ describe('aas2schemaParserRule', function() {
         }
       }
     };
-    const { diagnostics } = await validate(parser, document);
 
+    const diagnostics = await parser.validate(document);
     expect(filterDiagnostics(diagnostics, 'asyncapi-schemas-v2')).toHaveLength(2);
     expect(filterDiagnostics(diagnostics, 'asyncapi-payload-unsupported-schemaFormat')).toHaveLength(0);
     expect(filterDiagnostics(diagnostics, 'asyncapi-payload')).toHaveLength(0);
   });
 });
-
-function filterDiagnostics(diagnostics: ISpectralDiagnostic[], code: string) {
-  return diagnostics.filter(d => d.code === code);
-}

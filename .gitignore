@@ -4,4 +4,6 @@ node_modules
 /docs
 /coverage
 /lib
+/esm
+/cjs
 /browser

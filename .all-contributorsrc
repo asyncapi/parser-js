@@ -183,5 +183,5 @@
     }
   ],
   "contributorsPerLine": 4,
-  "skipCi": true
+  "skipCi": false
 }

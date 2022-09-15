@@ -3,7 +3,7 @@ import { AsyncAPIDocumentInterface } from './models';
 import { customOperations } from './custom-operations';
 import { validate } from './validate';
 import { copy } from './stringify';
-import { newAsyncAPIDocument } from './document';
+import { createAsyncAPIDocument } from './document';
 import { createDetailedAsyncAPI, mergePatch, setExtension } from './utils';
 
 import { xParserSpecParsed } from './constants';
@@ -45,12 +45,12 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
   const validatedDoc = copy(validated as Record<string, any>);
   
   const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, validatedDoc);
-  const parsedDoc = newAsyncAPIDocument(detailed);
-  setExtension(xParserSpecParsed, true, parsedDoc);
-  await customOperations(parser, parsedDoc, detailed, options);
+  const document = createAsyncAPIDocument(detailed);
+  setExtension(xParserSpecParsed, true, document);
+  await customOperations(parser, document, detailed, options);
 
   return { 
-    document: parsedDoc,
+    document,
     diagnostics,
   };
 }

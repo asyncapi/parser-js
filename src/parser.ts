@@ -15,7 +15,7 @@ import type { Diagnostic, Input } from './types';
 export interface ParserOptions {}
 
 export class Parser {
-  protected readonly parserRegistry = new Map<string, SchemaParser>();
+  public readonly parserRegistry = new Map<string, SchemaParser>();
   protected readonly spectral: Spectral;
 
   constructor(

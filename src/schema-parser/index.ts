@@ -28,7 +28,19 @@ export interface SchemaParser<D = unknown, M = unknown> {
 export async function validateSchema(parser: Parser, input: ValidateSchemaInput) {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
   if (schemaParser === undefined) {
-    throw new Error('Unknown schema format');
+    const { path, schemaFormat } = input;
+    path.pop(); // remove 'payload' as last element of path
+
+    return [
+      {
+        message: `Unknown schema format: "${schemaFormat}"`,
+        path: [...path, 'schemaFormat'],
+      },
+      {
+        message: `Cannot validate and parse given schema due to unknown schema format: "${schemaFormat}"`,
+        path: [...path, 'payload'],
+      }
+    ] as SchemaValidateResult[];
   }
   return schemaParser.validate(input);
 }

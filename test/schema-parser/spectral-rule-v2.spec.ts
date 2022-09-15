@@ -248,6 +248,10 @@ describe('aas2schemaParserRule', function() {
         message: 'Unknown schema format: "not existing"',
         path: ['channels', 'channel', 'publish', 'message', 'schemaFormat']
       },
+      {
+        message: 'Cannot validate and parse given schema due to unknown schema format: "not existing"',
+        path: ['channels', 'channel', 'publish', 'message', 'payload']
+      },
     ]);
   });
 

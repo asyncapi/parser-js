@@ -10,7 +10,7 @@ import {
 import type { AsyncAPIDocumentInterface } from './models';
 import type { DetailedAsyncAPI } from './types';
 
-export function newAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
+export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
   switch (asyncapi.semver.major) {
   case 2:
     return new AsyncAPIDocumentV2(asyncapi.parsed, { asyncapi, pointer: '/' });
@@ -28,7 +28,7 @@ export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface
   if (!isParsedDocument(maybeDoc)) {
     return;
   }
-  return unstringify(maybeDoc) || newAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc as any));
+  return unstringify(maybeDoc) || createAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc as any));
 }
 
 export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {

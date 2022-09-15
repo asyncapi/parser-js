@@ -20,6 +20,8 @@ function configureRuleset(parser: Parser): RulesetDefinition {
     rules: {
       'asyncapi-is-asyncapi': asyncApi2IsAsyncApi(),
       'asyncapi-schemas-v2': asyncApi2SchemaParserRule(parser),
+      // operationId is optional field
+      'asyncapi-operation-operationId': 'warn',
       // We do not use these rules from the official ruleset due to the fact 
       // that the given rules validate only AsyncAPI Schemas and prevent defining schemas in other formats 
       'asyncapi-payload-unsupported-schemaFormat': 'off',

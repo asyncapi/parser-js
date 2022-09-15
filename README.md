@@ -47,6 +47,24 @@ yarn add @asyncapi/parser
 
 The parser by default supports AsyncAPI Schema Format and JSON Schema Format for schemas. For additional formats, check [Custom schema parsers](#custom-schema-parsers) section.
 
+## Usage
+
+The package exposes the main class `Parser`, which has two main functions:
+
+- `validate()` - function that validates the passed AsyncAPI document. Returns array of all possible errors against the validation conditions.
+- `parse()` - function that validates the passed AsyncAPI document, and then if it's valid, parses the input. It returns an object that contains:
+  - `document` object, which is an parsed AsyncAPI document with [`AsyncAPIDocumentInterface`](./src/models/asyncapi.ts) API. If the schema is invalid against the validation conditions, the field has `undefined` value.
+  - `diagnostics` array that contains all possible errors against the validation conditions.
+- `registerSchemaParser()` - function that registers custom schema parsers. For more info, please check [Custom schema parsers](#custom-schema-parsers) section.
+
+Natively `Parser` class does not contain methods that operate on the source (AsyncAPI document) from a file or URL. However, the package exposes utils that make this possible:
+
+```ts
+import { fromURL, fromFile } from '@asyncapi/parser';
+```
+
+Check out the [examples](#examples) of using the above mentioned functionalities.
+
 ## Examples 
 
 ### Example with parsing
@@ -124,6 +142,26 @@ Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/op
 ### [Example using RAML data types](#custom-schema-parsers)
 
 Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/raml-dt-schema-parser) for more information.
+
+### Example with performing actions on HTTP source
+
+```ts
+import { Parser, fromURL } from '@asyncapi/parser';
+
+const parser = new Parser();
+
+const { document, diagnostics } = await (await fromURL(parser, 'https://example.com/')).parse();
+```
+
+### Example with performing actions on file source
+
+```ts
+import { Parser, fromFile } from '@asyncapi/parser';
+
+const parser = new Parser();
+
+const { document, diagnostics } = await (await fromFile(parser, './asyncapi.yaml')).parse();
+```
 
 ### [Example with stringify and unstringify parsed document](#stringify)
 

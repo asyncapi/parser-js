@@ -14,22 +14,21 @@ import type { MaybeAsyncAPI, Diagnostic } from './types';
 
 export type ParseInput = string | MaybeAsyncAPI | AsyncAPIDocumentInterface;
 export interface ParseOutput {
-  source: ParseInput;
   document: AsyncAPIDocumentInterface | undefined;
   diagnostics: Diagnostic[]; 
 }
 
 export interface ParseOptions {
+  source?: string;
   applyTraits?: boolean;
   parseSchemas?: boolean;
-  validateOptions?: ValidateOptions;
+  validateOptions?: Omit<ValidateOptions, 'source'>;
 }
 
 export async function parse(parser: Parser, asyncapi: ParseInput, options?: ParseOptions): Promise<ParseOutput> {
   const maybeDocument = toAsyncAPIDocument(asyncapi);
   if (maybeDocument) {
     return { 
-      source: asyncapi,
       document: maybeDocument,
       diagnostics: [],
     };
@@ -39,10 +38,9 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
     const document = normalizeInput(asyncapi as Exclude<ParseInput, AsyncAPIDocumentInterface>);
     options = normalizeOptions(options);
 
-    const { validated, diagnostics } = await validate(parser, document, options.validateOptions);
+    const { validated, diagnostics } = await validate(parser, document, { ...options.validateOptions, source: options.source });
     if (validated === undefined) {
       return {
-        source: asyncapi,
         document: undefined,
         diagnostics,
       };
@@ -57,7 +55,6 @@ export async function parse(parser: Parser, asyncapi: ParseInput, options?: Pars
     await customOperations(parser, parsedDoc, detailed, options);
   
     return { 
-      source: asyncapi,
       document: parsedDoc,
       diagnostics,
     };

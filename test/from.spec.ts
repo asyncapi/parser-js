@@ -8,15 +8,15 @@ describe('fromURL() & fromFile()', function() {
 
   describe('fromURL()', function() {
     it('should operate on existing HTTP source', async function() {
-      const { parsed, diagnostics } = await fromURL(parser, 'https://raw.githubusercontent.com/asyncapi/spec/master/examples/simple.yml').parse();
-      expect(parsed).not.toBeUndefined();
+      const { document, diagnostics } = await fromURL(parser, 'https://raw.githubusercontent.com/asyncapi/spec/master/examples/simple.yml').parse();
+      expect(document).not.toBeUndefined();
       expect(diagnostics.length > 0).toEqual(true);
       expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
     });
 
     it('should throw error on nonexisting HTTP source', async function() {
-      const { parsed, diagnostics } = await fromURL(parser, 'https://raw.githubusercontent.com/asyncapi/spec/master/examples/non-existing-spec.yml').parse();
-      expect(parsed).toBeUndefined();
+      const { document, diagnostics } = await fromURL(parser, 'https://raw.githubusercontent.com/asyncapi/spec/master/examples/non-existing-spec.yml').parse();
+      expect(document).toBeUndefined();
       expect(diagnostics.length > 0).toEqual(true);
       expect(hasErrorDiagnostic(diagnostics)).toEqual(true);
     });
@@ -24,8 +24,8 @@ describe('fromURL() & fromFile()', function() {
 
   describe('fromFile()', function() {
     it('should operate on existing file source', async function() {
-      const { parsed, diagnostics } = await fromFile(parser, path.resolve(__dirname, './mocks/simple.yaml')).parse();
-      expect(parsed).not.toBeUndefined();
+      const { document, diagnostics } = await fromFile(parser, path.resolve(__dirname, './mocks/simple.yaml')).parse();
+      expect(document).not.toBeUndefined();
       expect(diagnostics.length > 0).toEqual(true);
       expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
     });

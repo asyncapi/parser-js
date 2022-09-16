@@ -96,4 +96,40 @@ describe('Collection model', function() {
       expect(d.filterBy(filter)).toEqual([]);
     });
   });
+
+  describe('.filterByInUse()', function () {
+    const items = [
+      new ItemModel({}, { pointer: '/channels/myChannel/publish/message/payload' } as any),
+      new ItemModel({}, { pointer: '/channels/anotherChannel/parameters/myParameter/schema' } as any),
+      new ItemModel({}, { pointer: '/components/messages/myMessage/payload' } as any),
+      new ItemModel({}, { pointer: '/components/schemas/mySchema' } as any),
+    ];
+    const d = new Model(items);
+    
+    it('should return all items in use', function () {
+      expect(d.filterByInUse()).toEqual([items[0], items[1]]);
+    });
+
+    it('should return empty if there are no items in use', function () {
+      expect(new Model([items[2], items[3]]).filterByInUse()).toEqual([]);
+    });
+  });
+
+  describe('.filterByNotInUse()', function () {
+    const items = [
+      new ItemModel({}, { pointer: '/channels/myChannel/publish/message/payload' } as any),
+      new ItemModel({}, { pointer: '/channels/anotherChannel/parameters/myParameter/schema' } as any),
+      new ItemModel({}, { pointer: '/components/messages/myMessage/payload' } as any),
+      new ItemModel({}, { pointer: '/components/schemas/mySchema' } as any),
+    ];
+    const d = new Model(items);
+
+    it('should return all items not in use', function () {
+      expect(d.filterByNotInUse()).toEqual([items[2], items[3]]);
+    });
+
+    it('should return empty if all items are in use', function () {
+      expect(new Model([items[0], items[1]]).filterByNotInUse()).toEqual([]);
+    });
+  });
 });

@@ -9,10 +9,10 @@ import { Server } from './server';
 
 import { bindings, hasDescription, description, extensions } from './mixins';
 
-import type { BindingsInterface } from 'models/bindings';
+import type { BindingsInterface } from '../bindings';
 import type { ChannelInterface } from '../channel';
 import type { ChannelParametersInterface } from '../channel-parameters';
-import type { ExtensionsInterface } from 'models/extensions';
+import type { ExtensionsInterface } from '../extensions';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { OperationsInterface } from '../operations';

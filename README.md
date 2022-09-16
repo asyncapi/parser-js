@@ -330,7 +330,7 @@ The parser uses custom extensions to define additional information about the spe
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
 - [`x-parser-circular`](#circular-references).
 
-In addition, the [`migrateToOldAPI()` function](#convert-to-the-old-api) which converts new API to an old one adds additional extensions:
+In addition, the [`convertToOldAPI()` function](#convert-to-the-old-api) which converts new API to an old one adds additional extensions:
 
 - `x-parser-message-parsed` is used to specify if the message is already parsed by the message parser. Property `x-parser-message-parsed` is added to the message object with the `true` value.
 - `x-parser-schema-id` is used to specify the ID of the schema if it is not provided. For schemas without IDs, the parser generates anonymous names. Property `x-parser-schema-id` is added to every object of a schema with a value that follows this pattern: `<anonymous-schema-${number}>`. This value is returned by `schema.uid()` when regular `$id` property is not present.
@@ -370,17 +370,17 @@ Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify
 
 ## Convert to the old API
 
-Version `2.0.0` of package introduced a lot of breaking changes, including changing the API of the returned parsed document (parser uses [New API](https://github.com/asyncapi/parser-api)). Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `migrateToOldAPI()` function to convert new API to old one:
+Version `2.0.0` of package introduced a lot of breaking changes, including changing the API of the returned parsed document (parser uses [New API](https://github.com/asyncapi/parser-api)). Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `convertToOldAPI()` function to convert new API to old one:
 
 ```js
-import { Parser, migrateToOldAPI } from '@asyncapi/parser';
+import { Parser, convertToOldAPI } from '@asyncapi/parser';
 
 const parser = new Parser();
 const { document } = parser.parse(...);
-const oldAsyncAPIDocument = migrateToOldAPI(document);
+const oldAsyncAPIDocument = convertToOldAPI(document);
 ```
 
-> **Note**
+> **Warning**
 > The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of January 2023.
 
 ## Bundler configuration

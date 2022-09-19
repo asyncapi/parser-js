@@ -1,12 +1,11 @@
 import { AsyncAPIDocumentV2 } from '../src/models';
 import { Parser } from '../src/parser';
-import { parse } from '../src/parse';
 
 describe('custom resolver', function() {
   it('should resolve document references', async function() {
     const parser = new Parser();
 
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -31,19 +30,19 @@ describe('custom resolver', function() {
           }
         }
       }
-    }
-    const { parsed } = await parse(parser, document);
+    };
+    const { document } = await parser.parse(documentRaw);
     
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
-    const refMessage = parsed?.channels().get('channel')?.operations().get('publish')?.messages()[0];
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    const refMessage = document?.channels().get('channel')?.operations().get('publish')?.messages()[0];
     expect(refMessage?.json()).not.toBeUndefined();
-    expect(refMessage?.json() === parsed?.components().messages().get('message')?.json()).toEqual(true);
+    expect(refMessage?.json() === document?.components().messages().get('message')?.json()).toEqual(true);
   });
 
   it('should resolve file references', async function() {
     const parser = new Parser();
 
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -59,11 +58,11 @@ describe('custom resolver', function() {
           },
         }
       },
-    }
-    const { parsed } = await parse(parser, document, { validateOptions: { path: __filename } });
+    };
+    const { document } = await parser.parse(documentRaw, { source: __filename });
     
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
-    const refMessage = parsed?.channels().get('channel')?.operations().get('publish')?.messages()[0];
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    const refMessage = document?.channels().get('channel')?.operations().get('publish')?.messages()[0];
     expect(refMessage?.json()).not.toBeUndefined();
     expect(refMessage?.json('$ref')).toBeUndefined();
   });
@@ -71,7 +70,7 @@ describe('custom resolver', function() {
   it('should resolve http references', async function() {
     const parser = new Parser();
 
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -87,30 +86,31 @@ describe('custom resolver', function() {
           },
         }
       },
-    }
-    const { parsed } = await parse(parser, document);
-    
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2); // we should have parsed document
+    };
+    const { document } = await parser.parse(documentRaw);
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2); // we should have parsed document
   });
 
   it('should resolve custom protocols', async function() {
     const parser = new Parser({
-      __unstableResolver: {
-        resolvers: [
-          {
-            schema: 'customProtocol',
-            read(uri) {
-              if (uri.path() === '/someRef') {
-                return '{"someRef": "value"}';
-              }
-              return '{"anotherRef": "value"}';
-            },
-          }
-        ]
+      __unstable: {
+        resolver: {
+          resolvers: [
+            {
+              schema: 'customProtocol',
+              read(uri) {
+                if (uri.path() === '/someRef') {
+                  return '{"someRef": "value"}';
+                }
+                return '{"anotherRef": "value"}';
+              },
+            }
+          ]
+        }
       }
     });
 
-    const document = {
+    const documentRaw = {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -136,15 +136,15 @@ describe('custom resolver', function() {
           },
         }
       },
-    }
-    const { parsed } = await parse(parser, document);
+    };
+    const { document } = await parser.parse(documentRaw);
     
-    expect(parsed).toBeInstanceOf(AsyncAPIDocumentV2);
-    const someRef = parsed?.channels().get('channel')?.operations().get('publish')?.messages()[0]?.payload();
-    expect(someRef?.json()).toEqual({ someRef: 'value' });
-    expect(someRef?.json('$ref')).toBeUndefined();
-    const anotherRef = parsed?.channels().get('channel')?.operations().get('subscribe')?.messages()[0]?.payload();
-    expect(anotherRef?.json()).toEqual({ anotherRef: 'value' });
-    expect(anotherRef?.json('$ref')).toBeUndefined();
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    const someRef = document?.channels().get('channel')?.operations().get('publish')?.messages()[0]?.payload();
+    expect(someRef?.json()).toEqual({ someRef: 'value', 'x-parser-schema-id': '<anonymous-schema-1>' });
+    expect(someRef?.json('$ref' as any)).toBeUndefined();
+    const anotherRef = document?.channels().get('channel')?.operations().get('subscribe')?.messages()[0]?.payload();
+    expect(anotherRef?.json()).toEqual({ anotherRef: 'value', 'x-parser-schema-id': '<anonymous-schema-2>' });
+    expect(anotherRef?.json('$ref' as any)).toBeUndefined();
   });
 });

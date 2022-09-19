@@ -14,7 +14,9 @@ import type { Diagnostic, Input } from './types';
 
 export interface ParserOptions {
   schemaParsers?: Array<SchemaParser>;
-  __unstableResolver?: ResolverOptions;
+  __unstable?: {
+    resolver?: ResolverOptions;
+  };
 }
 
 export class Parser {

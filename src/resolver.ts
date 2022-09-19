@@ -48,7 +48,7 @@ function createDefaultResolvers(): Array<Resolver> {
       schema: 'http',
       read: resolveHttp as (input: Uri, ctx?: any) => string | Promise<string>,
     },
-  ]
+  ];
 }
 
 function createSchemaResolver(schema: string, allResolvers: Array<Resolver>): (uri: Uri, ctx?: any) => string | Promise<string> {
@@ -64,7 +64,7 @@ function createSchemaResolver(schema: string, allResolvers: Array<Resolver>): (u
         if (typeof result === 'string') {
           break;
         }
-      } catch(e: any) {
+      } catch (e: any) {
         lastError = e;
         continue;
       }
@@ -73,7 +73,7 @@ function createSchemaResolver(schema: string, allResolvers: Array<Resolver>): (u
       throw lastError || new Error(`None of the available resolvers for "${schema}" can resolve the given reference.`);
     }
     return result;
-  }
+  };
 }
 
 function canRead(resolver: Resolver, uri: Uri, ctx?: any) {

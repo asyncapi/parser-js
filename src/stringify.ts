@@ -57,13 +57,6 @@ export function copy(data: Record<string, any>) {
   return unstringifiedData;
 }
 
-export function unfreeze(data: Record<string, any>) {
-  const stringifiedData = JSON.stringify(data, refReplacer());
-  const unstringifiedData = JSON.parse(stringifiedData);
-  traverseStringifiedDoc(unstringifiedData, undefined, unstringifiedData, new Map(), new Map());
-  return unstringifiedData;
-}
-
 function refReplacer() {
   const modelPaths = new Map();
   const paths = new Map();

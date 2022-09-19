@@ -11,7 +11,7 @@ import type { Parser, ParserOptions } from './parser';
 import type { MaybeAsyncAPI } from './types';
 
 export function createSpectral(parser: Parser, options: ParserOptions): Spectral {
-  const spectral = new Spectral({ resolver: createResolver(options.__unstableResolver) });
+  const spectral = new Spectral({ resolver: createResolver(options.__unstable?.resolver) });
   const ruleset = configureRuleset(parser);
   spectral.setRuleset(ruleset);
   return spectral;

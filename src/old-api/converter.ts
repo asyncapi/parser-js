@@ -5,7 +5,7 @@ import { getDefaultSchemaFormat } from '../schema-parser';
 
 import type { AsyncAPIDocumentInterface } from '../models/asyncapi';
 
-export function migrateToOldAPI(newDocument: AsyncAPIDocumentInterface): AsyncAPIDocument {
+export function convertToOldAPI(newDocument: AsyncAPIDocumentInterface): AsyncAPIDocument {
   const data = copy(newDocument.json());
   const document = new AsyncAPIDocument(data);
 

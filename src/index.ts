@@ -7,7 +7,7 @@ export { stringify, unstringify } from './stringify';
 export { fromURL, fromFile } from './from';
 
 export { AsyncAPIDocument as OldAsyncAPIDocument } from './old-api/asyncapi';
-export { migrateToOldAPI } from './old-api/migrator';
+export { convertToOldAPI } from './old-api/converter';
 
 export type { AsyncAPISemver, Input, Diagnostic, SchemaValidateResult } from './types';
 export type { ValidateOptions, ValidateOutput } from './validate';

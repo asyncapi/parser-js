@@ -1,4 +1,4 @@
-import { migrateToOldAPI } from '../../src/old-api/migrator';
+import { convertToOldAPI } from '../../src/old-api/converter';
 import { SchemaIteratorCallbackType, SchemaTypesToIterate, traverseAsyncApiDocument } from '../../src/old-api/iterator';
 import { Parser } from '../../src/parser';
 import { AsyncAPIDocument } from '../../src/old-api/asyncapi';
@@ -59,7 +59,7 @@ describe('Traverse AsyncAPI document - old API', function() {
   describe('traverseAsyncApiDocument()', function() {
     it('should traverse all possible schemas from a valid document', async function() {
       const { document } = await parser.parse(documentRaw);
-      const oldDocument = migrateToOldAPI(document!);
+      const oldDocument = convertToOldAPI(document!);
 
       expect(oldDocument).toBeInstanceOf(AsyncAPIDocument);
 
@@ -87,7 +87,7 @@ describe('Traverse AsyncAPI document - old API', function() {
 
     it('should traverse few schemas from a valid document', async function() {
       const { document } = await parser.parse(documentRaw);
-      const oldDocument = migrateToOldAPI(document!);
+      const oldDocument = convertToOldAPI(document!);
 
       expect(oldDocument).toBeInstanceOf(AsyncAPIDocument);
 

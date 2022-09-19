@@ -1,17 +1,16 @@
 # Parser v1 to v2 Migration Guide
 
-## tl;dr;
-
-1. The document's AsyncAPI API has been rewritten from old to new supporting the [Intent API](https://github.com/asyncapi/parser-api) - there is a function that converts the new API to the old one for backward compatibility. 
-2. Package source code has been rewritten to the TypeScript alongside with rewritten from CJS (CommonJS) to ESM (EcmaScript) modules.
-3. The functionality of the Parser was wrapped with the class. This means that from now on it's possible to have a dozen other Parser instances with different configurations.
-4. Validation is powered by [Spectral](https://github.com/stoplightio/spectral). This allows better validation, checking not only syntax errors, but also informing about good practices, such as defining `operationID` field etc.
-5. AsyncAPI document validation (without parsing) is available via a separate method - `.validate()`.
-6. The function `.parse()` returns parsed AsyncAPi `document` and possible `diagnostics` based on validation configuration.  
-7. The function `parseFromUrl()` has been deprecated in favour of `fromURL` standalone function.
-8. The Custom Schema Parser interface has been changed with an additional function `validate()`.
-9. Stringify and unstringify the parsed document is now a separate functionality.
-10. Package is fully [tree-shakable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking).
+- The document's AsyncAPI API has been rewritten from old to new supporting the [Intent API](https://github.com/asyncapi/parser-api) - there is a function that converts the new API to the old one for backward compatibility. 
+- Package source code has been rewritten to the TypeScript alongside with rewritten from CJS (CommonJS) to ESM (EcmaScript) modules.
+- The functionality of the Parser was wrapped with the class. This means that from now on it's possible to have a dozen other Parser instances with different configurations.
+- Validation is powered by [Spectral](https://github.com/stoplightio/spectral). This allows better validation, checking not only syntax errors, but also informing about good practices, such as defining `operationID` field etc. In addition, Spectral uses a different references resolver, which causes changes in defining custom resolvers.
+- AsyncAPI document validation (without parsing) is available via a separate method - `.validate()`.
+- The function `.parse()` returns parsed AsyncAPi `document` and possible `diagnostics` based on validation configuration.  
+- The function `parseFromUrl()` has been deprecated in favour of `fromURL` standalone function.
+- The Custom Schema Parser interface has been changed with an additional function `validate()`.
+- Stringify and unstringify the parsed document is now a separate functionality.
+- Stringify and unstringify the parsed document is now a separate functionality.
+- Package is fully [tree-shakable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking).
 
 ### New Intent API
 
@@ -127,6 +126,69 @@ const { document } = fromURL(parser, 'https://my.server.com/example-asyncapi.yam
 > **Note**
 > Parser exposes similar function to handle file system sources - `fromFile`.
 
+### Custom reference resolvers
+
+With the v1 version there was an option to pass a custom resolvers to the reference resolver ([json-schema-ref-parser](https://github.com/APIDevTools/json-schema-ref-parser)), which allowed custom logic for retrieving reference data - e.g. for mapping data located on the external resources to local data (used by `--map-base-url` flag for [Generator](https://github.com/asyncapi/generator#cli-usage)'s CLI). The current logic is similar, but differs in a few things:
+
+- custom resolver have to be passes in the `Parser`'s constructor.
+- must define what scheme it supports, such as `https`, or `file`.
+
+```ts
+import { Parser } from '@asyncapi/parser';
+
+const parser = new Parser({
+  __unstable: {
+    resolver: {
+      resolvers: [
+        {
+          schema: 'customProtocol',
+          read(uri) {
+            if (uri.path() === '/someRef') {
+              return '{"someRef": "value"}';
+            }
+            return '{"anotherRef": "value"}';
+          },
+        }
+      ]
+    }
+  }
+});
+
+const asyncApiDocument = {
+  asyncapi: '2.5.0',
+  info: {
+    title: 'Example AsyncApi document',
+    version: '1.0',
+  },
+  channels: {
+    someChannel: {
+      publish: {
+        operationId: 'publish',
+        message: {
+          payload: {
+            $ref: 'customProtocol:///someRef'
+          }
+        }
+      },
+      subscribe: {
+        operationId: 'subscribe',
+        message: {
+          payload: {
+            $ref: 'customProtocol:///anotherRef'
+          }
+        }
+      },
+    }
+  },
+};
+const { document } = await parser.parse(asyncApiDocument);
+// document.json().channels.someChannel.publish.message.payload == { "someRef": "value" };
+// document.json().channels.someChannel.subscribe.message.payload == { "anotherRef": "value" };
+```
+
+> **Note**
+> As [Spectral](https://github.com/stoplightio/spectral) natively does not support multiple custom resolvers, `Parser` implements wrapper for existing logic in [Spectral](https://github.com/stoplightio/spectral), and due to that fact, custom resolvers need to be passed with `__unstable.resolver` field. If [Spectral](https://github.com/stoplightio/spectral will support out in the box multiple custom resolvers we will include this logic permanently in the `Parser`, currently it is in the "unstable" phase.
+
 ### New Custom Schema Parser interface
 
 The custom parser interface has been changed to shape including methods:
@@ -200,14 +262,14 @@ if (document) {
 
 ### Convert new API to the old one
 
-Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `migrateToOldAPI()` function to convert new API to old one:
+Due to the fact that a large part of the AsyncAPI tooling ecosystem uses a Parser with the old API and rewriting the tool for the new one can be time-consuming and difficult, the package exposes the `convertToOldAPI()` function to convert new API to old one:
 
 ```js
-import { Parser, migrateToOldAPI } from '@asyncapi/parser';
+import { Parser, convertToOldAPI } from '@asyncapi/parser';
 
 const parser = new Parser();
 const { document } = parser.parse(...);
-const oldAsyncAPIDocument = migrateToOldAPI(document);
+const oldAsyncAPIDocument = convertToOldAPI(document);
 ```
 
 > **Warning**

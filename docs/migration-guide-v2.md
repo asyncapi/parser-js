@@ -131,7 +131,7 @@ const { document } = fromURL(parser, 'https://my.server.com/example-asyncapi.yam
 With the v1 version there was an option to pass a custom resolvers to the reference resolver ([json-schema-ref-parser](https://github.com/APIDevTools/json-schema-ref-parser)), which allowed custom logic for retrieving reference data - e.g. for mapping data located on the external resources to local data (used by `--map-base-url` flag for [Generator](https://github.com/asyncapi/generator#cli-usage)'s CLI). The current logic is similar, but differs in a few things:
 
 - custom resolver have to be passes in the `Parser`'s constructor, in the `__unstable.resolver.resolvers` array.
-- must define what scheme it supports, such as `https`, or `file`.
+- must define what schema it supports, such as `https`, or `file`.
 
 ```ts
 import { Parser } from '@asyncapi/parser';

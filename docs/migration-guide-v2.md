@@ -187,7 +187,7 @@ const { document } = await parser.parse(asyncApiDocument);
 ```
 
 > **Note**
-> As [Spectral](https://github.com/stoplightio/spectral) natively does not support multiple custom resolvers, `Parser` implements wrapper for existing logic in [Spectral](https://github.com/stoplightio/spectral), and due to that fact, custom resolvers need to be passed with `__unstable.resolver` field. If [Spectral](https://github.com/stoplightio/spectral will support out in the box multiple custom resolvers we will include this logic permanently in the `Parser`, currently it is in the "unstable" phase.
+> As [Spectral](https://github.com/stoplightio/spectral) natively does not support multiple custom resolvers, `Parser` implements wrapper for existing logic in [Spectral](https://github.com/stoplightio/spectral), and due to that fact, custom resolvers need to be passed with `__unstable.resolver.resolvers` array. If [Spectral](https://github.com/stoplightio/spectral will support out in the box multiple custom resolvers we will include this logic permanently in the `Parser`, currently it is in the "unstable" phase.
 
 ### New Custom Schema Parser interface
 

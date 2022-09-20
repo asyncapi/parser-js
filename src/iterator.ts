@@ -39,7 +39,7 @@ export enum SchemaTypesToIterate {
 
 export type TraverseOptions = {
   callback: TraverseCallback
-  schemaTypesToIterate: SchemaTypesToIterate[]
+  schemaTypesToIterate: Array<`${SchemaTypesToIterate}`>;
   seenSchemas: Set<any>
 }   
 
@@ -48,7 +48,7 @@ export type TraverseCallback = (schema: SchemaInterface, propOrIndex: string | n
 /**
  * Go through each channel and for each parameter, and message payload and headers recursively call the callback for each schema.
  */
-export function traverseAsyncApiDocument(doc: AsyncAPIDocumentInterface, callback: TraverseCallback, schemaTypesToIterate: SchemaTypesToIterate[] = []) {
+export function traverseAsyncApiDocument(doc: AsyncAPIDocumentInterface, callback: TraverseCallback, schemaTypesToIterate: Array<`${SchemaTypesToIterate}`> = []) {
   if (schemaTypesToIterate.length === 0) {
     schemaTypesToIterate = Object.values(SchemaTypesToIterate);
   }

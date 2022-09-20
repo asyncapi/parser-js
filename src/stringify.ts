@@ -57,7 +57,7 @@ export function copy(data: Record<string, any>) {
   return unstringifiedData;
 }
 
-function refReplacer() {
+export function refReplacer() {
   const modelPaths = new Map();
   const paths = new Map();
   let init: unknown = null;
@@ -90,7 +90,7 @@ function refReplacer() {
 }
 
 const refRoot = '$ref:$';
-function traverseStringifiedData(parent: any, field: string | undefined, root: any, objToPath: Map<unknown, unknown>, pathToObj: Map<unknown, unknown>) {
+export function traverseStringifiedData(parent: any, field: string | undefined, root: any, objToPath: Map<unknown, unknown>, pathToObj: Map<unknown, unknown>) {
   let objOrPath = parent;
   let path = refRoot;
 

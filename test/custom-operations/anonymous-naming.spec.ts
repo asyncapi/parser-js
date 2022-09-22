@@ -174,4 +174,68 @@ describe('custom operations - anonymous naming', function() {
 
     expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('schema');
   });
+
+  it('should apply anonymous ids across whole document', async function() {
+    const { document, diagnostics } = await parser.parse({ 
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        'channel/{streetlightId}': {
+          parameters: {
+            streetlightId: {
+              schema: {
+                type: 'string',
+              }
+            }
+          },
+          subscribe: {
+            message: {
+              $ref: '#/components/messages/someMessage',
+            },
+          },
+          publish: {
+            message: {
+              payload: {}
+            }
+          }
+        }
+      },
+      components: {
+        parameters: {
+          someParameter: {
+            schema: {
+              type: 'string',
+            }
+          }
+        },
+        messages: {
+          someMessage: {
+            payload: {
+              $ref: '#/components/schemas/someSchema',
+            },
+          },
+        },
+        schemas: {
+          someSchema: {},
+        }
+      }
+    });
+
+    expect(document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message?.[xParserMessageName]).toEqual('someMessage');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema');
+
+    expect(document?.json()?.channels?.['channel/{streetlightId}']?.publish?.message?.[xParserMessageName]).toEqual('<anonymous-message-1>');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.publish?.message as any)?.payload?.[xParserSchemaId]).toEqual('<anonymous-schema-1>');
+
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.parameters?.streetlightId as any)?.schema?.[xParserSchemaId]).toEqual('streetlightId');
+
+    expect(document?.json()?.components?.messages?.someMessage?.[xParserMessageName]).toEqual('someMessage');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema');
+    expect((document?.json()?.components?.parameters?.someParameter as any)?.schema?.[xParserSchemaId]).toEqual('someParameter');
+
+    expect(document?.json()?.components?.schemas?.someSchema?.[xParserSchemaId]).toEqual('someSchema');
+  });
 });

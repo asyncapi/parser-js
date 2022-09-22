@@ -7,8 +7,8 @@ import { Message } from './message';
 import { Schema } from './schema';
 
 import { traverseAsyncApiDocument } from './iterator';
-import { xParserCircular } from '../constants';
-import { stringify, unstringify } from '../stringify';
+import { xParserCircular, xParserSpecStringified, xParserSpecParsed } from '../constants';
+import { refReplacer, traverseStringifiedData } from '../stringify';
 
 import type { v2 } from '../spec-types';
 import type { Operation } from './operation';
@@ -154,16 +154,41 @@ export class AsyncAPIDocument extends SpecificationExtensionsModel<v2.AsyncAPIOb
     return !!this._json[xParserCircular];
   }
 
-  traverseSchemas(callback: TraverseCallback, schemaTypesToIterate: SchemaTypesToIterate[]) {
+  traverseSchemas(callback: TraverseCallback, schemaTypesToIterate: Array<`${SchemaTypesToIterate}`> = []) {
     traverseAsyncApiDocument(this, callback, schemaTypesToIterate);
   }
 
-  static stringify(doc: AsyncAPIDocument, space: number): string | undefined {
-    return stringify(doc, { space });
+  static stringify(doc: AsyncAPIDocument, space?: number): string | undefined {
+    const rawDoc = doc.json();
+    const copiedDoc = { ...rawDoc };
+    copiedDoc[xParserSpecStringified] = true;
+    return JSON.stringify(copiedDoc, refReplacer(), space);
   }
 
-  static parse(doc: string): AsyncAPIDocument | undefined {
-    const possibleDocument = unstringify(doc);
-    return possibleDocument ? new AsyncAPIDocument(possibleDocument.json()) : undefined;
+  static parse(doc: string | Record<string, any>): AsyncAPIDocument | undefined {
+    let parsedJSON = doc;
+    if (typeof doc === 'string') {
+      parsedJSON = JSON.parse(doc);
+    } else if (typeof doc === 'object') {
+      // shall copy
+      parsedJSON = { ...(parsedJSON as Record<string, any>) };
+    }
+
+    // the `doc` must be an AsyncAPI parsed document
+    if (typeof parsedJSON !== 'object' || !parsedJSON[xParserSpecParsed]) {
+      throw new Error('Cannot parse invalid AsyncAPI document');
+    }
+    // if the `doc` is not stringified via the `stringify` static method then immediately return a model.
+    if (!parsedJSON[xParserSpecStringified]) {
+      return new AsyncAPIDocument(parsedJSON as v2.AsyncAPIObject);
+    }
+    // remove `x-parser-spec-stringified` extension
+    delete parsedJSON[String(xParserSpecStringified)];
+  
+    const objToPath = new Map();
+    const pathToObj = new Map();
+    traverseStringifiedData(parsedJSON, undefined, parsedJSON, objToPath, pathToObj);
+
+    return new AsyncAPIDocument(parsedJSON as v2.AsyncAPIObject);
   }
 }

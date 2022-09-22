@@ -88,7 +88,7 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
   }
 
   components(): ComponentsInterface {
-    return new Components(this._json.components || {});
+    return this.createModel(Components, this._json.components || {}, { pointer: '/components' });
   }
 
   extensions(): ExtensionsInterface {

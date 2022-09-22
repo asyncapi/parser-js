@@ -28,7 +28,7 @@ function assignNameToComponentMessages(document: AsyncAPIDocumentInterface) {
 function assignNameToAnonymousMessages(document: AsyncAPIDocumentInterface) {
   let anonymousMessageCounter = 0;
   document.messages().forEach(message => {
-    if (message.name() === undefined && message.extensions().get(xParserMessageName) === undefined) {
+    if (message.name() === undefined && message.extensions().get(xParserMessageName)?.value() === undefined) {
       setExtension(xParserMessageName, `<anonymous-message-${++anonymousMessageCounter}>`, message);
     }
   });

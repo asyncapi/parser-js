@@ -1,4 +1,5 @@
 import { Resolver as SpectralResolver } from '@stoplight/spectral-ref-resolver';
+import { Cache } from '@stoplight/json-ref-resolver/cache';
 import { resolveFile, resolveHttp } from '@stoplight/json-ref-readers';
 
 import type Uri from 'urijs';
@@ -11,6 +12,7 @@ export interface Resolver {
 }
 
 export interface ResolverOptions {
+  cache?: boolean;
   resolvers?: Array<Resolver>;
 }
 
@@ -29,7 +31,10 @@ export function createResolver(options: ResolverOptions = {}): SpectralResolver 
     return acc;
   }, {} as Record<string, { resolve: (uri: Uri, ctx?: any) => string | Promise<string> }>);
 
+  // if cache is enabled, use default Cache instance in SpectralResolver, otherwise use custom one with ttl set to 1ms
+  const cache = options.cache !== false;
   return new SpectralResolver({
+    uriCache: cache ? undefined : new Cache({ stdTTL: 1 }),
     resolvers: resolvers as any,
   });
 }

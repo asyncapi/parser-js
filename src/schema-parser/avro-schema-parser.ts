@@ -84,12 +84,12 @@ const typeMappings: Record<string, JSONSchema7TypeName> = {
   uuid: 'string',
 };
 
-function commonAttributesMapping(avroDefinition: AvroSchema, jsonSchema: v2.AsyncAPISchemaDefinition, isTopLevel: boolean): void {
+function commonAttributesMapping(avroDefinition: AvroSchema, jsonSchema: v2.AsyncAPISchemaDefinition, recordCache: { [key:string]: AsyncAPISchema }): void {
   if (avroDefinition.doc) jsonSchema.description = avroDefinition.doc;
   if (avroDefinition.default !== undefined) jsonSchema.default = avroDefinition.default;
 
   const fullyQualifiedName = getFullyQualifiedName(avroDefinition);
-  if (isTopLevel && fullyQualifiedName !== undefined) {
+  if (fullyQualifiedName !== undefined && recordCache[fullyQualifiedName]) {
     jsonSchema['x-parser-schema-id'] = fullyQualifiedName;
   }
 }
@@ -180,7 +180,9 @@ function additionalAttributesMapping(typeInput: any, avroDefinition: AvroSchema,
     setAdditionalAttribute('minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf');
     break;
   case 'string':
-    jsonSchema.format = avroDefinition.logicalType;
+    if (avroDefinition.logicalType) {
+      jsonSchema.format = avroDefinition.logicalType;
+    }
     setAdditionalAttribute('pattern', 'minLength', 'maxLength');
     break;
   case 'array':
@@ -207,14 +209,14 @@ function validateAvroSchema(avroDefinition: AvroSchema): void | never {
  * @param key String | Undefined - the fully qualified name of an avro record
  * @param value JsonSchema - The json schema from the avro record
  */
-function cacheAvroRecordDef(cache: {[key:string]: AsyncAPISchema}, key: string, value: AsyncAPISchema): void {
+function cacheAvroRecordDef(cache: { [key:string]: AsyncAPISchema }, key: string, value: AsyncAPISchema): void {
   if (key !== undefined) {
     cache[key] = value;
   }
 }
 
 async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: boolean, recordCache: Map<string, v2.AsyncAPISchemaDefinition> | any = {}): Promise<v2.AsyncAPISchemaDefinition> {
-  const jsonSchema: v2.AsyncAPISchemaDefinition = {};
+  let jsonSchema: v2.AsyncAPISchemaDefinition = {};
   const isUnion = Array.isArray(avroDefinition);
 
   if (isUnion) {
@@ -266,12 +268,20 @@ async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: 
   }
   case 'record': {
     const propsMap = await processRecordSchema(avroDefinition, recordCache, jsonSchema);
+    cacheAvroRecordDef(recordCache, getFullyQualifiedName(avroDefinition), propsMap);
     jsonSchema.properties = Object.fromEntries(propsMap.entries());
+    break;
+  }
+  default: {
+    const cachedRecord = recordCache[getFullyQualifiedName(avroDefinition)];
+    if (cachedRecord) {
+      jsonSchema = cachedRecord;
+    }
     break;
   }
   }
 
-  commonAttributesMapping(avroDefinition, jsonSchema, isTopLevel);
+  commonAttributesMapping(avroDefinition, jsonSchema, recordCache);
   additionalAttributesMapping(type, avroDefinition, jsonSchema);
 
   return jsonSchema;
@@ -296,7 +306,7 @@ async function processRecordSchema(avroDefinition: AvroSchema, recordCache: Reco
       const def = await convertAvroToJsonSchema(field.type, false, recordCache);
 
       requiredAttributesMapping(field, jsonSchema, field.default !== undefined);
-      commonAttributesMapping(field, def, false);
+      commonAttributesMapping(field, def, recordCache);
       additionalAttributesMapping(field.type, field, def);
 
       propsMap.set(field.name, def);

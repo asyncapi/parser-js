@@ -17,6 +17,7 @@ import type { ExternalDocumentationInterface } from '../external-docs';
 import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
+import { Collection } from 'models/collection';
 
 export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): BindingsInterface {
   const bindings = model.json('bindings') || {};
@@ -64,4 +65,18 @@ export function tags(model: BaseModel<{ tags?: v2.TagsObject }>): TagsInterface 
       createModel(Tag, tag, { pointer: model.jsonPath(`tags/${idx}`) }, model)
     )
   );
+}
+
+export function filterByInUse<T extends BaseModel>(collection: Collection<T>): T[] {
+  return collection.filterBy((item: T): boolean => {
+    // In the case of using $ref to reference any item from components, it will be already resolved since references are resolved before parsing, and will use another pointer rather than /components/...
+    return !item.meta().pointer.startsWith('/components'); 
+  });
+}
+
+export function filterByNotInUse<T extends BaseModel>(collection: Collection<T>): T[] {
+  return collection.filterBy((item: T): boolean => {
+    // In the case of using $ref to reference any item from components, it will be already resolved since references are resolved before parsing, and will use another pointer rather than /components/...
+    return item.meta().pointer.startsWith('/components'); 
+  });
 }

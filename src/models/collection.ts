@@ -33,20 +33,6 @@ export abstract class Collection<T extends BaseModel = BaseModel, M extends Reco
     return this.collections.filter(filter);
   }
 
-  filterByInUse(): T[] {
-    return this.filterBy((item: T): boolean => {
-      // In the case of using $ref to reference any item from components, it will be already resolved since references are resolved before parsing, and will use another pointer rather than /components/...
-      return !item.meta().pointer.startsWith('/components'); 
-    });
-  }
-
-  filterByNotInUse(): T[] {
-    return this.filterBy((item: T): boolean => {
-      // In the case of using $ref to reference any item from components, it will be already resolved since references are resolved before parsing, and will use another pointer rather than /components/...
-      return item.meta().pointer.startsWith('/components'); 
-    });
-  }
-
   meta(): CollectionMetadata<T> & M;
   meta<K extends keyof (CollectionMetadata<T> & M)>(key: K): (CollectionMetadata<T> & M)[K];
   meta(key?: keyof (CollectionMetadata<T> & M)) {

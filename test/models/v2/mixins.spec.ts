@@ -1,6 +1,7 @@
 import { BaseModel } from '../../../src/models/base';
-import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from '../../../src/models/v2/mixins';
+import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags, filterByInUse, filterByNotInUse } from '../../../src/models/v2/mixins';
 import { BindingsV2, ExtensionsV2, ExternalDocumentationV2, TagsV2 } from '../../../src/models/v2';
+import { Collection } from '../../../src/models/collection';
 
 describe('mixins', function() {
   describe('bindings', function() {
@@ -144,6 +145,54 @@ describe('mixins', function() {
       expect(tags(d2).length).toEqual(0);
       expect(tags(d3)).toBeInstanceOf(TagsV2);
       expect(tags(d3).length).toEqual(0);
+    });
+  });
+
+  class ItemModel extends BaseModel {
+    name(): string | undefined {
+      return this._json.name;
+    }
+  }
+
+  class Model extends Collection<ItemModel> {
+    override get(name: string): ItemModel | undefined {
+      return this.collections.find(item => item.name() === name);
+    }
+  }
+  
+  describe('.filterByInUse()', function () {
+    const items = [
+      new ItemModel({}, { pointer: '/channels/myChannel/publish/message/payload' } as any),
+      new ItemModel({}, { pointer: '/channels/anotherChannel/parameters/myParameter/schema' } as any),
+      new ItemModel({}, { pointer: '/components/messages/myMessage/payload' } as any),
+      new ItemModel({}, { pointer: '/components/schemas/mySchema' } as any),
+    ];
+    const d = new Model(items);
+    
+    it('should return all items in use', function () {
+      expect(filterByInUse(d)).toEqual([items[0], items[1]]);
+    });
+
+    it('should return empty if there are no items in use', function () {
+      expect(filterByInUse(new Model([items[2], items[3]]))).toEqual([]);
+    });
+  });
+
+  describe('.filterByNotInUse()', function () {
+    const items = [
+      new ItemModel({}, { pointer: '/channels/myChannel/publish/message/payload' } as any),
+      new ItemModel({}, { pointer: '/channels/anotherChannel/parameters/myParameter/schema' } as any),
+      new ItemModel({}, { pointer: '/components/messages/myMessage/payload' } as any),
+      new ItemModel({}, { pointer: '/components/schemas/mySchema' } as any),
+    ];
+    const d = new Model(items);
+
+    it('should return all items not in use', function () {
+      expect(filterByNotInUse(d)).toEqual([items[2], items[3]]);
+    });
+
+    it('should return empty if all items are in use', function () {
+      expect(filterByNotInUse(new Model([items[0], items[1]]))).toEqual([]);
     });
   });
 });

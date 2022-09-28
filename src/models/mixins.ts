@@ -1,3 +1,4 @@
+import { BaseModel } from './base';
 import type { BindingsInterface } from './bindings';
 import type { ExtensionsInterface } from './extensions';
 import type { ExternalDocumentationInterface } from './external-docs';
@@ -23,4 +24,9 @@ export interface ExternalDocumentationMixinInterface {
 
 export interface TagsMixinInterface {
   tags(): TagsInterface;
+}
+
+export interface FilterByUsageMixingInterface<T extends BaseModel> {
+  filterByInUse(): T[]
+  filterByNotInUse(): T[]
 }

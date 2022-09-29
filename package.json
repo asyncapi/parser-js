@@ -60,7 +60,7 @@
     "eslint-plugin-mocha": "^7.0.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sonarjs": "^0.15.0",
-    "http-server": "^0.12.3",
+    "http-server": "^14.1.1",
     "jsdoc-to-markdown": "^5.0.0",
     "markdown-toc": "^1.2.0",
     "mkdirp": "^1.0.4",

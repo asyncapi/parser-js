@@ -1,11 +1,12 @@
 const { expect } = require('chai');
-const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], bindings: { amqp: 'test' }, 'x-test': 'testing' };
+const js = { url: 'test.com', protocol: 'amqp', protocolVersion: '0-9-1', description: 'test', variables: { test1: { enum: ['value1', 'value2'], default: 'value1', description: 'test1', examples: ['value2'] } }, security: [{ oauth2: ['user:read'] }], bindings: { amqp: 'test' }, 'x-test': 'testing', tags: [{ name: 'env:development' }] };
 
 const Server = require('../../lib/models/server');
 
 const { assertMixinDescriptionInheritance } = require('../mixins/description_test');
 const { assertMixinBindingsInheritance } = require('../mixins/bindings_test');
 const { assertMixinSpecificationExtensionsInheritance } = require('../mixins/specification-extensions_test');
+const { assertMixinTagsInheritance } = require('../mixins/tags_test');
 
 describe('Server', function() {
   describe('#url()', function() {
@@ -73,6 +74,7 @@ describe('Server', function() {
       assertMixinDescriptionInheritance(Server);
       assertMixinBindingsInheritance(Server);
       assertMixinSpecificationExtensionsInheritance(Server);
+      assertMixinTagsInheritance(Server);
     });
   });
 });

@@ -287,6 +287,9 @@ declare module "@asyncapi/parser" {
      * @param callbackType - is the schema a new one or is the crawler finishing one.
      */
     type TraverseSchemas = (schema: Schema, propName: string, callbackType: SchemaIteratorCallbackType) => boolean;
+    /**
+     * Implements common functionality for all the models.
+     */
     class Base {
         /**
          * @param [key] - A key to retrieve from the JSON object.
@@ -1074,12 +1077,12 @@ declare module "@asyncapi/parser" {
          */
         ext(key: string): any;
     }
-    interface Server extends MixinDescription, MixinBindings, MixinSpecificationExtensions {
+    interface Server extends MixinDescription, MixinBindings, MixinSpecificationExtensions, MixinTags {
     }
     /**
      * Implements functions to deal with a Server object.
      */
-    class Server extends Base implements MixinDescription, MixinBindings, MixinSpecificationExtensions {
+    class Server extends Base implements MixinDescription, MixinBindings, MixinSpecificationExtensions, MixinTags {
         url(): string;
         protocol(): string;
         protocolVersion(): string;
@@ -1127,6 +1130,17 @@ declare module "@asyncapi/parser" {
          * @param key - Extension key.
          */
         ext(key: string): any;
+        hasTags(): boolean;
+        tags(): Tag[];
+        tagNames(): string[];
+        /**
+         * @param name - Name of the tag.
+         */
+        hasTag(name: string): boolean;
+        /**
+         * @param name - Name of the tag.
+         */
+        tag(name: string): Tag | null;
     }
     /**
      * Implements functions to deal with a SubscribeOperation object.

@@ -201,25 +201,24 @@ if (document) {
 
 ## API documentation
 
-Parser-JS API implements a global API definition for all AsyncAPI parser implementations known as the [Parser-API](https://github.com/asyncapi/parser-api). 
-This API is designed having in mind developer experience and resiliency to breaking changes. 
+Parser-JS API implements a global API definition for all AsyncAPI parser implementations known as the [Parser-API](https://github.com/asyncapi/parser-api). This API is designed having in mind developer experience and resiliency to breaking changes.
 
 The following table shows a compatibility matrix between this parser, and the [Parser-API](https://github.com/asyncapi/parser-api), as well as the AsyncAPI spec version supported by each release of this parser.
 
-Parser-JS | Parser-API                                                           | Spec 2.x | Spec 3.x
-----------|----------------------------------------------------------------------|----------|---------
-1.x       |                                                                      | ✓        |  
-2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) | ✓        | ✓
+| Parser-JS | Parser-API                                                           | Spec 2.x |
+|-----------|----------------------------------------------------------------------|----------|
+| 1.x       |                                                                      | ✓        |  
+| 2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) | ✓        |
 
 - `✓` Fully supported version.
 - `-` The AsyncAPI Spec version has features the Parser-JS can't use but the rest are fully supported.
 - Empty means not supported version.
 
-Additionally to all the methods declared in the [Parser-API](https://github.com/asyncapi/parser-api), this parser might introduce some helper functions.
+Additionally to all the methods declared in the [Parser-API](https://github.com/asyncapi/parser-api), this parser might introduce some helper functions like:
 
-Direct access to the parsed JSON document is always available through the `doc.json()` method.
-
-See [API documentation](./docs/api.md) for more examples and full API reference information.
+- `json()` which returns the JSON object of the given object. It is possible to pass as an argument the name of a field in an object and retrieve corresponding value.
+- `jsonPath()` which returns the JSON Path of the given object.
+- `meta()` which returns the metadata of a given object, like a parsed AsyncAPI Document.
 
 ## Using in the browser/SPA applications
 
@@ -345,7 +344,7 @@ In addition, the [`convertToOldAPI()` function](#convert-to-the-old-api) which c
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. In old API the Parser exposes `hasCircular()` function to check if given AsyncAPI document has circular references.
-- `isCircular()` function is added to the [Schema Model](./src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
+- `isCircular()` function is added to the [Schema Model](./src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the JSON tree.
 
 ## Stringify
 
@@ -395,6 +394,7 @@ Versions `<5` of Webpack should handle bundling without problems. Due to the fac
     fallback: {
       "fs": false,
       "path": false,
+      "util": false,
       "buffer": require.resolve("buffer/"),
     }
   }

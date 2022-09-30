@@ -1,3 +1,5 @@
+import { Document } from '@stoplight/spectral-core';
+
 import { AsyncAPIDocumentV2 } from '../src/models';
 import { Parser } from '../src/parser';
 
@@ -30,6 +32,22 @@ describe('parse()', function() {
     const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toEqual(undefined);
+    expect(diagnostics.length > 0).toEqual(true);
+  });
+
+  it('should return extras', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {}
+    };
+    const { document, diagnostics, extras } = await parser.parse(documentRaw);
+    
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(extras?.document).toBeInstanceOf(Document);
     expect(diagnostics.length > 0).toEqual(true);
   });
 

@@ -1,30 +1,7 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.14.1",
+  "version": "2.0.0",
   "description": "JavaScript AsyncAPI parser.",
-  "main": "lib/index.js",
-  "types": "types.d.ts",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "npm run test:browser:cleanup && npm run test:lib && npm run test:parseFromUrl && npm run cover:report && npm run test:browser",
-    "bundle": "browserify \"lib/browser.js\" | uglifyjs > \"dist/bundle.js\"",
-    "docs": "jsdoc2md \"lib/parser.js\" -f \"lib/**/*.js\" > API.md",
-    "types": "jsdoc -t \"node_modules/tsd-jsdoc/dist\" -r lib -d \"./\" && node \"./scripts/fix-ts-types.js\"",
-    "prepublishOnly": "npm run bundle && npm run docs && npm run types",
-    "release": "semantic-release",
-    "lint": "eslint --max-warnings 0 --config \".eslintrc\" \".\"",
-    "lint:fix": "eslint --max-warnings 0 --config \".eslintrc\" \".\" --fix",
-    "test:lib": "nyc --silent --no-clean mocha --exclude \"test/browser_test.js\" --exclude \"test/parseFromUrl_test.js\" --recursive",
-    "test:parseFromUrl": "nyc --silent --no-clean start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha test/parseFromUrl_test.js\"",
-    "cover:report": "nyc report --reporter=text --reporter=html",
-    "test:browser": "npm run test:browser:cleanup && npm run bundle && shx cp \"dist/bundle.js\" \"test/sample_browser/\"  && start-server-and-test \"http-server test/sample_browser --cors -s\" 8080 \"mocha --timeout 20000 test/browser_test.js\" && npm run test:browser:cleanup",
-    "test:browser:cleanup": "rimraf \"test/sample_browser/bundle.js\"",
-    "generate:readme:toc": "markdown-toc -i \"README.md\"",
-    "generate:assets": "npm run docs && npm run generate:readme:toc && npm run types && npm run bundle",
-    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
-  },
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
   },
@@ -32,71 +9,103 @@
     "type": "git",
     "url": "git://github.com/asyncapi/parser-js.git"
   },
-  "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
   "publishConfig": {
     "access": "public"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/asyncapi/parser-js",
+  "sideEffects": false,
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "/esm",
+    "/cjs",
+    "/browser",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs && npm run build:browser",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --project ./tsconfig.cjs.json",
+    "build:browser": "webpack",
+    "test": "npm run test:unit && npm run test:browser",
+    "test:unit": "cross-env CI=true jest --coverage --testPathIgnorePatterns=test/browser/*",
+    "test:browser": "npm run build:browser && cross-env CI=true jest -- ./test/browser/*",
+    "lint": "eslint --max-warnings 0 --config .eslintrc .",
+    "lint:fix": "eslint --max-warnings 0 --config .eslintrc . --fix",
+    "generate:readme:toc": "markdown-toc -i \"README.md\"",
+    "generate:assets": "npm run generate:readme:toc",
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
+    "prepublishOnly": "npm run bundle && npm run types",
+    "release": "semantic-release"
+  },
+  "dependencies": {
+    "@asyncapi/specs": "^3.1.0",
+    "@openapi-contrib/openapi-schema-to-json-schema": "^3.2.0",
+    "@stoplight/json-ref-resolver": "^3.1.4",
+    "@stoplight/spectral-core": "^1.14.1",
+    "@stoplight/spectral-functions": "^1.7.1",
+    "@stoplight/spectral-parsers": "^1.0.2",
+    "@stoplight/spectral-rulesets": "^1.12.0",
+    "ajv": "^8.11.0",
+    "avsc": "^5.7.5",
+    "fetch-mock-jest": "^1.5.1",
+    "js-yaml": "^4.1.0",
+    "jsonpath-plus": "^7.2.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "2.6.7",
+    "ramldt2jsonschema": "^1.2.3",
+    "webapi-parser": "^0.5.0"
+  },
   "devDependencies": {
+    "@jest/types": "^29.0.2",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/github": "7.2.3",
     "@semantic-release/npm": "^7.0.3",
     "@semantic-release/release-notes-generator": "^9.0.1",
-    "browserify": "^16.3.0",
-    "browserify-shim": "^3.8.14",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
+    "@swc/core": "^1.2.248",
+    "@swc/jest": "^0.2.22",
+    "@types/jest": "^27.4.1",
+    "@types/js-yaml": "^4.0.5",
+    "@types/json-schema": "^7.0.11",
+    "@types/lodash": "^4.14.179",
+    "@types/node-fetch": "^2.6.2",
+    "@types/urijs": "^1.19.19",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "conventional-changelog-conventionalcommits": "^4.2.3",
-    "eslint": "^7.27.0",
-    "eslint-plugin-mocha": "^7.0.1",
-    "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-sonarjs": "^0.5.0",
-    "http-server": "^0.12.3",
-    "jsdoc-to-markdown": "^5.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.23.0",
+    "eslint-plugin-github": "^4.3.7",
+    "eslint-plugin-security": "^1.5.0",
+    "eslint-plugin-sonarjs": "^0.15.0",
+    "jest": "^29.0.2",
     "markdown-toc": "^1.2.0",
-    "mocha": "^6.1.4",
-    "nyc": "^15.1.0",
-    "puppeteer": "^7.0.1",
-    "rimraf": "^3.0.2",
+    "path-browserify": "^1.0.1",
+    "puppeteer": "^17.1.1",
     "semantic-release": "17.4.3",
-    "shx": "^0.3.3",
-    "start-server-and-test": "^1.11.3",
-    "tsd-jsdoc": "^2.5.0",
-    "uglify-es": "^3.3.9"
-  },
-  "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "^2.13.0",
-    "@fmvilas/pseudo-yaml-ast": "^0.3.1",
-    "ajv": "^6.10.1",
-    "js-yaml": "^3.13.1",
-    "json-to-ast": "^2.1.0",
-    "lodash.clonedeep": "^4.5.0",
-    "node-fetch": "^2.6.0",
-    "tiny-merge-patch": "^0.1.2"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browserify-shim": {
-    "node-fetch": "global:fetch"
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2",
+    "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.6.1",
+    "webpack-cli": "^4.10.0"
   },
   "release": {
     "branches": [
       "master",
       {
-        "name": "2022-04-release",
-        "prerelease": true
-      },
-      {
-        "name": "next-major",
+        "name": "next-spec",
         "prerelease": true
       },
       {
         "name": "next-major-spec",
+        "prerelease": true
+      },
+      {
+        "name": "next-major",
         "prerelease": true
       }
     ],
@@ -117,20 +126,9 @@
       [
         "@semantic-release/github",
         {
-          "assets": [
-            {
-              "path": "dist/bundle.js",
-              "label": "Browser Bundle"
-            }
-          ]
+          "assets": []
         }
       ]
-    ]
-  },
-  "nyc": {
-    "exclude": [
-      "dist/bundle.js",
-      "test/**/*.js"
     ]
   }
 }

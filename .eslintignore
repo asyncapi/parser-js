@@ -1,7 +1,9 @@
 node_modules
-dist
-lib/browser.js
-scripts
-coverage
-.nyc_output
-test/sample_browser/
+.vscode
+.DS_Store
+/docs
+/coverage
+/lib
+/esm
+/cjs
+/browser

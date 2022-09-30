@@ -57,6 +57,37 @@ describe('custom operations - anonymous naming', function() {
     expect(document?.components().messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('message');
   });
 
+  it('should try use messageId for x-parser-message-name', async function() {
+    const { document } = await parser.parse({
+      asyncapi: '2.4.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'operation',
+            message: {
+              $ref: '#/components/messages/message'
+            }
+          }
+        }
+      },
+      components: {
+        messages: {
+          message: {
+            messageId: 'someId',
+            payload: {}
+          }
+        }
+      }
+    });
+
+    expect(document?.messages()).toHaveLength(1);
+    expect(document?.messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('someId');
+  });
+
   it('should not override x-parser-message-name if it exists', async function() {
     const { document } = await parser.parse({
       asyncapi: '2.0.0',

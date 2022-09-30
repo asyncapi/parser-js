@@ -86,6 +86,10 @@ export function hasRef(value: unknown): value is { $ref: string } {
   return isObject(value) && '$ref' in value && typeof value.$ref === 'string';
 }
 
+export function toJSONPathArray(jsonPath: string): Array<string | number> {
+  return jsonPath.split('/').map(untilde);
+}
+
 export function tilde(str: string) {
   return str.replace(/[~/]{1}/g, (sub) => {
     switch (sub) {

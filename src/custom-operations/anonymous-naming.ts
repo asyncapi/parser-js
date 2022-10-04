@@ -29,7 +29,7 @@ function assignNameToAnonymousMessages(document: AsyncAPIDocumentInterface) {
   let anonymousMessageCounter = 0;
   document.messages().forEach(message => {
     if (message.name() === undefined && message.extensions().get(xParserMessageName)?.value() === undefined) {
-      setExtension(xParserMessageName, `<anonymous-message-${++anonymousMessageCounter}>`, message);
+      setExtension(xParserMessageName, message.id() || `<anonymous-message-${++anonymousMessageCounter}>`, message);
     }
   });
 }

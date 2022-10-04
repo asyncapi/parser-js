@@ -16,14 +16,14 @@ export async function customOperations(parser: Parser, document: AsyncAPIDocumen
 }
 
 async function operationsV2(parser: Parser, document: AsyncAPIDocumentInterface, detailed: DetailedAsyncAPI, options: ParseOptions): Promise<void> {
-  checkCircularRefs(document);
-  anonymousNaming(document);
-
   if (options.applyTraits) {
     applyTraitsV2(detailed.parsed);
   }
   if (options.parseSchemas) {
     await parseSchemasV2(parser, detailed);
   }
+
+  checkCircularRefs(document);
+  anonymousNaming(document);
 }
 

@@ -8,14 +8,17 @@ import { createDetailedAsyncAPI, mergePatch, setExtension } from './utils';
 
 import { xParserSpecParsed } from './constants';
 
-import type { Spectral } from '@stoplight/spectral-core';
+import type { Spectral, Document } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
 import type { ValidateOptions } from './validate';
 import type { Input, Diagnostic } from './types';
 
 export interface ParseOutput {
   document: AsyncAPIDocumentInterface | undefined;
-  diagnostics: Diagnostic[]; 
+  diagnostics: Diagnostic[];
+  extras?: {
+    document: Document;
+  }
 }
 
 export interface ParseOptions {
@@ -33,11 +36,12 @@ const defaultOptions: ParseOptions = {
 
 export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input, options: ParseOptions = {}): Promise<ParseOutput> {
   options = mergePatch<ParseOptions>(defaultOptions, options);
-  const { validated, diagnostics } = await validate(spectral, asyncapi, { ...options.validateOptions, source: options.source });
+  const { validated, diagnostics, extras } = await validate(spectral, asyncapi, { ...options.validateOptions, source: options.source });
   if (validated === undefined) {
     return {
       document: undefined,
       diagnostics,
+      extras: undefined
     };
   }
 
@@ -52,5 +56,6 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
   return { 
     document,
     diagnostics,
+    extras,
   };
 }

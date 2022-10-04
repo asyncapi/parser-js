@@ -9,6 +9,7 @@ import type { Input, Diagnostic } from './types';
 export interface ValidateOptions extends IRunOpts {
   source?: string;
   allowedSeverity?: {
+    error?: boolean;
     warning?: boolean;
     info?: boolean;
     hint?: boolean;
@@ -18,10 +19,14 @@ export interface ValidateOptions extends IRunOpts {
 export interface ValidateOutput {
   validated: unknown;
   diagnostics: Diagnostic[];
+  extras: {
+    document: Document,
+  }
 }
 
 const defaultOptions: ValidateOptions = {
   allowedSeverity: {
+    error: false,
     warning: true,
     info: true,
     hint: true,
@@ -37,7 +42,7 @@ export async function validate(spectral: Spectral, asyncapi: Input, options: Val
   let { resolved: validated, results } = await spectral.runWithResolved(document);
 
   if (
-    hasErrorDiagnostic(results) ||
+    (!allowedSeverity?.error && hasErrorDiagnostic(results)) ||
     (!allowedSeverity?.warning && hasWarningDiagnostic(results)) ||
     (!allowedSeverity?.info && hasInfoDiagnostic(results)) ||
     (!allowedSeverity?.hint && hasHintDiagnostic(results))
@@ -45,5 +50,5 @@ export async function validate(spectral: Spectral, asyncapi: Input, options: Val
     validated = undefined;
   }
 
-  return { validated, diagnostics: results };
+  return { validated, diagnostics: results, extras: { document: document as Document } };
 }

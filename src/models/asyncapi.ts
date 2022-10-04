@@ -9,9 +9,9 @@ import type { SchemasInterface } from './schemas';
 import type { SecuritySchemesInterface } from './security-schemes';
 import type { ServersInterface } from './servers';
 
-import type { v2 } from '../spec-types';
+import type { AsyncAPIObject } from '../types';
 
-export interface AsyncAPIDocumentInterface extends BaseModel<v2.AsyncAPIObject>, ExtensionsMixinInterface {
+export interface AsyncAPIDocumentInterface extends BaseModel<AsyncAPIObject>, ExtensionsMixinInterface {
   version(): string;
   defaultContentType(): string | undefined;
   hasDefaultContentType(): boolean;

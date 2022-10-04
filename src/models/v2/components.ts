@@ -42,7 +42,7 @@ import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { MessageTraitsInterface } from '../message-traits';
 import type { OperationsInterface } from '../operations';
-import type { OperationInterface } from '../operation';
+import type { CorrelationIdsInterface } from '../correlation-ids';
 
 import type { v2 } from '../../spec-types';
 
@@ -76,9 +76,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   }
 
   operations(): OperationsInterface {
-    const operations: OperationInterface[] = [];
-    this.channels().forEach(channel => operations.push(...channel.operations().all()));
-    return new Operations(operations);
+    return new Operations([]);
   }
 
   operationTraits(): OperationTraitsInterface {
@@ -89,7 +87,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return this.createCollection('messageTraits', MessageTraits, MessageTrait);
   }
 
-  correlationIds(): CorrelationIds {
+  correlationIds(): CorrelationIdsInterface {
     return this.createCollection('correlationIds', CorrelationIds, CorrelationId);
   }
 

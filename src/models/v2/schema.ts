@@ -21,7 +21,7 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
   }
 
   uid(): string {
-    return this._meta.id || this.extensions().get(xParserSchemaId)?.value<string>() as string;
+    return this._meta.id || this.json(xParserSchemaId as any) as string;
   }
 
   $comment(): string | undefined {

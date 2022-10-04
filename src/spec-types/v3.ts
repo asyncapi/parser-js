@@ -7,7 +7,106 @@ export type DefaultContentType = string;
 export interface AsyncAPIObject extends SpecificationExtensions {
   asyncapi: AsyncAPIVersion;
   id?: Identifier;
+  info: InfoObject;
   defaultContentType?: DefaultContentType;
+}
+
+export interface InfoObject extends SpecificationExtensions {
+  title: string;
+  version: string;
+  description?: string;
+  termsOfService?: string;
+  contact?: ContactObject;
+  license?: LicenseObject;
+  tags?: TagsObject;
+  externalDocs?: ExternalDocumentationObject;
+}
+
+export interface ContactObject extends SpecificationExtensions {
+  name?: string;
+  url?: string;
+  email?: string;
+}
+
+export interface LicenseObject extends SpecificationExtensions {
+  name: string;
+  url?: string;
+}
+
+export interface ServerBindingsObject extends SpecificationExtensions {
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
+}
+
+export interface ChannelBindingsObject extends SpecificationExtensions {
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
+}
+
+export interface OperationBindingsObject extends SpecificationExtensions {
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
+}
+
+export interface MessageBindingsObject extends SpecificationExtensions {
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
 }
 
 export type TagsObject = Array<TagObject>;
@@ -21,6 +120,15 @@ export interface TagObject extends SpecificationExtensions {
 export interface ExternalDocumentationObject extends SpecificationExtensions {
   url: string;
   description?: string;
+}
+
+export interface ComponentsObject extends SpecificationExtensions {
+  tags?: Record<string, TagObject | ReferenceObject>;
+  externalDocs?: Record<string, ExternalDocumentationObject | ReferenceObject>;
+  serverBindings?: Record<string, ServerBindingsObject | ReferenceObject>;
+  channelBindings?: Record<string, ChannelBindingsObject | ReferenceObject>;
+  operationBindings?: Record<string, OperationBindingsObject | ReferenceObject>;
+  messageBindings?: Record<string, MessageBindingsObject | ReferenceObject>;
 }
 
 export type SchemaObject = AsyncAPISchemaObject | ReferenceObject;

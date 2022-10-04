@@ -3,30 +3,11 @@ import { Collection } from '../collection';
 
 import { Bindings } from './bindings';
 import { Binding } from './binding';
-import { Channel } from './channel';
-import { ChannelParameter } from './channel-parameter';
-import { CorrelationId } from './correlation-id';
-import { MessageTrait } from './message-trait';
-import { OperationTrait } from './operation-trait';
-import { Schema } from './schema';
-import { SecurityScheme } from './security-scheme';
-import { Server } from './server';
-import { ServerVariable } from './server-variable';
 import { extensions } from './mixins';
-import { Servers } from './servers';
-import { Channels } from './channels';
-import { Messages } from './messages';
-import { Schemas } from './schemas';
-import { ChannelParameters } from './channel-parameters';
-import { ServerVariables } from './server-variables';
-import { OperationTraits } from './operation-traits';
-import { MessageTraits } from './message-traits';
-import { SecuritySchemes } from './security-schemes';
-import { CorrelationIds } from './correlation-ids';
-import { Operations } from './operations';
-import { Message } from './message';
 import { Tags } from './tags';
+import { Tag } from './tag';
 import { ExternalDocumentations } from './external-documentations';
+import { ExternalDocumentation } from './external-documentation';
 
 import { tilde } from '../../utils';
 
@@ -44,69 +25,63 @@ import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { MessageTraitsInterface } from '../message-traits';
 import type { OperationsInterface } from '../operations';
-import type { OperationInterface } from '../operation';
 import type { TagsInterface } from '../tags';
 import type { ExternalDocumentationsInterface } from '../external-documentations';
+import type { CorrelationIdsInterface } from '../correlation-ids';
 
-import type { v2 } from '../../spec-types';
+import type { v3 } from '../../spec-types';
 
-export class Components extends BaseModel<v2.ComponentsObject> implements ComponentsInterface {
+export class Components extends BaseModel<v3.ComponentsObject> implements ComponentsInterface {
   servers(): ServersInterface {
-    return this.createCollection('servers', Servers, Server);
+    return [] as any;
   }
 
   channels(): ChannelsInterface {
-    return new Channels(
-      Object.entries(this._json.channels || {}).map(([channelAddress, channel]) => 
-        this.createModel(Channel, channel as v2.ChannelObject, { id: channelAddress, address: '', pointer: `/components/channels/${tilde(channelAddress)}` })
-      )
-    );
+    return [] as any;
   }
 
   messages(): MessagesInterface {
-    return this.createCollection('messages', Messages, Message);
+    return [] as any;
   }
 
   schemas(): SchemasInterface {
-    return this.createCollection('schemas', Schemas, Schema);
+    return [] as any;
   }
 
   channelParameters(): ChannelParametersInterface {
-    return this.createCollection('parameters', ChannelParameters, ChannelParameter);
+    return [] as any;
   }
 
   serverVariables(): ServerVariablesInterface {
-    return this.createCollection('serverVariables', ServerVariables, ServerVariable);
+    return [] as any;
   }
 
   operations(): OperationsInterface {
-    const operations: OperationInterface[] = [];
-    this.channels().forEach(channel => operations.push(...channel.operations().all()));
-    return new Operations(operations);
+    return [] as any;
   }
 
   operationTraits(): OperationTraitsInterface {
-    return this.createCollection('operationTraits', OperationTraits, OperationTrait);
+    return [] as any;
   }
 
   messageTraits(): MessageTraitsInterface {
-    return this.createCollection('messageTraits', MessageTraits, MessageTrait);
+    return [] as any;
   }
 
-  correlationIds(): CorrelationIds {
-    return this.createCollection('correlationIds', CorrelationIds, CorrelationId);
+  correlationIds(): CorrelationIdsInterface {
+    return [] as any;
   }
 
   securitySchemes(): SecuritySchemesInterface {
-    return this.createCollection('securitySchemes', SecuritySchemes, SecurityScheme);
+    return [] as any;
   }
 
   tags(): TagsInterface {
-    return new Tags([]);
+    return this.createCollection('tags', Tags, Tag, 'componentId');
   }
 
   externalDocs(): ExternalDocumentationsInterface {
-    return new ExternalDocumentations([]);
+    return this.createCollection('externalDocs', ExternalDocumentations, ExternalDocumentation, 'componentId');
   }
 
   serverBindings(): Record<string, BindingsInterface> {
@@ -133,10 +108,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return Object.keys(this._json).length === 0;
   }
 
-  protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v2.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
+  protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v3.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>, idKey: string = 'id'): M {
     const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([id, item]) => {
-      collectionItems.push(this.createModel(itemModel, item as any, { id, pointer: `/components/${itemsName}/${id}` } as any));
+      collectionItems.push(this.createModel(itemModel, item as any, { [idKey]: id, pointer: `/components/${itemsName}/${id}` } as any));
     });
     return new collectionModel(collectionItems);
   }

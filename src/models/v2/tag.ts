@@ -3,7 +3,7 @@ import { BaseModel } from '../base';
 import { hasDescription, description, extensions, hasExternalDocs, externalDocs } from './mixins';
 
 import type { ExtensionsInterface } from '../extensions';
-import  type{ ExternalDocumentationInterface } from '../external-docs';
+import  type{ ExternalDocumentationInterface } from '../external-documentation';
 import type { TagInterface } from '../tag';
 
 import type { v2 } from '../../spec-types';

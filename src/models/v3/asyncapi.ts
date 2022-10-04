@@ -1,6 +1,8 @@
 import { BaseModel } from '../base';
+import { Info } from './info';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
+import type { InfoInterface } from '../info';
 
 import type { v3 } from '../../spec-types';
 

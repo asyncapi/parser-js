@@ -12,6 +12,8 @@ import type { MessageTraitsInterface } from './message-traits';
 import type { SecuritySchemesInterface } from './security-schemes';
 import type { CorrelationIdsInterface } from './correlation-ids';
 import type { OperationsInterface } from './operations';
+import type { TagsInterface } from './tags';
+import type { ExternalDocumentationsInterface } from './external-documentations';
 
 export interface ComponentsInterface extends BaseModel, ExtensionsMixinInterface {
   servers(): ServersInterface;
@@ -25,6 +27,8 @@ export interface ComponentsInterface extends BaseModel, ExtensionsMixinInterface
   messageTraits(): MessageTraitsInterface;
   correlationIds(): CorrelationIdsInterface;
   securitySchemes(): SecuritySchemesInterface;
+  tags(): TagsInterface;
+  externalDocs(): ExternalDocumentationsInterface;
   serverBindings(): Record<string, BindingsInterface>;
   channelBindings(): Record<string, BindingsInterface>;
   operationBindings(): Record<string, BindingsInterface>;

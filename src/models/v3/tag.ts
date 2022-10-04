@@ -6,9 +6,9 @@ import type { ExtensionsInterface } from '../extensions';
 import  type{ ExternalDocumentationInterface } from '../external-docs';
 import type { TagInterface } from '../tag';
 
-import type { v2 } from '../../spec-types';
+import type { v3 } from '../../spec-types';
 
-export class Tag extends BaseModel<v2.TagObject> implements TagInterface {
+export class Tag extends BaseModel<v3.TagObject> implements TagInterface {
   name(): string {
     return this._json.name;
   }

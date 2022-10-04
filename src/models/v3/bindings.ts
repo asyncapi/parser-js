@@ -10,7 +10,7 @@ import type { BindingInterface } from '../binding';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExtensionInterface } from '../extension';
 
-import type  { v2 } from '../../spec-types';
+import type  { v3 } from '../../spec-types';
 
 export class Bindings extends Collection<BindingInterface> implements BindingsInterface {
   override get<T extends Record<string, any> = Record<string, any>>(name: string): BindingInterface<T> | undefined {
@@ -19,7 +19,7 @@ export class Bindings extends Collection<BindingInterface> implements BindingsIn
 
   extensions(): ExtensionsInterface {
     const extensions: ExtensionInterface[] = [];
-    Object.entries(this._meta.originalData as v2.SpecificationExtensions || {}).forEach(([id, value]) => {
+    Object.entries(this._meta.originalData as v3.SpecificationExtensions || {}).forEach(([id, value]) => {
       if (EXTENSION_REGEX.test(id)) {
         extensions.push(
           createModel(Extension, value, { id, pointer: `${this._meta.pointer}/${id}`, asyncapi: this._meta.asyncapi }) as Extension

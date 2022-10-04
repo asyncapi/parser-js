@@ -5,9 +5,9 @@ import { hasDescription, description, extensions } from './mixins';
 import type { ExternalDocumentationInterface } from '../external-docs';
 import type { ExtensionsInterface } from '../extensions';
 
-import type { v2 } from '../../spec-types';
+import type { v3 } from '../../spec-types';
 
-export class ExternalDocumentation extends BaseModel<v2.ExternalDocumentationObject> implements ExternalDocumentationInterface {
+export class ExternalDocumentation extends BaseModel<v3.ExternalDocumentationObject> implements ExternalDocumentationInterface {
   url(): string {
     return this._json.url;
   }

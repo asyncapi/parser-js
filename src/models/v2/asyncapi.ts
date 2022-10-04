@@ -18,7 +18,9 @@ import { tilde } from '../../utils';
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
 import type { InfoInterface } from '../info';
 import type { ServersInterface } from '../servers';
+import type { ServerInterface } from '../server';
 import type { ChannelsInterface } from '../channels';
+import type { ChannelInterface } from '../channel';
 import type { ComponentsInterface } from '../components';
 import type { OperationsInterface } from '../operations';
 import type { OperationInterface } from '../operation';
@@ -66,27 +68,20 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
-    this.channels().forEach(channel => operations.push(...channel.operations().all()));
+    this.channels().forEach(channel => operations.push(...channel.operations()));
     return new Operations(operations);
   }
 
   messages(): MessagesInterface {
     const messages: MessageInterface[] = [];
-    this.operations().forEach(operation => messages.push(...operation.messages().all()));
+    this.operations().forEach(operation => operation.messages().forEach(message => (
+      !messages.some(m => m.json() === message.json()) && messages.push(message)
+    )));
     return new Messages(messages);
   }
 
   schemas(): SchemasInterface {
-    const schemas: Set<SchemaInterface> = new Set();
-    function callback(schema: SchemaInterface) {
-      if (!schemas.has(schema.json())) {
-        schemas.add(schema);
-      }
-    }
-    // return only schemas used in channels ("active" schemas)
-    const toIterate = Object.values(SchemaTypesToIterate).filter(s => s !== SchemaTypesToIterate.Components);
-    traverseAsyncApiDocument(this, callback, toIterate);
-    return new Schemas(Array.from(schemas));
+    return this.__schemas(false);
   }
 
   securitySchemes(): SecuritySchemesInterface {
@@ -101,7 +96,60 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
     return this.createModel(Components, this._json.components || {}, { pointer: '/components' });
   }
 
+  allServers(): ServersInterface {
+    const servers: ServerInterface[] = this.servers();
+    this.components().servers().forEach(server => 
+      !servers.some(s => s.json() === server.json()) && servers.push(server)
+    );
+    return new Servers(servers);
+  }
+
+  allChannels(): ChannelsInterface {
+    const channels: ChannelInterface[] = this.channels();
+    this.components().channels().forEach(channel => 
+      !channels.some(c => c.json() === channel.json()) && channels.push(channel)
+    );
+    return new Channels(channels);
+  }
+
+  allOperations(): OperationsInterface {
+    const operations: OperationInterface[] = [];
+    this.allChannels().forEach(channel => operations.push(...channel.operations()));
+    return new Operations(operations);
+  }
+
+  allMessages(): MessagesInterface {
+    const messages: MessageInterface[] = [];
+    this.allOperations().forEach(operation => operation.messages().forEach(message => (
+      !messages.some(m => m.json() === message.json()) && messages.push(message)
+    )));
+    this.components().messages().forEach(message => (
+      !messages.some(m => m.json() === message.json()) && messages.push(message)
+    ));
+    return new Messages(messages);
+  }
+
+  allSchemas(): SchemasInterface {
+    return this.__schemas(true);
+  }
+
   extensions(): ExtensionsInterface {
     return extensions(this);
+  }
+
+  private __schemas(withComponents: boolean) {
+    const schemas: Set<SchemaInterface> = new Set();
+    function callback(schema: SchemaInterface) {
+      if (!schemas.has(schema.json())) {
+        schemas.add(schema);
+      }
+    }
+
+    let toIterate = Object.values(SchemaTypesToIterate);
+    if (!withComponents) {
+      toIterate = toIterate.filter(s => s !== SchemaTypesToIterate.Components);
+    }
+    traverseAsyncApiDocument(this, callback, toIterate);
+    return new Schemas(Array.from(schemas));
   }
 }

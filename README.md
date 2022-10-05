@@ -15,12 +15,15 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
 <!-- toc -->
 
 - [Installation](#installation)
+- [Usage](#usage)
 - [Examples](#examples)
   * [Example with parsing](#example-with-parsing)
   * [Example with validation](#example-with-validation)
   * [Example using Avro schemas](#example-using-avro-schemas)
   * [Example using OpenAPI schemas](#example-using-openapi-schemas)
   * [Example using RAML data types](#example-using-raml-data-types)
+  * [Example with performing actions on HTTP source](#example-with-performing-actions-on-http-source)
+  * [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
   * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
 - [Using in the browser/SPA applications](#using-in-the-browserspa-applications)

@@ -1,15 +1,28 @@
 import { Schema } from '../../../src/models/v2/schema';
 
 import { assertExtensions, assertExternalDocumentation } from './utils';
+import { xParserSchemaId } from '../../../src/constants';
 
 import type { v2 } from '../../../src/spec-types';
 
 describe('Channel model', function() {
   describe('.id()', function() {
-    it('should return id of model', function() {
-      const doc = {};
-      const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'schema' });
-      expect(d.id()).toEqual('schema');
+    it('should return $id of schema', function() {
+      const doc = { $id: '$id', [xParserSchemaId]: xParserSchemaId };
+      const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'id' });
+      expect(d.id()).toEqual('$id');
+    });
+
+    it('should return meta id of schema as fallback', function() {
+      const doc = { [xParserSchemaId]: xParserSchemaId };
+      const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'id' });
+      expect(d.id()).toEqual('id');
+    });
+
+    it(`should return ${xParserSchemaId} of schema as fallback`, function() {
+      const doc = { [xParserSchemaId]: xParserSchemaId };
+      const d = new Schema(doc, { asyncapi: {} as any, pointer: '' });
+      expect(d.id()).toEqual(xParserSchemaId);
     });
   });
 

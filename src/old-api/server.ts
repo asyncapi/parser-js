@@ -1,4 +1,4 @@
-import { SpecificationExtensionsModel, description, hasDescription, createMapOfType, bindingsMixins, getMapValue } from './mixins';
+import { SpecificationExtensionsModel, description, hasDescription, createMapOfType, bindingsMixins, tagsMixins, getMapValue } from './mixins';
 import { ServerVariable } from './server-variable';
 import { SecurityRequirement } from './security-requirement';
 
@@ -60,5 +60,25 @@ export class Server extends SpecificationExtensionsModel<v2.ServerObject> {
 
   binding(name: string) {
     return bindingsMixins.binding(this as any, name);
+  }
+
+  hasTags() {
+    return tagsMixins.hasTags(this);
+  }
+
+  tags() {
+    return tagsMixins.tags(this);
+  }
+
+  tagNames() {
+    return tagsMixins.tagNames(this);
+  }
+
+  hasTag(name: string) {
+    return tagsMixins.hasTag(this, name);
+  }
+
+  tag(name: string) {
+    return tagsMixins.tag(this, name);
   }
 }

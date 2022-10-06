@@ -8,7 +8,7 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/v2/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
+import { serializeInput, assertBindings, assertDescription, assertExtensions, assertTags } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
 import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
@@ -210,5 +210,6 @@ describe('Server Model', function () {
     assertBindings(Server);
     assertDescription(Server);
     assertExtensions(Server);
+    assertTags(Server);
   });
 });

@@ -101,8 +101,9 @@ describe('custom resolver', function() {
               read(uri) {
                 if (uri.path() === '/someRef') {
                   return '{"someRef": "value"}';
+                } else if (uri.valueOf() === 'customProtocol:///anotherRef.txt' && uri.suffix() === 'txt') {
+                  return '{"anotherRef": "value"}';
                 }
-                return '{"anotherRef": "value"}';
               },
             }
           ]
@@ -130,7 +131,7 @@ describe('custom resolver', function() {
             operationId: 'subscribe',
             message: {
               payload: {
-                $ref: 'customProtocol:///anotherRef'
+                $ref: 'customProtocol:///anotherRef.txt'
               }
             }
           },
@@ -148,7 +149,7 @@ describe('custom resolver', function() {
     expect(anotherRef?.json('$ref' as any)).toBeUndefined();
   });
 
-  it('should resolve custom protocols (using custom options in parse function)', async function() {
+  it.only('should resolve custom protocols (using custom options in parse function)', async function() {
     const parser = new Parser();
 
     const documentRaw = {
@@ -171,7 +172,7 @@ describe('custom resolver', function() {
             operationId: 'subscribe',
             message: {
               payload: {
-                $ref: 'customProtocol:///anotherRef'
+                $ref: 'customProtocol:///anotherRef.txt'
               }
             }
           },
@@ -187,8 +188,9 @@ describe('custom resolver', function() {
               read(uri) {
                 if (uri.path() === '/someRef') {
                   return '{"someRef": "value"}';
+                } else if (uri.valueOf() === 'customProtocol:///anotherRef.txt' && uri.suffix() === 'txt') {
+                  return '{"anotherRef": "value"}';
                 }
-                return '{"anotherRef": "value"}';
               },
             }
           ]

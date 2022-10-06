@@ -20,7 +20,7 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
     super(_json, _meta);
   }
 
-  uid(): string {
+  id(): string {
     return this._meta.id || this.json(xParserSchemaId as any) as string;
   }
 

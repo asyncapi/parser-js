@@ -9,7 +9,7 @@ describe('Channel model', function() {
     it('should return id of model', function() {
       const doc = {};
       const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'schema' });
-      expect(d.uid()).toEqual('schema');
+      expect(d.id()).toEqual('schema');
     });
   });
 

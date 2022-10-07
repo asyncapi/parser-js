@@ -92,15 +92,28 @@ describe('Channel model', function() {
       const d = new Schema(doc);
       expect(d.additionalItems()).toEqual(true);
     });
+
+    it('should return true when not defined', function() {
+      const doc: any = {};
+      const d = new Schema(doc);
+      expect(d.additionalItems()).toEqual(true);
+    });
+    
+    it('should return false when null', function() {
+      const doc: any = { additionalItems: null };
+      const d = new Schema(doc);
+      expect(d.additionalItems()).toEqual(false);
+    });
   });
 
-  describe('.additionalProperties()', function() {
-    it('should return the value schema object', function() {
-      const doc = { additionalProperties: {} };
+  describe('additionalProperties()', function() {
+    it('should return a Schema object', function() {
+      const doc: any = { additionalProperties: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.additionalProperties()).toBeInstanceOf(Schema);
+      expect((d.additionalProperties() as Schema).json()).toEqual(doc.additionalProperties);
     });
-
+    
     it('should return the true when there is no value', function() {
       const doc = {};
       const d = new Schema(doc);
@@ -112,11 +125,17 @@ describe('Channel model', function() {
       const d = new Schema(doc);
       expect(d.additionalProperties()).toEqual(false);
     });
-
-    it('should return the false where there is true value', function() {
-      const doc = { additionalProperties: true };
+    
+    it('should return true when not defined', function() {
+      const doc: any = {};
       const d = new Schema(doc);
       expect(d.additionalProperties()).toEqual(true);
+    });
+    
+    it('should return false when null', function() {
+      const doc: any = { additionalProperties: null };
+      const d = new Schema(doc);
+      expect(d.additionalProperties()).toEqual(false);
     });
   });
 

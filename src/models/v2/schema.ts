@@ -41,15 +41,17 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
 
   additionalItems(): boolean | SchemaInterface {
     if (typeof this._json === 'boolean') return this._json;
-    if (this._json.additionalItems === undefined) return true;
     if (typeof this._json.additionalItems === 'boolean') return this._json.additionalItems;
+    if (this._json.additionalItems === undefined) return true;
+    if (this._json.additionalItems === null) return false;
     return this.createModel(Schema, this._json.additionalItems, { pointer: `${this._meta.pointer}/additionalItems`, parent: this });
   }
 
   additionalProperties(): boolean | SchemaInterface {
     if (typeof this._json === 'boolean') return this._json;
-    if (this._json.additionalProperties === undefined) return true;
     if (typeof this._json.additionalProperties === 'boolean') return this._json.additionalProperties;
+    if (this._json.additionalProperties === undefined) return true;
+    if (this._json.additionalProperties === null) return false;
     return this.createModel(Schema, this._json.additionalProperties, { pointer: `${this._meta.pointer}/additionalProperties`, parent: this });
   }
 

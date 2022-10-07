@@ -250,13 +250,15 @@ describe('custom operations - anonymous naming', function() {
           },
         },
         schemas: {
-          someSchema: {},
+          someSchema: {
+            $id: 'someSchema-id'
+          },
         }
       }
     });
 
     expect(document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message?.[xParserMessageName]).toEqual('someMessage');
-    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema-id');
 
     expect(document?.json()?.channels?.['channel/{streetlightId}']?.publish?.message?.[xParserMessageName]).toEqual('<anonymous-message-1>');
     expect((document?.json()?.channels?.['channel/{streetlightId}']?.publish?.message as any)?.payload?.[xParserSchemaId]).toEqual('<anonymous-schema-1>');
@@ -264,9 +266,9 @@ describe('custom operations - anonymous naming', function() {
     expect((document?.json()?.channels?.['channel/{streetlightId}']?.parameters?.streetlightId as any)?.schema?.[xParserSchemaId]).toEqual('streetlightId');
 
     expect(document?.json()?.components?.messages?.someMessage?.[xParserMessageName]).toEqual('someMessage');
-    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema-id');
     expect((document?.json()?.components?.parameters?.someParameter as any)?.schema?.[xParserSchemaId]).toEqual('someParameter');
 
-    expect(document?.json()?.components?.schemas?.someSchema?.[xParserSchemaId]).toEqual('someSchema');
+    expect(document?.json()?.components?.schemas?.someSchema?.[xParserSchemaId]).toEqual('someSchema-id');
   });
 });

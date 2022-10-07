@@ -33,8 +33,9 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
 - [Circular references](#circular-references)
 - [Stringify](#stringify)
 - [Convert to the old API](#convert-to-the-old-api)
-- [Bundler configuration](#bundler-configuration)
-  * [Webpack](#webpack)
+- [Notes](#notes)
+  * [Using with Webpack](#using-with-webpack)
+  * [Testing with [Jest](https://jestjs.io/)](#testing-with-jesthttpsjestjsio)
 - [Develop](#develop)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -385,9 +386,9 @@ const oldAsyncAPIDocument = convertToOldAPI(document);
 > **Warning**
 > The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of January 2023.
 
-## Bundler configuration
+## Notes
 
-### Webpack
+### Using with Webpack
 
 Versions `<5` of Webpack should handle bundling without problems. Due to the fact that Webpack 5 no longer does fallbacks to native NodeJS modules by default we need to install `buffer` package and add fallbacks:
 
@@ -402,6 +403,23 @@ Versions `<5` of Webpack should handle bundling without problems. Due to the fac
     }
   }
 }
+```
+
+### Testing with [Jest](https://jestjs.io/)
+
+Using a Parser in an application that is tested using [Jest](https://jestjs.io/), there will probably an error like: 
+
+```bash
+Cannot find module 'nimma/legacy' from 'node_modules/@stoplight/spectral-core/dist/runner/runner.js
+```
+
+It's a problem with Jest, which cannot understand [NodeJS's package exports](https://nodejs.org/api/packages.html). To fix that, should be [enabled ESM support in Jest](https://jestjs.io/docs/ecmascript-modules) or set an appropriate Jest's `moduleNameMapper` config:
+
+```js
+moduleNameMapper: {
+  '^nimma/legacy$': '<rootDir>/node_modules/nimma/dist/legacy/cjs/index.js',
+  '^nimma/(.*)': '<rootDir>/node_modules/nimma/dist/cjs/$1',
+},
 ```
 
 ## Develop

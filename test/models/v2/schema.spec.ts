@@ -1,15 +1,28 @@
 import { Schema } from '../../../src/models/v2/schema';
 
 import { assertExtensions, assertExternalDocumentation } from './utils';
+import { xParserSchemaId } from '../../../src/constants';
 
 import type { v2 } from '../../../src/spec-types';
 
 describe('Channel model', function() {
   describe('.id()', function() {
-    it('should return id of model', function() {
-      const doc = {};
-      const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'schema' });
-      expect(d.id()).toEqual('schema');
+    it('should return $id of schema', function() {
+      const doc = { $id: '$id', [xParserSchemaId]: xParserSchemaId };
+      const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'id' });
+      expect(d.id()).toEqual('$id');
+    });
+
+    it('should return meta id of schema as fallback', function() {
+      const doc = { [xParserSchemaId]: xParserSchemaId };
+      const d = new Schema(doc, { asyncapi: {} as any, pointer: '', id: 'id' });
+      expect(d.id()).toEqual('id');
+    });
+
+    it(`should return ${xParserSchemaId} of schema as fallback`, function() {
+      const doc = { [xParserSchemaId]: xParserSchemaId };
+      const d = new Schema(doc, { asyncapi: {} as any, pointer: '' });
+      expect(d.id()).toEqual(xParserSchemaId);
     });
   });
 
@@ -79,15 +92,28 @@ describe('Channel model', function() {
       const d = new Schema(doc);
       expect(d.additionalItems()).toEqual(true);
     });
+
+    it('should return true when not defined', function() {
+      const doc: any = {};
+      const d = new Schema(doc);
+      expect(d.additionalItems()).toEqual(true);
+    });
+    
+    it('should return false when null', function() {
+      const doc: any = { additionalItems: null };
+      const d = new Schema(doc);
+      expect(d.additionalItems()).toEqual(false);
+    });
   });
 
-  describe('.additionalProperties()', function() {
-    it('should return the value schema object', function() {
-      const doc = { additionalProperties: {} };
+  describe('additionalProperties()', function() {
+    it('should return a Schema object', function() {
+      const doc: any = { additionalProperties: { type: 'string' } };
       const d = new Schema(doc);
       expect(d.additionalProperties()).toBeInstanceOf(Schema);
+      expect((d.additionalProperties() as Schema).json()).toEqual(doc.additionalProperties);
     });
-
+    
     it('should return the true when there is no value', function() {
       const doc = {};
       const d = new Schema(doc);
@@ -99,11 +125,17 @@ describe('Channel model', function() {
       const d = new Schema(doc);
       expect(d.additionalProperties()).toEqual(false);
     });
-
-    it('should return the false where there is true value', function() {
-      const doc = { additionalProperties: true };
+    
+    it('should return true when not defined', function() {
+      const doc: any = {};
       const d = new Schema(doc);
       expect(d.additionalProperties()).toEqual(true);
+    });
+    
+    it('should return false when null', function() {
+      const doc: any = { additionalProperties: null };
+      const d = new Schema(doc);
+      expect(d.additionalProperties()).toEqual(false);
     });
   });
 

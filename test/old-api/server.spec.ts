@@ -1,7 +1,7 @@
 import { Server } from '../../src/old-api/server';
 import { ServerVariable } from '../../src/old-api/server-variable';
 import { SecurityRequirement } from '../../src/old-api/security-requirement';
-import { assertDescriptionMixin, assertExtensionsMixin, assertBindingsMixin } from './mixins';
+import { assertDescriptionMixin, assertExtensionsMixin, assertBindingsMixin, assertTagsMixin } from './mixins';
 
 import type { v2 } from '../../src/spec-types';
 
@@ -69,6 +69,7 @@ describe('Server', function() {
   });
 
   assertDescriptionMixin(Server);
+  assertTagsMixin(Server);
   assertExtensionsMixin(Server);
   assertBindingsMixin(Server);
 });

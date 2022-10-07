@@ -26,7 +26,7 @@ export class Parser {
   constructor(
     private readonly options: ParserOptions = {}
   ) {
-    this.spectral = createSpectral(this, options);
+    this.spectral = createSpectral(this, options?.__unstable?.resolver);
     this.registerSchemaParser(AsyncAPISchemaParser());
     this.options.schemaParsers?.forEach(parser => this.registerSchemaParser(parser));
   }
@@ -47,7 +47,7 @@ export class Parser {
     if (maybeDocument) {
       return [];
     }
-    return (await validate(this.spectral, asyncapi, options)).diagnostics;
+    return (await validate(this, this.spectral, asyncapi, options)).diagnostics;
   }
 
   registerSchemaParser(parser: SchemaParser) {

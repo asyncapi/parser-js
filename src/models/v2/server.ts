@@ -9,7 +9,7 @@ import { ServerVariable } from './server-variable';
 import { SecurityRequirements } from './security-requirements';
 import { SecurityRequirement } from './security-requirement';
 
-import { bindings, hasDescription, description, extensions } from './mixins';
+import { bindings, hasDescription, description, extensions, tags } from './mixins';
 import { tilde } from '../../utils';
 
 import type { ChannelsInterface } from '../channels';
@@ -22,6 +22,7 @@ import type { ServerInterface } from '../server';
 import type { ServerVariablesInterface } from '../server-variables';
 import type { ExtensionsInterface } from '../extensions';
 import type { BindingsInterface } from '../bindings';
+import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
 
@@ -102,6 +103,10 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
       });
       return new SecurityRequirements(requirements);
     });
+  }
+
+  tags(): TagsInterface {
+    return tags(this);
   }
 
   bindings(): BindingsInterface {

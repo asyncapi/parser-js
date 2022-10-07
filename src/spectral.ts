@@ -7,11 +7,12 @@ import { specVersions } from './constants';
 import { isObject } from './utils';
 
 import type { RuleDefinition, RulesetDefinition } from '@stoplight/spectral-core';
-import type { Parser, ParserOptions } from './parser';
+import type { Parser } from './parser';
+import type { ResolverOptions } from './resolver';
 import type { MaybeAsyncAPI } from './types';
 
-export function createSpectral(parser: Parser, options: ParserOptions = {}): Spectral {
-  const spectral = new Spectral({ resolver: createResolver(options.__unstable?.resolver) });
+export function createSpectral(parser: Parser, options: ResolverOptions = {}): Spectral {
+  const spectral = new Spectral({ resolver: createResolver(options) });
   const ruleset = configureRuleset(parser);
   spectral.setRuleset(ruleset);
   return spectral;

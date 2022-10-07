@@ -10,6 +10,7 @@ import { xParserSpecParsed } from './constants';
 
 import type { Spectral, Document } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
+import type { ResolverOptions } from './resolver';
 import type { ValidateOptions } from './validate';
 import type { Input, Diagnostic } from './types';
 
@@ -26,17 +27,21 @@ export interface ParseOptions {
   applyTraits?: boolean;
   parseSchemas?: boolean;
   validateOptions?: Omit<ValidateOptions, 'source'>;
+  __unstable?: {
+    resolver?: Omit<ResolverOptions, 'cache'>;
+  };
 }
 
 const defaultOptions: ParseOptions = {
   applyTraits: true,
   parseSchemas: true,
   validateOptions: {},
+  __unstable: {},
 };
 
 export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input, options: ParseOptions = {}): Promise<ParseOutput> {
   options = mergePatch<ParseOptions>(defaultOptions, options);
-  const { validated, diagnostics, extras } = await validate(spectral, asyncapi, { ...options.validateOptions, source: options.source });
+  const { validated, diagnostics, extras } = await validate(parser, spectral, asyncapi, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
   if (validated === undefined) {
     return {
       document: undefined,

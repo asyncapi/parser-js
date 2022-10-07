@@ -42,13 +42,13 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@asyncapi/specs": "^3.1.0",
+    "@asyncapi/specs": "^3.2.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "^3.2.0",
     "@stoplight/json-ref-resolver": "^3.1.4",
-    "@stoplight/spectral-core": "^1.14.1",
+    "@stoplight/spectral-core": "^1.14.2",
     "@stoplight/spectral-functions": "^1.7.1",
     "@stoplight/spectral-parsers": "^1.0.2",
-    "@stoplight/spectral-rulesets": "^1.12.0",
+    "@stoplight/spectral-rulesets": "^1.14.1",
     "ajv": "^8.11.0",
     "avsc": "^5.7.5",
     "fetch-mock-jest": "^1.5.1",

@@ -1,4 +1,8 @@
+import { tilde } from '../../utils';
 import { BaseModel } from '../base';
+import { OperationInterface } from '../operation';
+import { Operations } from '../operations';
+import { Operation } from './operation';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
 
@@ -30,7 +34,11 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   operations() {
-    return null as any;
+    const operations: OperationInterface[] = Object.entries(this._json.operations || {}).map(([operationId, operation]) =>
+      this.createModel(Operation, operation, { id: operationId, address: operationId, pointer: `/operations/${tilde(operationId)}` })
+    )
+    
+    return new Operations(operations);
   }
 
   messages() {

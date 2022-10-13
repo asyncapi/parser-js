@@ -36,7 +36,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   operations() {
     const operations: OperationInterface[] = Object.entries(this._json.operations || {}).map(([operationId, operation]) =>
       this.createModel(Operation, operation, { id: operationId, address: operationId, pointer: `/operations/${tilde(operationId)}` })
-    )
+    );
     
     return new Operations(operations);
   }

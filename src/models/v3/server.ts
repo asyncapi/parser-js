@@ -75,7 +75,7 @@ export class Server extends BaseModel<v3.ServerObject, { id: string }> implement
           operationsData.push(op.json());
         }
       });
-    })
+    });
     return new Operations(operations);
   }
 

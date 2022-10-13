@@ -115,7 +115,7 @@ export interface OperationObject extends SpecificationExtensions {
   externalDocs?: ExternalDocumentationObject;
   bindings?: OperationBindingsObject | ReferenceObject;
   traits?: OperationTraitObject[];
-};
+}
 
 export interface OperationTraitObject extends SpecificationExtensions {
   action?: string;
@@ -126,7 +126,7 @@ export interface OperationTraitObject extends SpecificationExtensions {
   tags?: TagsObject;
   externalDocs?: ExternalDocumentationObject;
   bindings?: OperationBindingsObject | ReferenceObject;
-};
+}
 
 export type TagsObject = Array<TagObject>;
 

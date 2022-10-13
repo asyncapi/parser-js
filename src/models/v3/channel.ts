@@ -3,7 +3,6 @@ import { ChannelParameters } from '../channel-parameters';
 import { ChannelParameter } from './channel-parameter';
 import { Messages } from '../messages';
 import { Operations } from '../operations';
-import { Operation } from './operation';
 import { Servers } from '../servers';
 import { Server } from './server';
 
@@ -16,7 +15,7 @@ import type { ExtensionsInterface } from '../extensions';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { OperationsInterface } from '../operations';
-import type { OperationAction, OperationInterface } from '../operation';
+import type { OperationInterface } from '../operation';
 import type { ServersInterface } from '../servers';
 import type { ServerInterface } from '../server';
 
@@ -44,7 +43,7 @@ export class Channel extends BaseModel<v3.ChannelObject, { id: string, address?:
     if (Array.isArray(this._json.servers)) {
       allowedServers = this._json.servers || [];
     } else {
-      const parsedAsyncAPI = this._meta.asyncapi!.parsed as v3.AsyncAPIObject
+      const parsedAsyncAPI = this._meta.asyncapi.parsed as v3.AsyncAPIObject;
       allowedServers = parsedAsyncAPI.servers || [];
     }
     const servers: ServerInterface[] = allowedServers.map((server: v3.ServerObject) => new Server(server));

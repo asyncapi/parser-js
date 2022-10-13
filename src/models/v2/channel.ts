@@ -1,10 +1,10 @@
 import { BaseModel } from '../base';
-import { ChannelParameters } from './channel-parameters';
+import { ChannelParameters } from '../channel-parameters';
 import { ChannelParameter } from './channel-parameter';
-import { Messages } from './messages';
-import { Operations } from './operations';
+import { Messages } from '../messages';
+import { Operations } from '../operations';
 import { Operation } from './operation';
-import { Servers } from './servers';
+import { Servers } from '../servers';
 import { Server } from './server';
 
 import { bindings, hasDescription, description, extensions } from './mixins';

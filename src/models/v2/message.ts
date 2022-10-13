@@ -1,9 +1,9 @@
-import { Channels } from './channels';
-import { Operations } from './operations';
+import { Channels } from '../channels';
+import { Operations } from '../operations';
 import { Operation } from './operation';
-import { MessageTraits } from './message-traits';
+import { MessageTraits } from '../message-traits';
 import { MessageTrait } from './message-trait';
-import { Servers } from './servers';
+import { Servers } from '../servers';
 import { Schema } from './schema';
 
 import { tilde } from '../../utils';

@@ -1,10 +1,10 @@
-import { Channels } from './channels';
+import { Channels } from '../channels';
 import { Channel } from './channel';
-import { Messages } from './messages';
+import { Messages } from '../messages';
 import { Message } from './message';
-import { OperationTraits } from './operation-traits';
+import { OperationTraits } from '../operation-traits';
 import { OperationTrait } from './operation-trait';
-import { Servers } from './servers';
+import { Servers } from '../servers';
 
 import { tilde } from '../../utils';
 

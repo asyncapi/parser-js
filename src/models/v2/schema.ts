@@ -16,7 +16,7 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
     _json: v2.AsyncAPISchemaObject,
     _meta: ModelMetadata & { id: string, parent?: Schema } = {} as any,
   ) {
-    _json = retrievePossibleRef(_json, _meta.pointer, _meta.asyncapi?.parsed);
+    _json = retrievePossibleRef(_json, _meta.pointer as string, _meta.asyncapi?.parsed);
     super(_json, _meta);
   }
 

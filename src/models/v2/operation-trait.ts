@@ -11,24 +11,20 @@ import type { OperationTraitInterface } from '../operation-trait';
 import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
-import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
 
-export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string, action: OperationAction }> implements OperationTraitInterface {
-  id(): string {
-    return this.operationId() || this._meta.id;
+export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string | undefined, action: OperationAction }> implements OperationTraitInterface {
+  id(): string | undefined {
+    return this._json.operationId;
   }
 
   action(): OperationAction {
     return this._meta.action;
   }
 
-  hasOperationId(): boolean {
-    return !!this._json.operationId;
-  }
-
-  operationId(): string | undefined {
-    return this._json.operationId;
+  hasId(): boolean {
+    return this.id() !== undefined;
   }
 
   hasSummary(): boolean {

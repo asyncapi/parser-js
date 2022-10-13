@@ -2,7 +2,7 @@ import { BaseModel } from '../base';
 import { Contact } from './contact';
 import { ExternalDocumentation } from './external-docs';
 import { License } from './license';
-import { Tags } from './tags';
+import { Tags } from '../tags';
 import { Tag } from './tag';
 
 import { hasDescription, description, extensions } from './mixins';
@@ -68,17 +68,20 @@ export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
   }
 
   hasExternalDocs(): boolean {
-    return Object.keys(this._meta.asyncapi.parsed.externalDocs || {}).length > 0;
+    const parsedAsyncAPI: v2.AsyncAPIObject = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+    return Object.keys(parsedAsyncAPI.externalDocs || {}).length > 0;
   }
 
   externalDocs(): ExternalDocumentationInterface | undefined { 
     if (this.hasExternalDocs()) {
-      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
+      const parsedAsyncAPI: v2.AsyncAPIObject = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+      return this.createModel(ExternalDocumentation, parsedAsyncAPI.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
     }
   }
 
   tags(): TagsInterface {
-    const tags = this._meta.asyncapi.parsed.tags || [];
+    const parsedAsyncAPI: v2.AsyncAPIObject = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+    const tags = parsedAsyncAPI.tags || [];
     return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `/tags/${idx}` })));
   }
 

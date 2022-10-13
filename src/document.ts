@@ -9,11 +9,12 @@ import {
 
 import type { AsyncAPIDocumentInterface } from './models';
 import type { DetailedAsyncAPI } from './types';
+import { v2 } from 'spec-types';
 
 export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
   switch (asyncapi.semver.major) {
   case 2:
-    return new AsyncAPIDocumentV2(asyncapi.parsed, { asyncapi, pointer: '/' });
+    return new AsyncAPIDocumentV2(asyncapi.parsed as v2.AsyncAPIObject, { asyncapi, pointer: '/' });
     // case 3:
     //   return new AsyncAPIDocumentV3(asyncapi.parsed, { asyncapi, pointer: '/' });
   default:

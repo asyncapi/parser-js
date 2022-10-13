@@ -1,11 +1,10 @@
 import type { BaseModel } from './base';
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface } from './mixins';
-import { SecurityRequirements } from './v2/security-requirements';
+import { SecurityRequirements } from './security-requirements';
 
 export interface OperationTraitInterface extends BaseModel, BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface {
-  id(): string;
-  hasOperationId(): boolean;
-  operationId(): string | undefined;
+  id(): string | undefined;
+  hasId(): boolean;
   hasSummary(): boolean;
   summary(): string | undefined;
   security(): SecurityRequirements[];

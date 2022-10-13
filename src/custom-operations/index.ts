@@ -7,6 +7,7 @@ import type { Parser } from '../parser';
 import type { ParseOptions } from '../parse';
 import type { AsyncAPIDocumentInterface } from '../models';
 import type { DetailedAsyncAPI } from '../types';
+import { v2 } from 'spec-types';
 
 export async function customOperations(parser: Parser, document: AsyncAPIDocumentInterface, detailed: DetailedAsyncAPI, options: ParseOptions): Promise<void> {
   switch (detailed.semver.major) {
@@ -20,7 +21,7 @@ async function operationsV2(parser: Parser, document: AsyncAPIDocumentInterface,
   anonymousNaming(document);
 
   if (options.applyTraits) {
-    applyTraitsV2(detailed.parsed);
+    applyTraitsV2(detailed.parsed as v2.AsyncAPIObject);
   }
   if (options.parseSchemas) {
     await parseSchemasV2(parser, detailed);

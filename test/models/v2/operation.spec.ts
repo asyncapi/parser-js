@@ -1,24 +1,18 @@
-import { Channels } from '../../../src/models/v2/channels';
+import { Channels } from '../../../src/models/channels';
 import { Channel } from '../../../src/models/v2/channel';
 import { Operation } from '../../../src/models/v2/operation';
-import { OperationTraits } from '../../../src/models/v2/operation-traits';
+import { OperationTraits } from '../../../src/models/operation-traits';
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
-import { Messages } from '../../../src/models/v2/messages';
+import { Messages } from '../../../src/models/messages';
 import { Message } from '../../../src/models/v2/message';
-import { Servers } from '../../../src/models/v2/servers';
+import { Servers } from '../../../src/models/servers';
 import { Server } from '../../../src/models/v2/server';
 
 import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Operation model', function() {
   describe('.id()', function() {
-    it('should return id of model', function() {
-      const doc = {};
-      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'operation', action: 'publish' });
-      expect(d.id()).toEqual('operation');
-    });
-
-    it('should reuse operationId', function() {
+    it('should return operationId', function() {
       const doc = { operationId: '...' };
       const d = new Operation(doc);
       expect(d.id()).toEqual(doc.operationId);

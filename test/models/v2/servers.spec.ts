@@ -1,4 +1,4 @@
-import { Servers } from '../../../src/models/v2/servers';
+import { Servers } from '../../../src/models/servers';
 import { Server } from '../../../src/models/v2/server';
 
 const doc = {

@@ -1,4 +1,4 @@
-import { Messages } from '../../../src/models/v2/messages';
+import { Messages } from '../../../src/models/messages';
 import { Message } from '../../../src/models/v2/message';
 
 const messages = {

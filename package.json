@@ -26,6 +26,7 @@
     "README.md"
   ],
   "scripts": {
+    "dev": "tsc --watch",
     "build": "npm run build:esm && npm run build:cjs && npm run build:browser",
     "build:esm": "tsc",
     "build:cjs": "tsc --project ./tsconfig.cjs.json",

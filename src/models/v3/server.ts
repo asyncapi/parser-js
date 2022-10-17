@@ -59,7 +59,7 @@ export class Server extends BaseModel<v3.ServerObject, { id: string }> implement
     Object.entries(this._meta.asyncapi?.parsed?.channels || {}).forEach(([channelAddress, channel]: [string, any]) => {
       const allowedServers: string[] = channel.servers || [];
       if (allowedServers.length === 0 || allowedServers.includes(this._meta.id)) {
-        channels.push(this.createModel(Channel, channel, { id: channelAddress, address: channelAddress, pointer: `/channels/${tilde(channelAddress)}` }));
+        channels.push(this.createModel(Channel, channel, { id: channelAddress, pointer: `/channels/${tilde(channelAddress)}` }));
       }
     });
     return new Channels(channels);

@@ -27,7 +27,7 @@ export class Channel extends BaseModel<v3.ChannelObject, { id: string }> impleme
   }
 
   address(): string | null | undefined {
-    return this._meta.address;
+    return this._json.address;
   }
 
   hasDescription(): boolean {

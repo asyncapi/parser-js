@@ -70,7 +70,7 @@ export class Operation extends BaseModel<v3.OperationObject> implements Operatio
     const channels: ChannelInterface[] = [];
     const pointer = this._json.channel.address ? tilde(`/channels/${this._json.channel.address}`) : undefined;
     channels.push(
-      this.createModel(Channel, this._json.channel, { id: this._json.channel['x-parser-id'], address: this._json.channel.address, pointer })
+      this.createModel(Channel, this._json.channel, { id: this._json.channel['x-parser-id'], pointer })
     );
     return new Channels(channels);
   }

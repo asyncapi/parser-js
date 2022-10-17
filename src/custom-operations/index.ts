@@ -7,7 +7,7 @@ import type { Parser } from '../parser';
 import type { ParseOptions } from '../parse';
 import type { AsyncAPIDocumentInterface } from '../models';
 import type { DetailedAsyncAPI } from '../types';
-import type { v2 } from '../../spec-types';
+import type { v2 } from '../spec-types';
 
 export async function customOperations(parser: Parser, document: AsyncAPIDocumentInterface, detailed: DetailedAsyncAPI, options: ParseOptions): Promise<void> {
   switch (detailed.semver.major) {

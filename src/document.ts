@@ -9,7 +9,7 @@ import {
 
 import type { AsyncAPIDocumentInterface } from './models';
 import type { DetailedAsyncAPI } from './types';
-import { v2 } from 'spec-types';
+import type { v2 } from './spec-types';
 
 export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
   switch (asyncapi.semver.major) {

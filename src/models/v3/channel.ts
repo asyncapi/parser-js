@@ -21,7 +21,7 @@ import type { ServerInterface } from '../server';
 
 import type { v3 } from '../../spec-types';
 
-export class Channel extends BaseModel<v3.ChannelObject, { id: string, address?: string | null }> implements ChannelInterface {
+export class Channel extends BaseModel<v3.ChannelObject, { id: string }> implements ChannelInterface {
   id(): string {
     return this._meta.id;
   }

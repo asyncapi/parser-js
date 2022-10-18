@@ -235,10 +235,10 @@ A few advantages of this solution:
 
 ## Develop
 
-1. Make sure you are using Node.js 14 or higher and npm 7 or higher
-1. Write code and tests.
-1. Make sure all tests pass `npm test`
-1. Make sure code is well formatted and secure `npm run lint`
+1. Make sure you are using Node.js 15 or higher and npm 7 or higher.
+2. Write code and tests.
+3. Make sure all tests pass `npm test`.
+4. Make sure code is well formatted and secure `npm run lint`.
 
 Release regenerates API documentation and browser bundle, so you do not have to regenerate it manually with `npm run docs` and `npm run prepublishOnly`.
 

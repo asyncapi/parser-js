@@ -12,7 +12,7 @@ export { createAsyncAPIDocument, toAsyncAPIDocument, isAsyncAPIDocument } from '
 export * from './old-api';
 
 export { DiagnosticSeverity };
-export type { AsyncAPISemver, Input, Diagnostic, SchemaValidateResult } from './types';
+export type { AsyncAPISemver, Input, Diagnostic, SchemaValidateResult, AsyncAPISchema, AsyncAPISchemaDefinition } from './types';
 export type { ValidateOptions, ValidateOutput } from './validate';
 export type { ParseOptions, ParseOutput } from './parse';
 export type { StringifyOptions } from './stringify';

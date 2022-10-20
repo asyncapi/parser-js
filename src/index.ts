@@ -8,14 +8,15 @@ export { Parser };
 export { stringify, unstringify } from './stringify';
 export { fromURL, fromFile } from './from';
 export { createAsyncAPIDocument, toAsyncAPIDocument, isAsyncAPIDocument } from './document';
+export { DiagnosticSeverity };
 
 export * from './old-api';
 
-export { DiagnosticSeverity };
-export type { AsyncAPISemver, Input, Diagnostic, SchemaValidateResult, AsyncAPISchema, AsyncAPISchemaDefinition } from './types';
+export type { AsyncAPISemver, Input, Diagnostic, SchemaValidateResult, AsyncAPISchema } from './types';
 export type { ValidateOptions, ValidateOutput } from './validate';
 export type { ParseOptions, ParseOutput } from './parse';
 export type { StringifyOptions } from './stringify';
 export type { ValidateSchemaInput, ParseSchemaInput, SchemaParser } from './schema-parser';
+export type { v2 as specTypesV2 } from './spec-types';
 
 export default Parser;

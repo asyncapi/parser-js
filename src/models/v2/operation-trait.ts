@@ -1,25 +1,27 @@
 import { BaseModel } from '../base';
+import { Channels } from '../channels';
 import { SecurityScheme } from './security-scheme';
+import { SecurityRequirements } from '../security-requirements';
+import { SecurityRequirement } from './security-requirement';
 
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
 
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-docs';
+import type { ChannelsInterface } from '../channels';
 import type { OperationAction } from '../operation';
 import type { OperationTraitInterface } from '../operation-trait';
 import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
-import { SecurityRequirements } from '../security-requirements';
-import { SecurityRequirement } from './security-requirement';
 
 export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string | undefined, action: OperationAction }> implements OperationTraitInterface {
   id(): string | undefined {
     return this._json.operationId;
   }
 
-  action(): OperationAction {
+  action(): OperationAction | undefined {
     return this._meta.action;
   }
 
@@ -47,16 +49,16 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
     return hasExternalDocs(this);
   }
 
+  externalDocs(): ExternalDocumentationInterface | undefined {
+    return externalDocs(this);
+  }
+
   isSend(): boolean {
     return this.action() === 'subscribe';
   }
 
   isReceive(): boolean {
     return this.action() === 'publish';
-  }
-
-  externalDocs(): ExternalDocumentationInterface | undefined {
-    return externalDocs(this);
   }
 
   security(): SecurityRequirements[] {
@@ -71,6 +73,10 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
       });
       return new SecurityRequirements(requirements);
     });
+  }
+
+  channels(): ChannelsInterface {
+    return new Channels([]);
   }
 
   tags(): TagsInterface {

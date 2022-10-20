@@ -8,10 +8,49 @@ export interface AsyncAPIObject extends SpecificationExtensions {
   asyncapi: AsyncAPIVersion;
   id?: Identifier;
   defaultContentType?: DefaultContentType;
-  operations?: OperationsObject;
+  servers?: ServersObject;
   channels?: ChannelsObject;
+  operations?: OperationsObject;
   components?: ComponentsObject;
-  servers?: ServerObject[];
+}
+
+export type ServersObject = Record<string, ServerObject>;
+
+export interface ServerObject extends SpecificationExtensions {
+  url: string;
+  protocol: string;
+  protocolVersion?: string;
+  description?: string;
+  variables?: Record<string, ServerVariableObject>;
+  security?: Array<SecurityRequirementObject>;
+  tags?: TagsObject;
+  bindings?: ServerBindingsObject | ReferenceObject;
+}
+
+export interface ServerVariableObject extends SpecificationExtensions {
+  enum?: Array<string>;
+  default?: string;
+  description?: string;
+  examples?: Array<string>;
+}
+
+export interface ServerBindingsObject extends SpecificationExtensions {
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
 }
 
 export type ChannelsObject = Record<string, ChannelObject>;
@@ -28,6 +67,50 @@ export interface ChannelObject extends SpecificationExtensions {
 }
 
 export interface ChannelBindingsObject extends SpecificationExtensions {
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
+}
+
+export type OperationsObject = Record<string, OperationObject>;
+
+export interface OperationObject extends SpecificationExtensions {
+  action: 'send' | 'receive';
+  channel: ChannelObject | ReferenceObject;
+  summary?: string;
+  description?: string;
+  security?: Array<SecurityRequirementObject>;
+  tags?: TagsObject;
+  externalDocs?: ExternalDocumentationObject;
+  bindings?: OperationBindingsObject | ReferenceObject;
+  traits?: OperationTraitObject[];
+}
+
+export interface OperationTraitObject extends SpecificationExtensions {
+  action?: 'send' | 'receive';
+  channel?: ChannelObject | ReferenceObject;
+  summary?: string;
+  description?: string;
+  security?: Array<SecurityRequirementObject>;
+  tags?: TagsObject;
+  externalDocs?: ExternalDocumentationObject;
+  bindings?: OperationBindingsObject | ReferenceObject;
+}
+
+export interface OperationBindingsObject extends SpecificationExtensions {
   http?: Binding;
   ws?: Binding;
   kafka?: Binding;
@@ -103,31 +186,6 @@ export interface ParameterObject extends SpecificationExtensions {
   location?: string;
 }
 
-export type OperationsObject = Record<string, OperationObject>;
-
-export interface OperationObject extends SpecificationExtensions {
-  action: 'send' | 'receive';
-  channel: ChannelObject;
-  summary?: string;
-  description?: string;
-  security?: Array<SecurityRequirementObject>;
-  tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
-  bindings?: OperationBindingsObject | ReferenceObject;
-  traits?: OperationTraitObject[];
-}
-
-export interface OperationTraitObject extends SpecificationExtensions {
-  action?: string;
-  channel?: ReferenceObject;
-  summary?: string;
-  description?: string;
-  security?: Array<SecurityRequirementObject>;
-  tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
-  bindings?: OperationBindingsObject | ReferenceObject;
-}
-
 export type TagsObject = Array<TagObject>;
 
 export interface TagObject extends SpecificationExtensions {
@@ -156,44 +214,6 @@ export interface ComponentsObject extends SpecificationExtensions {
   channelBindings?: Record<string, ChannelBindingsObject | ReferenceObject>;
   operationBindings?: Record<string, OperationBindingsObject | ReferenceObject>;
   messageBindings?: Record<string, MessageBindingsObject | ReferenceObject>;
-}
-
-export type ServersObject = Record<string, ServerObject>;
-
-export interface ServerObject extends SpecificationExtensions {
-  url: string;
-  protocol: string;
-  protocolVersion?: string;
-  description?: string;
-  variables?: Record<string, ServerVariableObject>;
-  security?: Array<SecurityRequirementObject>;
-  bindings?: ServerBindingsObject | ReferenceObject;
-}
-
-export interface ServerVariableObject extends SpecificationExtensions {
-  enum?: Array<string>;
-  default?: string;
-  description?: string;
-  examples?: Array<string>;
-}
-
-export interface ServerBindingsObject extends SpecificationExtensions {
-  http?: Binding;
-  ws?: Binding;
-  kafka?: Binding;
-  anypointmq?: Binding;
-  amqp?: Binding;
-  amqp1?: Binding;
-  mqtt?: Binding;
-  mqtt5?: Binding;
-  nats?: Binding;
-  jms?: Binding;
-  sns?: Binding;
-  sqs?: Binding;
-  stomp?: Binding;
-  redis?: Binding;
-  mercure?: Binding;
-  ibmmq?: Binding;
 }
 
 export interface SecuritySchemeObject extends SpecificationExtensions {
@@ -418,25 +438,6 @@ export interface ReferenceObject {
 }
 
 export type SecurityRequirementObject = Record<string, Array<string>>;
-
-export interface OperationBindingsObject extends SpecificationExtensions {
-  http?: Binding;
-  ws?: Binding;
-  kafka?: Binding;
-  anypointmq?: Binding;
-  amqp?: Binding;
-  amqp1?: Binding;
-  mqtt?: Binding;
-  mqtt5?: Binding;
-  nats?: Binding;
-  jms?: Binding;
-  sns?: Binding;
-  sqs?: Binding;
-  stomp?: Binding;
-  redis?: Binding;
-  mercure?: Binding;
-  ibmmq?: Binding;
-}
 
 export interface CorrelationIDObject extends SpecificationExtensions {
   location: string;

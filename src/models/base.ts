@@ -3,7 +3,7 @@ import type { DetailedAsyncAPI } from '../types';
 
 export interface ModelMetadata {
   asyncapi: DetailedAsyncAPI;
-  pointer?: string;
+  pointer: string;
 }
 
 export abstract class BaseModel<J extends any = any, M extends Record<string, any> = {}> {
@@ -28,7 +28,7 @@ export abstract class BaseModel<J extends any = any, M extends Record<string, an
     return this._meta[key];
   }
 
-  jsonPath(field?: string | undefined): string | undefined {
+  jsonPath(field?: string | undefined): string {
     if (typeof field !== 'string') {
       return this._meta.pointer;
     }

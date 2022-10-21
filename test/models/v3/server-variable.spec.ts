@@ -1,4 +1,4 @@
-import { ServerVariable } from '../../../src/models/v2/server-variable';
+import { ServerVariable } from '../../../src/models/v3/server-variable';
 
 import { assertDescription, assertExtensions } from './utils';
 

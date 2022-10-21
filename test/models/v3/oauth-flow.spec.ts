@@ -1,8 +1,8 @@
-import { OAuthFlow } from '../../../src/models/v2/oauth-flow';
+import { OAuthFlow } from '../../../src/models/v3/oauth-flow';
 
 import { assertExtensions } from './utils';
 
-import type { v2 } from '../../../src/spec-types';
+import type { v3 } from '../../../src/spec-types';
 
 const flowObject = {
   authorizationUrl: 'https://example.com/api/oauth/dialog',
@@ -13,7 +13,7 @@ const flowObject = {
 };
 
 const flow = new OAuthFlow(flowObject);
-const emptyObject = new OAuthFlow({} as v2.OAuthFlowObject);
+const emptyObject = new OAuthFlow({} as v3.OAuthFlowObject);
 
 describe('OAuth Flow', function() {
   describe('.authorizationUrl()', function() {

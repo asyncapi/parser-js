@@ -181,10 +181,10 @@ describe('Message model', function() {
   });
 
   describe('mixins', function() {
-    assertBindings(MessageTrait);
-    assertDescription(MessageTrait);
-    assertExtensions(MessageTrait);
-    assertExternalDocumentation(MessageTrait);
-    assertTags(MessageTrait);
+    assertBindings(Message);
+    assertDescription(Message);
+    assertExtensions(Message);
+    assertExternalDocumentation(Message);
+    assertTags(Message);
   });
 });

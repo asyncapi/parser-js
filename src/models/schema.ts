@@ -3,7 +3,7 @@ import type { ExtensionsMixinInterface, ExternalDocumentationMixinInterface } fr
 import type { v2 } from '../spec-types';
 
 export interface SchemaInterface extends BaseModel<v2.AsyncAPISchemaObject>, ExtensionsMixinInterface, ExternalDocumentationMixinInterface {
-  uid(): string;
+  id(): string;
   $comment(): string | undefined;
   $id(): string | undefined;
   $schema(): string;

@@ -1,9 +1,9 @@
 import { Bindings } from './bindings';
 import { Binding } from './binding';
-import { Extensions } from './extensions';
+import { Extensions } from '../extensions';
 import { Extension } from './extension';
 import { ExternalDocumentation } from './external-docs';
-import { Tags } from './tags';
+import { Tags } from '../tags';
 import { Tag } from './tag';
 
 import { createModel } from '../utils';

@@ -1,9 +1,9 @@
-import { Schema } from '../../../src/models/v2/schema';
+import { Schema } from '../../../src/models/v3/schema';
 
 import { assertExtensions, assertExternalDocumentation } from './utils';
 import { xParserSchemaId } from '../../../src/constants';
 
-import type { v2 } from '../../../src/spec-types';
+import type { v3 } from '../../../src/spec-types';
 
 describe('Schema model', function() {
   describe('.id()', function() {
@@ -430,7 +430,7 @@ describe('Schema model', function() {
 
   describe('.isCircular()', function() {
     it('should return a true when schema has circular reference', function() {
-      const doc: v2.AsyncAPISchemaObject = {
+      const doc: v3.AsyncAPISchemaObject = {
         properties: {
           nonCircular: {
             type: 'string',
@@ -762,13 +762,13 @@ describe('Schema model', function() {
 
   describe('.type()', function() {
     it('should return single type', function() {
-      const doc: v2.AsyncAPISchemaObject = { type: 'object' };
+      const doc: v3.AsyncAPISchemaObject = { type: 'object' };
       const d = new Schema(doc);
       expect(d.type()).toEqual(doc.type);
     });
 
     it('should return array of type', function() {
-      const doc: v2.AsyncAPISchemaObject = { type: ['object', 'array'] };
+      const doc: v3.AsyncAPISchemaObject = { type: ['object', 'array'] };
       const d = new Schema(doc);
       expect(d.type()).toEqual(doc.type);
     });

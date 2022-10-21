@@ -66,9 +66,9 @@ export class Server extends BaseModel<v3.ServerObject, { id: string }> implement
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
       const operationChannel = operation.channel as v3.ChannelObject | undefined;
       if (!channels.some(channel => channel.json() === operationChannel)) {
-        const allowedServers: v3.ServerObject[] = operationChannel!.servers || [];
+        const allowedServers: v3.ServerObject[] = (operationChannel as v3.ChannelObject).servers || [];
         if (allowedServers.length === 0 || allowedServers.includes(this._json)) {
-          channels.push(this.createModel(Channel, operationChannel!, { id: '', pointer: `/operations/${tilde(operationId)}/channel` }));
+          channels.push(this.createModel(Channel, operationChannel as v3.ChannelObject, { id: '', pointer: `/operations/${tilde(operationId)}/channel` }));
         }
       }
     });

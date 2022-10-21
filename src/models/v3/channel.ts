@@ -80,7 +80,7 @@ export class Channel extends BaseModel<v3.ChannelObject, { id: string }> impleme
   messages(): MessagesInterface {
     return new Messages(
       Object.entries(this._json.messages || {}).map(([messageName, message]) => {
-        return this.createModel(Message, message, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) })
+        return this.createModel(Message, message, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) });
       })
     );
   }

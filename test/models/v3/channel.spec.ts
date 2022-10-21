@@ -53,7 +53,7 @@ describe('Channel model', function() {
     });
 
     it('should return collection of servers - available only on particular ones', function() {
-      const someServer2 = {}
+      const someServer2 = {};
       const doc = serializeInput<v3.ChannelObject>({ servers: [someServer2] });
       const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2, } } } as any, pointer: '', id: 'channel' });
       expect(d.servers()).toBeInstanceOf(Servers);

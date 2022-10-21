@@ -45,7 +45,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
   channels(): ChannelsInterface {
     const channels: ChannelInterface[] = [];
     Object.entries((this._meta.asyncapi?.parsed?.channels || {}) as v3.ChannelsObject).forEach(([channelName, channel]) => {
-      const hasMessage = Object.entries(channel.messages || {}).some(([_, message]) => message === this._json);
+      const hasMessage = Object.entries(channel.messages || {}).some(([, message]) => message === this._json);
       if (hasMessage) {
         channels.push(
           this.createModel(Channel, channel, { id: channelName, pointer: `/channels/${channelName}` }),
@@ -55,7 +55,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
       const operationChannel = operation.channel as v3.ChannelObject | undefined;
       if (!channels.some(channel => channel.json() === operationChannel)) {
-        const hasMessage = Object.entries(operationChannel?.messages || {}).some(([_, message]) => message === this._json);
+        const hasMessage = Object.entries(operationChannel?.messages || {}).some(([, message]) => message === this._json);
         if (hasMessage) {
           channels.push(
             this.createModel(Channel, operationChannel as v3.ChannelObject, { id: '', pointer: `/operations/${operationId}/channel` }),
@@ -70,7 +70,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
     const operations: OperationInterface[] = [];
     this.channels().forEach(channel => {
       operations.push(...channel.operations());
-    })
+    });
     return new Operations(operations);
   }
 

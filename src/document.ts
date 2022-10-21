@@ -15,8 +15,8 @@ export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocu
   switch (asyncapi.semver.major) {
   case 2:
     return new AsyncAPIDocumentV2(asyncapi.parsed as v2.AsyncAPIObject, { asyncapi, pointer: '/' });
-    case 3:
-      return new AsyncAPIDocumentV3(asyncapi.parsed as v3.AsyncAPIObject, { asyncapi, pointer: '/' });
+  case 3:
+    return new AsyncAPIDocumentV3(asyncapi.parsed as v3.AsyncAPIObject, { asyncapi, pointer: '/' });
   default:
     throw new Error(`Unsupported AsyncAPI version: ${asyncapi.semver.version}`);
   }

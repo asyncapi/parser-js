@@ -29,99 +29,94 @@ describe('Channel model', function() {
     });
   });
 
-  // describe('.servers()', function() {
-  //   it('should return collection of servers - available on all servers', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({});
-  //     const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel' });
-  //     expect(d.servers()).toBeInstanceOf(Servers);
-  //     expect(d.servers().all()).toHaveLength(2);
-  //     expect(d.servers().all()[0]).toBeInstanceOf(Server);
-  //     expect(d.servers().all()[0].id()).toEqual('someServer1');
-  //     expect(d.servers().all()[1]).toBeInstanceOf(Server);
-  //     expect(d.servers().all()[1].id()).toEqual('someServer2');
-  //   });
+  describe('.servers()', function() {
+    it('should return collection of servers - available on all servers', function() {
+      const doc = serializeInput<v3.ChannelObject>({});
+      const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel' });
+      expect(d.servers()).toBeInstanceOf(Servers);
+      expect(d.servers().all()).toHaveLength(2);
+      expect(d.servers().all()[0]).toBeInstanceOf(Server);
+      expect(d.servers().all()[0].id()).toEqual('someServer1');
+      expect(d.servers().all()[1]).toBeInstanceOf(Server);
+      expect(d.servers().all()[1].id()).toEqual('someServer2');
+    });
 
-  //   it('should return collection of servers - available on all servers (empty servers array)', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ servers: [] });
-  //     const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel' });
-  //     expect(d.servers()).toBeInstanceOf(Servers);
-  //     expect(d.servers().all()).toHaveLength(2);
-  //     expect(d.servers().all()[0]).toBeInstanceOf(Server);
-  //     expect(d.servers().all()[0].id()).toEqual('someServer1');
-  //     expect(d.servers().all()[1]).toBeInstanceOf(Server);
-  //     expect(d.servers().all()[1].id()).toEqual('someServer2');
-  //   });
+    it('should return collection of servers - available on all servers (empty servers array)', function() {
+      const doc = serializeInput<v3.ChannelObject>({ servers: [] });
+      const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2: {}, } } } as any, pointer: '', id: 'channel' });
+      expect(d.servers()).toBeInstanceOf(Servers);
+      expect(d.servers().all()).toHaveLength(2);
+      expect(d.servers().all()[0]).toBeInstanceOf(Server);
+      expect(d.servers().all()[0].id()).toEqual('someServer1');
+      expect(d.servers().all()[1]).toBeInstanceOf(Server);
+      expect(d.servers().all()[1].id()).toEqual('someServer2');
+    });
 
-  //   it('should return collection of servers - available only on particular ones', function() {
-  //     const someServer2 = {}
-  //     const doc = serializeInput<v3.ChannelObject>({ servers: [someServer2] });
-  //     const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2, } } } as any, pointer: '', id: 'channel' });
-  //     expect(d.servers()).toBeInstanceOf(Servers);
-  //     expect(d.servers().all()).toHaveLength(1);
-  //     expect(d.servers().all()[0]).toBeInstanceOf(Server);
-  //     expect(d.servers().all()[0].id()).toEqual('someServer2');
-  //   });
-  // });
+    it('should return collection of servers - available only on particular ones', function() {
+      const someServer2 = {}
+      const doc = serializeInput<v3.ChannelObject>({ servers: [someServer2] });
+      const d = new Channel(doc, { asyncapi: { parsed: { servers: { someServer1: {}, someServer2, } } } as any, pointer: '', id: 'channel' });
+      expect(d.servers()).toBeInstanceOf(Servers);
+      expect(d.servers().all()).toHaveLength(1);
+      expect(d.servers().all()[0]).toBeInstanceOf(Server);
+      expect(d.servers().all()[0].id()).toEqual('someServer2');
+    });
+  });
 
-  // describe('.operations()', function() {
-  //   it('should return collection of operations - publish operation', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ publish: {} });
-  //     const d = new Channel(doc);
-  //     expect(d.operations()).toBeInstanceOf(Operations);
-  //     expect(d.operations().all()).toHaveLength(1);
-  //     expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-  //     expect(d.operations().all()[0].action()).toEqual('publish');
-  //   });
+  describe('.operations()', function() {
+    it('should return collection of operations - send operation', function() {
+      const channel = {};
+      const d = new Channel(channel, { asyncapi: { parsed: { operations: { someOperation: { action: 'send', channel } } } } } as any);
+      expect(d.operations()).toBeInstanceOf(Operations);
+      expect(d.operations().all()).toHaveLength(1);
+      expect(d.operations().all()[0]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[0].action()).toEqual('send');
+    });
     
-  //   it('should return collection of operations - subscribe operation', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ subscribe: {} });
-  //     const d = new Channel(doc);
-  //     expect(d.operations()).toBeInstanceOf(Operations);
-  //     expect(d.operations().all()).toHaveLength(1);
-  //     expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-  //     expect(d.operations().all()[0].action()).toEqual('subscribe');
-  //   });
+    it('should return collection of operations - receive operation', function() {
+      const channel = {};
+      const d = new Channel(channel, { asyncapi: { parsed: { operations: { someOperation: { action: 'receive', channel } } } } } as any);
+      expect(d.operations()).toBeInstanceOf(Operations);
+      expect(d.operations().all()).toHaveLength(1);
+      expect(d.operations().all()[0]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[0].action()).toEqual('receive');
+    });
 
-  //   it('should return collection of operations - both operations', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ publish: {}, subscribe: {} });
-  //     const d = new Channel(doc);
-  //     expect(d.operations()).toBeInstanceOf(Operations);
-  //     expect(d.operations().all()).toHaveLength(2);
-  //     expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-  //     expect(d.operations().all()[0].action()).toEqual('publish');
-  //     expect(d.operations().all()[1]).toBeInstanceOf(Operation);
-  //     expect(d.operations().all()[1].action()).toEqual('subscribe');
-  //   });
-  // });
+    it('should return collection of operations - more than one operations', function() {
+      const channel = {};
+      const d = new Channel(channel, { asyncapi: { parsed: { operations: { someOperation1: { action: 'send', channel }, someOperation2: { action: 'receive', channel }, someOperation3: { action: 'send', channel } } } } } as any);
+      expect(d.operations()).toBeInstanceOf(Operations);
+      expect(d.operations().all()).toHaveLength(3);
+      expect(d.operations().all()[0]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[0].action()).toEqual('send');
+      expect(d.operations().all()[1]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[1].action()).toEqual('receive');
+      expect(d.operations().all()[2]).toBeInstanceOf(Operation);
+      expect(d.operations().all()[2].action()).toEqual('send');
+    });
+  });
 
-  // describe('.messages()', function() {
-  //   it('should return collection of messages - single message', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ publish: { message: { messageId: '...' } } });
-  //     const d = new Channel(doc);
-  //     expect(d.messages()).toBeInstanceOf(Messages);
-  //     expect(d.messages().all()).toHaveLength(1);
-  //     expect(d.messages().all()[0]).toBeInstanceOf(Message);
-  //     expect(d.messages().all()[0].messageId()).toEqual((doc as any).publish.message.messageId);
-  //   });
+  describe('.messages()', function() {
+    it('should return collection of messages - single message', function() {
+      const doc = serializeInput<v3.ChannelObject>({ messages: { someMessage: { messageId: 'messageId' } } });
+      const d = new Channel(doc);
+      expect(d.messages()).toBeInstanceOf(Messages);
+      expect(d.messages().all()).toHaveLength(1);
+      expect(d.messages().all()[0]).toBeInstanceOf(Message);
+      expect(d.messages().all()[0].messageId()).toEqual(doc.messages?.['someMessage']?.messageId);
+    });
     
-  //   it('should return collection of messages - oneOf message', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ subscribe: { message: { oneOf: [{ messageId: '1' }, { messageId: '2' }] } } });
-  //     const d = new Channel(doc);
-  //     expect(d.messages()).toBeInstanceOf(Messages);
-  //     expect(d.messages().all()).toHaveLength(2);
-  //     expect(d.messages().all()[0]).toBeInstanceOf(Message);
-  //     expect(d.messages().all()[0].messageId()).toEqual((doc as any).subscribe.message.oneOf[0].messageId);
-  //     expect(d.messages().all()[1]).toBeInstanceOf(Message);
-  //     expect(d.messages().all()[1].messageId()).toEqual((doc as any).subscribe.message.oneOf[1].messageId);
-  //   });
-
-  //   it('should return collection of messages - single message and oneOf', function() {
-  //     const doc = serializeInput<v3.ChannelObject>({ publish: { message: {} }, subscribe: { message: { oneOf: [{ messageId: '1' }, { messageId: '2' }] } } });
-  //     const d = new Channel(doc);
-  //     expect(d.messages()).toBeInstanceOf(Messages);
-  //     expect(d.messages().all()).toHaveLength(3);
-  //   });
-  // });
+    it('should return collection of messages - more than one messages', function() {
+      const doc = serializeInput<v3.ChannelObject>({ messages: { someMessage1: { messageId: 'messageId1' }, someMessage2: { messageId: 'messageId2' } } });
+      const d = new Channel(doc);
+      expect(d.messages()).toBeInstanceOf(Messages);
+      expect(d.messages().all()).toHaveLength(2);
+      expect(d.messages().all()[0]).toBeInstanceOf(Message);
+      expect(d.messages().all()[0].messageId()).toEqual(doc.messages?.['someMessage1']?.messageId);
+      expect(d.messages().all()[1]).toBeInstanceOf(Message);
+      expect(d.messages().all()[1].messageId()).toEqual(doc.messages?.['someMessage2']?.messageId);
+    });
+  });
 
   describe('.parameters()', function() {
     it('should return collection of channel parameters', function() {

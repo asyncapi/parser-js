@@ -57,10 +57,19 @@ export class Server extends BaseModel<v3.ServerObject, { id: string }> implement
 
   channels(): ChannelsInterface {
     const channels: ChannelInterface[] = [];
-    Object.entries(this._meta.asyncapi?.parsed?.channels || {}).forEach(([channelAddress, channel]: [string, any]) => {
-      const allowedServers: string[] = channel.servers || [];
-      if (allowedServers.length === 0 || allowedServers.includes(this._meta.id)) {
-        channels.push(this.createModel(Channel, channel, { id: channelAddress, pointer: `/channels/${tilde(channelAddress)}` }));
+    Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.channels || {}).forEach(([channelName, channel]) => {
+      const allowedServers: v3.ServerObject[] = channel.servers || [];
+      if (allowedServers.length === 0 || allowedServers.includes(this._json)) {
+        channels.push(this.createModel(Channel, channel, { id: channelName, pointer: `/channels/${tilde(channelName)}` }));
+      }
+    });
+    Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
+      const operationChannel = operation.channel as v3.ChannelObject | undefined;
+      if (!channels.some(channel => channel.json() === operationChannel)) {
+        const allowedServers: v3.ServerObject[] = operationChannel!.servers || [];
+        if (allowedServers.length === 0 || allowedServers.includes(this._json)) {
+          channels.push(this.createModel(Channel, operationChannel!, { id: '', pointer: `/operations/${tilde(operationId)}/channel` }));
+        }
       }
     });
     return new Channels(channels);
@@ -69,11 +78,11 @@ export class Server extends BaseModel<v3.ServerObject, { id: string }> implement
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     const operationsData: v3.OperationObject[] = [];
-    this.channels().forEach((channel: ChannelInterface) => {
-      channel.operations().forEach((op: OperationInterface) => {
-        if (!operationsData.includes(op.json())) {
-          operations.push(op);
-          operationsData.push(op.json());
+    this.channels().forEach(channel => {
+      channel.operations().forEach(operation => {
+        if (!operationsData.includes(operation.json())) {
+          operations.push(operation);
+          operationsData.push(operation.json());
         }
       });
     });
@@ -82,7 +91,15 @@ export class Server extends BaseModel<v3.ServerObject, { id: string }> implement
 
   messages(): MessagesInterface {
     const messages: MessageInterface[] = [];
-    this.operations().forEach(operation => messages.push(...operation.messages().all()));
+    const messagedData: v3.MessageObject[] = [];
+    this.channels().forEach(channel => {
+      channel.messages().forEach(message => {
+        if (!messagedData.includes(message.json())) {
+          messages.push(message);
+          messagedData.push(message.json());
+        }
+      });
+    });
     return new Messages(messages);
   }
 

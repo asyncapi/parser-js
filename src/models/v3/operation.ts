@@ -1,8 +1,11 @@
 import { Messages } from '../messages';
+import { Channels } from '../channels';
+import { Channel } from './channel';
 import { OperationTraits } from '../operation-traits';
 import { OperationTrait } from './operation-trait';
 import { Servers } from '../servers';
 
+import type { ChannelsInterface } from '../channels';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { OperationInterface, OperationAction } from '../operation';
@@ -29,6 +32,15 @@ export class Operation extends OperationTrait<v3.OperationObject> implements Ope
       });
     });
     return new Servers(servers);
+  }
+
+  channels(): ChannelsInterface {
+    if (this._json.channel) {
+      return new Channels([
+        this.createModel(Channel, this._json.channel as v3.ChannelObject, { id: '', pointer: this.jsonPath('channel') })
+      ]);
+    }
+    return new Channels([]);
   }
 
   messages(): MessagesInterface {

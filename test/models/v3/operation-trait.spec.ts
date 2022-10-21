@@ -1,16 +1,15 @@
-import { OperationTrait } from '../../../src/models/v2/operation-trait';
-import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
+import { OperationTrait } from '../../../src/models/v3/operation-trait';
+import { SecurityRequirement } from '../../../src/models/v3/security-requirement';
 import { SecurityRequirements } from '../../../src/models/security-requirements';
-import { SecurityScheme } from '../../../src/models/v2/security-scheme';
+import { SecurityScheme } from '../../../src/models/v3/security-scheme';
 
 import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('OperationTrait model', function() {
   describe('.id()', function() {
     it('should return the value', function() {
-      const doc = { operationId: '...' };
-      const d = new OperationTrait(doc);
-      expect(d.id()).toEqual(doc.operationId);
+      const d = new OperationTrait({}, { id: '...' } as any);
+      expect(d.id()).toEqual('...');
     });
     
     it('should return undefined when there is no value', function() {
@@ -22,8 +21,7 @@ describe('OperationTrait model', function() {
 
   describe('.hasId()', function() {
     it('should return true when there is a value', function() {
-      const doc = { operationId: '...' };
-      const d = new OperationTrait(doc);
+      const d = new OperationTrait({}, { id: '...' } as any);
       expect(d.hasId()).toEqual(true);
     });
     
@@ -36,36 +34,34 @@ describe('OperationTrait model', function() {
 
   describe('.action()', function() {
     it('should return kind/action of operation', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
-      expect(d.action()).toEqual('publish');
+      const d = new OperationTrait({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
+      expect(d.action()).toEqual('send');
     });
   });
 
   describe('.isSend()', function() {
-    it('should return true when operation is subscribe', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+    it('should return true when operation has send action', function() {
+      const d = new OperationTrait({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
       expect(d.isSend()).toBeTruthy();
     });
 
-    it('should return false when operation is publish', function() {
+    it('should return false when operation has receive action', function() {
       const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      const d = new OperationTrait({ action: 'receive', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
       expect(d.isSend()).toBeFalsy();
     });
   });
 
   describe('.isReceive()', function() {
-    it('should return true when operation is publish', function() {
+    it('should return true when operation has receive action', function() {
       const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      const d = new OperationTrait({ action: 'receive', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
       expect(d.isReceive()).toBeTruthy();
     });
 
-    it('should return false when operation is subscribe', function() {
+    it('should return false when operation has send action', function() {
       const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      const d = new OperationTrait({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
       expect(d.isReceive()).toBeFalsy();
     });
   });

@@ -7,12 +7,12 @@ import { Operation } from '../../../src/models/v2/operation';
 import { Server } from '../../../src/models/v2/server';
 import { ServerVariables } from '../../../src/models/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
+import { SecurityRequirements } from '../../../src/models/security-requirements';
+import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
-import { SecurityRequirements } from '../../../src/models/security-requirements';
-import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 const doc = {
   development: {

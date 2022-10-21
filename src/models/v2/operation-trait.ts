@@ -21,12 +21,12 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
     return this._json.operationId;
   }
 
-  action(): OperationAction | undefined {
-    return this._meta.action;
-  }
-
   hasId(): boolean {
     return this.id() !== undefined;
+  }
+
+  action(): OperationAction | undefined {
+    return this._meta.action;
   }
 
   hasSummary(): boolean {

@@ -1,5 +1,5 @@
 import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
-import { BaseModel, AsyncAPIDocumentV2 } from '../src/models';
+import { BaseModel, AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from '../src/models';
 import { 
   createAsyncAPIDocument,
   toAsyncAPIDocument, 
@@ -13,12 +13,20 @@ describe('utils', function() {
   class Model extends BaseModel {}
 
   describe('createAsyncAPIDocument()', function() {
-    it('should create a valid document from v2.0.0', function() {
+    it('should create a valid document from v2.x.x', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc, doc as any);
       const d = createAsyncAPIDocument(detailed);
       expect(d.version()).toEqual(doc.asyncapi);
       expect(d).toBeInstanceOf(AsyncAPIDocumentV2);
+    });
+
+    it('should create a valid document from v3.x.x', function() {
+      const doc = { asyncapi: '3.0.0' };
+      const detailed = createDetailedAsyncAPI(doc, doc as any);
+      const d = createAsyncAPIDocument(detailed);
+      expect(d.version()).toEqual(doc.asyncapi);
+      expect(d).toBeInstanceOf(AsyncAPIDocumentV3);
     });
   
     it('should fail trying to create a document from a non supported spec version', function() {

@@ -9,14 +9,14 @@ import {
 
 import type { AsyncAPIDocumentInterface } from './models';
 import type { DetailedAsyncAPI } from './types';
-import type { v2 } from './spec-types';
+import type { v2, v3 } from './spec-types';
 
 export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
   switch (asyncapi.semver.major) {
   case 2:
     return new AsyncAPIDocumentV2(asyncapi.parsed as v2.AsyncAPIObject, { asyncapi, pointer: '/' });
-    // case 3:
-    //   return new AsyncAPIDocumentV3(asyncapi.parsed, { asyncapi, pointer: '/' });
+    case 3:
+      return new AsyncAPIDocumentV3(asyncapi.parsed as v3.AsyncAPIObject, { asyncapi, pointer: '/' });
   default:
     throw new Error(`Unsupported AsyncAPI version: ${asyncapi.semver.version}`);
   }

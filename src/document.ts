@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 import type { AsyncAPIDocumentInterface } from './models';
-import type { DetailedAsyncAPI } from './types';
+import type { DetailedAsyncAPI, AsyncAPIObject } from './types';
 
 export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
   switch (asyncapi.semver.major) {
@@ -26,28 +26,33 @@ export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface
     return maybeDoc;
   }
   if (!isParsedDocument(maybeDoc)) {
-    return;
+    return unstringify(maybeDoc);
   }
-  return unstringify(maybeDoc) || createAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc, maybeDoc as any));
+  return createAsyncAPIDocument(createDetailedAsyncAPI(maybeDoc as any, maybeDoc));
 }
 
 export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {
   return maybeDoc instanceof AsyncAPIDocumentV2 || maybeDoc instanceof AsyncAPIDocumentV3;
 }
 
-export function isParsedDocument(maybeDoc: unknown): maybeDoc is Record<string, unknown> {
+export function isParsedDocument(maybeDoc: unknown): maybeDoc is AsyncAPIObject {
   if (typeof maybeDoc !== 'object' || maybeDoc === null) {
     return false;
   }
-  return Boolean((maybeDoc as Record<string, unknown>)[xParserSpecParsed]);
+  return Boolean((maybeDoc as AsyncAPIObject)[xParserSpecParsed]);
 }
 
-export function isStringifiedDocument(maybeDoc: unknown): maybeDoc is Record<string, unknown> {
-  if (typeof maybeDoc !== 'object' || maybeDoc === null) {
+export function isStringifiedDocument(maybeDoc: unknown): maybeDoc is AsyncAPIObject {
+  try {
+    maybeDoc = typeof maybeDoc === 'string' ? JSON.parse(maybeDoc) : maybeDoc;
+    if (typeof maybeDoc !== 'object' || maybeDoc === null) {
+      return false;
+    }
+    return (
+      Boolean((maybeDoc as AsyncAPIObject)[xParserSpecParsed]) &&
+      Boolean((maybeDoc as AsyncAPIObject)[xParserSpecStringified])
+    );
+  } catch (_: unknown) {
     return false;
   }
-  return (
-    Boolean((maybeDoc as Record<string, unknown>)[xParserSpecParsed]) &&
-    Boolean((maybeDoc as Record<string, unknown>)[xParserSpecStringified])
-  );
 }

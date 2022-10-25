@@ -62,6 +62,18 @@ describe('utils', function() {
     it('stringified document (with missed parsed extension) should not return AsyncAPIDocument instance', function() {
       expect(toAsyncAPIDocument({ [xParserSpecStringified]: true })).toEqual(undefined);
     });
+
+    it('stringified document (with parsed extension) should not return AsyncAPIDocument instance', function() {
+      expect(toAsyncAPIDocument({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toBeInstanceOf(AsyncAPIDocumentV2);
+    });
+
+    it('stringified document as string (with missed parsed extension) should not return AsyncAPIDocument instance', function() {
+      expect(toAsyncAPIDocument(JSON.stringify({ [xParserSpecStringified]: true }))).toEqual(undefined);
+    });
+
+    it('stringified document as string (with parsed extension) should not return AsyncAPIDocument instance', function() {
+      expect(toAsyncAPIDocument(JSON.stringify({ asyncapi: '2.0.0', [xParserSpecParsed]: true, [xParserSpecStringified]: true }))).toBeInstanceOf(AsyncAPIDocumentV2);
+    });
   });
 
   describe('isAsyncAPIDocument()', function() {
@@ -155,8 +167,16 @@ describe('utils', function() {
       expect(isStringifiedDocument({ [xParserSpecStringified]: true })).toEqual(false);
     });
 
+    it('stringified object with only stringified extension should not be parsed document', function() {
+      expect(isStringifiedDocument(JSON.stringify({ [xParserSpecStringified]: true }))).toEqual(false);
+    });
+
     it('object with proper extensions should be parsed document', function() {
       expect(isStringifiedDocument({ [xParserSpecParsed]: true, [xParserSpecStringified]: true })).toEqual(true);
+    });
+
+    it('stringified object with proper extensions should be parsed document', function() {
+      expect(isStringifiedDocument(JSON.stringify({ [xParserSpecParsed]: true, [xParserSpecStringified]: true }))).toEqual(true);
     });
   });
 });

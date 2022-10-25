@@ -1,8 +1,9 @@
+import { Document } from '@stoplight/spectral-core';
 import { DiagnosticSeverity } from '@stoplight/types';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import type { BaseModel } from './models';
-import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from './types';
+import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI, Diagnostic } from './types';
 
 export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
   return {
@@ -84,6 +85,22 @@ export function hasRef(value: unknown): value is { $ref: string } {
 
 export function toJSONPathArray(jsonPath: string): Array<string | number> {
   return jsonPath.split('/').map(untilde);
+}
+
+export function createUncaghtDiagnostic(err: unknown, message: string, document?: Document): Diagnostic[] {
+  if (err instanceof Error) {
+    const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
+    return [
+      {
+        code: 'uncaught-error',
+        message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+        path: [],
+        severity: DiagnosticSeverity.Error,
+        range,
+      }
+    ];
+  }
+  return [];
 }
 
 export function tilde(str: string) {

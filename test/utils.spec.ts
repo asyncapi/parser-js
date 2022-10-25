@@ -1,5 +1,4 @@
 import { DiagnosticSeverity } from '@stoplight/types';
-import { cloneDeep } from 'lodash';
 
 import { 
   hasErrorDiagnostic,
@@ -292,7 +291,7 @@ describe('utils', function() {
 
     it('should not directly edit the origin', function () {
       const origin = { a: { b: 10 }, c: 5 };
-      const clone = cloneDeep(origin);
+      const clone = { a: { b: 10 }, c: 5 };
       const patched = mergePatch(origin, { a: { b: 8 } }) as Record<string, unknown>;
       expect(patched).not.toEqual(origin);
       expect(patched.a).not.toEqual(origin.a);

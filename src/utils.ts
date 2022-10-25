@@ -5,9 +5,10 @@ import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import type { BaseModel } from './models';
 import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI, Diagnostic } from './types';
 
-export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
+export function createDetailedAsyncAPI(parsed: AsyncAPIObject, input: string | MaybeAsyncAPI | AsyncAPIObject, source?: string): DetailedAsyncAPI {
   return {
     source,
+    input,
     parsed,
     semver: getSemver(parsed.asyncapi),
   };

@@ -47,7 +47,7 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   delete (<Record<string, any>>parsed)[String(xParserSpecStringified)];
 
   traverseStringifiedData(document, undefined, document, new Map(), new Map());
-  return createAsyncAPIDocument(createDetailedAsyncAPI(document as string, parsed as DetailedAsyncAPI['parsed']));
+  return createAsyncAPIDocument(createDetailedAsyncAPI(parsed as DetailedAsyncAPI['parsed'], document as DetailedAsyncAPI['input']));
 }
 
 export function copy(data: Record<string, any>) {

@@ -12,7 +12,7 @@ import type { Spectral, Document } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
 import type { ResolverOptions } from './resolver';
 import type { ValidateOptions } from './validate';
-import type { Input, Diagnostic } from './types';
+import type { Input, Diagnostic, DetailedAsyncAPI } from './types';
 
 export interface ParseOutput {
   document: AsyncAPIDocumentInterface | undefined;
@@ -58,7 +58,7 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     // unfreeze the object - Spectral makes resolved document "freezed" 
     const validatedDoc = copy(validated as Record<string, any>);
     
-    const detailed = createDetailedAsyncAPI(asyncapi as string | Record<string, unknown>, validatedDoc);
+    const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
     await customOperations(parser, document, detailed, options);

@@ -53,10 +53,11 @@ function rulesetFunction(parser: Parser) {
       }
 
       const path = [...ctx.path, 'payload'];
-      const spec = ctx.document.data as v2.AsyncAPIObject;
-      const schemaFormat = getSchemaFormat(targetVal.schemaFormat, spec.asyncapi);
-      const defaultSchemaFormat = getDefaultSchemaFormat(spec.asyncapi);
-      const asyncapi = createDetailedAsyncAPI(ctx.document.data as Record<string, any>, spec);
+      const document = ctx.document;
+      const parsedSpec = document.data as v2.AsyncAPIObject;
+      const schemaFormat = getSchemaFormat(targetVal.schemaFormat, parsedSpec.asyncapi);
+      const defaultSchemaFormat = getDefaultSchemaFormat(parsedSpec.asyncapi);
+      const asyncapi = createDetailedAsyncAPI(parsedSpec, (document as any).__parserInput, document.source || undefined);
 
       const input: ValidateSchemaInput = {
         asyncapi,
@@ -72,7 +73,7 @@ function rulesetFunction(parser: Parser) {
       } catch (err: any) {
         return [
           {
-            message: `Error thrown during schema validation, name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+            message: `Error thrown during schema validation. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
             path,
           }
         ] as SchemaValidateResult[];

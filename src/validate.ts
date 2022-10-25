@@ -47,6 +47,8 @@ export async function validate(parser: Parser, parserSpectral: Spectral, asyncap
     const { allowedSeverity } = mergePatch<ValidateOptions>(defaultOptions, options);
     const stringifiedDocument = normalizeInput(asyncapi as Exclude<Input, AsyncAPIDocumentInterface>);
     document = new Document(stringifiedDocument, Yaml, options.source) as Document;
+    // add input data (asyncapi argument) to the document to reuse it in rules
+    (document as any).__parserInput = asyncapi;
   
     const spectral = options.__unstable?.resolver ? createSpectral(parser, options.__unstable?.resolver) : parserSpectral;
     // eslint-disable-next-line prefer-const

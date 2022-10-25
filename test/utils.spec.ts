@@ -176,10 +176,12 @@ describe('utils', function() {
 
   describe('createDetailedAsyncAPI()', function() {
     it('should create detailed object', function () {
-      const source = '{ asyncapi: \'2.1.37\' }';
+      const source = 'file:///asyncapi.yaml';
+      const input = '{ asyncapi: \'2.1.37\' }';
       const parsed = { asyncapi: '2.1.37' };
-      const detailed = createDetailedAsyncAPI(source, parsed as any);
+      const detailed = createDetailedAsyncAPI(parsed as any, input, source);
       expect(detailed.source).toEqual(source);
+      expect(detailed.input).toEqual(input);
       expect(detailed.parsed).toEqual(parsed);
       expect(detailed.semver.version).toEqual('2.1.37');
       expect(detailed.semver.major).toEqual(2);

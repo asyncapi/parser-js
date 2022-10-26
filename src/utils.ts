@@ -49,10 +49,12 @@ export function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Hint);
 }
 
-export function setExtension(id: string, value: any, model: BaseModel): void {
-  id = id.startsWith('x-') ? id : `x-${id}`;
-  const data = model.json();
-  data[id] = value;
+export function setExtension(id: string, value: unknown, model: BaseModel): void {
+  const modelValue = model.json();
+  if (typeof modelValue === 'object' && modelValue) {
+    id = id.startsWith('x-') ? id : `x-${id}`;
+    modelValue[String(id)] = value;
+  }
 }
 
 export function mergePatch<T = any>(origin: unknown, patch: unknown): T {

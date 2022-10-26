@@ -7,6 +7,7 @@ import {
   hasHintDiagnostic,
   createDetailedAsyncAPI,
   getSemver,
+  setExtension,
   mergePatch,
   normalizeInput,
 } from '../src/utils';
@@ -216,6 +217,20 @@ describe('utils', function() {
       const source = { asyncapi: '2.1.37' };
       const normalized = JSON.stringify(source, undefined, 2);
       expect(normalizeInput(source)).toEqual(normalized);
+    });
+  });
+
+  describe('setExtension()', function() {
+    it('should set extension', function () {
+      const source = { asyncapi: '2.1.37' };
+      setExtension('x-extension', 'value', { json() { return source; } } as any);
+      expect(source['x-extension']).toEqual('value');
+    });
+
+    it('should not set extension on primitive value like boolean', function () {
+      const source = true;
+      setExtension('x-extension', 'value', { json() { return source; } } as any);
+      expect(source['x-extension']).toEqual(undefined);
     });
   });
 

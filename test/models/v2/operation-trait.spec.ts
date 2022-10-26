@@ -1,50 +1,72 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
-import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
+import { SecurityRequirements } from '../../../src/models/security-requirements';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('OperationTrait model', function() {
   describe('.id()', function() {
-    it('should return id of model', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
-      expect(d.id()).toEqual('trait');
-    });
-
-    it('should reuse operationId', function() {
-      const doc = { operationId: '...' };
-      const d = new OperationTrait(doc);
-      expect(d.id()).toEqual(doc.operationId);
-    });
-  });
-
-  describe('.hasOperationId()', function() {
-    it('should return true when there is a value', function() {
-      const doc = { operationId: '...' };
-      const d = new OperationTrait(doc);
-      expect(d.hasOperationId()).toEqual(true);
-    });
-    
-    it('should return false when there is no value', function() {
-      const doc = {};
-      const d = new OperationTrait(doc);
-      expect(d.hasOperationId()).toEqual(false);
-    });
-  });
-
-  describe('.operationId()', function() {
     it('should return the value', function() {
       const doc = { operationId: '...' };
       const d = new OperationTrait(doc);
-      expect(d.operationId()).toEqual(doc.operationId);
+      expect(d.id()).toEqual(doc.operationId);
     });
     
     it('should return undefined when there is no value', function() {
       const doc = {};
       const d = new OperationTrait(doc);
-      expect(d.operationId()).toBeUndefined();
+      expect(d.id()).toBeUndefined();
+    });
+  });
+
+  describe('.hasId()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { operationId: '...' };
+      const d = new OperationTrait(doc);
+      expect(d.hasId()).toEqual(true);
+    });
+    
+    it('should return false when there is no value', function() {
+      const doc = {};
+      const d = new OperationTrait(doc);
+      expect(d.hasId()).toEqual(false);
+    });
+  });
+
+  describe('.action()', function() {
+    it('should return kind/action of operation', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.action()).toEqual('publish');
+    });
+  });
+
+  describe('.isSend()', function() {
+    it('should return true when operation is subscribe', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      expect(d.isSend()).toBeTruthy();
+    });
+
+    it('should return false when operation is publish', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.isSend()).toBeFalsy();
+    });
+  });
+
+  describe('.isReceive()', function() {
+    it('should return true when operation is publish', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.isReceive()).toBeTruthy();
+    });
+
+    it('should return false when operation is subscribe', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      expect(d.isReceive()).toBeFalsy();
     });
   });
 

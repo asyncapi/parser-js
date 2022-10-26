@@ -1,5 +1,7 @@
 import { OAuthFlow } from '../../../src/models/v2/oauth-flow';
 
+import { assertExtensions } from './utils';
+
 import type { v2 } from '../../../src/spec-types';
 
 const flowObject = {
@@ -29,5 +31,9 @@ describe('OAuth Flow', function() {
       expect(emptyObject.scopes()).toBeUndefined();
       expect(flow.scopes()!['write:pets']).toMatch(flowObject.scopes['write:pets']);
     });
+  });
+
+  describe('mixins', function() {
+    assertExtensions(OAuthFlow);
   });
 });

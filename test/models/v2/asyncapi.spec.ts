@@ -1,11 +1,11 @@
 import { AsyncAPIDocument } from '../../../src/models/v2/asyncapi';
-import { Channels } from '../../../src/models/v2/channels';
+import { Channels } from '../../../src/models/channels';
 import { Components } from '../../../src/models/v2/components';
 import { Info } from '../../../src/models/v2/info';
-import { Messages } from '../../../src/models/v2/messages';
-import { Operations } from '../../../src/models/v2/operations';
-import { SecuritySchemes } from '../../../src/models/v2/security-schemes';
-import { Servers } from '../../../src/models/v2/servers';
+import { Messages } from '../../../src/models/messages';
+import { Operations } from '../../../src/models/operations';
+import { SecuritySchemes } from '../../../src/models/security-schemes';
+import { Servers } from '../../../src/models/servers';
 
 import { serializeInput, assertExtensions } from './utils';
 

@@ -1,5 +1,5 @@
 import { Collection } from '../collection';
-import { Extensions } from './extensions';
+import { Extensions } from '../extensions';
 import { Extension } from './extension';
 
 import { createModel } from '../utils';

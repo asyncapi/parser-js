@@ -1,6 +1,15 @@
 import { BaseModel } from '../base';
+import { Channels } from '../channels';
+import { Channel } from './channel';
+import { Operations } from '../operations';
+import { Operation } from './operation';
+
+import { extensions } from './mixins';
+import { tilde } from '../../utils';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
+import type { ChannelsInterface } from '../channels';
+import type { OperationsInterface } from '../operations';
 
 import type { v3 } from '../../spec-types';
 
@@ -25,12 +34,20 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
     return null as any;
   }
 
-  channels() {
-    return null as any;
+  channels(): ChannelsInterface {
+    return new Channels(
+      Object.entries(this._json.channels || {}).map(([channelId, channel]) =>
+        this.createModel(Channel, channel, { id: channelId, pointer: `/channels/${tilde(channelId)}` })
+      )
+    );
   }
 
-  operations() {
-    return null as any;
+  operations(): OperationsInterface {    
+    return new Operations(
+      Object.entries(this._json.operations || {}).map(([operationId, operation]) =>
+        this.createModel(Operation, operation, { id: operationId, pointer: `/operations/${tilde(operationId)}` })
+      )
+    );
   }
 
   messages() {
@@ -50,6 +67,6 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   extensions() {
-    return null as any;
+    return extensions(this);
   }
 }

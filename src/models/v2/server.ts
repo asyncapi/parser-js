@@ -1,15 +1,16 @@
 import { BaseModel } from '../base';
-import { Channels } from './channels';
+import { Channels } from '../channels';
 import { Channel } from './channel';
-import { Messages } from './messages';
-import { Operations } from './operations';
+import { Messages } from '../messages';
+import { Operations } from '../operations';
 import { SecurityScheme } from './security-scheme';
-import { ServerVariables } from './server-variables';
+import { ServerVariables } from '../server-variables';
 import { ServerVariable } from './server-variable';
-import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
+import { TagsInterface } from '../tags';
 
-import { bindings, hasDescription, description, extensions } from './mixins';
+import { bindings, hasDescription, description, extensions, tags } from './mixins';
 import { tilde } from '../../utils';
 
 import type { ChannelsInterface } from '../channels';
@@ -102,6 +103,10 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
       });
       return new SecurityRequirements(requirements);
     });
+  }
+
+  tags(): TagsInterface {
+    return tags(this);
   }
 
   bindings(): BindingsInterface {

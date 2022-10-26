@@ -14,14 +14,14 @@ import type { v2 } from '../../spec-types';
 export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, parent?: Schema }> implements SchemaInterface {
   constructor(
     _json: v2.AsyncAPISchemaObject,
-    _meta: ModelMetadata & { id: string, parent?: Schema } = {} as any,
+    _meta: ModelMetadata & { id?: string, parent?: Schema } = {} as any,
   ) {
-    _json = retrievePossibleRef(_json, _meta.pointer, _meta.asyncapi?.parsed);
+    _json = retrievePossibleRef(_json, _meta.pointer as string, _meta.asyncapi?.parsed);
     super(_json, _meta);
   }
 
-  uid(): string {
-    return this._meta.id || this.extensions().get(xParserSchemaId)?.value<string>() as string;
+  id(): string {
+    return this.$id() || this._meta.id || this.json(xParserSchemaId as any) as string;
   }
 
   $comment(): string | undefined {

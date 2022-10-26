@@ -1,4 +1,4 @@
-import { Channels } from '../../../src/models/v2/channels';
+import { Channels } from '../../../src/models/channels';
 import { Channel } from '../../../src/models/v2/channel';
 
 const channel = {

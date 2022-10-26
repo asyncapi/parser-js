@@ -1,4 +1,4 @@
-import { MessageTraits } from '../../../src/models/v2/message-traits';
+import { MessageTraits } from '../../../src/models/message-traits';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
 
 const messageTrait = {

@@ -1,15 +1,29 @@
 import { BaseModel } from '../base';
+import { Info } from './info';
+import { Servers } from '../servers';
+import { Server } from './server';
 import { Channels } from '../channels';
 import { Channel } from './channel';
 import { Operations } from '../operations';
 import { Operation } from './operation';
+import { Messages } from '../messages';
+import { SecuritySchemes } from '../security-schemes';
+import { SecurityScheme } from './security-scheme';
+import { Components } from './components';
 
 import { extensions } from './mixins';
 import { tilde } from '../../utils';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
+import type { InfoInterface } from '../info';
+import type { ServersInterface } from '../servers';
 import type { ChannelsInterface } from '../channels';
 import type { OperationsInterface } from '../operations';
+import type { MessagesInterface } from '../messages';
+import type { MessageInterface } from '../message';
+import type { ComponentsInterface } from '../components';
+import type { SecuritySchemesInterface } from '../security-schemes';
+import type { ExtensionsInterface } from '../extensions';
 
 import type { v3 } from '../../spec-types';
 
@@ -26,12 +40,16 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
     return !!this._json.defaultContentType;
   }
 
-  info() {
-    return null as any;
+  info(): InfoInterface {
+    return this.createModel(Info, this._json.info, { pointer: '/info' });
   }
 
-  servers() {
-    return null as any;
+  servers(): ServersInterface {
+    return new Servers(
+      Object.entries(this._json.servers || {}).map(([serverName, server]) => 
+        this.createModel(Server, server, { id: serverName, pointer: `/servers/${tilde(serverName)}` })
+      )
+    );
   }
 
   channels(): ChannelsInterface {
@@ -50,23 +68,37 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
     );
   }
 
-  messages() {
-    return null as any;
+  messages(): MessagesInterface {
+    const messages: MessageInterface[] = [];
+    const messagesData: any[] = [];
+    this.channels().forEach(channel => {
+      channel.messages().forEach(message => {
+        if (!messagesData.includes(message.json())) {
+          messagesData.push(message.json());
+          messages.push(message);
+        }
+      });
+    });
+    return new Messages(messages);
   }
 
   schemas() {
     return null as any;
   }
 
-  securitySchemes() {
-    return null as any;
+  securitySchemes(): SecuritySchemesInterface {
+    return new SecuritySchemes(
+      Object.entries(this._json.components?.securitySchemes || {}).map(([securitySchemeName, securityScheme]) => 
+        this.createModel(SecurityScheme, securityScheme as v3.SecuritySchemeObject, { id: securitySchemeName, pointer: `/components/securitySchemes/${securitySchemeName}` })
+      )
+    );
   }
 
-  components() {
-    return null as any;
+  components(): ComponentsInterface {
+    return this.createModel(Components, this._json.components || {}, { pointer: '/components' });
   }
 
-  extensions() {
+  extensions(): ExtensionsInterface {
     return extensions(this);
   }
 }

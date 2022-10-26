@@ -1,4 +1,4 @@
-import { ExternalDocumentation } from '../../../src/models/v2/external-docs';
+import { ExternalDocumentation } from '../../../src/models/v2/external-documentation';
 
 import { serializeInput, assertDescription, assertExtensions } from './utils';
 

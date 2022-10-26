@@ -10,7 +10,7 @@ export { Contact as ContactV2 } from './contact';
 export { CorrelationId as CorrelationIdV2 } from './correlation-id';
 export { Extension as ExtensionV2 } from './extension';
 export { Extensions as ExtensionsV2 } from '../extensions';
-export { ExternalDocumentation as ExternalDocumentationV2 } from './external-docs';
+export { ExternalDocumentation as ExternalDocumentationV2 } from './external-documentation';
 export { Info as InfoV2 } from './info';
 export { License as LicenseV2 } from './license';
 export { MessageExample as MessageExampleV2 } from './message-example';

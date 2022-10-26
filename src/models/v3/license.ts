@@ -2,17 +2,13 @@ import { BaseModel } from '../base';
 
 import { extensions } from './mixins';
 
-import type { ContactInterface } from '../contact';
 import type { ExtensionsInterface } from '../extensions';
+import type { LicenseInterface } from '../license';
 
 import type { v3 } from '../../spec-types';
 
-export class Contact extends BaseModel<v3.ContactObject> implements ContactInterface {
-  hasName(): boolean {
-    return !!this._json.name;
-  }
-
-  name(): string | undefined {
+export class License extends BaseModel<v3.LicenseObject> implements LicenseInterface {
+  name(): string {
     return this._json.name;
   }
 
@@ -22,14 +18,6 @@ export class Contact extends BaseModel<v3.ContactObject> implements ContactInter
 
   url(): string | undefined {
     return this._json.url;
-  }
-
-  hasEmail(): boolean {
-    return !!this._json.email;
-  }
-
-  email(): string | undefined {
-    return this._json.email;
   }
 
   extensions(): ExtensionsInterface {

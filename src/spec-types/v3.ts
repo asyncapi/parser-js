@@ -8,10 +8,33 @@ export interface AsyncAPIObject extends SpecificationExtensions {
   asyncapi: AsyncAPIVersion;
   id?: Identifier;
   defaultContentType?: DefaultContentType;
+  info: InfoObject;
   servers?: ServersObject;
   channels?: ChannelsObject;
   operations?: OperationsObject;
   components?: ComponentsObject;
+}
+
+export interface InfoObject extends SpecificationExtensions {
+  title: string;
+  version: string;
+  description?: string;
+  termsOfService?: string;
+  contact?: ContactObject;
+  license?: LicenseObject;
+  tags?: TagsObject;
+  externalDocs?: ExternalDocumentationObject;
+}
+
+export interface ContactObject extends SpecificationExtensions {
+  name?: string;
+  url?: string;
+  email?: string;
+}
+
+export interface LicenseObject extends SpecificationExtensions {
+  name: string;
+  url?: string;
 }
 
 export type ServersObject = Record<string, ServerObject>;
@@ -200,8 +223,9 @@ export interface ExternalDocumentationObject extends SpecificationExtensions {
 }
 
 export interface ComponentsObject extends SpecificationExtensions {
-  channels?: Record<string, ChannelObject | ReferenceObject>;
   servers?: Record<string, ServerObject | ReferenceObject>;
+  channels?: Record<string, ChannelObject | ReferenceObject>;
+  operations?: Record<string, OperationObject | ReferenceObject>;
   schemas?: Record<string, SchemaObject | ReferenceObject>;
   messages?: Record<string, MessageObject | ReferenceObject>;
   securitySchemes?: Record<string, SecuritySchemeObject | ReferenceObject>;
@@ -210,6 +234,8 @@ export interface ComponentsObject extends SpecificationExtensions {
   correlationIds?: Record<string, CorrelationIDObject | ReferenceObject>;
   operationTraits?: Record<string, OperationTraitObject | ReferenceObject>;
   messageTraits?: Record<string, MessageTraitObject | ReferenceObject>;
+  tags?: Record<string, TagObject | ReferenceObject>;
+  externalDocs?: Record<string, ExternalDocumentationObject | ReferenceObject>;
   serverBindings?: Record<string, ServerBindingsObject | ReferenceObject>;
   channelBindings?: Record<string, ChannelBindingsObject | ReferenceObject>;
   operationBindings?: Record<string, OperationBindingsObject | ReferenceObject>;

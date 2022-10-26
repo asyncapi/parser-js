@@ -16,7 +16,7 @@ export * from './correlation-id';
 export * from './correlation-ids';
 export * from './extension';
 export * from './extensions';
-export * from './external-docs';
+export * from './external-documentation';
 export * from './info';
 export * from './license';
 export * from './message-example';

@@ -3,12 +3,12 @@ import { BaseModel } from '../base';
 import { hasDescription, description, extensions, hasExternalDocs, externalDocs } from './mixins';
 
 import type { ExtensionsInterface } from '../extensions';
-import  type{ ExternalDocumentationInterface } from '../external-docs';
+import  type{ ExternalDocumentationInterface } from '../external-documentation';
 import type { TagInterface } from '../tag';
 
 import type { v2 } from '../../spec-types';
 
-export class Tag extends BaseModel<v2.TagObject> implements TagInterface {
+export class Tag extends BaseModel<v2.TagObject, { id?: string }> implements TagInterface {
   name(): string {
     return this._json.name;
   }

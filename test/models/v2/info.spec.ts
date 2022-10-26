@@ -1,7 +1,7 @@
 import { Info } from '../../../src/models/v2/info';
 import { Contact } from '../../../src/models/v2/contact';
 import { License } from '../../../src/models/v2/license';
-import { ExternalDocumentation } from '../../../src/models/v2/external-docs';
+import { ExternalDocumentation } from '../../../src/models/v2/external-documentation';
 import { Tags } from '../../../src/models/tags';
 import { Tag } from '../../../src/models/v2/tag';
 import { createDetailedAsyncAPI } from '../../../src/utils';

@@ -91,21 +91,21 @@ export function toJSONPathArray(jsonPath: string): Array<string | number> {
 }
 
 export function createUncaghtDiagnostic(err: unknown, message: string, document?: Document): Diagnostic[] {
-  if (err instanceof Error) {
-    const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
-    return [
-      {
-        code: 'uncaught-error',
-        message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
-        path: [],
-        severity: DiagnosticSeverity.Error,
-        range,
-      }
-    ];
+  if (!(err instanceof Error)) {
+    return [];
   }
-  return [];
+  
+  const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
+  return [
+    {
+      code: 'uncaught-error',
+      message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+      path: [],
+      severity: DiagnosticSeverity.Error,
+      range,
+    }
+  ];  
 }
-
 export function tilde(str: string) {
   return str.replace(/[~/]{1}/g, (sub) => {
     switch (sub) {

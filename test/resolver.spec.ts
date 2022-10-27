@@ -149,7 +149,7 @@ describe('custom resolver', function() {
     expect(anotherRef?.json('$ref' as any)).toBeUndefined();
   });
 
-  it.only('should resolve custom protocols (using custom options in parse function)', async function() {
+  it('should resolve custom protocols (using custom options in parse function)', async function() {
     const parser = new Parser();
 
     const documentRaw = {

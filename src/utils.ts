@@ -1,12 +1,14 @@
+import { Document } from '@stoplight/spectral-core';
 import { DiagnosticSeverity } from '@stoplight/types';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import type { BaseModel } from './models';
-import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from './types';
+import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI, Diagnostic } from './types';
 
-export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
+export function createDetailedAsyncAPI(parsed: AsyncAPIObject, input: string | MaybeAsyncAPI | AsyncAPIObject, source?: string): DetailedAsyncAPI {
   return {
     source,
+    input,
     parsed,
     semver: getSemver(parsed.asyncapi),
   };
@@ -47,10 +49,12 @@ export function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Hint);
 }
 
-export function setExtension(id: string, value: any, model: BaseModel): void {
-  id = id.startsWith('x-') ? id : `x-${id}`;
-  const data = model.json();
-  data[id] = value;
+export function setExtension(id: string, value: unknown, model: BaseModel): void {
+  const modelValue = model.json();
+  if (typeof modelValue === 'object' && modelValue) {
+    id = id.startsWith('x-') ? id : `x-${id}`;
+    modelValue[String(id)] = value;
+  }
 }
 
 export function mergePatch<T = any>(origin: unknown, patch: unknown): T {
@@ -86,6 +90,22 @@ export function toJSONPathArray(jsonPath: string): Array<string | number> {
   return jsonPath.split('/').map(untilde);
 }
 
+export function createUncaghtDiagnostic(err: unknown, message: string, document?: Document): Diagnostic[] {
+  if (!(err instanceof Error)) {
+    return [];
+  }
+  
+  const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
+  return [
+    {
+      code: 'uncaught-error',
+      message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+      path: [],
+      severity: DiagnosticSeverity.Error,
+      range,
+    }
+  ];  
+}
 export function tilde(str: string) {
   return str.replace(/[~/]{1}/g, (sub) => {
     switch (sub) {

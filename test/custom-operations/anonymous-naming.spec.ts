@@ -1,4 +1,5 @@
 import { Parser } from '../../src/parser';
+import { hasErrorDiagnostic } from '../../src/utils';
 import { xParserMessageName, xParserSchemaId } from '../../src/constants';
 
 describe('custom operations - anonymous naming', function() {
@@ -204,6 +205,34 @@ describe('custom operations - anonymous naming', function() {
     });
 
     expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('schema');
+  });
+
+  it('should skip boolean schemas in assigning x-parser-schema-id', async function() {
+    const { document, diagnostics } = await parser.parse({
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'operation',
+            message: {
+              payload: true
+            }
+          }
+        }
+      },
+      components: {
+        schemas: {
+          schema: {},
+        }
+      }
+    });
+
+    expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
+    expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual(undefined);
   });
 
   it('should apply anonymous ids across whole document', async function() {

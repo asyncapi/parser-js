@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
-// @ts-ignore
+import addFormats from 'ajv-formats';
+import ajvErrors from 'ajv-errors';
 import specs from '@asyncapi/specs';
 
 import { specVersions } from '../constants';
@@ -8,12 +9,6 @@ import type { ErrorObject, ValidateFunction } from 'ajv';
 import type { JSONSchema7 } from 'json-schema';
 import type { AsyncAPISchema, SchemaValidateResult } from '../types';
 import type { SchemaParser, ParseSchemaInput, ValidateSchemaInput } from '../schema-parser';
-
-const ajv = new Ajv({
-  allErrors: true,
-  strict: false,
-  logger: false,
-});
 
 export function AsyncAPISchemaParser(): SchemaParser {
   return {
@@ -67,9 +62,10 @@ function ajvToSpectralResult(path: Array<string | number>, errors: ErrorObject[]
 }
 
 function getSchemaValidator(version: string): ValidateFunction {
+  const ajv = getAjvInstance();
   let validator = ajv.getSchema(version);
   if (!validator) {
-    const schema = preparePayloadSchema(specs[version], version);
+    const schema = preparePayloadSchema(specs[version as keyof typeof specs], version);
 
     ajv.addSchema(schema, version);
     validator = ajv.getSchema(version);
@@ -97,4 +93,25 @@ function preparePayloadSchema(asyncapiSchema: JSONSchema7, version: string): JSO
     $ref: payloadSchema,
     definitions
   };
+}
+
+let _ajv: Ajv | undefined;
+function getAjvInstance(): Ajv {
+  if (_ajv) {
+    return _ajv;
+  }
+
+  _ajv = new Ajv({
+    allErrors: true,
+    meta: true,
+    messages: true,
+    strict: false,
+    allowUnionTypes: true,
+    unicodeRegExp: false,
+  });
+
+  addFormats(_ajv);
+  ajvErrors(_ajv);
+
+  return _ajv;
 }

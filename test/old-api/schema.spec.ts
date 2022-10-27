@@ -285,16 +285,16 @@ describe('Schema', function() {
       expect(d.additionalProperties()).toEqual(doc.additionalProperties);
     });
     
-    it('should return true when not defined', function() {
+    it('should return undefined when not defined', function() {
       const doc: any = {};
       const d = new Schema(doc);
-      expect(d.additionalProperties()).toEqual(true);
+      expect(d.additionalProperties()).toEqual(undefined);
     });
     
-    it('should return false when null', function() {
+    it('should return undefined when null', function() {
       const doc: any = { additionalProperties: null };
       const d = new Schema(doc);
-      expect(d.additionalProperties()).toEqual(false);
+      expect(d.additionalProperties()).toEqual(undefined);
     });
   });
 
@@ -306,23 +306,16 @@ describe('Schema', function() {
       expect((d.additionalItems() as Schema).json()).toEqual(doc.additionalItems);
     });
     
-    it('should return a boolean', function() {
-      const doc: any = { additionalItems: true };
-      const d = new Schema(doc);
-      expect(typeof d.additionalItems()).toEqual('boolean');
-      expect(d.additionalItems()).toEqual(doc.additionalItems);
-    });
-    
-    it('should return true when not defined', function() {
+    it('should return undefined when not defined', function() {
       const doc: any = {};
       const d = new Schema(doc);
-      expect(d.additionalItems()).toEqual(true);
+      expect(d.additionalItems()).toEqual(undefined);
     });
     
-    it('should return false when null', function() {
+    it('should return undefined when null', function() {
       const doc: any = { additionalItems: null };
       const d = new Schema(doc);
-      expect(d.additionalItems()).toEqual(false);
+      expect(d.additionalItems()).toEqual(undefined);
     });
   });
 

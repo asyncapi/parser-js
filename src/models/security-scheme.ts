@@ -3,12 +3,12 @@ import type { OAuthFlowsInterface } from './oauth-flows';
 import type { DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
 
 export interface SecuritySchemeInterface extends BaseModel, DescriptionMixinInterface, ExtensionsMixinInterface {
-  id(): string
-  hasBearerFormat(): boolean;
-  bearerFormat(): string | undefined;
-  openIdConnectUrl(): string | undefined;
-  scheme(): string | undefined;
-  flows(): OAuthFlowsInterface | undefined;
+  id(): string;
   type(): string;
+  name(): string | undefined;
   in(): string | undefined;
+  scheme(): string | undefined;
+  bearerFormat(): string | undefined;
+  flows(): OAuthFlowsInterface | undefined;
+  openIdConnectUrl(): string | undefined;
 }

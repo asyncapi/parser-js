@@ -14,6 +14,10 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
     return this._meta.id;
   }
 
+  type(): v2.SecuritySchemeType {
+    return this._json.type;
+  }
+
   hasDescription(): boolean {
     return hasDescription(this);
   }
@@ -22,20 +26,20 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
     return description(this);
   }
 
-  hasBearerFormat(): boolean {
-    return !!this._json.bearerFormat;
+  name(): string | undefined {
+    return this._json.name;
   }
 
-  bearerFormat(): string | undefined {
-    return this._json.bearerFormat;
-  }
-
-  openIdConnectUrl(): string | undefined {
-    return this._json.openIdConnectUrl;
+  in(): v2.SecuritySchemaLocation | undefined {
+    return this._json.in;
   }
 
   scheme(): string | undefined {
     return this._json.scheme;
+  }
+
+  bearerFormat(): string | undefined {
+    return this._json.bearerFormat;
   }
 
   flows(): OAuthFlowsInterface | undefined {
@@ -43,12 +47,8 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
     return new OAuthFlows(this._json.flows);
   }
 
-  type(): v2.SecuritySchemeType {
-    return this._json.type;
-  }
-
-  in(): v2.SecuritySchemaLocation | undefined {
-    return this._json.in;
+  openIdConnectUrl(): string | undefined {
+    return this._json.openIdConnectUrl;
   }
 
   extensions(): ExtensionsInterface {

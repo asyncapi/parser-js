@@ -144,21 +144,6 @@ export function findSubArrayIndex(arr: Array<any>, subarr: Array<any>, fromIndex
   return -1;
 }
 
-export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {}): any {
-  if (!hasRef(data)) {
-    return data;
-  }
-
-  const refPath = serializePath(data.$ref);
-  if (pathOfData.startsWith(refPath)) { // starts by given path
-    return retrieveDeepData(spec, splitPath(refPath)) || data;
-  } else if (pathOfData.includes(refPath)) { // circular path in substring of path
-    const substringPath = pathOfData.split(refPath)[0];
-    return retrieveDeepData(spec, splitPath(`${substringPath}${refPath}`)) || data;
-  }
-  return data;
-}
-
 export function retrieveDeepData(value: Record<string, any>, path: Array<string | number>) {
   let index = 0;
   const length = path.length;

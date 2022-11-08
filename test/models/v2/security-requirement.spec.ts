@@ -12,6 +12,7 @@ describe('SecurityRequirement model', function() {
       expect(d.scheme()).toEqual(expectedScheme);   
     });
   });
+  
   describe('.scopes()', function() {
     it('should return scopes', function() {
       const scopes = ['scope_one'];

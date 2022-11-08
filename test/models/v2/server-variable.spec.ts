@@ -1,9 +1,11 @@
 import { ServerVariable } from '../../../src/models/v2/server-variable';
+import { assertDescription, assertExtensions } from './utils';
 
 const doc = {
   description: 'Secure connection (TLS) is available through port 8883.',
   default: '1883',
-  enum: ['1883', '8883']
+  enum: ['1883', '8883'],
+  examples: ['1883', '8883'],
 };
 
 const sv = new ServerVariable(doc, { asyncapi: {} as any, pointer: '', id: 'doc' });
@@ -35,5 +37,16 @@ describe('Server Variable ', function() {
     it('should return enum object', function() {
       expect(sv.allowedValues()).toEqual(doc.enum);
     });
+  });
+
+  describe('.examples()', function() {
+    it('should return array', function() {
+      expect(sv.examples()).toEqual(doc.examples);
+    });
+  });
+
+  describe('mixins inheritance', function () {
+    assertDescription(ServerVariable);
+    assertExtensions(ServerVariable);
   });
 });

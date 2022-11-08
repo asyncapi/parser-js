@@ -59,7 +59,7 @@ function retrieveCircularRef(data: { $ref: string }, path: Array<string | number
     let dataPath: Array<string | number> | undefined;
     if (subArrayIndex === -1) { // create subarray based on location of the assiociated document - use item.path
       dataPath = [...path.slice(0, path.length - item.path.length), ...$refPath];
-    } else { // create subarray based $refPath
+    } else { // create subarray based on $refPath
       dataPath = path.slice(0, subArrayIndex + $refPath.length);
     }
     return retrieveDeepData(ctx.document, dataPath);

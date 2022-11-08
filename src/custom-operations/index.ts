@@ -24,7 +24,7 @@ async function operationsV2(parser: Parser, document: AsyncAPIDocumentInterface,
     await parseSchemasV2(parser, detailed);
   }
 
-  // anonymous naming and checking circular refrences should be done after custom schemas parsing
+  // anonymous naming and resolving circular refrences should be done after custom schemas parsing
   if (inventory) {
     resolveCircularRefs(document, inventory);
   }

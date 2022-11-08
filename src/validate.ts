@@ -26,7 +26,7 @@ export interface ValidateOutput {
   validated: unknown;
   diagnostics: Diagnostic[];
   extras: {
-    document: Document,
+    document: Document;
   }
 }
 
@@ -52,7 +52,7 @@ export async function validate(parser: Parser, parserSpectral: Spectral, asyncap
   
     const spectral = options.__unstable?.resolver ? createSpectral(parser, options.__unstable?.resolver) : parserSpectral;
     // eslint-disable-next-line prefer-const
-    let { resolved: validated, results } = await spectral.runWithResolved(document);
+    let { resolved: validated, results } = await spectral.runWithResolved(document, {  });
   
     if (
       (!allowedSeverity?.error && hasErrorDiagnostic(results)) ||

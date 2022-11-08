@@ -49,7 +49,10 @@ function asyncApi2IsAsyncApi(): RuleDefinition {
           input: null,
           options: null,
         },
-        (targetVal) => {
+        (targetVal, _, { document, documentInventory }) => {
+          // adding document inventory in document - we need it in custom operations to resolve all circular refs
+          (document as any).__documentInventory = documentInventory;
+
           if (!isObject(targetVal) || typeof targetVal.asyncapi !== 'string') {
             return [
               {

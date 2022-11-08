@@ -1,6 +1,5 @@
 import { SpecificationExtensionsModel, createMapOfType, getMapValue, description, hasDescription, hasExternalDocs, externalDocs } from './mixins';
 import { xParserCircular, xParserCircularProps } from '../constants';
-import { hasRef } from '../utils';
 
 import type { Base } from './base';
 import type { v2 } from '../spec-types';
@@ -236,7 +235,7 @@ export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject
   }
 
   isCircular() {
-    if (hasRef(this._json) || this.ext(xParserCircular)) {
+    if (this.ext(xParserCircular)) {
       return true;
     }
 

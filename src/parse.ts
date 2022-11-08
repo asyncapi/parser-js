@@ -8,7 +8,7 @@ import { createDetailedAsyncAPI, mergePatch, setExtension, createUncaghtDiagnost
 
 import { xParserSpecParsed } from './constants';
 
-import type { Spectral, Document } from '@stoplight/spectral-core';
+import type { Spectral, Document, RulesetFunctionContext } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
 import type { ResolverOptions } from './resolver';
 import type { ValidateOptions } from './validate';
@@ -54,14 +54,14 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     }
 
     spectralDocument = extras.document;
+    const inventory: RulesetFunctionContext['documentInventory'] = (spectralDocument as any).__documentInventory;
   
     // unfreeze the object - Spectral makes resolved document "freezed" 
     const validatedDoc = copy(validated as Record<string, any>);
-    
     const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
-    await customOperations(parser, document, detailed, options);
+    await customOperations(parser, document, detailed, inventory, options);
   
     return { 
       document,

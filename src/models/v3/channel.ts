@@ -14,7 +14,7 @@ import type { BindingsInterface } from '../bindings';
 import type { ChannelInterface } from '../channel';
 import type { ChannelParametersInterface } from '../channel-parameters';
 import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-docs';
+import type { ExternalDocumentationInterface } from '../external-documentation';
 import type { MessagesInterface } from '../messages';
 import type { OperationsInterface } from '../operations';
 import type { OperationInterface } from '../operation';

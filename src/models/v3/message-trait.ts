@@ -11,7 +11,7 @@ import { bindings, hasDescription, description, extensions, hasExternalDocs, ext
 import type { BindingsInterface } from '../bindings';
 import type { CorrelationIdInterface } from '../correlation-id';
 import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-docs';
+import type { ExternalDocumentationInterface } from '../external-documentation';
 import type { MessageExamplesInterface } from '../message-examples';
 import type { MessageTraitInterface } from '../message-trait';
 import type { SchemaInterface } from '../schema';

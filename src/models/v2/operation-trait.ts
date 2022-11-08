@@ -8,7 +8,7 @@ import { bindings, hasDescription, description, extensions, hasExternalDocs, ext
 
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-docs';
+import type { ExternalDocumentationInterface } from '../external-documentation';
 import type { ChannelsInterface } from '../channels';
 import type { OperationAction } from '../operation';
 import type { OperationTraitInterface } from '../operation-trait';

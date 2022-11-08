@@ -2,7 +2,7 @@ import { Bindings } from './bindings';
 import { Binding } from './binding';
 import { Extensions } from '../extensions';
 import { Extension } from './extension';
-import { ExternalDocumentation } from './external-docs';
+import { ExternalDocumentation } from './external-documentation';
 import { Tags } from '../tags';
 import { Tag } from './tag';
 
@@ -13,7 +13,7 @@ import type { BaseModel } from '../base';
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExtensionInterface } from '../extension';
-import type { ExternalDocumentationInterface } from '../external-docs';
+import type { ExternalDocumentationInterface } from '../external-documentation';
 import type { TagsInterface } from '../tags';
 
 import type { v3 } from '../../spec-types';

@@ -24,9 +24,12 @@ import { MessageTraits } from '../message-traits';
 import { SecuritySchemes } from '../security-schemes';
 import { CorrelationIds } from '../correlation-ids';
 import { Operations } from '../operations';
+import { Operation } from './operation';
 import { Message } from './message';
 import { ExternalDocumentations } from '../external-documentations';
+import { ExternalDocumentation } from './external-documentation';
 import { Tags } from '../tags';
+import { Tag } from './tag';
 
 import { tilde } from '../../utils';
 
@@ -47,9 +50,9 @@ import type { OperationsInterface } from '../operations';
 import type { ExternalDocumentationsInterface } from '../external-documentations';
 import type { TagsInterface } from '../tags';
 
-import type { v2 } from '../../spec-types';
+import type { v3 } from '../../spec-types';
 
-export class Components extends BaseModel<v2.ComponentsObject> implements ComponentsInterface {
+export class Components extends BaseModel<v3.ComponentsObject> implements ComponentsInterface {
   servers(): ServersInterface {
     return this.createCollection('servers', Servers, Server);
   }
@@ -59,7 +62,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   }
 
   operations(): OperationsInterface {
-    return new Operations([]);
+    return this.createCollection('operations', Operations, Operation);
   }
 
   messages(): MessagesInterface {
@@ -95,11 +98,11 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   }
 
   tags(): TagsInterface {
-    return new Tags([]);
+    return this.createCollection('tags', Tags, Tag);
   }
 
   externalDocs(): ExternalDocumentationsInterface {
-    return new ExternalDocumentations([]);
+    return this.createCollection('externalDocs', ExternalDocumentations, ExternalDocumentation);
   }
 
   serverBindings(): Record<string, BindingsInterface> {
@@ -126,7 +129,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return Object.keys(this._json).length === 0;
   }
 
-  protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v2.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
+  protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v3.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
     const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([id, item]) => {
       collectionItems.push(this.createModel(itemModel, item as any, { id, pointer: `/components/${itemsName}/${tilde(id)}` } as any));

@@ -5,7 +5,7 @@ import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import type { BaseModel } from './models';
 import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI, Diagnostic } from './types';
 
-export function createDetailedAsyncAPI(parsed: AsyncAPIObject, input: string | MaybeAsyncAPI | AsyncAPIObject, source?: string): DetailedAsyncAPI {
+export function createDetailedAsyncAPI(parsed: AsyncAPIObject, input?: string | MaybeAsyncAPI | AsyncAPIObject, source?: string): DetailedAsyncAPI {
   return {
     source,
     input,
@@ -87,7 +87,7 @@ export function hasRef(value: unknown): value is { $ref: string } {
 }
 
 export function toJSONPathArray(jsonPath: string): Array<string | number> {
-  return jsonPath.split('/').map(untilde);
+  return splitPath(serializePath(jsonPath));
 }
 
 export function createUncaghtDiagnostic(err: unknown, message: string, document?: Document): Diagnostic[] {
@@ -127,6 +127,23 @@ export function untilde(str: string) {
   });
 }
 
+export function findSubArrayIndex(arr: Array<any>, subarr: Array<any>, fromIndex = 0) {
+  let i, found, j;
+  for (i = fromIndex; i < 1 + (arr.length - subarr.length); ++i) {
+    found = true;
+    for (j = 0; j < subarr.length; ++j) {
+      if (arr[i + j] !== subarr[j]) {
+        found = false;
+        break;
+      }
+    }
+    if (found) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {}): any {
   if (!hasRef(data)) {
     return data;
@@ -142,7 +159,7 @@ export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {
   return data;
 }
 
-function retrieveDeepData(value: Record<string, any>, path: string[]) {
+export function retrieveDeepData(value: Record<string, any>, path: Array<string | number>) {
   let index = 0;
   const length = path.length;
 

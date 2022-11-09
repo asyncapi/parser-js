@@ -20,6 +20,14 @@ export class Operation extends OperationTrait<v3.OperationObject> implements Ope
     return this._json.action;
   }
 
+  isSend(): boolean {
+    return this.action() === 'send';
+  }
+
+  isReceive(): boolean {
+    return this.action() === 'receive';
+  }
+
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const serversData: any[] = [];

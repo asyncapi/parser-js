@@ -123,8 +123,6 @@ export interface OperationObject extends SpecificationExtensions {
 }
 
 export interface OperationTraitObject extends SpecificationExtensions {
-  action?: 'send' | 'receive';
-  channel?: ChannelObject | ReferenceObject;
   summary?: string;
   description?: string;
   security?: Array<SecurityRequirementObject>;

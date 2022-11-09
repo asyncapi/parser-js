@@ -23,6 +23,14 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
     return this._meta.action;
   }
 
+  isSend(): boolean {
+    return this.action() === 'subscribe';
+  }
+
+  isReceive(): boolean {
+    return this.action() === 'publish';
+  }
+
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const serversData: any[] = [];

@@ -32,40 +32,6 @@ describe('OperationTrait model', function() {
     });
   });
 
-  describe('.action()', function() {
-    it('should return kind/action of operation', function() {
-      const d = new OperationTrait({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
-      expect(d.action()).toEqual('send');
-    });
-  });
-
-  describe('.isSend()', function() {
-    it('should return true when operation has send action', function() {
-      const d = new OperationTrait({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
-      expect(d.isSend()).toBeTruthy();
-    });
-
-    it('should return false when operation has receive action', function() {
-      const doc = {};
-      const d = new OperationTrait({ action: 'receive', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
-      expect(d.isSend()).toBeFalsy();
-    });
-  });
-
-  describe('.isReceive()', function() {
-    it('should return true when operation has receive action', function() {
-      const doc = {};
-      const d = new OperationTrait({ action: 'receive', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
-      expect(d.isReceive()).toBeTruthy();
-    });
-
-    it('should return false when operation has send action', function() {
-      const doc = {};
-      const d = new OperationTrait({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
-      expect(d.isReceive()).toBeFalsy();
-    });
-  });
-
   describe('.hasSummary()', function() {
     it('should return true when there is a value', function() {
       const doc = { summary: '...' };

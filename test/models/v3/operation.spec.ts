@@ -11,10 +11,44 @@ import { Server } from '../../../src/models/v3/server';
 import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Operation model', function() {
+  describe('.id()', function() {
+    it('should return operationId', function() {
+      const d = new Operation({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'operation' });
+      expect(d.id()).toEqual('operation');
+    });
+  });
+
   describe('.action()', function() {
     it('should return kind/action of operation', function() {
-      const d = new Operation({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'trait' });
+      const d = new Operation({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'operation' });
       expect(d.action()).toEqual('send');
+    });
+  });
+
+  describe('.isSend()', function() {
+    it('should return true when operation has send action', function() {
+      const d = new Operation({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'operation' });
+      expect(d.isSend()).toBeTruthy();
+    });
+
+    it('should return false when operation has receive action', function() {
+      const doc = {};
+      const d = new Operation({ action: 'receive', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'operation' });
+      expect(d.isSend()).toBeFalsy();
+    });
+  });
+
+  describe('.isReceive()', function() {
+    it('should return true when operation has receive action', function() {
+      const doc = {};
+      const d = new Operation({ action: 'receive', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'operation' });
+      expect(d.isReceive()).toBeTruthy();
+    });
+
+    it('should return false when operation has send action', function() {
+      const doc = {};
+      const d = new Operation({ action: 'send', channel: {} }, { asyncapi: {} as any, pointer: '', id: 'operation' });
+      expect(d.isReceive()).toBeFalsy();
     });
   });
 
@@ -76,7 +110,7 @@ describe('Operation model', function() {
 
   describe('.traits()', function() {
     it('should return collection of traits', function() {
-      const d = new Operation({ action: 'send', channel: {}, traits: [{ action: 'receive' }] });
+      const d = new Operation({ action: 'send', channel: {}, traits: [{}] });
       expect(d.traits()).toBeInstanceOf(OperationTraits);
       expect(d.traits().all()).toHaveLength(1);
       expect(d.traits().all()[0]).toBeInstanceOf(OperationTrait);

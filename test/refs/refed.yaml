@@ -1,4 +1,4 @@
 type: object
 properties:
   testing:
-    $ref: 'refed2.yaml'
+    $ref: './refed2.yaml'

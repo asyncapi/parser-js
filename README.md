@@ -238,7 +238,7 @@ A few advantages of this solution:
 1. Write code and tests.
 2. Make sure all tests pass `npm test`
 
-If in-case some tests still fails randomly during local development, the reason to it might be when you develop something in the parser and even though you did not make any changes affects tests, and the tests are failing then you can run:
+For Windows environments, some tests might still fail randomly during local development even when you made no changes to the tests. The reason for this from file endings are different than expected and this comes from Git defaulting to an unexpected file ending. If you encounter this issue you can run the following commands to set Git to use the expected one:
 ```
 git config --global core.autocrlf false
 git config --global core.eol lf

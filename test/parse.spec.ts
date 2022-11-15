@@ -169,4 +169,68 @@ describe('parse()', function() {
     expect(deepCircular?.json() !== undefined).toEqual(true);
     expect(deepProperty?.json() === deepCircular?.json()).toEqual(true); // expect that same reference
   });
+
+  it('should throw errors when references url does not exist (#224 issue)', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Invalid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'someId',
+            message: {
+              payload: {
+                $ref: 'http://hopefullu-it-does-not-exist.com/some-file.yaml#/components/schemas/schema'
+              }
+            }
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    const filteredDiagnostics = diagnostics.filter(d => d.code === 'invalid-ref');
+    
+    expect(document).toBeUndefined();
+    expect(diagnostics.length > 0).toEqual(true);
+    expect(filteredDiagnostics.length).toEqual(1);
+    expect(filteredDiagnostics[0].message).toEqual('FetchError: request to http://hopefullu-it-does-not-exist.com/some-file.yaml failed, reason: getaddrinfo ENOTFOUND hopefullu-it-does-not-exist.com');
+  });
+
+  it('should throw errors when local reference does not exist (#360 issue)', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Invalid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'someId',
+            message: {
+              $ref: '#components/messages/message1',
+            }
+          }
+        }
+      },
+      components: {
+        messages: {
+          message1: {
+            name: 'unusedMessage',
+            title: 'This is most definityly a message.',
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    const filteredDiagnostics = diagnostics.filter(d => d.code === 'invalid-ref');
+    
+    expect(document).toBeUndefined();
+    expect(diagnostics.length > 0).toEqual(true);
+    expect(filteredDiagnostics.length).toEqual(1);
+    expect(filteredDiagnostics[0].message).toEqual('\'#components/messages/message1\' JSON pointer is invalid');
+  });
 });

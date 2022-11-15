@@ -8,7 +8,7 @@ import type { MessagesInterface } from './messages';
 export type OperationAction = 'send' | 'receive' | 'publish' | 'subscribe';
 
 export interface OperationInterface extends BaseModel, OperationTraitInterface {
-  action(): OperationAction | undefined;
+  action(): OperationAction;
   isSend(): boolean;
   isReceive(): boolean;
   servers(): ServersInterface;

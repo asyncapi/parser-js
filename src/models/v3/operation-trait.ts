@@ -1,6 +1,4 @@
 import { BaseModel } from '../base';
-// import { Channels } from '../channels';
-// import { Channel } from './channel';
 import { SecurityScheme } from './security-scheme';
 import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
@@ -10,8 +8,6 @@ import { bindings, hasDescription, description, extensions, hasExternalDocs, ext
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-documentation';
-import type { ChannelsInterface } from '../channels';
-import type { OperationAction } from '../operation';
 import type { OperationTraitInterface } from '../operation-trait';
 import type { TagsInterface } from '../tags';
 
@@ -24,10 +20,6 @@ export class OperationTrait<J extends v3.OperationTraitObject = v3.OperationTrai
 
   hasId(): boolean {
     return this.id() !== undefined;
-  }
-
-  action(): OperationAction | undefined {
-    return this._json.action;
   }
 
   hasSummary(): boolean {
@@ -52,24 +44,6 @@ export class OperationTrait<J extends v3.OperationTraitObject = v3.OperationTrai
 
   externalDocs(): ExternalDocumentationInterface | undefined {
     return externalDocs(this);
-  }
-
-  isSend(): boolean {
-    return this.action() === 'send';
-  }
-
-  isReceive(): boolean {
-    return this.action() === 'receive';
-  }
-
-  channels(): ChannelsInterface {
-    // if (this._json.channel) {
-    //   return new Channels([
-    //     this.createModel(Channel, this._json.channel as v3.ChannelObject, { id: '', pointer: this.jsonPath('channel') })
-    //   ]);
-    // }
-    // return new Channels([]);
-    return [] as any;
   }
 
   security(): SecurityRequirements[] {

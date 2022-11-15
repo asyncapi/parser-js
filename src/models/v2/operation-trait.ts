@@ -1,5 +1,4 @@
 import { BaseModel } from '../base';
-import { Channels } from '../channels';
 import { SecurityScheme } from './security-scheme';
 import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
@@ -9,7 +8,6 @@ import { bindings, hasDescription, description, extensions, hasExternalDocs, ext
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-documentation';
-import type { ChannelsInterface } from '../channels';
 import type { OperationAction } from '../operation';
 import type { OperationTraitInterface } from '../operation-trait';
 import type { TagsInterface } from '../tags';
@@ -23,10 +21,6 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
 
   hasId(): boolean {
     return this.id() !== undefined;
-  }
-
-  action(): OperationAction | undefined {
-    return this._meta.action;
   }
 
   hasSummary(): boolean {
@@ -53,14 +47,6 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
     return externalDocs(this);
   }
 
-  isSend(): boolean {
-    return this.action() === 'subscribe';
-  }
-
-  isReceive(): boolean {
-    return this.action() === 'publish';
-  }
-
   security(): SecurityRequirements[] {
     const securitySchemes = (this._meta?.asyncapi?.parsed?.components?.securitySchemes || {}) as Record<string, v2.SecuritySchemeObject>;
     return (this._json.security || []).map((requirement, index) => {
@@ -73,10 +59,6 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
       });
       return new SecurityRequirements(requirements);
     });
-  }
-
-  channels(): ChannelsInterface {
-    return new Channels([]);
   }
 
   tags(): TagsInterface {

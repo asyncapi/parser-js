@@ -181,62 +181,6 @@ describe('MessageTrait model', function() {
     });
   });
 
-  describe('.hasTitle()', function() {
-    it('should return true when there is a value', function() {
-      const doc = { title: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.hasTitle()).toEqual(true);
-    });
-    
-    it('should return false when there is no value', function() {
-      const doc = {};
-      const d = new MessageTrait(doc);
-      expect(d.hasTitle()).toEqual(false);
-    });
-  });
-
-  describe('.title()', function() {
-    it('should return the value', function() {
-      const doc = { title: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.title()).toEqual(doc.title);
-    });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = {};
-      const d = new MessageTrait(doc);
-      expect(d.title()).toBeUndefined();
-    });
-  });
-
-  describe('.hasSummary()', function() {
-    it('should return true when there is a value', function() {
-      const doc = { summary: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.hasSummary()).toEqual(true);
-    });
-    
-    it('should return false when there is no value', function() {
-      const doc = {};
-      const d = new MessageTrait(doc);
-      expect(d.hasSummary()).toEqual(false);
-    });
-  });
-
-  describe('.summary()', function() {
-    it('should return the value', function() {
-      const doc = { summary: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.summary()).toEqual(doc.summary);
-    });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = {};
-      const d = new MessageTrait(doc);
-      expect(d.summary()).toBeUndefined();
-    });
-  });
-
   describe('.examples()', function() {
     it('should return collection of examples', function() {
       const doc = { examples: [{ name: '...' }] };

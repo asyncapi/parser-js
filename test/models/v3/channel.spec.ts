@@ -8,7 +8,7 @@ import { Message } from '../../../src/models/v3/message';
 import { Servers } from '../../../src/models/servers';
 import { Server } from '../../../src/models/v3/server';
 
-import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
+import { serializeInput, assertCoreModel } from './utils';
 
 import type { v3 } from '../../../src/spec-types';
 
@@ -132,8 +132,6 @@ describe('Channel model', function() {
   });
 
   describe('mixins', function() {
-    assertBindings(Channel);
-    assertDescription(Channel);
-    assertExtensions(Channel);
+    assertCoreModel(Channel);
   });
 });

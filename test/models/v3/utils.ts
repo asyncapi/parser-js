@@ -1,7 +1,7 @@
 import { BindingsV3, ExtensionsV3, ExternalDocumentationV3, TagsV3 } from '../../../src/models/v3';
 
 import type { Constructor } from '../../../src/models/utils';
-import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface } from '../../../src/models/mixins';
+import type { BindingsMixinInterface, CoreMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, SummaryMixinInterface, TagsMixinInterface, TitleMixinInterface } from '../../../src/models/mixins';
 
 type DeepPartial<T> = T extends object ? { [P in keyof T]?: DeepPartial<T[P]> } : T;
 
@@ -126,6 +126,41 @@ export function assertExternalDocumentation(model: Constructor<ExternalDocumenta
   });
 }
 
+export function assertSummary(model: Constructor<SummaryMixinInterface>) {
+  describe('.hasSummary()', () => {
+    const doc1 = { summary: 'Testing' };
+    const doc2 = { summary: '' };
+    const doc3 = {};
+    const d1 = new model(doc1);
+    const d2 = new model(doc2);
+    const d3 = new model(doc3);
+
+    it('should return a boolean indicating if the object has summary', () => {
+      expect(d1.hasSummary()).toEqual(true);  
+      expect(d2.hasSummary()).toEqual(false);  
+      expect(d3.hasSummary()).toEqual(false);  
+    });
+  });
+
+  describe('.summary()', () => {
+    const doc1 = { summary: 'Testing' };
+    const doc2 = { summary: '' };
+    const doc3 = {};
+    const d1 = new model(doc1);
+    const d2 = new model(doc2);
+    const d3 = new model(doc3);
+
+    it('should return a value', () => {
+      expect(d1.summary()).toEqual(doc1.summary);  
+      expect(d2.summary()).toEqual(''); 
+    });
+
+    it('should return an undefined', () => {
+      expect(d3.summary()).toEqual(undefined);  
+    });
+  });
+}
+
 export function assertTags(model: Constructor<TagsMixinInterface>) {
   describe('tags', () => {
     const doc1 = { tags: [{ name: 'test1' }, { name: 'test2' }] };
@@ -147,4 +182,49 @@ export function assertTags(model: Constructor<TagsMixinInterface>) {
       expect(d3.tags().length).toEqual(0);
     });
   });
+}
+
+export function assertTitle(model: Constructor<TitleMixinInterface>) {
+  describe('.hasTitle()', () => {
+    const doc1 = { title: 'Testing' };
+    const doc2 = { title: '' };
+    const doc3 = {};
+    const d1 = new model(doc1);
+    const d2 = new model(doc2);
+    const d3 = new model(doc3);
+
+    it('should return a boolean indicating if the object has title', () => {
+      expect(d1.hasTitle()).toEqual(true);  
+      expect(d2.hasTitle()).toEqual(false);  
+      expect(d3.hasTitle()).toEqual(false);  
+    });
+  });
+
+  describe('.title()', () => {
+    const doc1 = { title: 'Testing' };
+    const doc2 = { title: '' };
+    const doc3 = {};
+    const d1 = new model(doc1);
+    const d2 = new model(doc2);
+    const d3 = new model(doc3);
+
+    it('should return a value', () => {
+      expect(d1.title()).toEqual(doc1.title);  
+      expect(d2.title()).toEqual(''); 
+    });
+
+    it('should return an undefined', () => {
+      expect(d3.title()).toEqual(undefined);  
+    });
+  });
+}
+
+export function assertCoreModel(model: Constructor<CoreMixinInterface>) {
+  assertBindings(model);
+  assertDescription(model);
+  assertExtensions(model);
+  assertExternalDocumentation(model);
+  assertSummary(model);
+  assertTags(model);
+  assertTitle(model);
 }

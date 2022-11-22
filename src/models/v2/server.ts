@@ -1,4 +1,3 @@
-import { BaseModel } from '../base';
 import { Channels } from '../channels';
 import { Channel } from './channel';
 import { Messages } from '../messages';
@@ -8,9 +7,8 @@ import { ServerVariables } from '../server-variables';
 import { ServerVariable } from './server-variable';
 import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
-import { TagsInterface } from '../tags';
 
-import { bindings, hasDescription, description, extensions, tags } from './mixins';
+import { CoreModel } from './mixins';
 import { tilde } from '../../utils';
 
 import type { ChannelsInterface } from '../channels';
@@ -21,12 +19,10 @@ import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { ServerInterface } from '../server';
 import type { ServerVariablesInterface } from '../server-variables';
-import type { ExtensionsInterface } from '../extensions';
-import type { BindingsInterface } from '../bindings';
 
 import type { v2 } from '../../spec-types';
 
-export class Server extends BaseModel<v2.ServerObject, { id: string }> implements ServerInterface {
+export class Server extends CoreModel<v2.ServerObject, { id: string }> implements ServerInterface {
   id(): string {
     return this._meta.id;
   }
@@ -45,14 +41,6 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
 
   protocolVersion(): string | undefined {
     return this._json.protocolVersion;
-  }
-
-  hasDescription(): boolean {
-    return hasDescription(this);
-  }
-
-  description(): string | undefined {
-    return description(this);
   }
 
   channels(): ChannelsInterface {
@@ -103,17 +91,5 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
       });
       return new SecurityRequirements(requirements);
     });
-  }
-
-  tags(): TagsInterface {
-    return tags(this);
-  }
-
-  bindings(): BindingsInterface {
-    return bindings(this);
-  }
-
-  extensions(): ExtensionsInterface {
-    return extensions(this);
   }
 }

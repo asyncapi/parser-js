@@ -9,7 +9,7 @@ import { Schema } from '../../../src/models/v2/schema';
 import { Servers } from '../../../src/models/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
+import { assertCoreModel } from './utils';
 
 describe('Message model', function() {
   describe('.id()', function() {
@@ -181,10 +181,6 @@ describe('Message model', function() {
   });
 
   describe('mixins', function() {
-    assertBindings(Message);
-    assertDescription(Message);
-    assertExtensions(Message);
-    assertExternalDocumentation(Message);
-    assertTags(Message);
+    assertCoreModel(Message);
   });
 });

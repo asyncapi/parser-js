@@ -3,7 +3,7 @@ import { SecurityRequirement } from '../../../src/models/v2/security-requirement
 import { SecurityRequirements } from '../../../src/models/security-requirements';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
+import { assertCoreModel } from './utils';
 
 describe('OperationTrait model', function() {
   describe('.id()', function() {
@@ -34,34 +34,6 @@ describe('OperationTrait model', function() {
     });
   });
 
-  describe('.hasSummary()', function() {
-    it('should return true when there is a value', function() {
-      const doc = { summary: '...' };
-      const d = new OperationTrait(doc);
-      expect(d.hasSummary()).toEqual(true);
-    });
-    
-    it('should return false when there is no value', function() {
-      const doc = {};
-      const d = new OperationTrait(doc);
-      expect(d.hasSummary()).toEqual(false);
-    });
-  });
-
-  describe('.summary()', function() {
-    it('should return the value', function() {
-      const doc = { summary: '...' };
-      const d = new OperationTrait(doc);
-      expect(d.summary()).toEqual(doc.summary);
-    });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = {};
-      const d = new OperationTrait(doc);
-      expect(d.summary()).toBeUndefined();
-    });
-  });
-
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
       const doc = { security: [{ requirement: [] }] };
@@ -88,10 +60,6 @@ describe('OperationTrait model', function() {
   });
 
   describe('mixins', function() {
-    assertBindings(OperationTrait);
-    assertDescription(OperationTrait);
-    assertExtensions(OperationTrait);
-    assertExternalDocumentation(OperationTrait);
-    assertTags(OperationTrait);
+    assertCoreModel(OperationTrait);
   });
 });

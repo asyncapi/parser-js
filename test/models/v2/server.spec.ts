@@ -10,7 +10,7 @@ import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 import { SecurityRequirements } from '../../../src/models/security-requirements';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
-import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
+import { serializeInput, assertCoreModel } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
 
@@ -206,9 +206,7 @@ describe('Server Model', function () {
     });
   });
 
-  describe('mixins inheritance', function () {
-    assertBindings(Server);
-    assertDescription(Server);
-    assertExtensions(Server);
+  describe('mixins', function () {
+    assertCoreModel(Server);
   });
 });

@@ -1,49 +1,20 @@
-import { BaseModel } from '../base';
 import { SecurityScheme } from './security-scheme';
 import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
 
-import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
+import { CoreModel } from './mixins';
 
-import type { BindingsInterface } from '../bindings';
-import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-documentation';
 import type { OperationTraitInterface } from '../operation-trait';
-import type { TagsInterface } from '../tags';
 
 import type { v3 } from '../../spec-types';
 
-export class OperationTrait<J extends v3.OperationTraitObject = v3.OperationTraitObject> extends BaseModel<J, { id: string | undefined }> implements OperationTraitInterface {
+export class OperationTrait<J extends v3.OperationTraitObject = v3.OperationTraitObject> extends CoreModel<J, { id: string | undefined }> implements OperationTraitInterface {
   id(): string | undefined {
     return this._meta.id;
   }
 
   hasId(): boolean {
     return this.id() !== undefined;
-  }
-
-  hasSummary(): boolean {
-    return !!this._json.summary;
-  }
-
-  summary(): string | undefined {
-    return this._json.summary;
-  }
-
-  hasDescription(): boolean {
-    return hasDescription(this);
-  }
-
-  description(): string | undefined {
-    return description(this);
-  }
-
-  hasExternalDocs(): boolean {
-    return hasExternalDocs(this);
-  }
-
-  externalDocs(): ExternalDocumentationInterface | undefined {
-    return externalDocs(this);
   }
 
   security(): SecurityRequirements[] {
@@ -58,17 +29,5 @@ export class OperationTrait<J extends v3.OperationTraitObject = v3.OperationTrai
       });
       return new SecurityRequirements(requirements);
     });
-  }
-
-  tags(): TagsInterface {
-    return tags(this);
-  }
-
-  bindings(): BindingsInterface {
-    return bindings(this);
-  }
-
-  extensions(): ExtensionsInterface {
-    return extensions(this);
   }
 }

@@ -4,12 +4,28 @@ import { AsyncAPIDocumentV2 } from '../../src';
 import { anonymousNaming } from '../../src/custom-operations/anonymous-naming';
 import { checkCircularRefs } from '../../src/custom-operations/check-circular-refs';
 import { getDefaultSchemaFormat } from '../../src/schema-parser';
-import { xParserCircular, xParserOriginalTraits, xParserOriginalSchemaFormat, xParserMessageParsed, xParserOriginalPayload } from '../../src/constants';
+import { xParserApiVersion, xParserCircular, xParserOriginalTraits, xParserOriginalSchemaFormat, xParserMessageParsed, xParserOriginalPayload } from '../../src/constants';
 
 describe('convertToOldAPI()', function() {
   it('should return AsyncAPIDocument instance', function() {
     const newApi = new AsyncAPIDocumentV2({} as any);
     expect(convertToOldAPI(newApi)).toBeInstanceOf(OldAsyncAPIDocument);
+  });
+
+  it('should assign x-parser-api-version extension to the 0 value', function() {
+    const newApi = new AsyncAPIDocumentV2({
+      channels: {
+        channel: {
+          publish: {
+            message: {
+              payload: {},
+            }
+          }
+        }
+      }
+    } as any);
+
+    expect(convertToOldAPI(newApi).ext(xParserApiVersion)).toEqual(0);
   });
 
   it('should not assign x-parser-circular extension when document has not circular schemas', function() {

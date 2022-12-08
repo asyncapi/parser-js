@@ -1,15 +1,19 @@
-import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
+import { xParserApiVersion, xParserSpecParsed, xParserSpecStringified } from '../src/constants';
 import { BaseModel, AsyncAPIDocumentV2 } from '../src/models';
+import { convertToOldAPI } from '../src/old-api';
+import { Parser } from '../src/parser';
 import { 
   createAsyncAPIDocument,
   toAsyncAPIDocument, 
   isAsyncAPIDocument, 
   isParsedDocument, 
   isStringifiedDocument,
+  isOldAsyncAPIDocument,
 } from '../src/document';
 import { createDetailedAsyncAPI } from '../src/utils';
 
 describe('utils', function() {
+  const parser = new Parser();
   class Model extends BaseModel {}
 
   describe('createAsyncAPIDocument()', function() {
@@ -97,6 +101,59 @@ describe('utils', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc as any, doc as any);
       expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
+    });
+
+    it('AsyncAPIDocument instance should be AsyncAPI document', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc as any, doc as any);
+      expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 1 should be AsyncAPI documen', async function() {
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      };
+      const { document } = await parser.parse(documentRaw);
+      
+      expect(isAsyncAPIDocument(document)).toEqual(true);
+    });
+  });
+
+  describe('isOldAsyncAPIDocument()', function() {
+    it('document with the x-parser-api-version extension set to 0 should be old AsyncAPI documen', async function() {
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      };
+      const { document } = await parser.parse(documentRaw);
+      const oldDocument = convertToOldAPI(document!);
+      
+      expect(isOldAsyncAPIDocument(oldDocument)).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to undefined should be old AsyncAPI documen', async function() {
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      };
+      const { document } = await parser.parse(documentRaw);
+      const oldDocument = convertToOldAPI(document!);
+      delete oldDocument.json()[xParserApiVersion];
+      
+      expect(isOldAsyncAPIDocument(oldDocument)).toEqual(true);
     });
   });
 

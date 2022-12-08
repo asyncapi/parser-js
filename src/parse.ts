@@ -6,7 +6,7 @@ import { copy } from './stringify';
 import { createAsyncAPIDocument } from './document';
 import { createDetailedAsyncAPI, mergePatch, setExtension, createUncaghtDiagnostic } from './utils';
 
-import { xParserSpecParsed } from './constants';
+import { xParserSpecParsed, xParserApiVersion } from './constants';
 
 import type { Spectral, Document, RulesetFunctionContext } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
@@ -61,6 +61,7 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
+    setExtension(xParserApiVersion, 1, document);
     await customOperations(parser, document, detailed, inventory, options);
   
     return { 

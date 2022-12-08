@@ -1,7 +1,8 @@
 import { AsyncAPIDocument } from './asyncapi';
-import { xParserOriginalPayload, xParserOriginalSchemaFormat, xParserOriginalTraits, xParserMessageParsed } from '../constants';
+import { xParserApiVersion, xParserOriginalPayload, xParserOriginalSchemaFormat, xParserOriginalTraits, xParserMessageParsed } from '../constants';
 import { copy } from '../stringify';
 import { getDefaultSchemaFormat } from '../schema-parser';
+import { setExtension } from '../utils';
 
 import type { AsyncAPIDocumentInterface } from '../models/asyncapi';
 
@@ -11,6 +12,7 @@ export function convertToOldAPI(newDocument: AsyncAPIDocumentInterface): AsyncAP
 
   handleMessages(document);
   handleOperations(document);
+  setExtension(xParserApiVersion, 0, document as any);
 
   return document;
 }

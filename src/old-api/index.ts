@@ -1,4 +1,4 @@
-export { convertToOldAPI } from './converter';
+export { convertToOldAPI, convertToNewAPI } from './converter';
 
 export { AsyncAPIDocument as OldAsyncAPIDocument } from './asyncapi';
 export { Base as OldBase } from './base';

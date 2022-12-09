@@ -1,4 +1,4 @@
-import { convertToOldAPI } from '../../src/old-api/converter';
+import { convertToOldAPI, convertToNewAPI } from '../../src/old-api/converter';
 import { AsyncAPIDocument as OldAsyncAPIDocument } from '../../src/old-api/asyncapi';
 import { AsyncAPIDocumentV2 } from '../../src';
 import { anonymousNaming } from '../../src/custom-operations/anonymous-naming';
@@ -274,5 +274,12 @@ describe('convertToOldAPI()', function() {
     expect(oldApi.json().channels.channel?.publish?.traits).toBeUndefined();
     expect(oldApi.json().channels.channel?.subscribe?.[xParserOriginalTraits]).toEqual([{}, {}]);
     expect(oldApi.json().channels.channel?.subscribe?.traits).toBeUndefined();
+  });
+});
+
+describe('convertToNewAPI()', function() {
+  it('should return AsyncAPIDocumentV2 instance', function() {
+    const oldDocument = new OldAsyncAPIDocument({ asyncapi: '2.0.0' } as any);
+    expect(convertToNewAPI(oldDocument)).toBeInstanceOf(AsyncAPIDocumentV2);
   });
 });

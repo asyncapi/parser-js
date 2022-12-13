@@ -5,9 +5,11 @@ import { createDetailedAsyncAPI } from './utils';
 import { 
   xParserSpecParsed,
   xParserSpecStringified,
+  xParserApiVersion,
 } from './constants';
 
 import type { AsyncAPIDocumentInterface } from './models';
+import type { OldAsyncAPIDocument } from './old-api';
 import type { DetailedAsyncAPI, AsyncAPIObject } from './types';
 
 export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
@@ -32,7 +34,25 @@ export function toAsyncAPIDocument(maybeDoc: unknown): AsyncAPIDocumentInterface
 }
 
 export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocumentInterface {
-  return maybeDoc instanceof AsyncAPIDocumentV2 || maybeDoc instanceof AsyncAPIDocumentV3;
+  if (!maybeDoc) {
+    return false;
+  }
+  if (maybeDoc instanceof AsyncAPIDocumentV2 || maybeDoc instanceof AsyncAPIDocumentV3) {
+    return true;
+  }
+  if (maybeDoc && typeof (maybeDoc as AsyncAPIDocumentInterface).json === 'function') {
+    const versionOfParserAPI = (maybeDoc as AsyncAPIDocumentInterface).json()[xParserApiVersion];
+    return versionOfParserAPI === 1;
+  }
+  return false;
+}
+
+export function isOldAsyncAPIDocument(maybeDoc: unknown): maybeDoc is OldAsyncAPIDocument {
+  if (maybeDoc && typeof (maybeDoc as OldAsyncAPIDocument).json === 'function') {
+    const versionOfParserAPI = (maybeDoc as OldAsyncAPIDocument).json()[xParserApiVersion];
+    return versionOfParserAPI === undefined || versionOfParserAPI === 0;
+  }
+  return false;
 }
 
 export function isParsedDocument(maybeDoc: unknown): maybeDoc is AsyncAPIObject {

@@ -2,6 +2,7 @@ import specs from '@asyncapi/specs';
 
 export const xParserSpecParsed = 'x-parser-spec-parsed';
 export const xParserSpecStringified = 'x-parser-spec-stringified';
+export const xParserApiVersion = 'x-parser-api-version';
 
 export const xParserMessageName = 'x-parser-message-name';
 export const xParserMessageParsed = 'x-parser-message-parsed';

@@ -1,15 +1,19 @@
-import { xParserSpecParsed, xParserSpecStringified } from '../src/constants';
+import { xParserApiVersion, xParserSpecParsed, xParserSpecStringified } from '../src/constants';
 import { BaseModel, AsyncAPIDocumentV2 } from '../src/models';
+import { convertToOldAPI } from '../src/old-api';
+import { Parser } from '../src/parser';
 import { 
   createAsyncAPIDocument,
   toAsyncAPIDocument, 
   isAsyncAPIDocument, 
   isParsedDocument, 
   isStringifiedDocument,
+  isOldAsyncAPIDocument,
 } from '../src/document';
 import { createDetailedAsyncAPI } from '../src/utils';
 
 describe('utils', function() {
+  const parser = new Parser();
   class Model extends BaseModel {}
 
   describe('createAsyncAPIDocument()', function() {
@@ -97,6 +101,53 @@ describe('utils', function() {
       const doc = { asyncapi: '2.0.0' };
       const detailed = createDetailedAsyncAPI(doc as any, doc as any);
       expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
+    });
+
+    it('AsyncAPIDocument instance should be AsyncAPI document', function() {
+      const doc = { asyncapi: '2.0.0' };
+      const detailed = createDetailedAsyncAPI(doc as any, doc as any);
+      expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 1 should be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 1 }; } })).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 0 should not be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 0 }; } })).toEqual(false);
+    });
+
+    it('document without the x-parser-api-version extension should not be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return {}; } })).toEqual(false);
+    });
+  });
+
+  describe('isOldAsyncAPIDocument()', function() {
+    it('OldAsyncAPIDocument instance should be old AsyncAPI document', async function() {
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
+        },
+        channels: {}
+      };
+      const { document } = await parser.parse(documentRaw);
+      const oldDocument = convertToOldAPI(document!);
+      
+      expect(isOldAsyncAPIDocument(oldDocument)).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 0 should be old AsyncAPI document', async function() {
+      expect(isOldAsyncAPIDocument({ json() { return { [xParserApiVersion]: 0 }; } })).toEqual(true);
+    });
+
+    it('document without the x-parser-api-version extension should be old AsyncAPI document', async function() {
+      expect(isOldAsyncAPIDocument({ json() { return {}; } })).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 1 should not be old AsyncAPI document', async function() {
+      expect(isOldAsyncAPIDocument({ json() { return { [xParserApiVersion]: 1 }; } })).toEqual(false);
     });
   });
 

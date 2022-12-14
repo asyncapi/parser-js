@@ -1,29 +1,26 @@
-# Parser v1 to v2 Migration Guide
+# Migrating from v1
+
+## TL;DR
 
 - The document's AsyncAPI API has been rewritten from old to new supporting the [Intent API](https://github.com/asyncapi/parser-api) - there is a function that converts the new API to the old one for backward compatibility. 
-- Package source code has been rewritten to the TypeScript alongside with rewritten from CJS (CommonJS) to ESM (EcmaScript) modules.
-- The functionality of the Parser was wrapped with the class. This means that from now on it's possible to have a dozen other Parser instances with different configurations.
-- Validation is powered by [Spectral](https://github.com/stoplightio/spectral). This allows better validation, checking not only syntax errors, but also informing about good practices, such as defining `operationID` field etc. In addition, Spectral uses a different references resolver, which causes changes in defining custom resolvers.
-- AsyncAPI document validation (without parsing) is available via a separate method - `.validate()`.
-- The function `.parse()` returns parsed AsyncAPi `document` and possible `diagnostics` based on validation configuration.  
-- The function `parseFromUrl()` has been deprecated in favour of `fromURL` standalone function.
-- The Custom Schema Parser interface has been changed with an additional function `validate()`.
-- Stringify and unstringify the parsed document is now a separate functionality.
-- Stringify and unstringify the parsed document is now a separate functionality.
-- Package is fully [tree-shakable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking).
+- Source code has been rewritten in TypeScript and ESM. This makes the package fully [tree-shakable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking). [Read more](#typescript-and-esm).
+- The parser is now exposed as a class, making it possible to have multiple parser instances with different configurations. [Read more](#parser-class).
+- It validates AsyncAPI documents using [Spectral](https://github.com/stoplightio/spectral). This enables better validation and introduces linting capabilities. [Read more](#spectral).
+- Introduces validation without parsing via the `.validate()` method. [Read more](#validate-method).
+- The `.parse()` method now also returns diagnostics (errors, warnings, and bits of advice). [Read more](#parse-method).
+- The `parseFromUrl()` method has been deprecated in favor of the `fromURL` standalone function. [Read more](#parseFromUrl-is-now-deprecated).
+- Custom parsers now have a `validate()` method. [Read more](#new-custom-schema-parser-interface).
+- The way to pass custom `$ref` resolvers has changed. [Read more](#custom-reference-resolvers).
+- Stringify and unstringify the parsed document is now a separate functionality. [Read more](#standalone-stringify-and-unstringify-functionality).
+- If there is a need to use an old version of the API, the Parser provides the `convertToOldAPI` functionality. [Read more](#convert-new-api-to-the-old-one).
 
 ### New Intent API
 
 The old Document API based 1:1 on AsyncAPI Specification has been rewritten to support the new so-called [Intent API](https://github.com/asyncapi/parser-api), which makes it easier to operate on the document and retrieve collections of needed objects from the document. Due to the fact that the new API does not stick firmly to AsyncAPI Specification, it allows for better integration with future versions of AsyncAPI. User does not need to know the new API against the new version of AsyncAPI - all methods will remain the same with the inclusion of new/deprecated fields. Also new API has been enhanced with some additional functionality like retrieving the JSON Path of the object using the `.jsonPath()` method etc.
 
-### EcmaScript Modules
+### TypeScript and ESM
 
-The source code of the package was rewritten from CJS (CommonJS) to ESM (EcmaScript) modules. This allows the fully [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) and much better integration in browser-type environments like SPA applications. In addition, the package is published with:
-
-- `esm` (ESM modules) folder mainly for browser applications and newer versions of NodeJS, to support fully [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) 
-- `cjs` (CJS modules) folder for old versions of NodeJS
-
-Both versions have support for Typescript types.
+The source code of the package has been rewritten to ESM (EcmaScript modules). This enables [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) and much better integration in browser-based environments. In addition, the package exposes a `cjs` directory containing the CommonJS version of the parser, for compatibility with older environments. Both versions have support for Typescript types.
 
 ### Parser class
 
@@ -109,7 +106,7 @@ const diagnostics = await parser.validate(`
 `);
 ```
 
-### Deprecation of the `parseFromUrl()` function
+### `parseFromUrl()` is now deprecated
 
 The `parseFromUrl()` function has been deprecated in favour of the new `fromURL` function:
 
@@ -274,3 +271,14 @@ const oldAsyncAPIDocument = convertToOldAPI(document);
 
 > **Warning**
 > The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of January 2023.
+
+If there is a need to convert an existing instance of the old API to the new one, the library provides the `convertToNewAPI` function:
+
+```js
+import { Parser, convertToNewAPI } from '@asyncapi/parser';
+
+const newAsyncAPIDocument = convertToNewAPI(oldDocument);
+```
+
+> **Warning**
+> Due to the fact that the new Parser validates the docuemnt more restrictively, it may be that a parsed document in the old way will not work 100% in accordance with the new API.

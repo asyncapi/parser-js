@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "1.17.1",
+  "version": "1.17.2",
   "description": "JavaScript AsyncAPI parser.",
   "main": "lib/index.js",
   "types": "types.d.ts",
@@ -64,7 +64,7 @@
     "jsdoc-to-markdown": "^7.1.1",
     "markdown-toc": "^1.2.0",
     "mkdirp": "^1.0.4",
-    "mocha": "^6.1.4",
+    "mocha": "^10.1.0",
     "nyc": "^15.1.0",
     "puppeteer": "^17.0.0",
     "rimraf": "^3.0.2",
@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
-    "@asyncapi/specs": "^4.0.0",
+    "@asyncapi/specs": "^4.0.1",
     "@fmvilas/pseudo-yaml-ast": "^0.3.1",
     "ajv": "^6.10.1",
     "js-yaml": "^3.13.1",

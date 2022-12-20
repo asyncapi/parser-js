@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-- The document's AsyncAPI API has been rewritten from old to new supporting the [Intent API](https://github.com/asyncapi/parser-api) - there is a function that converts the new API to the old one for backward compatibility. 
+- The parser API has been rewritten from the ground up. It's now based on user intents instead of a 1:1 map to the spec. [Read more](#new-intent-api).
 - Source code has been rewritten in TypeScript and ESM. This makes the package fully [tree-shakable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking). [Read more](#typescript-and-esm).
 - The parser is now exposed as a class, making it possible to have multiple parser instances with different configurations. [Read more](#parser-class).
 - It validates AsyncAPI documents using [Spectral](https://github.com/stoplightio/spectral). This enables better validation and introduces linting capabilities. [Read more](#spectral).
@@ -270,7 +270,7 @@ const oldAsyncAPIDocument = convertToOldAPI(document);
 ```
 
 > **Warning**
-> The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of January 2023.
+> The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of March 2023.
 
 If there is a need to convert an existing instance of the old API to the new one, the library provides the `convertToNewAPI` function:
 
@@ -281,4 +281,4 @@ const newAsyncAPIDocument = convertToNewAPI(oldDocument);
 ```
 
 > **Warning**
-> Due to the fact that the new Parser validates the docuemnt more restrictively, it may be that a parsed document in the old way will not work 100% in accordance with the new API.
+> Due to the fact that the new Parser validates the document more restrictively, it may be that a parsed document in the old way will not work 100% in accordance with the new API.

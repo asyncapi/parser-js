@@ -896,6 +896,7 @@ it('should fail on invalid examples', async function() {
   }, expectedErrorObject);
 });
 
+// eslint-disable-next-line mocha/no-skipped-tests
 describe.skip('memory usage', function () {
   it('should use this same instance of validation function in each call', async function() {
     this.timeout(12500);

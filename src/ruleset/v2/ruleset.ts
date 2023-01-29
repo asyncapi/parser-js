@@ -9,11 +9,13 @@ import { checkId } from './functions/checkId';
 import { messageExamples } from './functions/messageExamples';
 import { messageIdUniqueness } from './functions/messageIdUniqueness';
 import { operationIdUniqueness } from './functions/operationIdUniqueness';
+import { schemaValidation } from './functions/schemaValidation';
 import { security } from './functions/security';
 import { serverVariables } from './functions/serverVariables';
 import { uniquenessTags } from '../functions/uniquenessTags';
+import { asyncApi2SchemaParserRule } from '../../schema-parser/spectral-rule-v2';
 
-const from_aas2_4 = aas2AllFormats.slice(4);
+import type { Parser } from '../../parser';
 
 export const v2CoreRuleset = {
   description: 'Core AsyncAPI 2.x.x ruleset.',
@@ -173,6 +175,61 @@ export const v2CoreRuleset = {
   },
 };
 
+export const v2SchemasRuleset = (parser: Parser) => {
+  return {
+    description: 'Schemas AsyncAPI 2.x.x ruleset.',
+    documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
+    formats: [...aas2AllFormats],
+    rules: {
+      'asyncapi2-schemas': asyncApi2SchemaParserRule(parser),
+      'asyncapi2-schema-default': {
+        description: 'Default must be valid against its defined schema.',
+        message: '{{error}}',
+        severity: 'error',
+        recommended: true,
+        given: [
+          '$.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.default^',
+          '$.channels.*.parameters.*.schema.default^',
+          '$.components.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.default^',
+          '$.components.channels.*.parameters.*.schema.default^',
+          '$.components.schemas.*.default^',
+          '$.components.parameters.*.schema.default^',
+          '$.components.messages[?(@.schemaFormat === void 0)].payload.default^',
+          '$.components.messageTraits[?(@.schemaFormat === void 0)].payload.default^',
+        ],
+        then: {
+          function: schemaValidation,
+          functionOptions: {
+            type: 'default',
+          },
+        },
+      },
+      'asyncapi2-schema-examples': {
+        description: 'Examples must be valid against their defined schema.',
+        message: '{{error}}',
+        severity: 'error',
+        recommended: true,
+        given: [
+          '$.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.examples^',
+          '$.channels.*.parameters.*.schema.examples^',
+          '$.components.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.examples^',
+          '$.components.channels.*.parameters.*.schema.examples^',
+          '$.components.schemas.*.examples^',
+          '$.components.parameters.*.schema.examples^',
+          '$.components.messages[?(@.schemaFormat === void 0)].payload.examples^',
+          '$.components.messageTraits[?(@.schemaFormat === void 0)].payload.examples^',
+        ],
+        then: {
+          function: schemaValidation,
+          functionOptions: {
+            type: 'examples',
+          },
+        },
+      },
+    }
+  };
+};
+
 export const v2RecommendedRuleset = {
   description: 'Recommended AsyncAPI 2.x.x ruleset.',
   documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
@@ -278,7 +335,7 @@ export const v2RecommendedRuleset = {
     'asyncapi2-message-messageId': {
       description: 'Message should have a "messageId" field defined.',
       recommended: true,
-      formats: from_aas2_4,
+      formats: aas2AllFormats.slice(4), // from 2.4.0
       given: [
         '$.channels.*.[publish,subscribe][?(@property === "message" && @.oneOf == void 0)]',
         '$.channels.*.[publish,subscribe].message.oneOf.*',

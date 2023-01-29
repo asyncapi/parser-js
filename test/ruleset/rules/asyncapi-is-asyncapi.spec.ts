@@ -1,4 +1,5 @@
 import { testRule, DiagnosticSeverity } from '../tester';
+import { lastVersion } from '../../../src/constants';
 
 testRule('asyncapi-is-asyncapi', [
   {
@@ -28,6 +29,19 @@ testRule('asyncapi-is-asyncapi', [
         message: 'This is not an AsyncAPI document. The "asyncapi" field as string is missing.',
         severity: DiagnosticSeverity.Error 
       }
+    ],
+  },
+
+  {
+    name: 'unsupported case',
+    document: {
+      asyncapi: '2.1.37',
+    },
+    errors: [
+      {
+        message: `Version "2.1.37" is not supported. Please use "${lastVersion}" (latest) version of the specification.`,
+        severity: DiagnosticSeverity.Error,
+      },
     ],
   },
 ]);

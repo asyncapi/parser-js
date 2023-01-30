@@ -2,7 +2,7 @@ import { Parser } from '../../src/parser';
 
 // rulesets
 import { coreRuleset, recommendedRuleset } from '../../src/ruleset/ruleset';
-import { v2CoreRuleset, v2SchemasRuleset, v2RecommendedRuleset } from '../../src/ruleset/v2/ruleset';
+import { v2CoreRuleset, v2SchemasRuleset, v2RecommendedRuleset } from '../../src/ruleset/v2';
 
 import type { ParserOptions } from '../../src/parser';
 import type { IRuleResult, RulesetDefinition } from '@stoplight/spectral-core';

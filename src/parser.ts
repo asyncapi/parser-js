@@ -13,7 +13,7 @@ import type { SchemaParser } from './schema-parser';
 import type { Diagnostic, Input } from './types';
 
 export interface ParserOptions {
-  ruleset?: RulesetDefinition
+  ruleset?: RulesetDefinition & { core?: boolean, recommended?: boolean };
   schemaParsers?: Array<SchemaParser>;
   __unstable?: {
     resolver?: ResolverOptions;

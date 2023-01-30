@@ -9,7 +9,6 @@ import { unusedComponent } from './functions/unusedComponent';
 
 export const coreRuleset = {
   description: 'Core AsyncAPI x.x.x ruleset.',
-  documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
   formats: [...aas2AllFormats],
   rules: {
     /**
@@ -81,7 +80,6 @@ export const coreRuleset = {
 
 export const recommendedRuleset = {
   description: 'Recommended AsyncAPI x.x.x ruleset.',
-  documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
   formats: [...aas2AllFormats],
   rules: {
     /**

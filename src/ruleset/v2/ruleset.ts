@@ -19,7 +19,6 @@ import type { Parser } from '../../parser';
 
 export const v2CoreRuleset = {
   description: 'Core AsyncAPI 2.x.x ruleset.',
-  documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
   formats: [...aas2AllFormats],
   rules: {
     /**
@@ -178,7 +177,6 @@ export const v2CoreRuleset = {
 export const v2SchemasRuleset = (parser: Parser) => {
   return {
     description: 'Schemas AsyncAPI 2.x.x ruleset.',
-    documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
     formats: [...aas2AllFormats],
     rules: {
       'asyncapi2-schemas': asyncApi2SchemaParserRule(parser),
@@ -232,7 +230,6 @@ export const v2SchemasRuleset = (parser: Parser) => {
 
 export const v2RecommendedRuleset = {
   description: 'Recommended AsyncAPI 2.x.x ruleset.',
-  documentationUrl: 'https://meta.stoplight.io/docs/spectral/docs/reference/asyncapi-rules.md',
   formats: [...aas2AllFormats],
   rules: {
     /**

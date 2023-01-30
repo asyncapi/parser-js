@@ -243,7 +243,7 @@ const parser = new Parser({
         given: '$',
         then: {
           field: 'info.termsOfService',
-          function: truthy,
+          function: 'truthy',
         },
       },
     }

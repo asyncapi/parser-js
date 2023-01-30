@@ -5,15 +5,16 @@ import { registerSchemaParser } from './schema-parser';
 import { AsyncAPISchemaParser } from './schema-parser/asyncapi-schema-parser';
 import { createSpectral } from './spectral';
 
-import type { Spectral, RulesetDefinition } from '@stoplight/spectral-core';
+import type { Spectral } from '@stoplight/spectral-core';
 import type { ParseOptions, ParseOutput } from './parse';
 import type { ValidateOptions } from './validate';
 import type { ResolverOptions } from './resolver';
+import type { RulesetOptions } from './ruleset';
 import type { SchemaParser } from './schema-parser';
 import type { Diagnostic, Input } from './types';
 
 export interface ParserOptions {
-  ruleset?: RulesetDefinition & { core?: boolean, recommended?: boolean };
+  ruleset?: RulesetOptions;
   schemaParsers?: Array<SchemaParser>;
   __unstable?: {
     resolver?: ResolverOptions;

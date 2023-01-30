@@ -4,10 +4,13 @@ import { v2CoreRuleset, v2SchemasRuleset, v2RecommendedRuleset } from './v2';
 import type { Parser } from '../parser';
 import type { RulesetDefinition } from '@stoplight/spectral-core';
 
-export type RulesetOptions = RulesetDefinition & { core?: boolean, recommended?: boolean };
+export type RulesetOptions = 
+  | RulesetDefinition & { core?: boolean, recommended?: boolean }
+  | RulesetDefinition
+  | { core?: boolean, recommended?: boolean };
 
 export function createRuleset(parser: Parser, options?: RulesetOptions): RulesetDefinition {
-  const { core: useCore = true, recommended: useRecommended = true, ...rest } = options || {};
+  const { core: useCore = true, recommended: useRecommended = true, ...rest } = (options || {}) as (RulesetDefinition & { core?: boolean, recommended?: boolean });
 
   const extendedRuleset = [
     useCore && coreRuleset,

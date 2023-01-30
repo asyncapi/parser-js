@@ -33,4 +33,6 @@ jobs:
           committer_email: info@asyncapi.io
           # html-template - temporary until react component releases 1.0, then it can be removed
           # cli - temporary until ParserJS releases 2.0, then it can be removed
-          repos_to_ignore: html-template,cli
+          # modelina - temporary until ParserJS releases 2.0, then it can be removed
+          # studio - temporary until ParserJS releases 2.0, then it can be removed
+          repos_to_ignore: html-template,cli,modelina,studio

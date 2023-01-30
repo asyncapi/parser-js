@@ -26,6 +26,7 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
   * [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
   * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
+- [Spectral rulesets](#spectral-rulesets)
 - [Using in the browser/SPA applications](#using-in-the-browserspa-applications)
 - [Custom schema parsers](#custom-schema-parsers)
   * [Official supported custom schema parsers](#official-supported-custom-schema-parsers)
@@ -223,6 +224,44 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 - `json()` which returns the JSON object of the given object. It is possible to pass as an argument the name of a field in an object and retrieve corresponding value.
 - `jsonPath()` which returns the JSON Path of the given object.
 - `meta()` which returns the metadata of a given object, like a parsed AsyncAPI Document.
+
+## Spectral rulesets
+
+Validation of AsyncAPI documents in ParserJS is powered by [Spectral](https://github.com/stoplightio/spectral). For this reason, it is possible to use own rulesets/rules, or overwrite existing ones, by passing `ruleset` option to the Parser instance:
+
+```ts
+import { Parser, stringify, unstringify } from '@asyncapi/parser';
+
+const parser = new Parser({
+  ruleset: {
+    extends: [],
+    rules: {
+      'asyncapi-defaultContentType': 'off',
+      'asyncapi-termsOfService': {
+        description: 'Info "termsOfService" should be present and non-empty string.',
+        recommended: true,
+        given: '$',
+        then: {
+          field: 'info.termsOfService',
+          function: truthy,
+        },
+      },
+    }
+  }
+});
+
+// One of diagnostics should have `asyncapi-termsOfService` code with `warning` severity, because we didn't define the `$.info.termsOfService` field.
+// Also we won't see the diagnostics related to the omitted `defaultContentType` field.
+const diagnostics = await parser.validate(`
+  asyncapi: '2.0.0'
+  info:
+    title: Example AsyncAPI specification
+    version: '0.1.0'
+  channels: {}
+`);
+```
+
+ParserJS has some built-in Spectral rulesets that validate AsyncAPI documents and inform about good practices. [Checks them](./docs/ruleset) for more info.
 
 ## Using in the browser/SPA applications
 

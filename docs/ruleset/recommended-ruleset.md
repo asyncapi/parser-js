@@ -2,6 +2,9 @@
 
 The recommended ruleset, which verify good practices when writing the specification structure.
 
+> **Note**
+> These rules will apply to each version, starting with `2.0.0`.
+
 ## Rules
 
 ### asyncapi-id

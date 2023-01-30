@@ -2,6 +2,9 @@
 
 The recommended ruleset, which verify good practices when writing the `2.x.x` specifications structure.
 
+> **Note**
+> These rules will only apply to AsyncAPI `2.x.x` documents.
+
 ## Rules
 
 ### asyncapi2-tags

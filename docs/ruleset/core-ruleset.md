@@ -2,6 +2,9 @@
 
 The core ruleset, which validates the overall structure of the specification.
 
+> **Note**
+> These rules will apply to each version, starting with `2.0.0`.
+
 ## Rules
 
 ### asyncapi-is-asyncapi

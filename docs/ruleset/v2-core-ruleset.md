@@ -2,6 +2,9 @@
 
 The core ruleset, which validates the overall structure of the `2.x.x` specifications.
 
+> **Note**
+> These rules will only apply to AsyncAPI `2.x.x` documents.
+
 ## Rules
 
 ### asyncapi2-server-security

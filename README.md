@@ -251,7 +251,7 @@ const parser = new Parser({
 });
 
 // One of diagnostics should have `asyncapi-termsOfService` code with `warning` severity, because we didn't define the `$.info.termsOfService` field.
-// Also we won't see the diagnostics related to the omitted `defaultContentType` field.
+// Also we should won't see the diagnostics related to the omitted `defaultContentType` field.
 const diagnostics = await parser.validate(`
   asyncapi: '2.0.0'
   info:

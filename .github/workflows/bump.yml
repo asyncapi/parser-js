@@ -11,7 +11,7 @@ on:
   # This means we cannot extract easily latest version and have a risk that package is not yet on npm
   push:
     branches:
-      - next-major
+      - master
 
 jobs:
   bump-in-dependent-projects:
@@ -32,4 +32,4 @@ jobs:
           committer_username: asyncapi-bot
           committer_email: info@asyncapi.io
           # html-template - temporary until react component releases 1.0, then it can be removed
-          repos_to_ignore: html-template
+          repos_to_ignore: html-template,cli,studio

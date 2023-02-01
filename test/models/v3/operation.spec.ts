@@ -55,7 +55,7 @@ describe('Operation model', function() {
 
   describe('.servers()', function() {
     it('should return collection of servers - channel available on all servers', function() {
-      const channel = {}
+      const channel = {};
       const d = new Operation({ action: 'send', channel }, { asyncapi: { parsed: { channels: { someChannel: channel }, servers: { production: {}, development: {}, } } } as any, pointer: '', id: 'operation' });
       expect(d.servers()).toBeInstanceOf(Servers);
       expect(d.servers().all()).toHaveLength(2);
@@ -90,7 +90,7 @@ describe('Operation model', function() {
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
       const channel = { messages: { someMessage: { messageId: 'messageId' } } };
-      const d = new Operation({ action: 'send', channel: channel }, { asyncapi: { parsed: { channels: { someChannel: channel } } } as any, pointer: '', id: 'operation' });
+      const d = new Operation({ action: 'send', channel }, { asyncapi: { parsed: { channels: { someChannel: channel } } } as any, pointer: '', id: 'operation' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);

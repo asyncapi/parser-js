@@ -43,6 +43,10 @@ export class SecurityScheme extends BaseModel<v2.SecuritySchemeObject, { id: str
     return new OAuthFlows(this._json.flows);
   }
 
+  scopes(): string[] | undefined {
+    return undefined;
+  }
+
   type(): v2.SecuritySchemeType {
     return this._json.type;
   }

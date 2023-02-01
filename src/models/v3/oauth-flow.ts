@@ -5,11 +5,11 @@ import { extensions } from './mixins';
 import type { ExtensionsInterface } from '../extensions';
 import type { OAuthFlowInterface } from '../oauth-flow';
 
-import type { v2 } from '../../spec-types';
+import type { v3 } from '../../spec-types';
 
-export class OAuthFlow<F extends v2.OAuthFlowObjectBase> extends BaseModel<F> implements OAuthFlowInterface {
+export class OAuthFlow<F extends v3.OAuthFlowObjectBase> extends BaseModel<F> implements OAuthFlowInterface {
   authorizationUrl(): string | undefined {
-    return this.json<v2.OAuthFlowObjectAuthorizationCode>().authorizationUrl;
+    return this.json<v3.OAuthFlowObjectAuthorizationCode>().authorizationUrl;
   }
 
   hasRefreshUrl(): boolean {
@@ -21,11 +21,11 @@ export class OAuthFlow<F extends v2.OAuthFlowObjectBase> extends BaseModel<F> im
   }
   
   scopes(): Record<string, string> | undefined {
-    return this._json.scopes;
+    return this._json.availableScopes;
   }
 
   tokenUrl(): string | undefined {    
-    return this.json<Extract<v2.OAuthFlowObject, v2.OAuthFlowObjectImplicit>>().tokenUrl;
+    return this.json<Extract<v3.OAuthFlowObject, v3.OAuthFlowObjectImplicit>>().tokenUrl;
   }
 
   extensions(): ExtensionsInterface {

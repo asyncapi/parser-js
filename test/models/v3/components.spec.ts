@@ -4,6 +4,7 @@ import { Channel } from '../../../src/models/v3/channel';
 import { ChannelParameter } from '../../../src/models/v3/channel-parameter';
 import { CorrelationId } from '../../../src/models/v3/correlation-id';
 import { OperationTrait } from '../../../src/models/v3/operation-trait';
+import { OperationReply } from '../../../src/models/v3/operation-reply';
 import { Message } from '../../../src/models/v3/message';
 import { MessageTrait } from '../../../src/models/v3/message-trait';
 import { Schema } from '../../../src/models/v3/schema';
@@ -20,6 +21,7 @@ import { Schemas } from '../../../src/models/schemas';
 import { ChannelParameters } from '../../../src/models/channel-parameters';
 import { ServerVariables } from '../../../src/models/server-variables';
 import { OperationTraits } from '../../../src/models/operation-traits';
+import { OperationReplies } from '../../../src/models/operation-replies';
 import { MessageTraits } from '../../../src/models/message-traits';
 import { CorrelationIds } from '../../../src/models/correlation-ids';
 import { SecuritySchemes } from '../../../src/models/security-schemes';
@@ -179,6 +181,22 @@ describe('Components model', function() {
       const d = new Components(doc);
       const items = d.messageTraits();
       expect(items).toBeInstanceOf(MessageTraits);
+      expect(items.all()).toHaveLength(0);
+    });
+  });
+
+  describe('.replies()', function() {
+    it('should return OperationReplies with OperationReply Object', function() {
+      const doc = serializeInput<v3.ComponentsObject>({ replies: { reply: {} } });
+      const d = new Components(doc);
+      testCollection(doc, d.replies(), 'replies', OperationReplies, OperationReply);
+    });
+
+    it('should return OperationReplies with empty reply objects when replies are not defined', function() {
+      const doc = serializeInput<v3.ComponentsObject>({});
+      const d = new Components(doc);
+      const items = d.replies();
+      expect(items).toBeInstanceOf(OperationReplies);
       expect(items.all()).toHaveLength(0);
     });
   });

@@ -6,7 +6,7 @@ import type { v3 } from '../../../src/spec-types';
 
 const flowObject = {
   authorizationUrl: 'https://example.com/api/oauth/dialog',
-  scopes: {
+  availableScopes: {
     'write:pets': 'modify pets in your account',
     'read:pets': 'read your pets'
   }
@@ -29,7 +29,7 @@ describe('OAuth Flow', function() {
   describe('.scopes()', function() {
     it('should return scopes if present', function() {
       expect(emptyObject.scopes()).toBeUndefined();
-      expect(flow.scopes()!['write:pets']).toMatch(flowObject.scopes['write:pets']);
+      expect(flow.scopes()!['write:pets']).toMatch(flowObject.availableScopes['write:pets']);
     });
   });
 

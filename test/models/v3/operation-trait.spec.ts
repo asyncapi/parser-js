@@ -34,17 +34,15 @@ describe('OperationTrait model', function() {
 
   describe('.security()', function() {
     it('should return collection of security requirements', function() {
-      const doc = { security: [{ requirement: [] }] };
-      const d = new OperationTrait(doc);
+      const d = new OperationTrait({ security: [{ type: 'apiKey' }] });
 
       const security = d.security();
       expect(Array.isArray(security)).toEqual(true);
       expect(security).toHaveLength(1);
       expect(security[0]).toBeInstanceOf(SecurityRequirements);
       
-      const requirement = security[0].get('requirement') as SecurityRequirement;
+      const requirement = security[0].all()[0] as SecurityRequirement;
       expect(requirement).toBeInstanceOf(SecurityRequirement);
-      expect(requirement.meta().id).toEqual('requirement');
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
     });

@@ -21,6 +21,7 @@ import { ChannelParameters } from '../channel-parameters';
 import { ServerVariables } from '../server-variables';
 import { OperationTraits } from '../operation-traits';
 import { MessageTraits } from '../message-traits';
+import { OperationReplies } from '../operation-replies';
 import { SecuritySchemes } from '../security-schemes';
 import { CorrelationIds } from '../correlation-ids';
 import { Operations } from '../operations';
@@ -43,6 +44,7 @@ import type { ServerVariablesInterface } from '../server-variables';
 import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { MessageTraitsInterface } from '../message-traits';
+import type { OperationRepliesInterface } from '../operation-replies';
 import type { OperationsInterface } from '../operations';
 import type { ExternalDocumentationsInterface } from '../external-documentations';
 import type { TagsInterface } from '../tags';
@@ -84,6 +86,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
 
   messageTraits(): MessageTraitsInterface {
     return this.createCollection('messageTraits', MessageTraits, MessageTrait);
+  }
+
+  replies(): OperationRepliesInterface {
+    return new OperationReplies([]);
   }
 
   correlationIds(): CorrelationIds {

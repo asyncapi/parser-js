@@ -105,7 +105,8 @@ describe('Server Model', function () {
   describe('.operations()', function() {
     it('should return collection of operations - one operation', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { operations: { someOperation: { channel: {} } } } } as any, pointer: '', id: 'production' });
+      const channel = {};
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation: { channel } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -114,7 +115,8 @@ describe('Server Model', function () {
 
     it('should return collection of channels - multiple operations', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { operations: { someOperation1: { channel: {} }, someOperation2: { channel: {} } } } } as any, pointer: '', id: 'production' });
+      const channel = {};
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation1: { channel }, someOperation2: { channel} } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(2);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -125,7 +127,8 @@ describe('Server Model', function () {
 
     it('should return collection of operations - server available only in particular channel', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { operations: { someOperation1: { channel: { servers: [doc] } }, someOperation2: { channel: { servers: [{}] } } } } } as any, pointer: '', id: 'production' });
+      const channel = { servers: [doc] };
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation1: { channel }, someOperation2: { channel: { servers: [{}] } } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -174,7 +177,7 @@ describe('Server Model', function () {
 
   describe('.security()', function() {
     it('should return SecurityRequirements', function() {
-      const doc = serializeInput<v3.ServerObject>({ security: [{ requirement: [] }] });
+      const doc = serializeInput<v3.ServerObject>({ security: [{ type: 'apiKey' }] });
       const d = new Server(doc, {pointer: '/servers/test'} as any);
 
       const security = d.security();
@@ -182,12 +185,11 @@ describe('Server Model', function () {
       expect(security).toHaveLength(1);
       expect(security[0]).toBeInstanceOf(SecurityRequirements);
       
-      const requirement = security[0].get('requirement') as SecurityRequirement;
+      const requirement = security[0].all()[0] as SecurityRequirement;
       expect(requirement).toBeInstanceOf(SecurityRequirement);
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
-      expect(requirement.meta().id).toEqual('requirement');
-      expect(requirement.meta().pointer).toEqual('/servers/test/security/0/requirement');
+      expect(requirement.meta().pointer).toEqual('/servers/test/security/0');
     });
     
     it('should return SecurityRequirements when value is undefined', function() {

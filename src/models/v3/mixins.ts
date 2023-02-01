@@ -29,7 +29,7 @@ export interface CoreObject extends v3.SpecificationExtensions {
   title?: string;
   summary?: string;
   description?: string;
-  externalDocs?: v3.ExternalDocumentationObject;
+  externalDocs?: v3.ExternalDocumentationObject | v3.ReferenceObject;
   tags?: v3.TagsObject;
   bindings?: BindingsObject;
 }
@@ -110,12 +110,12 @@ export function extensions(model: BaseModel<v3.SpecificationExtensions>): Extens
   return new Extensions(extensions);
 }
 
-export function hasExternalDocs(model: BaseModel<{ externalDocs?: v3.ExternalDocumentationObject }>): boolean {
+export function hasExternalDocs(model: BaseModel<{ externalDocs?: v3.ExternalDocumentationObject | v3.ReferenceObject }>): boolean {
   return Object.keys(model.json('externalDocs') || {}).length > 0;
 }
 
-export function externalDocs(model: BaseModel<{ externalDocs?: v3.ExternalDocumentationObject }>): ExternalDocumentationInterface | undefined { 
-  if (hasExternalDocs(model)) {
+export function externalDocs(model: BaseModel<{ externalDocs?: v3.ExternalDocumentationObject | v3.ReferenceObject }>): ExternalDocumentationInterface | undefined { 
+  if (hasExternalDocs(model as BaseModel<{ externalDocs?: v3.ExternalDocumentationObject }>)) {
     return new ExternalDocumentation(model.json('externalDocs') as v3.ExternalDocumentationObject);
   }
 }
@@ -123,7 +123,7 @@ export function externalDocs(model: BaseModel<{ externalDocs?: v3.ExternalDocume
 export function tags(model: BaseModel<{ tags?: v3.TagsObject }>): TagsInterface {
   return new Tags(
     (model.json('tags') || []).map((tag, idx) => 
-      createModel(Tag, tag, { pointer: model.jsonPath(`tags/${idx}`) }, model)
+      createModel(Tag, tag as v3.TagObject, { pointer: model.jsonPath(`tags/${idx}`) }, model)
     )
   );
 }

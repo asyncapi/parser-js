@@ -40,8 +40,9 @@ export interface LicenseObject extends SpecificationExtensions {
 export type ServersObject = Record<string, ServerObject | ReferenceObject>;
 
 export interface ServerObject extends SpecificationExtensions {
-  url: string;
+  host: string;
   protocol: string;
+  pathname?: string;
   protocolVersion?: string;
   description?: string;
   variables?: Record<string, ServerVariableObject | ReferenceObject>;

@@ -122,6 +122,12 @@ export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {
   return data;
 }
 
+export function resolveUrl(protocol: string, url: string): { host: string, pathname: string | undefined } {
+  const serialized = new URL(`${protocol}://${url}`);
+  const pathname = serialized.pathname;
+  return { host: serialized.host, pathname: pathname === '/' ? undefined : pathname };
+}
+
 function retrieveDeepData(value: Record<string, any>, path: string[]) {
   let index = 0;
   const length = path.length;

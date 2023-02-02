@@ -9,7 +9,9 @@ import type { SecurityRequirementsInterface } from './security-requirements';
 export interface ServerInterface extends BaseModel, CoreMixinInterface {
   id(): string
   url(): string;
+  host(): string;
   protocol(): string;
+  pathname(): string | undefined;
   protocolVersion(): string | undefined;
   hasProtocolVersion(): boolean;
   channels(): ChannelsInterface;

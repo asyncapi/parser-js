@@ -28,11 +28,19 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   }
 
   url(): string {
-    return this._json.url;
+    return `${this._json.host}${this._json.pathname}`;
+  }
+
+  host(): string {
+    return this._json.host;
   }
 
   protocol(): string {
     return this._json.protocol;
+  }
+
+  pathname(): string | undefined {
+    return this._json.pathname;
   }
 
   hasProtocolVersion(): boolean {

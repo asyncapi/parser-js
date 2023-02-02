@@ -9,7 +9,7 @@ import { SecurityRequirements } from '../security-requirements';
 import { SecurityRequirement } from './security-requirement';
 
 import { CoreModel } from './mixins';
-import { tilde } from '../../utils';
+import { tilde, resolveUrl } from '../../utils';
 
 import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
@@ -31,8 +31,16 @@ export class Server extends CoreModel<v2.ServerObject, { id: string }> implement
     return this._json.url;
   }
 
+  host(): string {
+    return resolveUrl(this._json.protocol, this._json.url).host;
+  }
+
   protocol(): string {
     return this._json.protocol;
+  }
+
+  pathname(): string | undefined {
+    return resolveUrl(this._json.protocol, this._json.url).pathname || undefined;
   }
 
   hasProtocolVersion(): boolean {

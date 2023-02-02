@@ -15,10 +15,11 @@ import { serializeInput, assertCoreModel } from './utils';
 import type { v3 } from '../../../src/spec-types';
 
 const doc = {
-  development: {
-    protocol: 'mqtt',
+  production: {
+    host: 'rabbitmq.in.mycompany.com:5672',
+    pathname: '/production',
+    protocol: 'amqp',
     protocolVersion: '1.0.0',
-    url: 'development.gigantic-server.com',
     variables: {
       username: {
         default: 'demo',
@@ -27,19 +28,42 @@ const doc = {
     }
   }
 };
-const docItem = new Server(doc.development, { asyncapi: {} as any, pointer: '', id: 'development' });
+const docItem = new Server(doc.production, { asyncapi: {} as any, pointer: '', id: 'production' });
 const emptyItem = new Server(serializeInput<v3.ServerObject>({}), { asyncapi: {} as any, pointer: '', id: '' });
 
 describe('Server Model', function () {
   describe('.id()', function () {
     it('should return name if present', function () {
-      expect(docItem.id()).toMatch('development');
+      expect(docItem.id()).toEqual('production');
+    });
+  });
+
+  describe('.url()', function () {
+    it('should return value', function () {
+      expect(docItem.url()).toEqual(`${doc.production.host}${doc.production.pathname}`);
+    });
+  });
+
+  describe('.host()', function () {
+    it('should return value', function () {
+      expect(docItem.host()).toEqual(doc.production.host);
     });
   });
 
   describe('protocol()', function () {
     it('should return protocol ', function () {
-      expect(docItem.protocol()).toMatch(doc.development.protocol);
+      expect(docItem.protocol()).toEqual(doc.production.protocol);
+    });
+  });
+
+  describe('.pathname()', function () {
+    it('should return value', function () {
+      expect(docItem.pathname()).toEqual(doc.production.pathname);
+    });
+
+    it('should return undefined if value is not set', function () {
+      const docItem = new Server({ ...doc.production, pathname: undefined }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(docItem.pathname()).toBeUndefined();
     });
   });
 
@@ -55,17 +79,11 @@ describe('Server Model', function () {
 
   describe('.protocolVersion()', function () {
     it('should return value', function () {
-      expect(docItem.protocolVersion()).toMatch(doc.development.protocolVersion);
+      expect(docItem.protocolVersion()).toMatch(doc.production.protocolVersion);
     });
 
     it('should return undefined when protocolVersion is missing', function () {
       expect(emptyItem.protocolVersion()).toBeUndefined();
-    });
-  });
-
-  describe('.url()', function () {
-    it('should return value', function () {
-      expect(docItem.url()).toMatch(doc.development.url);
     });
   });
 

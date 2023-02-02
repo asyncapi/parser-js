@@ -46,7 +46,7 @@ function filterRefErrors(errors: IFunctionResult[], resolved: boolean) {
 function getSchema(formats: Set<Format>): Record<string, any> | void {
   switch (true) {
   case formats.has(aas2_6):
-    return getSerializedSchema('2.6.0' as any);
+    return getSerializedSchema('2.6.0');
   case formats.has(aas2_5):
     return getSerializedSchema('2.5.0');
   case formats.has(aas2_4):

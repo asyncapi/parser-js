@@ -193,4 +193,138 @@ testRule('asyncapi2-message-examples', [
       },
     ],
   },
+
+  {
+    name: 'case with omitted payload',
+    document: {
+      asyncapi: '2.0.0',
+      components: {
+        messages: {
+          someMessage: {
+            examples: [
+              {
+                payload: {
+                  key1: 2137,
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'case with falsy payload (valid case)',
+    document: {
+      asyncapi: '2.0.0',
+      components: {
+        messages: {
+          someMessage: {
+            payload: false,
+            examples: [
+              {},
+            ],
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'case with falsy payload (invalid case)',
+    document: {
+      asyncapi: '2.0.0',
+      components: {
+        messages: {
+          someMessage: {
+            payload: false,
+            examples: [
+              {
+                payload: {
+                  key: '2137'
+                }
+              },
+            ],
+          },
+        },
+      },
+    },
+    errors: [
+      {
+        message: '"payload" property must not be valid',
+        path: ['components', 'messages', 'someMessage', 'examples', '0', 'payload'],
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
+  },
+
+  {
+    name: 'case with omitted headers',
+    document: {
+      asyncapi: '2.0.0',
+      components: {
+        messages: {
+          someMessage: {
+            examples: [
+              {
+                headers: {
+                  key1: 2137,
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'case with falsy headers (valid case)',
+    document: {
+      asyncapi: '2.0.0',
+      components: {
+        messages: {
+          someMessage: {
+            headers: false,
+            examples: [
+              {},
+            ],
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'case with falsy headers (invalid case)',
+    document: {
+      asyncapi: '2.0.0',
+      components: {
+        messages: {
+          someMessage: {
+            headers: false,
+            examples: [
+              {
+                headers: {
+                  key: '2137'
+                }
+              },
+            ],
+          },
+        },
+      },
+    },
+    errors: [
+      {
+        message: '"headers" property must not be valid',
+        path: ['components', 'messages', 'someMessage', 'examples', '0', 'headers'],
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
+  },
 ]);

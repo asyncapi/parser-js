@@ -6,6 +6,23 @@ import type { IFunctionResult, RulesetFunctionContext } from '@stoplight/spectra
 import type { JSONSchema7 } from 'json-schema';
 import type { v2 } from 'spec-types';
 
+function serializeSchema(schema: unknown, type: 'payload' | 'headers'): any {
+  if (!schema && typeof schema !== 'boolean') { // if schema is falsy then
+    if (type === 'headers') { // object for headers
+      schema = { type: 'object' };
+    } else { // anything for payload
+      schema = {};
+    }
+  } else if (typeof schema === 'boolean') { // spectral cannot handle boolean schemas
+    if (schema === true) {
+      schema = {}; // everything
+    } else {
+      schema = { not: {} }; // nothing
+    }
+  }
+  return schema;
+}
+
 function getMessageExamples(message: v2.MessageObject): Array<{ path: JsonPath; value: v2.MessageExampleObject }> {
   if (!Array.isArray(message.examples)) {
     return [];
@@ -59,18 +76,22 @@ export const messageExamples = createRulesetFunction<v2.MessageObject, null>(
     if (!targetVal.examples) return;
 
     const results: IFunctionResult[] = [];
+    const payloadSchema = serializeSchema(targetVal.payload, 'payload');
+    const headersSchema = serializeSchema(targetVal.headers, 'headers');
     for (const example of getMessageExamples(targetVal)) {
+      const { path, value } = example;
+
       // validate payload
-      if (example.value.payload !== undefined) {
-        const errors = validate(example.value.payload, example.path, 'payload', targetVal.payload, ctx);
+      if (value.payload !== undefined) {
+        const errors = validate(value.payload, path, 'payload', payloadSchema, ctx);
         if (Array.isArray(errors)) {
           results.push(...errors);
         }
       }
 
       // validate headers
-      if (example.value.headers !== undefined) {
-        const errors = validate(example.value.headers, example.path, 'headers', targetVal.headers, ctx);
+      if (value.headers !== undefined) {
+        const errors = validate(value.headers, path, 'headers', headersSchema, ctx);
         if (Array.isArray(errors)) {
           results.push(...errors);
         }

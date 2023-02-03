@@ -53,6 +53,7 @@ export const coreRuleset = {
         },
       },
     },
+    // enable after fixing https://github.com/asyncapi/spec-json-schemas/issues/296
     // 'asyncapi-document-unresolved': {
     //   description: 'Checking if the AsyncAPI document has valid unresolved structure.',
     //   message: '{{error}}',

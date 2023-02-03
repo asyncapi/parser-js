@@ -1,61 +1,129 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { createRulesetFunction, Spectral } from '@stoplight/spectral-core';
+import { DiagnosticSeverity } from '../src';
 import { Parser } from '../src/parser';
 import { createSpectral } from '../src/spectral';
-import { specVersions } from '../src/constants';
-
-import { expectDiagnostics } from './utils';
 
 describe('Custom Spectral instance', function() {
-  const parser = new Parser();
-
   describe('createSpectral()', function() {
     it('should create Spectral instance', async function() {
+      const parser = new Parser();
       const spectral = createSpectral(parser);
       expect(spectral).toBeInstanceOf(Spectral);
     });
   });
 
-  describe('asyncapi-is-asyncapi Spectral rule', function() {
-    it('should throw error when input is not an AsyncAPI document (empty input case)', async function() {
-      const diagnostics = await parser.validate('');
-      
-      expect(diagnostics.length > 0).toEqual(true);
-      expectDiagnostics(diagnostics, 'asyncapi-is-asyncapi', [
-        {
-          message: 'This is not an AsyncAPI document. The "asyncapi" field as string is missing.',
-          path: []
+  describe('custom rules', function() {
+    it('should disable core rules', async function() {
+      const parser = new Parser({
+        ruleset: {
+          core: false,
+        }
+      });
+
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
         },
-      ]);
+        channels: {
+          channel: {
+            publish: {
+              operationId: 'publish',
+              message: {
+                payload: {
+                  type: 'string'
+                }
+              }
+            },
+          }
+        },
+      };
+      const { diagnostics } = await parser.parse(documentRaw);
+
+      const filteredDiagnostic = diagnostics.filter(d => d.severity === DiagnosticSeverity.Error);
+      expect(filteredDiagnostic).toHaveLength(0);
     });
 
-    it('should throw error when input is not an AsyncAPI document (another spec case)', async function() {
-      const document = {
-        openapi: '3.0.0',
-      };
-      const diagnostics = await parser.validate(document as any);
-      
-      expect(diagnostics.length > 0).toEqual(true);
-      expectDiagnostics(diagnostics, 'asyncapi-is-asyncapi', [
-        {
-          message: 'This is not an AsyncAPI document. The "asyncapi" field as string is missing.',
-          path: []
+    it('should disable recommended rules', async function() {
+      const parser = new Parser({
+        ruleset: {
+          recommended: false,
+        }
+      });
+
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
         },
-      ]);
+        channels: {
+          channel: {
+            publish: {
+              operationId: 'publish',
+              message: {
+                payload: {
+                  type: 'string'
+                }
+              }
+            },
+          }
+        },
+      };
+      const { diagnostics } = await parser.parse(documentRaw);
+
+      const filteredDiagnostic = diagnostics.filter(d => d.severity === DiagnosticSeverity.Warning);
+      expect(filteredDiagnostic).toHaveLength(0);
     });
 
-    it('should throw error when input is an unsupported version of AsyncAPI', async function() {
-      const document = {
-        asyncapi: '2.1.37',
-      };
-      const diagnostics = await parser.validate(document as any);
-      
-      expect(diagnostics.length > 0).toEqual(true);
-      expectDiagnostics(diagnostics, 'asyncapi-is-asyncapi', [
-        {
-          message: `Version "2.1.37" is not supported. Please use "${specVersions[specVersions.length - 1]}" (latest) version of the specification.`,
-          path: []
+    it('should use custom rules passed in options', async function() {
+      const parser = new Parser({
+        ruleset: {
+          rules: {
+            'asyncapi-custom': {
+              formats: [() => true], // for every input
+              given: '$',
+              severity: 'warn',
+              then: {
+                function: createRulesetFunction<null, null>({ input: null, options: null }, () => {
+                  return [
+                    {
+                      message: 'Message from custom ruleset',
+                      path: [],
+                    }
+                  ];
+                }),
+              }
+            }
+          }
+        }
+      });
+
+      const documentRaw = {
+        asyncapi: '2.0.0',
+        info: {
+          title: 'Valid AsyncApi document',
+          version: '1.0',
         },
-      ]);
+        channels: {
+          channel: {
+            publish: {
+              operationId: 'publish',
+              message: {
+                payload: {
+                  type: 'string'
+                }
+              }
+            },
+          }
+        },
+      };
+      const { diagnostics } = await parser.parse(documentRaw);
+
+      const filteredDiagnostic = diagnostics.filter(d => d.code === 'asyncapi-custom');
+      expect(filteredDiagnostic).toHaveLength(1);
+      expect(filteredDiagnostic[0].message).toEqual('Message from custom ruleset');
     });
   });
 });

@@ -50,7 +50,7 @@ export async function validate(parser: Parser, parserSpectral: Spectral, asyncap
     // add input data (asyncapi argument) to the document to reuse it in rules
     (document as any).__parserInput = asyncapi;
   
-    const spectral = options.__unstable?.resolver ? createSpectral(parser, options.__unstable?.resolver) : parserSpectral;
+    const spectral = options.__unstable?.resolver ? createSpectral(parser, options) : parserSpectral;
     // eslint-disable-next-line prefer-const
     let { resolved: validated, results } = await spectral.runWithResolved(document, {  });
   

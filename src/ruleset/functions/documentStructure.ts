@@ -17,6 +17,8 @@ function shouldIgnoreError(error: ErrorObject): boolean {
   );
 }
 
+// ajv throws a lot of errors that have no understandable context, e.g. errors related to the fact that a value doesn't meet the conditions of some sub-schema in `oneOf`, `anyOf` etc.
+// for this reason, we filter these unnecessary errors and leave only the most important ones (usually the first occurring in the list of errors). 
 function prepareResults(errors: ErrorObject[]): void {
   // Update additionalProperties errors to make them more precise and prevent them from being treated as duplicates
   for (let i = 0; i < errors.length; i++) {

@@ -35,7 +35,7 @@ export const unusedSecuritySchemes = createRulesetFunction<v2.AsyncAPIObject, nu
         }
       });
     }
-    // collect all security requirements from servers
+    // collect all security requirements from operations
     const operations = getAllOperations(targetVal);
     for (const { operation } of operations) {
       if (Array.isArray(operation.security)) {

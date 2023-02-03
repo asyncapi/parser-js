@@ -24,7 +24,7 @@ export const unusedComponent = createRulesetFunction<{ components: Record<string
     const results: IFunctionResult[] = [];
     Object.keys(components).forEach(componentType => {
       // if component type is `securitySchemes` and we operate on AsyncAPI 2.x.x skip validation
-      // security schemes in 2.x.x is references by keys, not by object ref - for that case we have separate rule `asyncapi2-unused-securityScheme`
+      // security schemes in 2.x.x are referenced by keys, not by object ref - for this case we have a separate `asyncapi2-unused-securityScheme` rule
       if (componentType === 'securitySchemes' && aas2(targetVal, null)) {
         return;
       }

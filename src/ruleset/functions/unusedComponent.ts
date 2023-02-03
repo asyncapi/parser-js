@@ -1,5 +1,6 @@
 import { unreferencedReusableObject } from '@stoplight/spectral-functions';
 import { createRulesetFunction } from '@stoplight/spectral-core';
+import { aas2 } from '../formats';
 import { isObject } from '../../utils';
 
 import type { IFunctionResult } from '@stoplight/spectral-core';
@@ -22,6 +23,12 @@ export const unusedComponent = createRulesetFunction<{ components: Record<string
 
     const results: IFunctionResult[] = [];
     Object.keys(components).forEach(componentType => {
+      // if component type is `securitySchemes` and we operate on AsyncAPI 2.x.x skip validation
+      // security schemes in 2.x.x are referenced by keys, not by object ref - for this case we have a separate `asyncapi2-unused-securityScheme` rule
+      if (componentType === 'securitySchemes' && aas2(targetVal, null)) {
+        return;
+      }
+
       const value = components[componentType];
       if (!isObject(value)) {
         return;

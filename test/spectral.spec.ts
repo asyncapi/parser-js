@@ -1,4 +1,5 @@
-import { createRulesetFunction, Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@stoplight/spectral-core';
+import { truthy } from '@stoplight/spectral-functions';
 import { DiagnosticSeverity } from '../src';
 import { Parser } from '../src/parser';
 import { createSpectral } from '../src/spectral';
@@ -80,22 +81,19 @@ describe('Custom Spectral instance', function() {
     it('should use custom rules passed in options', async function() {
       const parser = new Parser({
         ruleset: {
+          extends: [],
           rules: {
-            'asyncapi-custom': {
-              formats: [() => true], // for every input
+            'asyncapi-defaultContentType': 'off',
+            'asyncapi-termsOfService': {
+              description: 'Info "termsOfService" should be present and non-empty string.',
+              message: 'Info "termsOfService" should be present and non-empty string.',
+              recommended: true,
               given: '$',
-              severity: 'warn',
               then: {
-                function: createRulesetFunction<null, null>({ input: null, options: null }, () => {
-                  return [
-                    {
-                      message: 'Message from custom ruleset',
-                      path: [],
-                    }
-                  ];
-                }),
-              }
-            }
+                field: 'info.termsOfService',
+                function: truthy,
+              },
+            },
           }
         }
       });
@@ -121,9 +119,10 @@ describe('Custom Spectral instance', function() {
       };
       const { diagnostics } = await parser.parse(documentRaw);
 
-      const filteredDiagnostic = diagnostics.filter(d => d.code === 'asyncapi-custom');
+      const filteredDiagnostic = diagnostics.filter(d => d.code === 'asyncapi-termsOfService');
       expect(filteredDiagnostic).toHaveLength(1);
-      expect(filteredDiagnostic[0].message).toEqual('Message from custom ruleset');
+      expect(filteredDiagnostic[0].message).toEqual('Info "termsOfService" should be present and non-empty string.');
+      expect(diagnostics.filter(d => d.code === 'asyncapi-defaultContentType')).toHaveLength(0);
     });
   });
 });

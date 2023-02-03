@@ -12,6 +12,7 @@ import { operationIdUniqueness } from './functions/operationIdUniqueness';
 import { schemaValidation } from './functions/schemaValidation';
 import { security } from './functions/security';
 import { serverVariables } from './functions/serverVariables';
+import { unusedSecuritySchemes } from './functions/unusedSecuritySchemes';
 import { uniquenessTags } from '../functions/uniquenessTags';
 import { asyncApi2SchemaParserRule } from '../../schema-parser/spectral-rule-v2';
 
@@ -345,6 +346,20 @@ export const v2RecommendedRuleset = {
         functionOptions: {
           idField: 'messageId',
         },
+      },
+    },
+
+    /**
+     * Component Object rules
+     */
+    'asyncapi2-unused-securityScheme': {
+      description: 'Potentially unused security scheme has been detected in AsyncAPI document.',
+      recommended: true,
+      resolved: false,
+      severity: 'info',
+      given: '$',
+      then: {
+        function: unusedSecuritySchemes,
       },
     },
   },

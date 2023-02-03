@@ -3,10 +3,47 @@ import { createRulesetFunction } from '@stoplight/spectral-core';
 import { schema as schemaFn } from '@stoplight/spectral-functions';
 import { aas2_0, aas2_1, aas2_2, aas2_3, aas2_4, aas2_5, aas2_6 } from '../formats';
 
-// import type { ErrorObject } from 'ajv';
+import type { ErrorObject } from 'ajv';
 import type { IFunctionResult, Format } from '@stoplight/spectral-core';
 
 type AsyncAPIVersions = keyof typeof specs;
+
+function shouldIgnoreError(error: ErrorObject): boolean {
+  return (
+    // oneOf is a fairly error as we have 2 options to choose from for most of the time.
+    error.keyword === 'oneOf' ||
+    // the required $ref is entirely useless, since aas-schema rules operate on resolved content, so there won't be any $refs in the document
+    (error.keyword === 'required' && error.params.missingProperty === '$ref')
+  );
+}
+
+// ajv throws a lot of errors that have no understandable context, e.g. errors related to the fact that a value doesn't meet the conditions of some sub-schema in `oneOf`, `anyOf` etc.
+// for this reason, we filter these unnecessary errors and leave only the most important ones (usually the first occurring in the list of errors). 
+function prepareResults(errors: ErrorObject[]): void {
+  // Update additionalProperties errors to make them more precise and prevent them from being treated as duplicates
+  for (let i = 0; i < errors.length; i++) {
+    const error = errors[i];
+
+    if (error.keyword === 'additionalProperties') {
+      error.instancePath = `${error.instancePath}/${String(error.params['additionalProperty'])}`;
+    } else if (error.keyword === 'required' && error.params.missingProperty === '$ref') {
+      errors.splice(i, 1);
+      i--;
+    }
+  }
+
+  for (let i = 0; i < errors.length; i++) {
+    const error = errors[i];
+
+    if (i + 1 < errors.length && errors[i + 1].instancePath === error.instancePath) {
+      errors.splice(i + 1, 1);
+      i--;
+    } else if (i > 0 && shouldIgnoreError(error) && errors[i - 1].instancePath.startsWith(error.instancePath)) {
+      errors.splice(i, 1);
+      i--;
+    }
+  }
+}
 
 function getCopyOfSchema(version: AsyncAPIVersions): Record<string, unknown> {
   return JSON.parse(JSON.stringify(specs[version])) as Record<string, unknown>;
@@ -88,7 +125,7 @@ export const documentStructure = createRulesetFunction<unknown, { resolved: bool
       return;
     }
 
-    const errors = schemaFn(targetVal, { allErrors: true, schema }, context);
+    const errors = schemaFn(targetVal, { allErrors: true, schema, prepareResults: options.resolved ? prepareResults : undefined }, context);
     if (!Array.isArray(errors)) {
       return;
     }

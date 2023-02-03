@@ -160,4 +160,37 @@ testRule('asyncapi-unused-component', [
       },
     ],
   },
+
+  {
+    name: 'possible component is unused - skip security schemes',
+    document: {
+      asyncapi: '2.0.0',
+      channels: {
+        someChannel: {
+          publish: {
+            message: {
+              $ref: '#/components/messages/someMessage'
+            }
+          }
+        }
+      },
+      components: {
+        messages: {
+          someMessage: {
+            payload: {
+              $ref: '#/components/schemas/someSchema',
+            }
+          },
+        },
+        schemas: {
+          someSchema: {},
+        },
+        securitySchemes: {
+          unusedScheme1: {},
+          unusedScheme2: {},
+        }
+      }
+    },
+    errors: [],
+  },
 ]);

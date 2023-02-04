@@ -47,6 +47,11 @@ describe('Server Model', function () {
     it('should return value', function () {
       expect(docItem.host()).toEqual('development.gigantic-server.com:2137');
     });
+
+    it('should return value (url with protocol case)', function () {
+      const server = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137/some/path' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(server.host()).toEqual('development.gigantic-server.com:2137');
+    });
   });
 
   describe('protocol()', function () {
@@ -58,6 +63,11 @@ describe('Server Model', function () {
   describe('.pathname()', function () {
     it('should return value', function () {
       expect(docItem.pathname()).toEqual('/some/path');
+    });
+
+    it('should return value (url with protocol case)', function () {
+      const server = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137/some/path' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(server.pathname()).toEqual('/some/path');
     });
 
     it('should return undefined if pathname does not exist in url', function () {

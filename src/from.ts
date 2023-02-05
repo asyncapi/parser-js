@@ -1,4 +1,5 @@
-import { readFile } from 'fs/promises';
+import { readFile } from 'fs';
+import { promisify } from 'util';
 
 import type { RequestInit } from 'node-fetch';
 import type { Parser } from './parser';
@@ -29,9 +30,9 @@ export function fromURL(parser: Parser, source: string, options?: RequestInit): 
   };
 }
 
-export function fromFile(parser: Parser, source: string, options?: Parameters<typeof readFile>[1]): FromResult {
+export function fromFile(parser: Parser, source: string, options?: Parameters<typeof readFile.__promisify__>[1]): FromResult {
   async function readFileFn(): Promise<Input> {
-    return (await readFile(source, options)).toString();
+    return (await promisify(readFile)(source, options)).toString();
   }
 
   return {

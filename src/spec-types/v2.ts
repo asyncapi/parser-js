@@ -45,8 +45,8 @@ export interface ServerObject extends SpecificationExtensions {
   description?: string;
   variables?: Record<string, ServerVariableObject>;
   security?: Array<SecurityRequirementObject>;
-  tags?: TagsObject;
   bindings?: ServerBindingsObject | ReferenceObject;
+  tags?: TagsObject;
 }
 
 export interface ServerVariableObject extends SpecificationExtensions {

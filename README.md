@@ -15,12 +15,15 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
 <!-- toc -->
 
 - [Installation](#installation)
+- [Usage](#usage)
 - [Examples](#examples)
   * [Example with parsing](#example-with-parsing)
   * [Example with validation](#example-with-validation)
   * [Example using Avro schemas](#example-using-avro-schemas)
   * [Example using OpenAPI schemas](#example-using-openapi-schemas)
   * [Example using RAML data types](#example-using-raml-data-types)
+  * [Example with performing actions on HTTP source](#example-with-performing-actions-on-http-source)
+  * [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
   * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
 - [Using in the browser/SPA applications](#using-in-the-browserspa-applications)
@@ -30,8 +33,9 @@ Use this package to validate and parse AsyncAPI documents —either YAML or JSON
 - [Circular references](#circular-references)
 - [Stringify](#stringify)
 - [Convert to the old API](#convert-to-the-old-api)
-- [Bundler configuration](#bundler-configuration)
-  * [Webpack](#webpack)
+- [Notes](#notes)
+  * [Using with Webpack](#using-with-webpack)
+  * [Testing with [Jest](https://jestjs.io/)](#testing-with-jesthttpsjestjsio)
 - [Develop](#develop)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -201,25 +205,24 @@ if (document) {
 
 ## API documentation
 
-Parser-JS API implements a global API definition for all AsyncAPI parser implementations known as the [Parser-API](https://github.com/asyncapi/parser-api). 
-This API is designed having in mind developer experience and resiliency to breaking changes. 
+Parser-JS API implements a global API definition for all AsyncAPI parser implementations known as the [Parser-API](https://github.com/asyncapi/parser-api). This API is designed having in mind developer experience and resiliency to breaking changes.
 
 The following table shows a compatibility matrix between this parser, and the [Parser-API](https://github.com/asyncapi/parser-api), as well as the AsyncAPI spec version supported by each release of this parser.
 
-Parser-JS | Parser-API                                                           | Spec 2.x | Spec 3.x
-----------|----------------------------------------------------------------------|----------|---------
-1.x       |                                                                      | ✓        |  
-2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) | ✓        | ✓
+| Parser-JS | Parser-API                                                           | Spec 2.x |
+|-----------|----------------------------------------------------------------------|----------|
+| 1.x       |                                                                      | ✓        |  
+| 2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) | ✓        |
 
 - `✓` Fully supported version.
 - `-` The AsyncAPI Spec version has features the Parser-JS can't use but the rest are fully supported.
 - Empty means not supported version.
 
-Additionally to all the methods declared in the [Parser-API](https://github.com/asyncapi/parser-api), this parser might introduce some helper functions.
+Additionally to all the methods declared in the [Parser-API](https://github.com/asyncapi/parser-api), this parser might introduce some helper functions like:
 
-Direct access to the parsed JSON document is always available through the `doc.json()` method.
-
-See [API documentation](./docs/api.md) for more examples and full API reference information.
+- `json()` which returns the JSON object of the given object. It is possible to pass as an argument the name of a field in an object and retrieve corresponding value.
+- `jsonPath()` which returns the JSON Path of the given object.
+- `meta()` which returns the metadata of a given object, like a parsed AsyncAPI Document.
 
 ## Using in the browser/SPA applications
 
@@ -326,6 +329,7 @@ In AsyncAPI Initiative we support below custom schema parsers. To install them, 
 The parser uses custom extensions to define additional information about the spec. Each has a different purpose but all of them are there to make it much easier to work with the AsyncAPI document. These extensions are prefixed with `x-parser-`. The following extensions are used:
 
 - `x-parser-spec-parsed` is used to specify if the AsyncAPI document is already parsed by the parser. Property `x-parser-spec-parsed` is added to the root of the document with the `true` value.
+- `x-parser-api-version` is used to specify which version of the [Parser-API](https://github.com/asyncapi/parser-api) the parsed AsyncAPI document uses. Property `x-parser-api-version` is added to the root of the document with the `1` value if the parsed document uses [Parser-API](https://github.com/asyncapi/parser-api) in the `v1` version or `0` if document uses old `parser-js` API.
 - `x-parser-message-name` is used to specify the name of the message if it is not provided. For messages without names, the parser generates anonymous names. Property `x-parser-message-name` is added to a message object with a value that follows this pattern: `<anonymous-message-${number}>`. This value is returned by `message.id()` (`message.uid()` in the [old API](#convert-to-the-old-api)) when regular `name` property is not present.
 - `x-parser-original-payload` holds the original payload of the message. You can use different formats for payloads with the AsyncAPI documents and the parser converts them to. For example, it converts payload described with Avro schema to AsyncAPI schema. The original payload is preserved in the extension.
 - [`x-parser-circular`](#circular-references).
@@ -345,7 +349,7 @@ In addition, the [`convertToOldAPI()` function](#convert-to-the-old-api) which c
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. In old API the Parser exposes `hasCircular()` function to check if given AsyncAPI document has circular references.
-- `isCircular()` function is added to the [Schema Model](./src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the tree.
+- `isCircular()` function is added to the [Schema Model](./src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the JSON tree.
 
 ## Stringify
 
@@ -383,9 +387,9 @@ const oldAsyncAPIDocument = convertToOldAPI(document);
 > **Warning**
 > The old api will be supported only for a certain period of time. The target date for turning off support of the old API is around the end of January 2023.
 
-## Bundler configuration
+## Notes
 
-### Webpack
+### Using with Webpack
 
 Versions `<5` of Webpack should handle bundling without problems. Due to the fact that Webpack 5 no longer does fallbacks to native NodeJS modules by default we need to install `buffer` package and add fallbacks:
 
@@ -395,10 +399,28 @@ Versions `<5` of Webpack should handle bundling without problems. Due to the fac
     fallback: {
       "fs": false,
       "path": false,
+      "util": false,
       "buffer": require.resolve("buffer/"),
     }
   }
 }
+```
+
+### Testing with [Jest](https://jestjs.io/)
+
+Using a Parser in an application that is tested using [Jest](https://jestjs.io/), there will probably an error like: 
+
+```bash
+Cannot find module 'nimma/legacy' from 'node_modules/@stoplight/spectral-core/dist/runner/runner.js
+```
+
+It's a problem with Jest, which cannot understand [NodeJS's package exports](https://nodejs.org/api/packages.html). To fix that, should be [enabled ESM support in Jest](https://jestjs.io/docs/ecmascript-modules) or set an appropriate Jest's `moduleNameMapper` config:
+
+```js
+moduleNameMapper: {
+  '^nimma/legacy$': '<rootDir>/node_modules/nimma/dist/legacy/cjs/index.js',
+  '^nimma/(.*)': '<rootDir>/node_modules/nimma/dist/cjs/$1',
+},
 ```
 
 ## Develop

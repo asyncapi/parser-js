@@ -1,36 +1,78 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
-import { SecurityRequirements } from '../../../src/models/security-requirements';
+import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
-import { assertCoreModel } from './utils';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('OperationTrait model', function() {
   describe('.id()', function() {
-    it('should return the value', function() {
+    it('should return id of model', function() {
+      const doc = {};
+      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.id()).toEqual('trait');
+    });
+
+    it('should reuse operationId', function() {
       const doc = { operationId: '...' };
       const d = new OperationTrait(doc);
       expect(d.id()).toEqual(doc.operationId);
     });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = {};
-      const d = new OperationTrait(doc);
-      expect(d.id()).toBeUndefined();
-    });
   });
 
-  describe('.hasId()', function() {
+  describe('.hasOperationId()', function() {
     it('should return true when there is a value', function() {
       const doc = { operationId: '...' };
       const d = new OperationTrait(doc);
-      expect(d.hasId()).toEqual(true);
+      expect(d.hasOperationId()).toEqual(true);
     });
     
     it('should return false when there is no value', function() {
       const doc = {};
       const d = new OperationTrait(doc);
-      expect(d.hasId()).toEqual(false);
+      expect(d.hasOperationId()).toEqual(false);
+    });
+  });
+
+  describe('.operationId()', function() {
+    it('should return the value', function() {
+      const doc = { operationId: '...' };
+      const d = new OperationTrait(doc);
+      expect(d.operationId()).toEqual(doc.operationId);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = {};
+      const d = new OperationTrait(doc);
+      expect(d.operationId()).toBeUndefined();
+    });
+  });
+
+  describe('.hasSummary()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { summary: '...' };
+      const d = new OperationTrait(doc);
+      expect(d.hasSummary()).toEqual(true);
+    });
+    
+    it('should return false when there is no value', function() {
+      const doc = {};
+      const d = new OperationTrait(doc);
+      expect(d.hasSummary()).toEqual(false);
+    });
+  });
+
+  describe('.summary()', function() {
+    it('should return the value', function() {
+      const doc = { summary: '...' };
+      const d = new OperationTrait(doc);
+      expect(d.summary()).toEqual(doc.summary);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = {};
+      const d = new OperationTrait(doc);
+      expect(d.summary()).toBeUndefined();
     });
   });
 
@@ -60,6 +102,10 @@ describe('OperationTrait model', function() {
   });
 
   describe('mixins', function() {
-    assertCoreModel(OperationTrait);
+    assertBindings(OperationTrait);
+    assertDescription(OperationTrait);
+    assertExtensions(OperationTrait);
+    assertExternalDocumentation(OperationTrait);
+    assertTags(OperationTrait);
   });
 });

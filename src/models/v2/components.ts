@@ -13,18 +13,20 @@ import { SecurityScheme } from './security-scheme';
 import { Server } from './server';
 import { ServerVariable } from './server-variable';
 import { extensions } from './mixins';
-import { Servers } from './servers';
-import { Channels } from './channels';
-import { Messages } from './messages';
-import { Schemas } from './schemas';
-import { ChannelParameters } from './channel-parameters';
-import { ServerVariables } from './server-variables';
-import { OperationTraits } from './operation-traits';
-import { MessageTraits } from './message-traits';
-import { SecuritySchemes } from './security-schemes';
-import { CorrelationIds } from './correlation-ids';
-import { Operations } from './operations';
+import { Servers } from '../servers';
+import { Channels } from '../channels';
+import { Messages } from '../messages';
+import { Schemas } from '../schemas';
+import { ChannelParameters } from '../channel-parameters';
+import { ServerVariables } from '../server-variables';
+import { OperationTraits } from '../operation-traits';
+import { MessageTraits } from '../message-traits';
+import { SecuritySchemes } from '../security-schemes';
+import { CorrelationIds } from '../correlation-ids';
+import { Operations } from '../operations';
 import { Message } from './message';
+import { ExternalDocumentations } from '../external-documentations';
+import { Tags } from '../tags';
 
 import { tilde } from '../../utils';
 
@@ -42,7 +44,8 @@ import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { MessageTraitsInterface } from '../message-traits';
 import type { OperationsInterface } from '../operations';
-import type { CorrelationIdsInterface } from '../correlation-ids';
+import type { ExternalDocumentationsInterface } from '../external-documentations';
+import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
 
@@ -52,11 +55,11 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   }
 
   channels(): ChannelsInterface {
-    return new Channels(
-      Object.entries(this._json.channels || {}).map(([channelAddress, channel]) => 
-        this.createModel(Channel, channel as v2.ChannelObject, { id: channelAddress, address: '', pointer: `/components/channels/${tilde(channelAddress)}` })
-      )
-    );
+    return this.createCollection('channels', Channels, Channel);
+  }
+
+  operations(): OperationsInterface {
+    return new Operations([]);
   }
 
   messages(): MessagesInterface {
@@ -75,10 +78,6 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return this.createCollection('serverVariables', ServerVariables, ServerVariable);
   }
 
-  operations(): OperationsInterface {
-    return new Operations([]);
-  }
-
   operationTraits(): OperationTraitsInterface {
     return this.createCollection('operationTraits', OperationTraits, OperationTrait);
   }
@@ -87,12 +86,20 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return this.createCollection('messageTraits', MessageTraits, MessageTrait);
   }
 
-  correlationIds(): CorrelationIdsInterface {
+  correlationIds(): CorrelationIds {
     return this.createCollection('correlationIds', CorrelationIds, CorrelationId);
   }
 
   securitySchemes(): SecuritySchemesInterface {
     return this.createCollection('securitySchemes', SecuritySchemes, SecurityScheme);
+  }
+
+  tags(): TagsInterface {
+    return new Tags([]);
+  }
+
+  externalDocs(): ExternalDocumentationsInterface {
+    return new ExternalDocumentations([]);
   }
 
   serverBindings(): Record<string, BindingsInterface> {
@@ -122,7 +129,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
   protected createCollection<M extends Collection<any>, T extends BaseModel>(itemsName: keyof v2.ComponentsObject, collectionModel: Constructor<M>, itemModel: Constructor<T>): M {
     const collectionItems: T[] = [];
     Object.entries(this._json[itemsName] || {}).forEach(([id, item]) => {
-      collectionItems.push(this.createModel(itemModel, item as any, { id, pointer: `/components/${itemsName}/${id}` } as any));
+      collectionItems.push(this.createModel(itemModel, item as any, { id, pointer: `/components/${itemsName}/${tilde(id)}` } as any));
     });
     return new collectionModel(collectionItems);
   }

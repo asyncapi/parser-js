@@ -1,4 +1,4 @@
-import { Operations } from '../../../src/models/v2/operations';
+import { Operations } from '../../../src/models/operations';
 import { Operation } from '../../../src/models/v2/operation';
 
 const operation = {

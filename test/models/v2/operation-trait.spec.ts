@@ -1,6 +1,6 @@
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
-import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
+import { SecurityRequirements } from '../../../src/models/security-requirements';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 
 import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
@@ -20,33 +20,47 @@ describe('OperationTrait model', function() {
     });
   });
 
-  describe('.hasOperationId()', function() {
+  describe('.hasId()', function() {
     it('should return true when there is a value', function() {
       const doc = { operationId: '...' };
       const d = new OperationTrait(doc);
-      expect(d.hasOperationId()).toEqual(true);
+      expect(d.hasId()).toEqual(true);
     });
     
     it('should return false when there is no value', function() {
       const doc = {};
       const d = new OperationTrait(doc);
-      expect(d.hasOperationId()).toEqual(false);
+      expect(d.hasId()).toEqual(false);
     });
   });
 
-  describe('.operationId()', function() {
-    it('should return the value', function() {
-      const doc = { operationId: '...' };
-      const d = new OperationTrait(doc);
-      expect(d.operationId()).toEqual(doc.operationId);
-    });
+  // describe('.hasOperationId()', function() {
+  //   it('should return true when there is a value', function() {
+  //     const doc = { operationId: '...' };
+  //     const d = new OperationTrait(doc);
+  //     expect(d.hasOperationId()).toEqual(true);
+  //   });
     
-    it('should return undefined when there is no value', function() {
-      const doc = {};
-      const d = new OperationTrait(doc);
-      expect(d.operationId()).toBeUndefined();
-    });
-  });
+  //   it('should return false when there is no value', function() {
+  //     const doc = {};
+  //     const d = new OperationTrait(doc);
+  //     expect(d.hasOperationId()).toEqual(false);
+  //   });
+  // });
+
+  // describe('.operationId()', function() {
+  //   it('should return the value', function() {
+  //     const doc = { operationId: '...' };
+  //     const d = new OperationTrait(doc);
+  //     expect(d.operationId()).toEqual(doc.operationId);
+  //   });
+    
+  //   it('should return undefined when there is no value', function() {
+  //     const doc = {};
+  //     const d = new OperationTrait(doc);
+  //     expect(d.operationId()).toBeUndefined();
+  //   });
+  // });
 
   describe('.hasSummary()', function() {
     it('should return true when there is a value', function() {

@@ -1,18 +1,18 @@
-import { Channels } from '../../../src/models/v2/channels';
+import { Channels } from '../../../src/models/channels';
 import { Channel } from '../../../src/models/v2/channel';
-import { Messages } from '../../../src/models/v2/messages';
+import { Messages } from '../../../src/models/messages';
 import { Message } from '../../../src/models/v2/message';
-import { Operations } from '../../../src/models/v2/operations';
+import { Operations } from '../../../src/models/operations';
 import { Operation } from '../../../src/models/v2/operation';
 import { Server } from '../../../src/models/v2/server';
-import { ServerVariables } from '../../../src/models/v2/server-variables';
+import { ServerVariables } from '../../../src/models/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
+import { SecurityRequirements } from '../../../src/models/security-requirements';
+import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 import { serializeInput, assertBindings, assertDescription, assertExtensions, assertTags } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
-import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
-import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 const doc = {
   development: {
@@ -109,7 +109,7 @@ describe('Server Model', function () {
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[0].operationId()).toEqual('1');
+      expect(d.operations().all()[0].id()).toEqual('1');
     });
 
     it('should return collection of channels - multiple channels', function() {
@@ -118,9 +118,9 @@ describe('Server Model', function () {
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(2);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[0].operationId()).toEqual('1');
+      expect(d.operations().all()[0].id()).toEqual('1');
       expect(d.operations().all()[1]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[1].operationId()).toEqual('2');
+      expect(d.operations().all()[1].id()).toEqual('2');
     });
 
     it('should return collection of channels - server available only in particular channel', function() {
@@ -129,11 +129,11 @@ describe('Server Model', function () {
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(3);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[0].operationId()).toEqual('1');
+      expect(d.operations().all()[0].id()).toEqual('1');
       expect(d.operations().all()[1]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[1].operationId()).toEqual('2');
+      expect(d.operations().all()[1].id()).toEqual('2');
       expect(d.operations().all()[2]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[2].operationId()).toEqual('3');
+      expect(d.operations().all()[2].id()).toEqual('3');
     });
   });
 

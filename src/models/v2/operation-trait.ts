@@ -11,7 +11,7 @@ import type { v2 } from '../../spec-types';
 
 export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends CoreModel<J, { id: string | undefined, action: OperationAction }> implements OperationTraitInterface {
   id(): string | undefined {
-    return this._json.operationId;
+    return this._json.operationId || this._meta.id;
   }
 
   hasId(): boolean {

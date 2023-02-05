@@ -11,20 +11,20 @@ import { Server } from '../../../src/models/v2/server';
 import { ServerVariable } from '../../../src/models/v2/server-variable';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
 import { BaseModel, ModelMetadata } from '../../../src/models';
-import { Servers } from '../../../src/models/v2/servers';
-import { Channels } from '../../../src/models/v2/channels';
-import { Messages } from '../../../src/models/v2/messages';
+import { Servers } from '../../../src/models/servers';
+import { Channels } from '../../../src/models/channels';
+import { Messages } from '../../../src/models/messages';
 import { Collection } from '../../../src/models/collection';
 import { Constructor } from '../../../src/models/utils';
-import { Schemas } from '../../../src/models/v2/schemas';
-import { ChannelParameters } from '../../../src/models/v2/channel-parameters';
-import { ServerVariables } from '../../../src/models/v2/server-variables';
-import { OperationTraits } from '../../../src/models/v2/operation-traits';
-import { MessageTraits } from '../../../src/models/v2/message-traits';
-import { CorrelationIds } from '../../../src/models/v2/correlation-ids';
-import { SecuritySchemes } from '../../../src/models/v2/security-schemes';
+import { Schemas } from '../../../src/models/schemas';
+import { ChannelParameters } from '../../../src/models/channel-parameters';
+import { ServerVariables } from '../../../src/models/server-variables';
+import { OperationTraits } from '../../../src/models/operation-traits';
+import { MessageTraits } from '../../../src/models/message-traits';
+import { CorrelationIds } from '../../../src/models/correlation-ids';
+import { SecuritySchemes } from '../../../src/models/security-schemes';
 import { Operation } from '../../../src/models/v2/operation';
-import { Operations } from '../../../src/models/v2/operations';
+import { Operations } from '../../../src/models/operations';
 import { OperationAction } from '../../../src/models/operation';
 import { serializeInput, assertExtensions } from './utils';
 import type { v2 } from '../../../src/spec-types';
@@ -55,7 +55,7 @@ describe('Components model', function() {
       const items = d.channels();
       expect(items).toBeInstanceOf(Channels);
       expect(items.all()).toEqual([
-        new Channel(doc.channels?.channel as ChannelObject, {id: 'channel', address: '', pointer: '/components/channels/channel'} as ModelMetadata & { id: string, address: string } | undefined)
+        new Channel(doc.channels?.channel as ChannelObject, { id: 'channel', pointer: '/components/channels/channel' } as any)
       ]);
     });
 

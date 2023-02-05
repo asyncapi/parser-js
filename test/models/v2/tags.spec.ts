@@ -1,4 +1,4 @@
-import { Tags } from '../../../src/models/v2/tags';
+import { Tags } from '../../../src/models/tags';
 import { Tag } from '../../../src/models/v2/tag';
 
 const tag = {

@@ -33,4 +33,4 @@ jobs:
           committer_email: info@asyncapi.io
           # html-template - temporary until react component releases 1.0, then it can be removed
           # all others - temporary until ParserJS releases 2.0, then it can be removed
-          repos_to_ignore: html-template,generator,asyncapi-react,bundler,server-api,glee,tck,ts-nats-template,template-for-generator-templates,generator-filters,openapi-schema-parser,generator-hooks,raml-dt-schema-parser,dotnet-nats-template,cupid,generator-react-sdk,avro-schema-parser,optimizer,diff,simulator,dotnet-rabbitmq-template,go-watermill-template,markdown-template
+          repos_to_ignore: html-template,generator,asyncapi-react,bundler,server-api,glee,tck,ts-nats-template,template-for-generator-templates,generator-filters,openapi-schema-parser,generator-hooks,raml-dt-schema-parser,dotnet-nats-template,cupid,generator-react-sdk,avro-schema-parser,optimizer,diff,simulator,dotnet-rabbitmq-template,go-watermill-template,markdown-template,java-template

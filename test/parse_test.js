@@ -195,6 +195,30 @@ describe('parse()', function() {
             endColumn: 46,
             endOffset: offset(2024, 68),
           }
+        },
+        {
+          location: {
+            endColumn: 46,
+            endLine: 68,
+            endOffset: 2024,
+            jsonPointer: "/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref",
+            startColumn: 9,
+            startLine: 67,
+            startOffset: 1970,
+          },
+          title: "/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref should match format \"uri-reference\"",
+        },
+        {
+          location: {
+            endColumn: 46,
+            endLine: 68,
+            endOffset: 2024,
+            jsonPointer: "/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId",
+            startColumn: 7,
+            startLine: 66,
+            startOffset: 1947,
+          },
+          title: "/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId should match exactly one schema in oneOf",
         }
       ]
     };

@@ -53,21 +53,20 @@ export const coreRuleset = {
         },
       },
     },
-    // enable after fixing https://github.com/asyncapi/spec-json-schemas/issues/296
-    // 'asyncapi-document-unresolved': {
-    //   description: 'Checking if the AsyncAPI document has valid unresolved structure.',
-    //   message: '{{error}}',
-    //   severity: 'error',
-    //   recommended: true,
-    //   resolved: false,
-    //   given: '$',
-    //   then: {
-    //     function: documentStructure,
-    //     functionOptions: {
-    //       resolved: false,
-    //     },
-    //   },
-    // },
+    'asyncapi-document-unresolved': {
+      description: 'Checking if the AsyncAPI document has valid unresolved structure.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      resolved: false,
+      given: '$',
+      then: {
+        function: documentStructure,
+        functionOptions: {
+          resolved: false,
+        },
+      },
+    },
     'asyncapi-internal': {
       description: 'That rule is internal to extend Spectral functionality for Parser purposes.',
       recommended: true,

@@ -22,6 +22,7 @@ import { ServerVariables } from '../server-variables';
 import { OperationTraits } from '../operation-traits';
 import { MessageTraits } from '../message-traits';
 import { OperationReplies } from '../operation-replies';
+import { OperationReplyAddresses } from '../operation-reply-addresses';
 import { SecuritySchemes } from '../security-schemes';
 import { CorrelationIds } from '../correlation-ids';
 import { Operations } from '../operations';
@@ -45,6 +46,7 @@ import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { MessageTraitsInterface } from '../message-traits';
 import type { OperationRepliesInterface } from '../operation-replies';
+import type { OperationReplyAddressesInterface } from '../operation-reply-addresses';
 import type { OperationsInterface } from '../operations';
 import type { ExternalDocumentationsInterface } from '../external-documentations';
 import type { TagsInterface } from '../tags';
@@ -90,6 +92,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
 
   replies(): OperationRepliesInterface {
     return new OperationReplies([]);
+  }
+
+  replyAddresses(): OperationReplyAddressesInterface {
+    return new OperationReplyAddresses([]);
   }
 
   correlationIds(): CorrelationIds {

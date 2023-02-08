@@ -143,7 +143,7 @@ export interface OperationTraitObject extends SpecificationExtensions {
 
 export interface OperationReplyObject extends SpecificationExtensions {
   channel?: ChannelObject | ReferenceObject;
-  address?: OperationReplyAddressObject;
+  address?: OperationReplyAddressObject | ReferenceObject;
 }
 
 export interface OperationReplyAddressObject extends SpecificationExtensions {
@@ -252,6 +252,7 @@ export interface ComponentsObject extends SpecificationExtensions {
   serverVariables?: Record<string, ServerVariableObject | ReferenceObject>;
   parameters?: Record<string, ParameterObject | ReferenceObject>;
   replies?: Record<string, OperationReplyObject | ReferenceObject>;
+  replyAddresses?: Record<string, OperationReplyAddressObject | ReferenceObject>;
   correlationIds?: Record<string, CorrelationIDObject | ReferenceObject>;
   operationTraits?: Record<string, OperationTraitObject | ReferenceObject>;
   messageTraits?: Record<string, MessageTraitObject | ReferenceObject>;

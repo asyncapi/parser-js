@@ -10,6 +10,7 @@ import type { ChannelParametersInterface } from './channel-parameters';
 import type { ServerVariablesInterface } from './server-variables';
 import type { OperationTraitsInterface } from './operation-traits';
 import type { OperationRepliesInterface } from './operation-replies';
+import type { OperationReplyAddressesInterface } from './operation-reply-addresses';
 import type { MessageTraitsInterface } from './message-traits';
 import type { SecuritySchemesInterface } from './security-schemes';
 import type { CorrelationIdsInterface } from './correlation-ids';
@@ -27,6 +28,7 @@ export interface ComponentsInterface extends BaseModel, ExtensionsMixinInterface
   operationTraits(): OperationTraitsInterface;
   messageTraits(): MessageTraitsInterface;
   replies(): OperationRepliesInterface;
+  replyAddresses(): OperationReplyAddressesInterface;
   correlationIds(): CorrelationIdsInterface;
   securitySchemes(): SecuritySchemesInterface;
   tags(): TagsInterface;

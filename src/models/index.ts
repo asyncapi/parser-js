@@ -29,6 +29,7 @@ export * from './oauth-flow';
 export * from './oauth-flows';
 export * from './operation-replies';
 export * from './operation-reply-address';
+export * from './operation-reply-addresses';
 export * from './operation-reply';
 export * from './operation-trait';
 export * from './operation-traits';

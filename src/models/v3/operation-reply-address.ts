@@ -7,7 +7,11 @@ import type { OperationReplyAddressInterface } from '../operation-reply-address'
 
 import type { v3 } from '../../spec-types';
 
-export class OperationReplyAddress extends BaseModel<v3.OperationReplyAddressObject> implements OperationReplyAddressInterface {
+export class OperationReplyAddress extends BaseModel<v3.OperationReplyAddressObject, { id: string | undefined }> implements OperationReplyAddressInterface {
+  id(): string | undefined {
+    return this._meta.id;
+  }
+
   location(): string {
     return this._json.location;
   }

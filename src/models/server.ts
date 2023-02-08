@@ -11,6 +11,7 @@ export interface ServerInterface extends BaseModel, CoreMixinInterface {
   url(): string;
   host(): string;
   protocol(): string;
+  hasPathname(): boolean;
   pathname(): string | undefined;
   protocolVersion(): string | undefined;
   hasProtocolVersion(): boolean;

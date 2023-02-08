@@ -7,7 +7,11 @@ import type { ExtensionsInterface } from '../extensions';
 
 import type { v2 } from '../../spec-types';
 
-export class ExternalDocumentation extends BaseModel<v2.ExternalDocumentationObject, { id?: string }> implements ExternalDocumentationInterface {
+export class ExternalDocumentation extends BaseModel<v2.ExternalDocumentationObject> implements ExternalDocumentationInterface {
+  id(): string | undefined {
+    return;
+  }
+
   url(): string {
     return this._json.url;
   }

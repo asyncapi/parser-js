@@ -39,6 +39,10 @@ export class Server extends CoreModel<v2.ServerObject, { id: string }> implement
     return this._json.protocol;
   }
 
+  hasPathname(): boolean {
+    return !!this.pathname();
+  }
+
   pathname(): string | undefined {
     return resolveServerUrl(this._json.url).pathname;
   }

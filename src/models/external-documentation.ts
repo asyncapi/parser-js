@@ -4,5 +4,6 @@ import type { DescriptionMixinInterface, ExtensionsMixinInterface } from './mixi
 export interface ExternalDocumentationInterface 
   extends BaseModel, DescriptionMixinInterface, ExtensionsMixinInterface {
 
+  id(): string | undefined;
   url(): string;
 }

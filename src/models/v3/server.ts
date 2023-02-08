@@ -28,7 +28,15 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   }
 
   url(): string {
-    return `${this._json.host}${this._json.pathname}`;
+    let host = this._json.host;
+    if (!host.endsWith('/')) {
+      host = `${host}/`;
+    }
+    let pathname = this._json.pathname || ''; 
+    if (pathname.startsWith('/')) {
+      pathname = pathname.slice(1);
+    }
+    return `${host}${pathname}`;
   }
 
   host(): string {
@@ -37,6 +45,10 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
 
   protocol(): string {
     return this._json.protocol;
+  }
+
+  hasPathname(): boolean {
+    return !!this._json.pathname;
   }
 
   pathname(): string | undefined {

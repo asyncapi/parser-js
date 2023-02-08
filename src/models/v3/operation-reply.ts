@@ -22,7 +22,7 @@ export class OperationReply extends BaseModel<v3.OperationReplyObject, { id?: st
 
   address(): OperationReplyAddressInterface | undefined {
     if (this._json.address) {
-      return this.createModel(OperationReplyAddress, this._json.address, { pointer: this.jsonPath('address') });
+      return this.createModel(OperationReplyAddress, this._json.address as v3.OperationReplyAddressObject, { pointer: this.jsonPath('address') });
     }
   }
 

@@ -60,6 +60,17 @@ describe('Server Model', function () {
     });
   });
 
+  describe('.hasPathname()', function () {
+    it('should return true if pathname is not missing', function () {
+      expect(docItem.hasPathname()).toEqual(true);
+    });
+
+    it('should be false when protocolVersion is missing', function () {
+      const docItem = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(docItem.hasPathname()).toEqual(false);
+    });
+  });
+
   describe('.pathname()', function () {
     it('should return value', function () {
       expect(docItem.pathname()).toEqual('/some/path');

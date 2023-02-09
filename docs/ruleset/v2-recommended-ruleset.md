@@ -249,3 +249,48 @@ channels:
     publish:
       message: {...} # without `messageId`
 ```
+
+### asyncapi2-unused-securityScheme
+
+Potentially unused security scheme has been detected in AsyncAPI document.
+
+> **Warning**
+> This rule may identify false positives when linting a specification that acts as a library (a container storing reusable objects, leveraged by other specifications that reference those objects).
+
+#### Good example
+
+```yaml
+asyncapi: 2.0.0
+info:
+  title: Valid AsyncAPI document
+  version: 1.0
+servers:
+  production:
+    url: test.mosquitto.org
+    protocol: mqtt
+    security:
+      - usedSchema: []
+channels:
+  ...
+components:
+  securitySchemas:
+    usedSchema: {...}
+```
+
+#### Bad example
+
+```yaml
+asyncapi: 2.0.0
+info:
+  title: Invalid AsyncAPI document
+  version: 1.0
+servers:
+  production:
+    url: test.mosquitto.org
+    protocol: mqtt
+channels:
+  ...
+components:
+  securitySchemas:
+    unusedSchema: {...}
+```

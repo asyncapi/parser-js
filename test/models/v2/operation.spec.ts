@@ -25,6 +25,70 @@ describe('Operation model', function() {
     });
   });
 
+  describe('.action()', function() {
+    it('should return kind/action of operation', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.action()).toEqual('publish');
+    });
+  });
+
+  describe('.isSend()', function() {
+    it('should return true when operation is subscribe', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      expect(d.isSend()).toBeTruthy();
+    });
+
+    it('should return false when operation is publish', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.isSend()).toBeFalsy();
+    });
+  });
+
+  describe('.isReceive()', function() {
+    it('should return true when operation is publish', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.isReceive()).toBeTruthy();
+    });
+
+    it('should return false when operation is subscribe', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
+      expect(d.isReceive()).toBeFalsy();
+    });
+  });
+
+  describe('.hasOperationId()', function() {
+    it('should return true if operationId is present', function() {
+      const doc = { operationId: '...' };
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.hasOperationId()).toEqual(true);
+    });
+
+    it('should return falsee if operationId is present', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.hasOperationId()).toEqual(false);
+    });
+  });
+
+  describe('.operationId()', function() {
+    it('should return operationId if present', function() {
+      const doc = { operationId: '...' };
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.operationId()).toEqual(doc.operationId);
+    });
+
+    it('should return undefined if operationId is not present', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.operationId()).toEqual(undefined);
+    });
+  });
+
   describe('.servers()', function() {
     it('should return collection of servers - channel available on all servers', function() {
       const doc = {};
@@ -86,42 +150,6 @@ describe('Operation model', function() {
       expect(d.channels().all()).toHaveLength(1);
       expect(d.channels().all()[0]).toBeInstanceOf(Channel);
       expect(d.channels().all()[0].address()).toEqual('user/signup');
-    });
-  });
-
-  describe('.action()', function() {
-    it('should return kind/action of operation', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
-      expect(d.action()).toEqual('publish');
-    });
-  });
-
-  describe('.isSend()', function() {
-    it('should return true when operation is subscribe', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
-      expect(d.isSend()).toBeTruthy();
-    });
-
-    it('should return false when operation is publish', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
-      expect(d.isSend()).toBeFalsy();
-    });
-  });
-
-  describe('.isReceive()', function() {
-    it('should return true when operation is publish', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
-      expect(d.isReceive()).toBeTruthy();
-    });
-
-    it('should return false when operation is subscribe', function() {
-      const doc = {};
-      const d = new OperationTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
-      expect(d.isReceive()).toBeFalsy();
     });
   });
 

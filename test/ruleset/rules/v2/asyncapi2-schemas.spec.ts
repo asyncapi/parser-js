@@ -1,12 +1,9 @@
-import { Parser } from '../../src/parser';
+import { testRule, DiagnosticSeverity } from '../../tester';
 
-import { filterDiagnostics, expectDiagnostics } from '../utils';
-
-describe('aas2schemaParserRule', function() {
-  const parser = new Parser();
-
-  it('should validate AsyncAPI Schema with valid schema', async function() {
-    const document = {
+testRule('asyncapi2-schemas', [
+  {
+    name: 'valid case',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -23,14 +20,13 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
+    },
+    errors: [],
+  },
 
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', []);
-  });
-
-  it('should validate AsyncAPI Schema with invalid schema', async function() {
-    const document = {
+  {
+    name: 'invalid schema',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Invalid AsyncApi document',
@@ -52,23 +48,24 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
-
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
+    },
+    errors: [
       {
         message: 'must be array',
-        path: ['channels', 'channel', 'publish', 'message', 'payload', 'oneOf']
+        path: ['channels', 'channel', 'publish', 'message', 'payload', 'oneOf'],
+        severity: DiagnosticSeverity.Error,
       },
       {
         message: 'must be object,boolean',
-        path: ['channels', 'channel', 'publish', 'message', 'payload', 'properties', 'name', 'if']
+        path: ['channels', 'channel', 'publish', 'message', 'payload', 'properties', 'name', 'if'],
+        severity: DiagnosticSeverity.Error,
       }
-    ]);
-  });
+    ],
+  },
 
-  it('should validate AsyncAPI Schema with invalid schema (components.messages case)', async function() {
-    const document = {
+  {
+    name: 'invalid schema (components.messages case)',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Invalid AsyncApi document',
@@ -89,23 +86,24 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
-
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
+    },
+    errors: [
       {
         message: 'must be array',
-        path: ['components', 'messages', 'message', 'payload', 'oneOf']
+        path: ['components', 'messages', 'message', 'payload', 'oneOf'],
+        severity: DiagnosticSeverity.Error,
       },
       {
         message: 'must be object,boolean',
-        path: ['components', 'messages', 'message', 'payload', 'properties', 'name', 'if']
+        path: ['components', 'messages', 'message', 'payload', 'properties', 'name', 'if'],
+        severity: DiagnosticSeverity.Error,
       }
-    ]);
-  });
+    ],
+  },
 
-  it('should validate AsyncAPI Schema with invalid schema (components.channels case)', async function() {
-    const document = {
+  {
+    name: 'invalid schema (components.channels case)',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Invalid AsyncApi document',
@@ -130,23 +128,24 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
-
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
+    },
+    errors: [
       {
         message: 'must be array',
-        path: ['components', 'channels', 'channel', 'publish', 'message', 'payload', 'oneOf']
+        path: ['components', 'channels', 'channel', 'publish', 'message', 'payload', 'oneOf'],
+        severity: DiagnosticSeverity.Error,
       },
       {
         message: 'must be object,boolean',
-        path: ['components', 'channels', 'channel', 'publish', 'message', 'payload', 'properties', 'name', 'if']
+        path: ['components', 'channels', 'channel', 'publish', 'message', 'payload', 'properties', 'name', 'if'],
+        severity: DiagnosticSeverity.Error,
       }
-    ]);
-  });
+    ],
+  },
 
-  it('should validate AsyncAPI Schema with invalid schema (oneOf case)', async function() {
-    const document = {
+  {
+    name: 'invalid schema (oneOf case)',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Invalid AsyncApi document',
@@ -177,27 +176,29 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
-
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
+    },
+    errors: [
       {
         message: 'must be array',
-        path: ['channels', 'channel', 'publish', 'message', 'oneOf', '0', 'payload', 'oneOf']
+        path: ['channels', 'channel', 'publish', 'message', 'oneOf', '0', 'payload', 'oneOf'],
+        severity: DiagnosticSeverity.Error,
       },
       {
         message: 'must be object,boolean',
-        path: ['channels', 'channel', 'publish', 'message', 'oneOf', '0', 'payload', 'properties', 'name', 'if']
+        path: ['channels', 'channel', 'publish', 'message', 'oneOf', '0', 'payload', 'properties', 'name', 'if'],
+        severity: DiagnosticSeverity.Error,
       },
       {
         message: 'must be array',
-        path: ['channels', 'channel', 'publish', 'message', 'oneOf', '1', 'payload', 'oneOf']
+        path: ['channels', 'channel', 'publish', 'message', 'oneOf', '1', 'payload', 'oneOf'],
+        severity: DiagnosticSeverity.Error,
       }
-    ]);
-  });
+    ],
+  },
 
-  it('should validate AsyncAPI Schema with supported schema format', async function() {
-    const document = {
+  {
+    name: 'valid case with supported schema format',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Valid AsyncApi document',
@@ -215,14 +216,13 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
+    },
+    errors: [],
+  },
 
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', []);
-  });
-
-  it('should validate AsyncAPI Schema with non supported schema format', async function() {
-    const document = {
+  {
+    name: 'invalid case with non supported schema format',
+    document: {
       asyncapi: '2.0.0',
       info: {
         title: 'Invalid AsyncApi document',
@@ -240,49 +240,18 @@ describe('aas2schemaParserRule', function() {
           }
         }
       }
-    };
-
-    const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi-schemas-v2', [
+    },
+    errors: [
       {
         message: 'Unknown schema format: "not existing"',
-        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat']
+        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat'],
+        severity: DiagnosticSeverity.Error,
       },
       {
         message: 'Cannot validate and parse given schema due to unknown schema format: "not existing"',
-        path: ['channels', 'channel', 'publish', 'message', 'payload']
+        path: ['channels', 'channel', 'publish', 'message', 'payload'],
+        severity: DiagnosticSeverity.Error,
       },
-    ]);
-  });
-
-  it('should not contain errors from asyncapi-payload-unsupported-schemaFormat and asyncapi-payload rules', async function() {
-    const document = {
-      asyncapi: '2.0.0',
-      info: {
-        title: 'Invalid AsyncApi document',
-        version: '1.0',
-      },
-      channels: {
-        channel: {
-          publish: {
-            message: {
-              payload: {
-                oneOf: 'this should be an array',
-                properties: {
-                  name: {
-                    if: 'this should be an if'
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    };
-
-    const diagnostics = await parser.validate(document);
-    expect(filterDiagnostics(diagnostics, 'asyncapi-schemas-v2')).toHaveLength(2);
-    expect(filterDiagnostics(diagnostics, 'asyncapi-payload-unsupported-schemaFormat')).toHaveLength(0);
-    expect(filterDiagnostics(diagnostics, 'asyncapi-payload')).toHaveLength(0);
-  });
-});
+    ],
+  },
+]);

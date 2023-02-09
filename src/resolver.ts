@@ -19,7 +19,7 @@ export interface ResolverOptions {
 export function createResolver(options: ResolverOptions = {}): SpectralResolver {
   const availableResolvers: Array<Resolver> = [
     ...createDefaultResolvers(),
-    ...(options?.resolvers || [])
+    ...(options.resolvers || [])
   ].map(r => ({ 
     ...r,
     order: r.order || Number.MAX_SAFE_INTEGER,

@@ -11,7 +11,7 @@ import { tilde } from '../../utils';
 import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
 import type { MessagesInterface } from '../messages';
-import type { OperationInterface } from '../operation';
+import type { OperationInterface, OperationAction } from '../operation';
 import type { OperationTraitsInterface } from '../operation-traits';
 import type { ServersInterface } from '../servers';
 import type { ServerInterface } from '../server';
@@ -19,6 +19,18 @@ import type { ServerInterface } from '../server';
 import type { v2 } from '../../spec-types';
 
 export class Operation extends OperationTrait<v2.OperationObject> implements OperationInterface {
+  action(): OperationAction {
+    return this._meta.action;
+  }
+
+  isSend(): boolean {
+    return this.action() === 'subscribe';
+  }
+
+  isReceive(): boolean {
+    return this.action() === 'publish';
+  }
+
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const serversData: any[] = [];

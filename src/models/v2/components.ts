@@ -59,6 +59,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     );
   }
 
+  operations(): OperationsInterface {
+    return new Operations([]);
+  }
+
   messages(): MessagesInterface {
     return this.createCollection('messages', Messages, Message);
   }
@@ -73,10 +77,6 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
 
   serverVariables(): ServerVariablesInterface {
     return this.createCollection('serverVariables', ServerVariables, ServerVariable);
-  }
-
-  operations(): OperationsInterface {
-    return new Operations([]);
   }
 
   operationTraits(): OperationTraitsInterface {

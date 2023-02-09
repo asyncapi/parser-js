@@ -1,5 +1,7 @@
 import { BaseModel } from '../base';
 import { SecurityScheme } from './security-scheme';
+import { SecurityRequirements } from './security-requirements';
+import { SecurityRequirement } from './security-requirement';
 
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
 
@@ -11,16 +13,10 @@ import type { OperationTraitInterface } from '../operation-trait';
 import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
-import { SecurityRequirements } from './security-requirements';
-import { SecurityRequirement } from './security-requirement';
 
 export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string, action: OperationAction }> implements OperationTraitInterface {
   id(): string {
     return this.operationId() || this._meta.id;
-  }
-
-  action(): OperationAction {
-    return this._meta.action;
   }
 
   hasOperationId(): boolean {
@@ -49,14 +45,6 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
 
   hasExternalDocs(): boolean {
     return hasExternalDocs(this);
-  }
-
-  isSend(): boolean {
-    return this.action() === 'subscribe';
-  }
-
-  isReceive(): boolean {
-    return this.action() === 'publish';
   }
 
   externalDocs(): ExternalDocumentationInterface | undefined {

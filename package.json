@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "2.0.0-next-major.13",
+  "version": "2.0.0-next-major.14",
   "description": "JavaScript AsyncAPI parser.",
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"

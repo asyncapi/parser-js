@@ -50,7 +50,7 @@ asyncapi: 2.5.0
 
 ### asyncapi-document-resolved
 
-Checking if the AsyncAPI document has valid resolved (with resolved references) structure based on the specification's JSON Schema.
+Checking if the AsyncAPI document has a valid resolved (with resolved references) structure based on the specification's JSON Schema.
 
 #### Good example
 
@@ -80,7 +80,7 @@ info:
 
 ### asyncapi-document-unresolved
 
-Checking if the AsyncAPI document has valid unresolved (with unresolved references) structure based on the specification's JSON Schema.
+Checking if the AsyncAPI document has a valid unresolved (with unresolved references) structure based on the specification's JSON Schema.
 
 #### Good example
 

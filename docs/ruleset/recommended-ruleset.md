@@ -1,6 +1,6 @@
 # AsyncAPI Recommended Ruleset
 
-The recommended ruleset, which verify good practices when writing the specification structure.
+The recommended ruleset, which verifies good practices when writing the specification structure.
 
 > **Note**
 > These rules will apply to each version, starting with `2.0.0`.
@@ -9,7 +9,7 @@ The recommended ruleset, which verify good practices when writing the specificat
 
 ### asyncapi-id
 
-AsyncAPI document should have `id` field.
+AsyncAPI document should have an `id` field.
 
 #### Good example
 
@@ -28,7 +28,7 @@ asyncapi: 2.0.0
 
 ### asyncapi-defaultContentType
 
-AsyncAPI document should have `defaultContentType` field.
+AsyncAPI document should have a `defaultContentType` field.
 
 #### Good example
 
@@ -47,7 +47,7 @@ asyncapi: 2.0.0
 
 ### asyncapi-info-description
 
-Info `description` should be present and non-empty string.
+Info `description` should be present and a non-empty string.
 
 #### Good example
 
@@ -70,7 +70,7 @@ info:
 
 ### asyncapi-info-contact
 
-Info object should have `contact` object.
+Info object should have a `contact` object.
 
 #### Good example
 
@@ -93,7 +93,7 @@ info:
 
 ### asyncapi-info-contact-properties
 
-Contact object should have `name`, `url` and `email` fields.
+Contact object should have `name`, `url`, and `email` fields.
 
 #### Good example
 
@@ -121,7 +121,7 @@ info:
 
 ### asyncapi-info-license
 
-Info object should have `license` object.
+Info object should have a `license` object.
 
 #### Good example
 
@@ -144,7 +144,7 @@ info:
 
 ### asyncapi-info-license-url
 
-License object should have `url` field.
+License object should have a `url` field.
 
 #### Good example
 
@@ -171,7 +171,7 @@ info:
 
 ### asyncapi-servers
 
-AsyncAPI document should have non-empty `servers` object.
+AsyncAPI document should have a non-empty `servers` object.
 
 #### Good example
 
@@ -199,7 +199,7 @@ info:
 
 ### asyncapi-unused-component
 
-Potentially unused component has been detected in AsyncAPI document.
+A potentially unused component has been detected in the AsyncAPI document.
 
 > **Warning**
 > This rule may identify false positives when linting a specification that acts as a library (a container storing reusable objects, leveraged by other specifications that reference those objects).

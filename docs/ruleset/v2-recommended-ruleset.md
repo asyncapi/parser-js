@@ -9,7 +9,7 @@ The recommended ruleset, which verify good practices when writing the `2.x.x` sp
 
 ### asyncapi2-tags
 
-AsyncAPI object should have non-empty `tags` array.
+AsyncAPI object should have a non-empty `tags` array.
 
 #### Good example
 
@@ -35,7 +35,7 @@ servers: {...}
 
 ### asyncapi2-server-no-empty-variable
 
-Server URL variable declarations cannot be empty, e.g. `gigantic-server.com/{}` is invalid.
+Server URL variable declarations cannot be empty (e.g., `gigantic-server.com/{}` is invalid).
 
 #### Good example
 
@@ -95,7 +95,7 @@ servers:
 
 ### asyncapi2-channel-no-empty-parameter
 
-Channel parameter declarations cannot be empty, e.g. `./given/{}` is invalid.
+Channel parameter declarations cannot be empty (e.g., `./given/{}` is invalid).
 
 #### Good example
 
@@ -174,7 +174,7 @@ channels:
 
 ### asyncapi2-operation-operationId
 
-`operationId` should be defined in each operation. `operationId` is essentially a reference for the operation. Tools may use it for defining function names, class method names, and even URL hashes in documentation systems.
+The `operationId` should be defined in each operation, essentially as an operation reference. Tools may use `operationId` for defining function names, class method names, and even URL hashes in documentation systems.
 
 #### Good example
 
@@ -211,7 +211,7 @@ channels:
 
 ### asyncapi2-message-messageId
 
-`messageId` should be defined in each message. `messageId` is essentially a reference for the message. Tools may use it for defining function names, class method names, and even URL hashes in documentation systems.
+The `messageId` should be defined in each message, essentially a message reference. Tools may use `messageId` for defining function names, class method names, and even URL hashes in documentation systems.
 
 #### Good example
 
@@ -252,7 +252,7 @@ channels:
 
 ### asyncapi2-unused-securityScheme
 
-Potentially unused security scheme has been detected in AsyncAPI document.
+A potentially unused security scheme has been detected in the AsyncAPI document.
 
 > **Warning**
 > This rule may identify false positives when linting a specification that acts as a library (a container storing reusable objects, leveraged by other specifications that reference those objects).

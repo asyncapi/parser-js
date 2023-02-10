@@ -261,7 +261,7 @@ const diagnostics = await parser.validate(`
 `);
 ```
 
-ParserJS has some built-in Spectral rulesets that validate AsyncAPI documents and inform about good practices. [Checks them](./docs/ruleset) for more info.
+[ParserJS has some built-in Spectral rulesets](./docs/ruleset) that validate AsyncAPI documents and inform on good practices. 
 
 ## Using in the browser/SPA applications
 

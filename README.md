@@ -227,7 +227,7 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 
 ## Spectral rulesets
 
-Validation of AsyncAPI documents in ParserJS is powered by [Spectral](https://github.com/stoplightio/spectral). For this reason, it is possible to use own rulesets/rules, or overwrite existing ones, by passing `ruleset` option to the Parser instance:
+[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS. For this reason, it is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance: 
 
 ```ts
 import { Parser, stringify, unstringify } from '@asyncapi/parser';

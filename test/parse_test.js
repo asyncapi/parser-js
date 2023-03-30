@@ -185,7 +185,7 @@ describe('parse()', function() {
       title: 'There were errors validating the AsyncAPI document.',
       validationErrors: [
         {
-          title: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref should match format "uri-reference\"',
+          title: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref should match format "uri-reference"',
           location: {
             jsonPointer: '/channels/smartylighting~1streetlights~11~10~1action~1{streetlightId}~1turn~1off/parameters/streetlightId/$ref',
             startLine: 67,

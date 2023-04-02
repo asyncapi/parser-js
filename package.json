@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "2.0.0-next-major.15",
+  "version": "2.0.0-next-major.16",
   "description": "JavaScript AsyncAPI parser.",
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@asyncapi/specs": "^4.1.0",
-    "@openapi-contrib/openapi-schema-to-json-schema": "^3.2.0",
+    "@openapi-contrib/openapi-schema-to-json-schema": "~3.2.0",
     "@stoplight/json-ref-resolver": "^3.1.5",
     "@stoplight/spectral-core": "^1.16.1",
     "@stoplight/spectral-functions": "^1.7.2",

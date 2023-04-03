@@ -150,6 +150,20 @@ describe('Operation model', function() {
     });
   });
 
+  describe('.reply()', function() {
+    it('should return undefined if reply is not defined', function () {
+      const d = new Operation({ action: 'send', channel: {}, traits: [] });
+      expect(d.hasReply()).toBeFalsy();
+      expect(d.reply()).toBeUndefined();
+    });
+
+    it('should return a Reply object ', function () {
+      const d = new Operation({ action: 'send', channel: {}, reply: { address: { location: '$message.header#/replyTo' }} });
+      expect(d.hasReply()).toBeTruthy();
+      expect(d.reply()).toBeInstanceOf(OperationReply);
+    });
+  });
+
   describe('mixins', function() {
     assertCoreModel(Operation);
   });

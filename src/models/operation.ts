@@ -5,6 +5,7 @@ import type { OperationReplyInterface } from './operation-reply';
 import type { ChannelsInterface } from './channels';
 import type { ServersInterface } from './servers';
 import type { MessagesInterface } from './messages';
+import { OperationReplyInterface } from './operation-reply';
 
 export type OperationAction = 'send' | 'receive' | 'publish' | 'subscribe';
 
@@ -17,4 +18,6 @@ export interface OperationInterface extends BaseModel, OperationTraitInterface {
   messages(): MessagesInterface;
   reply(): OperationReplyInterface | undefined;
   traits(): OperationTraitsInterface;
+  hasReply(): boolean;
+  reply(): OperationReplyInterface | undefined;
 }

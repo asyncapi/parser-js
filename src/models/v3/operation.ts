@@ -89,4 +89,13 @@ export class Operation extends OperationTrait<v3.OperationObject> implements Ope
       })
     );
   }
+
+  hasReply(): boolean {
+    return !!this._json.reply;
+  }
+
+  reply(): OperationReplyInterface | undefined {
+    if (!this._json.reply) return undefined;
+    return new OperationReply(this._json.reply);
+  }
 }

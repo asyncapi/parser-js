@@ -145,6 +145,14 @@ describe('Operation model', function() {
     });
   });
 
+  describe('.reply()', function() {
+    it('should return undefined', function() {
+      const doc = {};
+      const d = new Operation(doc);
+      expect(d.reply()).toBeUndefined();
+    });
+  });
+
   describe('.traits()', function() {
     it('should return collection of traits', function() {
       const doc = { traits: [{ operationId: '...' }] };

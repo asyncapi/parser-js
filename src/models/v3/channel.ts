@@ -31,14 +31,9 @@ export class Channel extends CoreModel<v3.ChannelObject, { id: string }> impleme
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const allowedServers = this._json.servers || [];
-    Object.entries(this._meta.asyncapi?.parsed?.servers || {}).forEach(([serverName, server]) => {
-      if (allowedServers.length === 0) {
+    Object.entries(this._meta.asyncapi?.parsed.servers || {}).forEach(([serverName, server]) => {
+      if (allowedServers.length === 0 || allowedServers.includes(server)) {
         servers.push(this.createModel(Server, server, { id: serverName, pointer: `/servers/${serverName}` }));
-      } else {
-        const index = allowedServers.indexOf(server);
-        if (index !== -1) {
-          servers.push(this.createModel(Server, server, { id: serverName, pointer: this.jsonPath(`servers/${index}`) }));
-        }
       }
     });
     return new Servers(servers);
@@ -47,9 +42,9 @@ export class Channel extends CoreModel<v3.ChannelObject, { id: string }> impleme
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
     Object.entries(((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {})).forEach(([operationId, operation]) => {
-      if (operation.channel === this._json) {
+      if ((operation as v3.OperationObject).channel === this._json) {
         operations.push(
-          this.createModel(Operation, operation, { id: operationId, pointer: `/operations/${operationId}` }),
+          this.createModel(Operation, operation as v3.OperationObject, { id: operationId, pointer: `/operations/${operationId}` }),
         );
       }
     });
@@ -59,7 +54,7 @@ export class Channel extends CoreModel<v3.ChannelObject, { id: string }> impleme
   messages(): MessagesInterface {
     return new Messages(
       Object.entries(this._json.messages || {}).map(([messageName, message]) => {
-        return this.createModel(Message, message, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) });
+        return this.createModel(Message, message as v3.MessageObject, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) });
       })
     );
   }
@@ -69,7 +64,7 @@ export class Channel extends CoreModel<v3.ChannelObject, { id: string }> impleme
       Object.entries(this._json.parameters || {}).map(([channelParameterName, channelParameter]) => {
         return this.createModel(ChannelParameter, channelParameter as v3.ParameterObject, {
           id: channelParameterName,
-          pointer: `${this._meta.pointer}/parameters/${channelParameterName}`
+          pointer: this.jsonPath(`parameters/${channelParameterName}`),
         });
       })
     );

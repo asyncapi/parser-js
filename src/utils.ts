@@ -122,6 +122,20 @@ export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {
   return data;
 }
 
+export function resolveServerUrl(url: string): { host: string, pathname: string | undefined } {
+  // eslint-disable-next-line prefer-const
+  let [maybeProtocol, maybeHost] = url.split('://');
+  if (!maybeHost) {
+    maybeHost = maybeProtocol;
+  }
+
+  const [host, ...pathnames] = maybeHost.split('/');
+  if (pathnames.length) {
+    return { host, pathname: `/${pathnames.join('/')}` };
+  }
+  return { host, pathname: undefined };
+}
+
 function retrieveDeepData(value: Record<string, any>, path: string[]) {
   let index = 0;
   const length = path.length;

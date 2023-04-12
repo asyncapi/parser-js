@@ -9,6 +9,7 @@ export interface SecuritySchemeInterface extends BaseModel, DescriptionMixinInte
   openIdConnectUrl(): string | undefined;
   scheme(): string | undefined;
   flows(): OAuthFlowsInterface | undefined;
+  scopes(): string[] | undefined;
   type(): string;
   in(): string | undefined;
 }

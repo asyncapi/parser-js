@@ -47,7 +47,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   servers(): ServersInterface {
     return new Servers(
       Object.entries(this._json.servers || {}).map(([serverName, server]) => 
-        this.createModel(Server, server, { id: serverName, pointer: `/servers/${tilde(serverName)}` })
+        this.createModel(Server, server as v3.ServerObject, { id: serverName, pointer: `/servers/${tilde(serverName)}` })
       )
     );
   }
@@ -55,7 +55,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   channels(): ChannelsInterface {
     return new Channels(
       Object.entries(this._json.channels || {}).map(([channelId, channel]) =>
-        this.createModel(Channel, channel, { id: channelId, pointer: `/channels/${tilde(channelId)}` })
+        this.createModel(Channel, channel as v3.ChannelObject, { id: channelId, pointer: `/channels/${tilde(channelId)}` })
       )
     );
   }
@@ -63,7 +63,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   operations(): OperationsInterface {    
     return new Operations(
       Object.entries(this._json.operations || {}).map(([operationId, operation]) =>
-        this.createModel(Operation, operation, { id: operationId, pointer: `/operations/${tilde(operationId)}` })
+        this.createModel(Operation, operation as v3.OperationObject, { id: operationId, pointer: `/operations/${tilde(operationId)}` })
       )
     );
   }
@@ -73,8 +73,9 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
     const messagesData: any[] = [];
     this.channels().forEach(channel => {
       channel.messages().forEach(message => {
-        if (!messagesData.includes(message.json())) {
-          messagesData.push(message.json());
+        const messageData = message.json();
+        if (!messagesData.includes(messageData)) {
+          messagesData.push(messageData);
           messages.push(message);
         }
       });

@@ -20,6 +20,8 @@ import { Schemas } from '../../../src/models/schemas';
 import { ChannelParameters } from '../../../src/models/channel-parameters';
 import { ServerVariables } from '../../../src/models/server-variables';
 import { OperationTraits } from '../../../src/models/operation-traits';
+import { OperationReplies } from '../../../src/models/operation-replies';
+import { OperationReplyAddresses } from '../../../src/models/operation-reply-addresses';
 import { MessageTraits } from '../../../src/models/message-traits';
 import { CorrelationIds } from '../../../src/models/correlation-ids';
 import { SecuritySchemes } from '../../../src/models/security-schemes';
@@ -171,6 +173,26 @@ describe('Components model', function() {
       const items = d.messageTraits();
       expect(items).toBeInstanceOf(MessageTraits);
       expect(items.all()).toHaveLength(0);
+    });
+  });
+
+  describe('.replies()', function() {
+    it('should return OperationReplies with empty collection', function() {
+      const doc = {};
+      const d = new Components(doc);
+      const replies = d.replies();
+      expect(replies).toBeInstanceOf(OperationReplies);
+      expect(replies.all()).toHaveLength(0);
+    });
+  });
+
+  describe('.replyAddresses()', function() {
+    it('should return OperationRepliesAddresses with empty collection', function() {
+      const doc = {};
+      const d = new Components(doc);
+      const replies = d.replyAddresses();
+      expect(replies).toBeInstanceOf(OperationReplyAddresses);
+      expect(replies.all()).toHaveLength(0);
     });
   });
 

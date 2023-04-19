@@ -16,9 +16,9 @@ import type { v2 } from '../../../src/spec-types';
 
 const doc = {
   development: {
+    url: 'development.gigantic-server.com:2137/some/path',
     protocol: 'mqtt',
     protocolVersion: '1.0.0',
-    url: 'development.gigantic-server.com',
     variables: {
       username: {
         default: 'demo',
@@ -33,13 +33,57 @@ const emptyItem = new Server(serializeInput<v2.ServerObject>({}), { asyncapi: {}
 describe('Server Model', function () {
   describe('.id()', function () {
     it('should return name if present', function () {
-      expect(docItem.id()).toMatch('development');
+      expect(docItem.id()).toEqual('development');
+    });
+  });
+
+  describe('.url()', function () {
+    it('should return value', function () {
+      expect(docItem.url()).toEqual(doc.development.url);
+    });
+  });
+
+  describe('.host()', function () {
+    it('should return value', function () {
+      expect(docItem.host()).toEqual('development.gigantic-server.com:2137');
+    });
+
+    it('should return value (url with protocol case)', function () {
+      const server = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137/some/path' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(server.host()).toEqual('development.gigantic-server.com:2137');
     });
   });
 
   describe('protocol()', function () {
     it('should return protocol ', function () {
-      expect(docItem.protocol()).toMatch(doc.development.protocol);
+      expect(docItem.protocol()).toEqual(doc.development.protocol);
+    });
+  });
+
+  describe('.hasPathname()', function () {
+    it('should return true if pathname is not missing', function () {
+      expect(docItem.hasPathname()).toEqual(true);
+    });
+
+    it('should be false when protocolVersion is missing', function () {
+      const docItem = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(docItem.hasPathname()).toEqual(false);
+    });
+  });
+
+  describe('.pathname()', function () {
+    it('should return value', function () {
+      expect(docItem.pathname()).toEqual('/some/path');
+    });
+
+    it('should return value (url with protocol case)', function () {
+      const server = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137/some/path' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(server.pathname()).toEqual('/some/path');
+    });
+
+    it('should return undefined if pathname does not exist in url', function () {
+      const docItem = new Server({ ...doc.development, url: 'development.gigantic-server.com:2137' }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(docItem.pathname()).toBeUndefined();
     });
   });
 
@@ -55,17 +99,11 @@ describe('Server Model', function () {
 
   describe('.protocolVersion()', function () {
     it('should return value', function () {
-      expect(docItem.protocolVersion()).toMatch(doc.development.protocolVersion);
+      expect(docItem.protocolVersion()).toEqual(doc.development.protocolVersion);
     });
 
     it('should return undefined when protocolVersion is missing', function () {
       expect(emptyItem.protocolVersion()).toBeUndefined();
-    });
-  });
-
-  describe('.url()', function () {
-    it('should return value', function () {
-      expect(docItem.url()).toMatch(doc.development.url);
     });
   });
 

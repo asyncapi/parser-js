@@ -1,6 +1,6 @@
 import { Channels } from '../channels';
-import { Channel } from './channel';
 import { Operations } from '../operations';
+import { Operation } from './operation';
 import { MessageTraits } from '../message-traits';
 import { MessageTrait } from './message-trait';
 import { Servers } from '../servers';
@@ -25,7 +25,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
   
   payload(): SchemaInterface | undefined {
     if (!this._json.payload) return undefined;
-    return this.createModel(Schema, this._json.payload, { pointer: `${this._meta.pointer}/payload` });
+    return this.createModel(Schema, this._json.payload, { pointer: this.jsonPath('payload') });
   }
 
   servers(): ServersInterface {
@@ -33,8 +33,9 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
     const serversData: any[] = [];
     this.channels().forEach(channel => {
       channel.servers().forEach(server => {
-        if (!serversData.includes(server.json())) {
-          serversData.push(server.json());
+        const serverData = server.json();
+        if (!serversData.includes(serverData)) {
+          serversData.push(serverData);
           servers.push(server);
         }
       });
@@ -44,32 +45,26 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
 
   channels(): ChannelsInterface {
     const channels: ChannelInterface[] = [];
-    Object.entries((this._meta.asyncapi?.parsed?.channels || {}) as v3.ChannelsObject).forEach(([channelName, channel]) => {
-      const hasMessage = Object.entries(channel.messages || {}).some(([, message]) => message === this._json);
-      if (hasMessage) {
-        channels.push(
-          this.createModel(Channel, channel, { id: channelName, pointer: `/channels/${channelName}` }),
-        );
-      }
-    });
-    Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
-      const operationChannel = operation.channel as v3.ChannelObject | undefined;
-      if (!channels.some(channel => channel.json() === operationChannel)) {
-        const hasMessage = Object.entries(operationChannel?.messages || {}).some(([, message]) => message === this._json);
-        if (hasMessage) {
-          channels.push(
-            this.createModel(Channel, operationChannel as v3.ChannelObject, { id: '', pointer: `/operations/${operationId}/channel` }),
-          );
+    const channelData: any[] = [];
+    this.operations().forEach(operation => {
+      operation.channels().forEach(channel => {
+        const channelsData = channel.json();
+        if (!channelData.includes(channelsData)) {
+          channelData.push(channelsData);
+          channels.push(channel);
         }
-      }
+      });
     });
     return new Channels(channels);
   }
 
   operations(): OperationsInterface {
     const operations: OperationInterface[] = [];
-    this.channels().forEach(channel => {
-      operations.push(...channel.operations());
+    Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
+      const operationModel = this.createModel(Operation, operation as v3.OperationObject, { id: operationId, pointer: `/operations/${operationId}` });
+      if (operationModel.messages().some(m => m.json() === this._json)) {
+        operations.push(operationModel);
+      }
     });
     return new Operations(operations);
   }
@@ -77,7 +72,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
   traits(): MessageTraitsInterface {
     return new MessageTraits(
       (this._json.traits || []).map((trait: any, index: number) => {
-        return this.createModel(MessageTrait, trait, { id: '', pointer: `${this._meta.pointer}/traits/${index}` });
+        return this.createModel(MessageTrait, trait, { id: '', pointer: this.jsonPath(`traits/${index}`) });
       })
     );
   }

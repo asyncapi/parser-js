@@ -23,7 +23,7 @@ export interface InfoObject extends SpecificationExtensions {
   contact?: ContactObject;
   license?: LicenseObject;
   tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
 }
 
 export interface ContactObject extends SpecificationExtensions {
@@ -37,16 +37,18 @@ export interface LicenseObject extends SpecificationExtensions {
   url?: string;
 }
 
-export type ServersObject = Record<string, ServerObject>;
+export type ServersObject = Record<string, ServerObject | ReferenceObject>;
 
 export interface ServerObject extends SpecificationExtensions {
-  url: string;
+  host: string;
   protocol: string;
+  pathname?: string;
   protocolVersion?: string;
   description?: string;
-  variables?: Record<string, ServerVariableObject>;
-  security?: Array<SecurityRequirementObject>;
+  variables?: Record<string, ServerVariableObject | ReferenceObject>;
+  security?: Array<SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: ServerBindingsObject | ReferenceObject;
 }
 
@@ -74,19 +76,22 @@ export interface ServerBindingsObject extends SpecificationExtensions {
   redis?: Binding;
   mercure?: Binding;
   ibmmq?: Binding;
+  googlepubsub?: Binding;
 }
 
-export type ChannelsObject = Record<string, ChannelObject>;
+export type ChannelsObject = Record<string, ChannelObject | ReferenceObject>;
 
 export interface ChannelObject extends SpecificationExtensions {
   address?: string | null;
   messages?: MessagesObject;
+  title?: string;
+  summary?: string;
   description?: string;
-  servers?: Array<ServerObject>;
+  servers?: Array<ServerObject | ReferenceObject>;
   parameters?: ParametersObject;
-  bindings?: ChannelBindingsObject | ReferenceObject;
   tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
+  bindings?: ChannelBindingsObject | ReferenceObject;
 }
 
 export interface ChannelBindingsObject extends SpecificationExtensions {
@@ -106,29 +111,44 @@ export interface ChannelBindingsObject extends SpecificationExtensions {
   redis?: Binding;
   mercure?: Binding;
   ibmmq?: Binding;
+  googlepubsub?: Binding;
 }
 
-export type OperationsObject = Record<string, OperationObject>;
+export type OperationsObject = Record<string, OperationObject | ReferenceObject>;
 
 export interface OperationObject extends SpecificationExtensions {
   action: 'send' | 'receive';
   channel: ChannelObject | ReferenceObject;
+  messages?: Array<MessageObject | ReferenceObject>;
+  reply?: OperationReplyObject | ReferenceObject;
+  title?: string;
   summary?: string;
   description?: string;
-  security?: Array<SecurityRequirementObject>;
+  security?: Array<SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: OperationBindingsObject | ReferenceObject;
-  traits?: OperationTraitObject[];
+  traits?: Array<OperationTraitObject | ReferenceObject>;
 }
 
 export interface OperationTraitObject extends SpecificationExtensions {
+  title?: string;
   summary?: string;
   description?: string;
-  security?: Array<SecurityRequirementObject>;
+  security?: Array<SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: OperationBindingsObject | ReferenceObject;
+}
+
+export interface OperationReplyObject extends SpecificationExtensions {
+  channel?: ChannelObject | ReferenceObject;
+  address?: OperationReplyAddressObject | ReferenceObject;
+}
+
+export interface OperationReplyAddressObject extends SpecificationExtensions {
+  location: string;
+  description?: string;
 }
 
 export interface OperationBindingsObject extends SpecificationExtensions {
@@ -148,9 +168,10 @@ export interface OperationBindingsObject extends SpecificationExtensions {
   redis?: Binding;
   mercure?: Binding;
   ibmmq?: Binding;
+  googlepubsub?: Binding;
 }
 
-export type MessagesObject = Record<string, MessageObject>;
+export type MessagesObject = Record<string, MessageObject | ReferenceObject>;
 
 export interface MessageObject extends MessageTraitObject, SpecificationExtensions {
   payload?: any;
@@ -168,7 +189,7 @@ export interface MessageTraitObject extends SpecificationExtensions {
   summary?: string;
   description?: string;
   tags?: TagsObject;
-  externalDocs?: ExternalDocumentationObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: MessageBindingsObject | ReferenceObject;
   examples?: Array<MessageExampleObject>;
 }
@@ -197,6 +218,7 @@ export interface MessageBindingsObject extends SpecificationExtensions {
   redis?: Binding;
   mercure?: Binding;
   ibmmq?: Binding;
+  googlepubsub?: Binding;
 }
 
 export type ParametersObject = Record<string, ParameterObject | ReferenceObject>;
@@ -207,12 +229,12 @@ export interface ParameterObject extends SpecificationExtensions {
   location?: string;
 }
 
-export type TagsObject = Array<TagObject>;
+export type TagsObject = Array<TagObject | ReferenceObject>;
 
 export interface TagObject extends SpecificationExtensions {
   name: string;
   description?: string;
-  externalDocs?: ExternalDocumentationObject;
+  externalDocs?: ExternalDocumentationObject | ReferenceObject;
 }
 
 export interface ExternalDocumentationObject extends SpecificationExtensions {
@@ -224,11 +246,13 @@ export interface ComponentsObject extends SpecificationExtensions {
   servers?: Record<string, ServerObject | ReferenceObject>;
   channels?: Record<string, ChannelObject | ReferenceObject>;
   operations?: Record<string, OperationObject | ReferenceObject>;
-  schemas?: Record<string, SchemaObject | ReferenceObject>;
   messages?: Record<string, MessageObject | ReferenceObject>;
+  schemas?: Record<string, SchemaObject | ReferenceObject>;
   securitySchemes?: Record<string, SecuritySchemeObject | ReferenceObject>;
-  parameters?: Record<string, ParameterObject | ReferenceObject>;
   serverVariables?: Record<string, ServerVariableObject | ReferenceObject>;
+  parameters?: Record<string, ParameterObject | ReferenceObject>;
+  replies?: Record<string, OperationReplyObject | ReferenceObject>;
+  replyAddresses?: Record<string, OperationReplyAddressObject | ReferenceObject>;
   correlationIds?: Record<string, CorrelationIDObject | ReferenceObject>;
   operationTraits?: Record<string, OperationTraitObject | ReferenceObject>;
   messageTraits?: Record<string, MessageTraitObject | ReferenceObject>;
@@ -249,6 +273,7 @@ export interface SecuritySchemeObject extends SpecificationExtensions {
   bearerFormat?: string;
   flows?: OAuthFlowsObject;
   openIdConnectUrl?: string;
+  scopes?: string[];
 }
 
 export type SecuritySchemeType =
@@ -314,6 +339,7 @@ export interface SecuritySchemeObjectHttp extends SecuritySchemeObjectBase, Spec
 export interface SecuritySchemeObjectOauth2 extends SecuritySchemeObjectBase, SpecificationExtensions {
   type: 'oauth2';
   flows: OAuthFlowsObject;
+  scopes: string[];
 }
 
 export interface SecuritySchemeObjectOpenIdConnect extends SecuritySchemeObjectBase, SpecificationExtensions {
@@ -352,7 +378,7 @@ export type OAuthFlowObject =
 
 export interface OAuthFlowObjectBase extends SpecificationExtensions {
   refreshUrl?: string;
-  scopes: Record<string, string>;
+  availableScopes: Record<string, string>;
 }
 
 export interface OAuthFlowObjectImplicit extends OAuthFlowObjectBase, SpecificationExtensions {
@@ -460,8 +486,6 @@ export type SpecificationExtension<T = any> = T;
 export interface ReferenceObject {
   $ref: string;
 }
-
-export type SecurityRequirementObject = Record<string, Array<string>>;
 
 export interface CorrelationIDObject extends SpecificationExtensions {
   location: string;

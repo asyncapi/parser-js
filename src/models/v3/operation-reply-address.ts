@@ -2,18 +2,18 @@ import { BaseModel } from '../base';
 
 import { hasDescription, description, extensions } from './mixins';
 
-import type { ExternalDocumentationInterface } from '../external-documentation';
 import type { ExtensionsInterface } from '../extensions';
+import type { OperationReplyAddressInterface } from '../operation-reply-address';
 
-import type { v2 } from '../../spec-types';
+import type { v3 } from '../../spec-types';
 
-export class ExternalDocumentation extends BaseModel<v2.ExternalDocumentationObject> implements ExternalDocumentationInterface {
+export class OperationReplyAddress extends BaseModel<v3.OperationReplyAddressObject, { id?: string }> implements OperationReplyAddressInterface {
   id(): string | undefined {
-    return;
+    return this._meta.id;
   }
 
-  url(): string {
-    return this._json.url;
+  location(): string {
+    return this._json.location;
   }
 
   hasDescription(): boolean {

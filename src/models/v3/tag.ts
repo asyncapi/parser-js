@@ -8,7 +8,11 @@ import type { TagInterface } from '../tag';
 
 import type { v3 } from '../../spec-types';
 
-export class Tag extends BaseModel<v3.TagObject> implements TagInterface {
+export class Tag extends BaseModel<v3.TagObject, { id?: string }> implements TagInterface {
+  id(): string | undefined {
+    return this._meta.id;
+  }
+
   name(): string {
     return this._json.name;
   }

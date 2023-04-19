@@ -28,11 +28,31 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   }
 
   url(): string {
-    return this._json.url;
+    let host = this._json.host;
+    if (!host.endsWith('/')) {
+      host = `${host}/`;
+    }
+    let pathname = this._json.pathname || ''; 
+    if (pathname.startsWith('/')) {
+      pathname = pathname.slice(1);
+    }
+    return `${host}${pathname}`;
+  }
+
+  host(): string {
+    return this._json.host;
   }
 
   protocol(): string {
     return this._json.protocol;
+  }
+
+  hasPathname(): boolean {
+    return !!this._json.pathname;
+  }
+
+  pathname(): string | undefined {
+    return this._json.pathname;
   }
 
   hasProtocolVersion(): boolean {
@@ -46,18 +66,9 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   channels(): ChannelsInterface {
     const channels: ChannelInterface[] = [];
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.channels || {}).forEach(([channelName, channel]) => {
-      const allowedServers: v3.ServerObject[] = channel.servers || [];
+      const allowedServers = (channel as v3.ChannelObject).servers || [];
       if (allowedServers.length === 0 || allowedServers.includes(this._json)) {
-        channels.push(this.createModel(Channel, channel, { id: channelName, pointer: `/channels/${tilde(channelName)}` }));
-      }
-    });
-    Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
-      const operationChannel = operation.channel as v3.ChannelObject | undefined;
-      if (!channels.some(channel => channel.json() === operationChannel)) {
-        const allowedServers: v3.ServerObject[] = (operationChannel as v3.ChannelObject).servers || [];
-        if (allowedServers.length === 0 || allowedServers.includes(this._json)) {
-          channels.push(this.createModel(Channel, operationChannel as v3.ChannelObject, { id: '', pointer: `/operations/${tilde(operationId)}/channel` }));
-        }
+        channels.push(this.createModel(Channel, channel as v3.ChannelObject, { id: channelName, pointer: `/channels/${tilde(channelName)}` }));
       }
     });
     return new Channels(channels);
@@ -68,9 +79,10 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
     const operationsData: v3.OperationObject[] = [];
     this.channels().forEach(channel => {
       channel.operations().forEach(operation => {
-        if (!operationsData.includes(operation.json())) {
+        const operationData = operation.json();
+        if (!operationsData.includes(operationData)) {
           operations.push(operation);
-          operationsData.push(operation.json());
+          operationsData.push(operationData);
         }
       });
     });
@@ -82,9 +94,10 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
     const messagedData: v3.MessageObject[] = [];
     this.channels().forEach(channel => {
       channel.messages().forEach(message => {
-        if (!messagedData.includes(message.json())) {
+        const messageData = message.json();
+        if (!messagedData.includes(messageData)) {
           messages.push(message);
-          messagedData.push(message.json());
+          messagedData.push(messageData);
         }
       });
     });
@@ -94,25 +107,19 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   variables(): ServerVariablesInterface {
     return new ServerVariables(
       Object.entries(this._json.variables || {}).map(([serverVariableName, serverVariable]) => {
-        return this.createModel(ServerVariable, serverVariable, {
+        return this.createModel(ServerVariable, serverVariable as v3.ServerVariableObject, {
           id: serverVariableName,
-          pointer: `${this._meta.pointer}/variables/${serverVariableName}`
+          pointer: this.jsonPath(`variables/${serverVariableName}`),
         });
       })
     );
   }
 
   security(): SecurityRequirements[] {
-    const securitySchemes = (this._meta?.asyncapi?.parsed?.components?.securitySchemes || {}) as Record<string, v3.SecuritySchemeObject>;
-    return (this._json.security || []).map((requirement, index) => {
-      const requirements: SecurityRequirement[] = [];
-      Object.entries(requirement).forEach(([security, scopes]) => {
-        const scheme = this.createModel(SecurityScheme, securitySchemes[security], { id: security, pointer: `/components/securitySchemes/${security}` });
-        requirements.push(
-          this.createModel(SecurityRequirement, { scheme, scopes }, { id: security, pointer: `${this.meta().pointer}/security/${index}/${security}` })
-        );
-      });
-      return new SecurityRequirements(requirements);
+    return (this._json.security || []).map((security, index) => {
+      const scheme = this.createModel(SecurityScheme, security as v3.SecuritySchemeObject, { id: '', pointer: this.jsonPath(`security/${index}`) });
+      const requirement = this.createModel(SecurityRequirement, { scheme, scopes: (security as v3.SecuritySchemeObject).scopes }, { id: '', pointer: this.jsonPath(`security/${index}`) });
+      return new SecurityRequirements([requirement]);
     });
   }
 }

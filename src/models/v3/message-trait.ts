@@ -37,7 +37,7 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
 
   correlationId(): CorrelationIdInterface | undefined {
     if (!this._json.correlationId) return undefined;
-    return this.createModel(CorrelationId, this._json.correlationId as v3.CorrelationIDObject, { pointer: `${this._meta.pointer}/correlationId` });
+    return this.createModel(CorrelationId, this._json.correlationId as v3.CorrelationIDObject, { pointer: this.jsonPath('correlationId') });
   }
 
   hasContentType(): boolean {
@@ -45,7 +45,7 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
   }
 
   contentType(): string | undefined {
-    return this._json.contentType || this._meta.asyncapi?.parsed.defaultContentType;
+    return this._json.contentType || this._meta.asyncapi?.parsed?.defaultContentType;
   }
 
   hasHeaders(): boolean {
@@ -54,7 +54,7 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
 
   headers(): SchemaInterface | undefined {
     if (!this._json.headers) return undefined;
-    return this.createModel(Schema, this._json.headers, { pointer: `${this._meta.pointer}/headers` });
+    return this.createModel(Schema, this._json.headers, { pointer: this.jsonPath('headers') });
   }
 
   hasName(): boolean {
@@ -68,7 +68,7 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
   examples(): MessageExamplesInterface {
     return new MessageExamples(
       (this._json.examples || []).map((example: any, index: number) => {
-        return this.createModel(MessageExample, example, { pointer: `${this._meta.pointer}/examples/${index}` });
+        return this.createModel(MessageExample, example, { pointer: this.jsonPath(`examples/${index}`) });
       })
     );
   }

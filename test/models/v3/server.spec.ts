@@ -15,10 +15,11 @@ import { serializeInput, assertCoreModel } from './utils';
 import type { v3 } from '../../../src/spec-types';
 
 const doc = {
-  development: {
-    protocol: 'mqtt',
+  production: {
+    host: 'rabbitmq.in.mycompany.com:5672',
+    pathname: '/production',
+    protocol: 'amqp',
     protocolVersion: '1.0.0',
-    url: 'development.gigantic-server.com',
     variables: {
       username: {
         default: 'demo',
@@ -27,19 +28,53 @@ const doc = {
     }
   }
 };
-const docItem = new Server(doc.development, { asyncapi: {} as any, pointer: '', id: 'development' });
+const docItem = new Server(doc.production, { asyncapi: {} as any, pointer: '', id: 'production' });
 const emptyItem = new Server(serializeInput<v3.ServerObject>({}), { asyncapi: {} as any, pointer: '', id: '' });
 
 describe('Server Model', function () {
   describe('.id()', function () {
     it('should return name if present', function () {
-      expect(docItem.id()).toMatch('development');
+      expect(docItem.id()).toEqual('production');
+    });
+  });
+
+  describe('.url()', function () {
+    it('should return value', function () {
+      expect(docItem.url()).toEqual(`${doc.production.host}${doc.production.pathname}`);
+    });
+  });
+
+  describe('.host()', function () {
+    it('should return value', function () {
+      expect(docItem.host()).toEqual(doc.production.host);
     });
   });
 
   describe('protocol()', function () {
     it('should return protocol ', function () {
-      expect(docItem.protocol()).toMatch(doc.development.protocol);
+      expect(docItem.protocol()).toEqual(doc.production.protocol);
+    });
+  });
+
+  describe('.hasPathname()', function () {
+    it('should return true if pathname is not missing', function () {
+      expect(docItem.hasPathname()).toEqual(true);
+    });
+
+    it('should be false when protocolVersion is missing', function () {
+      const docItem = new Server({ ...doc.production, pathname: undefined }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(docItem.hasPathname()).toEqual(false);
+    });
+  });
+
+  describe('.pathname()', function () {
+    it('should return value', function () {
+      expect(docItem.pathname()).toEqual(doc.production.pathname);
+    });
+
+    it('should return undefined if value is not set', function () {
+      const docItem = new Server({ ...doc.production, pathname: undefined }, { asyncapi: {} as any, pointer: '', id: 'development' });
+      expect(docItem.pathname()).toBeUndefined();
     });
   });
 
@@ -55,17 +90,11 @@ describe('Server Model', function () {
 
   describe('.protocolVersion()', function () {
     it('should return value', function () {
-      expect(docItem.protocolVersion()).toMatch(doc.development.protocolVersion);
+      expect(docItem.protocolVersion()).toMatch(doc.production.protocolVersion);
     });
 
     it('should return undefined when protocolVersion is missing', function () {
       expect(emptyItem.protocolVersion()).toBeUndefined();
-    });
-  });
-
-  describe('.url()', function () {
-    it('should return value', function () {
-      expect(docItem.url()).toMatch(doc.development.url);
     });
   });
 
@@ -105,7 +134,8 @@ describe('Server Model', function () {
   describe('.operations()', function() {
     it('should return collection of operations - one operation', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { operations: { someOperation: { channel: {} } } } } as any, pointer: '', id: 'production' });
+      const channel = {};
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation: { channel } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -114,7 +144,8 @@ describe('Server Model', function () {
 
     it('should return collection of channels - multiple operations', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { operations: { someOperation1: { channel: {} }, someOperation2: { channel: {} } } } } as any, pointer: '', id: 'production' });
+      const channel = {};
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation1: { channel }, someOperation2: { channel} } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(2);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -125,7 +156,8 @@ describe('Server Model', function () {
 
     it('should return collection of operations - server available only in particular channel', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { operations: { someOperation1: { channel: { servers: [doc] } }, someOperation2: { channel: { servers: [{}] } } } } } as any, pointer: '', id: 'production' });
+      const channel = { servers: [doc] };
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation1: { channel }, someOperation2: { channel: { servers: [{}] } } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
@@ -174,7 +206,7 @@ describe('Server Model', function () {
 
   describe('.security()', function() {
     it('should return SecurityRequirements', function() {
-      const doc = serializeInput<v3.ServerObject>({ security: [{ requirement: [] }] });
+      const doc = serializeInput<v3.ServerObject>({ security: [{ type: 'apiKey' }] });
       const d = new Server(doc, {pointer: '/servers/test'} as any);
 
       const security = d.security();
@@ -182,12 +214,11 @@ describe('Server Model', function () {
       expect(security).toHaveLength(1);
       expect(security[0]).toBeInstanceOf(SecurityRequirements);
       
-      const requirement = security[0].get('requirement') as SecurityRequirement;
+      const requirement = security[0].all()[0] as SecurityRequirement;
       expect(requirement).toBeInstanceOf(SecurityRequirement);
       expect(requirement.scheme()).toBeInstanceOf(SecurityScheme);
       expect(requirement.scopes()).toEqual([]);
-      expect(requirement.meta().id).toEqual('requirement');
-      expect(requirement.meta().pointer).toEqual('/servers/test/security/0/requirement');
+      expect(requirement.meta().pointer).toEqual('/servers/test/security/0');
     });
     
     it('should return SecurityRequirements when value is undefined', function() {

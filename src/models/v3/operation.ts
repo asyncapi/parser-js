@@ -93,5 +93,4 @@ export class Operation extends OperationTrait<v3.OperationObject> implements Ope
       })
     );
   }
-
 }

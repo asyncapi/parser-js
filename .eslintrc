@@ -4,6 +4,8 @@ env:
   node: true
   es6: true
   jest: true
+  mocha: true
+  browser: true
 
 plugins:
   - "@typescript-eslint"

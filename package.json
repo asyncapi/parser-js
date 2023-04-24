@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "2.0.0-next-major.17",
+  "version": "2.0.0-next-major.18",
   "description": "JavaScript AsyncAPI parser.",
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
@@ -92,7 +92,7 @@
     "webpack": "^5.74.0",
     "webpack-bundle-analyzer": "^4.6.1",
     "webpack-cli": "^4.10.0"
-},
+  },
   "browserify": {
     "transform": [
       "browserify-shim"

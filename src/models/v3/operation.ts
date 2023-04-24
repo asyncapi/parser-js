@@ -76,6 +76,10 @@ export class Operation extends OperationTrait<v3.OperationObject> implements Ope
     return new Messages(messages);
   }
 
+  hasReply(): boolean {
+    return !!this._json.reply;
+  }
+
   reply(): OperationReplyInterface | undefined {
     if (this._json.reply) {
       return this.createModel(OperationReply, this._json.reply as v3.OperationReplyObject, { pointer: this.jsonPath('reply') });

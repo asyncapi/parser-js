@@ -17,4 +17,5 @@ export interface OperationInterface extends BaseModel, OperationTraitInterface {
   messages(): MessagesInterface;
   reply(): OperationReplyInterface | undefined;
   traits(): OperationTraitsInterface;
+  hasReply(): boolean;
 }

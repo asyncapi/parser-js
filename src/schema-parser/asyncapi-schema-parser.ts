@@ -65,7 +65,7 @@ function getSchemaValidator(version: string): ValidateFunction {
   const ajv = getAjvInstance();
   let validator = ajv.getSchema(version);
   if (!validator) {
-    const schema = preparePayloadSchema(specs[version as keyof typeof specs], version);
+    const schema = preparePayloadSchema(specs.schemas[version as keyof typeof specs.schemas], version);
 
     ajv.addSchema(schema, version);
     validator = ajv.getSchema(version);

@@ -1,5 +1,8 @@
+import { Document } from '@stoplight/spectral-core';
+
 import { AsyncAPIDocumentV2 } from '../src/models';
 import { Parser } from '../src/parser';
+import { xParserApiVersion } from '../src/constants';
 
 describe('parse()', function() {
   const parser = new Parser();
@@ -31,6 +34,37 @@ describe('parse()', function() {
     
     expect(document).toEqual(undefined);
     expect(diagnostics.length > 0).toEqual(true);
+  });
+
+  it('should return extras', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {}
+    };
+    const { document, diagnostics, extras } = await parser.parse(documentRaw);
+    
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(extras?.document).toBeInstanceOf(Document);
+    expect(diagnostics.length > 0).toEqual(true);
+  });
+
+  it('should assign x-parser-api-version extension to the 1 value', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {}
+    };
+    const { document } = await parser.parse(documentRaw);
+    
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(document?.extensions().get(xParserApiVersion)?.value()).toEqual(1);
   });
 
   it('should preserve references', async function() {
@@ -150,5 +184,69 @@ describe('parse()', function() {
     expect(deepProperty?.json() !== undefined).toEqual(true);
     expect(deepCircular?.json() !== undefined).toEqual(true);
     expect(deepProperty?.json() === deepCircular?.json()).toEqual(true); // expect that same reference
+  });
+
+  it('should throw errors when references url does not exist (#224 issue)', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Invalid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'someId',
+            message: {
+              payload: {
+                $ref: 'http://hopefullu-it-does-not-exist.com/some-file.yaml#/components/schemas/schema'
+              }
+            }
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    const filteredDiagnostics = diagnostics.filter(d => d.code === 'invalid-ref');
+    
+    expect(document).toBeUndefined();
+    expect(diagnostics.length > 0).toEqual(true);
+    expect(filteredDiagnostics.length).toEqual(1);
+    expect(filteredDiagnostics[0].message).toEqual('FetchError: request to http://hopefullu-it-does-not-exist.com/some-file.yaml failed, reason: getaddrinfo ENOTFOUND hopefullu-it-does-not-exist.com');
+  });
+
+  it('should throw errors when local reference does not exist (#360 issue)', async function() {
+    const documentRaw = {
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Invalid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'someId',
+            message: {
+              $ref: '#components/messages/message1',
+            }
+          }
+        }
+      },
+      components: {
+        messages: {
+          message1: {
+            name: 'unusedMessage',
+            title: 'This is most definityly a message.',
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    const filteredDiagnostics = diagnostics.filter(d => d.code === 'invalid-ref');
+    
+    expect(document).toBeUndefined();
+    expect(diagnostics.length > 0).toEqual(true);
+    expect(filteredDiagnostics.length).toEqual(1);
+    expect(filteredDiagnostics[0].message).toEqual('\'#components/messages/message1\' JSON pointer is invalid');
   });
 });

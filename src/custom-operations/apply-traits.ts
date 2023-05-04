@@ -37,17 +37,24 @@ export function applyTraitsV3(asyncapi: v2.AsyncAPIObject) { // TODO: Change typ
 }
 
 function applyAllTraits(asyncapi: Record<string, any>, paths: string[]) {
+  const visited: Set<unknown> = new Set();
   paths.forEach(path => {
     JSONPath({
       path,
       json: asyncapi,
       resultType: 'value',
-      callback(value) { applyTraits(value); },
+      callback(value) {
+        if (visited.has(value)) {
+          return;
+        }
+        visited.add(value);
+        applyTraits(value);
+      },
     });
   });
 }
 
-function applyTraits(value: Record<string, unknown>) {
+function applyTraits(value: Record<string, unknown> & { traits?: any[] }) {
   if (Array.isArray(value.traits)) {
     for (const trait of value.traits) {
       for (const key in trait) {

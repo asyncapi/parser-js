@@ -46,6 +46,7 @@ export interface ServerObject extends SpecificationExtensions {
   variables?: Record<string, ServerVariableObject>;
   security?: Array<SecurityRequirementObject>;
   bindings?: ServerBindingsObject | ReferenceObject;
+  tags?: TagsObject;
 }
 
 export interface ServerVariableObject extends SpecificationExtensions {
@@ -56,22 +57,22 @@ export interface ServerVariableObject extends SpecificationExtensions {
 }
 
 export interface ServerBindingsObject extends SpecificationExtensions {
-  http: Binding;
-  ws: Binding;
-  kafka: Binding;
-  anypointmq: Binding;
-  amqp: Binding;
-  amqp1: Binding;
-  mqtt: Binding;
-  mqtt5: Binding;
-  nats: Binding;
-  jms: Binding;
-  sns: Binding;
-  sqs: Binding;
-  stomp: Binding;
-  redis: Binding;
-  mercure: Binding;
-  ibmmq: Binding;
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
 }
 
 export type ChannelsObject = Record<string, ChannelObject>;
@@ -86,22 +87,22 @@ export interface ChannelObject extends SpecificationExtensions {
 }
 
 export interface ChannelBindingsObject extends SpecificationExtensions {
-  http: Binding;
-  ws: Binding;
-  kafka: Binding;
-  anypointmq: Binding;
-  amqp: Binding;
-  amqp1: Binding;
-  mqtt: Binding;
-  mqtt5: Binding;
-  nats: Binding;
-  jms: Binding;
-  sns: Binding;
-  sqs: Binding;
-  stomp: Binding;
-  redis: Binding;
-  mercure: Binding;
-  ibmmq: Binding;
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
 }
 
 export interface OperationObject extends OperationTraitObject, SpecificationExtensions {
@@ -120,22 +121,22 @@ export interface OperationTraitObject extends SpecificationExtensions {
 }
 
 export interface OperationBindingsObject extends SpecificationExtensions {
-  http: Binding;
-  ws: Binding;
-  kafka: Binding;
-  anypointmq: Binding;
-  amqp: Binding;
-  amqp1: Binding;
-  mqtt: Binding;
-  mqtt5: Binding;
-  nats: Binding;
-  jms: Binding;
-  sns: Binding;
-  sqs: Binding;
-  stomp: Binding;
-  redis: Binding;
-  mercure: Binding;
-  ibmmq: Binding;
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
 }
 
 export type ParametersObject = Record<string, ParameterObject | ReferenceObject>;
@@ -175,22 +176,22 @@ export interface MessageExampleObject extends SpecificationExtensions {
 }
 
 export interface MessageBindingsObject extends SpecificationExtensions {
-  http: Binding;
-  ws: Binding;
-  kafka: Binding;
-  anypointmq: Binding;
-  amqp: Binding;
-  amqp1: Binding;
-  mqtt: Binding;
-  mqtt5: Binding;
-  nats: Binding;
-  jms: Binding;
-  sns: Binding;
-  sqs: Binding;
-  stomp: Binding;
-  redis: Binding;
-  mercure: Binding;
-  ibmmq: Binding;
+  http?: Binding;
+  ws?: Binding;
+  kafka?: Binding;
+  anypointmq?: Binding;
+  amqp?: Binding;
+  amqp1?: Binding;
+  mqtt?: Binding;
+  mqtt5?: Binding;
+  nats?: Binding;
+  jms?: Binding;
+  sns?: Binding;
+  sqs?: Binding;
+  stomp?: Binding;
+  redis?: Binding;
+  mercure?: Binding;
+  ibmmq?: Binding;
 }
 
 export type TagsObject = Array<TagObject>;

@@ -28,8 +28,8 @@ function assignNameToComponentMessages(document: AsyncAPIDocumentInterface) {
 function assignNameToAnonymousMessages(document: AsyncAPIDocumentInterface) {
   let anonymousMessageCounter = 0;
   document.messages().forEach(message => {
-    if (message.name() === undefined && message.extensions().get(xParserMessageName) === undefined) {
-      setExtension(xParserMessageName, `<anonymous-message-${++anonymousMessageCounter}>`, message);
+    if (message.name() === undefined && message.extensions().get(xParserMessageName)?.value() === undefined) {
+      setExtension(xParserMessageName, message.id() || `<anonymous-message-${++anonymousMessageCounter}>`, message);
     }
   });
 }
@@ -37,7 +37,7 @@ function assignNameToAnonymousMessages(document: AsyncAPIDocumentInterface) {
 function assignUidToComponentParameterSchemas(document: AsyncAPIDocumentInterface) {
   document.components().channelParameters().forEach(parameter => {
     const schema = parameter.schema();
-    if (schema && !schema.uid()) {
+    if (schema && !schema.id()) {
       setExtension(xParserSchemaId, parameter.id(), schema);
     }
   });
@@ -47,7 +47,7 @@ function assignUidToChannelParameterSchemas(document: AsyncAPIDocumentInterface)
   document.channels().forEach(channel => {
     channel.parameters().forEach(parameter => {
       const schema = parameter.schema();
-      if (schema && !schema.uid()) {
+      if (schema && !schema.id()) {
         setExtension(xParserSchemaId, parameter.id(), schema);
       }
     });
@@ -56,14 +56,14 @@ function assignUidToChannelParameterSchemas(document: AsyncAPIDocumentInterface)
 
 function assignUidToComponentSchemas(document: AsyncAPIDocumentInterface) {
   document.components().schemas().forEach(schema => {
-    setExtension(xParserSchemaId, schema.uid(), schema);
+    setExtension(xParserSchemaId, schema.id(), schema);
   });
 }
   
 function assignUidToAnonymousSchemas(doc: AsyncAPIDocumentInterface) {
   let anonymousSchemaCounter = 0;
   function callback(schema: SchemaInterface) {
-    if (!schema.uid()) {
+    if (!schema.id()) {
       setExtension(xParserSchemaId, `<anonymous-schema-${++anonymousSchemaCounter}>`, schema);
     }
   }

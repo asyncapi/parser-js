@@ -23,4 +23,9 @@ export interface AsyncAPIDocumentInterface extends BaseModel<v2.AsyncAPIObject>,
   schemas(): SchemasInterface;
   securitySchemes(): SecuritySchemesInterface;
   components(): ComponentsInterface;
+  allServers(): ServersInterface;
+  allChannels(): ChannelsInterface;
+  allOperations(): OperationsInterface;
+  allMessages(): MessagesInterface;
+  allSchemas(): SchemasInterface;
 }

@@ -44,18 +44,20 @@ export function hasDescription(model: Base<{ description?: string }>) {
   return Boolean(model.json('description'));
 }
 
-export function description(model: Base<{ description?: string }>): string | undefined {
-  return model.json('description');
+export function description(model: Base<{ description?: string }>): string | null {
+  const description = model.json('description');
+  return typeof description === 'string' ? description : null;
 }
 
 export function hasExternalDocs(model: Base<{ externalDocs?: v2.ExternalDocumentationObject }>): boolean {
   return Object.keys(model.json('externalDocs') || {}).length > 0;
 }
 
-export function externalDocs(model: Base<{ externalDocs?: v2.ExternalDocumentationObject }>): ExternalDocs | undefined { 
-  if (hasExternalDocs(model)) {
+export function externalDocs(model: Base<{ externalDocs?: v2.ExternalDocumentationObject }>): ExternalDocs | null { 
+  if (typeof model.json('externalDocs') === 'object') {
     return new ExternalDocs(model.json('externalDocs') as v2.ExternalDocumentationObject);
   }
+  return null;
 }
 
 export const extensionsMixins = {

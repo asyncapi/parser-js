@@ -115,17 +115,16 @@ export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject
   }
 
   additionalProperties() {
-    if (typeof this._json === 'boolean') return this._json;
     const additionalProperties = this.__get('additionalProperties');
-    if (additionalProperties === undefined) return true;
-    return new Schema(additionalProperties as any, { parent: this });
+    if (typeof additionalProperties === 'boolean') return additionalProperties;
+    if (additionalProperties === undefined || additionalProperties === null) return;
+    return this.__createChild(additionalProperties);
   }
 
   additionalItems() {
-    if (typeof this._json === 'boolean') return this._json;
     const additionalItems = this.__get('additionalItems');
-    if (additionalItems === undefined) return true;
-    return new Schema(additionalItems as any, { parent: this });
+    if (additionalItems === undefined || additionalItems === null) return;
+    return this.__createChild(additionalItems);
   }
 
   patternProperties() {

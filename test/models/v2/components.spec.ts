@@ -181,20 +181,8 @@ describe('Components model', function() {
   });
 
   describe('.operations()', function() {
-    it('should return Operations with Operation Object', function() {
-      const doc = { channels: { channel: { publish: {} } } };
-      const d = new Components(doc);
-      const expectedOperations: Operation[] = [
-        new Operation({}, {action: 'publish', id: 'channel_publish', pointer: '/components/channels/channel/publish'} as ModelMetadata & { id: string, action: OperationAction })
-      ];
-      
-      const operations = d.operations();
-      expect(operations).toBeInstanceOf(Operations);
-      expect(operations.all()).toEqual(expectedOperations);
-    });
-
-    it('should return Operations with empty operation objects when operations are not defined in channels', function() {
-      const doc = { channels: { channel: {} } };
+    it('should return Operations with empty collection', function() {
+      const doc = {};
       const d = new Components(doc);
       const operations = d.operations();
       expect(operations).toBeInstanceOf(Operations);

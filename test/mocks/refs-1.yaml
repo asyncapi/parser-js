@@ -1,0 +1,4 @@
+type: object
+properties:
+  testing:
+    $ref: './refs-2.yaml'

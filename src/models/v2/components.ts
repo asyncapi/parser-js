@@ -42,7 +42,7 @@ import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { MessageTraitsInterface } from '../message-traits';
 import type { OperationsInterface } from '../operations';
-import type { OperationInterface } from '../operation';
+import type { CorrelationIdsInterface } from '../correlation-ids';
 
 import type { v2 } from '../../spec-types';
 
@@ -57,6 +57,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
         this.createModel(Channel, channel as v2.ChannelObject, { id: channelAddress, address: '', pointer: `/components/channels/${tilde(channelAddress)}` })
       )
     );
+  }
+
+  operations(): OperationsInterface {
+    return new Operations([]);
   }
 
   messages(): MessagesInterface {
@@ -75,12 +79,6 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return this.createCollection('serverVariables', ServerVariables, ServerVariable);
   }
 
-  operations(): OperationsInterface {
-    const operations: OperationInterface[] = [];
-    this.channels().forEach(channel => operations.push(...channel.operations().all()));
-    return new Operations(operations);
-  }
-
   operationTraits(): OperationTraitsInterface {
     return this.createCollection('operationTraits', OperationTraits, OperationTrait);
   }
@@ -89,7 +87,7 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
     return this.createCollection('messageTraits', MessageTraits, MessageTrait);
   }
 
-  correlationIds(): CorrelationIds {
+  correlationIds(): CorrelationIdsInterface {
     return this.createCollection('correlationIds', CorrelationIds, CorrelationId);
   }
 

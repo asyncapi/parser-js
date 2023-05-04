@@ -1,5 +1,3 @@
-import { Spectral } from '@stoplight/spectral-core';
-
 import { toAsyncAPIDocument } from './document';
 import { parse } from './parse';
 import { validate } from './validate';
@@ -7,22 +5,32 @@ import { registerSchemaParser } from './schema-parser';
 import { AsyncAPISchemaParser } from './schema-parser/asyncapi-schema-parser';
 import { createSpectral } from './spectral';
 
+import type { Spectral } from '@stoplight/spectral-core';
 import type { ParseOptions, ParseOutput } from './parse';
 import type { ValidateOptions } from './validate';
+import type { ResolverOptions } from './resolver';
+import type { RulesetOptions } from './ruleset';
 import type { SchemaParser } from './schema-parser';
 import type { Diagnostic, Input } from './types';
 
-export interface ParserOptions {}
+export interface ParserOptions {
+  ruleset?: RulesetOptions;
+  schemaParsers?: Array<SchemaParser>;
+  __unstable?: {
+    resolver?: ResolverOptions;
+  };
+}
 
 export class Parser {
   public readonly parserRegistry = new Map<string, SchemaParser>();
   protected readonly spectral: Spectral;
 
   constructor(
-    private readonly _: ParserOptions = {}
+    private readonly options: ParserOptions = {}
   ) {
-    this.spectral = createSpectral(this);
+    this.spectral = createSpectral(this, options);
     this.registerSchemaParser(AsyncAPISchemaParser());
+    this.options.schemaParsers?.forEach(parser => this.registerSchemaParser(parser));
   }
 
   async parse(asyncapi: Input, options?: ParseOptions): Promise<ParseOutput> {
@@ -41,7 +49,7 @@ export class Parser {
     if (maybeDocument) {
       return [];
     }
-    return (await validate(this.spectral, asyncapi, options)).diagnostics;
+    return (await validate(this, this.spectral, asyncapi, options)).diagnostics;
   }
 
   registerSchemaParser(parser: SchemaParser) {

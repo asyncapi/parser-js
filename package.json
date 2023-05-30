@@ -41,7 +41,7 @@
     "prepublishOnly": "npm run generate:assets"
   },
   "dependencies": {
-    "@asyncapi/specs": "^5.0.0",
+    "@asyncapi/specs": "^5.0.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "~3.2.0",
     "@stoplight/json-ref-resolver": "^3.1.5",
     "@stoplight/spectral-core": "^1.16.1",

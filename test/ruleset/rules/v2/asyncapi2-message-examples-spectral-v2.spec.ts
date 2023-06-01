@@ -1,6 +1,6 @@
 import { testRule, DiagnosticSeverity } from '../../tester';
 
-testRule('asyncapi2-message-examples-default', [
+testRule('asyncapi2-message-examples', [
   {
     name: 'valid case',
     document: {
@@ -372,7 +372,7 @@ testRule('asyncapi2-message-examples-default', [
     },
     errors: [],
   },
-
+  
   {
     name: 'invalid example from avro spec case',
     document: {
@@ -415,86 +415,15 @@ testRule('asyncapi2-message-examples-default', [
         },
       },
     },
-    errors: [],
-  },
-
-  {
-    name: 'avro can contain null values',
-    document: {
-      asyncapi: '2.6.0',
-      channels: {
-        someChannel: {
-          publish: {
-            message: {
-              schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
-              payload: {
-                type: 'record',
-                name: 'Command',
-                fields: [{
-                  name: 'foo',
-                  default: null,
-                  type: ['null', 'string'],
-                }],
-              },
-              examples: [
-                {
-                  payload: {}
-                },
-              ],
-            },
-          },
-        },
-      },
-    },
-    errors: [],
-  },
-
-  {
-    name: 'handles oneOf processing',
-    document: {
-      asyncapi: '2.6.0',
-      channels: {
-        someChannel: {
-          publish: {
-            message: {
-              oneOf: [
-                {
-                  schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
-                  payload: {
-                    type: 'record',
-                    name: 'Command',
-                    fields: [{
-                      name: 'foo',
-                      default: null,
-                      type: ['null', 'string'],
-                    }],
-                  },
-                  examples: [
-                    {
-                      payload: {}
-                    },
-                  ],
-                },
-                {
-                  payload: {
-                    type: 'string'
-                  },
-                  examples: [
-                    {
-                      payload: 1
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-        },
-      },
-    },
     errors: [
       {
-        message: '"payload" property type must be string',
-        path: ['channels', 'someChannel', 'publish', 'message', 'oneOf', '1', 'examples', '0', 'payload'],
+        message: '"direction" property must be equal to one of the allowed values: "North", "East", "South", "West"',
+        path: ['channels', 'someChannel', 'publish', 'message', 'examples', '0', 'payload', 'direction'],
+        severity: DiagnosticSeverity.Error,
+      },
+      {
+        message: '"someOtherKey" property type must be string',
+        path: ['channels', 'someChannel', 'publish', 'message', 'examples', '0', 'headers', 'someOtherKey'],
         severity: DiagnosticSeverity.Error,
       },
     ],

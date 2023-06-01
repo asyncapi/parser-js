@@ -7,6 +7,7 @@ import { channelParameters } from './functions/channelParameters';
 import { channelServers } from './functions/channelServers';
 import { checkId } from './functions/checkId';
 import { messageExamples } from './functions/messageExamples';
+import { asyncApi2MessageExamplesParserRule } from './functions/messageExamples-spectral-rule-v2';
 import { messageIdUniqueness } from './functions/messageIdUniqueness';
 import { operationIdUniqueness } from './functions/operationIdUniqueness';
 import { schemaValidation } from './functions/schemaValidation';
@@ -115,7 +116,7 @@ export const v2CoreRuleset = {
     /**
      * Message Object rules
      */
-    'asyncapi2-message-examples': {
+    'asyncapi2-message-examples-default': {
       description: 'Examples of message object should validate againt the "payload" and "headers" schemas.',
       message: '{{error}}',
       severity: 'error',
@@ -238,6 +239,7 @@ export const v2SchemasRuleset = (parser: Parser) => {
           },
         },
       },
+      'asyncapi2-message-examples': asyncApi2MessageExamplesParserRule(parser),
     }
   };
 };

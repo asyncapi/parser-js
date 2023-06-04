@@ -25,7 +25,7 @@ testRule('asyncapi2-channel-no-query-nor-fragment', [
       {
         message: 'Channel address should not include query ("?") or fragment ("#") delimiter.',
         path: ['channels', 'users/{userId}/signedOut?byMistake={didFatFingerTheSignOutButton}'],
-        severity: DiagnosticSeverity.Warning,
+        severity: DiagnosticSeverity.Error,
       },
     ],
   },
@@ -43,7 +43,7 @@ testRule('asyncapi2-channel-no-query-nor-fragment', [
       {
         message: 'Channel address should not include query ("?") or fragment ("#") delimiter.',
         path: ['channels', 'users/{userId}/signedOut#onPurpose'],
-        severity: DiagnosticSeverity.Warning,
+        severity: DiagnosticSeverity.Error,
       },
     ],
   },

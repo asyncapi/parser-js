@@ -6,7 +6,7 @@ import { aas2_0, aas2_1, aas2_2, aas2_3, aas2_4, aas2_5, aas2_6 } from '../forma
 import type { ErrorObject } from 'ajv';
 import type { IFunctionResult, Format } from '@stoplight/spectral-core';
 
-type AsyncAPIVersions = keyof typeof specs;
+type AsyncAPIVersions = keyof typeof specs.schemas;
 
 function shouldIgnoreError(error: ErrorObject): boolean {
   return (
@@ -46,7 +46,7 @@ function prepareResults(errors: ErrorObject[]): void {
 }
 
 function getCopyOfSchema(version: AsyncAPIVersions): Record<string, unknown> {
-  return JSON.parse(JSON.stringify(specs[version])) as Record<string, unknown>;
+  return JSON.parse(JSON.stringify(specs.schemas[version])) as Record<string, unknown>;
 }
 
 const serializedSchemas = new Map<AsyncAPIVersions, Record<string, unknown>>();

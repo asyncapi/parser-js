@@ -1,0 +1,6 @@
+type: object
+properties:
+  testing1:
+    $ref: "./refed2.yaml"
+  testing2:
+    $ref: "http://localhost:8080/refs/refed2.yaml"

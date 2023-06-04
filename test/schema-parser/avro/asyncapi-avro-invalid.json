@@ -1,6 +1,0 @@
-{
-  "schemaFormat": "application/vnd.apache.avro;version=1.9.0",
-  "payload": {
-    "isThisAnAvroSchema": "no"
-  }  
-}

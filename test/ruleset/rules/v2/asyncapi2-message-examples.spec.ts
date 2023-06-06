@@ -327,4 +327,69 @@ testRule('asyncapi2-message-examples', [
       },
     ],
   },
+
+  {
+    name: 'valid avro spec case',
+    document: {
+      asyncapi: '2.0.0',
+      channels: {
+        someChannel: {
+          publish: {
+            message: {
+              schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+              payload: {
+                type: 'record',
+                name: 'Test',
+                fields: [
+                  {name: 'direction', type: { type: 'enum', name: 'directionEnum', symbols: ['North', 'East', 'South', 'West']}},
+                  {name: 'speed', type: 'string'}
+                ]
+              },
+              examples: [
+                {
+                  payload: {
+                    direction: 'North',
+                    speed: '18'
+                  }
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+  {
+    name: 'invalid avro spec case',
+    document: {
+      asyncapi: '2.0.0',
+      channels: {
+        someChannel: {
+          publish: {
+            message: {
+              schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+              payload: {
+                type: 'record',
+                name: 'Test',
+                fields: [
+                  {name: 'direction', type: { type: 'enum', name: 'directionEnum', symbols: ['North', 'East', 'South', 'West']}},
+                  {name: 'speed', type: 'string'}
+                ]
+              },
+              examples: [
+                {
+                  payload: {
+                    direction: 'South-West',
+                    speed: '18'
+                  }
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+    errors: [],
+  }
 ]);

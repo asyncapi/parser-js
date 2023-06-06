@@ -116,24 +116,24 @@ export const v2CoreRuleset = {
      * Message Object rules
      */
     'asyncapi2-message-examples': {
-      description: 'Examples of message object should follow by "payload" and "headers" schemas.',
+      description: 'Examples of message object should validate againt the "payload" and "headers" schemas.',
       message: '{{error}}',
       severity: 'error',
       recommended: true,
       given: [
         // messages
-        '$.channels.*.[publish,subscribe].message',
-        '$.channels.*.[publish,subscribe].message.oneOf.*',
-        '$.components.channels.*.[publish,subscribe].message',
-        '$.components.channels.*.[publish,subscribe].message.oneOf.*',
-        '$.components.messages.*',
+        '$.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe].message.oneOf[?(@.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].message.oneOf[?(@.schemaFormat === void 0)]',
+        '$.components.messages[?(@.schemaFormat === void 0)]',
         // message traits
-        '$.channels.*.[publish,subscribe].message.traits.*',
-        '$.channels.*.[publish,subscribe].message.oneOf.*.traits.*',
-        '$.components.channels.*.[publish,subscribe].message.traits.*',
-        '$.components.channels.*.[publish,subscribe].message.oneOf.*.traits.*',
-        '$.components.messages.*.traits.*',
-        '$.components.messageTraits.*',
+        '$.channels.*.[publish,subscribe].message.traits[?(@.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe].message.oneOf.*.traits[?(@.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].message.traits[?(@.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].message.oneOf.*.traits[?(@.schemaFormat === void 0)]',
+        '$.components.messages.*.traits[?(@.schemaFormat === void 0)]',
+        '$.components.messageTraits[?(@.schemaFormat === void 0)]',
       ],
       then: {
         function: messageExamples,

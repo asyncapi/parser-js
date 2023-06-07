@@ -116,7 +116,7 @@ export const v2CoreRuleset = {
     /**
      * Message Object rules
      */
-    'asyncapi2-message-examples-default': {
+    'asyncapi2-message-examples': {
       description: 'Examples of message object should validate againt the "payload" and "headers" schemas.',
       message: '{{error}}',
       severity: 'error',
@@ -239,7 +239,7 @@ export const v2SchemasRuleset = (parser: Parser) => {
           },
         },
       },
-      'asyncapi2-message-examples': asyncApi2MessageExamplesParserRule(parser),
+      'asyncapi2-message-examples-custom-format': asyncApi2MessageExamplesParserRule(parser),
     }
   };
 };

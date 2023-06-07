@@ -1,6 +1,6 @@
 import { testRule, DiagnosticSeverity } from '../../tester';
 
-testRule('asyncapi2-message-examples-default', [
+testRule('asyncapi2-message-examples', [
   {
     name: 'valid case',
     document: {

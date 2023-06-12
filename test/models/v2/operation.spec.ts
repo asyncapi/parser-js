@@ -1,18 +1,24 @@
-import { Channels } from '../../../src/models/channels';
+import { Channels } from '../../../src/models/v2/channels';
 import { Channel } from '../../../src/models/v2/channel';
 import { Operation } from '../../../src/models/v2/operation';
-import { OperationTraits } from '../../../src/models/operation-traits';
+import { OperationTraits } from '../../../src/models/v2/operation-traits';
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
-import { Messages } from '../../../src/models/messages';
+import { Messages } from '../../../src/models/v2/messages';
 import { Message } from '../../../src/models/v2/message';
-import { Servers } from '../../../src/models/servers';
+import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { assertCoreModel } from './utils';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Operation model', function() {
   describe('.id()', function() {
-    it('should return operationId', function() {
+    it('should return id of model', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'operation', action: 'publish' });
+      expect(d.id()).toEqual('operation');
+    });
+
+    it('should reuse operationId', function() {
       const doc = { operationId: '...' };
       const d = new Operation(doc);
       expect(d.id()).toEqual(doc.operationId);
@@ -52,6 +58,34 @@ describe('Operation model', function() {
       const doc = {};
       const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'subscribe' });
       expect(d.isReceive()).toBeFalsy();
+    });
+  });
+
+  describe('.hasOperationId()', function() {
+    it('should return true if operationId is present', function() {
+      const doc = { operationId: '...' };
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.hasOperationId()).toEqual(true);
+    });
+
+    it('should return falsee if operationId is present', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.hasOperationId()).toEqual(false);
+    });
+  });
+
+  describe('.operationId()', function() {
+    it('should return operationId if present', function() {
+      const doc = { operationId: '...' };
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.operationId()).toEqual(doc.operationId);
+    });
+
+    it('should return undefined if operationId is not present', function() {
+      const doc = {};
+      const d = new Operation(doc, { asyncapi: {} as any, pointer: '', id: 'trait', action: 'publish' });
+      expect(d.operationId()).toEqual(undefined);
     });
   });
 
@@ -145,14 +179,6 @@ describe('Operation model', function() {
     });
   });
 
-  describe('.reply()', function() {
-    it('should return undefined', function() {
-      const doc = {};
-      const d = new Operation(doc);
-      expect(d.reply()).toBeUndefined();
-    });
-  });
-
   describe('.traits()', function() {
     it('should return collection of traits', function() {
       const doc = { traits: [{ operationId: '...' }] };
@@ -171,6 +197,10 @@ describe('Operation model', function() {
   });
 
   describe('mixins', function() {
-    assertCoreModel(Operation);
+    assertBindings(Operation);
+    assertDescription(Operation);
+    assertExtensions(Operation);
+    assertExternalDocumentation(Operation);
+    assertTags(Operation);
   });
 });

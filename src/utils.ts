@@ -1,12 +1,14 @@
+import { Document } from '@stoplight/spectral-core';
 import { DiagnosticSeverity } from '@stoplight/types';
 
 import type { ISpectralDiagnostic } from '@stoplight/spectral-core';
 import type { BaseModel } from './models';
-import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI } from './types';
+import type { AsyncAPISemver, AsyncAPIObject, DetailedAsyncAPI, MaybeAsyncAPI, Diagnostic } from './types';
 
-export function createDetailedAsyncAPI(source: string | Record<string, unknown>, parsed: AsyncAPIObject): DetailedAsyncAPI {
+export function createDetailedAsyncAPI(parsed: AsyncAPIObject, input?: string | MaybeAsyncAPI | AsyncAPIObject, source?: string): DetailedAsyncAPI {
   return {
     source,
+    input,
     parsed,
     semver: getSemver(parsed.asyncapi),
   };
@@ -31,10 +33,6 @@ export function normalizeInput(asyncapi: string | MaybeAsyncAPI): string {
   return JSON.stringify(asyncapi, undefined, 2);
 }
 
-export function unfreezeObject(data: unknown) {
-  return JSON.parse(JSON.stringify(data));
-}
-
 export function hasErrorDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Error);
 }
@@ -51,10 +49,12 @@ export function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
   return diagnostics.some(diagnostic => diagnostic.severity === DiagnosticSeverity.Hint);
 }
 
-export function setExtension(id: string, value: any, model: BaseModel): void {
-  id = id.startsWith('x-') ? id : `x-${id}`;
-  const data = model.json();
-  data[id] = value;
+export function setExtension(id: string, value: unknown, model: BaseModel): void {
+  const modelValue = model.json();
+  if (typeof modelValue === 'object' && modelValue) {
+    id = id.startsWith('x-') ? id : `x-${id}`;
+    modelValue[String(id)] = value;
+  }
 }
 
 export function mergePatch<T = any>(origin: unknown, patch: unknown): T {
@@ -86,6 +86,26 @@ export function hasRef(value: unknown): value is { $ref: string } {
   return isObject(value) && '$ref' in value && typeof value.$ref === 'string';
 }
 
+export function toJSONPathArray(jsonPath: string): Array<string | number> {
+  return splitPath(serializePath(jsonPath));
+}
+
+export function createUncaghtDiagnostic(err: unknown, message: string, document?: Document): Diagnostic[] {
+  if (!(err instanceof Error)) {
+    return [];
+  }
+  
+  const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
+  return [
+    {
+      code: 'uncaught-error',
+      message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+      path: [],
+      severity: DiagnosticSeverity.Error,
+      range,
+    }
+  ];  
+}
 export function tilde(str: string) {
   return str.replace(/[~/]{1}/g, (sub) => {
     switch (sub) {
@@ -107,36 +127,24 @@ export function untilde(str: string) {
   });
 }
 
-export function retrievePossibleRef(data: any, pathOfData: string, spec: any = {}): any {
-  if (!hasRef(data)) {
-    return data;
+export function findSubArrayIndex(arr: Array<any>, subarr: Array<any>, fromIndex = 0) {
+  let i, found, j;
+  for (i = fromIndex; i < 1 + (arr.length - subarr.length); ++i) {
+    found = true;
+    for (j = 0; j < subarr.length; ++j) {
+      if (arr[i + j] !== subarr[j]) {
+        found = false;
+        break;
+      }
+    }
+    if (found) {
+      return i;
+    }
   }
-
-  const refPath = serializePath(data.$ref);
-  if (pathOfData.startsWith(refPath)) { // starts by given path
-    return retrieveDeepData(spec, splitPath(refPath)) || data;
-  } else if (pathOfData.includes(refPath)) { // circular path in substring of path
-    const substringPath = pathOfData.split(refPath)[0];
-    return retrieveDeepData(spec, splitPath(`${substringPath}${refPath}`)) || data;
-  }
-  return data;
+  return -1;
 }
 
-export function resolveServerUrl(url: string): { host: string, pathname: string | undefined } {
-  // eslint-disable-next-line prefer-const
-  let [maybeProtocol, maybeHost] = url.split('://');
-  if (!maybeHost) {
-    maybeHost = maybeProtocol;
-  }
-
-  const [host, ...pathnames] = maybeHost.split('/');
-  if (pathnames.length) {
-    return { host, pathname: `/${pathnames.join('/')}` };
-  }
-  return { host, pathname: undefined };
-}
-
-function retrieveDeepData(value: Record<string, any>, path: string[]) {
+export function retrieveDeepData(value: Record<string, any>, path: Array<string | number>) {
   let index = 0;
   const length = path.length;
 

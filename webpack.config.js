@@ -35,6 +35,7 @@ module.exports = {
     fallback: {
       fs: false,
       path: false,
+      util: false,
       buffer: require.resolve('buffer/'),
     }
   },

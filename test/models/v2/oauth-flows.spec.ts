@@ -1,8 +1,6 @@
 import { OAuthFlows } from '../../../src/models/v2/oauth-flows';
 import { OAuthFlow } from '../../../src/models/v2/oauth-flow';
 
-import { assertExtensions } from './utils';
-
 const oAuthFlowsObject = {
   implicit: {
     authorizationUrl: 'https://example.com/api/oauth/dialog',
@@ -34,9 +32,5 @@ describe('OAuth Flows', function() {
     it('should return OAuthflow object', function() {
       expect(flows.implicit() instanceof OAuthFlow).toBeTruthy();
     });
-  });
-
-  describe('mixins', function() {
-    assertExtensions(OAuthFlows);
   });
 });

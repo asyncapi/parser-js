@@ -1,15 +1,15 @@
-import { Channels } from '../../../src/models/channels';
+import { Channels } from '../../../src/models/v2/channels';
 import { Channel } from '../../../src/models/v2/channel';
 import { Message } from '../../../src/models/v2/message';
-import { MessageTraits } from '../../../src/models/message-traits';
+import { MessageTraits } from '../../../src/models/v2/message-traits';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
-import { Operations } from '../../../src/models/operations';
+import { Operations } from '../../../src/models/v2/operations';
 import { Operation } from '../../../src/models/v2/operation';
 import { Schema } from '../../../src/models/v2/schema';
-import { Servers } from '../../../src/models/servers';
+import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { assertCoreModel } from './utils';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('Message model', function() {
   describe('.id()', function() {
@@ -181,6 +181,10 @@ describe('Message model', function() {
   });
 
   describe('mixins', function() {
-    assertCoreModel(Message);
+    assertBindings(MessageTrait);
+    assertDescription(MessageTrait);
+    assertExtensions(MessageTrait);
+    assertExternalDocumentation(MessageTrait);
+    assertTags(MessageTrait);
   });
 });

@@ -1,21 +1,54 @@
+import { BaseModel } from '../base';
 import { SecurityScheme } from './security-scheme';
-import { SecurityRequirements } from '../security-requirements';
+import { SecurityRequirements } from './security-requirements';
 import { SecurityRequirement } from './security-requirement';
 
-import { CoreModel } from './mixins';
+import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
 
+import type { BindingsInterface } from '../bindings';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { OperationAction } from '../operation';
 import type { OperationTraitInterface } from '../operation-trait';
+import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
 
-export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends CoreModel<J, { id: string | undefined, action: OperationAction }> implements OperationTraitInterface {
-  id(): string | undefined {
+export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTraitObject> extends BaseModel<J, { id: string, action: OperationAction }> implements OperationTraitInterface {
+  id(): string {
+    return this.operationId() || this._meta.id;
+  }
+
+  hasOperationId(): boolean {
+    return !!this._json.operationId;
+  }
+
+  operationId(): string | undefined {
     return this._json.operationId;
   }
 
-  hasId(): boolean {
-    return this.id() !== undefined;
+  hasSummary(): boolean {
+    return !!this._json.summary;
+  }
+
+  summary(): string | undefined {
+    return this._json.summary;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
+  }
+
+  hasExternalDocs(): boolean {
+    return hasExternalDocs(this);
+  }
+
+  externalDocs(): ExternalDocumentationInterface | undefined {
+    return externalDocs(this);
   }
 
   security(): SecurityRequirements[] {
@@ -30,5 +63,17 @@ export class OperationTrait<J extends v2.OperationTraitObject = v2.OperationTrai
       });
       return new SecurityRequirements(requirements);
     });
+  }
+
+  tags(): TagsInterface {
+    return tags(this);
+  }
+
+  bindings(): BindingsInterface {
+    return bindings(this);
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

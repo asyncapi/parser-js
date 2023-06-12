@@ -1,4 +1,4 @@
-import { OperationTraits } from '../../../src/models/operation-traits';
+import { OperationTraits } from '../../../src/models/v2/operation-traits';
 import { OperationTrait } from '../../../src/models/v2/operation-trait';
 
 const operationTrait = {

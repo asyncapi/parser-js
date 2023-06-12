@@ -1,6 +1,5 @@
 import { SpecificationExtensionsModel, createMapOfType, getMapValue, description, hasDescription, hasExternalDocs, externalDocs } from './mixins';
 import { xParserCircular, xParserCircularProps } from '../constants';
-import { hasRef } from '../utils';
 
 import type { Base } from './base';
 import type { v2 } from '../spec-types';
@@ -116,20 +115,15 @@ export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject
   }
 
   additionalProperties() {
-    if (typeof this._json === 'boolean') return this._json;
     const additionalProperties = this.__get('additionalProperties');
     if (typeof additionalProperties === 'boolean') return additionalProperties;
-    if (additionalProperties === undefined) return true;
-    if (additionalProperties === null) return false;
+    if (additionalProperties === undefined || additionalProperties === null) return;
     return this.__createChild(additionalProperties);
   }
 
   additionalItems() {
-    if (typeof this._json === 'boolean') return this._json;
     const additionalItems = this.__get('additionalItems');
-    if (typeof additionalItems === 'boolean') return additionalItems;
-    if (additionalItems === undefined) return true;
-    if (additionalItems === null) return false;
+    if (additionalItems === undefined || additionalItems === null) return;
     return this.__createChild(additionalItems);
   }
 
@@ -241,7 +235,7 @@ export class Schema extends SpecificationExtensionsModel<v2.AsyncAPISchemaObject
   }
 
   isCircular() {
-    if (hasRef(this._json) || this.ext(xParserCircular)) {
+    if (this.ext(xParserCircular)) {
       return true;
     }
 

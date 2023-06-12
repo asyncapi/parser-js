@@ -1,10 +1,10 @@
 import { CorrelationId } from '../../../src/models/v2/correlation-id';
-import { MessageExamples } from '../../../src/models/message-examples';
+import { MessageExamples } from '../../../src/models/v2/message-examples';
 import { MessageExample } from '../../../src/models/v2/message-example';
 import { MessageTrait } from '../../../src/models/v2/message-trait';
 import { Schema } from '../../../src/models/v2/schema';
 
-import { assertCoreModel } from './utils';
+import { assertBindings, assertDescription, assertExtensions, assertExternalDocumentation, assertTags } from './utils';
 
 describe('MessageTrait model', function() {
   describe('.id()', function() {
@@ -181,6 +181,62 @@ describe('MessageTrait model', function() {
     });
   });
 
+  describe('.hasTitle()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { title: '...' };
+      const d = new MessageTrait(doc);
+      expect(d.hasTitle()).toEqual(true);
+    });
+    
+    it('should return false when there is no value', function() {
+      const doc = {};
+      const d = new MessageTrait(doc);
+      expect(d.hasTitle()).toEqual(false);
+    });
+  });
+
+  describe('.title()', function() {
+    it('should return the value', function() {
+      const doc = { title: '...' };
+      const d = new MessageTrait(doc);
+      expect(d.title()).toEqual(doc.title);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = {};
+      const d = new MessageTrait(doc);
+      expect(d.title()).toBeUndefined();
+    });
+  });
+
+  describe('.hasSummary()', function() {
+    it('should return true when there is a value', function() {
+      const doc = { summary: '...' };
+      const d = new MessageTrait(doc);
+      expect(d.hasSummary()).toEqual(true);
+    });
+    
+    it('should return false when there is no value', function() {
+      const doc = {};
+      const d = new MessageTrait(doc);
+      expect(d.hasSummary()).toEqual(false);
+    });
+  });
+
+  describe('.summary()', function() {
+    it('should return the value', function() {
+      const doc = { summary: '...' };
+      const d = new MessageTrait(doc);
+      expect(d.summary()).toEqual(doc.summary);
+    });
+    
+    it('should return undefined when there is no value', function() {
+      const doc = {};
+      const d = new MessageTrait(doc);
+      expect(d.summary()).toBeUndefined();
+    });
+  });
+
   describe('.examples()', function() {
     it('should return collection of examples', function() {
       const doc = { examples: [{ name: '...' }] };
@@ -199,6 +255,10 @@ describe('MessageTrait model', function() {
   });
 
   describe('mixins', function() {
-    assertCoreModel(MessageTrait);
+    assertBindings(MessageTrait);
+    assertDescription(MessageTrait);
+    assertExtensions(MessageTrait);
+    assertExternalDocumentation(MessageTrait);
+    assertTags(MessageTrait);
   });
 });

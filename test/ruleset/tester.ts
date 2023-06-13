@@ -44,10 +44,10 @@ export { DiagnosticSeverity } from '../../src';
 function createParser(rules: Array<RuleNames>, options: ParserOptions = {}): Parser {
   const ruleset: RulesetDefinition = {
     extends: [
-      [coreRuleset, 'off'],
-      [recommendedRuleset, 'off'],
-      [v2CoreRuleset, 'off'],
-      [v2RecommendedRuleset, 'off'],
+      [coreRuleset as RulesetDefinition, 'off'],
+      [recommendedRuleset as RulesetDefinition, 'off'],
+      [v2CoreRuleset as RulesetDefinition, 'off'],
+      [v2RecommendedRuleset as RulesetDefinition, 'off'],
     ],
     rules: {
       'asyncapi2-schemas': 'off',

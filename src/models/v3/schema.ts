@@ -6,7 +6,7 @@ import { retrievePossibleRef, hasRef } from '../../utils';
 
 import type { ModelMetadata } from '../base';
 import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-documentation';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { SchemaInterface } from '../schema';
 
 import type { v3 } from '../../spec-types';

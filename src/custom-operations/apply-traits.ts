@@ -2,7 +2,7 @@ import { JSONPath } from 'jsonpath-plus';
 
 import { mergePatch } from '../utils';
 
-import type { v2 } from '../spec-types';
+import type { v2, v3 } from '../spec-types';
 
 const v2TraitPaths = [
   // operations
@@ -32,7 +32,7 @@ const v3TraitPaths = [
   '$.components.messages.*',
 ];
 
-export function applyTraitsV3(asyncapi: v2.AsyncAPIObject) { // TODO: Change type when we will have implemented types for v3
+export function applyTraitsV3(asyncapi: v3.AsyncAPIObject) {
   applyAllTraits(asyncapi, v3TraitPaths);
 }
 

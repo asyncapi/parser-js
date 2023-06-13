@@ -75,7 +75,7 @@ export function assertExtensions(model: Constructor<ExtensionsMixinInterface>) {
     const d1 = new model(doc1);
     const d2 = new model(doc2);
     const d3 = new model(doc3);
-  
+
     it('should return a collection with extensions', () => {
       expect(d1.extensions()).toBeInstanceOf(ExtensionsV3);
       expect(d1.extensions().length).toEqual(1);

@@ -8,8 +8,20 @@ import type { OAuthFlowInterface } from '../oauth-flow';
 import type { v2 } from '../../spec-types';
 
 export class OAuthFlow<F extends v2.OAuthFlowObjectBase> extends BaseModel<F> implements OAuthFlowInterface {
+  hasAuthorizationUrl(): boolean {
+    return !!this.json<v2.OAuthFlowObjectAuthorizationCode>().authorizationUrl;
+  }
+
   authorizationUrl(): string | undefined {
     return this.json<v2.OAuthFlowObjectAuthorizationCode>().authorizationUrl;
+  }
+
+  hasTokenUrl(): boolean {    
+    return !!this.json<Extract<v2.OAuthFlowObject, v2.OAuthFlowObjectImplicit>>().tokenUrl;
+  }
+
+  tokenUrl(): string | undefined {    
+    return this.json<Extract<v2.OAuthFlowObject, v2.OAuthFlowObjectImplicit>>().tokenUrl;
   }
 
   hasRefreshUrl(): boolean {
@@ -22,10 +34,6 @@ export class OAuthFlow<F extends v2.OAuthFlowObjectBase> extends BaseModel<F> im
   
   scopes(): Record<string, string> | undefined {
     return this._json.scopes;
-  }
-
-  tokenUrl(): string | undefined {    
-    return this.json<Extract<v2.OAuthFlowObject, v2.OAuthFlowObjectImplicit>>().tokenUrl;
   }
 
   extensions(): ExtensionsInterface {

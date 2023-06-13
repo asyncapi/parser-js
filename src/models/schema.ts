@@ -3,7 +3,6 @@ import type { ExtensionsMixinInterface, ExternalDocumentationMixinInterface } fr
 import type { v2 } from '../spec-types';
 
 export interface SchemaInterface extends BaseModel<v2.AsyncAPISchemaObject>, ExtensionsMixinInterface, ExternalDocumentationMixinInterface {
-  id(): string;
   $comment(): string | undefined;
   $id(): string | undefined;
   $schema(): string;
@@ -27,6 +26,7 @@ export interface SchemaInterface extends BaseModel<v2.AsyncAPISchemaObject>, Ext
   exclusiveMaximum(): number | undefined;
   exclusiveMinimum(): number | undefined;
   format(): string | undefined;
+  id(): string;
   isBooleanSchema(): boolean;
   if(): SchemaInterface | undefined;
   isCircular(): boolean;

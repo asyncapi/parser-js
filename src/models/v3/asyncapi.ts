@@ -1,18 +1,20 @@
 import { BaseModel } from '../base';
 import { Info } from './info';
-import { Servers } from '../servers';
+import { Servers } from './servers';
 import { Server } from './server';
-import { Channels } from '../channels';
+import { Channels } from './channels';
 import { Channel } from './channel';
-import { Operations } from '../operations';
+import { Operations } from './operations';
 import { Operation } from './operation';
-import { Messages } from '../messages';
-import { SecuritySchemes } from '../security-schemes';
+import { Messages } from './messages';
+import { SecuritySchemes } from './security-schemes';
 import { SecurityScheme } from './security-scheme';
 import { Components } from './components';
+import { Schemas } from './schemas';
 
 import { extensions } from './mixins';
 import { tilde } from '../../utils';
+import { SchemaTypesToIterate, traverseAsyncApiDocument } from '../../iterator';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
 import type { InfoInterface } from '../info';
@@ -24,8 +26,12 @@ import type { MessageInterface } from '../message';
 import type { ComponentsInterface } from '../components';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { ExtensionsInterface } from '../extensions';
-
+import type { SchemaInterface } from 'models/schema';
+import type { SchemasInterface } from 'models/schemas';
 import type { v3 } from '../../spec-types';
+import { OperationInterface } from 'models/operation';
+import { ChannelInterface } from 'models/channel';
+import { ServerInterface } from 'models/server';
 
 export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements AsyncAPIDocumentInterface {
   version(): string {
@@ -99,7 +105,60 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
     return this.createModel(Components, this._json.components || {}, { pointer: '/components' });
   }
 
+  allServers(): ServersInterface {
+    const servers: ServerInterface[] = this.servers();
+    this.components().servers().forEach(server => 
+      !servers.some(s => s.json() === server.json()) && servers.push(server)
+    );
+    return new Servers(servers);
+  }
+
+  allChannels(): ChannelsInterface {
+    const channels: ChannelInterface[] = this.channels();
+    this.components().channels().forEach(channel => 
+      !channels.some(c => c.json() === channel.json()) && channels.push(channel)
+    );
+    return new Channels(channels);
+  }
+
+  allOperations(): OperationsInterface {
+    const operations: OperationInterface[] = [];
+    this.allChannels().forEach(channel => operations.push(...channel.operations()));
+    return new Operations(operations);
+  }
+
+  allMessages(): MessagesInterface {
+    const messages: MessageInterface[] = [];
+    this.allOperations().forEach(operation => operation.messages().forEach(message => (
+      !messages.some(m => m.json() === message.json()) && messages.push(message)
+    )));
+    this.components().messages().forEach(message => (
+      !messages.some(m => m.json() === message.json()) && messages.push(message)
+    ));
+    return new Messages(messages);
+  }
+
+  allSchemas(): SchemasInterface {
+    return this.__schemas(true);
+  }
+
   extensions(): ExtensionsInterface {
     return extensions(this);
+  }
+
+  private __schemas(withComponents: boolean) {
+    const schemas: Set<SchemaInterface> = new Set();
+    function callback(schema: SchemaInterface) {
+      if (!schemas.has(schema.json())) {
+        schemas.add(schema);
+      }
+    }
+
+    let toIterate = Object.values(SchemaTypesToIterate);
+    if (!withComponents) {
+      toIterate = toIterate.filter(s => s !== SchemaTypesToIterate.Components);
+    }
+    traverseAsyncApiDocument(this, callback, toIterate);
+    return new Schemas(Array.from(schemas));
   }
 }

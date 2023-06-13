@@ -9,10 +9,6 @@ export class Extension<T = any> extends BaseModel<v2.SpecificationExtension<T>, 
     return this._meta.id;
   }
 
-  version(): string {
-    return 'to implement';
-  }
-
   value<V = T>(): V {
     return this._json as unknown as V;
   }

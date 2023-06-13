@@ -1,7 +1,7 @@
 import { Channel } from '../../../src/models/v3/channel';
 import { OperationReply } from '../../../src/models/v3/operation-reply';
 import { OperationReplyAddress } from '../../../src/models/v3/operation-reply-address';
-import { Messages } from '../../../src/models/messages';
+import { Messages } from '../../../src/models/v3/messages';
 import { Message } from '../../../src/models/v3/message';
 
 import { assertExtensions } from './utils';

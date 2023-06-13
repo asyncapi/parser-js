@@ -26,14 +26,14 @@ describe('Info model', function() {
 
   describe('.hasId()', function() {
     it('should return true when there is a value', function() {
-      const doc = { asyncapi: '2.0.0', id: 'someId' };
+      const doc = { asyncapi: '2.0.0', info: { title: 'test', version: 'test' }, id: 'someId' };
       const asyncapi = createDetailedAsyncAPI(doc, doc as any);
       const d = new Info(serializeInput<v3.InfoObject>({}), { asyncapi, pointer: '/info' });
       expect(d.hasId()).toEqual(true);
     });
     
     it('should return false when there is no value', function() {
-      const doc = { asyncapi: '2.0.0' };
+      const doc = { asyncapi: '2.0.0', info: { title: 'test', version: 'test' } };
       const asyncapi = createDetailedAsyncAPI(doc, doc as any);
       const d = new Info(serializeInput<v3.InfoObject>({}), { asyncapi, pointer: '/info' });
       expect(d.hasId()).toEqual(false);
@@ -42,14 +42,14 @@ describe('Info model', function() {
 
   describe('.id()', function() {
     it('should return the value', function() {
-      const doc = { asyncapi: '2.0.0', id: 'someId' };
+      const doc = { asyncapi: '2.0.0', info: { title: 'test', version: 'test' }, id: 'someId' };
       const asyncapi = createDetailedAsyncAPI(doc, doc as any);
       const d = new Info(serializeInput<v3.InfoObject>({}), { asyncapi, pointer: '/info' });
       expect(d.id()).toEqual(doc.id);
     });
     
     it('should return undefined when there is no value', function() {
-      const doc = { asyncapi: '2.0.0' };
+      const doc = { asyncapi: '2.0.0', info: { title: 'test', version: 'test' } };
       const asyncapi = createDetailedAsyncAPI(doc, doc as any);
       const d = new Info(serializeInput<v3.InfoObject>({}), { asyncapi, pointer: '/info' });
       expect(d.id()).toEqual(undefined);

@@ -2,7 +2,7 @@ import { JSONPath } from 'jsonpath-plus';
 
 import { mergePatch } from '../utils';
 
-import type { v2 } from '../spec-types';
+import type { v2, v3 } from '../spec-types';
 
 const v2TraitPaths = [
   // operations
@@ -32,22 +32,29 @@ const v3TraitPaths = [
   '$.components.messages.*',
 ];
 
-export function applyTraitsV3(asyncapi: v2.AsyncAPIObject) { // TODO: Change type when we will have implemented types for v3
+export function applyTraitsV3(asyncapi: v3.AsyncAPIObject) {
   applyAllTraits(asyncapi, v3TraitPaths);
 }
 
 function applyAllTraits(asyncapi: Record<string, any>, paths: string[]) {
+  const visited: Set<unknown> = new Set();
   paths.forEach(path => {
     JSONPath({
       path,
       json: asyncapi,
       resultType: 'value',
-      callback(value) { applyTraits(value); },
+      callback(value) {
+        if (visited.has(value)) {
+          return;
+        }
+        visited.add(value);
+        applyTraits(value);
+      },
     });
   });
 }
 
-function applyTraits(value: Record<string, unknown>) {
+function applyTraits(value: Record<string, unknown> & { traits?: any[] }) {
   if (Array.isArray(value.traits)) {
     for (const trait of value.traits) {
       for (const key in trait) {

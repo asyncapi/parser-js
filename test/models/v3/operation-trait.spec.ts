@@ -1,6 +1,6 @@
 import { OperationTrait } from '../../../src/models/v3/operation-trait';
 import { SecurityRequirement } from '../../../src/models/v3/security-requirement';
-import { SecurityRequirements } from '../../../src/models/security-requirements';
+import { SecurityRequirements } from '../../../src/models/v3/security-requirements';
 import { SecurityScheme } from '../../../src/models/v3/security-scheme';
 
 import { assertCoreModel } from './utils';
@@ -22,13 +22,13 @@ describe('OperationTrait model', function() {
   describe('.hasId()', function() {
     it('should return true when there is a value', function() {
       const d = new OperationTrait({}, { id: '...' } as any);
-      expect(d.hasId()).toEqual(true);
+      expect(d.hasOperationId()).toEqual(true);
     });
     
     it('should return false when there is no value', function() {
       const doc = {};
       const d = new OperationTrait(doc);
-      expect(d.hasId()).toEqual(false);
+      expect(d.hasOperationId()).toEqual(false);
     });
   });
 

@@ -1,12 +1,12 @@
-import { Channels } from '../../../src/models/channels';
+import { Channels } from '../../../src/models/v3/channels';
 import { Channel } from '../../../src/models/v3/channel';
 import { Operation } from '../../../src/models/v3/operation';
-import { OperationTraits } from '../../../src/models/operation-traits';
+import { OperationTraits } from '../../../src/models/v3/operation-traits';
 import { OperationTrait } from '../../../src/models/v3/operation-trait';
 import { OperationReply } from '../../../src/models/v3/operation-reply';
-import { Messages } from '../../../src/models/messages';
+import { Messages } from '../../../src/models/v3/messages';
 import { Message } from '../../../src/models/v3/message';
-import { Servers } from '../../../src/models/servers';
+import { Servers } from '../../../src/models/v3/servers';
 import { Server } from '../../../src/models/v3/server';
 
 import { assertCoreModel } from './utils';

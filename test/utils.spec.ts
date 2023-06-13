@@ -1,5 +1,4 @@
 import { DiagnosticSeverity } from '@stoplight/types';
-import { cloneDeep } from 'lodash';
 
 import { 
   hasErrorDiagnostic,
@@ -8,6 +7,7 @@ import {
   hasHintDiagnostic,
   createDetailedAsyncAPI,
   getSemver,
+  setExtension,
   mergePatch,
   normalizeInput,
 } from '../src/utils';
@@ -177,10 +177,12 @@ describe('utils', function() {
 
   describe('createDetailedAsyncAPI()', function() {
     it('should create detailed object', function () {
-      const source = '{ asyncapi: \'2.1.37\' }';
+      const source = 'file:///asyncapi.yaml';
+      const input = '{ asyncapi: \'2.1.37\' }';
       const parsed = { asyncapi: '2.1.37' };
-      const detailed = createDetailedAsyncAPI(source, parsed as any);
+      const detailed = createDetailedAsyncAPI(parsed as any, input, source);
       expect(detailed.source).toEqual(source);
+      expect(detailed.input).toEqual(input);
       expect(detailed.parsed).toEqual(parsed);
       expect(detailed.semver.version).toEqual('2.1.37');
       expect(detailed.semver.major).toEqual(2);
@@ -215,6 +217,20 @@ describe('utils', function() {
       const source = { asyncapi: '2.1.37' };
       const normalized = JSON.stringify(source, undefined, 2);
       expect(normalizeInput(source)).toEqual(normalized);
+    });
+  });
+
+  describe('setExtension()', function() {
+    it('should set extension', function () {
+      const source = { asyncapi: '2.1.37' };
+      setExtension('x-extension', 'value', { json() { return source; } } as any);
+      expect(source['x-extension']).toEqual('value');
+    });
+
+    it('should not set extension on primitive value like boolean', function () {
+      const source = true;
+      setExtension('x-extension', 'value', { json() { return source; } } as any);
+      expect(source['x-extension']).toEqual(undefined);
     });
   });
 
@@ -292,7 +308,7 @@ describe('utils', function() {
 
     it('should not directly edit the origin', function () {
       const origin = { a: { b: 10 }, c: 5 };
-      const clone = cloneDeep(origin);
+      const clone = { a: { b: 10 }, c: 5 };
       const patched = mergePatch(origin, { a: { b: 8 } }) as Record<string, unknown>;
       expect(patched).not.toEqual(origin);
       expect(patched.a).not.toEqual(origin.a);

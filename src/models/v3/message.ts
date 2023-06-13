@@ -17,12 +17,18 @@ import type { ServerInterface } from '../server';
 import type { SchemaInterface } from '../schema';
 
 import type { v3 } from '../../spec-types';
+import { getDefaultSchemaFormat } from 'schema-parser';
 
 export class Message extends MessageTrait<v3.MessageObject> implements MessageInterface {
   hasPayload(): boolean {
     return !!this._json.payload;
   }
   
+  schemaFormat(): string {
+    const payloadIsSchemaUnion = this._json.payload.schemaFormat !== undefined;
+    return payloadIsSchemaUnion ? this._json.payload.schemaFormat : getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
+  }
+
   payload(): SchemaInterface | undefined {
     if (!this._json.payload) return undefined;
     return this.createModel(Schema, this._json.payload, { pointer: this.jsonPath('payload') });

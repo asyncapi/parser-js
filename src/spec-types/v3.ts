@@ -175,7 +175,7 @@ export interface OperationBindingsObject extends SpecificationExtensions {
 export type MessagesObject = Record<string, MessageObject | ReferenceObject>;
 
 export interface MessageObject extends MessageTraitObject, SpecificationExtensions {
-  payload?: any;
+  payload?: AllSchemaObjects;
   traits?: Array<MessageTraitObject | ReferenceObject>;
 }
 
@@ -183,7 +183,6 @@ export interface MessageTraitObject extends SpecificationExtensions {
   messageId?: string;
   headers?: SchemaObject;
   correlationId?: CorrelationIDObject | ReferenceObject;
-  schemaFormat?: string;
   contentType?: string;
   name?: string;
   title?: string;
@@ -398,6 +397,12 @@ export interface OAuthFlowObjectAuthorizationCode extends OAuthFlowObjectBase, S
   authorizationUrl: string;
   tokenUrl: string;
 }
+export interface MultiFormatSchemaObject {
+  schemaFormat: string;
+  schema: AsyncAPISchemaObject | ReferenceObject | any;
+}
+
+export type AllSchemaObjects = MultiFormatSchemaObject | AsyncAPISchemaObject | ReferenceObject | any;
 
 export type SchemaObject = AsyncAPISchemaObject | ReferenceObject;
 

@@ -6,7 +6,6 @@ import type { SchemaInterface } from './schema';
 
 export interface MessageTraitInterface extends BaseModel, CoreMixinInterface {
   id(): string;
-  schemaFormat(): string;
   hasMessageId(): boolean;
   messageId(): string | undefined;
   hasCorrelationId(): boolean;

@@ -4,7 +4,6 @@ import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
 import { xParserMessageName } from '../../constants';
-import { getDefaultSchemaFormat } from '../../schema-parser';
 import { CoreModel } from './mixins';
 
 import type { CorrelationIdInterface } from '../correlation-id';
@@ -13,6 +12,7 @@ import type { MessageTraitInterface } from '../message-trait';
 import type { SchemaInterface } from '../schema';
 
 import type { v2 } from '../../spec-types';
+import { getDefaultSchemaFormat } from 'schema-parser';
 
 export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends CoreModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {

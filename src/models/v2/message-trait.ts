@@ -19,6 +19,10 @@ export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObjec
     return this.messageId() || this._meta.id || this.extensions().get(xParserMessageName)?.value<string>() as string;
   }
 
+  hasSchemaFormat(): boolean {
+    return true;
+  }
+
   schemaFormat(): string {
     return this._json.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }

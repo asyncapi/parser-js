@@ -24,7 +24,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
     return !!this._json.payload;
   }
   
-  schemaFormat(): string {
+  schemaFormat(): string | undefined {
     const payloadIsSchemaUnion = this._json.payload.schemaFormat !== undefined;
     return payloadIsSchemaUnion ? this._json.payload.schemaFormat : getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }

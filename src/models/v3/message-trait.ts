@@ -23,6 +23,14 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
     return !!this._json.messageId;
   }
 
+  hasSchemaFormat(): boolean {
+    return false;
+  }
+
+  schemaFormat(): string | undefined {
+    return undefined;
+  }
+
   messageId(): string | undefined {
     return this._json.messageId;
   }

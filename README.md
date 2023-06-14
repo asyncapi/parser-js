@@ -393,7 +393,6 @@ const oldAsyncAPIDocument = convertToOldAPI(document);
 ## Notes
 
 ### Using with Webpack
-
 Versions `<5` of Webpack should handle bundling without problems. Due to the fact that Webpack 5 no longer does fallbacks to native NodeJS modules by default we need to install `buffer` package and add fallbacks:
 
 ```js
@@ -431,7 +430,15 @@ moduleNameMapper: {
 1. Make sure you are using Node.js 16 or higher and npm 8 or higher
 2. Write code and tests.
 3. Make sure all tests pass `npm test`
+
+For Windows environments, some tests might still fail randomly during local development even when you made no changes to the tests. The reason for this from file endings are different than expected and this comes from Git defaulting to an unexpected file ending. If you encounter this issue you can run the following commands to set Git to use the expected one:
+```
+git config --global core.autocrlf false
+git config --global core.eol lf
+```
+
 4. Make sure code is well formatted and secure `npm run lint`
+
 
 ## Contributing
 

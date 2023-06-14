@@ -225,6 +225,43 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 - `jsonPath()` which returns the JSON Path of the given object.
 - `meta()` which returns the metadata of a given object, like a parsed AsyncAPI Document.
 
+## Spectral rulesets
+
+[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS. For this reason, it is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance: 
+
+```ts
+import { Parser, stringify, unstringify } from '@asyncapi/parser';
+const parser = new Parser({
+  ruleset: {
+    extends: [],
+    rules: {
+      'asyncapi-defaultContentType': 'off',
+      'asyncapi-termsOfService': {
+        description: 'Info "termsOfService" should be present and non-empty string.',
+        recommended: true,
+        given: '$',
+        then: {
+          field: 'info.termsOfService',
+          function: 'truthy',
+        },
+      },
+    }
+  }
+});
+// One of diagnostics should have `asyncapi-termsOfService` code with `warning` severity, because we didn't define the `$.info.termsOfService` field.
+// Also we should won't see the diagnostics related to the omitted `defaultContentType` field.
+const diagnostics = await parser.validate(`
+  asyncapi: '2.0.0'
+  info:
+    title: Example AsyncAPI specification
+    version: '0.1.0'
+  channels: {}
+`);
+```
+
+[ParserJS has some built-in Spectral rulesets](./docs/ruleset) that validate AsyncAPI documents and inform on good practices. 
+
+
 ## Using in the browser/SPA applications
 
 The package contains a built-in version of the parser. To use it, you need to import the parser into the HTML file as below:

@@ -1,4 +1,4 @@
-import { MessageExamples } from '../../../src/models/message-examples';
+import { MessageExamples } from '../../../src/models/v2/message-examples';
 import { MessageExample } from '../../../src/models/v2/message-example';
 
 const messageExample = {

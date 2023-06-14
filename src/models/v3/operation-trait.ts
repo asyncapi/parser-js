@@ -1,5 +1,5 @@
 import { SecurityScheme } from './security-scheme';
-import { SecurityRequirements } from '../security-requirements';
+import { SecurityRequirements } from './security-requirements';
 import { SecurityRequirement } from './security-requirement';
 
 import { CoreModel } from './mixins';
@@ -10,11 +10,15 @@ import type { v3 } from '../../spec-types';
 
 export class OperationTrait<J extends v3.OperationTraitObject = v3.OperationTraitObject> extends CoreModel<J, { id: string | undefined }> implements OperationTraitInterface {
   id(): string | undefined {
-    return this._meta.id;
+    return this.operationId() || this._meta.id;
   }
 
-  hasId(): boolean {
-    return this.id() !== undefined;
+  hasOperationId(): boolean {
+    return !!this._meta.id;
+  }
+
+  operationId(): string | undefined {
+    return this._meta.id;
   }
 
   security(): SecurityRequirements[] {

@@ -1,11 +1,11 @@
-import { Messages } from '../messages';
+import { Messages } from './messages';
 import { Message } from './message';
-import { Channels } from '../channels';
+import { Channels } from './channels';
 import { Channel } from './channel';
-import { OperationTraits } from '../operation-traits';
+import { OperationTraits } from './operation-traits';
 import { OperationTrait } from './operation-trait';
 import { OperationReply } from './operation-reply';
-import { Servers } from '../servers';
+import { Servers } from './servers';
 
 import type { ChannelsInterface } from '../channels';
 import type { MessagesInterface } from '../messages';

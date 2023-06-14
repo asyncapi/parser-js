@@ -1,10 +1,10 @@
 import { BaseModel } from '../base';
 import { Bindings } from './bindings';
 import { Binding } from './binding';
-import { Extensions } from '../extensions';
+import { Extensions } from './extensions';
 import { Extension } from './extension';
-import { ExternalDocumentation } from './external-documentation';
-import { Tags } from '../tags';
+import { ExternalDocumentation } from './external-docs';
+import { Tags } from './tags';
 import { Tag } from './tag';
 
 import { createModel } from '../utils';
@@ -13,7 +13,7 @@ import { EXTENSION_REGEX } from '../../constants';
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExtensionInterface } from '../extension';
-import type { ExternalDocumentationInterface } from '../external-documentation';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { TagsInterface } from '../tags';
 
 import type { v3 } from '../../spec-types';

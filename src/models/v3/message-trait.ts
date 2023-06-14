@@ -1,5 +1,5 @@
 import { CorrelationId } from './correlation-id';
-import { MessageExamples } from '../message-examples';
+import { MessageExamples } from './message-examples';
 import { MessageExample } from './message-example';
 import { Schema } from './schema';
 

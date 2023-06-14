@@ -1,6 +1,6 @@
 import { Collection } from './collection';
 
-import type { ExternalDocumentationInterface } from './external-documentation';
+import type { ExternalDocumentationInterface } from './external-docs';
 
 export type ExternalDocumentationsInterface = Collection<ExternalDocumentationInterface>
 

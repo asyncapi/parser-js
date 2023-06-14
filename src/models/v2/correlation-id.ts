@@ -8,20 +8,16 @@ import type { ExtensionsInterface } from '../extensions';
 import type { v2 } from '../../spec-types';
 
 export class CorrelationId extends BaseModel<v2.CorrelationIDObject> implements CorrelationIdInterface {
+  location(): string {
+    return this._json.location;
+  }
+
   hasDescription(): boolean {
     return hasDescription(this);
   }
 
   description(): string | undefined {
     return description(this);
-  }
-
-  hasLocation(): boolean {
-    return !!this._json.location;
-  }
-
-  location(): string | undefined {
-    return this._json.location;
   }
 
   extensions(): ExtensionsInterface {

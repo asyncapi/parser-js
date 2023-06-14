@@ -1,6 +1,6 @@
 import { Bindings } from '../../../src/models/v3/bindings';
 import { Binding } from '../../../src/models/v3/binding';
-import { Extensions } from '../../../src/models/extensions';
+import { Extensions } from '../../../src/models/v3/extensions';
 import { Extension } from '../../../src/models/v3/extension';
 
 const binding = {

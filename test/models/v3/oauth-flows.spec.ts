@@ -6,7 +6,7 @@ import { assertExtensions } from './utils';
 const oAuthFlowsObject = {
   implicit: {
     authorizationUrl: 'https://example.com/api/oauth/dialog',
-    scopes: {
+    availableScopes: {
       'write:pets': 'modify pets in your account',
       'read:pets': 'read your pets'
     }
@@ -14,7 +14,7 @@ const oAuthFlowsObject = {
   authorizationCode: {
     authorizationUrl: 'https://example.com/api/oauth/dialog',
     tokenUrl: 'https://example.com/api/oauth/token',
-    scopes: {
+    availableScopes: {
       'write:pets': 'modify pets in your account',
       'read:pets': 'read your pets'
     }

@@ -1,4 +1,4 @@
-import { SecurityRequirements } from '../../../src/models/security-requirements';
+import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
 import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 const requirementItem = new SecurityRequirement({} as any, { id: 'test' } as any);

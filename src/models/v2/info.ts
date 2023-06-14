@@ -1,8 +1,8 @@
 import { BaseModel } from '../base';
 import { Contact } from './contact';
-import { ExternalDocumentation } from './external-documentation';
+import { ExternalDocumentation } from './external-docs';
 import { License } from './license';
-import { Tags } from '../tags';
+import { Tags } from './tags';
 import { Tag } from './tag';
 
 import { hasDescription, description, extensions } from './mixins';
@@ -10,7 +10,7 @@ import { hasDescription, description, extensions } from './mixins';
 import type { ContactInterface } from '../contact';
 import type { InfoInterface } from '../info';
 import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-documentation';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { LicenseInterface } from '../license';
 import type { TagsInterface } from '../tags';
 
@@ -68,20 +68,20 @@ export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
   }
 
   hasExternalDocs(): boolean {
-    const parsedAsyncAPI: v2.AsyncAPIObject = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
-    return Object.keys(parsedAsyncAPI.externalDocs || {}).length > 0;
+    const asyncapiV2 = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+    return Object.keys(asyncapiV2.externalDocs || {}).length > 0;
   }
 
   externalDocs(): ExternalDocumentationInterface | undefined { 
     if (this.hasExternalDocs()) {
-      const parsedAsyncAPI: v2.AsyncAPIObject = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
-      return this.createModel(ExternalDocumentation, parsedAsyncAPI.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
+      const asyncapiV2 = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+      return this.createModel(ExternalDocumentation, asyncapiV2.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
     }
   }
 
   tags(): TagsInterface {
-    const parsedAsyncAPI: v2.AsyncAPIObject = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
-    const tags = parsedAsyncAPI.tags || [];
+    const asyncapiV2 = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+    const tags = asyncapiV2.tags || [];
     return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `/tags/${idx}` })));
   }
 

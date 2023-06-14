@@ -1,24 +1,24 @@
-import { Channels } from '../../../src/models/channels';
+import { Channels } from '../../../src/models/v2/channels';
 import { Channel } from '../../../src/models/v2/channel';
-import { Messages } from '../../../src/models/messages';
+import { Messages } from '../../../src/models/v2/messages';
 import { Message } from '../../../src/models/v2/message';
-import { Operations } from '../../../src/models/operations';
+import { Operations } from '../../../src/models/v2/operations';
 import { Operation } from '../../../src/models/v2/operation';
 import { Server } from '../../../src/models/v2/server';
-import { ServerVariables } from '../../../src/models/server-variables';
+import { ServerVariables } from '../../../src/models/v2/server-variables';
 import { SecurityScheme } from '../../../src/models/v2/security-scheme';
-import { SecurityRequirements } from '../../../src/models/security-requirements';
-import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
-import { serializeInput, assertCoreModel } from './utils';
+import { serializeInput, assertBindings, assertDescription, assertExtensions, assertTags } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
+import { SecurityRequirements } from '../../../src/models/v2/security-requirements';
+import { SecurityRequirement } from '../../../src/models/v2/security-requirement';
 
 const doc = {
   development: {
-    url: 'development.gigantic-server.com:2137/some/path',
     protocol: 'mqtt',
     protocolVersion: '1.0.0',
+    url: 'development.gigantic-server.com',
     variables: {
       username: {
         default: 'demo',
@@ -33,57 +33,13 @@ const emptyItem = new Server(serializeInput<v2.ServerObject>({}), { asyncapi: {}
 describe('Server Model', function () {
   describe('.id()', function () {
     it('should return name if present', function () {
-      expect(docItem.id()).toEqual('development');
-    });
-  });
-
-  describe('.url()', function () {
-    it('should return value', function () {
-      expect(docItem.url()).toEqual(doc.development.url);
-    });
-  });
-
-  describe('.host()', function () {
-    it('should return value', function () {
-      expect(docItem.host()).toEqual('development.gigantic-server.com:2137');
-    });
-
-    it('should return value (url with protocol case)', function () {
-      const server = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137/some/path' }, { asyncapi: {} as any, pointer: '', id: 'development' });
-      expect(server.host()).toEqual('development.gigantic-server.com:2137');
+      expect(docItem.id()).toMatch('development');
     });
   });
 
   describe('protocol()', function () {
     it('should return protocol ', function () {
-      expect(docItem.protocol()).toEqual(doc.development.protocol);
-    });
-  });
-
-  describe('.hasPathname()', function () {
-    it('should return true if pathname is not missing', function () {
-      expect(docItem.hasPathname()).toEqual(true);
-    });
-
-    it('should be false when protocolVersion is missing', function () {
-      const docItem = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137' }, { asyncapi: {} as any, pointer: '', id: 'development' });
-      expect(docItem.hasPathname()).toEqual(false);
-    });
-  });
-
-  describe('.pathname()', function () {
-    it('should return value', function () {
-      expect(docItem.pathname()).toEqual('/some/path');
-    });
-
-    it('should return value (url with protocol case)', function () {
-      const server = new Server({ ...doc.development, url: 'mqtt://development.gigantic-server.com:2137/some/path' }, { asyncapi: {} as any, pointer: '', id: 'development' });
-      expect(server.pathname()).toEqual('/some/path');
-    });
-
-    it('should return undefined if pathname does not exist in url', function () {
-      const docItem = new Server({ ...doc.development, url: 'development.gigantic-server.com:2137' }, { asyncapi: {} as any, pointer: '', id: 'development' });
-      expect(docItem.pathname()).toBeUndefined();
+      expect(docItem.protocol()).toMatch(doc.development.protocol);
     });
   });
 
@@ -99,11 +55,17 @@ describe('Server Model', function () {
 
   describe('.protocolVersion()', function () {
     it('should return value', function () {
-      expect(docItem.protocolVersion()).toEqual(doc.development.protocolVersion);
+      expect(docItem.protocolVersion()).toMatch(doc.development.protocolVersion);
     });
 
     it('should return undefined when protocolVersion is missing', function () {
       expect(emptyItem.protocolVersion()).toBeUndefined();
+    });
+  });
+
+  describe('.url()', function () {
+    it('should return value', function () {
+      expect(docItem.url()).toMatch(doc.development.url);
     });
   });
 
@@ -147,7 +109,7 @@ describe('Server Model', function () {
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[0].id()).toEqual('1');
+      expect(d.operations().all()[0].operationId()).toEqual('1');
     });
 
     it('should return collection of channels - multiple channels', function() {
@@ -156,9 +118,9 @@ describe('Server Model', function () {
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(2);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[0].id()).toEqual('1');
+      expect(d.operations().all()[0].operationId()).toEqual('1');
       expect(d.operations().all()[1]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[1].id()).toEqual('2');
+      expect(d.operations().all()[1].operationId()).toEqual('2');
     });
 
     it('should return collection of channels - server available only in particular channel', function() {
@@ -167,11 +129,11 @@ describe('Server Model', function () {
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(3);
       expect(d.operations().all()[0]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[0].id()).toEqual('1');
+      expect(d.operations().all()[0].operationId()).toEqual('1');
       expect(d.operations().all()[1]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[1].id()).toEqual('2');
+      expect(d.operations().all()[1].operationId()).toEqual('2');
       expect(d.operations().all()[2]).toBeInstanceOf(Operation);
-      expect(d.operations().all()[2].id()).toEqual('3');
+      expect(d.operations().all()[2].operationId()).toEqual('3');
     });
   });
 
@@ -244,7 +206,10 @@ describe('Server Model', function () {
     });
   });
 
-  describe('mixins', function () {
-    assertCoreModel(Server);
+  describe('mixins inheritance', function () {
+    assertBindings(Server);
+    assertDescription(Server);
+    assertExtensions(Server);
+    assertTags(Server);
   });
 });

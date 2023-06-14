@@ -1,4 +1,5 @@
 import { Parser } from '../../src/parser';
+import { hasErrorDiagnostic } from '../../src/utils';
 import { xParserMessageName, xParserSchemaId } from '../../src/constants';
 
 describe('custom operations - anonymous naming', function() {
@@ -55,6 +56,37 @@ describe('custom operations - anonymous naming', function() {
 
     expect(document?.components().messages()).toHaveLength(1);
     expect(document?.components().messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('message');
+  });
+
+  it('should try use messageId for x-parser-message-name', async function() {
+    const { document } = await parser.parse({
+      asyncapi: '2.4.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'operation',
+            message: {
+              $ref: '#/components/messages/message'
+            }
+          }
+        }
+      },
+      components: {
+        messages: {
+          message: {
+            messageId: 'someId',
+            payload: {}
+          }
+        }
+      }
+    });
+
+    expect(document?.messages()).toHaveLength(1);
+    expect(document?.messages()[0].extensions().get(xParserMessageName)?.value()).toEqual('someId');
   });
 
   it('should not override x-parser-message-name if it exists', async function() {
@@ -175,6 +207,34 @@ describe('custom operations - anonymous naming', function() {
     expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual('schema');
   });
 
+  it('should skip boolean schemas in assigning x-parser-schema-id', async function() {
+    const { document, diagnostics } = await parser.parse({
+      asyncapi: '2.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        channel: {
+          publish: {
+            operationId: 'operation',
+            message: {
+              payload: true
+            }
+          }
+        }
+      },
+      components: {
+        schemas: {
+          schema: {},
+        }
+      }
+    });
+
+    expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
+    expect(document?.messages()[0].payload()?.extensions().get(xParserSchemaId)?.value()).toEqual(undefined);
+  });
+
   it('should apply anonymous ids across whole document', async function() {
     const { document, diagnostics } = await parser.parse({ 
       asyncapi: '2.0.0',
@@ -219,13 +279,15 @@ describe('custom operations - anonymous naming', function() {
           },
         },
         schemas: {
-          someSchema: {},
+          someSchema: {
+            $id: 'someSchema-id'
+          },
         }
       }
     });
 
     expect(document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message?.[xParserMessageName]).toEqual('someMessage');
-    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema-id');
 
     expect(document?.json()?.channels?.['channel/{streetlightId}']?.publish?.message?.[xParserMessageName]).toEqual('<anonymous-message-1>');
     expect((document?.json()?.channels?.['channel/{streetlightId}']?.publish?.message as any)?.payload?.[xParserSchemaId]).toEqual('<anonymous-schema-1>');
@@ -233,9 +295,9 @@ describe('custom operations - anonymous naming', function() {
     expect((document?.json()?.channels?.['channel/{streetlightId}']?.parameters?.streetlightId as any)?.schema?.[xParserSchemaId]).toEqual('streetlightId');
 
     expect(document?.json()?.components?.messages?.someMessage?.[xParserMessageName]).toEqual('someMessage');
-    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema');
+    expect((document?.json()?.channels?.['channel/{streetlightId}']?.subscribe?.message as any)?.payload?.[xParserSchemaId]).toEqual('someSchema-id');
     expect((document?.json()?.components?.parameters?.someParameter as any)?.schema?.[xParserSchemaId]).toEqual('someParameter');
 
-    expect(document?.json()?.components?.schemas?.someSchema?.[xParserSchemaId]).toEqual('someSchema');
+    expect(document?.json()?.components?.schemas?.someSchema?.[xParserSchemaId]).toEqual('someSchema-id');
   });
 });

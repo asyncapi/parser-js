@@ -1,22 +1,27 @@
+import { BaseModel } from '../base';
 import { CorrelationId } from './correlation-id';
-import { MessageExamples } from '../message-examples';
+import { MessageExamples } from './message-examples';
 import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
 import { xParserMessageName } from '../../constants';
 import { CoreModel } from './mixins';
 
+import type { BindingsInterface } from '../bindings';
 import type { CorrelationIdInterface } from '../correlation-id';
+import type { ExtensionsInterface } from '../extensions';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { MessageExamplesInterface } from '../message-examples';
 import type { MessageTraitInterface } from '../message-trait';
 import type { SchemaInterface } from '../schema';
+import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
 import { getDefaultSchemaFormat } from 'schema-parser';
 
-export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends CoreModel<J, { id: string }> implements MessageTraitInterface {
+export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends BaseModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {
-    return this.messageId() || this._meta.id || this.extensions().get(xParserMessageName)?.value<string>() as string;
+    return this.messageId() || this._meta.id || this.json(xParserMessageName) as string;
   }
 
   hasSchemaFormat(): boolean {
@@ -69,11 +74,55 @@ export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObjec
     return this._json.name;
   }
 
+  hasTitle(): boolean {
+    return !!this._json.title;
+  }
+
+  title(): string | undefined {
+    return this._json.title;
+  }
+
+  hasSummary(): boolean {
+    return !!this._json.summary;
+  }
+
+  summary(): string | undefined {
+    return this._json.summary;
+  }
+
+  hasDescription(): boolean {
+    return hasDescription(this);
+  }
+
+  description(): string | undefined {
+    return description(this);
+  }
+
+  hasExternalDocs(): boolean {
+    return hasExternalDocs(this);
+  }
+
+  externalDocs(): ExternalDocumentationInterface | undefined {
+    return externalDocs(this);
+  }
+
   examples(): MessageExamplesInterface {
     return new MessageExamples(
       (this._json.examples || []).map((example: any, index: number) => {
         return this.createModel(MessageExample, example, { pointer: `${this._meta.pointer}/examples/${index}` });
       })
     );
+  }
+
+  tags(): TagsInterface {
+    return tags(this);
+  }
+
+  bindings(): BindingsInterface {
+    return bindings(this);
+  }
+
+  extensions(): ExtensionsInterface {
+    return extensions(this);
   }
 }

@@ -1,92 +1,30 @@
-import { BaseModel } from '../base';
 import { Bindings } from './bindings';
 import { Binding } from './binding';
-import { Extensions } from '../extensions';
+import { Extensions } from './extensions';
 import { Extension } from './extension';
-import { ExternalDocumentation } from './external-documentation';
-import { Tags } from '../tags';
+import { ExternalDocumentation } from './external-docs';
+import { Tags } from './tags';
 import { Tag } from './tag';
 
 import { createModel } from '../utils';
 import { EXTENSION_REGEX } from '../../constants';
 
+import type { BaseModel } from '../base';
 import type { BindingsInterface } from '../bindings';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExtensionInterface } from '../extension';
-import type { ExternalDocumentationInterface } from '../external-documentation';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { TagsInterface } from '../tags';
 
 import type { v2 } from '../../spec-types';
 
-type BindingsObject =
-  | v2.ServerBindingsObject
-  | v2.ChannelBindingsObject
-  | v2.OperationBindingsObject
-  | v2.MessageBindingsObject
-  | v2.ReferenceObject;
-
-export interface CoreObject extends v2.SpecificationExtensions {
-  title?: string;
-  summary?: string;
-  description?: string;
-  externalDocs?: v2.ExternalDocumentationObject;
-  tags?: v2.TagsObject;
-  bindings?: BindingsObject;
-}
-
-export abstract class CoreModel<J extends CoreObject = CoreObject, M extends Record<string, any> = {}> extends BaseModel<J, M> {
-  hasTitle(): boolean {
-    return !!this._json.title;
-  }
-
-  title(): string | undefined {
-    return this._json.title;
-  }
-
-  hasSummary(): boolean {
-    return !!this._json.summary;
-  }
-
-  summary(): string | undefined {
-    return this._json.summary;
-  }
-
-  hasDescription(): boolean {
-    return hasDescription(this);
-  }
-
-  description(): string | undefined {
-    return description(this);
-  }
-
-  hasExternalDocs(): boolean {
-    return hasExternalDocs(this);
-  }
-
-  externalDocs(): ExternalDocumentationInterface | undefined {
-    return externalDocs(this);
-  }
-
-  tags(): TagsInterface {
-    return tags(this);
-  }
-
-  bindings(): BindingsInterface {
-    return bindings(this);
-  }
-
-  extensions(): ExtensionsInterface {
-    return extensions(this);
-  }
-}
-
-export function bindings(model: BaseModel<{ bindings?: BindingsObject }>): BindingsInterface {
+export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): BindingsInterface {
   const bindings = model.json('bindings') || {};
   return new Bindings(
     Object.entries(bindings || {}).map(([protocol, binding]) => 
       createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
     ),
-    { originalData: bindings as Record<string, Binding>, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }
+    { originalData: bindings, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }
   );
 }
 

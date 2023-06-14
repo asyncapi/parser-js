@@ -1,7 +1,7 @@
 import { BaseModel } from '../base';
 import { Channel } from './channel';
 import { Message } from './message';
-import { Messages } from '../messages';
+import { Messages } from './messages';
 import { MessagesInterface } from 'models/messages';
 import { OperationReplyAddress } from './operation-reply-address';
 
@@ -42,7 +42,7 @@ export class OperationReply extends BaseModel<v3.OperationReplyObject, { id?: st
   messages(): MessagesInterface {
     return new Messages(
       Object.entries(this._json.messages || {}).map(([messageName, message]) => {
-        return this.createModel(Message, message, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) });
+        return this.createModel(Message, message as v3.MessageObject, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) });
       })
     );
   }

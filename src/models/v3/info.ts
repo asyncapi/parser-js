@@ -7,7 +7,7 @@ import { hasDescription, description, extensions, hasExternalDocs, externalDocs,
 import type { ContactInterface } from '../contact';
 import type { InfoInterface } from '../info';
 import type { ExtensionsInterface } from '../extensions';
-import type { ExternalDocumentationInterface } from '../external-documentation';
+import type { ExternalDocumentationInterface } from '../external-docs';
 import type { LicenseInterface } from '../license';
 import type { TagsInterface } from '../tags';
 

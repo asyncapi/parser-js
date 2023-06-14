@@ -1,0 +1,5 @@
+payload:
+  type: object
+  properties:
+    someProperty:
+      type: string

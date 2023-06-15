@@ -12,24 +12,24 @@ import { createDetailedAsyncAPI } from '../../../utils';
 
 export function asyncApi2MessageExamplesParserRule(parser: Parser): RuleDefinition {
   return {
-    description: 'Examples of message object should validate againt the "payload" and "headers" schemas.',
+    description: 'Examples of message object should validate against the "payload" and "headers" schemas.',
     message: '{{error}}',
     severity: 'error',
     recommended: true,
     given: [
       // messages
-      '$.channels.*.[publish,subscribe].message',
-      '$.channels.*.[publish,subscribe].message.oneOf.*',
-      '$.components.channels.*.[publish,subscribe].message',
-      '$.components.channels.*.[publish,subscribe].message.oneOf.*',
-      '$.components.messages.*',
+      '$.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat !== void 0)]',
+      '$.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat !== void 0)]',
+      '$.components.channels.*.[publish,subscribe].message[?(@property === \'message\' && @.schemaFormat !== void 0)]',
+      '$.components.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat !== void 0)]',
+      '$.components.messages[?(!@null && @.schemaFormat !== void 0)]',
       // message traits
-      '$.channels.*.[publish,subscribe].message.traits.*',
-      '$.channels.*.[publish,subscribe].message.oneOf.*.traits.*',
-      '$.components.channels.*.[publish,subscribe].message.traits.*',
-      '$.components.channels.*.[publish,subscribe].message.oneOf.*.traits.*',
-      '$.components.messages.*.traits.*',
-      '$.components.messageTraits.*',
+      '$.channels.*.[publish,subscribe].message.traits[?(!@null && @.schemaFormat !== void 0)]',
+      '$.channels.*.[publish,subscribe].message.oneOf.*.traits[?(!@null && @.schemaFormat !== void 0)]',
+      '$.components.channels.*.[publish,subscribe].message.traits[?(!@null && @.schemaFormat !== void 0)]',
+      '$.components.channels.*.[publish,subscribe].message.oneOf.*.traits[?(!@null && @.schemaFormat !== void 0)]',
+      '$.components.messages.*.traits[?(!@null && @.schemaFormat !== void 0)]',
+      '$.components.messageTraits[?(!@null && @.schemaFormat !== void 0)]',
     ],
     then: {
       function: rulesetFunction(parser),
@@ -121,7 +121,7 @@ async function parseExampleSchema(parser: Parser, schema: unknown, type: 'payloa
   try {
     const parseSchemaInput: ParseSchemaInput = {
       asyncapi: input.asyncapi,
-      data: serializeSchema(schema, type),
+      data: schema,
       meta: {},
       path,
       schemaFormat: input.schemaFormat,
@@ -136,23 +136,6 @@ async function parseExampleSchema(parser: Parser, schema: unknown, type: 'payloa
     };
     return {path, schema: undefined, errors: [error]};
   }
-}
-
-function serializeSchema(schema: unknown, type: 'payload' | 'headers'): any {
-  if (!schema && typeof schema !== 'boolean') { // if schema is falsy then
-    if (type === 'headers') { // object for headers
-      schema = { type: 'object' };
-    } else { // anything for payload
-      schema = {};
-    }
-  } else if (typeof schema === 'boolean') { // spectral cannot handle boolean schemas
-    if (schema === true) {
-      schema = {}; // everything
-    } else {
-      schema = { not: {} }; // nothing
-    }
-  }
-  return schema;
 }
 
 function getMessageExamples(message: v2.MessageObject): Array<{ path: JsonPath; value: v2.MessageExampleObject }> {

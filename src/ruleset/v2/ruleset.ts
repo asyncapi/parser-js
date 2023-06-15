@@ -123,9 +123,9 @@ export const v2CoreRuleset = {
       recommended: true,
       given: [
         // messages
-        '$.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)]',
         '$.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
-        '$.components.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)]',
         '$.components.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
         '$.components.messages[?(!@null && @.schemaFormat === void 0)]',
         // message traits

@@ -34,7 +34,7 @@ const parser = new Parser();
 const { document } = await parser.parse(`...AsyncAPI document`, ...?options);
 ```
 
-### Powered by [Spectral](https://github.com/stoplightio/spectral)
+### Powered by Spectral
 
 [Spectral](https://github.com/stoplightio/spectral) is an open-source API linting tool by [Stoplight](https://stoplight.io/) that allows users to create custom style guides to enforce validations on API design automatically. This allows for better validation and showing all errors in one validation process - the old parser had a huge problem with this. In addition, there is the ability to show good practices though like defining `operationId` for each operation, or enforcing things that are optional but required for a project or company (API governance). Together with [Stoplight](https://stoplight.io/), we have an official partnership and will be improving integration as well as [Spectral](https://github.com/stoplightio/spectral) itself for better quality validation of AsyncAPI documents.
 

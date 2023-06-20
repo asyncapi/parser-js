@@ -16,7 +16,7 @@
 
 ### New Intent API
 
-The old Document API based 1:1 on AsyncAPI Specification has been rewritten to support the new so-called [Intent API](https://github.com/asyncapi/parser-api), which makes it easier to operate on the document and retrieve collections of needed objects from the document. Due to the fact that the new API does not stick firmly to AsyncAPI Specification, it allows for better integration with future versions of AsyncAPI. User does not need to know the new API against the new version of AsyncAPI - all methods will remain the same with the inclusion of new/deprecated fields. Also new API has been enhanced with some additional functionality like retrieving the JSON Path of the object using the `.jsonPath()` method etc.
+The old Document API based 1:1 on AsyncAPI Specification has been rewritten to support the new so-called [Parser API](https://github.com/asyncapi/parser-api), which makes it easier to operate on the document and retrieve collections of needed objects from it. Due to the fact that the new API does not stick firmly to the AsyncAPI Specification file structure, it allows for better integration with future versions of AsyncAPI. The user does not need to know the new API against the new version of AsyncAPI - all methods will remain the same with the inclusion of new/deprecated fields. Also new API has been enhanced with some additional functionality like retrieving the JSON Path of the object using the `.jsonPath()` method etc.
 
 ### TypeScript and ESM
 

@@ -57,23 +57,11 @@ testRule('asyncapi2-message-examples-custom-format', [
                   {name: 'speed', type: 'string'}
                 ]
               },
-              headers: {
-                type: 'record',
-                name: 'TestHeader',
-                fields: [
-                  {name: 'someKey', type: 'string'},
-                  {name: 'someOtherKey', type: 'string'}
-                ]
-              },
               examples: [
                 {
                   payload: {
                     direction: 'North',
                     speed: '18'
-                  },
-                  headers: {
-                    someKey: 'someValue',
-                    someOtherKey: 'someValue',
                   },
                 },
               ],
@@ -102,23 +90,11 @@ testRule('asyncapi2-message-examples-custom-format', [
                   {name: 'speed', type: 'string'}
                 ]
               },
-              headers: {
-                type: 'record',
-                name: 'TestHeader',
-                fields: [
-                  {name: 'someKey', type: 'string'},
-                  {name: 'someOtherKey', type: 'string'}
-                ]
-              },
               examples: [
                 {
                   payload: {
                     direction: 'South-West',
                     speed: '18'
-                  },
-                  headers: {
-                    someKey: 'someValue',
-                    someOtherKey: 123,
                   },
                 },
               ],
@@ -131,11 +107,6 @@ testRule('asyncapi2-message-examples-custom-format', [
       {
         message: '"direction" property must be equal to one of the allowed values: "North", "East", "South", "West"',
         path: ['channels', 'someChannel', 'publish', 'message', 'examples', '0', 'payload', 'direction'],
-        severity: DiagnosticSeverity.Error,
-      },
-      {
-        message: '"someOtherKey" property type must be string',
-        path: ['channels', 'someChannel', 'publish', 'message', 'examples', '0', 'headers', 'someOtherKey'],
         severity: DiagnosticSeverity.Error,
       },
     ],

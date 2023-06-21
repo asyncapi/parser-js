@@ -345,23 +345,11 @@ testRule('asyncapi2-message-examples', [
                   {name: 'speed', type: 'string'}
                 ]
               },
-              headers: {
-                type: 'record',
-                name: 'TestHeader',
-                fields: [
-                  {name: 'someKey', type: 'string'},
-                  {name: 'someOtherKey', type: 'string'}
-                ]
-              },
               examples: [
                 {
                   payload: {
                     direction: 'North',
                     speed: '18'
-                  },
-                  headers: {
-                    someKey: 'someValue',
-                    someOtherKey: 'someValue',
                   },
                 },
               ],
@@ -390,23 +378,11 @@ testRule('asyncapi2-message-examples', [
                   {name: 'speed', type: 'string'}
                 ]
               },
-              headers: {
-                type: 'record',
-                name: 'TestHeader',
-                fields: [
-                  {name: 'someKey', type: 'string'},
-                  {name: 'someOtherKey', type: 'string'}
-                ]
-              },
               examples: [
                 {
                   payload: {
                     direction: 'South-West',
                     speed: '18'
-                  },
-                  headers: {
-                    someKey: 'someValue',
-                    someOtherKey: 123,
                   },
                 },
               ],

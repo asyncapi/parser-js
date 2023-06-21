@@ -11,7 +11,7 @@ import { getMessageExamples, validate } from './messageExamples';
 
 export function asyncApi2MessageExamplesParserRule(parser: Parser): RuleDefinition {
   return {
-    description: 'Examples of message object should validate against the "payload" and "headers" schemas.',
+    description: 'Examples of message object should validate against a payload with an explicit schemaFormat.',
     message: '{{error}}',
     severity: 'error',
     recommended: true,
@@ -54,6 +54,7 @@ function rulesetFunction(parser: Parser) {
     },
     async (targetVal, _, ctx) => {
       if (!targetVal.examples) return;
+      if (!targetVal.payload) return;
 
       const document = ctx.document;
       const parsedSpec = document.data as v2.AsyncAPIObject;
@@ -68,27 +69,15 @@ function rulesetFunction(parser: Parser) {
       };
 
       const results: IFunctionResult[] = [];
-      const payloadSchemaResults = await parseExampleSchema(parser, targetVal.payload, 'payload', input);
+      const payloadSchemaResults = await parseExampleSchema(parser, targetVal.payload, input);
       const payloadSchema = payloadSchemaResults.schema;
       results.push(...payloadSchemaResults.errors);
-
-      const headersSchemaResults = await parseExampleSchema(parser, targetVal.headers, 'headers', input);
-      const headersSchema = headersSchemaResults.schema;
-      results.push(...headersSchemaResults.errors);
 
       for (const example of getMessageExamples(targetVal)) {
         const { path, value } = example;
         // validate payload
         if (value.payload !== undefined && payloadSchema !== undefined) {
           const errors = validate(value.payload, path, 'payload', payloadSchema, ctx);
-          if (Array.isArray(errors)) {
-            results.push(...errors);
-          }
-        }
-  
-        // validate headers
-        if (value.headers !== undefined && headersSchema !== undefined) {
-          const errors = validate(value.headers, path, 'headers', headersSchema, ctx);
           if (Array.isArray(errors)) {
             results.push(...errors);
           }
@@ -112,8 +101,8 @@ interface ParseExampleSchemaResult {
   errors: IFunctionResult[]
 }
 
-async function parseExampleSchema(parser: Parser, schema: unknown, type: 'payload' | 'headers', input: ParseExampleSchemaInput): Promise<ParseExampleSchemaResult> {
-  const path = [...input.rootPath, type];
+async function parseExampleSchema(parser: Parser, schema: unknown, input: ParseExampleSchemaInput): Promise<ParseExampleSchemaResult> {
+  const path = [...input.rootPath, 'payload'];
   if (schema === undefined) {
     return {path, schema: undefined, errors: []};
   }

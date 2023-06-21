@@ -23,7 +23,7 @@ function serializeSchema(schema: unknown, type: 'payload' | 'headers'): any {
   return schema;
 }
 
-function getMessageExamples(message: v2.MessageObject): Array<{ path: JsonPath; value: v2.MessageExampleObject }> {
+export function getMessageExamples(message: v2.MessageObject): Array<{ path: JsonPath; value: v2.MessageExampleObject }> {
   if (!Array.isArray(message.examples)) {
     return [];
   }
@@ -37,7 +37,7 @@ function getMessageExamples(message: v2.MessageObject): Array<{ path: JsonPath; 
   );
 }
 
-function validate(
+export function validate(
   value: unknown,
   path: JsonPath,
   type: 'payload' | 'headers',

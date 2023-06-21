@@ -1,14 +1,13 @@
 import { RuleDefinition, createRulesetFunction } from '@stoplight/spectral-core';
-import { schema as schemaFn } from '@stoplight/spectral-functions';
 
 import type { JsonPath } from '@stoplight/types';
-import type { IFunctionResult, RulesetFunctionContext } from '@stoplight/spectral-core';
-import type { JSONSchema7 } from 'json-schema';
+import type { IFunctionResult } from '@stoplight/spectral-core';
 import type { v2 } from 'spec-types';
 import type { Parser } from 'parser';
 import type { DetailedAsyncAPI } from 'types';
 import { ParseSchemaInput, getDefaultSchemaFormat, getSchemaFormat, parseSchema } from '../../../schema-parser';
 import { createDetailedAsyncAPI } from '../../../utils';
+import { getMessageExamples, validate } from './messageExamples';
 
 export function asyncApi2MessageExamplesParserRule(parser: Parser): RuleDefinition {
   return {
@@ -136,38 +135,4 @@ async function parseExampleSchema(parser: Parser, schema: unknown, type: 'payloa
     };
     return {path, schema: undefined, errors: [error]};
   }
-}
-
-function getMessageExamples(message: v2.MessageObject): Array<{ path: JsonPath; value: v2.MessageExampleObject }> {
-  if (!Array.isArray(message.examples)) {
-    return [];
-  }
-  return (
-    message.examples.map((example, index) => {
-      return {
-        path: ['examples', index],
-        value: example,
-      };
-    }) ?? []
-  );
-}
-
-function validate(
-  value: unknown,
-  path: JsonPath,
-  type: 'payload' | 'headers',
-  schema: unknown,
-  ctx: RulesetFunctionContext,
-): ReturnType<typeof schemaFn> {
-  return schemaFn(
-    value,
-    {
-      allErrors: true,
-      schema: schema as JSONSchema7,
-    },
-    {
-      ...ctx,
-      path: [...ctx.path, ...path, type],
-    },
-  );
 }

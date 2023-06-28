@@ -12,6 +12,10 @@ Updated bundle for the browser is always attached to the GitHub Release.
 > **Warning**
 > This package has rewrote the Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
 
+> **Note**
+> Read the [migration guide from v1 to v2](./docs/migrations/v1-to-v2.md).
+
+
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
 <!-- toc -->
@@ -77,9 +81,7 @@ Check out the [examples](#examples) of using the above mentioned functionalities
 
 ```ts
 import { Parser } from '@asyncapi/parser';
-
 const parser = new Parser();
-
 const { document } = await parser.parse(`
   asyncapi: '2.4.0'
   info:

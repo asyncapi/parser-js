@@ -1,6 +1,6 @@
 # AsyncAPI v2 Recommended Ruleset
 
-The recommended ruleset, which verify good practices when writing the `2.x.x` specifications structure.
+The recommended ruleset verifies good practices within AsyncAPI version `2.x.x` documents.
 
 > **Note**
 > These rules will only apply to AsyncAPI `2.x.x` documents.
@@ -9,7 +9,7 @@ The recommended ruleset, which verify good practices when writing the `2.x.x` sp
 
 ### asyncapi2-tags
 
-AsyncAPI object should have a non-empty `tags` array.
+AsyncAPI document should have a non-empty `tags` array.
 
 #### Good example
 

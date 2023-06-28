@@ -248,8 +248,8 @@ const parser = new Parser({
     }
   }
 });
-// One of diagnostics should have `asyncapi-termsOfService` code with `warning` severity, because we didn't define the `$.info.termsOfService` field.
-// Also we should won't see the diagnostics related to the omitted `defaultContentType` field.
+// The returned diagnostics object will include `asyncapi-termsOfService` diagnostic with `warning` (`recommended: true`) severity because `$.info.termsOfService` is not defined in the following AsyncAPI document.
+// On the other hand, since we turned it off, we won't see the diagnostics related to the `defaultContentType` field.
 const diagnostics = await parser.validate(`
   asyncapi: '2.0.0'
   info:

@@ -1,9 +1,9 @@
 # AsyncAPI Recommended Ruleset
 
-The recommended ruleset, which verifies good practices when writing the specification structure.
+The recommended ruleset verifies good practices within AsyncAPI documents structure.
 
 > **Note**
-> These rules will apply to each version, starting with `2.0.0`.
+> These rules will apply to each version, starting from `2.0.0`.
 
 ## Rules
 

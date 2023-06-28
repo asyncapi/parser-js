@@ -1,9 +1,9 @@
 # AsyncAPI Core Ruleset
 
-The core ruleset, which validates the overall structure of the specification.
+The core ruleset validates the overall structure of AsyncAPI documents.
 
 > **Note**
-> These rules will apply to each version, starting with `2.0.0`.
+> These rules will apply to each version, starting from `2.0.0`.
 
 ## Rules
 
@@ -35,6 +35,8 @@ asyncapi: 2.1.37
 Checking if the AsyncAPI document is using the latest version.
 
 #### Good example
+
+Assuming the latest version is `2.6.0`:
 
 ```yaml
 asyncapi: 2.6.0

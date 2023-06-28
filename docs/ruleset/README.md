@@ -1,6 +1,6 @@
 # AsyncAPI Spectral Ruleset
 
-ParserJS has some built-in Spectral rulesets that validate AsyncAPI documents and inform about good practices. The distinctions are:
+ParserJS has some built-in Spectral rulesets that validate AsyncAPI documents and inform about good practices. Those are:
 
 - [Core Ruleset](./core-ruleset.md) - the core ruleset, which validates the overall structure of the specification (applied for each version, starting with `2.0.0`).
 - [Recommended Ruleset](./recommended-ruleset.md) - the recommended ruleset, which verify good practices when writing the specification structure (applied for each version, starting with `2.0.0`).

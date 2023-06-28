@@ -32,6 +32,7 @@ Updated bundle for the browser is always attached to the GitHub Release.
   * [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
   * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
+- [Spectral rulesets](#spectral-rulesets)
 - [Using in the browser/SPA applications](#using-in-the-browserspa-applications)
 - [Custom schema parsers](#custom-schema-parsers)
   * [Official supported custom schema parsers](#official-supported-custom-schema-parsers)

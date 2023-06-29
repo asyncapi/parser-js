@@ -12,6 +12,10 @@ Updated bundle for the browser is always attached to the GitHub Release.
 > **Warning**
 > This package has rewrote the Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
 
+> **Note**
+> Read the [migration guide from v1 to v2](./docs/migrations/v1-to-v2.md).
+
+
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
 <!-- toc -->
@@ -28,6 +32,7 @@ Updated bundle for the browser is always attached to the GitHub Release.
   * [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
   * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
+- [Spectral rulesets](#spectral-rulesets)
 - [Using in the browser/SPA applications](#using-in-the-browserspa-applications)
 - [Custom schema parsers](#custom-schema-parsers)
   * [Official supported custom schema parsers](#official-supported-custom-schema-parsers)
@@ -77,9 +82,7 @@ Check out the [examples](#examples) of using the above mentioned functionalities
 
 ```ts
 import { Parser } from '@asyncapi/parser';
-
 const parser = new Parser();
-
 const { document } = await parser.parse(`
   asyncapi: '2.4.0'
   info:
@@ -224,6 +227,43 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 - `json()` which returns the JSON object of the given object. It is possible to pass as an argument the name of a field in an object and retrieve corresponding value.
 - `jsonPath()` which returns the JSON Path of the given object.
 - `meta()` which returns the metadata of a given object, like a parsed AsyncAPI Document.
+
+## Spectral rulesets
+
+[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS. For this reason, it is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance: 
+
+```ts
+import { Parser, stringify, unstringify } from '@asyncapi/parser';
+const parser = new Parser({
+  ruleset: {
+    extends: [],
+    rules: {
+      'asyncapi-defaultContentType': 'off',
+      'asyncapi-termsOfService': {
+        description: 'Info "termsOfService" should be present and non-empty string.',
+        recommended: true,
+        given: '$',
+        then: {
+          field: 'info.termsOfService',
+          function: 'truthy',
+        },
+      },
+    }
+  }
+});
+// The returned diagnostics object will include `asyncapi-termsOfService` diagnostic with `warning` (`recommended: true`) severity because `$.info.termsOfService` is not defined in the following AsyncAPI document.
+// On the other hand, since we turned it off, we won't see the diagnostics related to the `defaultContentType` field.
+const diagnostics = await parser.validate(`
+  asyncapi: '2.0.0'
+  info:
+    title: Example AsyncAPI specification
+    version: '0.1.0'
+  channels: {}
+`);
+```
+
+[ParserJS has some built-in Spectral rulesets](./docs/ruleset) that validate AsyncAPI documents and inform on good practices. 
+
 
 ## Using in the browser/SPA applications
 

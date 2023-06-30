@@ -1,6 +1,6 @@
 import type { BindingsInterface } from './bindings';
 import type { ExtensionsInterface } from './extensions';
-import type { ExternalDocumentationInterface } from './external-documentation';
+import type { ExternalDocumentationInterface } from './external-docs';
 import type { TagsInterface } from './tags';
 
 export interface BindingsMixinInterface {

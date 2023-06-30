@@ -1,13 +1,13 @@
-import { Channels } from '../../../src/models/channels';
+import { Channels } from '../../../src/models/v3/channels';
 import { Channel } from '../../../src/models/v3/channel';
-import { Messages } from '../../../src/models/messages';
+import { Messages } from '../../../src/models/v3/messages';
 import { Message } from '../../../src/models/v3/message';
-import { Operations } from '../../../src/models/operations';
+import { Operations } from '../../../src/models/v3/operations';
 import { Operation } from '../../../src/models/v3/operation';
 import { Server } from '../../../src/models/v3/server';
-import { ServerVariables } from '../../../src/models/server-variables';
+import { ServerVariables } from '../../../src/models/v3/server-variables';
 import { SecurityScheme } from '../../../src/models/v3/security-scheme';
-import { SecurityRequirements } from '../../../src/models/security-requirements';
+import { SecurityRequirements } from '../../../src/models/v3/security-requirements';
 import { SecurityRequirement } from '../../../src/models/v3/security-requirement';
 
 import { serializeInput, assertCoreModel } from './utils';
@@ -40,7 +40,7 @@ describe('Server Model', function () {
 
   describe('.url()', function () {
     it('should return value', function () {
-      expect(docItem.url()).toEqual(`${doc.production.host}${doc.production.pathname}`);
+      expect(docItem.url()).toEqual(`${doc.production.protocol}://${doc.production.host}${doc.production.pathname}`);
     });
   });
 

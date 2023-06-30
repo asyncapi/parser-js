@@ -1,15 +1,31 @@
-import { convertToOldAPI } from '../../src/old-api/converter';
+import { convertToOldAPI, convertToNewAPI } from '../../src/old-api/converter';
 import { AsyncAPIDocument as OldAsyncAPIDocument } from '../../src/old-api/asyncapi';
 import { AsyncAPIDocumentV2 } from '../../src';
 import { anonymousNaming } from '../../src/custom-operations/anonymous-naming';
 import { checkCircularRefs } from '../../src/custom-operations/check-circular-refs';
 import { getDefaultSchemaFormat } from '../../src/schema-parser';
-import { xParserCircular, xParserOriginalTraits, xParserOriginalSchemaFormat, xParserMessageParsed, xParserOriginalPayload } from '../../src/constants';
+import { xParserApiVersion, xParserCircular, xParserOriginalTraits, xParserOriginalSchemaFormat, xParserMessageParsed, xParserOriginalPayload } from '../../src/constants';
 
 describe('convertToOldAPI()', function() {
   it('should return AsyncAPIDocument instance', function() {
     const newApi = new AsyncAPIDocumentV2({} as any);
     expect(convertToOldAPI(newApi)).toBeInstanceOf(OldAsyncAPIDocument);
+  });
+
+  it('should assign x-parser-api-version extension to the 0 value', function() {
+    const newApi = new AsyncAPIDocumentV2({
+      channels: {
+        channel: {
+          publish: {
+            message: {
+              payload: {},
+            }
+          }
+        }
+      }
+    } as any);
+
+    expect(convertToOldAPI(newApi).ext(xParserApiVersion)).toEqual(0);
   });
 
   it('should not assign x-parser-circular extension when document has not circular schemas', function() {
@@ -258,5 +274,12 @@ describe('convertToOldAPI()', function() {
     expect(oldApi.json().channels.channel?.publish?.traits).toBeUndefined();
     expect(oldApi.json().channels.channel?.subscribe?.[xParserOriginalTraits]).toEqual([{}, {}]);
     expect(oldApi.json().channels.channel?.subscribe?.traits).toBeUndefined();
+  });
+});
+
+describe('convertToNewAPI()', function() {
+  it('should return AsyncAPIDocumentV2 instance', function() {
+    const oldDocument = new OldAsyncAPIDocument({ asyncapi: '2.0.0' } as any);
+    expect(convertToNewAPI(oldDocument)).toBeInstanceOf(AsyncAPIDocumentV2);
   });
 });

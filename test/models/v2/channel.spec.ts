@@ -1,14 +1,14 @@
 import { Channel } from '../../../src/models/v2/channel';
-import { ChannelParameters } from '../../../src/models/channel-parameters';
+import { ChannelParameters } from '../../../src/models/v2/channel-parameters';
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
-import { Operations } from '../../../src/models/operations';
+import { Operations } from '../../../src/models/v2/operations';
 import { Operation } from '../../../src/models/v2/operation';
-import { Messages } from '../../../src/models/messages';
+import { Messages } from '../../../src/models/v2/messages';
 import { Message } from '../../../src/models/v2/message';
-import { Servers } from '../../../src/models/servers';
+import { Servers } from '../../../src/models/v2/servers';
 import { Server } from '../../../src/models/v2/server';
 
-import { serializeInput, assertCoreModel } from './utils';
+import { serializeInput, assertBindings, assertDescription, assertExtensions } from './utils';
 
 import type { v2 } from '../../../src/spec-types';
 
@@ -136,6 +136,8 @@ describe('Channel model', function() {
   });
 
   describe('mixins', function() {
-    assertCoreModel(Channel);
+    assertBindings(Channel);
+    assertDescription(Channel);
+    assertExtensions(Channel);
   });
 });

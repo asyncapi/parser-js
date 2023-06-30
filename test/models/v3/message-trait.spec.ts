@@ -1,5 +1,5 @@
 import { CorrelationId } from '../../../src/models/v3/correlation-id';
-import { MessageExamples } from '../../../src/models/message-examples';
+import { MessageExamples } from '../../../src/models/v3/message-examples';
 import { MessageExample } from '../../../src/models/v3/message-example';
 import { MessageTrait } from '../../../src/models/v3/message-trait';
 import { Schema } from '../../../src/models/v3/schema';

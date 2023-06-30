@@ -1,4 +1,4 @@
-import { ChannelParameters } from '../../../src/models/channel-parameters';
+import { ChannelParameters } from '../../../src/models/v2/channel-parameters';
 import { ChannelParameter } from '../../../src/models/v2/channel-parameter';
 
 const channelParameter = {

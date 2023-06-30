@@ -1,18 +1,17 @@
-import { Channels } from '../channels';
+import { Channels } from './channels';
 import { Channel } from './channel';
-import { Messages } from '../messages';
+import { Messages } from './messages';
 import { Message } from './message';
-import { OperationTraits } from '../operation-traits';
+import { OperationTraits } from './operation-traits';
 import { OperationTrait } from './operation-trait';
-import { Servers } from '../servers';
+import { Servers } from './servers';
 
 import { tilde } from '../../utils';
 
 import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
 import type { MessagesInterface } from '../messages';
-import type { OperationAction, OperationInterface } from '../operation';
-import type { OperationReplyInterface } from '../operation-reply';
+import type { OperationInterface, OperationAction } from '../operation';
 import type { OperationTraitsInterface } from '../operation-traits';
 import type { ServersInterface } from '../servers';
 import type { ServerInterface } from '../server';
@@ -75,10 +74,6 @@ export class Operation extends OperationTrait<v2.OperationObject> implements Ope
         return this.createModel(Message, message, { id: '', pointer: `${this._meta.pointer}/message${isOneOf ? `/oneOf/${index}` : ''}` });
       })
     );
-  }
-
-  reply(): OperationReplyInterface | undefined {
-    return undefined;
   }
 
   traits(): OperationTraitsInterface {

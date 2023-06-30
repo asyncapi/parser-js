@@ -143,6 +143,7 @@ export interface OperationTraitObject extends SpecificationExtensions {
 
 export interface OperationReplyObject extends SpecificationExtensions {
   channel?: ChannelObject | ReferenceObject;
+  messages?: MessagesObject;
   address?: OperationReplyAddressObject | ReferenceObject;
 }
 

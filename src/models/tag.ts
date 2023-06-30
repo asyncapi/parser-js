@@ -4,6 +4,5 @@ import type { DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocum
 export interface TagInterface 
   extends BaseModel, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface {
 
-  id(): string | undefined;
   name(): string;
 }

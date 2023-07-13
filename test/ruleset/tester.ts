@@ -31,6 +31,7 @@ export function testRule(ruleName: RuleNames, tests: Scenario,): void {
         const doc = JSON.stringify(testCase.document);
 
         const errors = await parser.validate(doc);
+        expect(errors.filter(({ code }) => code === 'uncaught-error')).toHaveLength(0);
         expect(errors.filter(({ code }) => code === ruleName)).toEqual(
           testCase.errors.map(error => expect.objectContaining(error) as unknown),
         );

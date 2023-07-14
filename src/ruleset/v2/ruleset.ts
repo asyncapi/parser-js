@@ -123,17 +123,17 @@ export const v2CoreRuleset = {
       given: [
         // messages
         '$.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
-        '$.channels.*.[publish,subscribe].message.oneOf[?(@.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
         '$.components.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
-        '$.components.channels.*.[publish,subscribe].message.oneOf[?(@.schemaFormat === void 0)]',
-        '$.components.messages[?(@.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
+        '$.components.messages[?(!@null && @.schemaFormat === void 0)]',
         // message traits
-        '$.channels.*.[publish,subscribe].message.traits[?(@.schemaFormat === void 0)]',
-        '$.channels.*.[publish,subscribe].message.oneOf.*.traits[?(@.schemaFormat === void 0)]',
-        '$.components.channels.*.[publish,subscribe].message.traits[?(@.schemaFormat === void 0)]',
-        '$.components.channels.*.[publish,subscribe].message.oneOf.*.traits[?(@.schemaFormat === void 0)]',
-        '$.components.messages.*.traits[?(@.schemaFormat === void 0)]',
-        '$.components.messageTraits[?(@.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe].message.traits[?(!@null && @.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe].message.oneOf.*.traits[?(!@null && @.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].message.traits[?(!@null && @.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe].message.oneOf.*.traits[?(!@null && @.schemaFormat === void 0)]',
+        '$.components.messages.*.traits[?(!@null && @.schemaFormat === void 0)]',
+        '$.components.messageTraits[?(!@null && @.schemaFormat === void 0)]',
       ],
       then: {
         function: messageExamples,

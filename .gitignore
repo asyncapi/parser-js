@@ -1,7 +1,7 @@
 node_modules
 .vscode
 .DS_Store
-/docs
+/docs/api.md
 /coverage
 /lib
 /esm

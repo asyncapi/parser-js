@@ -40,7 +40,6 @@ describe('custom operations - apply traits v3', function() {
     const { document, diagnostics } = await parser.parse(documentRaw);
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
-    // expect(diagnostics.length > 0).toEqual(true);
 
     const someOperation1 = v3Document?.json()?.operations?.someOperation1;
     delete someOperation1?.traits;

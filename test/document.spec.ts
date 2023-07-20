@@ -23,7 +23,7 @@ describe('utils', function() {
     ];
 
     test.each(cases)('should create a valid document from a v%p.0.0 source', (majorVersion, expected) => {
-      const doc = { asyncapi: `${majorVersion  }.0.0` };
+      const doc = { asyncapi: `${majorVersion}.0.0` };
       const detailed = createDetailedAsyncAPI(doc as any, doc as any);
       const d = createAsyncAPIDocument(detailed);
       expect(d.version()).toEqual(doc.asyncapi);

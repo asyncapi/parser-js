@@ -2,24 +2,14 @@ import { BaseModel } from '../base';
 
 import { xParserSchemaId } from '../../constants';
 import { extensions, hasExternalDocs, externalDocs } from './mixins';
-import { retrievePossibleRef, hasRef } from '../../utils';
-
-import type { ModelMetadata } from '../base';
 import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-docs';
 import type { SchemaInterface } from '../schema';
 
 import type { v3 } from '../../spec-types';
+import { getDefaultSchemaFormat } from '../../schema-parser';
 
-export class Schema extends BaseModel<v3.AsyncAPISchemaObject, { id?: string, parent?: Schema }> implements SchemaInterface {
-  constructor(
-    _json: v3.AsyncAPISchemaObject,
-    _meta: ModelMetadata & { id?: string, parent?: Schema } = {} as any,
-  ) {
-    _json = retrievePossibleRef(_json, _meta.pointer as string, _meta.asyncapi?.parsed);
-    super(_json, _meta);
-  }
-
+export class Schema extends BaseModel<v3.AsyncAPISchemaObject, { id?: string, parent?: Schema, schemaFormat?: string }> implements SchemaInterface {
   id(): string {
     return this.$id() || this._meta.id || this.json(xParserSchemaId as any) as string;
   }
@@ -162,7 +152,6 @@ export class Schema extends BaseModel<v3.AsyncAPISchemaObject, { id?: string, pa
   }
 
   isCircular(): boolean {
-    if (hasRef(this._json)) return true;
     let parent = this._meta.parent;
     while (parent) {
       if (parent._json === this._json) return true;
@@ -274,6 +263,10 @@ export class Schema extends BaseModel<v3.AsyncAPISchemaObject, { id?: string, pa
   required(): Array<string> | undefined {
     if (typeof this._json === 'boolean') return;
     return this._json.required;
+  }
+
+  schemaFormat(): string {
+    return this._meta.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }
 
   then(): SchemaInterface | undefined {

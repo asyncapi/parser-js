@@ -4,7 +4,6 @@ import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
 import { xParserMessageName } from '../../constants';
-import { getDefaultSchemaFormat } from '../../schema-parser';
 import { CoreModel } from './mixins';
 
 import type { CorrelationIdInterface } from '../correlation-id';
@@ -19,12 +18,16 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
     return this.messageId() || this._meta.id || this.extensions().get(xParserMessageName)?.value<string>() as string;
   }
 
-  schemaFormat(): string {
-    return this._json.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
-  }
-
   hasMessageId(): boolean {
     return !!this._json.messageId;
+  }
+
+  hasSchemaFormat(): boolean {
+    return false;
+  }
+
+  schemaFormat(): string | undefined {
+    return undefined;
   }
 
   messageId(): string | undefined {

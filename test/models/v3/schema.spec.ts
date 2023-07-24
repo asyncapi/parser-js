@@ -4,6 +4,7 @@ import { assertExtensions, assertExternalDocumentation } from './utils';
 import { xParserSchemaId } from '../../../src/constants';
 
 import type { v3 } from '../../../src/spec-types';
+import { getDefaultSchemaFormat } from '../../../src/schema-parser';
 
 describe('Schema model', function() {
   describe('.id()', function() {
@@ -729,6 +730,20 @@ describe('Schema model', function() {
       const doc = {};
       const d = new Schema(doc);
       expect(d.required()).toBeUndefined();
+    });
+  });
+
+  describe('.schemaFormat()', function() {
+    it('should return the format of the schema', function() {
+      const actualSchemaFormat = 'application/vnd.apache.avro;version=1.9.0';
+      const d = new Schema({}, {asyncapi: {} as any, pointer: '', schemaFormat: actualSchemaFormat});
+      expect(d.schemaFormat()).toEqual(actualSchemaFormat);
+    });
+
+    it('should return the default schema format where there is no value', function() {
+      const doc = {asyncapi: '3.0.0' };
+      const d = new Schema(doc, {asyncapi: { semver: { version: doc.asyncapi } }});
+      expect(d.schemaFormat()).toEqual(getDefaultSchemaFormat(doc.asyncapi));
     });
   });
 

@@ -24,6 +24,7 @@ export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string
     if (!this.hasSchema()) return undefined;
     return this.createModel(Schema, {
       type: 'string', 
+      description: this._json.description,
       enum: this._json.enum, 
       default: this._json.default, 
       examples: this._json.examples

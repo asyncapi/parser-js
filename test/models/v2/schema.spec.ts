@@ -7,7 +7,6 @@ import { getDefaultSchemaFormat } from '../../../src/schema-parser';
 
 import type { v2 } from '../../../src/spec-types';
 
-
 describe('Channel model', function() {
   describe('.id()', function() {
     it('should return $id of schema', function() {

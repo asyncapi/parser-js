@@ -7,11 +7,11 @@ import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-docs';
 import type { SchemaInterface } from '../schema';
 
-import type { v2 } from '../../spec-types';
 import { getDefaultSchemaFormat } from '../../schema-parser';
-import { DetailedAsyncAPI } from 'types';
 
-export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, asyncapi?: DetailedAsyncAPI, parent?: Schema, schemaFormat?: string }> implements SchemaInterface {
+import type { v2 } from '../../spec-types';
+
+export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, parent?: Schema, schemaFormat?: string }> implements SchemaInterface {
   id(): string {
     return this.$id() || this._meta.id || this.json(xParserSchemaId as any) as string;
   }

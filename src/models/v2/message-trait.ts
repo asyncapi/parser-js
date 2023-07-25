@@ -16,8 +16,9 @@ import type { MessageTraitInterface } from '../message-trait';
 import type { SchemaInterface } from '../schema';
 import type { TagsInterface } from '../tags';
 
-import type { v2 } from '../../spec-types';
 import { getDefaultSchemaFormat } from '../../schema-parser';
+
+import type { v2 } from '../../spec-types';
 
 export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends BaseModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {

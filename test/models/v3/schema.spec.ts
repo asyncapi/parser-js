@@ -3,8 +3,9 @@ import { Schema } from '../../../src/models/v3/schema';
 import { assertExtensions, assertExternalDocumentation } from './utils';
 import { xParserSchemaId } from '../../../src/constants';
 
-import type { v3 } from '../../../src/spec-types';
 import { getDefaultSchemaFormat } from '../../../src/schema-parser';
+
+import type { v3 } from '../../../src/spec-types';
 
 describe('Schema model', function() {
   describe('.id()', function() {

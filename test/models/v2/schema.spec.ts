@@ -3,8 +3,10 @@ import { Schema } from '../../../src/models/v2/schema';
 import { assertExtensions, assertExternalDocumentation } from './utils';
 import { xParserSchemaId } from '../../../src/constants';
 
-import type { v2 } from '../../../src/spec-types';
 import { getDefaultSchemaFormat } from '../../../src/schema-parser';
+
+import type { v2 } from '../../../src/spec-types';
+
 
 describe('Channel model', function() {
   describe('.id()', function() {

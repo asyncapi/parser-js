@@ -6,8 +6,9 @@ import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-docs';
 import type { SchemaInterface } from '../schema';
 
-import type { v3 } from '../../spec-types';
 import { getDefaultSchemaFormat } from '../../schema-parser';
+
+import type { v3 } from '../../spec-types';
 
 export class Schema extends BaseModel<v3.AsyncAPISchemaObject, { id?: string, parent?: Schema, schemaFormat?: string }> implements SchemaInterface {
   id(): string {

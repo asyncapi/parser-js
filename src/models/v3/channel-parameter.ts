@@ -7,7 +7,7 @@ import type { SchemaInterface } from '../schema';
 import type { ExtensionsInterface } from '../extensions';
 
 import type { v3 } from '../../spec-types';
-import { ParameterSchema } from './channel-parameter-schema';
+import { Schema } from './schema';
 
 export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string }> implements ChannelParameterInterface {
   id(): string {
@@ -24,7 +24,12 @@ export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string
 
   schema(): SchemaInterface | undefined {
     if (!this.hasSchema()) return undefined;
-    return this.createModel(ParameterSchema, this._json, { pointer: `${this._meta.pointer}` });
+    return this.createModel(Schema, {
+      type: 'string', 
+      enum: this._json.enum, 
+      default: this._json.default, 
+      examples: this._json.examples
+    }, { pointer: `${this._meta.pointer}` });
   }
 
   hasLocation(): boolean {

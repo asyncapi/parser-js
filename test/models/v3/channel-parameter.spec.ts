@@ -4,7 +4,6 @@ import { Schema } from '../../../src/models/v3/schema';
 import { serializeInput, assertDescription, assertExtensions } from './utils';
 
 import type { v3 } from '../../../src/spec-types';
-import { ParameterSchema } from '../../../src/models/v3/channel-parameter-schema';
 
 describe('ChannelParameter model', function() {
   describe('.id()', function() {
@@ -72,19 +71,19 @@ describe('ChannelParameter model', function() {
     it('should be able to access enum values', function() {
       const doc = serializeInput<v3.ParameterObject>({ enum: ['test'] });
       const d = new ChannelParameter(doc);
-      expect(d.schema()).toBeInstanceOf(ParameterSchema);
+      expect(d.schema()).toBeInstanceOf(Schema);
       expect(d.schema()?.enum()).toEqual(['test']);
     });
     it('should be able to access examples values', function() {
       const doc = serializeInput<v3.ParameterObject>({ examples: ['test'] });
       const d = new ChannelParameter(doc);
-      expect(d.schema()).toBeInstanceOf(ParameterSchema);
+      expect(d.schema()).toBeInstanceOf(Schema);
       expect(d.schema()?.examples()).toEqual(['test']);
     });
     it('should be able to access default value', function() {
       const doc = serializeInput<v3.ParameterObject>({ default: 'test' });
       const d = new ChannelParameter(doc);
-      expect(d.schema()).toBeInstanceOf(ParameterSchema);
+      expect(d.schema()).toBeInstanceOf(Schema);
       expect(d.schema()?.default()).toEqual('test');
     });
     

@@ -1,5 +1,4 @@
 import { BaseModel } from '../base';
-import { Schema } from './schema';
 
 import { hasDescription, description, extensions } from './mixins';
 
@@ -8,6 +7,7 @@ import type { SchemaInterface } from '../schema';
 import type { ExtensionsInterface } from '../extensions';
 
 import type { v3 } from '../../spec-types';
+import { ParameterSchema } from './channel-parameter-schema';
 
 export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string }> implements ChannelParameterInterface {
   id(): string {
@@ -15,12 +15,16 @@ export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string
   }
 
   hasSchema(): boolean {
-    return !!this._json.schema;
+    return this._json && (
+      this._json.default !== undefined || 
+      this._json.enum !== undefined || 
+      this._json.examples !== undefined
+    );
   }
 
   schema(): SchemaInterface | undefined {
-    if (!this._json.schema) return undefined;
-    return this.createModel(Schema, this._json.schema, { pointer: `${this._meta.pointer}/schema` });
+    if (!this.hasSchema()) return undefined;
+    return this.createModel(ParameterSchema, this._json, { pointer: `${this._meta.pointer}` });
   }
 
   hasLocation(): boolean {

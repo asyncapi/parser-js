@@ -14,6 +14,7 @@ export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string
 
   hasSchema(): boolean {
     return this._json && (
+      this._json.description !== undefined ||
       this._json.default !== undefined || 
       this._json.enum !== undefined || 
       this._json.examples !== undefined

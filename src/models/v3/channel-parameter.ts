@@ -1,13 +1,11 @@
 import { BaseModel } from '../base';
-
 import { hasDescription, description, extensions } from './mixins';
+import { Schema } from './schema';
 
 import type { ChannelParameterInterface } from '../channel-parameter';
 import type { SchemaInterface } from '../schema';
 import type { ExtensionsInterface } from '../extensions';
-
 import type { v3 } from '../../spec-types';
-import { Schema } from './schema';
 
 export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string }> implements ChannelParameterInterface {
   id(): string {

@@ -2,12 +2,11 @@ import { BaseModel } from '../base';
 
 import { xParserSchemaId } from '../../constants';
 import { extensions, hasExternalDocs, externalDocs } from './mixins';
+import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-docs';
 import type { SchemaInterface } from '../schema';
-
-import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import type { v2 } from '../../spec-types';
 

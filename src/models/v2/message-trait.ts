@@ -6,6 +6,7 @@ import { Schema } from './schema';
 
 import { xParserMessageName } from '../../constants';
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
+import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import type { BindingsInterface } from '../bindings';
 import type { CorrelationIdInterface } from '../correlation-id';
@@ -15,8 +16,6 @@ import type { MessageExamplesInterface } from '../message-examples';
 import type { MessageTraitInterface } from '../message-trait';
 import type { SchemaInterface } from '../schema';
 import type { TagsInterface } from '../tags';
-
-import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import type { v2 } from '../../spec-types';
 

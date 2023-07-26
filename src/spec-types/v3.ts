@@ -400,8 +400,9 @@ export interface OAuthFlowObjectAuthorizationCode extends OAuthFlowObjectBase, S
 }
 
 export type SchemaObject = AsyncAPISchemaObject | ReferenceObject;
-
 export type AsyncAPISchemaObject = AsyncAPISchemaDefinition | boolean;
+export type MultiFormatSchemaObject = AsyncAPISchemaObject | { schema: AsyncAPISchemaObject, schemaFormat: string | undefined }
+
 export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
   $id?: string;
   $schema?: JSONSchema7Version;

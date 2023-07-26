@@ -226,7 +226,9 @@ export type ParametersObject = Record<string, ParameterObject | ReferenceObject>
 
 export interface ParameterObject extends SpecificationExtensions {
   description?: string;
-  schema?: SchemaObject;
+  enum?: string[];
+  default?: string;
+  examples?: string[];
   location?: string;
 }
 

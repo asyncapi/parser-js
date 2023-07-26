@@ -25,7 +25,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
   
   payload(): SchemaInterface | undefined {
     if (!this._json.payload) return undefined;
-    return this.createModel(Schema, this._json.payload, { pointer: this.jsonPath('payload'), schemaFormat: this._json.payload.schemaFormat });
+    return this.createModel(Schema, this._json.payload, { pointer: this.jsonPath('payload')});
   }
 
   servers(): ServersInterface {

@@ -20,6 +20,29 @@ describe('Message model', function() {
     });
   });
 
+  describe('.schemaFormat() + .hasSchemaFormat()', function() {
+    it('should return defined schemaFormat, and true for hasSchemaFormat()', function() {
+      const doc = { payload: {schemaFormat: 'customSchemaFormat', schema: {} }};
+      const d = new Message(doc, { asyncapi: {} as any, pointer: '', id: 'message' });
+      expect(d.hasSchemaFormat()).toBeTruthy();
+      expect(d.schemaFormat()).toEqual('customSchemaFormat');
+    });
+
+    it('should return default schemaFormat if schemaFormat field is absent', function() {
+      const doc = {payload: {}};
+      const d = new Message(doc, { asyncapi: { semver: { version: '2.0.0' } } as any, pointer: '', id: 'message' });
+      expect(d.hasSchemaFormat()).toBeTruthy();
+      expect(d.schemaFormat()).toEqual('application/vnd.aai.asyncapi;version=2.0.0');
+    });
+
+    it('should return undefined schemaFormat, and false for hasSchemaFormat() if there is no payload', function() {
+      const doc = {};
+      const d = new Message(doc, { asyncapi: { semver: { version: '2.0.0' } } as any, pointer: '', id: 'message' });
+      expect(d.hasSchemaFormat()).toBeFalsy();
+      expect(d.schemaFormat()).toBeUndefined();
+    });
+  });
+
   describe('.hasPayload()', function() {
     it('should return true when there is a value', function() {
       const doc = { payload: {} };

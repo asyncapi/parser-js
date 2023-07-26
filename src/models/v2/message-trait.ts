@@ -25,10 +25,10 @@ export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObjec
   }
 
   hasSchemaFormat(): boolean {
-    return true;
+    return this.schemaFormat() !== undefined;
   }
 
-  schemaFormat(): string {
+  schemaFormat(): string | undefined {
     return this._json.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }
 

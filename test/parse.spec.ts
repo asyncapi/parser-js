@@ -1,13 +1,13 @@
 import { Document } from '@stoplight/spectral-core';
 
-import { AsyncAPIDocumentV2 } from '../src/models';
+import { AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from '../src/models';
 import { Parser } from '../src/parser';
 import { xParserApiVersion } from '../src/constants';
 
 describe('parse()', function() {
   const parser = new Parser();
 
-  it('should parse valid document', async function() {
+  it('should parse valid document', async function() { 
     const documentRaw = {
       asyncapi: '2.0.0',
       info: {
@@ -22,6 +22,21 @@ describe('parse()', function() {
     expect(diagnostics.length > 0).toEqual(true);
   });
 
+  it('should parse valid v3 document', async function() { 
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {}
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(diagnostics).toHaveLength(0); // No recommended rules in v3 yet. Change once rules apply.
+  });
+
   it('should parse invalid document', async function() {
     const documentRaw = {
       asyncapi: '2.0.0',
@@ -34,6 +49,20 @@ describe('parse()', function() {
     
     expect(document).toEqual(undefined);
     expect(diagnostics.length > 0).toEqual(true);
+  });
+
+  it('should parse invalid v3 document', async function() { 
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      this_is_not_an_info_object: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(diagnostics).toHaveLength(0); // No core rules in v3 yet. Change once rules apply.
   });
 
   it('should return extras', async function() {

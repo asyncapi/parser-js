@@ -1,4 +1,4 @@
-import { aas2All as aas2AllFormats } from './formats';
+
 import { lastVersion } from '../constants';
 import { truthy, schema } from '@stoplight/spectral-functions';
 
@@ -6,10 +6,11 @@ import { documentStructure } from './functions/documentStructure';
 import { internal } from './functions/internal';
 import { isAsyncAPIDocument } from './functions/isAsyncAPIDocument';
 import { unusedComponent } from './functions/unusedComponent';
+import { AsyncAPIFormats } from './formats';
 
 export const coreRuleset = {
   description: 'Core AsyncAPI x.x.x ruleset.',
-  formats: [...aas2AllFormats],
+  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
   rules: {
     /**
      * Root Object rules
@@ -80,7 +81,7 @@ export const coreRuleset = {
 
 export const recommendedRuleset = {
   description: 'Recommended AsyncAPI x.x.x ruleset.',
-  formats: [...aas2AllFormats],
+  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
   rules: {
     /**
      * Root Object rules
@@ -188,6 +189,7 @@ export const recommendedRuleset = {
      */
     'asyncapi-unused-component': {
       description: 'Potentially unused component has been detected in AsyncAPI document.',
+      formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
       recommended: true,
       resolved: false,
       severity: 'info',

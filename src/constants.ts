@@ -19,4 +19,4 @@ export const EXTENSION_REGEX = /^x-[\w\d.\-_]+$/;
 
 // Only >=2.0.0 versions are supported
 export const specVersions = Object.keys(specs.schemas);
-export const lastVersion = specVersions[specVersions.length - 1];
+export const lastVersion = specVersions[specVersions.length - 2]; // 3.0.0 is not enabled yet

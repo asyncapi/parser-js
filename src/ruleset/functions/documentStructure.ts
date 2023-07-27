@@ -1,10 +1,10 @@
 import specs from '@asyncapi/specs';
 import { createRulesetFunction } from '@stoplight/spectral-core';
 import { schema as schemaFn } from '@stoplight/spectral-functions';
-import { aas2_0, aas2_1, aas2_2, aas2_3, aas2_4, aas2_5, aas2_6 } from '../formats';
 
 import type { ErrorObject } from 'ajv';
 import type { IFunctionResult, Format } from '@stoplight/spectral-core';
+import { AsyncAPIFormats } from '../formats';
 
 type AsyncAPIVersions = keyof typeof specs.schemas;
 
@@ -80,24 +80,11 @@ function filterRefErrors(errors: IFunctionResult[], resolved: boolean) {
     });
 }
 
-function getSchema(formats: Set<Format>): Record<string, any> | void {
-  switch (true) {
-  case formats.has(aas2_6):
-    return getSerializedSchema('2.6.0');
-  case formats.has(aas2_5):
-    return getSerializedSchema('2.5.0');
-  case formats.has(aas2_4):
-    return getSerializedSchema('2.4.0');
-  case formats.has(aas2_3):
-    return getSerializedSchema('2.3.0');
-  case formats.has(aas2_2):
-    return getSerializedSchema('2.2.0');
-  case formats.has(aas2_1):
-    return getSerializedSchema('2.1.0');
-  case formats.has(aas2_0):
-    return getSerializedSchema('2.0.0');
-  default:
-    return;
+export function getSchema(docFormats: Set<Format>): Record<string, any> | void {
+  for (const [version, format] of AsyncAPIFormats) {
+    if (docFormats.has(format)) {
+      return getSerializedSchema(version as AsyncAPIVersions);
+    }
   }
 }
 

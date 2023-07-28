@@ -2,6 +2,7 @@ import { Schema } from '../../../src/models/v3/schema';
 
 import { assertExtensions, assertExternalDocumentation } from './utils';
 import { xParserSchemaId } from '../../../src/constants';
+import { getDefaultSchemaFormat } from '../../../src/schema-parser';
 
 import type { v3 } from '../../../src/spec-types';
 
@@ -729,6 +730,29 @@ describe('Schema model', function() {
       const doc = {};
       const d = new Schema(doc);
       expect(d.required()).toBeUndefined();
+    });
+  });
+
+  describe('.schemaFormat()', function() {
+    it('should return the format of the schema', function() {
+      const actualSchemaFormat = 'application/vnd.apache.avro;version=1.9.0';
+      const doc = {schemaFormat: actualSchemaFormat, schema: {}};
+      
+      const d = new Schema(doc, {asyncapi: {} as any, pointer: '', });
+      expect(d.schemaFormat()).toEqual(actualSchemaFormat);
+    });
+
+    it('should return the default schema format where there is no value', function() {
+      const d = new Schema({}, {asyncapi: { semver: { version: '3.0.0' } }});
+      expect(d.schemaFormat()).toEqual(getDefaultSchemaFormat('3.0.0'));
+    });
+  });
+
+  describe('MultiFormatSchema is parsed correctly', function() {
+    it('should return any field from the underlaying schema', function() {
+      const doc = {schemaFormat: 'whatever', schema: {$comment: 'test'}};
+      const d = new Schema(doc, {asyncapi: {} as any, pointer: '', });
+      expect(d.$comment()).toEqual('test');
     });
   });
 

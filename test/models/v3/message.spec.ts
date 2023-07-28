@@ -1,13 +1,7 @@
-import { Channels } from '../../../src/models/v3/channels';
-import { Channel } from '../../../src/models/v3/channel';
 import { Message } from '../../../src/models/v3/message';
 import { MessageTraits } from '../../../src/models/v3/message-traits';
 import { MessageTrait } from '../../../src/models/v3/message-trait';
-import { Operations } from '../../../src/models/v3/operations';
-import { Operation } from '../../../src/models/v3/operation';
 import { Schema } from '../../../src/models/v3/schema';
-import { Servers } from '../../../src/models/v3/servers';
-import { Server } from '../../../src/models/v3/server';
 
 import { assertCoreModel } from './utils';
 
@@ -26,17 +20,26 @@ describe('Message model', function() {
     });
   });
 
-  describe('.schemaFormat()', function() {
-    it('should return defined schemaFormat', function() {
-      const doc = { schemaFormat: 'customSchemaFormat' };
+  describe('.schemaFormat() + .hasSchemaFormat()', function() {
+    it('should return defined schemaFormat, and true for hasSchemaFormat()', function() {
+      const doc = { payload: {schemaFormat: 'customSchemaFormat', schema: {} }};
       const d = new Message(doc, { asyncapi: {} as any, pointer: '', id: 'message' });
+      expect(d.hasSchemaFormat()).toBeTruthy();
       expect(d.schemaFormat()).toEqual('customSchemaFormat');
     });
 
     it('should return default schemaFormat if schemaFormat field is absent', function() {
+      const doc = {payload: {}};
+      const d = new Message(doc, { asyncapi: { semver: { version: '2.0.0' } } as any, pointer: '', id: 'message' });
+      expect(d.hasSchemaFormat()).toBeTruthy();
+      expect(d.schemaFormat()).toEqual('application/vnd.aai.asyncapi;version=2.0.0');
+    });
+
+    it('should return undefined schemaFormat, and false for hasSchemaFormat() if there is no payload', function() {
       const doc = {};
       const d = new Message(doc, { asyncapi: { semver: { version: '2.0.0' } } as any, pointer: '', id: 'message' });
-      expect(d.schemaFormat()).toEqual('application/vnd.aai.asyncapi;version=2.0.0');
+      expect(d.hasSchemaFormat()).toBeFalsy();
+      expect(d.schemaFormat()).toBeUndefined();
     });
   });
 

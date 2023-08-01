@@ -10,7 +10,7 @@ import { AsyncAPIFormats } from './formats';
 
 export const coreRuleset = {
   description: 'Core AsyncAPI x.x.x ruleset.',
-  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
+  formats: AsyncAPIFormats.formats(),
   rules: {
     /**
      * Root Object rules
@@ -81,7 +81,7 @@ export const coreRuleset = {
 
 export const recommendedRuleset = {
   description: 'Recommended AsyncAPI x.x.x ruleset.',
-  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
+  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Recommended validation for AsyncAPI v3 is still WIP.
   rules: {
     /**
      * Root Object rules

@@ -13,8 +13,15 @@ describe('custom operations - apply traits v3', function() {
         title: 'Valid AsyncApi document',
         version: '1.0',
       },
+      channels: {
+        channel1: {}
+      },
       operations: {
         someOperation1: {
+          action: 'send',
+          channel: {
+            $ref: '#/channels/channel1'
+          },
           traits: [
             {
               description: 'some description' 
@@ -25,6 +32,10 @@ describe('custom operations - apply traits v3', function() {
           ]
         },
         someOperation2: {
+          action: 'send',
+          channel: {
+            $ref: '#/channels/channel1'
+          },
           description: 'root description',
           traits: [
             {
@@ -38,6 +49,8 @@ describe('custom operations - apply traits v3', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
+    expect(diagnostics).toHaveLength(0);
+    
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
 

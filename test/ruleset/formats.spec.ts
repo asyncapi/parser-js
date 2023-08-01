@@ -1,117 +1,82 @@
-import { aas2, aas2_0, aas2_1, aas2_2, aas2_3, aas2_4, aas2_5, aas2_6 } from '../../src/ruleset/formats';
+import { schemas } from '@asyncapi/specs';
+import { AsyncAPIFormats, Formats } from '../../src/ruleset/formats';
+import { getSemver } from '../../src/utils';
+
+import type { Format } from '@stoplight/spectral-core';
 
 describe('AsyncAPI format', () => {
-  describe('AsyncAPI 2.x', () => {
-    it.each(['2.0.0', '2.1.0', '2.2.0', '2.3.0', '2.0.17', '2.1.37', '2.9.0', '2.9.3'])(
-      'recognizes %s version correctly',
-      version => {
-        expect(aas2({ asyncapi: version }, null)).toBe(true);
-      },
-    );
-
+  describe('Recognizes versions', () => {
     const testCases = [
-      { asyncapi: '3.0' },
-      { asyncapi: '3.0.0' },
-      { asyncapi: '2' },
-      { asyncapi: '2.0' },
-      { asyncapi: '2.0.' },
-      { asyncapi: '2.0.01' },
-      { asyncapi: '1.0' },
-      { asyncapi: 2 },
-      { asyncapi: null },
-      { openapi: '4.0' },
-      { openapi: '2.0' },
-      { openapi: null },
-      { swagger: null },
-      { swagger: '3.0' },
-      {},
-      null,
+      { formatVersion: '2.0.0', document: {asyncapi: '2.0.0'}, existsFormat: true, result: true },
+      { formatVersion: '2.0.0', document: {asyncapi: '2.1.8'}, existsFormat: true, result: false },
+      { formatVersion: '2.1.8', document: {asyncapi: '2.0.0'}, existsFormat: true, result: false },
+      { formatVersion: '2.1.3', document: {asyncapi: '2.1.3'}, existsFormat: true, result: true },
+      { formatVersion: '2.1.3', document: {asyncapi: '2.0.0'}, existsFormat: true, result: false },
+      { formatVersion: '2.0.0', document: {asyncapi: '2.1.3'}, existsFormat: true, result: false },
+      { formatVersion: '2.2.9', document: {asyncapi: '2.2.9'}, existsFormat: true, result: true },
+      { formatVersion: '2.2.9', document: {asyncapi: '2.0.0'}, existsFormat: true, result: false },
+      { formatVersion: '2.0.0', document: {asyncapi: '2.2.9'}, existsFormat: true, result: false },
+      { formatVersion: '2.6.5', document: {asyncapi: '2.6.5'}, existsFormat: true, result: true },
+      { formatVersion: '2.6.5', document: {asyncapi: '2.0.0'}, existsFormat: true, result: false },
+      { formatVersion: '2.0.0', document: {asyncapi: '2.6.5'}, existsFormat: true, result: false },
+      { formatVersion: '3.0.10', document: {asyncapi: '3.0.10'}, existsFormat: true, result: true },
+      { formatVersion: '3.0.0', document: {openapi: '3.0.0'}, existsFormat: true, result: false },
+      { formatVersion: '3.0.0', document: null, existsFormat: true, result: false },
+      { formatVersion: '999.999.0', document: {}, existsFormat: false, result: false },
+      { formatVersion: '19923.1.0', document: {}, existsFormat: false, result: false },
+      { formatVersion: '2.99.0', document: {}, existsFormat: false, result: false },
     ];
+      
+    it.each(testCases)('format formatVersion recognizes version %p correctly', testCase => {
+      const format = AsyncAPIFormats.find(testCase.formatVersion);
+      expect(format !== undefined).toEqual(testCase.existsFormat);
+      if (format !== undefined) {
+        expect(format(testCase.document, null)).toEqual(testCase.result);
+      }
+    });
+  });
+});
 
-    it.each(testCases)('does not recognize invalid document %o', document => {
-      expect(aas2(document, null)).toBe(false);
+describe('AsyncAPIFormats collection', () => {
+  it('Is a Formats collection', () => {
+    expect(AsyncAPIFormats).toBeInstanceOf(Formats);
+  });
+
+  it('Returns all formats as array', () => {
+    const formats = AsyncAPIFormats.formats();
+    expect(formats).toHaveLength(Object.keys(schemas).length);    
+  });
+
+  it('Finds existing version', () => {
+    expect(AsyncAPIFormats.find('2.0.0') !== undefined).toBeTruthy();
+  });
+
+  it('Finds non-existing version', () => {
+    expect(AsyncAPIFormats.find('9999.9999.99999-rc') === undefined).toBeTruthy();
+  });
+
+  it('Filters by major version', () => {
+    const formats = AsyncAPIFormats;
+    formats.set('999.0.0', (_: unknown): boolean => true);
+
+    const filteredMajorVersion = '2';
+    const previousLenght = AsyncAPIFormats.formats().length;
+    const filteredFormats = AsyncAPIFormats.filterByMajorVersions([filteredMajorVersion]);
+
+    expect(filteredFormats.size).toBeLessThan(previousLenght);
+    filteredFormats.forEach((_, version) => {
+      expect(String(getSemver(version).major)).toEqual(filteredMajorVersion);
     });
   });
 
-  describe('AsyncAPI 2.0', () => {
-    it.each(['2.0.0', '2.0.3'])('recognizes %s version correctly', version => {
-      expect(aas2_0({ asyncapi: version }, null)).toBe(true);
+  it('Excludes by version', () => {
+    const excludedVersions = ['2.0.0', '2.1.0', '2.6.0'];
+    const previousLenght = AsyncAPIFormats.formats().length;
+    const filteredFormats = AsyncAPIFormats.excludeByVersions(excludedVersions);
+
+    expect(filteredFormats.size).toEqual(previousLenght - excludedVersions.length);
+    excludedVersions.forEach((version) => {
+      expect(filteredFormats.find(version)).toBeFalsy();
     });
-
-    it.each(['2', '2.0', '2.1.0', '2.1.3'])('does not recognize %s version', version => {
-      expect(aas2_0({ asyncapi: version }, null)).toBe(false);
-    });
-  });
-
-  describe('AsyncAPI 2.1', () => {
-    it.each(['2.1.0', '2.1.37'])('recognizes %s version correctly', version => {
-      expect(aas2_1({ asyncapi: version }, null)).toBe(true);
-    });
-
-    it.each(['2', '2.1', '2.0.0', '2.2.0', '2.2.3'])('does not recognize %s version', version => {
-      expect(aas2_1({ asyncapi: version }, null)).toBe(false);
-    });
-  });
-
-  describe('AsyncAPI 2.2', () => {
-    it.each(['2.2.0', '2.2.3'])('recognizes %s version correctly', version => {
-      expect(aas2_2({ asyncapi: version }, null)).toBe(true);
-    });
-
-    it.each(['2', '2.2', '2.0.0', '2.1.0', '2.1.37', '2.3.0', '2.3.3'])('does not recognize %s version', version => {
-      expect(aas2_2({ asyncapi: version }, null)).toBe(false);
-    });
-  });
-
-  describe('AsyncAPI 2.3', () => {
-    it.each(['2.3.0', '2.3.3'])('recognizes %s version correctly', version => {
-      expect(aas2_3({ asyncapi: version }, null)).toBe(true);
-    });
-
-    it.each(['2', '2.3', '2.0.0', '2.1.0', '2.1.37', '2.2.0', '2.4.0', '2.4.3'])(
-      'does not recognize %s version',
-      version => {
-        expect(aas2_3({ asyncapi: version }, null)).toBe(false);
-      },
-    );
-  });
-
-  describe('AsyncAPI 2.4', () => {
-    it.each(['2.4.0', '2.4.3'])('recognizes %s version correctly', version => {
-      expect(aas2_4({ asyncapi: version }, null)).toBe(true);
-    });
-
-    it.each(['2', '2.3', '2.0.0', '2.1.0', '2.1.37', '2.2.0', '2.3.0', '2.5.0', '2.5.3'])(
-      'does not recognize %s version',
-      version => {
-        expect(aas2_4({ asyncapi: version }, null)).toBe(false);
-      },
-    );
-  });
-
-  describe('AsyncAPI 2.5', () => {
-    it.each(['2.5.0', '2.5.2'])('recognizes %s version correctly', version => {
-      expect(aas2_5({ asyncapi: version }, null)).toBe(true);
-    });
-
-    it.each(['2', '2.3', '2.0.0', '2.1.0', '2.1.37', '2.2.0', '2.3.0', '2.4.0', '2.4.3', '2.6.0', '2.6.4'])(
-      'does not recognize %s version',
-      version => {
-        expect(aas2_5({ asyncapi: version }, null)).toBe(false);
-      },
-    );
-  });
-
-  describe('AsyncAPI 2.6', () => {
-    it.each(['2.6.0', '2.6.2'])('recognizes %s version correctly', version => {
-      expect(aas2_6({ asyncapi: version }, null)).toBe(true);
-    });
-
-    it.each(['2', '2.3', '2.0.0', '2.1.0', '2.1.37', '2.2.0', '2.3.0', '2.4.0', '2.4.3', '2.5.0', '2.5.3', '2.7.0', '2.7.4'])(
-      'does not recognize %s version',
-      version => {
-        expect(aas2_6({ asyncapi: version }, null)).toBe(false);
-      },
-    );
   });
 });

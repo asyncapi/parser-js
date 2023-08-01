@@ -1,51 +1,57 @@
-/* eslint-disable security/detect-unsafe-regex */
-
-import { isObject } from '../utils';
+import { getSemver, isObject } from '../utils';
+import { schemas } from '@asyncapi/specs';
 
 import type { Format } from '@stoplight/spectral-core';
 import type { MaybeAsyncAPI } from '../types';
 
-const aas2Regex = /^2\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;
-const aas2_0Regex = /^2\.0(?:\.[0-9]*)?$/;
-const aas2_1Regex = /^2\.1(?:\.[0-9]*)?$/;
-const aas2_2Regex = /^2\.2(?:\.[0-9]*)?$/;
-const aas2_3Regex = /^2\.3(?:\.[0-9]*)?$/;
-const aas2_4Regex = /^2\.4(?:\.[0-9]*)?$/;
-const aas2_5Regex = /^2\.5(?:\.[0-9]*)?$/;
-const aas2_6Regex = /^2\.6(?:\.[0-9]*)?$/;
+export class Formats extends Map<string, Format> {
+  filterByMajorVersions(majorsToInclude: string[]): Formats {
+    return new Formats([...this.entries()].filter(element => {return majorsToInclude.includes(element[0].split('.')[0]);}));
+  }
 
-const isAas2 = (document: unknown): document is { asyncapi: string } & Record<string, unknown> =>
-  isObject(document) && 'asyncapi' in document && aas2Regex.test(String((document as MaybeAsyncAPI).asyncapi));
+  excludeByVersions(versionsToExclude: string[]): Formats {
+    return new Formats([...this.entries()].filter(element => {return !versionsToExclude.includes(element[0]);}));
+  }
 
-export const aas2: Format = isAas2;
-aas2.displayName = 'AsyncAPI 2.x';
+  find(version: string): Format | undefined {
+    return this.get(formatVersion(version));
+  }
 
-export const aas2_0: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_0Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_0.displayName = 'AsyncAPI 2.0.x';
+  formats(): Format[] {
+    return [...this.values()];
+  } 
+}
 
-export const aas2_1: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_1Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_1.displayName = 'AsyncAPI 2.1.x';
+export const AsyncAPIFormats = new Formats(Object.entries(schemas).reverse().map(([version]) => [version, createFormat(version)])); // reverse is used for giving newer versions a higher priority when matching
 
-export const aas2_2: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_2Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_2.displayName = 'AsyncAPI 2.2.x';
+function isAsyncAPIVersion(versionToMatch: string, document: unknown): document is { asyncapi: string } & Record<string, unknown> {
+  const asyncAPIDoc = document as MaybeAsyncAPI;
+  if (!asyncAPIDoc) return false;
 
-export const aas2_3: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_3Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_3.displayName = 'AsyncAPI 2.3.x';
+  const documentVersion = String(asyncAPIDoc.asyncapi);
+  return isObject(document) && 'asyncapi' in document 
+    && assertValidAsyncAPIVersion(documentVersion)
+    && versionToMatch === formatVersion(documentVersion);
+}
+  
+function assertValidAsyncAPIVersion(documentVersion: string): boolean {
+  const semver = getSemver(documentVersion);
+  const regexp = new RegExp(`^(${semver.major})\\.(${semver.minor})\\.(0|[1-9][0-9]*)$`); // eslint-disable-line security/detect-non-literal-regexp
+  return regexp.test(documentVersion);
+}
 
-export const aas2_4: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_4Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_4.displayName = 'AsyncAPI 2.4.x';
+function createFormat(version: string): Format {
+  const format: Format = (document: unknown): boolean =>
+    isAsyncAPIVersion(version, document);
+  
+  const semver = getSemver(version);
+  format.displayName = `AsyncAPI ${semver.major}.${semver.minor}.x`;
 
-export const aas2_5: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_5Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_5.displayName = 'AsyncAPI 2.5.x';
+  return format; 
+}
 
-export const aas2_6: Format = (document: unknown): boolean =>
-  isAas2(document) && aas2_6Regex.test(String((document as MaybeAsyncAPI).asyncapi));
-aas2_6.displayName = 'AsyncAPI 2.6.x';
+const formatVersion = function (version: string): string {
+  const versionSemver = getSemver(version);
+  return `${versionSemver.major}.${versionSemver.minor}.0`;
+};
 
-export const aas2All = [aas2_0, aas2_1, aas2_2, aas2_3, aas2_4, aas2_5, aas2_6];

@@ -34,7 +34,7 @@ describe('parse()', function() {
     const { document, diagnostics } = await parser.parse(documentRaw);
     expect(document).toEqual(undefined);
     expect(diagnostics.length > 0).toEqual(true);
-    expect(diagnostics[0].message).toContain('Unsupported AsyncAPI version: 3.0.0');
+    expect(diagnostics[0].message).toContain('Version "3.0.0" is not supported');
   });
 
   it('should parse invalid document', async function() {

@@ -2,6 +2,8 @@ import { schemas } from '@asyncapi/specs';
 import { AsyncAPIFormats, Formats } from '../../src/ruleset/formats';
 import { getSemver } from '../../src/utils';
 
+import type { Format } from '@stoplight/spectral-core';
+
 describe('AsyncAPI format', () => {
   describe('Recognizes versions', () => {
     const testCases = [
@@ -17,9 +19,9 @@ describe('AsyncAPI format', () => {
       { formatVersion: '2.6.5', document: {asyncapi: '2.6.5'}, existsFormat: true, result: true },
       { formatVersion: '2.6.5', document: {asyncapi: '2.0.0'}, existsFormat: true, result: false },
       { formatVersion: '2.0.0', document: {asyncapi: '2.6.5'}, existsFormat: true, result: false },
-      { formatVersion: '3.0.10', document: {asyncapi: '3.0.10'}, existsFormat: true, result: true },
-      { formatVersion: '3.0.0', document: {openapi: '3.0.0'}, existsFormat: true, result: false },
-      { formatVersion: '3.0.0', document: null, existsFormat: true, result: false },
+      { formatVersion: '3.0.10', document: {asyncapi: '3.0.10'}, existsFormat: false, result: false },
+      { formatVersion: '3.0.0', document: {openapi: '3.0.0'}, existsFormat: false, result: false },
+      { formatVersion: '3.0.0', document: null, existsFormat: false, result: false },
       { formatVersion: '999.999.0', document: {}, existsFormat: false, result: false },
       { formatVersion: '19923.1.0', document: {}, existsFormat: false, result: false },
       { formatVersion: '2.99.0', document: {}, existsFormat: false, result: false },
@@ -54,6 +56,9 @@ describe('AsyncAPIFormats collection', () => {
   });
 
   it('Filters by major version', () => {
+    const formats = AsyncAPIFormats;
+    formats.set('999.0.0', (_: unknown): boolean => true);
+
     const filteredMajorVersion = '2';
     const previousLenght = AsyncAPIFormats.formats().length;
     const filteredFormats = AsyncAPIFormats.filterByMajorVersions([filteredMajorVersion]);

@@ -1,4 +1,5 @@
 import { Parser } from '../../src/parser';
+import { AvroSchemaParser } from '@asyncapi/avro-schema-parser'; // allows testing non default schema parsers
 
 // rulesets
 import { coreRuleset, recommendedRuleset } from '../../src/ruleset/ruleset';
@@ -28,6 +29,7 @@ export function testRule(ruleName: RuleNames, tests: Scenario,): void {
     for (const testCase of tests) {
       it(testCase.name, async () => {
         const parser = createParser([ruleName]);
+        parser.registerSchemaParser(AvroSchemaParser());
         const doc = JSON.stringify(testCase.document);
 
         const errors = await parser.validate(doc);

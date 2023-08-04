@@ -51,6 +51,11 @@ export const coreRuleset = {
         function: documentStructure,
         functionOptions: {
           resolved: true,
+          schemaTransformers: {
+            3: (schema: Record<string, unknown>) =>
+              (schema as { definitions: Record<string, any> }).definitions['http://asyncapi.com/definitions/3.0.0/operation.json'].properties.channel.$ref = 'http://asyncapi.com/definitions/3.0.0/channel.json'
+            
+          },
         },
       },
     },

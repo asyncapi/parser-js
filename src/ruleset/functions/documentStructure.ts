@@ -5,8 +5,10 @@ import { schema as schemaFn } from '@stoplight/spectral-functions';
 import type { ErrorObject } from 'ajv';
 import type { IFunctionResult, Format } from '@stoplight/spectral-core';
 import { AsyncAPIFormats } from '../formats';
+import { getSemver } from '../../utils';
 
 type AsyncAPIVersions = keyof typeof specs.schemas;
+type RawSchema = Record<string, unknown>;
 
 function shouldIgnoreError(error: ErrorObject): boolean {
   return (
@@ -45,24 +47,33 @@ function prepareResults(errors: ErrorObject[]): void {
   }
 }
 
-function getCopyOfSchema(version: AsyncAPIVersions): Record<string, unknown> {
-  return JSON.parse(JSON.stringify(specs.schemas[version])) as Record<string, unknown>;
+function getCopyOfSchema(version: AsyncAPIVersions): RawSchema {
+  return JSON.parse(JSON.stringify(specs.schemas[version])) as RawSchema;
 }
 
-const serializedSchemas = new Map<AsyncAPIVersions, Record<string, unknown>>();
-function getSerializedSchema(version: AsyncAPIVersions): Record<string, unknown> {
-  const schema = serializedSchemas.get(version);
+const serializedSchemas = new Map<AsyncAPIVersions, RawSchema>();
+function getSerializedSchema(version: AsyncAPIVersions, options: options): RawSchema {
+  const serializedSchemaKey = options.resolved ? `${version}-resolved` : `${version}-unresolved`;
+  const schema = serializedSchemas.get(serializedSchemaKey as AsyncAPIVersions);
   if (schema) {
     return schema;
   }
 
   // Copy to not operate on the original json schema - between imports (in different modules) we operate on this same schema.
-  const copied = getCopyOfSchema(version) as { definitions: Record<string, unknown> };
+  const copied = getCopyOfSchema(version) as { definitions: RawSchema };
   // Remove the meta schemas because they are already present within Ajv, and it's not possible to add duplicated schemas.
   delete copied.definitions['http://json-schema.org/draft-07/schema'];
   delete copied.definitions['http://json-schema.org/draft-04/schema'];
 
-  serializedSchemas.set(version, copied);
+  if (options.schemaTransformers) {
+    const majorVersion = getSemver(version).major;
+    const transformer = options.schemaTransformers[version] || options.schemaTransformers[majorVersion] || options.schemaTransformers[String(majorVersion)];
+    if (transformer) {
+      transformer(copied);
+    }
+  }
+
+  serializedSchemas.set(serializedSchemaKey as AsyncAPIVersions, copied);
   return copied;
 }
 
@@ -79,16 +90,19 @@ function filterRefErrors(errors: IFunctionResult[], resolved: boolean) {
       return err;
     });
 }
+type SchemaTransformers = Record<string, (schema: RawSchema) => void>
 
-export function getSchema(docFormats: Set<Format>): Record<string, any> | void {
+export function getSchema(docFormats: Set<Format>, options: options): Record<string, any> | void {
   for (const [version, format] of AsyncAPIFormats) {
     if (docFormats.has(format)) {
-      return getSerializedSchema(version as AsyncAPIVersions);
+      return getSerializedSchema(version as AsyncAPIVersions, options);
     }
   }
 }
 
-export const documentStructure = createRulesetFunction<unknown, { resolved: boolean }>(
+type options = { resolved: boolean, schemaTransformers: SchemaTransformers};
+
+export const documentStructure = createRulesetFunction<unknown, options>(
   {
     input: null,
     options: {
@@ -107,7 +121,7 @@ export const documentStructure = createRulesetFunction<unknown, { resolved: bool
       return;
     }
 
-    const schema = getSchema(formats);
+    const schema = getSchema(formats, options);
     if (!schema) {
       return;
     }

@@ -56,11 +56,11 @@ describe('custom operations - apply traits v3', function() {
 
     const someOperation1 = v3Document?.json()?.operations?.someOperation1;
     delete someOperation1?.traits;
-    expect(someOperation1).toEqual({ description: 'another description' });
+    expect(someOperation1).toEqual({ action: 'send', channel: {}, description: 'another description' });
 
     const someOperation2 = v3Document?.json()?.operations?.someOperation2;
     delete someOperation2?.traits;
-    expect(someOperation2).toEqual({ description: 'root description' });
+    expect(someOperation2).toEqual({ action: 'send', channel: {}, description: 'root description' });
   });
 
   it('should apply traits to messages (channels)', async function() {

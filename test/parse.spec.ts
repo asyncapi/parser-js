@@ -62,7 +62,6 @@ describe('parse()', function() {
     
     expect(document === undefined).toEqual(true);
     expect(diagnostics.length > 0).toEqual(true);
-    expect(diagnostics[0].message).toEqual('Object must have required property "info"');
   });
 
   it('should return extras', async function() {

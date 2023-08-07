@@ -1,5 +1,3 @@
-
-import { lastVersion } from '../constants';
 import { truthy, schema } from '@stoplight/spectral-functions';
 
 import { documentStructure } from './functions/documentStructure';
@@ -7,6 +5,7 @@ import { internal } from './functions/internal';
 import { isAsyncAPIDocument } from './functions/isAsyncAPIDocument';
 import { unusedComponent } from './functions/unusedComponent';
 import { AsyncAPIFormats } from './formats';
+import { lastVersion } from '../constants';
 
 export const coreRuleset = {
   description: 'Core AsyncAPI x.x.x ruleset.',
@@ -51,11 +50,6 @@ export const coreRuleset = {
         function: documentStructure,
         functionOptions: {
           resolved: true,
-          schemaTransformers: {
-            3: (schema: Record<string, unknown>) =>
-              (schema as { definitions: Record<string, any> }).definitions['http://asyncapi.com/definitions/3.0.0/operation.json'].properties.channel.$ref = 'http://asyncapi.com/definitions/3.0.0/channel.json'
-            
-          },
         },
       },
     },

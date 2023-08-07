@@ -72,8 +72,8 @@ describe('custom operations - apply traits v3', function() {
       },
       channels: {
         someChannel1: {
-          messages: [
-            {
+          messages: {
+            someMessage: {
               traits: [
                 {
                   messageId: 'traitMessageId',
@@ -84,11 +84,11 @@ describe('custom operations - apply traits v3', function() {
                 }
               ]
             }
-          ]
+          }
         },
         someChannel2: {
-          messages: [
-            {
+          messages: {
+            someMessage: {
               messageId: 'rootMessageId',
               description: 'root description',
               traits: [
@@ -101,20 +101,20 @@ describe('custom operations - apply traits v3', function() {
                 }
               ]
             }
-          ]
+          }
         }
       }
     };
-    const { document } = await parser.parse(documentRaw);
+    const { diagnostics, document } = await parser.parse(documentRaw);
     
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
 
-    const message1 = v3Document?.json()?.channels?.someChannel1?.messages?.[0];
+    const message1 = v3Document?.json()?.channels?.someChannel1?.messages?.someMessage;
     delete (message1 as v3.MessageObject)?.traits;
     expect(message1).toEqual({ messageId: 'traitMessageId', description: 'another description', 'x-parser-message-name': 'traitMessageId' });
 
-    const message2 = v3Document?.json()?.channels?.someChannel2?.messages?.[0];
+    const message2 = v3Document?.json()?.channels?.someChannel2?.messages?.someMessage;
     delete (message2 as v3.MessageObject)?.traits;
     expect(message2).toEqual({ messageId: 'rootMessageId', description: 'root description', 'x-parser-message-name': 'rootMessageId' });
   });

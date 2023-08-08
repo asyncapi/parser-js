@@ -50,6 +50,8 @@ function prepareResults(errors: ErrorObject[]): void {
   }
 }
 
+// this is needed because some v3 object fields are expected to be only `$ref` to other objects. 
+// In order to validate resolved references, we modify those schemas and instead allow the definition of the object
 function prepareV3ResolvedSchema(copied: any): any {
   // channel object
   const channelObject = copied.definitions['http://asyncapi.com/definitions/3.0.0/channel.json'];

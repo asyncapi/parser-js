@@ -79,15 +79,4 @@ describe('AsyncAPIFormats collection', () => {
       expect(filteredFormats.find(version)).toBeFalsy();
     });
   });
-
-  it('Excludes by major version', () => {
-    const excludedMajorVersions = ['3'];
-    const previousLenght = AsyncAPIFormats.formats().length;
-    const filteredFormats = AsyncAPIFormats.excludeByMajorVersions(excludedMajorVersions);
-
-    expect(filteredFormats.size).toEqual(previousLenght - excludedMajorVersions.length);
-    filteredFormats.forEach((_, version) => {
-      expect(excludedMajorVersions).not.toContain(String(getSemver(version).major));
-    });
-  });
 });

@@ -9,10 +9,6 @@ export class Formats extends Map<string, Format> {
     return new Formats([...this.entries()].filter(element => {return majorsToInclude.includes(element[0].split('.')[0]);}));
   }
 
-  excludeByMajorVersions(versionsToExclude: string[]): Formats {
-    return new Formats([...this.entries()].filter(element => {return !versionsToExclude.includes(element[0].split('.')[0]);}));
-  }
-
   excludeByVersions(versionsToExclude: string[]): Formats {
     return new Formats([...this.entries()].filter(element => {return !versionsToExclude.includes(element[0]);}));
   }

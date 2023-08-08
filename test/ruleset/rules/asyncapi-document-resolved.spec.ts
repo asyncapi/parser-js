@@ -32,7 +32,7 @@ testRule('asyncapi-document-resolved', [
   },
 
   {
-    name: 'valid case for 2.X.X (case when other $ref errors should also occur but we filter them out)',
+    name: 'valid case for 2.X.X (case validating $ref resolution works as expected)',
     document: {
       asyncapi: '2.0.0',
       info: {
@@ -367,7 +367,7 @@ testRule('asyncapi-document-resolved', [
   },
 
   {
-    name: 'valid case for 3.X.X (case when other $ref errors should also occur but we filter them out)',
+    name: 'valid case for 3.X.X (case validating $ref resolution works as expected)',
     document: {
       asyncapi: '3.0.0',
       info: {

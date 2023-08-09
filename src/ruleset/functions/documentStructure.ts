@@ -1,12 +1,17 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+
 import specs from '@asyncapi/specs';
 import { createRulesetFunction } from '@stoplight/spectral-core';
 import { schema as schemaFn } from '@stoplight/spectral-functions';
 
+import { AsyncAPIFormats } from '../formats';
+import { getSemver } from '../../utils';
+
 import type { ErrorObject } from 'ajv';
 import type { IFunctionResult, Format } from '@stoplight/spectral-core';
-import { AsyncAPIFormats } from '../formats';
 
 type AsyncAPIVersions = keyof typeof specs.schemas;
+type RawSchema = Record<string, unknown>;
 
 function shouldIgnoreError(error: ErrorObject): boolean {
   return (
@@ -45,24 +50,52 @@ function prepareResults(errors: ErrorObject[]): void {
   }
 }
 
-function getCopyOfSchema(version: AsyncAPIVersions): Record<string, unknown> {
-  return JSON.parse(JSON.stringify(specs.schemas[version])) as Record<string, unknown>;
+// this is needed because some v3 object fields are expected to be only `$ref` to other objects. 
+// In order to validate resolved references, we modify those schemas and instead allow the definition of the object
+function prepareV3ResolvedSchema(copied: any): any {
+  // channel object
+  const channelObject = copied.definitions['http://asyncapi.com/definitions/3.0.0/channel.json'];
+  channelObject.properties.servers.items.$ref = 'http://asyncapi.com/definitions/3.0.0/server.json';
+
+  // operation object
+  const operationSchema = copied.definitions['http://asyncapi.com/definitions/3.0.0/operation.json'];
+  operationSchema.properties.channel.$ref = 'http://asyncapi.com/definitions/3.0.0/channel.json';
+  operationSchema.properties.messages.items.$ref = 'http://asyncapi.com/definitions/3.0.0/messageObject.json';
+
+  // operation reply object
+  const operationReplySchema = copied.definitions['http://asyncapi.com/definitions/3.0.0/operationReply.json'];
+  operationReplySchema.properties.channel.$ref = 'http://asyncapi.com/definitions/3.0.0/channel.json';
+  operationReplySchema.properties.messages.items.$ref = 'http://asyncapi.com/definitions/3.0.0/messageObject.json';
+
+  return copied;
 }
 
-const serializedSchemas = new Map<AsyncAPIVersions, Record<string, unknown>>();
-function getSerializedSchema(version: AsyncAPIVersions): Record<string, unknown> {
-  const schema = serializedSchemas.get(version);
+function getCopyOfSchema(version: AsyncAPIVersions): RawSchema {
+  return JSON.parse(JSON.stringify(specs.schemas[version])) as RawSchema;
+}
+
+const serializedSchemas = new Map<AsyncAPIVersions, RawSchema>();
+function getSerializedSchema(version: AsyncAPIVersions, resolved: boolean): RawSchema {
+  const serializedSchemaKey = resolved ? `${version}-resolved` : `${version}-unresolved`;
+  const schema = serializedSchemas.get(serializedSchemaKey as AsyncAPIVersions);
   if (schema) {
     return schema;
   }
 
   // Copy to not operate on the original json schema - between imports (in different modules) we operate on this same schema.
-  const copied = getCopyOfSchema(version) as { definitions: Record<string, unknown> };
+  let copied = getCopyOfSchema(version) as { '$id': string, definitions: RawSchema };
   // Remove the meta schemas because they are already present within Ajv, and it's not possible to add duplicated schemas.
   delete copied.definitions['http://json-schema.org/draft-07/schema'];
   delete copied.definitions['http://json-schema.org/draft-04/schema'];
+  // Spectral caches the schemas using '$id' property
+  copied['$id'] = copied['$id'].replace('asyncapi.json', `asyncapi-${resolved ? 'resolved' : 'unresolved'}.json`);
 
-  serializedSchemas.set(version, copied);
+  const { major } = getSemver(version);
+  if (resolved && major === 3) {
+    copied = prepareV3ResolvedSchema(copied);
+  }
+
+  serializedSchemas.set(serializedSchemaKey as AsyncAPIVersions, copied);
   return copied;
 }
 
@@ -80,10 +113,10 @@ function filterRefErrors(errors: IFunctionResult[], resolved: boolean) {
     });
 }
 
-export function getSchema(docFormats: Set<Format>): Record<string, any> | void {
+export function getSchema(docFormats: Set<Format>, resolved: boolean): Record<string, any> | void {
   for (const [version, format] of AsyncAPIFormats) {
     if (docFormats.has(format)) {
-      return getSerializedSchema(version as AsyncAPIVersions);
+      return getSerializedSchema(version as AsyncAPIVersions, resolved);
     }
   }
 }
@@ -107,16 +140,17 @@ export const documentStructure = createRulesetFunction<unknown, { resolved: bool
       return;
     }
 
-    const schema = getSchema(formats);
+    const resolved = options.resolved;
+    const schema = getSchema(formats, resolved);
     if (!schema) {
       return;
     }
 
-    const errors = schemaFn(targetVal, { allErrors: true, schema, prepareResults: options.resolved ? prepareResults : undefined }, context);
+    const errors = schemaFn(targetVal, { allErrors: true, schema, prepareResults: resolved ? prepareResults : undefined }, context);
     if (!Array.isArray(errors)) {
       return;
     }
 
-    return filterRefErrors(errors, options.resolved);
+    return filterRefErrors(errors, resolved);
   },
 );

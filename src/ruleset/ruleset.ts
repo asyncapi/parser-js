@@ -1,5 +1,3 @@
-
-import { lastVersion } from '../constants';
 import { truthy, schema } from '@stoplight/spectral-functions';
 
 import { documentStructure } from './functions/documentStructure';
@@ -7,10 +5,11 @@ import { internal } from './functions/internal';
 import { isAsyncAPIDocument } from './functions/isAsyncAPIDocument';
 import { unusedComponent } from './functions/unusedComponent';
 import { AsyncAPIFormats } from './formats';
+import { lastVersion } from '../constants';
 
 export const coreRuleset = {
   description: 'Core AsyncAPI x.x.x ruleset.',
-  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
+  formats: AsyncAPIFormats.formats(),
   rules: {
     /**
      * Root Object rules
@@ -81,7 +80,7 @@ export const coreRuleset = {
 
 export const recommendedRuleset = {
   description: 'Recommended AsyncAPI x.x.x ruleset.',
-  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Validation for AsyncAPI v3 is still WIP.
+  formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(), // Recommended validation for AsyncAPI v3 is still WIP.
   rules: {
     /**
      * Root Object rules

@@ -13,8 +13,15 @@ describe('custom operations - apply traits v3', function() {
         title: 'Valid AsyncApi document',
         version: '1.0',
       },
+      channels: {
+        channel1: {}
+      },
       operations: {
         someOperation1: {
+          action: 'send',
+          channel: {
+            $ref: '#/channels/channel1'
+          },
           traits: [
             {
               description: 'some description' 
@@ -25,6 +32,10 @@ describe('custom operations - apply traits v3', function() {
           ]
         },
         someOperation2: {
+          action: 'send',
+          channel: {
+            $ref: '#/channels/channel1'
+          },
           description: 'root description',
           traits: [
             {
@@ -38,16 +49,18 @@ describe('custom operations - apply traits v3', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
+    expect(diagnostics).toHaveLength(0);
+    
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
 
     const someOperation1 = v3Document?.json()?.operations?.someOperation1;
     delete someOperation1?.traits;
-    expect(someOperation1).toEqual({ description: 'another description' });
+    expect(someOperation1).toEqual({ action: 'send', channel: {}, description: 'another description' });
 
     const someOperation2 = v3Document?.json()?.operations?.someOperation2;
     delete someOperation2?.traits;
-    expect(someOperation2).toEqual({ description: 'root description' });
+    expect(someOperation2).toEqual({ action: 'send', channel: {}, description: 'root description' });
   });
 
   it('should apply traits to messages (channels)', async function() {
@@ -59,8 +72,8 @@ describe('custom operations - apply traits v3', function() {
       },
       channels: {
         someChannel1: {
-          messages: [
-            {
+          messages: {
+            someMessage: {
               traits: [
                 {
                   messageId: 'traitMessageId',
@@ -71,11 +84,11 @@ describe('custom operations - apply traits v3', function() {
                 }
               ]
             }
-          ]
+          }
         },
         someChannel2: {
-          messages: [
-            {
+          messages: {
+            someMessage: {
               messageId: 'rootMessageId',
               description: 'root description',
               traits: [
@@ -88,20 +101,20 @@ describe('custom operations - apply traits v3', function() {
                 }
               ]
             }
-          ]
+          }
         }
       }
     };
-    const { document } = await parser.parse(documentRaw);
+    const { diagnostics, document } = await parser.parse(documentRaw);
     
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
 
-    const message1 = v3Document?.json()?.channels?.someChannel1?.messages?.[0];
+    const message1 = v3Document?.json()?.channels?.someChannel1?.messages?.someMessage;
     delete (message1 as v3.MessageObject)?.traits;
     expect(message1).toEqual({ messageId: 'traitMessageId', description: 'another description', 'x-parser-message-name': 'traitMessageId' });
 
-    const message2 = v3Document?.json()?.channels?.someChannel2?.messages?.[0];
+    const message2 = v3Document?.json()?.channels?.someChannel2?.messages?.someMessage;
     delete (message2 as v3.MessageObject)?.traits;
     expect(message2).toEqual({ messageId: 'rootMessageId', description: 'root description', 'x-parser-message-name': 'rootMessageId' });
   });

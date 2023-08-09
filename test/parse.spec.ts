@@ -60,8 +60,8 @@ describe('parse()', function() {
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
     
-    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true); // Validation in v3 is still not enabled. This test will intentionally fail once that changes.
+    expect(document === undefined).toEqual(true);
+    expect(diagnostics.length > 0).toEqual(true);
   });
 
   it('should return extras', async function() {

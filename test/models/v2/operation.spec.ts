@@ -179,6 +179,14 @@ describe('Operation model', function() {
     });
   });
 
+  describe('.reply()', function() {
+    it('should return always undefined as it is not a feature part of v2', function() {
+      const doc = { reply: {} };
+      const d = new Operation(doc);
+      expect(d.reply()).toBeUndefined();
+    });
+  });
+
   describe('.traits()', function() {
     it('should return collection of traits', function() {
       const doc = { traits: [{ operationId: '...' }] };

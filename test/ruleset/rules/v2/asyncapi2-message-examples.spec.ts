@@ -350,7 +350,7 @@ testRule('asyncapi2-message-examples', [
                   payload: {
                     direction: 'North',
                     speed: '18'
-                  }
+                  },
                 },
               ],
             },
@@ -362,7 +362,7 @@ testRule('asyncapi2-message-examples', [
   },
 
   {
-    name: 'invalid avro spec case',
+    name: 'invalid example from avro spec case',
     document: {
       asyncapi: '2.0.0',
       channels: {
@@ -383,7 +383,7 @@ testRule('asyncapi2-message-examples', [
                   payload: {
                     direction: 'South-West',
                     speed: '18'
-                  }
+                  },
                 },
               ],
             },
@@ -391,6 +391,7 @@ testRule('asyncapi2-message-examples', [
         },
       },
     },
+    // no errors as this rule is just checking examples where schemaFormat is set
     errors: [],
   },
 
@@ -447,7 +448,8 @@ testRule('asyncapi2-message-examples', [
                   },
                   examples: [
                     {
-                      payload: {}
+                      // no error for this as this rule is just checking examples where schemaFormat is not set
+                      payload: {foo: 1}
                     },
                   ],
                 },

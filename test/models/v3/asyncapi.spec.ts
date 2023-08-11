@@ -4,6 +4,7 @@ import { Components } from '../../../src/models/v3/components';
 import { Info } from '../../../src/models/v3/info';
 import { Messages } from '../../../src/models/v3/messages';
 import { Operations } from '../../../src/models/v3/operations';
+import { Schemas } from '../../../src/models/v3/schemas';
 import { SecuritySchemes } from '../../../src/models/v3/security-schemes';
 import { Servers } from '../../../src/models/v3/servers';
 
@@ -127,7 +128,25 @@ describe('AsyncAPIDocument model', function() {
   });
 
   describe('.schemas()', function() {
-    it.todo('should return a collection of schemas');
+    it('should return a collection of schemas', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: { payload: {}}, someMessage2: { payload: {} } } }, userLogout: { address: 'user/logout', messages: { someMessage3WithoutPayload: {} } } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.schemas()).toBeInstanceOf(Schemas);
+      expect(d.schemas()).toHaveLength(2);
+    });
+
+    it('should return only an "used" schemas (without schemas from components)', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: { payload: {}}, someMessage2: { payload: {} } } } }, components: { schemas: { schemaOne: {}, schemaTwo: {} } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.schemas()).toBeInstanceOf(Schemas);
+      expect(d.schemas()).toHaveLength(2);
+    });
+
+    it('should return a collection of schemas even if collection is empty', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.schemas()).toBeInstanceOf(Schemas);
+    });
   });
 
   describe('.securitySchemes()', function() {

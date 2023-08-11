@@ -90,7 +90,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   schemas() {
-    return null as any;
+    return this.__schemas(false);
   }
 
   securitySchemes(): SecuritySchemesInterface {

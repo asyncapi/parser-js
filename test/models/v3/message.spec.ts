@@ -10,7 +10,6 @@ import { Operations } from '../../../src/models/v3/operations';
 import { Operation } from '../../../src/models/v3/operation';
 
 import { assertCoreModel } from './utils';
-import { ChannelsV3 } from '../../../src/models';
 
 describe('Message model', function() {
   describe('.id()', function() {

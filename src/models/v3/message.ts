@@ -1,3 +1,4 @@
+import { Channel } from './channel';
 import { Channels } from './channels';
 import { Operations } from './operations';
 import { Operation } from './operation';
@@ -58,16 +59,26 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
 
   channels(): ChannelsInterface {
     const channels: ChannelInterface[] = [];
-    const channelData: any[] = [];
+    const channelsData: any[] = [];
     this.operations().forEach(operation => {
       operation.channels().forEach(channel => {
-        const channelsData = channel.json();
-        if (!channelData.includes(channelsData)) {
-          channelData.push(channelsData);
+        const channelData = channel.json();
+        // Comparing with the data (JSON) because same channel could exist but it will include the ID based on where it is declared. For example, asyncapi.channels contain ID field.
+        if (!channelsData.includes(channelData)) {
+          channelsData.push(channelData);
           channels.push(channel);
         }
       });
     });
+
+    Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.channels || {}).forEach(([channelId, channelData]) => {
+      const channelModel = this.createModel(Channel, channelData as v3.ChannelObject, { id: channelId, pointer: `/channels/${channelId}` });
+      if (!channelsData.includes(channelData) && channelModel.messages().some(m => m.json() === this._json)) {
+        channelsData.push(channelData);
+        channels.push(channelModel);
+      }
+    });
+
     return new Channels(channels);
   }
 

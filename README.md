@@ -214,9 +214,10 @@ Parser-JS API implements a global API definition for all AsyncAPI parser impleme
 
 The following table shows a compatibility matrix between this parser, and the [Parser-API](https://github.com/asyncapi/parser-api), as well as the AsyncAPI spec version supported by each release of this parser.
 
-| Parser-JS | Parser-API                                                           | Spec 2.x |
-|-----------|----------------------------------------------------------------------|----------|
-| 2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/master/docs/v1.md) | ✓        |
+| Parser-JS | Parser-API                                                            | Spec 2.x | Spec 3.x |
+|-----------|-----------------------------------------------------------------------|----------|----------|
+| 2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/v1.0.0/docs/v1.md)  | ✓        |          |
+| 3.x       | [2.x](https://github.com/asyncapi/parser-api/blob/v2.0.0/docs/api.md) | ✓        | ✓        |
 
 - `✓` Fully supported version.
 - `-` The AsyncAPI Spec version has features the Parser-JS can't use but the rest are fully supported.

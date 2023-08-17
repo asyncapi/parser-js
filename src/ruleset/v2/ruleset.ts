@@ -7,6 +7,7 @@ import { channelParameters } from './functions/channelParameters';
 import { channelServers } from './functions/channelServers';
 import { checkId } from './functions/checkId';
 import { messageExamples } from './functions/messageExamples';
+import { asyncApi2MessageExamplesParserRule } from './functions/messageExamples-spectral-rule-v2';
 import { messageIdUniqueness } from './functions/messageIdUniqueness';
 import { operationIdUniqueness } from './functions/operationIdUniqueness';
 import { schemaValidation } from './functions/schemaValidation';
@@ -122,9 +123,9 @@ export const v2CoreRuleset = {
       recommended: true,
       given: [
         // messages
-        '$.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)]',
         '$.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
-        '$.components.channels.*.[publish,subscribe].[?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)]',
         '$.components.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
         '$.components.messages[?(!@null && @.schemaFormat === void 0)]',
         // message traits
@@ -237,6 +238,7 @@ export const v2SchemasRuleset = (parser: Parser) => {
           },
         },
       },
+      'asyncapi2-message-examples-custom-format': asyncApi2MessageExamplesParserRule(parser),
     }
   };
 };

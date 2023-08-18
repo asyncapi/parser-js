@@ -11,6 +11,9 @@ import type { ServersInterface } from './servers';
 
 import type { v2, v3 } from '../spec-types';
 
+// https://github.com/asyncapi/parser-api/releases/tag/v2.0.0
+export const ParserAPIVersion = '2.0.0';
+
 export interface AsyncAPIDocumentInterface extends BaseModel<v2.AsyncAPIObject | v3.AsyncAPIObject>, ExtensionsMixinInterface {
   version(): string;
   defaultContentType(): string | undefined;

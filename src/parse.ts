@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentInterface } from './models';
+import { AsyncAPIDocumentInterface, ParserAPIVersion } from './models';
 
 import { customOperations } from './custom-operations';
 import { validate } from './validate';
@@ -61,7 +61,7 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
-    setExtension(xParserApiVersion, 1, document);
+    setExtension(xParserApiVersion, ParserAPIVersion, document);
     await customOperations(parser, document, detailed, inventory, options);
   
     return { 

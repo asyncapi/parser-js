@@ -1,6 +1,6 @@
 ---
 branches:
-- master
+- main
 # by default release workflow reacts on push not only to master. 
 #This is why out of the box sematic release is configured for all these branches
 - name: next-spec

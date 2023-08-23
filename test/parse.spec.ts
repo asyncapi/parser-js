@@ -1,6 +1,6 @@
 import { Document } from '@stoplight/spectral-core';
 
-import { AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from '../src/models';
+import { AsyncAPIDocumentV2, AsyncAPIDocumentV3, ParserAPIVersion } from '../src/models';
 import { Parser } from '../src/parser';
 import { xParserApiVersion } from '../src/constants';
 
@@ -92,7 +92,7 @@ describe('parse()', function() {
     const { document } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
-    expect(document?.extensions().get(xParserApiVersion)?.value()).toEqual(1);
+    expect(document?.extensions().get(xParserApiVersion)?.value()).toEqual(ParserAPIVersion);
   });
 
   it('should preserve references', async function() {

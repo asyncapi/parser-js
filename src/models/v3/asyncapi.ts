@@ -106,7 +106,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allServers(): ServersInterface {
-    const servers: ServerInterface[] = this.servers();
+    const servers: ServerInterface[] = this.servers().all();
     this.components().servers().forEach(server => 
       !servers.some(s => s.json() === server.json()) && servers.push(server)
     );
@@ -114,7 +114,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allChannels(): ChannelsInterface {
-    const channels: ChannelInterface[] = this.channels();
+    const channels: ChannelInterface[] = this.channels().all();
     this.components().channels().forEach(channel => 
       !channels.some(c => c.json() === channel.json()) && channels.push(channel)
     );

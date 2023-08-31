@@ -128,10 +128,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allMessages(): MessagesInterface {
-    const messages: MessageInterface[] = [];
-    this.allOperations().forEach(operation => operation.messages().forEach(message => (
-      !messages.some(m => m.json() === message.json()) && messages.push(message)
-    )));
+    const messages: MessageInterface[] = this.messages().all();
     this.components().messages().forEach(message => (
       !messages.some(m => m.json() === message.json()) && messages.push(message)
     ));

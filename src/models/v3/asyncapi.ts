@@ -122,8 +122,10 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allOperations(): OperationsInterface {
-    const operations: OperationInterface[] = [];
-    this.allChannels().forEach(channel => operations.push(...channel.operations()));
+    const operations: OperationInterface[] = this.operations().all();
+    this.components().operations().forEach(operation => 
+      !operations.some(o => o.json() === operation.json()) && operations.push(operation)
+    );
     return new Operations(operations);
   }
 

@@ -7,6 +7,7 @@ import { Operations } from '../../../src/models/v2/operations';
 import { Schemas } from '../../../src/models/v2/schemas';
 import { SecuritySchemes } from '../../../src/models/v2/security-schemes';
 import { Servers } from '../../../src/models/v2/servers';
+import { Collection } from '../../../src/models';
 
 import { serializeInput, assertExtensions } from './utils';
 
@@ -189,6 +190,8 @@ describe('AsyncAPIDocument model', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({ servers: { development: {} } });
       const d = new AsyncAPIDocument(doc);
       expect(d.allServers()).toBeInstanceOf(Servers);
+      expect(d.allServers().all()).toBeInstanceOf(Array);
+      expect(d.allServers().all()).not.toBeInstanceOf(Collection);
       expect(d.allServers()).toHaveLength(1);
       expect(d.allServers().all()[0].id()).toEqual('development');
     });
@@ -212,6 +215,8 @@ describe('AsyncAPIDocument model', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': {} } });
       const d = new AsyncAPIDocument(doc);
       expect(d.allChannels()).toBeInstanceOf(Channels);
+      expect(d.allChannels().all()).not.toBeInstanceOf(Collection);
+      expect(d.allChannels().all()).toBeInstanceOf(Array);
       expect(d.allChannels()).toHaveLength(1);
       expect(d.allChannels().all()[0].address()).toEqual('user/signup');
     });
@@ -235,6 +240,8 @@ describe('AsyncAPIDocument model', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': { publish: {}, subscribe: {} }, 'user/logout': { publish: {} } } });
       const d = new AsyncAPIDocument(doc);
       expect(d.allOperations()).toBeInstanceOf(Operations);
+      expect(d.allOperations().all()).toBeInstanceOf(Array);
+      expect(d.allOperations().all()).not.toBeInstanceOf(Collection);
       expect(d.allOperations()).toHaveLength(3);
     });
 
@@ -257,6 +264,8 @@ describe('AsyncAPIDocument model', function() {
     it('should return a collection of messages', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': { publish: { message: {} }, subscribe: { message: { oneOf: [{}, {}] } } }, 'user/logout': { publish: { message: {} } } } });
       const d = new AsyncAPIDocument(doc);
+      expect(d.allMessages().all()).toBeInstanceOf(Array);
+      expect(d.allMessages().all()).not.toBeInstanceOf(Collection);
       expect(d.allMessages()).toBeInstanceOf(Messages);
       expect(d.allMessages()).toHaveLength(4);
     });
@@ -282,6 +291,8 @@ describe('AsyncAPIDocument model', function() {
       const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': { publish: { message: { payload: {} } }, subscribe: { message: { oneOf: [{ payload: {} }, {}, { payload: {} }] } } }, 'user/logout': { publish: { message: { payload: {} } } } } });
       const d = new AsyncAPIDocument(doc);
       expect(d.allSchemas()).toBeInstanceOf(Schemas);
+      expect(d.allSchemas().all()).toBeInstanceOf(Array);
+      expect(d.allSchemas().all()).not.toBeInstanceOf(Collection);
       expect(d.allSchemas()).toHaveLength(4);
     });
 

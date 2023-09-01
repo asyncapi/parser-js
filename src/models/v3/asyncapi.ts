@@ -106,7 +106,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allServers(): ServersInterface {
-    const servers: ServerInterface[] = this.servers();
+    const servers: ServerInterface[] = this.servers().all();
     this.components().servers().forEach(server => 
       !servers.some(s => s.json() === server.json()) && servers.push(server)
     );
@@ -114,7 +114,7 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allChannels(): ChannelsInterface {
-    const channels: ChannelInterface[] = this.channels();
+    const channels: ChannelInterface[] = this.channels().all();
     this.components().channels().forEach(channel => 
       !channels.some(c => c.json() === channel.json()) && channels.push(channel)
     );
@@ -122,16 +122,15 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allOperations(): OperationsInterface {
-    const operations: OperationInterface[] = [];
-    this.allChannels().forEach(channel => operations.push(...channel.operations()));
+    const operations: OperationInterface[] = this.operations().all();
+    this.components().operations().forEach(operation => 
+      !operations.some(o => o.json() === operation.json()) && operations.push(operation)
+    );
     return new Operations(operations);
   }
 
   allMessages(): MessagesInterface {
-    const messages: MessageInterface[] = [];
-    this.allOperations().forEach(operation => operation.messages().forEach(message => (
-      !messages.some(m => m.json() === message.json()) && messages.push(message)
-    )));
+    const messages: MessageInterface[] = this.messages().all();
     this.components().messages().forEach(message => (
       !messages.some(m => m.json() === message.json()) && messages.push(message)
     ));

@@ -11,6 +11,7 @@ import { Servers } from '../../../src/models/v3/servers';
 import { serializeInput, assertExtensions } from './utils';
 
 import type { v3 } from '../../../src/spec-types';
+import { Collection } from '../../../src/models';
 
 describe('AsyncAPIDocument model', function() {
   describe('.version()', function() {
@@ -164,6 +165,130 @@ describe('AsyncAPIDocument model', function() {
     });
   });
 
+  describe('.allMessages()', function() {
+    it('should return a collection of messages', function() {
+      const duplicatedMessage = {};
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: {}, someMessage2: duplicatedMessage } }, userLogout: { address: 'user/logout', messages: { someMessage3: duplicatedMessage } } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allMessages().all()).toBeInstanceOf(Array);
+      expect(d.allMessages().all()).not.toBeInstanceOf(Collection);
+      expect(d.allMessages()).toBeInstanceOf(Messages);
+      expect(d.allMessages()).toHaveLength(2);
+    });
+
+    it('should return all messages (with messages from components)', function() {
+      const duplicatedMessage = {};
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: {}, someMessage2: duplicatedMessage } }, userLogout: { address: 'user/logout', messages: { someMessage3: duplicatedMessage } } }, components: { messages: { someMessage4: {}, someMessage5: {} } }});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allMessages()).toBeInstanceOf(Messages);
+      expect(d.allMessages()).toHaveLength(4);
+    });
+
+    it('should return a collection of messages even if messages are not defined', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allMessages()).toBeInstanceOf(Messages);
+    });
+  });
+
+  describe('.allSchemas()', function() {
+    it('should return a collection of schemas', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: { payload: {}}, someMessage2: { payload: {} } } }, userLogout: { address: 'user/logout', messages: { someMessage3WithoutPayload: {} } } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allSchemas()).toBeInstanceOf(Schemas);
+      expect(d.allSchemas().all()).toBeInstanceOf(Array);
+      expect(d.allSchemas().all()).not.toBeInstanceOf(Collection);
+      expect(d.allSchemas()).toHaveLength(2);
+    });
+
+    it('should return all schemas (with schemas from components)', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: { payload: {}}, someMessage2: { payload: {} } } } }, components: { schemas: { schemaOne: {}, schemaTwo: {} } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allSchemas()).toBeInstanceOf(Schemas);
+      expect(d.allSchemas()).toHaveLength(4);
+    });
+
+    it('should return a collection of schemas even if collection is empty', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allSchemas()).toBeInstanceOf(Schemas);
+    });
+  });
+
+  describe('.allServers()', function() {
+    it('should return a collection of servers', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ servers: { development: {} } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allServers()).toBeInstanceOf(Servers);
+      expect(d.allServers().all()).toBeInstanceOf(Array);
+      expect(d.allServers().all()).not.toBeInstanceOf(Collection);
+      expect(d.allServers()).toHaveLength(1);
+      expect(d.allServers().all()[0].id()).toEqual('development');
+    });
+
+    it('should return all servers (with servers from components)', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ servers: { production: {} }, components: { servers: { development: {} } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allServers()).toBeInstanceOf(Servers);
+      expect(d.allServers()).toHaveLength(2);
+    });
+
+    it('should return a collection of servers even if servers are not defined', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allServers()).toBeInstanceOf(Servers);
+    });
+  });
+
+  describe('.allChannels()', function() {
+    it('should return a collection of channels', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { 'user/signup': {} } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allChannels()).toBeInstanceOf(Channels);
+      expect(d.allChannels().all()).not.toBeInstanceOf(Collection);
+      expect(d.allChannels().all()).toBeInstanceOf(Array);
+      expect(d.allChannels()).toHaveLength(1);
+    });
+
+    it('should return all channels (with channels from components)', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { 'user/signup': {} }, components: { channels: { someChannel1: {}, someChannel2: {} } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allChannels()).toBeInstanceOf(Channels);
+      expect(d.allChannels()).toHaveLength(3);
+    });
+
+    it('should return a collection of channels even if channels are not defined', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allChannels()).toBeInstanceOf(Channels);
+    });
+  });
+
+  describe('.allOperations()', function() {
+    it('should return a collection of operations', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({ operations: { userSignup: {}, userLogout: {} } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allOperations()).toBeInstanceOf(Operations);
+      expect(d.allOperations().all()).toBeInstanceOf(Array);
+      expect(d.allOperations().all()).not.toBeInstanceOf(Collection);
+      expect(d.allOperations()).toHaveLength(2);
+    });
+
+    it('should return all operations (with operations from components)', function() {
+      const duplicatedOperation = { };
+      const doc = serializeInput<v3.AsyncAPIObject>({ operations: { userSignup: duplicatedOperation, userLogout: {} }, components: { operations: { someOperation1: duplicatedOperation, someOperation2: {} } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allOperations()).toBeInstanceOf(Operations);
+      expect(d.allOperations()).toHaveLength(3);
+    });
+
+    it('should return a collection of operations even if operations are not defined', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({});
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allOperations()).toBeInstanceOf(Operations);
+    });
+  });
+  
   describe('.components()', function() {
     it('should return a components model', function() {
       const doc = serializeInput<v3.AsyncAPIObject>({ components: {} });

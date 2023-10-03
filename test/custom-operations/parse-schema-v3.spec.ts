@@ -106,7 +106,7 @@ describe('custom operations for v3 - parse schemas', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
-    console.log(diagnostics)
+    console.log(diagnostics);
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
     expect(diagnostics.length === 0).toEqual(true);
 

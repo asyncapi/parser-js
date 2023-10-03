@@ -43,7 +43,7 @@ export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocum
   }
   if (maybeDoc && typeof (maybeDoc as AsyncAPIDocumentInterface).json === 'function') {
     const versionOfParserAPI = (maybeDoc as AsyncAPIDocumentInterface).json()[xParserApiVersion];
-    return versionOfParserAPI === 1;
+    return versionOfParserAPI === 2;
   }
   return false;
 }

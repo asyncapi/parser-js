@@ -9,8 +9,6 @@ import { ProtoBuffSchemaParser } from '@asyncapi/protobuf-schema-parser';
 import type { ParserOptions as ParserOptionsParserV2 } from 'parserv2/esm/parser';
 import type { ParserOptions as ParserOptionsParserV3 } from 'parserv3/esm/parser';
 
-import { majorParserAPIVersion } from './utils';
-
 export type ParserOptions = ParserOptionsParserV2 | ParserOptionsParserV3;
 export type Options = {
   includeSchemaParsers?: boolean;
@@ -19,7 +17,7 @@ export type Options = {
 
 type Parser = ParserV2 | ParserV3;
 
-export function NewParser(parserAPIVersion: string, options?: Options): Parser {
+export function NewParser(parserAPIMajorVersion?: number, options?: Options): Parser {
   const parserOptions: ParserOptions = options?.parserOptions || {};
 
   // This is done globally instead of per version because latest versions of those schema parsers are still compatible with newer versions of the Parser-JS.
@@ -41,13 +39,11 @@ export function NewParser(parserAPIVersion: string, options?: Options): Parser {
       parserOptions.schemaParsers.push(...filteredDefaultSchemas as any);
     }
   }
-
-  const parserAPIMajorVersion = majorParserAPIVersion(parserAPIVersion); 
+ 
   switch (parserAPIMajorVersion) {
   case 1:
     return new ParserV2(parserOptions as ParserOptionsParserV2);
-  default:
-  case 0: // Using Parser v3 (latest atm) by default 
+  default: // default to latest version
   case 2:
     return new ParserV3(parserOptions as ParserOptionsParserV3);
   }   

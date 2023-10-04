@@ -43,7 +43,7 @@
     "@asyncapi/protobuf-schema-parser": "^3.0.0",
     "@asyncapi/raml-dt-schema-parser": "^4.0.4",
     "parserv2": "npm:@asyncapi/parser@^2.1.0",
-    "parserv3": "npm:@asyncapi/parser@^2.2.0-next-major-spec.2"
+    "parserv3": "npm:@asyncapi/parser@^3.0.0-next-major-spec.3"
   },
   "devDependencies": {
     "@jest/types": "^29.0.2",

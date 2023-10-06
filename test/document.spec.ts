@@ -114,8 +114,12 @@ describe('utils', function() {
       expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
     });
 
-    it('document with the x-parser-api-version extension set to 1 should be AsyncAPI document', async function() {
-      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 1 }; } })).toEqual(true);
+    it('document with the x-parser-api-version extension set to 2 should be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 2 }; } })).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 1 should not be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 1 }; } })).toEqual(false);
     });
 
     it('document with the x-parser-api-version extension set to 0 should not be AsyncAPI document', async function() {

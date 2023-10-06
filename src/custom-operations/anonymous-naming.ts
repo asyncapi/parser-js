@@ -1,6 +1,6 @@
 import { xParserMessageName, xParserSchemaId } from '../constants';
 import { traverseAsyncApiDocument } from '../iterator';
-import { setExtension, setExtensionOnJson } from '../utils';
+import { setExtension } from '../utils';
 
 import type { 
   AsyncAPIDocumentInterface,
@@ -59,15 +59,12 @@ function assignUidToComponentSchemas(document: AsyncAPIDocumentInterface) {
     setExtension(xParserSchemaId, schema.id(), schema);
   });
 }
-
+  
 function assignUidToAnonymousSchemas(doc: AsyncAPIDocumentInterface) {
   let anonymousSchemaCounter = 0;
   function callback(schema: SchemaInterface) {
-    const json = schema.json() as any;
-    const isMultiFormatSchema = json.schema !== undefined;
-    const underlyingSchema = isMultiFormatSchema ? json.schema : json;
     if (!schema.id()) {
-      setExtensionOnJson(xParserSchemaId, `<anonymous-schema-${++anonymousSchemaCounter}>`, underlyingSchema);
+      setExtension(xParserSchemaId, `<anonymous-schema-${++anonymousSchemaCounter}>`, schema);
     }
   }
   traverseAsyncApiDocument(doc, callback);

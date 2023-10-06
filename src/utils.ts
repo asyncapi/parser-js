@@ -51,13 +51,9 @@ export function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
 
 export function setExtension(id: string, value: unknown, model: BaseModel): void {
   const modelValue = model.json();
-  setExtensionOnJson(id, value, modelValue);
-}
-
-export function setExtensionOnJson(id: string, value: unknown, model: any): void {
-  if (typeof model === 'object' && model) {
+  if (typeof modelValue === 'object' && modelValue) {
     id = id.startsWith('x-') ? id : `x-${id}`;
-    model[String(id)] = value;
+    modelValue[String(id)] = value;
   }
 }
 

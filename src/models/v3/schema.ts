@@ -47,7 +47,7 @@ export class Schema extends BaseModel<v3.MultiFormatSchemaObject, { id?: string,
 
   $schema(): string {
     if (typeof this._schemaObject === 'boolean') return 'http://json-schema.org/draft-07/schema#';
-    return this._schemaObject.$schema ?? 'http://json-schema.org/draft-07/schema#';
+    return this._schemaObject.$schema || 'http://json-schema.org/draft-07/schema#';
   }
 
   additionalItems(): boolean | SchemaInterface {

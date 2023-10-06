@@ -23,10 +23,20 @@ const customSchemasPathsV2 = [
 ];
 
 const customSchemasPathsV3 = [
-  // operations
+  // channels
   '$.channels.*.messages.*.payload',
+  '$.channels.*.messages.*.headers',
   '$.components.channels.*.messages.*.payload',
+  '$.components.channels.*.messages.*.headers',
+  // operations
+  '$.operations.*.messages.*.payload',
+  '$.operations.*.messages.*.headers',
+  '$.components.operations.*.messages.*.payload',
+  '$.components.operations.*.messages.*.headers',
+  // messages
   '$.components.messages.*.payload',
+  '$.components.messages.*.headers.*',
+  // schemas 
   '$.components.schemas.*',
 ];
 

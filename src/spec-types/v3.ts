@@ -181,9 +181,8 @@ export interface MessageObject extends MessageTraitObject, SpecificationExtensio
 
 export interface MessageTraitObject extends SpecificationExtensions {
   messageId?: string;
-  headers?: SchemaObject;
+  headers?: MultiFormatSchemaObject;
   correlationId?: CorrelationIDObject | ReferenceObject;
-  schemaFormat?: string;
   contentType?: string;
   name?: string;
   title?: string;
@@ -403,7 +402,8 @@ export interface OAuthFlowObjectAuthorizationCode extends OAuthFlowObjectBase, S
 
 export type SchemaObject = AsyncAPISchemaObject | ReferenceObject;
 export type AsyncAPISchemaObject = AsyncAPISchemaDefinition | boolean;
-export type MultiFormatSchemaObject = AsyncAPISchemaObject | { schema: AsyncAPISchemaObject, schemaFormat: string | undefined }
+export type MultiFormatObject = { schema: AsyncAPISchemaObject, schemaFormat: string | undefined }
+export type MultiFormatSchemaObject = AsyncAPISchemaObject | MultiFormatObject
 
 export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
   $id?: string;

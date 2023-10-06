@@ -13,20 +13,10 @@ export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string
   }
 
   hasSchema(): boolean {
-    return this._json && (
-      this._json.description !== undefined ||
-      this._json.default !== undefined || 
-      this._json.enum !== undefined || 
-      this._json.examples !== undefined
-    );
+    return true;
   }
 
   schema(): SchemaInterface | undefined {
-    if (!this.hasSchema()) {
-      return this.createModel(Schema, {
-        type: 'string',
-      }, { pointer: `${this._meta.pointer}` });
-    }
     return this.createModel(Schema, {
       type: 'string', 
       description: this._json.description,

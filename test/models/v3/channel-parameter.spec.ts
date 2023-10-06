@@ -60,10 +60,10 @@ describe('ChannelParameter model', function() {
       expect(d.hasSchema()).toEqual(true);
     });
 
-    it('should return false when there is no value', function() {
+    it('should return true when there is no value', function() {
       const doc = serializeInput<v3.ParameterObject>({});
       const d = new ChannelParameter(doc);
-      expect(d.hasSchema()).toEqual(false);
+      expect(d.hasSchema()).toEqual(true);
     });
   });
 

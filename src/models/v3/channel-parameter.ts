@@ -22,7 +22,11 @@ export class ChannelParameter extends BaseModel<v3.ParameterObject, { id: string
   }
 
   schema(): SchemaInterface | undefined {
-    if (!this.hasSchema()) return undefined;
+    if (!this.hasSchema()) {
+      return this.createModel(Schema, {
+        type: 'string',
+      }, { pointer: `${this._meta.pointer}` });
+    }
     return this.createModel(Schema, {
       type: 'string', 
       description: this._json.description,

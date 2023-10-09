@@ -60,10 +60,10 @@ describe('ChannelParameter model', function() {
       expect(d.hasSchema()).toEqual(true);
     });
 
-    it('should return false when there is no value', function() {
+    it('should return true when there is no value', function() {
       const doc = serializeInput<v3.ParameterObject>({});
       const d = new ChannelParameter(doc);
-      expect(d.hasSchema()).toEqual(false);
+      expect(d.hasSchema()).toEqual(true);
     });
   });
 
@@ -87,10 +87,17 @@ describe('ChannelParameter model', function() {
       expect(d.schema()?.default()).toEqual('test');
     });
     
-    it('should return undefined when there is no value', function() {
+    it('should be able to access description value', function() {
+      const doc = serializeInput<v3.ParameterObject>({ description: 'test' });
+      const d = new ChannelParameter(doc);
+      expect(d.schema()).toBeInstanceOf(Schema);
+      expect(d.schema()?.description()).toEqual('test');
+    });
+    it('should return empty schema with type string when there is no value', function() {
       const doc = serializeInput<v3.ParameterObject>({});
       const d = new ChannelParameter(doc);
-      expect(d.schema()).toBeUndefined();
+      expect(d.schema()).toBeInstanceOf(Schema);
+      expect(d.schema()?.type()).toEqual('string');
     });
   });
 

@@ -1,8 +1,7 @@
 import { applyTraitsV2, applyTraitsV3 } from './apply-traits';
-import { checkCircularRefs } from './check-circular-refs';
-import { parseSchemasV2 } from './parse-schema';
-import { anonymousNaming } from './anonymous-naming';
 import { resolveCircularRefs } from './resolve-circular-refs';
+import { parseSchemasV2, parseSchemasV3 } from './parse-schema';
+import { anonymousNaming } from './anonymous-naming';
 
 import type { RulesetFunctionContext } from '@stoplight/spectral-core';
 import type { Parser } from '../parser';
@@ -10,6 +9,7 @@ import type { ParseOptions } from '../parse';
 import type { AsyncAPIDocumentInterface } from '../models';
 import type { DetailedAsyncAPI } from '../types';
 import type { v2, v3 } from '../spec-types';
+import { checkCircularRefs } from './check-circular-refs';
 
 export async function customOperations(parser: Parser, document: AsyncAPIDocumentInterface, detailed: DetailedAsyncAPI, inventory: RulesetFunctionContext['documentInventory'], options: ParseOptions): Promise<void> {
   switch (detailed.semver.major) {
@@ -28,7 +28,7 @@ async function operationsV2(parser: Parser, document: AsyncAPIDocumentInterface,
     await parseSchemasV2(parser, detailed);
   }
 
-  // anonymous naming and resolving circular refrences should be done after custom schemas parsing
+  // anonymous naming and resolving circular references should be done after custom schemas parsing
   if (inventory) {
     resolveCircularRefs(document, inventory);
   }
@@ -41,9 +41,12 @@ async function operationsV3(parser: Parser, document: AsyncAPIDocumentInterface,
   if (options.applyTraits) {
     applyTraitsV3(detailed.parsed as v3.AsyncAPIObject);
   }
-  // TODO: Support schema parsing in v3
-  // if (options.parseSchemas) {
-  //   await parseSchemasV2(parser, detailed);
-  // }
+  if (options.parseSchemas) {
+    await parseSchemasV3(parser, detailed);
+  }
+  // anonymous naming and resolving circular references should be done after custom schemas parsing
+  if (inventory) {
+    resolveCircularRefs(document, inventory);
+  }
   anonymousNaming(document);
 }

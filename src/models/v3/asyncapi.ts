@@ -26,12 +26,12 @@ import type { MessageInterface } from '../message';
 import type { ComponentsInterface } from '../components';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { ExtensionsInterface } from '../extensions';
-import type { SchemaInterface } from 'models/schema';
-import type { SchemasInterface } from 'models/schemas';
+import type { SchemaInterface } from '../schema';
+import type { SchemasInterface } from '../schemas';
 import type { v3 } from '../../spec-types';
-import { OperationInterface } from 'models/operation';
-import { ChannelInterface } from 'models/channel';
-import { ServerInterface } from 'models/server';
+import { OperationInterface } from '../operation';
+import { ChannelInterface } from '../channel';
+import { ServerInterface } from '../server';
 
 export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements AsyncAPIDocumentInterface {
   version(): string {

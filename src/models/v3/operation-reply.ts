@@ -2,7 +2,7 @@ import { BaseModel } from '../base';
 import { Channel } from './channel';
 import { Message } from './message';
 import { Messages } from './messages';
-import { MessagesInterface } from 'models/messages';
+import { MessagesInterface } from '../messages';
 import { OperationReplyAddress } from './operation-reply-address';
 
 import { extensions } from './mixins';

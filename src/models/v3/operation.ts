@@ -11,7 +11,7 @@ import type { ChannelsInterface } from '../channels';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { OperationInterface, OperationAction } from '../operation';
-import type { OperationReplyInterface } from 'models/operation-reply';
+import type { OperationReplyInterface } from '../operation-reply';
 import type { OperationTraitsInterface } from '../operation-traits';
 import type { ServersInterface } from '../servers';
 import type { ServerInterface } from '../server';

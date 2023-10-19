@@ -1,2 +1,2 @@
-export { NewParser} from './parse';
-export { ConvertDocumentParserAPIVersion } from './convert';
+export * from './parse';
+export * from './convert';

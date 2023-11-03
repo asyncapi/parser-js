@@ -15,11 +15,11 @@ import type { v3 } from '../../spec-types';
 
 export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObject> extends CoreModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {
-    return this.messageId() || this._meta.id || this.extensions().get(xParserMessageName)?.value<string>() as string;
+    return this._meta.id || this.extensions().get(xParserMessageName)?.value<string>() as string;
   }
 
   hasMessageId(): boolean {
-    return !!this._json.messageId;
+    return false;
   }
 
   hasSchemaFormat(): boolean {
@@ -28,10 +28,6 @@ export class MessageTrait<J extends v3.MessageTraitObject = v3.MessageTraitObjec
 
   schemaFormat(): string | undefined {
     return undefined;
-  }
-
-  messageId(): string | undefined {
-    return this._json.messageId;
   }
   
   hasCorrelationId(): boolean {

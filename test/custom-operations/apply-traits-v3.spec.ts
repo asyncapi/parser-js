@@ -76,7 +76,7 @@ describe('custom operations - apply traits v3', function() {
             someMessage: {
               traits: [
                 {
-                  messageId: 'traitMessageId',
+                  summary: 'some summary',
                   description: 'some description' 
                 },
                 {
@@ -89,11 +89,11 @@ describe('custom operations - apply traits v3', function() {
         someChannel2: {
           messages: {
             someMessage: {
-              messageId: 'rootMessageId',
+              summary: 'root summary',
               description: 'root description',
               traits: [
                 {
-                  messageId: 'traitMessageId',
+                  summary: 'some summary',
                   description: 'some description' 
                 },
                 {
@@ -112,11 +112,11 @@ describe('custom operations - apply traits v3', function() {
 
     const message1 = v3Document?.json()?.channels?.someChannel1?.messages?.someMessage;
     delete (message1 as v3.MessageObject)?.traits;
-    expect(message1).toEqual({ messageId: 'traitMessageId', description: 'another description', 'x-parser-message-name': 'traitMessageId' });
+    expect(message1).toEqual({ summary: 'some summary', description: 'another description', 'x-parser-message-name': 'someMessage' });
 
     const message2 = v3Document?.json()?.channels?.someChannel2?.messages?.someMessage;
     delete (message2 as v3.MessageObject)?.traits;
-    expect(message2).toEqual({ messageId: 'rootMessageId', description: 'root description', 'x-parser-message-name': 'rootMessageId' });
+    expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage' });
   });
 
   it('should apply traits to messages (components)', async function() {
@@ -131,7 +131,7 @@ describe('custom operations - apply traits v3', function() {
           someMessage1: {
             traits: [
               {
-                messageId: 'traitMessageId',
+                summary: 'some summary',
                 description: 'some description' 
               },
               {
@@ -140,11 +140,11 @@ describe('custom operations - apply traits v3', function() {
             ]
           },
           someMessage2: {
-            messageId: 'rootMessageId',
+            summary: 'root summary',
             description: 'root description',
             traits: [
               {
-                messageId: 'traitMessageId',
+                summary: 'some summary',
                 description: 'some description' 
               },
               {
@@ -162,10 +162,10 @@ describe('custom operations - apply traits v3', function() {
 
     const message1 = v3Document?.json()?.components?.messages?.someMessage1;
     delete (message1 as v3.MessageObject)?.traits;
-    expect(message1).toEqual({ messageId: 'traitMessageId', description: 'another description', 'x-parser-message-name': 'traitMessageId' });
+    expect(message1).toEqual({ summary: 'some summary', description: 'another description', 'x-parser-message-name': 'someMessage1' });
 
     const message2 = v3Document?.json()?.components?.messages?.someMessage2;
     delete (message2 as v3.MessageObject)?.traits;
-    expect(message2).toEqual({ messageId: 'rootMessageId', description: 'root description', 'x-parser-message-name': 'rootMessageId' });
+    expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage2' });
   });
 });

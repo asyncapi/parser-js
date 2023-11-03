@@ -144,7 +144,7 @@ describe('Server Model', function () {
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('1');
+      expect(d.messages().all()[0].id()).toEqual('1');
     });
 
     it('should return collection of messages - multiple channels', function() {
@@ -153,11 +153,11 @@ describe('Server Model', function () {
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(3);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('1');
+      expect(d.messages().all()[0].id()).toEqual('1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].messageId()).toEqual('2');
+      expect(d.messages().all()[1].id()).toEqual('2');
       expect(d.messages().all()[2]).toBeInstanceOf(Message);
-      expect(d.messages().all()[2].messageId()).toEqual('3');
+      expect(d.messages().all()[2].id()).toEqual('3');
     });
 
     it('should return collection of messages - server available only in particular channel', function() {
@@ -166,11 +166,11 @@ describe('Server Model', function () {
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(3);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('1');
+      expect(d.messages().all()[0].id()).toEqual('1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].messageId()).toEqual('2');
+      expect(d.messages().all()[1].id()).toEqual('2');
       expect(d.messages().all()[2]).toBeInstanceOf(Message);
-      expect(d.messages().all()[2].messageId()).toEqual('3');
+      expect(d.messages().all()[2].id()).toEqual('3');
     });
   });
 

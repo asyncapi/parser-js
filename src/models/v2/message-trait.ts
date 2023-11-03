@@ -21,7 +21,7 @@ import type { v2 } from '../../spec-types';
 
 export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends BaseModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {
-    return this.messageId() || this._meta.id || this.json(xParserMessageName) as string;
+    return this._json.messageId || this._meta.id || this.json(xParserMessageName) as string;
   }
 
   hasSchemaFormat(): boolean {
@@ -34,10 +34,6 @@ export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObjec
 
   hasMessageId(): boolean {
     return !!this._json.messageId;
-  }
-
-  messageId(): string | undefined {
-    return this._json.messageId;
   }
   
   hasCorrelationId(): boolean {

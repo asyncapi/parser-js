@@ -9,7 +9,6 @@ export interface MessageTraitInterface extends BaseModel, BindingsMixinInterface
   hasSchemaFormat(): boolean;
   schemaFormat(): string | undefined;
   hasMessageId(): boolean;
-  messageId(): string | undefined;
   hasCorrelationId(): boolean;
   correlationId(): CorrelationIdInterface | undefined;
   hasContentType(): boolean;

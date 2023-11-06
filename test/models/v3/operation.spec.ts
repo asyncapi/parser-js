@@ -89,7 +89,7 @@ describe('Operation model', function() {
 
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
-      const channel = { messages: { someMessage: { messageId: 'messageId' } } };
+      const channel = { messages: { someMessage: { summary: 'summary' } } };
       const d = new Operation({ action: 'send', channel }, { asyncapi: { parsed: { channels: { someChannel: channel } } } as any, pointer: '', id: 'operation' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
@@ -97,23 +97,23 @@ describe('Operation model', function() {
     });
 
     it('should return collection of messages - more than one messages', function() {
-      const channel = { messages: { someMessage1: { messageId: 'messageId1' }, someMessage2: { messageId: 'messageId2' } } };
+      const channel = { messages: { someMessage1: { summary: 'summary1' }, someMessage2: { summary: 'summary2' } } };
       const d = new Operation({ action: 'send', channel }, { asyncapi: { parsed: { channels: { someChannel: channel } } } as any, pointer: '', id: 'operation' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('messageId1');
+      expect(d.messages().all()[0].summary()).toEqual('summary1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].messageId()).toEqual('messageId2');
+      expect(d.messages().all()[1].summary()).toEqual('summary2');
     });
 
     it('should return collection of messages - defined message on operation level', function() {
-      const channel = { messages: { someMessage1: { messageId: 'messageId1' }, someMessage2: { messageId: 'messageId2' } } };
+      const channel = { messages: { someMessage1: { summary: 'summary1' }, someMessage2: { summary: 'summary2' } } };
       const d = new Operation({ action: 'send', channel, messages: [channel.messages.someMessage1] }, { asyncapi: { parsed: { channels: { someChannel: channel } } } as any, pointer: '', id: 'operation' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('messageId1');
+      expect(d.messages().all()[0].summary()).toEqual('summary1');
     });
     
     it('should return undefined when there is no value', function() {

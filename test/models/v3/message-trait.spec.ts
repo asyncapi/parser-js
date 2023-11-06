@@ -13,12 +13,6 @@ describe('MessageTrait model', function() {
       const d = new MessageTrait(doc, { asyncapi: {} as any, pointer: '', id: 'trait' });
       expect(d.id()).toEqual('trait');
     });
-
-    it('should reuse messageId', function() {
-      const doc = { messageId: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.id()).toEqual(doc.messageId);
-    });
   });
 
   describe('.schemaFormat()', function() {
@@ -38,30 +32,16 @@ describe('MessageTrait model', function() {
   });
 
   describe('.hasMessageId()', function() {
-    it('should return true when there is a value', function() {
-      const doc = { messageId: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.hasMessageId()).toEqual(true);
+    it('should return false when there is a value', function() {
+      const doc = {};
+      const d = new MessageTrait(doc, { asyncapi: {} as any, pointer: '', id: 'message' });
+      expect(d.hasMessageId()).toEqual(false);
     });
     
     it('should return false when there is no value', function() {
       const doc = {};
       const d = new MessageTrait(doc);
       expect(d.hasMessageId()).toEqual(false);
-    });
-  });
-
-  describe('.messageId()', function() {
-    it('should return the value', function() {
-      const doc = { messageId: '...' };
-      const d = new MessageTrait(doc);
-      expect(d.messageId()).toEqual(doc.messageId);
-    });
-    
-    it('should return undefined when there is no value', function() {
-      const doc = {};
-      const d = new MessageTrait(doc);
-      expect(d.messageId()).toBeUndefined();
     });
   });
 

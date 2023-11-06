@@ -53,13 +53,13 @@ describe('MessageTrait model', function() {
     it('should return the value', function() {
       const doc = { messageId: '...' };
       const d = new MessageTrait(doc);
-      expect(d.messageId()).toEqual(doc.messageId);
+      expect(d.id()).toEqual(doc.messageId);
     });
     
     it('should return undefined when there is no value', function() {
       const doc = {};
       const d = new MessageTrait(doc);
-      expect(d.messageId()).toBeUndefined();
+      expect(d.id()).toBeUndefined();
     });
   });
 

@@ -18,12 +18,6 @@ describe('Message model', function() {
       const d = new Message(doc, { asyncapi: {} as any, pointer: '', id: 'message' });
       expect(d.id()).toEqual('message');
     });
-
-    it('should reuse messageId', function() {
-      const doc = { messageId: '...' };
-      const d = new Message(doc);
-      expect(d.id()).toEqual(doc.messageId);
-    });
   });
 
   describe('.schemaFormat() + .hasSchemaFormat()', function() {

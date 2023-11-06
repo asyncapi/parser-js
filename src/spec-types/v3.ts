@@ -180,7 +180,6 @@ export interface MessageObject extends MessageTraitObject, SpecificationExtensio
 }
 
 export interface MessageTraitObject extends SpecificationExtensions {
-  messageId?: string;
   headers?: MultiFormatSchemaObject;
   correlationId?: CorrelationIDObject | ReferenceObject;
   contentType?: string;

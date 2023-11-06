@@ -168,33 +168,33 @@ describe('Server Model', function () {
   describe('.messages()', function() {
     it('should return collection of messages - one message', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: { messages: { someMessage: { messageId: 'messageId' } } } } } } as any, pointer: '', id: 'production' });
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: { messages: { someMessage: { summary: 'summary' } } } } } } as any, pointer: '', id: 'production' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('messageId');
+      expect(d.messages().all()[0].summary()).toEqual('summary');
     });
 
     it('should return collection of messages - more than one messages', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel1: { messages: { someMessage1: { messageId: 'messageId1' } } }, someChannel2: { messages: { someMessage2: { messageId: 'messageId2' }, someMessage3: { messageId: 'messageId3' } } } } } } as any, pointer: '', id: 'production' });
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel1: { messages: { someMessage1: { summary: 'summary1' } } }, someChannel2: { messages: { someMessage2: { summary: 'summary2' }, someMessage3: { summary: 'summary3' } } } } } } as any, pointer: '', id: 'production' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(3);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('messageId1');
+      expect(d.messages().all()[0].summary()).toEqual('summary1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].messageId()).toEqual('messageId2');
+      expect(d.messages().all()[1].summary()).toEqual('summary2');
       expect(d.messages().all()[2]).toBeInstanceOf(Message);
-      expect(d.messages().all()[2].messageId()).toEqual('messageId3');
+      expect(d.messages().all()[2].summary()).toEqual('summary3');
     });
 
     it('should return collection of messages - server available only in particular channel', function() {
       const doc = serializeInput<v3.ServerObject>({});
-      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel1: { servers: [doc], messages: { someMessage1: { messageId: 'messageId1' } } }, someChannel2: { servers: [{}], messages: { someMessage2: { messageId: 'messageId2' }, someMessage3: { messageId: 'messageId3' } } } } } } as any, pointer: '', id: 'production' });
+      const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel1: { servers: [doc], messages: { someMessage1: { summary: 'summary1' } } }, someChannel2: { servers: [{}], messages: { someMessage2: { summary: 'summary2' }, someMessage3: { summary: 'summary3' } } } } } } as any, pointer: '', id: 'production' });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual('messageId1');
+      expect(d.messages().all()[0].summary()).toEqual('summary1');
     });
   });
 

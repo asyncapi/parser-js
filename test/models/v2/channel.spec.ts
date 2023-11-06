@@ -100,7 +100,7 @@ describe('Channel model', function() {
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual((doc as any).publish.message.messageId);
+      expect(d.messages().all()[0].id()).toEqual((doc as any).publish.message.messageId);
     });
     
     it('should return collection of messages - oneOf message', function() {
@@ -109,9 +109,9 @@ describe('Channel model', function() {
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual((doc as any).subscribe.message.oneOf[0].messageId);
+      expect(d.messages().all()[0].id()).toEqual((doc as any).subscribe.message.oneOf[0].messageId);
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].messageId()).toEqual((doc as any).subscribe.message.oneOf[1].messageId);
+      expect(d.messages().all()[1].id()).toEqual((doc as any).subscribe.message.oneOf[1].messageId);
     });
 
     it('should return collection of messages - single message and oneOf', function() {

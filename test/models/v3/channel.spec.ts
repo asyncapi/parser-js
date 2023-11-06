@@ -98,26 +98,26 @@ describe('Channel model', function() {
 
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
-      const doc = serializeInput<v3.ChannelObject>({ messages: { someMessage: { messageId: 'messageId' } } });
+      const doc = serializeInput<v3.ChannelObject>({ messages: { someMessage: {} } });
       const d = new Channel(doc);
       const msg = doc.messages?.['someMessage'] as v3.MessageObject;
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].messageId()).toEqual(msg?.messageId);
+      expect(d.messages().all()[0].id()).toEqual('someMessage');
     });
     
     it('should return collection of messages - more than one messages', function() {
-      const doc = serializeInput<v3.ChannelObject>({ messages: { someMessage1: { messageId: 'messageId1' }, someMessage2: { messageId: 'messageId2' } } });
+      const doc = serializeInput<v3.ChannelObject>({ messages: { someMessage1: {}, someMessage2: {} } });
       const d = new Channel(doc);
       const msg1 = doc.messages?.['someMessage1'] as v3.MessageObject;
       const msg2 = doc.messages?.['someMessage2'] as v3.MessageObject;
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].id()).toEqual(msg1.messageId);
+      expect(d.messages().all()[0].id()).toEqual('someMessage1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].id()).toEqual(msg2.messageId);
+      expect(d.messages().all()[1].id()).toEqual('someMessage2');
     });
   });
 

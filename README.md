@@ -217,7 +217,7 @@ The following table shows a compatibility matrix between this parser, and the [P
 | Parser-JS | Parser-API                                                            | Spec 2.x | Spec 3.x |
 |-----------|-----------------------------------------------------------------------|----------|----------|
 | 2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/v1.0.0/docs/v1.md)  | ✓        |          |
-| 3.x       | [2.x](https://github.com/asyncapi/parser-api/blob/v2.0.0/docs/api.md) | ✓        | ✓        |
+| 3.x       | [3.x](https://github.com/asyncapi/parser-api/blob/v3.0.0/docs/api.md) | ✓        | ✓        |
 
 - `✓` Fully supported version.
 - `-` The AsyncAPI Spec version has features the Parser-JS can't use but the rest are fully supported.

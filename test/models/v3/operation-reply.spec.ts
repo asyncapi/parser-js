@@ -64,20 +64,20 @@ describe('OperationReply model', function() {
   
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
-      const d = new OperationReply({ messages: { someMessage: {} } });
+      const d = new OperationReply({ messages: [{}] });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
     });
 
     it('should return collection of messages - more than one messages', function() {
-      const d = new OperationReply({ messages: { someMessage1: {}, someMessage2: {} } });
+      const d = new OperationReply({ messages: [{name: 'someMessage1'}, {name: 'someMessage2'}] });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].id()).toEqual('someMessage1');
+      expect(d.messages().all()[0].name()).toEqual('someMessage1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].id()).toEqual('someMessage2');
+      expect(d.messages().all()[1].name()).toEqual('someMessage2');
     });
 
     it('should return undefined if address is not present', function() {

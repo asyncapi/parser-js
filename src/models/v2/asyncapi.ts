@@ -27,7 +27,6 @@ import type { OperationInterface } from '../operation';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { SchemasInterface } from '../schemas';
-import type { SchemaInterface } from '../schema';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { ExtensionsInterface } from '../extensions';
 

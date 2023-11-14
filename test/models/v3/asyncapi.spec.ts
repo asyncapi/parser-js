@@ -213,6 +213,13 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.allSchemas()).toBeInstanceOf(Schemas);
     });
+    it('should return a collection of schemas (with schemas from components) without duplicates', function() {
+      const sharedMessage = { payload: {} };
+      const doc = serializeInput<v3.AsyncAPIObject>({ channels: { userSignup: { address: 'user/signup', messages: { someMessage1: { payload: {}}, someMessage2: sharedMessage } } }, components: { messages: { aMessage: sharedMessage } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allSchemas()).toBeInstanceOf(Schemas);
+      expect(d.allSchemas()).toHaveLength(2);
+    });
   });
 
   describe('.allServers()', function() {

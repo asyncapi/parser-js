@@ -1,13 +1,16 @@
-import { createAsyncAPIDocument as createAsyncAPIDocumentParserV2 } from 'parserv2';
-import { createAsyncAPIDocument as createAsyncAPIDocumentParserV3 } from 'parserv3';
+import { createAsyncAPIDocument as createAsyncAPIDocumentParserV1 } from 'parserapiv1';
+import { createAsyncAPIDocument as createAsyncAPIDocumentParserV2 } from 'parserapiv2';
+import { createAsyncAPIDocument as createAsyncAPIDocumentParserV3 } from 'parserapiv3';
 
-import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV2 } from 'parserv2';
-import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV3 } from 'parserv3';
+import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV1 } from 'parserapiv1';
+import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV2 } from 'parserapiv2';
+import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV3 } from 'parserapiv3';
 
-import type { DetailedAsyncAPI as DetailedAsyncAPIParserV2 } from 'parserv2/esm/types';
-import type { DetailedAsyncAPI as DetailedAsyncAPIParserV3 } from 'parserv3/esm/types';
+import type { DetailedAsyncAPI as DetailedAsyncAPIParserV1 } from 'parserapiv1/esm/types';
+import type { DetailedAsyncAPI as DetailedAsyncAPIParserV2 } from 'parserapiv2/esm/types';
+import type { DetailedAsyncAPI as DetailedAsyncAPIParserV3 } from 'parserapiv3/esm/types';
 
-export type AsyncAPIDocument = AsyncAPIDocumentInterfaceParserV2 | AsyncAPIDocumentInterfaceParserV3;
+export type AsyncAPIDocument = AsyncAPIDocumentInterfaceParserV1 | AsyncAPIDocumentInterfaceParserV2 | AsyncAPIDocumentInterfaceParserV3;
 
 export function ConvertDocumentParserAPIVersion(doc: AsyncAPIDocument, toParserAPIMajorVersion: number): AsyncAPIDocument {
   if (!doc || !doc.json) return doc;
@@ -22,8 +25,10 @@ export function ConvertDocumentParserAPIVersion(doc: AsyncAPIDocument, toParserA
   const detailedAsyncAPI = doc.meta().asyncapi;
   switch (toParserAPIMajorVersion) {
   case 1:
-    return createAsyncAPIDocumentParserV2(detailedAsyncAPI as DetailedAsyncAPIParserV2);
+    return createAsyncAPIDocumentParserV1(detailedAsyncAPI as DetailedAsyncAPIParserV1);
   case 2:
+    return createAsyncAPIDocumentParserV2(detailedAsyncAPI as DetailedAsyncAPIParserV2);
+  case 3:
     return createAsyncAPIDocumentParserV3(detailedAsyncAPI as DetailedAsyncAPIParserV3);
   default: 
     return doc;

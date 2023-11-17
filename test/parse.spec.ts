@@ -1,6 +1,7 @@
 
-import { Parser as ParserV2 } from 'parserv2';
-import { Parser as ParserV3 } from 'parserv3';
+import { Parser as ParserV1 } from 'parserapiv1';
+import { Parser as ParserV2 } from 'parserapiv2';
+import { Parser as ParserV3 } from 'parserapiv3';
 
 import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
 import { OpenAPISchemaParser } from '@asyncapi/openapi-schema-parser';
@@ -19,14 +20,14 @@ const fakeSchemaParser = {
 describe('NewParser()', function() {
   it('Creates a Parser without options compatible with Parser-API v1 and caches it', async function() {
     const parser = NewParser(1);
-    expect(parser).toBeInstanceOf(ParserV2);
+    expect(parser).toBeInstanceOf(ParserV1);
   });
 
   it('Creates a Parser with options compatible with Parser-API v1', async function() {
     const options: Options = { parserOptions: { schemaParsers: [fakeSchemaParser]} };
     const parser = NewParser(1, options);
     
-    expect(parser).toBeInstanceOf(ParserV2);
+    expect(parser).toBeInstanceOf(ParserV1);
     expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
   });
 
@@ -35,7 +36,7 @@ describe('NewParser()', function() {
     const options: Options = { parserOptions: { schemaParsers: [knownSchemaParser]}, includeSchemaParsers: true };
     const parser = NewParser(1, options);
     
-    expect(parser).toBeInstanceOf(ParserV2);
+    expect(parser).toBeInstanceOf(ParserV1);
     expect(parser.parserRegistry.get(knownSchemaParser.getMimeTypes()[0])).toStrictEqual(knownSchemaParser);
     expect(parser.parserRegistry.get(OpenAPISchemaParser().getMimeTypes()[0])).toEqual(OpenAPISchemaParser());
     expect(parser.parserRegistry.get(RamlDTSchemaParser().getMimeTypes()[0])).toEqual(RamlDTSchemaParser());
@@ -44,22 +45,29 @@ describe('NewParser()', function() {
 
   it('Creates a Parser without options compatible with Parser-API v2', async function() {
     const parser = NewParser(2);
-    expect(parser).toBeInstanceOf(ParserV3);
+    expect(parser).toBeInstanceOf(ParserV2);
   });
 
   it('Creates a Parser with options compatible with Parser-API v2', async function() {
     const options: Options = { parserOptions: { schemaParsers: [fakeSchemaParser]} };
     const parser = NewParser(2, options);
+    expect(parser).toBeInstanceOf(ParserV2);
+    expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
+  });
+
+  it('Creates a Parser with options compatible with Parser-API v3', async function() {
+    const options: Options = { parserOptions: { schemaParsers: [fakeSchemaParser]} };
+    const parser = NewParser(3, options);
     expect(parser).toBeInstanceOf(ParserV3);
     expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
   });
 
-  it('Creates a Parser with options including known Schema Parsers and do not overwrite those with Parser-API v2', async function() {
+  it('Creates a Parser 2 with options including known Schema Parsers and do not overwrite those with Parser-API v2', async function() {
     const knownSchemaParser = AvroSchemaParser();
     const options: Options = { parserOptions: { schemaParsers: [knownSchemaParser]}, includeSchemaParsers: true };
     const parser = NewParser(2, options);
     
-    expect(parser).toBeInstanceOf(ParserV3);
+    expect(parser).toBeInstanceOf(ParserV2);
     expect(parser.parserRegistry.get(knownSchemaParser.getMimeTypes()[0])).toStrictEqual(knownSchemaParser);
     expect(parser.parserRegistry.get(OpenAPISchemaParser().getMimeTypes()[0])).toEqual(OpenAPISchemaParser());
     expect(parser.parserRegistry.get(RamlDTSchemaParser().getMimeTypes()[0])).toEqual(RamlDTSchemaParser());
@@ -78,7 +86,7 @@ describe('NewParser()', function() {
     expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
   });
 
-  it('Creates a Parser with options including known Schema Parsers and do not overwrite those with Parser-API v2', async function() {
+  it('Creates a Parser 0 with options including known Schema Parsers and do not overwrite those with Parser-API v2', async function() {
     const knownSchemaParser = AvroSchemaParser();
     const options: Options = { parserOptions: { schemaParsers: [knownSchemaParser]}, includeSchemaParsers: true };
     const parser = NewParser(0, options);

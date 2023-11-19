@@ -519,6 +519,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="25%"><a href="https://github.com/Ruchip16"><img src="https://avatars.githubusercontent.com/u/72685035?v=4?s=100" width="100px;" alt="Ruchi Pakhle"/><br /><sub><b>Ruchi Pakhle</b></sub></a><br /><a href="https://github.com/asyncapi/parser-js/commits?author=Ruchip16" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="25%"><a href="https://github.com/hainenber"><img src="https://avatars.githubusercontent.com/u/41283691?v=4?s=100" width="100px;" alt="Đỗ Trọng Hải"/><br /><sub><b>Đỗ Trọng Hải</b></sub></a><br /><a href="#security-hainenber" title="Security">🛡️</a></td>
     </tr>
   </tbody>
 </table>

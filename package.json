@@ -59,9 +59,7 @@
     "avsc": "^5.7.5",
     "js-yaml": "^4.1.0",
     "jsonpath-plus": "^7.2.0",
-    "node-fetch": "2.6.7",
-    "ramldt2jsonschema": "^1.2.3",
-    "webapi-parser": "^0.5.0"
+    "node-fetch": "2.6.7"
   },
   "devDependencies": {
     "@asyncapi/avro-schema-parser": "^3.0.4",

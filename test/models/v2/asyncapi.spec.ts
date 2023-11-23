@@ -308,6 +308,14 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.allSchemas()).toBeInstanceOf(Schemas);
     });
+
+    it('should return a collection of schemas (with schemas from components) without duplicates', function() {
+      const sharedMessage = { payload: {} };
+      const doc = serializeInput<v2.AsyncAPIObject>({ channels: { 'user/signup': { publish: { message: sharedMessage }, subscribe: { message: { oneOf: [{ payload: {} }, {}] } } }, 'user/logout': { publish: { message: { payload: {} } } } }, components: { messages: { aMessage: sharedMessage } } });
+      const d = new AsyncAPIDocument(doc);
+      expect(d.allSchemas()).toBeInstanceOf(Schemas);
+      expect(d.allSchemas()).toHaveLength(3);
+    });
   });
 
   describe('mixins', function() {

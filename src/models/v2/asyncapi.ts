@@ -12,8 +12,8 @@ import { SecurityScheme } from './security-scheme';
 import { Schemas } from './schemas';
 
 import { extensions } from './mixins';
-import { traverseAsyncApiDocument, SchemaTypesToIterate } from '../../iterator';
 import { tilde } from '../../utils';
+import { schemasFromDocument } from '../utils';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
 import type { InfoInterface } from '../info';
@@ -27,7 +27,6 @@ import type { OperationInterface } from '../operation';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
 import type { SchemasInterface } from '../schemas';
-import type { SchemaInterface } from '../schema';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { ExtensionsInterface } from '../extensions';
 
@@ -81,7 +80,7 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
   }
 
   schemas(): SchemasInterface {
-    return this.__schemas(false);
+    return schemasFromDocument(this, Schemas, false);
   }
 
   securitySchemes(): SecuritySchemesInterface {
@@ -130,26 +129,10 @@ export class AsyncAPIDocument extends BaseModel<v2.AsyncAPIObject> implements As
   }
 
   allSchemas(): SchemasInterface {
-    return this.__schemas(true);
+    return schemasFromDocument(this, Schemas, true);
   }
 
   extensions(): ExtensionsInterface {
     return extensions(this);
-  }
-
-  private __schemas(withComponents: boolean) {
-    const schemas: Set<SchemaInterface> = new Set();
-    function callback(schema: SchemaInterface) {
-      if (!schemas.has(schema.json())) {
-        schemas.add(schema);
-      }
-    }
-
-    let toIterate = Object.values(SchemaTypesToIterate);
-    if (!withComponents) {
-      toIterate = toIterate.filter(s => s !== SchemaTypesToIterate.Components);
-    }
-    traverseAsyncApiDocument(this, callback, toIterate);
-    return new Schemas(Array.from(schemas));
   }
 }

@@ -14,7 +14,7 @@ import { Schemas } from './schemas';
 
 import { extensions } from './mixins';
 import { tilde } from '../../utils';
-import { SchemaTypesToIterate, traverseAsyncApiDocument } from '../../iterator';
+import { schemasFromDocument } from '../utils';
 
 import type { AsyncAPIDocumentInterface } from '../asyncapi';
 import type { InfoInterface } from '../info';
@@ -26,12 +26,12 @@ import type { MessageInterface } from '../message';
 import type { ComponentsInterface } from '../components';
 import type { SecuritySchemesInterface } from '../security-schemes';
 import type { ExtensionsInterface } from '../extensions';
-import type { SchemaInterface } from '../schema';
 import type { SchemasInterface } from '../schemas';
+import type { OperationInterface } from '../operation';
+import type { ChannelInterface } from '../channel';
+import type { ServerInterface } from '../server';
+
 import type { v3 } from '../../spec-types';
-import { OperationInterface } from '../operation';
-import { ChannelInterface } from '../channel';
-import { ServerInterface } from '../server';
 
 export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements AsyncAPIDocumentInterface {
   version(): string {
@@ -89,8 +89,8 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
     return new Messages(messages);
   }
 
-  schemas() {
-    return this.__schemas(false);
+  schemas(): SchemasInterface {
+    return schemasFromDocument(this, Schemas, false);
   }
 
   securitySchemes(): SecuritySchemesInterface {
@@ -138,26 +138,10 @@ export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements As
   }
 
   allSchemas(): SchemasInterface {
-    return this.__schemas(true);
+    return schemasFromDocument(this, Schemas, true);
   }
 
   extensions(): ExtensionsInterface {
     return extensions(this);
-  }
-
-  private __schemas(withComponents: boolean) {
-    const schemas: Set<SchemaInterface> = new Set();
-    function callback(schema: SchemaInterface) {
-      if (!schemas.has(schema.json())) {
-        schemas.add(schema);
-      }
-    }
-
-    let toIterate = Object.values(SchemaTypesToIterate);
-    if (!withComponents) {
-      toIterate = toIterate.filter(s => s !== SchemaTypesToIterate.Components);
-    }
-    traverseAsyncApiDocument(this, callback, toIterate);
-    return new Schemas(Array.from(schemas));
   }
 }

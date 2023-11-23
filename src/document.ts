@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from './models';
+import { AsyncAPIDocumentV2, AsyncAPIDocumentV3, ParserAPIVersion } from './models';
 import { unstringify } from './stringify';
 import { createDetailedAsyncAPI } from './utils';
 
@@ -43,7 +43,7 @@ export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocum
   }
   if (maybeDoc && typeof (maybeDoc as AsyncAPIDocumentInterface).json === 'function') {
     const versionOfParserAPI = (maybeDoc as AsyncAPIDocumentInterface).json()[xParserApiVersion];
-    return versionOfParserAPI === 2;
+    return versionOfParserAPI === ParserAPIVersion;
   }
   return false;
 }

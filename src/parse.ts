@@ -59,6 +59,7 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     // unfreeze the object - Spectral makes resolved document "freezed" 
     const validatedDoc = copy(validated as Record<string, any>);
     const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
+    detailed.parsed['x-test'] = 'test';
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
     setExtension(xParserApiVersion, ParserAPIVersion, document);

@@ -26,7 +26,7 @@ describe('custom operations for v3 - parse schemas', function() {
           },
           messages: [
             {
-              $ref: '#/components/messages/message'
+              $ref: '#/channels/channel/messages/message'
             }
           ]
         }

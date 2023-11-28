@@ -2,7 +2,8 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
-import { requiredOperationChannelUnambiguity } from './functions/requiredOperationChannelUnambiguity';
+// import { requiredOperationChannelUnambiguity } from './functions/requiredOperationChannelUnambiguity';
+import { pattern } from '@stoplight/spectral-functions';
 
 export const v3CoreRuleset = {
   description: 'Core AsyncAPI 3.x.x ruleset.',
@@ -26,16 +27,17 @@ export const v3CoreRuleset = {
       },
     },
     'asyncapi3-required-operation-channel-unambiguity': {
-      description: 'Required operation (under root channels) "channel" must reference to a required channel (under root channels).',
-      message: '{{error}}',
+      description: 'The "channel" field of an operation under the root "operations" object must always reference a channel under the root "channels" object.',
       severity: 'error',
       recommended: true,
       resolved: false, // We use the JSON pointer to match the channel.
-      given: [
-        '$.operations.*',
-      ],
+      given: '$.operations.*',      
       then: {
-        function: requiredOperationChannelUnambiguity,
+        field: 'channel.$ref',
+        function: pattern,
+        functionOptions: {
+          match: '#\\/channels\\/', // If doesn't match, rule fails.
+        },
       },
     }
   },

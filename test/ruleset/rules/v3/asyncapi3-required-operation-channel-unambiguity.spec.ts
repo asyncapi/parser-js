@@ -222,8 +222,8 @@ testRule('asyncapi3-required-operation-channel-unambiguity', [
     },
     errors: [
       {
-        message: 'The channel field of a required operation should point to a required channel.',
-        path: ['operations', 'UserSignedUp', 'channel'],
+        message: 'The "channel" field of an operation under the root "operations" object must always reference a channel under the root "channels" object.',
+        path: ['operations', 'UserSignedUp', 'channel', '$ref'],
         severity: DiagnosticSeverity.Error,
       }
     ],
@@ -252,8 +252,8 @@ testRule('asyncapi3-required-operation-channel-unambiguity', [
     },
     errors: [
       {
-        message: 'The channel field of a required operation should point to a required channel.',
-        path: ['operations', 'UserSignedUp', 'channel'],
+        message: 'The "channel" field of an operation under the root "operations" object must always reference a channel under the root "channels" object.',
+        path: ['operations', 'UserSignedUp', 'channel', '$ref'],
         severity: DiagnosticSeverity.Error,
       }
     ],

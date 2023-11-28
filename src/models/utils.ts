@@ -17,6 +17,24 @@ export function createModel<T extends BaseModel>(Model: Constructor<T>, value: I
   return new Model(value, { ...meta, asyncapi: meta.asyncapi || parent?.meta().asyncapi });
 }
 
+export function objectIdFromJSONPointer(path: string, data: any): string {
+  if (typeof data === 'string') {
+    data = JSON.parse(data); 
+  }
+
+  if (!path.endsWith('/$ref')) path += '/$ref';
+
+  path = path.replace(/^\//, ''); // removing the leading slash
+  path.split('/').forEach((subpath) => {
+    const key = subpath.replace(/~1/, '/'); // recover escaped slashes
+    if (data[key] !== undefined) {
+      data = data[key];
+    }
+  });
+  
+  return data.split('/').pop().replace(/~1/, '/');
+}
+
 export function schemasFromDocument<T extends SchemasInterface>(document: AsyncAPIDocumentInterface, SchemasModel: Constructor<T>, includeComponents: boolean): T {
   const jsonInstances: Set<any> = new Set();
   const schemas: Set<SchemaInterface> = new Set();

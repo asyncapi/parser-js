@@ -1,7 +1,84 @@
-import { AsyncAPIDocumentV2 } from '../src/models';
+import { AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from '../src/models';
 import { Parser } from '../src/parser';
 
 describe('custom resolver', function() {
+  it('Reply channel + messages[] Ids come from JSON Pointer', async function() {
+    const parser = new Parser();
+
+    const documentRaw = `{
+      "asyncapi": "3.0.0",
+      "info": {
+        "title": "Account Service",
+        "version": "1.0.0",
+        "description": "This service is in charge of processing user signups"
+      },
+      "channels": {
+        "user/signedup": {
+          "address": "user/signedup",
+          "messages": {
+            "subscribe.message": {
+              "$ref": "#/components/messages/UserSignedUp"
+            }
+          }
+        }
+      },
+      "operations": {
+        "user/signedup.subscribe": {
+          "action": "send",
+          "channel": {
+            "$ref": "#/channels/user~1signedup"
+          },
+          "messages": [
+            {
+              "$ref": "#/components/messages/UserSignedUp"
+            }
+          ],
+          "reply": {
+            "channel": {
+              "$ref": "#/channels/user~1signedup"
+            },
+            "messages": [
+              {
+                "$ref": "#/components/messages/UserSignedUp"
+              }
+            ]
+          }
+        }
+      },
+      "components": {
+        "messages": {
+          "UserSignedUp": {
+            "payload": {
+              "type": "object",
+              "properties": {
+                "displayName": {
+                  "type": "string",
+                  "description": "Name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "Email of the user"
+                }
+              }
+            }
+          }
+        }
+      }
+    }`;
+    const { document } = await parser.parse(documentRaw);
+    
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+   
+    const operation = document?.operations().get('user/signedup.subscribe');
+    const replyObj = operation?.reply();
+    expect(replyObj?.channel()?.id()).toEqual('user/signedup');
+    
+    const message = replyObj?.messages()?.get('UserSignedUp');
+    expect(message).toBeDefined();
+    expect(message?.id()).toEqual('UserSignedUp');
+  });
+
   it('should resolve document references', async function() {
     const parser = new Parser();
 

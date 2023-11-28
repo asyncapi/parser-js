@@ -64,20 +64,21 @@ describe('OperationReply model', function() {
   
   describe('.messages()', function() {
     it('should return collection of messages - single message', function() {
-      const d = new OperationReply({ messages: { someMessage: {} } });
+      const d = new OperationReply({ messages: [{'x-parser-unique-object-id': 'testMessage'}] });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(1);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
+      expect(d.messages().all()[0].id()).toEqual('testMessage');
     });
 
     it('should return collection of messages - more than one messages', function() {
-      const d = new OperationReply({ messages: { someMessage1: {}, someMessage2: {} } });
+      const d = new OperationReply({ messages: [{'x-parser-unique-object-id': 'testMessage1'}, {'x-parser-unique-object-id': 'testMessage2'}] });
       expect(d.messages()).toBeInstanceOf(Messages);
       expect(d.messages().all()).toHaveLength(2);
       expect(d.messages().all()[0]).toBeInstanceOf(Message);
-      expect(d.messages().all()[0].id()).toEqual('someMessage1');
+      expect(d.messages().all()[0].id()).toEqual('testMessage1');
       expect(d.messages().all()[1]).toBeInstanceOf(Message);
-      expect(d.messages().all()[1].id()).toEqual('someMessage2');
+      expect(d.messages().all()[1].id()).toEqual('testMessage2');
     });
 
     it('should return undefined if address is not present', function() {

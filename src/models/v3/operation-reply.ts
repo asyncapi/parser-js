@@ -41,7 +41,8 @@ export class OperationReply extends BaseModel<v3.OperationReplyObject, { id?: st
   
   messages(): MessagesInterface {
     return new Messages(
-      Object.entries(this._json.messages ?? {}).map(([messageId, message]) => {
+      Object.values(this._json.messages ?? {}).map((message) => {
+        const messageId = (message as any)[xParserObjectUniqueId];
         return this.createModel(Message, message as v3.MessageObject, { id: messageId, pointer: this.jsonPath(`messages/${messageId}`) });
       })
     );

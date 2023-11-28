@@ -2,7 +2,6 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
-// import { requiredOperationChannelUnambiguity } from './functions/requiredOperationChannelUnambiguity';
 import { pattern } from '@stoplight/spectral-functions';
 
 export const v3CoreRuleset = {

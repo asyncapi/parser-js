@@ -2,6 +2,7 @@ import { applyTraitsV2, applyTraitsV3 } from './apply-traits';
 import { resolveCircularRefs } from './resolve-circular-refs';
 import { parseSchemasV2, parseSchemasV3 } from './parse-schema';
 import { anonymousNaming } from './anonymous-naming';
+import { checkCircularRefs } from './check-circular-refs';
 
 import type { RulesetFunctionContext } from '@stoplight/spectral-core';
 import type { Parser } from '../parser';
@@ -9,8 +10,8 @@ import type { ParseOptions } from '../parse';
 import type { AsyncAPIDocumentInterface } from '../models';
 import type { DetailedAsyncAPI } from '../types';
 import type { v2, v3 } from '../spec-types';
-import { checkCircularRefs } from './check-circular-refs';
 
+export {applyUniqueIds} from './apply-unique-ids';
 export async function customOperations(parser: Parser, document: AsyncAPIDocumentInterface, detailed: DetailedAsyncAPI, inventory: RulesetFunctionContext['documentInventory'], options: ParseOptions): Promise<void> {
   switch (detailed.semver.major) {
   case 2: return operationsV2(parser, document, detailed, inventory, options);

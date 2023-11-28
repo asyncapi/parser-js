@@ -13,6 +13,7 @@ import { SecurityRequirement } from '../../../src/models/v3/security-requirement
 import { serializeInput, assertCoreModel } from './utils';
 
 import type { v3 } from '../../../src/spec-types';
+import { xParserObjectUniqueId } from '../../../src/constants';
 
 const doc = {
   production: {
@@ -157,6 +158,7 @@ describe('Server Model', function () {
     it('should return collection of operations - server available only in particular channel', function() {
       const doc = serializeInput<v3.ServerObject>({});
       const channel = { servers: [doc] };
+      channel[xParserObjectUniqueId] = 'unique-id';
       const d = new Server(doc, { asyncapi: { parsed: { channels: { someChannel: channel }, operations: { someOperation1: { channel }, someOperation2: { channel: { servers: [{}] } } } } } as any, pointer: '', id: 'production' });
       expect(d.operations()).toBeInstanceOf(Operations);
       expect(d.operations().all()).toHaveLength(1);

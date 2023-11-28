@@ -4,14 +4,12 @@ import { Message } from './message';
 import { Messages } from './messages';
 import { MessagesInterface } from '../messages';
 import { OperationReplyAddress } from './operation-reply-address';
-
 import { extensions } from './mixins';
-
+import { xParserObjectUniqueId } from '../../constants';
 import type { ExtensionsInterface } from '../extensions';
 import type { OperationReplyInterface } from '../operation-reply';
 import type { OperationReplyAddressInterface } from '../operation-reply-address';
 import type { ChannelInterface } from '../channel';
-
 import type { v3 } from '../../spec-types';
 
 export class OperationReply extends BaseModel<v3.OperationReplyObject, { id?: string }> implements OperationReplyInterface {
@@ -35,14 +33,16 @@ export class OperationReply extends BaseModel<v3.OperationReplyObject, { id?: st
 
   channel(): ChannelInterface | undefined {
     if (this._json.channel) {
-      return this.createModel(Channel, this._json.channel as v3.ChannelObject, { id: '', pointer: this.jsonPath('channel') });
+      const channelId = (this._json.channel as any)[xParserObjectUniqueId];
+      return this.createModel(Channel, this._json.channel as v3.ChannelObject, { id: channelId, pointer: this.jsonPath('channel') });
     }
     return this._json.channel;
   }
+  
   messages(): MessagesInterface {
     return new Messages(
-      Object.entries(this._json.messages || {}).map(([messageName, message]) => {
-        return this.createModel(Message, message as v3.MessageObject, { id: messageName, pointer: this.jsonPath(`messages/${messageName}`) });
+      Object.entries(this._json.messages ?? {}).map(([messageId, message]) => {
+        return this.createModel(Message, message as v3.MessageObject, { id: messageId, pointer: this.jsonPath(`messages/${messageId}`) });
       })
     );
   }

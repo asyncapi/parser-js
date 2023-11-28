@@ -38,6 +38,24 @@ export const v3CoreRuleset = {
           match: '#\\/channels\\/', // If doesn't match, rule fails.
         },
       },
+    },
+    
+    /**
+     * Channel Object rules
+     */
+    'asyncapi3-required-channel-servers-unambiguity': {
+      description: 'The "servers" field of a channel under the root "channels" object must always reference to a subset of the servers under the root "servers" object.',
+      severity: 'error',
+      recommended: true,
+      resolved: false, // We use the JSON pointer to match the channel.
+      given: '$.channels.*',      
+      then: {
+        field: '$.servers.*.$ref',
+        function: pattern,
+        functionOptions: {
+          match: '#\\/servers\\/', // If doesn't match, rule fails.
+        },
+      },
     }
   },
 };

@@ -88,7 +88,7 @@ testRule('asyncapi3-required-operation-channel-unambiguity', [
     errors: [],
   },
   {
-    name: 'valid case - required operation (under components) channel field points to a required channel (under root)',
+    name: 'valid case - optional operation (under components) channel field points to a required channel (under root)',
     document: {
       asyncapi: '3.0.0',
       info: {

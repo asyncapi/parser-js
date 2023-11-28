@@ -166,12 +166,12 @@ testRule('asyncapi3-required-channel-servers-unambiguity', [
     },
     errors: [
       {
-        message: 'The "servers" field of a channel under the root "channels" object must always reference to a subset of the servers under the root "servers" object.',
+        message: 'The "servers" field of a channel under the root "channels" object must always reference a subset of the servers under the root "servers" object.',
         path: ['channels', 'UserSignedUp', 'servers', '0', '$ref'],
         severity: DiagnosticSeverity.Error,
       },
       {
-        message: 'The "servers" field of a channel under the root "channels" object must always reference to a subset of the servers under the root "servers" object.',
+        message: 'The "servers" field of a channel under the root "channels" object must always reference a subset of the servers under the root "servers" object.',
         path: ['channels', 'UserSignedUp', 'servers', '1', '$ref'],
         severity: DiagnosticSeverity.Error,
       }
@@ -196,12 +196,12 @@ testRule('asyncapi3-required-channel-servers-unambiguity', [
     },
     errors: [
       {
-        message: 'The "servers" field of a channel under the root "channels" object must always reference to a subset of the servers under the root "servers" object.',
+        message: 'The "servers" field of a channel under the root "channels" object must always reference a subset of the servers under the root "servers" object.',
         path: ['channels', 'UserSignedUp', 'servers', '0', '$ref'],
         severity: DiagnosticSeverity.Error,
       },
       {
-        message: 'The "servers" field of a channel under the root "channels" object must always reference to a subset of the servers under the root "servers" object.',
+        message: 'The "servers" field of a channel under the root "channels" object must always reference a subset of the servers under the root "servers" object.',
         path: ['channels', 'UserSignedUp', 'servers', '1', '$ref'],
         severity: DiagnosticSeverity.Error,
       }

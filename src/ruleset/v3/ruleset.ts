@@ -44,7 +44,7 @@ export const v3CoreRuleset = {
      * Channel Object rules
      */
     'asyncapi3-required-channel-servers-unambiguity': {
-      description: 'The "servers" field of a channel under the root "channels" object must always reference to a subset of the servers under the root "servers" object.',
+      description: 'The "servers" field of a channel under the root "channels" object must always reference a subset of the servers under the root "servers" object.',
       severity: 'error',
       recommended: true,
       resolved: false, // We use the JSON pointer to match the channel.

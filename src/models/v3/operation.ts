@@ -17,6 +17,7 @@ import type { ServersInterface } from '../servers';
 import type { ServerInterface } from '../server';
 
 import type { v3 } from '../../spec-types';
+import { xParserObjectUniqueId } from '../../constants';
 
 export class Operation extends OperationTrait<v3.OperationObject> implements OperationInterface {
   action(): OperationAction {
@@ -48,23 +49,21 @@ export class Operation extends OperationTrait<v3.OperationObject> implements Ope
 
   channels(): ChannelsInterface {
     if (this._json.channel) {
-      for (const [channelName, channel] of Object.entries(this._meta.asyncapi?.parsed.channels || {})) {
-        if (channel === this._json.channel) {
-          return new Channels([
-            this.createModel(Channel, this._json.channel as v3.ChannelObject, { id: channelName, pointer: `/channels/${channelName}` })
-          ]);
-        }
-      }
+      const operationChannelId = (this._json.channel as any)[xParserObjectUniqueId];
+      return new Channels([
+        this.createModel(Channel, this._json.channel as v3.ChannelObject, { id: operationChannelId, pointer: `/channels/${operationChannelId}` })
+      ]);
     }
     return new Channels([]);
   }
-
+  
   messages(): MessagesInterface {
     const messages: MessageInterface[] = [];
     if (Array.isArray(this._json.messages)) {
       this._json.messages.forEach((message, index) => {
+        const messageId = (message as any)[xParserObjectUniqueId];
         messages.push(
-          this.createModel(Message, message as v3.MessageObject, { id: '', pointer: this.jsonPath(`messages/${index}`) })
+          this.createModel(Message, message as v3.MessageObject, { id: messageId, pointer: this.jsonPath(`messages/${index}`) })
         );
       });
       return new Messages(messages);

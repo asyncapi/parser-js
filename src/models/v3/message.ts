@@ -6,7 +6,7 @@ import { MessageTraits } from './message-traits';
 import { MessageTrait } from './message-trait';
 import { Servers } from './servers';
 import { Schema } from './schema';
-
+import { xParserObjectUniqueId } from '../../constants';
 import type { ChannelsInterface } from '../channels';
 import type { ChannelInterface } from '../channel';
 import type { MessageInterface } from '../message';
@@ -16,7 +16,6 @@ import type { OperationInterface } from '../operation';
 import type { ServersInterface } from '../servers';
 import type { ServerInterface } from '../server';
 import type { SchemaInterface } from '../schema';
-
 import type { v3 } from '../../spec-types';
 
 export class Message extends MessageTrait<v3.MessageObject> implements MessageInterface {
@@ -58,6 +57,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
   }
 
   channels(): ChannelsInterface {
+    const thisMessageId = (this._json)[xParserObjectUniqueId];
     const channels: ChannelInterface[] = [];
     const channelsData: any[] = [];
     this.operations().forEach(operation => {
@@ -73,7 +73,10 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
 
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.channels || {}).forEach(([channelId, channelData]) => {
       const channelModel = this.createModel(Channel, channelData as v3.ChannelObject, { id: channelId, pointer: `/channels/${channelId}` });
-      if (!channelsData.includes(channelData) && channelModel.messages().some(m => m.json() === this._json)) {
+      if (!channelsData.includes(channelData) && channelModel.messages().some(m => {
+        const messageId = (m as any)[xParserObjectUniqueId];
+        return messageId === thisMessageId;
+      })) {
         channelsData.push(channelData);
         channels.push(channelModel);
       }
@@ -83,10 +86,15 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
   }
 
   operations(): OperationsInterface {
+    const thisMessageId = (this._json)[xParserObjectUniqueId];
     const operations: OperationInterface[] = [];
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
       const operationModel = this.createModel(Operation, operation as v3.OperationObject, { id: operationId, pointer: `/operations/${operationId}` });
-      if (operationModel.messages().some(m => m.json() === this._json)) {
+      const operationHasMessage = operationModel.messages().some(m => {
+        const messageId = (m as any)[xParserObjectUniqueId];
+        return messageId === thisMessageId;
+      });
+      if (operationHasMessage) {
         operations.push(operationModel);
       }
     });

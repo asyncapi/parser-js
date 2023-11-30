@@ -297,7 +297,6 @@ export type SecuritySchemaLocation =
   | 'password'
   | 'query'
   | 'header'
-  | 'header'
   | 'cookie';
 
 export interface SecuritySchemeObjectBase extends SpecificationExtensions {

@@ -76,6 +76,16 @@ export const coreRuleset = {
         function: internal,
       },
     },
+    'asyncapi-null-address-in-operations': {
+      description: 'check for null adrresses in channels associated with operations defining reply',
+      message: 'channel address should not be null when operation define a reply',
+      severity: 'error',
+      recommended: true,
+      given : '$',
+      then: {
+        function: 'checkNullAddressInOperations',
+      },
+    }
   },
 };
 

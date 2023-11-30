@@ -13,7 +13,7 @@ Updated bundle for the browser is always attached to the GitHub Release.
 > This package has rewrote the Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
 
 > **Note**
-> Read the [migration guide from v1 to v2](./docs/migrations/v1-to-v2.md).
+> Read the [migration guide from v2 to v3](./docs/migrations/v2-to-v3.md).
 
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->

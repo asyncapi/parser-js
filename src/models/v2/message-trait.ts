@@ -5,8 +5,8 @@ import { MessageExample } from './message-example';
 import { Schema } from './schema';
 
 import { xParserMessageName } from '../../constants';
-import { getDefaultSchemaFormat } from '../../schema-parser';
 import { bindings, hasDescription, description, extensions, hasExternalDocs, externalDocs, tags } from './mixins';
+import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import type { BindingsInterface } from '../bindings';
 import type { CorrelationIdInterface } from '../correlation-id';
@@ -21,19 +21,19 @@ import type { v2 } from '../../spec-types';
 
 export class MessageTrait<J extends v2.MessageTraitObject = v2.MessageTraitObject> extends BaseModel<J, { id: string }> implements MessageTraitInterface {
   id(): string {
-    return this.messageId() || this._meta.id || this.json(xParserMessageName) as string;
+    return this._json.messageId || this._meta.id || this.json(xParserMessageName) as string;
   }
 
-  schemaFormat(): string {
+  hasSchemaFormat(): boolean {
+    return this.schemaFormat() !== undefined;
+  }
+
+  schemaFormat(): string | undefined {
     return this._json.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }
 
   hasMessageId(): boolean {
     return !!this._json.messageId;
-  }
-
-  messageId(): string | undefined {
-    return this._json.messageId;
   }
   
   hasCorrelationId(): boolean {

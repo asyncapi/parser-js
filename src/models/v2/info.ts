@@ -68,17 +68,20 @@ export class Info extends BaseModel<v2.InfoObject> implements InfoInterface {
   }
 
   hasExternalDocs(): boolean {
-    return Object.keys(this._meta.asyncapi.parsed.externalDocs || {}).length > 0;
+    const asyncapiV2 = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+    return Object.keys(asyncapiV2.externalDocs || {}).length > 0;
   }
 
   externalDocs(): ExternalDocumentationInterface | undefined { 
     if (this.hasExternalDocs()) {
-      return this.createModel(ExternalDocumentation, this._meta.asyncapi.parsed.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
+      const asyncapiV2 = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+      return this.createModel(ExternalDocumentation, asyncapiV2.externalDocs as v2.ExternalDocumentationObject, { pointer: '/externalDocs' });
     }
   }
 
   tags(): TagsInterface {
-    const tags = this._meta.asyncapi.parsed.tags || [];
+    const asyncapiV2 = this._meta.asyncapi.parsed as v2.AsyncAPIObject;
+    const tags = asyncapiV2.tags || [];
     return new Tags(tags.map((tag: any, idx: number) => this.createModel(Tag, tag, { pointer: `/tags/${idx}` })));
   }
 

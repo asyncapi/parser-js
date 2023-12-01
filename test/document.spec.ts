@@ -1,5 +1,5 @@
 import { xParserApiVersion, xParserSpecParsed, xParserSpecStringified } from '../src/constants';
-import { BaseModel, AsyncAPIDocumentV2 } from '../src/models';
+import { AsyncAPIDocumentInterface, BaseModel, AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from '../src/models';
 import { convertToOldAPI } from '../src/old-api';
 import { Parser } from '../src/parser';
 import { 
@@ -17,12 +17,17 @@ describe('utils', function() {
   class Model extends BaseModel {}
 
   describe('createAsyncAPIDocument()', function() {
-    it('should create a valid document from v2.0.0', function() {
-      const doc = { asyncapi: '2.0.0' };
+    const cases = [
+      [2, AsyncAPIDocumentV2],
+      [3, AsyncAPIDocumentV3],
+    ];
+
+    test.each(cases)('should create a valid document from a v%p.0.0 source', (majorVersion, expected) => {
+      const doc = { asyncapi: `${majorVersion}.0.0` };
       const detailed = createDetailedAsyncAPI(doc as any, doc as any);
       const d = createAsyncAPIDocument(detailed);
       expect(d.version()).toEqual(doc.asyncapi);
-      expect(d).toBeInstanceOf(AsyncAPIDocumentV2);
+      expect(d).toBeInstanceOf(expected);
     });
   
     it('should fail trying to create a document from a non supported spec version', function() {
@@ -109,8 +114,16 @@ describe('utils', function() {
       expect(isAsyncAPIDocument(createAsyncAPIDocument(detailed))).toEqual(true);
     });
 
-    it('document with the x-parser-api-version extension set to 1 should be AsyncAPI document', async function() {
-      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 1 }; } })).toEqual(true);
+    it('document with the x-parser-api-version extension set to 3 should be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 3 }; } })).toEqual(true);
+    });
+
+    it('document with the x-parser-api-version extension set to 2 should not be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 2 }; } })).toEqual(false);
+    });
+
+    it('document with the x-parser-api-version extension set to 1 should not be AsyncAPI document', async function() {
+      expect(isAsyncAPIDocument({ json() { return { [xParserApiVersion]: 1 }; } })).toEqual(false);
     });
 
     it('document with the x-parser-api-version extension set to 0 should not be AsyncAPI document', async function() {

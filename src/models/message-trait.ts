@@ -6,9 +6,9 @@ import type { SchemaInterface } from './schema';
 
 export interface MessageTraitInterface extends BaseModel, BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface {
   id(): string;
-  schemaFormat(): string;
+  hasSchemaFormat(): boolean;
+  schemaFormat(): string | undefined;
   hasMessageId(): boolean;
-  messageId(): string | undefined;
   hasCorrelationId(): boolean;
   correlationId(): CorrelationIdInterface | undefined;
   hasContentType(): boolean;

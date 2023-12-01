@@ -3,7 +3,7 @@ import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixin
 import { SecurityRequirements } from './v2/security-requirements';
 
 export interface OperationTraitInterface extends BaseModel, BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface, ExternalDocumentationMixinInterface, TagsMixinInterface {
-  id(): string;
+  id(): string | undefined;
   hasOperationId(): boolean;
   operationId(): string | undefined;
   hasSummary(): boolean;

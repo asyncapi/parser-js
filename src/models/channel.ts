@@ -7,7 +7,7 @@ import type { ServersInterface } from './servers';
 
 export interface ChannelInterface extends BaseModel, BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface {
   id(): string;
-  address(): string;
+  address(): string | null | undefined;
   servers(): ServersInterface;
   operations(): OperationsInterface;
   messages(): MessagesInterface;

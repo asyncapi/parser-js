@@ -1,4 +1,4 @@
-import { AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from './models';
+import { AsyncAPIDocumentV2, AsyncAPIDocumentV3, ParserAPIVersion } from './models';
 import { unstringify } from './stringify';
 import { createDetailedAsyncAPI } from './utils';
 
@@ -11,13 +11,14 @@ import {
 import type { AsyncAPIDocumentInterface } from './models';
 import type { OldAsyncAPIDocument } from './old-api';
 import type { DetailedAsyncAPI, AsyncAPIObject } from './types';
+import { v2, v3 } from 'spec-types';
 
 export function createAsyncAPIDocument(asyncapi: DetailedAsyncAPI): AsyncAPIDocumentInterface {
   switch (asyncapi.semver.major) {
   case 2:
-    return new AsyncAPIDocumentV2(asyncapi.parsed, { asyncapi, pointer: '/' });
-    // case 3:
-    //   return new AsyncAPIDocumentV3(asyncapi.parsed, { asyncapi, pointer: '/' });
+    return new AsyncAPIDocumentV2(asyncapi.parsed as v2.AsyncAPIObject, { asyncapi, pointer: '/' });
+  case 3:
+    return new AsyncAPIDocumentV3(asyncapi.parsed as v3.AsyncAPIObject, { asyncapi, pointer: '/' });
   default:
     throw new Error(`Unsupported AsyncAPI version: ${asyncapi.semver.version}`);
   }
@@ -42,7 +43,7 @@ export function isAsyncAPIDocument(maybeDoc: unknown): maybeDoc is AsyncAPIDocum
   }
   if (maybeDoc && typeof (maybeDoc as AsyncAPIDocumentInterface).json === 'function') {
     const versionOfParserAPI = (maybeDoc as AsyncAPIDocumentInterface).json()[xParserApiVersion];
-    return versionOfParserAPI === 1;
+    return versionOfParserAPI === ParserAPIVersion;
   }
   return false;
 }

@@ -2,6 +2,7 @@ import { BaseModel } from '../base';
 
 import { xParserSchemaId } from '../../constants';
 import { extensions, hasExternalDocs, externalDocs } from './mixins';
+import { getDefaultSchemaFormat } from '../../schema-parser';
 
 import type { ExtensionsInterface } from '../extensions';
 import type { ExternalDocumentationInterface } from '../external-docs';
@@ -9,7 +10,7 @@ import type { SchemaInterface } from '../schema';
 
 import type { v2 } from '../../spec-types';
 
-export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, parent?: Schema }> implements SchemaInterface {
+export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, parent?: Schema, schemaFormat?: string }> implements SchemaInterface {
   id(): string {
     return this.$id() || this._meta.id || this.json(xParserSchemaId as any) as string;
   }
@@ -265,6 +266,10 @@ export class Schema extends BaseModel<v2.AsyncAPISchemaObject, { id?: string, pa
   required(): Array<string> | undefined {
     if (typeof this._json === 'boolean') return;
     return this._json.required;
+  }
+
+  schemaFormat(): string {
+    return this._meta.schemaFormat || getDefaultSchemaFormat(this._meta.asyncapi.semver.version);
   }
 
   then(): SchemaInterface | undefined {

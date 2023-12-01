@@ -22,6 +22,24 @@ const customSchemasPathsV2 = [
   '$.components.messages.*',
 ];
 
+const customSchemasPathsV3 = [
+  // channels
+  '$.channels.*.messages.*.payload',
+  '$.channels.*.messages.*.headers',
+  '$.components.channels.*.messages.*.payload',
+  '$.components.channels.*.messages.*.headers',
+  // operations
+  '$.operations.*.messages.*.payload',
+  '$.operations.*.messages.*.headers',
+  '$.components.operations.*.messages.*.payload',
+  '$.components.operations.*.messages.*.headers',
+  // messages
+  '$.components.messages.*.payload',
+  '$.components.messages.*.headers.*',
+  // schemas 
+  '$.components.schemas.*',
+];
+
 export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI) {
   const defaultSchemaFormat = getDefaultSchemaFormat(detailed.semver.version);
   const parseItems: Array<ToParseItem> = [];
@@ -63,6 +81,68 @@ export async function parseSchemasV2(parser: Parser, detailed: DetailedAsyncAPI)
   });
 
   return Promise.all(parseItems.map(item => parseSchemaV2(parser, item)));
+}
+
+export async function parseSchemasV3(parser: Parser, detailed: DetailedAsyncAPI) {
+  const defaultSchemaFormat = getDefaultSchemaFormat(detailed.semver.version);
+  const parseItems: Array<ToParseItem> = [];
+
+  const visited: Set<unknown> = new Set();
+  customSchemasPathsV3.forEach(path => {
+    JSONPath({
+      path,
+      json: detailed.parsed,
+      resultType: 'all',
+      callback(result) {
+        const value = result.value;
+        if (visited.has(value)) {
+          return;
+        }
+        visited.add(value);
+
+        const schema = value.schema;
+        if (!schema) {
+          return;
+        }
+
+        let schemaFormat = value.schemaFormat;
+        if (!schemaFormat) {
+          return;
+        }
+        schemaFormat = getSchemaFormat(value.schemaFormat, detailed.semver.version);
+
+        parseItems.push({
+          input: {
+            asyncapi: detailed,
+            data: schema,
+            meta: {
+              message: value,
+            },
+            path: [...splitPath(result.path), 'schema'],
+            schemaFormat,
+            defaultSchemaFormat,
+          },
+          value,
+        });
+      },
+    });
+  });
+
+  return Promise.all(parseItems.map(item => parseSchemaV3(parser, item)));
+}
+
+async function parseSchemaV3(parser: Parser, item: ToParseItem) {
+  const originalData = item.input.data;
+  const parsedData = await parseSchema(parser, item.input);
+  if (item.value?.schema !== undefined) {
+    item.value.schema = parsedData;
+  } else {
+    item.value = parsedData;
+  }
+  // save original payload only when data is different (returned by custom parsers)
+  if (originalData !== parsedData) {
+    item.value[xParserOriginalPayload] = originalData;
+  }
 }
 
 async function parseSchemaV2(parser: Parser, item: ToParseItem) {

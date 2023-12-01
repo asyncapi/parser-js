@@ -1,6 +1,6 @@
 import { Document } from '@stoplight/spectral-core';
 
-import { AsyncAPIDocumentV2, AsyncAPIDocumentV3 } from '../src/models';
+import { AsyncAPIDocumentV2, AsyncAPIDocumentV3, ParserAPIVersion } from '../src/models';
 import { Parser } from '../src/parser';
 import { xParserApiVersion } from '../src/constants';
 
@@ -32,9 +32,8 @@ describe('parse()', function() {
       channels: {}
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
-    expect(document).toEqual(undefined);
-    expect(diagnostics.length > 0).toEqual(true);
-    expect(diagnostics[0].message).toContain('Version "3.0.0" is not supported');
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(diagnostics.length === 0).toEqual(true);
   });
 
   it('should parse invalid document', async function() {
@@ -48,6 +47,20 @@ describe('parse()', function() {
     const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toEqual(undefined);
+    expect(diagnostics.length > 0).toEqual(true);
+  });
+
+  it('should parse invalid v3 document', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      not_a_valid_info_object: {
+        title: 'Invalid AsyncApi document',
+        version: '1.0',
+      },
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    
+    expect(document === undefined).toEqual(true);
     expect(diagnostics.length > 0).toEqual(true);
   });
 
@@ -79,7 +92,7 @@ describe('parse()', function() {
     const { document } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
-    expect(document?.extensions().get(xParserApiVersion)?.value()).toEqual(1);
+    expect(document?.extensions().get(xParserApiVersion)?.value()).toEqual(ParserAPIVersion);
   });
 
   it('should preserve references', async function() {

@@ -9,6 +9,9 @@ import type { SecurityRequirementsInterface } from './security-requirements';
 export interface ServerInterface extends BaseModel, DescriptionMixinInterface, BindingsMixinInterface, ExtensionsMixinInterface, TagsMixinInterface {
   id(): string
   url(): string;
+  host(): string;
+  hasPathname(): boolean;
+  pathname(): string | undefined;
   protocol(): string;
   protocolVersion(): string | undefined;
   hasProtocolVersion(): boolean;

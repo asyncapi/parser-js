@@ -15,7 +15,7 @@ testRule('asyncapi-document-resolved', [
   },
 
   {
-    name: 'invalid case (channels property is missing)',
+    name: 'invalid case for 2.X.X (channels property is missing)',
     document: {
       asyncapi: '2.0.0',
       info: {
@@ -32,7 +32,7 @@ testRule('asyncapi-document-resolved', [
   },
 
   {
-    name: 'valid case (case when other errors should also occur but we filter them out)',
+    name: 'valid case for 2.X.X (case validating $ref resolution works as expected)',
     document: {
       asyncapi: '2.0.0',
       info: {
@@ -306,6 +306,91 @@ testRule('asyncapi-document-resolved', [
           },
         },
       },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'valid case (3.0.0 version)',
+    document: {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Signup service example (internal)',
+        version: '0.1.0',
+      },
+      channels: {
+        'user/signedup': {
+          address: 'user/signedup',
+          messages: {
+            'subscribe.message': {
+              payload: {}
+            }
+          }
+        }
+      },
+      operations: {
+        'user/signedup.subscribe': {
+          action: 'send',
+          channel: {
+            address: 'user/signedup',
+            messages: {
+              'subscribe.message': {
+                payload: {}
+              }
+            }
+          },
+          messages: [
+            {
+              payload: {}
+            }
+          ]
+        }
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'invalid case for 3.X.X (info.version property is missing)',
+    document: {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+      },
+    },
+    errors: [
+      {
+        message: '"info" property must have required property "version"',
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
+  },
+
+  {
+    name: 'valid case for 3.X.X (case validating $ref resolution works as expected)',
+    document: {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Signup service example (internal)',
+        version: '0.1.0',
+      },
+      channels: {
+        userSignedup: {
+          address: 'user/signedup',
+          messages: {
+            'subscribe.message': {
+              $ref: '#/components/messages/testMessage'
+            }
+          }
+        }
+      },
+      components: {
+        messages: {
+          testMessage: {
+            payload: {}
+          }
+        }
+      }
     },
     errors: [],
   },

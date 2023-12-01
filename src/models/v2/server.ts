@@ -35,6 +35,20 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
     return this._json.url;
   }
 
+  host(): string {
+    const url = new URL(this.url());
+    return url.host;
+  }
+
+  hasPathname(): boolean {
+    return !!this.pathname();
+  }
+
+  pathname(): string | undefined {
+    const url = new URL(this.url());
+    return url.pathname;
+  }
+
   protocol(): string {
     return this._json.protocol;
   }

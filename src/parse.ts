@@ -1,6 +1,6 @@
-import { AsyncAPIDocumentInterface } from './models';
+import { AsyncAPIDocumentInterface, ParserAPIVersion } from './models';
 
-import { customOperations } from './custom-operations';
+import { applyUniqueIds, customOperations } from './custom-operations';
 import { validate } from './validate';
 import { copy } from './stringify';
 import { createAsyncAPIDocument } from './document';
@@ -38,13 +38,26 @@ const defaultOptions: ParseOptions = {
   validateOptions: {},
   __unstable: {},
 };
-
+import yaml from 'js-yaml';
 export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input, options: ParseOptions = {}): Promise<ParseOutput> {
   let spectralDocument: Document | undefined;
 
   try {
     options = mergePatch<ParseOptions>(defaultOptions, options);
-    const { validated, diagnostics, extras } = await validate(parser, spectral, asyncapi, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
+    // Normalize input to always be JSON 
+    let loadedObj;
+    if (typeof asyncapi === 'string') {
+      try {
+        loadedObj = yaml.load(asyncapi);
+      } catch (e) {
+        loadedObj = JSON.parse(asyncapi);
+      }
+    } else {
+      loadedObj = asyncapi;
+    }
+    // Apply unique ids before resolving references
+    applyUniqueIds(loadedObj);
+    const { validated, diagnostics, extras } = await validate(parser, spectral, loadedObj, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
     if (validated === undefined) {
       return {
         document: undefined,
@@ -58,12 +71,12 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
   
     // unfreeze the object - Spectral makes resolved document "freezed" 
     const validatedDoc = copy(validated as Record<string, any>);
-    const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
+    const detailed = createDetailedAsyncAPI(validatedDoc, loadedObj as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
-    setExtension(xParserApiVersion, 1, document);
+    setExtension(xParserApiVersion, ParserAPIVersion, document);
     await customOperations(parser, document, detailed, inventory, options);
-  
+    
     return { 
       document,
       diagnostics,

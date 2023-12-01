@@ -51,9 +51,13 @@ export function hasHintDiagnostic(diagnostics: ISpectralDiagnostic[]): boolean {
 
 export function setExtension(id: string, value: unknown, model: BaseModel): void {
   const modelValue = model.json();
-  if (typeof modelValue === 'object' && modelValue) {
+  setExtensionOnJson(id, value, modelValue);
+}
+
+export function setExtensionOnJson(id: string, value: unknown, model: any): void {
+  if (typeof model === 'object' && model) {
     id = id.startsWith('x-') ? id : `x-${id}`;
-    modelValue[String(id)] = value;
+    model[String(id)] = value;
   }
 }
 
@@ -142,6 +146,20 @@ export function findSubArrayIndex(arr: Array<any>, subarr: Array<any>, fromIndex
     }
   }
   return -1;
+}
+
+export function resolveServerUrl(url: string): { host: string, pathname: string | undefined } {
+  // eslint-disable-next-line prefer-const
+  let [maybeProtocol, maybeHost] = url.split('://');
+  if (!maybeHost) {
+    maybeHost = maybeProtocol;
+  }
+
+  const [host, ...pathnames] = maybeHost.split('/');
+  if (pathnames.length) {
+    return { host, pathname: `/${pathnames.join('/')}` };
+  }
+  return { host, pathname: undefined };
 }
 
 export function retrieveDeepData(value: Record<string, any>, path: Array<string | number>) {

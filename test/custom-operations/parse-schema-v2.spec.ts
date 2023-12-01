@@ -3,7 +3,7 @@ import { Parser } from '../../src/parser';
 
 import type { v2 } from '../../src/spec-types';
 
-describe('custom operations - parse schemas', function() {
+describe('custom operations for v2 - parse schemas', function() {
   const parser = new Parser();
 
   it('should parse valid schema format', async function() {

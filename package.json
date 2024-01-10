@@ -35,7 +35,7 @@
     "test": "npm run test:unit && npm run test:browser",
     "test:unit": "cross-env CI=true jest --coverage --testPathIgnorePatterns=test/browser/*",
     "test:browser": "npm run build:browser && cross-env CI=true jest -- ./test/browser/*",
-    "test:browser_new": "npm run build:browser_new && cross-env CI=true jest -- ./test/browser_new/*",
+    "test:browser_new": "cross-env CI=true jest -- ./test/browser_new/*",
     "lint": "eslint --max-warnings 0 --config .eslintrc .",
     "lint:fix": "eslint --max-warnings 0 --config .eslintrc . --fix",
     "generate:readme:toc": "markdown-toc -i \"README.md\"",

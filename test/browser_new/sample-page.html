@@ -15,9 +15,8 @@
     async function parse() {
       try {
         const parser = new window.AsyncAPIParser.Parser();
-        const spec = '{ "asyncapi": "2.0.0", "info": { "title": "My API", "version": "1.0.0" }, "channels": { "/test/tester": { "subscribe": { "operationId": "subscribeOperation", "message": { } } } } }';
-        const { document: parsedDocument, diagnostics } = await parser.parse(spec);
-
+        const result = window.AsyncAPIParser.fromURL(parser, 'http://localhost:8080/asyncapi.json');
+        const {document: parsedDocument, diagnostics} = await result.parse();
         document.getElementById('content').innerHTML = parsedDocument.version();
         document.getElementById('diagnostics').innerHTML = String(diagnostics.length);
       } catch (error) {

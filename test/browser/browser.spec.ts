@@ -44,7 +44,7 @@ describe('Test browser Parser in the node env', function() {
 
   afterAll(async function() {
     await browser.close();
-    await server.close();
+    server.close();
   });
 
   it('should parse spec in the browser', async function() {

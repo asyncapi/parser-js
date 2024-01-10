@@ -13,6 +13,7 @@ module.exports = {
     library: {
       name: 'AsyncAPIParser',
       type: 'umd',
+      export: 'default'
     },
   },
 

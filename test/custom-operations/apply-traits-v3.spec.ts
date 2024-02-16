@@ -55,13 +55,13 @@ describe('custom operations - apply traits v3', function() {
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
 
-    const someOperation1 = v3Document?.json()?.operations?.someOperation1;
+    const someOperation1 = v3Document?.json()?.operations?.someOperation1 as v3.OperationObject;
     delete someOperation1?.traits;
-    expect(someOperation1).toEqual({ action: 'send', channel: { 'x-parser-unique-object-id': 'channel1' }, description: 'another description' });
+    expect(someOperation1).toEqual({ action: 'send', channel: { 'x-parser-unique-object-id': 'channel1' }, description: 'another description', 'x-parser-unique-object-id': 'someOperation1' });
 
-    const someOperation2 = v3Document?.json()?.operations?.someOperation2;
+    const someOperation2 = v3Document?.json()?.operations?.someOperation2 as v3.OperationObject;
     delete someOperation2?.traits;
-    expect(someOperation2).toEqual({ action: 'send', channel: { 'x-parser-unique-object-id': 'channel1' }, description: 'root description' });
+    expect(someOperation2).toEqual({ action: 'send', channel: { 'x-parser-unique-object-id': 'channel1' }, description: 'root description', 'x-parser-unique-object-id': 'someOperation2' });
   });
 
   it('should apply traits to messages (channels)', async function() {
@@ -111,11 +111,11 @@ describe('custom operations - apply traits v3', function() {
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
 
-    const message1 = v3Document?.json()?.channels?.someChannel1?.messages?.someMessage;
+    const message1 = (v3Document?.json()?.channels?.someChannel1 as v3.ChannelObject).messages?.someMessage;
     delete (message1 as v3.MessageObject)?.traits;
     expect(message1).toEqual({ summary: 'some summary', description: 'another description', 'x-parser-message-name': 'someMessage', 'x-parser-unique-object-id': 'someMessage' });
 
-    const message2 = v3Document?.json()?.channels?.someChannel2?.messages?.someMessage;
+    const message2 = (v3Document?.json()?.channels?.someChannel2 as v3.ChannelObject).messages?.someMessage;
     delete (message2 as v3.MessageObject)?.traits;
     expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage', 'x-parser-unique-object-id': 'someMessage' });
   });
@@ -163,14 +163,14 @@ describe('custom operations - apply traits v3', function() {
 
     const message1 = v3Document?.json()?.components?.messages?.someMessage1;
     delete (message1 as v3.MessageObject)?.traits;
-    expect(message1).toEqual({ summary: 'some summary', description: 'another description', 'x-parser-message-name': 'someMessage1' });
+    expect(message1).toEqual({ summary: 'some summary', description: 'another description', 'x-parser-message-name': 'someMessage1', 'x-parser-unique-object-id': 'someMessage1' });
 
     const message2 = v3Document?.json()?.components?.messages?.someMessage2;
     delete (message2 as v3.MessageObject)?.traits;
-    expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage2' });
+    expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage2', 'x-parser-unique-object-id': 'someMessage2' });
   });
 
-  it('iterative functions should still work after traits have been applied', async function() {
+  describe('iterative functions should still work after traits have been applied', function() {
     const documentRaw = {
       asyncapi: '3.0.0',
       info: {
@@ -187,7 +187,7 @@ describe('custom operations - apply traits v3', function() {
         'smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured': {
           address: 'smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured',
           messages: {
-            'receiveLightMeasurement.message': {
+            lightMeasured: {
               $ref: '#/components/messages/lightMeasured'
             }
           },
@@ -213,7 +213,7 @@ describe('custom operations - apply traits v3', function() {
           ],
           messages: [
             {
-              $ref: '#/components/messages/lightMeasured'
+              $ref: '#/channels/smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured/messages/lightMeasured'
             }
           ]
         }
@@ -290,32 +290,64 @@ describe('custom operations - apply traits v3', function() {
         }
       }
     };
-    const { document } = await parser.parse(documentRaw);
-    
-    const v3Document = document as AsyncAPIDocumentV3;
-    expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
+    let v3Document: AsyncAPIDocumentV3;
     const expectedOperationId = 'receiveLightMeasurement';
     const expectedChannelId = 'smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured';
-    const operations = v3Document.operations();
-    expect(operations.length).toEqual(1);
-    const operation = operations[0];
-    expect(operation.id()).toEqual(expectedOperationId);
-    const operationChannels = operation.channels().all();
-    expect(operationChannels.length).toEqual(1);
-    const lightMeasuredChannel = operationChannels[0];
-    expect(lightMeasuredChannel.json()[xParserObjectUniqueId]).toEqual(expectedChannelId);
-    const channelOperations = lightMeasuredChannel.operations().all();
-    expect(channelOperations.length).toEqual(1);
-    const circularOperation = channelOperations[0];
-    expect(circularOperation.id()).toEqual(expectedOperationId);
+    const expectedMessageId = 'lightMeasured';
 
-    const channels = v3Document.channels();
-    expect(channels.length).toEqual(1);
-    const channel = channels[0];
-    expect(channel.json()[xParserObjectUniqueId]).toEqual(expectedChannelId);
-    const channelOperations2 = channel.operations().all();
-    expect(channelOperations2.length).toEqual(1);
-    const operation2 = channelOperations2[0];
-    expect(operation2.id()).toEqual(expectedOperationId);
+    beforeAll(async () => {
+      const { document, diagnostics } = await parser.parse(documentRaw);
+      expect(diagnostics.length).toEqual(0);
+      v3Document = document as AsyncAPIDocumentV3;
+    });
+
+    it('should be able to go from operation -> channel', () => {
+      const operations = v3Document.operations().all();
+      expect(operations.length).toEqual(1);
+      const operation = operations[0];
+      expect(operation.id()).toEqual(expectedOperationId);
+      const operationChannels = operation.channels().all();
+      expect(operationChannels.length).toEqual(1);
+      const lightMeasuredChannel = operationChannels[0];
+      expect(lightMeasuredChannel.json()[xParserObjectUniqueId]).toEqual(expectedChannelId);
+      const messages = lightMeasuredChannel.messages().all();
+      expect(messages.length).toEqual(1);
+      const message = messages[0];
+      expect(message.id()).toEqual(expectedMessageId);
+    });
+
+    it('should be able to go from channel -> operation', () => {
+      const channels = v3Document.channels().all();
+      expect(channels.length).toEqual(1);
+      const channel = channels[0];
+      expect(channel.json()[xParserObjectUniqueId]).toEqual(expectedChannelId);
+      const channelOperations = channel.operations().all();
+      expect(channelOperations.length).toEqual(1);
+      const operation = channelOperations[0];
+      expect(operation.id()).toEqual(expectedOperationId);
+      const messages = operation.messages().all();
+      expect(messages.length).toEqual(1);
+      const message = messages[0];
+      expect(message.id()).toEqual(expectedMessageId);
+    });
+
+    it('should be able to go in full circle operation -> channel -> operation', () => {
+      const operations = v3Document.operations().all();
+      expect(operations.length).toEqual(1);
+      const operation = operations[0];
+      expect(operation.id()).toEqual(expectedOperationId);
+      const operationChannels = operation.channels().all();
+      expect(operationChannels.length).toEqual(1);
+      const lightMeasuredChannel = operationChannels[0];
+      expect(lightMeasuredChannel.json()[xParserObjectUniqueId]).toEqual(expectedChannelId);
+      const channelOperations = lightMeasuredChannel.operations().all();
+      expect(channelOperations.length).toEqual(1);
+      const circularOperation = channelOperations[0];
+      expect(circularOperation.id()).toEqual(expectedOperationId);
+      const messages = circularOperation.messages().all();
+      expect(messages.length).toEqual(1);
+      const message = messages[0];
+      expect(message.id()).toEqual(expectedMessageId);
+    });
   });
 });

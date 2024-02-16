@@ -55,8 +55,6 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     } else {
       loadedObj = asyncapi;
     }
-    // Apply unique ids before resolving references
-    applyUniqueIds(loadedObj);
     const { validated, diagnostics, extras } = await validate(parser, spectral, loadedObj, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
     if (validated === undefined) {
       return {
@@ -71,6 +69,9 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
   
     // unfreeze the object - Spectral makes resolved document "freezed" 
     const validatedDoc = copy(validated as Record<string, any>);
+
+    // Apply unique ids which are used as part of iterating between channels <-> operations <-> messages
+    applyUniqueIds(validatedDoc);
     const detailed = createDetailedAsyncAPI(validatedDoc, loadedObj as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);

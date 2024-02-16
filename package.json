@@ -62,7 +62,7 @@
     "node-fetch": "2.6.7"
   },
   "devDependencies": {
-    "@asyncapi/avro-schema-parser": "^3.0.12",
+    "@asyncapi/avro-schema-parser": "^3.0.13",
     "@jest/types": "^29.0.2",
     "@swc/core": "^1.2.248",
     "@swc/jest": "^0.2.22",

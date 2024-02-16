@@ -4,8 +4,6 @@ import { xParserObjectUniqueId } from '../constants';
  * This function applies unique ids for objects whose key's function as ids, ensuring that the key is part of the value.
  * 
  * For v3; Apply unique ids to all channel's, operations, and message's.
- * 
- * Does not apply unique ids to $ref objects
  */
 export function applyUniqueIds(structure: any) {
   const asyncapiVersion = structure.asyncapi.charAt(0);
@@ -24,20 +22,16 @@ export function applyUniqueIds(structure: any) {
 
 function applyUniqueIdToChannels(channels: any) {
   for (const [channelId, channel] of Object.entries((channels ?? {}) as Record<string, any>)) {
-    if (!channel.$ref) {
+    if (!channel[xParserObjectUniqueId]) {
       channel[xParserObjectUniqueId] = channelId;
     }
-    for (const [messageId, message] of Object.entries((channel.messages ?? {}) as Record<string, any>)) {
-      if (!message.$ref) {
-        message[xParserObjectUniqueId] = messageId;
-      }
-    }
+    applyUniqueIdToObjects(channel.messages);
   }
 }
 
 function applyUniqueIdToObjects(objects: any) {
   for (const [objectKey, object] of Object.entries((objects ?? {}) as Record<string, any>)) {
-    if (!object.$ref) {
+    if (!object[xParserObjectUniqueId]) {
       object[xParserObjectUniqueId] = objectKey;
     }
   }

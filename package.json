@@ -44,7 +44,7 @@
     "@asyncapi/raml-dt-schema-parser": "^4.0.4",
     "parserapiv1": "npm:@asyncapi/parser@^2.1.0",
     "parserapiv2": "npm:@asyncapi/parser@3.0.0-next-major-spec.8",
-    "parserapiv3": "npm:@asyncapi/parser@^3.0.1"
+    "parserapiv3": "npm:@asyncapi/parser@^3.0.6"
   },
   "devDependencies": {
     "@jest/types": "^29.0.2",

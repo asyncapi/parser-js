@@ -7,4 +7,5 @@ node_modules
 /esm
 /cjs
 /browser
+/browser_new
 *.tgz

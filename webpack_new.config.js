@@ -7,13 +7,12 @@ module.exports = {
   mode: 'production',
 
   output: {
-    path: path.resolve(__dirname, 'browser'),
+    path: path.resolve(__dirname, 'browser_new'),
     filename: 'index.js',
     globalObject: '(typeof self !== \'undefined\' ? self : this)',
     library: {
       name: 'AsyncAPIParser',
-      type: 'umd',
-      export: 'default'
+      type: 'umd'
     },
   },
 

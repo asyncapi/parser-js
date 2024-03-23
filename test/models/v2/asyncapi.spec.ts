@@ -270,6 +270,171 @@ describe('AsyncAPIDocument model', function() {
       expect(d.allMessages()).toHaveLength(4);
     });
 
+    describe('.allSecuritySchemes()', function() {
+      it('should return a collection of securitySchemes', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({components: { securitySchemes: { security1: { type: 'X509' }, security2: { type: 'apiKey' } } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allSecuritySchemes()).toBeInstanceOf(SecuritySchemes);
+        expect(d.allSecuritySchemes()).toHaveLength(2);
+      });
+  
+      it('should return a collection of securitySchemes even if securitySchemes are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allSecuritySchemes()).toBeInstanceOf(SecuritySchemes);
+      });
+    });
+  
+    describe('.allServerVariables()', function() {
+      it('should return a collection of serverVariables', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ servers: {serv1: {variables: {var3: {enum: []}}}},components: { serverVariables: { var1: { enum: [] }, var2: { enum: [] } } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allServerVariables()).toBeInstanceOf(Collection);
+        expect(d.allServerVariables()).toHaveLength(3);
+      });
+  
+      it('should return a collection of serverVariables even if serverVariables are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allServerVariables()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allParameters()', function() {
+      it('should return a collection of channelParameters', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ channels: {chan1: {parameters: {par3: {schema: {}}}},components: { parameters: { par1: { schema: {} }, par2: { schema: {} } } } }});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allParameters()).toBeInstanceOf(Collection);
+        expect(d.allParameters()).toHaveLength(3);
+      });
+  
+      it('should return a collection of channelParameters even if channelParameters are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allParameters()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allCorrelationIds()', function() {
+      it('should return a collection of correlationIds', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ channels: {chan1: {publish: {message: {traits: [{correlationId: {location: ''}}],correlationId: {location: ''}}}}},components: { correlationIds: { correlationId1: {}, correlationId2: {} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allCorrelationIds()).toBeInstanceOf(Collection);
+        expect(d.allCorrelationIds()).toHaveLength(4);
+      });
+  
+      it('should return a collection of correlationIds even if correlationIds are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allCorrelationIds()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allTags()', function() {
+      it('should return a collection of tags', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({tags: [{ name: 'tag1' }, { name: 'tag2' }] });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allTags()).toBeInstanceOf(Collection);
+        expect(d.allTags()).toHaveLength(2);
+      });
+  
+      it('should return a collection of tags even if tags are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allTags()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allOperationTraits()', function() {
+      it('should return a collection of operationTraits', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ components: { operationTraits: { trait1: {}, trait2: {} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allOperationTraits()).toBeInstanceOf(Collection);
+        expect(d.allOperationTraits()).toHaveLength(2);
+      });
+  
+      it('should return a collection of operationTraits even if operationTraits are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allOperationTraits()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allMessageTraits()', function() {
+      it('should return a collection of messageTraits', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ components: { messageTraits: { trait1: {name: ''}, trait2: {name: ''} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allMessageTraits()).toBeInstanceOf(Collection);
+        expect(d.allMessageTraits()).toHaveLength(2);
+      });
+  
+      it('should return a collection of messageTraits even if messageTraits are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allMessageTraits()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allServerBindings()', function() {
+      it('should return a collection of serverBindings', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ components: { serverBindings: { binding1: {ws: {}}, binding2: {kafka: {}} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allServerBindings()).toBeInstanceOf(Collection);
+        expect(d.allServerBindings()).toHaveLength(2);
+      });
+  
+      it('should return a collection of serverBindings even if serverBindings are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allServerBindings()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allChannelBindings()', function() {
+      it('should return a collection of channelBindings', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ components: { channelBindings: { binding1: {ws: {}}, binding2: {http: {}} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allChannelBindings()).toBeInstanceOf(Collection);
+        expect(d.allChannelBindings()).toHaveLength(2);
+      });
+  
+      it('should return a collection of channelBindings even if channelBindings are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allChannelBindings()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allOperationBindings()', function() {
+      it('should return a collection of operationBindings', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ components: { operationBindings: { binding1: {ws: {}}, binding2: {mqtt: {}} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allOperationBindings()).toBeInstanceOf(Collection);
+        expect(d.allOperationBindings()).toHaveLength(2);
+      });
+  
+      it('should return a collection of operationBindings even if operationBindings are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allOperationBindings()).toBeInstanceOf(Collection);
+      });
+    });
+  
+    describe('.allMessageBindings()', function() {
+      it('should return a collection of messageBindings', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({ components: { messageBindings: { websocket: { ws: {} }, http: {http: {}} } } });
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allMessageBindings()).toBeInstanceOf(Collection);
+        expect(d.allMessageBindings()).toHaveLength(2);
+      });
+  
+      it('should return a collection of messageBindings even if messageBindings are not defined', function() {
+        const doc = serializeInput<v2.AsyncAPIObject>({});
+        const d = new AsyncAPIDocument(doc);
+        expect(d.allMessageBindings()).toBeInstanceOf(Collection);
+      });
+    });
+  
     it('should return all messages (with messages from components)', function() {
       const message = {};
       const channel = { publish: { message }, subscribe: { message: { oneOf: [{ payload: {} }, message] } } };

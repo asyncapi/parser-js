@@ -11,6 +11,8 @@ import { SecuritySchemes } from './security-schemes';
 import { SecurityScheme } from './security-scheme';
 import { Components } from './components';
 import { Schemas } from './schemas';
+import { Bindings } from './bindings';
+import { Tags } from './tags';
 
 import { extensions } from './mixins';
 import { tilde } from '../../utils';
@@ -30,10 +32,172 @@ import type { SchemasInterface } from '../schemas';
 import type { OperationInterface } from '../operation';
 import type { ChannelInterface } from '../channel';
 import type { ServerInterface } from '../server';
+import type { BindingsInterface } from 'models/bindings';
+import type { ChannelParametersInterface } from 'models/channel-parameters';
+import type { CorrelationIdsInterface } from 'models/correlation-ids';
+import type { MessageTraitsInterface } from 'models/message-traits';
+import type { OperationTraitsInterface } from 'models/operation-traits';
+import type { ServerVariablesInterface } from 'models/server-variables';
+import type { TagsInterface } from 'models/tags';
+import type { Tag } from './tag';
+import type { TagInterface } from 'models/tag';
 
 import type { v3 } from '../../spec-types';
 
 export class AsyncAPIDocument extends BaseModel<v3.AsyncAPIObject> implements AsyncAPIDocumentInterface {
+  allSecuritySchemes(): SecuritySchemesInterface {
+    return this.securitySchemes();
+  }
+  allServerVariables(): ServerVariablesInterface {
+    const serverVariables: ServerVariablesInterface = this.components().serverVariables();
+    this.servers().forEach(server => {
+      server.variables().forEach(variable => {
+        if (!serverVariables.has(variable.id())) {
+          serverVariables.push(variable);
+        }
+      });
+    });
+
+    return serverVariables;
+  }
+  allParameters(): ChannelParametersInterface {
+    const parameters: ChannelParametersInterface = this.components().channelParameters();
+    this.channels().forEach(channel => {
+      channel.parameters().forEach(parameter => {
+        if (!parameters.includes(parameter)) {
+          parameters.push(parameter);
+        }
+      });
+    });
+    return parameters;
+  }
+
+  allCorrelationIds(): CorrelationIdsInterface {
+    const correlationIds: CorrelationIdsInterface = this.components().correlationIds();
+    this.allMessages().forEach(message => {
+      const correlationId = message.correlationId();
+      if (correlationId) {
+        correlationIds.push(correlationId);
+      }
+    });
+
+    this.allMessageTraits().forEach(trait => {
+      const correlationId = trait.correlationId();
+      if (correlationId) {
+        correlationIds.push(correlationId);
+      }
+    });
+
+    return correlationIds;
+  }
+  allTags(): TagsInterface {
+    const tags: TagInterface[] = Object.values(this.components().json().tags || {}) || [];
+    this.info().tags().forEach(tag => {
+      if (!tags.includes(tag)) {
+        tags.push(tag);
+      }
+    });
+
+    this.servers().forEach(server => {
+      server.tags().forEach(tag => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+
+    this.channels().forEach(channel => {
+      (channel.json().tags || []).forEach((tag: Tag) => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+
+    this.operations().forEach(operation => {
+      operation.tags().forEach(tag => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+
+    this.allOperationTraits().forEach(trait => {
+      trait.tags().forEach(tag => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+
+    this.allMessages().forEach(message => {
+      message.tags().forEach(tag => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+
+    this.allMessageTraits().forEach(trait => {
+      trait.tags().forEach(tag => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+
+    return new Tags(tags);
+  }
+  allOperationTraits(): OperationTraitsInterface {
+    const traits: OperationTraitsInterface = this.components().operationTraits();
+    this.operations().forEach(operation => {
+      operation.traits().forEach(trait => {
+        if (!traits.includes(trait)) {
+          traits.push(trait);
+        }
+      });
+    });
+    return traits;
+  }
+  allMessageTraits(): MessageTraitsInterface {
+    const messageTraits: MessageTraitsInterface = this.components().messageTraits();
+    this.allMessages().forEach(message => {
+      message.traits().forEach(trait => {
+        if (!messageTraits.includes(trait)) {
+          messageTraits.push(trait);
+        }
+      });
+    });
+    return messageTraits;
+  }
+  allServerBindings(): BindingsInterface {
+    const serverBindings = Object.values(this.components().serverBindings()).flat();
+    this.allServers().forEach(server => server.bindings().forEach(binding => (
+      !serverBindings.some(b => b.json() === binding.json()) && serverBindings.push(binding)
+    )));
+    return new Bindings(serverBindings);
+  }
+  allChannelBindings(): BindingsInterface {
+    const channelBindings = Object.values(this.components().channelBindings()).flat();
+    this.allChannels().forEach(channel => channel.bindings().forEach(binding => (
+      !channelBindings.some(b => b.json() === binding.json()) && channelBindings.push(binding)
+    )));
+    return new Bindings(channelBindings);
+  }
+  allOperationBindings(): BindingsInterface {
+    const operationBindings = Object.values(this.components().operationBindings()).flat();
+    this.allOperations().forEach(operation => operation.bindings().forEach(binding => (
+      !operationBindings.some(b => b.json() === binding.json()) && operationBindings.push(binding)
+    )));
+    return new Bindings(operationBindings);
+  }
+  allMessageBindings(): BindingsInterface {
+    const messageBindings = Object.values(this.components().messageBindings()).flat();
+    this.allMessages().forEach(message => message.bindings().forEach(binding => (
+      !messageBindings.some(b => b.json() === binding.json()) && messageBindings.push(binding)
+    )));
+    return new Bindings(messageBindings);
+  }
   version(): string {
     return this._json.asyncapi;
   }

@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "3.0.10",
+  "version": "3.0.12",
   "description": "JavaScript AsyncAPI parser.",
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
@@ -41,7 +41,7 @@
     "prepublishOnly": "npm run generate:assets"
   },
   "dependencies": {
-    "@asyncapi/specs": "^6.5.3",
+    "@asyncapi/specs": "^6.5.5",
     "@openapi-contrib/openapi-schema-to-json-schema": "~3.2.0",
     "@stoplight/json": "^3.20.2",
     "@stoplight/json-ref-readers": "^1.2.2",
@@ -62,7 +62,7 @@
     "node-fetch": "2.6.7"
   },
   "devDependencies": {
-    "@asyncapi/avro-schema-parser": "^3.0.18",
+    "@asyncapi/avro-schema-parser": "^3.0.20",
     "@jest/types": "^29.0.2",
     "@swc/core": "^1.2.248",
     "@swc/jest": "^0.2.22",

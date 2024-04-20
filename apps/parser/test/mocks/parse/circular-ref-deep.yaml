@@ -1,0 +1,14 @@
+type: object
+properties:
+  ExternalFile:
+    type: object
+    properties:
+      testExt:
+        $ref: '#/properties/YetAnother'
+  YetAnother:
+    type: object
+    properties:
+      children:
+        type: array
+        items:
+          $ref: '#/properties/ExternalFile'

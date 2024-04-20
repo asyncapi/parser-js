@@ -1,0 +1,9 @@
+node_modules
+.vscode
+.DS_Store
+/docs
+/coverage
+/lib
+/esm
+/cjs
+/browser

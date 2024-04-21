@@ -8,6 +8,8 @@
     "test": {},
     "test:unit": {},
     "test:integration": {},
-    "test:browser":{}
+    "test:browser": {},
+    "lint": {},
+    "lint:fix": {}
   }
 }

@@ -2,10 +2,13 @@
   "name": "parser-js",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "test": "turbo run test",
+    "lint":"turbo run lint",
+    "build": "turbo run build",
+    "parser:test:unit":"turbo run test:unit --filter=@asyncapi/parser",
+    "parser:test":"turbo run test --filter=@asyncapi/parser",
+    "parser:test:browser":"turbo run test:browser --filter=@asyncapi/parser",
+    "parser:build":"turbo run build --filter=@asyncapi/parser"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

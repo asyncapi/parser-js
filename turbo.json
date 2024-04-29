@@ -1,10 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
   "pipeline": {
-    "build": {
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
     "test": {},
     "test:unit": {},
     "test:integration": {},

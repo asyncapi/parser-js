@@ -6,6 +6,7 @@
     "test:integration": {},
     "test:browser": {},
     "lint": {},
-    "lint:fix": {}
+    "lint:fix": {},
+    "build": {}
   }
 }

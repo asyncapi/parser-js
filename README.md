@@ -8,7 +8,7 @@ Clone this repo and run:
 npm install
 ```
 
-This is a monorepo containing following Repos:
+This is a Monorepo containing following Repos:
 
 1. Parser-js
 

@@ -9,7 +9,8 @@
     "parser:test:unit": "turbo run test:unit --filter=@asyncapi/parser",
     "parser:test": "turbo run test --filter=@asyncapi/parser",
     "parser:test:browser": "turbo run test:browser --filter=@asyncapi/parser",
-    "parser:build": "turbo run build --filter=@asyncapi/parser"
+    "parser:build": "turbo run build --filter=@asyncapi/parser",
+    "multi-parser:build":"turbo run build --filter=@@smoya/multi-parser"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

@@ -30,7 +30,7 @@
     "build:cjs": "tsc --project ./tsconfig.cjs.json",
     "test": "npm run test:unit",
     "test:unit": "cross-env CI=true jest --coverage",
-    "lint": "eslint --max-warnings 0 --config .eslintrc .",
+    "lint": "eslint --max-warnings 0 --config ../../../eslintrc .",
     "lint:fix": "eslint --max-warnings 0 --config .eslintrc . --fix",
     "generate:readme:toc": "markdown-toc -i \"README.md\"",
     "generate:assets": "npm run build && npm run generate:readme:toc",

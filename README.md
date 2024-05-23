@@ -8,11 +8,16 @@ Clone this repo and run:
 npm install
 ```
 
-This is a Monorepo containing following Repos:
+# This is a Monorepo containing following Repos:
 
 1. Parser-js
 
 Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
+
+2. multi-parser-js
+
+This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version
+
 
 #### Development
 
@@ -509,6 +514,10 @@ git config --global core.eol lf
 
 4. Make sure code is well formatted and secure `npm run lint`
 
+
+
+
+#
 ## Contributing
 
 Read [CONTRIBUTING](https://github.com/asyncapi/.github/blob/master/CONTRIBUTING.md) guide.
@@ -559,3 +568,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+

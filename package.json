@@ -6,11 +6,14 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "build": "turbo run build",
+    "parser:build": "turbo run build --filter=@asyncapi/parser",
     "parser:test:unit": "turbo run test:unit --filter=@asyncapi/parser",
     "parser:test": "turbo run test --filter=@asyncapi/parser",
     "parser:test:browser": "turbo run test:browser --filter=@asyncapi/parser",
-    "parser:build": "turbo run build --filter=@asyncapi/parser",
-    "multi-parser:build":"turbo run build --filter=@@smoya/multi-parser"
+    "multi-parser:build":"turbo run build --filter=@smoya/multi-parser",
+    "multi-parser:test:unit":"turbo run test:unit --filter=@smoya/multi-parser",
+    "multi-parser:test":"turbo run test --filter=@smoya/multi-parser"
+    
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

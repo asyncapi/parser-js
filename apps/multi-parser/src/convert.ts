@@ -1,14 +1,14 @@
 import { createAsyncAPIDocument as createAsyncAPIDocumentParserV1 } from 'parserapiv1';
 import { createAsyncAPIDocument as createAsyncAPIDocumentParserV2 } from 'parserapiv2';
-import { createAsyncAPIDocument as createAsyncAPIDocumentParserV3 } from 'parserapiv3';
+import { createAsyncAPIDocument as createAsyncAPIDocumentParserV3 } from '@asyncapi/parser';
 
 import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV1 } from 'parserapiv1';
 import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV2 } from 'parserapiv2';
-import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV3 } from 'parserapiv3';
+import type { AsyncAPIDocumentInterface as AsyncAPIDocumentInterfaceParserV3 } from '@asyncapi/parser';
 
 import type { DetailedAsyncAPI as DetailedAsyncAPIParserV1 } from 'parserapiv1/esm/types';
 import type { DetailedAsyncAPI as DetailedAsyncAPIParserV2 } from 'parserapiv2/esm/types';
-import type { DetailedAsyncAPI as DetailedAsyncAPIParserV3 } from 'parserapiv3/esm/types';
+import type { DetailedAsyncAPI as DetailedAsyncAPIParserV3 } from '@asyncapi/parser/esm/types';
 
 export type AsyncAPIDocument = AsyncAPIDocumentInterfaceParserV1 | AsyncAPIDocumentInterfaceParserV2 | AsyncAPIDocumentInterfaceParserV3;
 

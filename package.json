@@ -10,9 +10,9 @@
     "parser:test:unit": "turbo run test:unit --filter=@asyncapi/parser",
     "parser:test": "turbo run test --filter=@asyncapi/parser",
     "parser:test:browser": "turbo run test:browser --filter=@asyncapi/parser",
-    "multi-parser:build":"turbo run build --filter=@smoya/multi-parser",
-    "multi-parser:test:unit":"turbo run test:unit --filter=@smoya/multi-parser",
-    "multi-parser:test":"turbo run test --filter=@smoya/multi-parser"
+    "multi-parser:build":"turbo run build --filter=@asyncapi/multi-parser",
+    "multi-parser:test:unit":"turbo run test:unit --filter=@asyncapi/multi-parser",
+    "multi-parser:test":"turbo run test --filter=@asyncapi/multi-parser"
     
   },
   "devDependencies": {

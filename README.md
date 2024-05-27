@@ -1,25 +1,3 @@
-# Parser-Js
-
-### Installing
-
-Clone this repo and run:
-
-```
-npm install
-```
-
-This is a Monorepo containing following Repos:
-
-1. Parser-js
-
-Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
-
-#### Development
-
-1. Make sure you are using Node.js 16 or higher and npm 8 or higher
-2. Write code and tests.
-3. Make sure all tests pass `npm run parser:test`
-
 [![AsyncAPI JavaScript Parser](./assets/logo.png)](https://www.asyncapi.com)
 
 Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.  
@@ -27,6 +5,12 @@ Validation is powered by [Spectral](https://github.com/stoplightio/spectral).
 Updated bundle for the browser is always attached to the GitHub Release.
 
 ![npm](https://img.shields.io/npm/v/@asyncapi/parser?style=for-the-badge) ![npm](https://img.shields.io/npm/dt/@asyncapi/parser?style=for-the-badge)
+
+
+This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
+
+1. **Parser-js**: Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
+
 
 > **Warning**
 > This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
@@ -489,8 +473,8 @@ It's a problem with Jest, which cannot understand [NodeJS's package exports](htt
 
 ```js
 moduleNameMapper: {
-  '^nimma/legacy$': '<rootDir>/node_modules/nimma/dist/legacy/cjs/index.js',
-  '^nimma/(.*)': '<rootDir>/node_modules/nimma/dist/cjs/$1',
+  '^nimma/legacy$': '<rootDir>/../../node_modules/nimma/dist/legacy/cjs/index.js',
+  '^nimma/(.*)': '<rootDir>/../../node_modules/nimma/dist/cjs/$1',
 },
 ```
 

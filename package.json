@@ -12,8 +12,6 @@
     "parser:build": "turbo run build --filter=@asyncapi/parser"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
     "prettier": "^3.2.5",
     "turbo": "1.13.3"
   },

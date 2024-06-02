@@ -12,7 +12,6 @@
     "parser:build": "turbo run build --filter=@asyncapi/parser"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
     "turbo": "1.13.3"
   },
   "engines": {

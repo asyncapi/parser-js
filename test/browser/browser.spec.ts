@@ -2,7 +2,6 @@ import fs from 'fs';
 import http from 'http';
 import path from 'path';
 import url from 'url';
-import os from 'os';
 import * as child_process from 'child_process';
 import puppeteer from 'puppeteer';
 
@@ -13,25 +12,23 @@ describe('Test browser Parser in the node env', function() {
 
   beforeAll(async function() {
     // if MacOS M1/M2, provide your own path to chromium
-    if (os.platform() === 'darwin' && os.arch() === 'arm64') {
-      try {
-        const browsers = child_process
-          .execSync('ls ~/.cache/puppeteer')
-          .toString()
-          .replace('\n', '');
-        if (!browsers) {
-          throw new Error(
-            'error listing browsers!'
-          );
-        }
-        console.log('BROWSERS:', browsers);
-      } catch (error) {
-        console.error(error);
-        console.log(
-          '\n\nUnable to find browsers\n\n'
+    try {
+      const browsers = child_process
+        .execSync('ls ~/.cache/puppeteer')
+        .toString()
+        .replace('\n', '');
+      if (!browsers) {
+        throw new Error(
+          'error listing browsers!'
         );
-        throw error;
       }
+      console.log('BROWSERS:', browsers);
+    } catch (error) {
+      console.error(error);
+      console.log(
+        '\n\nUnable to find browsers\n\n'
+      );
+      throw error;
     }
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
     const htmlPath = path.resolve(__dirname, 'sample-page.html');

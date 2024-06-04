@@ -40,7 +40,7 @@ describe('Test browser Parser in the node env', function() {
 
     console.info('navigating to localhost');
     await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
-  }, 10000);
+  }, 20000);
 
   afterAll(async function() {
     await browser.close();

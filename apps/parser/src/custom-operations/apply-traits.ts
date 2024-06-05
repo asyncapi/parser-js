@@ -51,11 +51,9 @@ function applyTraitsToObjectV2(value: Record<string, unknown>) {
 const v3TraitPaths = [
   // operations
   '$.operations.*',
-  '$.operations.*.channel.*',
   '$.operations.*.channel.messages.*',
   '$.operations.*.messages.*',
   '$.components.operations.*',
-  '$.components.operations.*.channel.*',
   '$.components.operations.*.channel.messages.*',
   '$.components.operations.*.messages.*',
   // Channels

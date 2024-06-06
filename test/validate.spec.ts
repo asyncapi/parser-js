@@ -51,4 +51,47 @@ describe('validate()', function() {
     expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
     expect(hasWarningDiagnostic(diagnostics)).toEqual(true);
   });
+
+  // See https://github.com/asyncapi/parser-js/issues/996
+  it('user case - null channel address should not make operation traits appliance fail', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Nexus Server API',
+        version: '1.0.0'
+      },
+      channels: {
+        Exchange: {
+          address: null,
+          messages: {
+            FooEvent: {
+              name: 'FooEvent',
+              title: 'Tenant Created',
+              contentType: 'application/json',
+              payload: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      },
+      operations: {
+        sendTenantCreated: {
+          title: 'Send tenant created event to client',
+          action: 'send',
+          channel: {
+            $ref: '#/channels/Exchange'
+          },
+          messages: [
+            {
+              $ref: '#/channels/Exchange/messages/FooEvent'
+            }
+          ]
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw, { validateOptions: { allowedSeverity: { warning: false } } });
+    console.log(diagnostics);
+    expect(diagnostics).toHaveLength(0);
+  });
 });

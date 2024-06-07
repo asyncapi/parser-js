@@ -7,5 +7,3 @@ node_modules
 /esm
 /cjs
 /browser
-esm
-cjs

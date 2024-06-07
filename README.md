@@ -1,6 +1,9 @@
 [![AsyncAPI JavaScript Parser](./assets/logo.png)](https://www.asyncapi.com)
 
-Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.  
+This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
+
+1. [Parser-js](apps/parser): Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
+
 Validation is powered by [Spectral](https://github.com/stoplightio/spectral).  
 Updated bundle for the browser is always attached to the GitHub Release.
 

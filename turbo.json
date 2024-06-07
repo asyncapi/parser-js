@@ -1,0 +1,12 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "test": { "cache": false },
+    "test:unit": {},
+    "test:integration": {},
+    "test:browser": {},
+    "lint": {},
+    "lint:fix": {},
+    "build": {}
+  }
+}

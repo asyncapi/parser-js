@@ -22,7 +22,15 @@ export const channelParameters = createRulesetFunction<{ parameters: Record<stri
     const results: IFunctionResult[] = [];
 
     const parameters = parseUrlVariables(path);
-    if (parameters.length === 0) return;
+    
+    const hasParameters = Object.keys(targetVal.parameters).length > 0;
+    if (hasParameters && (path === null || parameters.length === 0)) {
+      results.push({
+        message: `Channel has parameters defined, but the address is null or does not contain any parameters.`,
+        path: ctx.path.slice(0, -1),
+      });
+      return results;
+    }
 
     const missingParameters = getMissingProps(parameters, targetVal.parameters);
     if (missingParameters.length) {

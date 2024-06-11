@@ -17,6 +17,25 @@ testRule('asyncapi2-channel-parameters', [
   },
 
   {
+    name: 'address has no parameters but parameters are defined',
+    document: {
+      asyncapi: '2.0.0',
+      channels: {
+        'users/signedUp': {
+          parameters: {
+            test: {},
+          },
+        },
+      },
+    },
+    errors: [{
+      message: 'Channel has parameters defined, but the address is null or does not contain any parameters',
+      path: ['channels', 'users/signedUp'],
+      severity: DiagnosticSeverity.Error,
+    },],
+  },
+
+  {
     name: 'channel has not defined definition for one of the parameters',
     document: {
       asyncapi: '2.0.0',

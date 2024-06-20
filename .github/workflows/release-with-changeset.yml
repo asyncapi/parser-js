@@ -2,7 +2,7 @@
 # Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in the above-mentioned repo
 
 # It does magic only if there is a package.json file in the root of the project
-name: Release - if Node project
+name: Release with changeset
 
 on:
   push:
@@ -106,6 +106,10 @@ jobs:
         name: Install dependencies
         shell: bash
         run: npm ci
+     - if: steps.packagejson.outputs.exists == 'true'
+        name: Install Changesets
+        run: npm install --save-dev @changesets/cli@2.26.1
+
       - if: steps.packagejson.outputs.exists == 'true'
         name: Create Release Pull Request or Release
         uses: changesets/action@v1
@@ -113,8 +117,8 @@ jobs:
         name: Publish to any of NPM, Github, and Docker Hub
         id: release
         with:
-          publish: npm run publish-packages
-          version: npm run version-packages
+          publish: npx turbo run build && npx changeset publish
+          version: npx changeset version
           commit: "version packages"
           title: "chore: version packages"
         env:

@@ -8,6 +8,13 @@ import type { OperationsInterface } from './operations';
 import type { SchemasInterface } from './schemas';
 import type { SecuritySchemesInterface } from './security-schemes';
 import type { ServersInterface } from './servers';
+import type { ServerVariablesInterface } from './server-variables';
+import type { ChannelParametersInterface } from './channel-parameters';
+import type { CorrelationIdsInterface } from './correlation-ids';
+import type { TagsInterface } from './tags';
+import type { OperationTraitsInterface } from './operation-traits';
+import type { MessageTraitsInterface } from './message-traits';
+import type { BindingsInterface } from './bindings';
 
 import type { v2, v3 } from '../spec-types';
 
@@ -31,4 +38,15 @@ export interface AsyncAPIDocumentInterface extends BaseModel<v2.AsyncAPIObject |
   allOperations(): OperationsInterface;
   allMessages(): MessagesInterface;
   allSchemas(): SchemasInterface;
+  allSecuritySchemes(): SecuritySchemesInterface;
+  allServerVariables(): ServerVariablesInterface;
+  allParameters(): ChannelParametersInterface;
+  allCorrelationIds(): CorrelationIdsInterface;
+  allTags(): TagsInterface;
+  allOperationTraits(): OperationTraitsInterface;
+  allMessageTraits(): MessageTraitsInterface;
+  allServerBindings(): BindingsInterface;
+  allChannelBindings(): BindingsInterface;
+  allOperationBindings(): BindingsInterface;
+  allMessageBindings(): BindingsInterface;
 }

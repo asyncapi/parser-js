@@ -108,10 +108,10 @@ jobs:
         uses: changesets/action@v1
         id: release
         with:
-          publish: npm run turbo run build && changeset publish
           version: npm run changeset version
           commit: "version packages"
           title: "chore: version packages"
+          publish: npm run turbo run build && changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -103,13 +103,14 @@ jobs:
         name: Install changelog
         shell: bash
         run: npm install --save-dev @changesets/changelog-git
+        run: npm i --save-dev @changesets/cli
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         uses: changesets/action@v1
         id: release
         with:
-          publish: npm run publish-packages
-          version: npm run version-packages
+          publish: npx run turbo run build && changeset publish
+          version: npx run changeset version
           commit: "version packages"
           title: "chore: version packages"
         env:

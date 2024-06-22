@@ -9,10 +9,16 @@
     "parser:test:unit": "turbo run test:unit --filter=@asyncapi/parser",
     "parser:test": "turbo run test --filter=@asyncapi/parser",
     "parser:test:browser": "turbo run test:browser --filter=@asyncapi/parser",
-    "parser:build": "turbo run build --filter=@asyncapi/parser"
+    "parser:build": "turbo run build --filter=@asyncapi/parser",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "publish-packages": "turbo run build && changeset publish"
   },
   "devDependencies": {
     "turbo": "1.13.3"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.26.2"
   },
   "engines": {
     "node": ">=18"

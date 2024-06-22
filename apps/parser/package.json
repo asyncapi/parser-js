@@ -1,7 +1,8 @@
 {
-  "name": "@asyncapi/parser",
+  "name": "@ayushnautiyal706020/parser",
   "version": "3.0.14",
   "description": "JavaScript AsyncAPI parser.",
+  "private": false,
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
   },

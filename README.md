@@ -234,7 +234,19 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 
 ## Spectral rulesets
 
-[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS. For this reason, it is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance: 
+[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS. 
+The default [built-in rulesets](src/ruleset) are:
+
+- Core ruleset:
+  - Basic and global validation. Apply to all AsyncAPI Spec versions (with some exceptions).
+- Recommended ruleset:
+  - These are good practices. They won't create validation errors but warnings.
+- Specific rulesets per each AsyncAPI Spec version:
+  - Contain particular rulesets that apply only to documents of a particular Spec version:
+    - Core rulesets: Rules that generate validation errors if not fulfilled by a particular Spec version.
+    - Recommended rulesets: Best practices for a particular Spec version
+
+It is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance: 
 
 ```ts
 import { Parser, stringify, unstringify } from '@asyncapi/parser';

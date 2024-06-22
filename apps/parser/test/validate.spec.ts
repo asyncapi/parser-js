@@ -1,3 +1,4 @@
+import { AsyncAPIDocument } from '../src/models/v3/asyncapi';
 import { Parser } from '../src/parser';
 import { hasErrorDiagnostic, hasWarningDiagnostic } from '../src/utils';
 
@@ -91,7 +92,7 @@ describe('validate()', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw, { validateOptions: { allowedSeverity: { warning: false } } });
-    console.log(diagnostics);
     expect(diagnostics).toHaveLength(0);
+    expect(document).toBeInstanceOf(AsyncAPIDocument);
   });
 });

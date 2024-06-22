@@ -1,5 +1,5 @@
 {
-  "name": "@ayushnautiyal706020/parser",
+  "name": "@asyncapi/parser",
   "version": "3.0.14",
   "description": "JavaScript AsyncAPI parser.",
   "private": false,

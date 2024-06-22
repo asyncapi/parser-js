@@ -109,7 +109,7 @@ jobs:
         id: release
         with:
           version: npm run changeset version
-          commit: "version packages"
+          commit: version packages
           title: "chore: version packages"
           publish: npm changeset publish
         env:

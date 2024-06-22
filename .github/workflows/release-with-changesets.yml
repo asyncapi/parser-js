@@ -102,7 +102,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install changelog
         shell: bash
-        run: npm install --save-dev @changesets/cli/changelog
+        run: npm install --save-dev @changesets/changelog-git
       - if: steps.packagejson.outputs.exists == 'true'
         name: Publish to any of NPM, Github, and Docker Hub
         uses: changesets/action@v1

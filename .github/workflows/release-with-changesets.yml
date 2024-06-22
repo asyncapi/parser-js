@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - master
-      # The below lines are not enough to have release supported for these branches
+        # The below lines are not enough to have release supported for these branches
       - next-spec
       - next-major
       - next-major-spec

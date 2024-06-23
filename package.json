@@ -12,7 +12,10 @@
     "parser:build": "turbo run build --filter=@asyncapi/parser",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "publish-packages": "turbo run build && changeset publish"
+    "publish-packages": "turbo run build && changeset publish",
+    "multi-parser:build":"turbo run build --filter=@asyncapi/multi-parser",
+    "multi-parser:test:unit":"turbo run test:unit --filter=@asyncapi/multi-parser",
+    "multi-parser:test":"turbo run test --filter=@asyncapi/multi-parser"
   },
   "devDependencies": {
     "turbo": "1.13.3"

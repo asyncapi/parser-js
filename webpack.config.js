@@ -12,8 +12,7 @@ module.exports = {
     globalObject: '(typeof self !== \'undefined\' ? self : this)',
     library: {
       name: 'AsyncAPIParser',
-      type: 'umd',
-      export: 'default'
+      type: 'umd'
     },
   },
 

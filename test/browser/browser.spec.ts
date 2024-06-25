@@ -12,15 +12,20 @@ describe('Test browser Parser in the node env', function() {
   beforeAll(async function() {
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
     const htmlPath = path.resolve(__dirname, 'sample-page.html');
-    const parserScript = path.resolve(__dirname, '../../browser/index.js');
+    const parserScript = path.resolve(__dirname, '../../browser_new/index.js');
 
     console.info('start server');
     server = http.createServer((req, res) => {
-      res.writeHead(200, { 'content-type': 'text/html' });
       if (req.url === '/') {
+        res.writeHead(200, { 'content-type': 'text/html' });
         return fs.createReadStream(htmlPath).pipe(res);
       } else if (req.url === '/parser.js') {
+        res.writeHead(200, { 'content-type': 'text/html' });
         return fs.createReadStream(parserScript).pipe(res);
+      } else if (req.url === '/asyncapi.json') {
+        res.writeHead(200, { 'content-type': 'application/json' });
+        res.write(JSON.stringify({ asyncapi: '2.0.0', info: { title: 'My API', version: '1.0.0' }, channels: { '/test/tester': { subscribe: { operationId: 'subscribeOperation', message: { } } } } }));
+        res.end();
       }
     });
     server.listen(8080);
@@ -40,7 +45,7 @@ describe('Test browser Parser in the node env', function() {
 
     console.info('navigating to localhost');
     await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
-  });
+  }, 5000);
 
   afterAll(async function() {
     await browser.close();

@@ -12,7 +12,7 @@ describe('Test browser Parser in the node env', function() {
   beforeAll(async function() {
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
     const htmlPath = path.resolve(__dirname, 'sample-page.html');
-    const parserScript = path.resolve(__dirname, '../../browser_new/index.js');
+    const parserScript = path.resolve(__dirname, '../../browser/index.js');
 
     console.info('start server');
     server = http.createServer((req, res) => {

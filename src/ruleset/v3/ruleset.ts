@@ -62,7 +62,7 @@ export const v3CoreRuleset = {
     /**
      * Server Object rules
      */
-    'asyncapi2-server-variables': {
+    'asyncapi3-server-variables': {
       description: 'Server variables must be defined and there must be no redundant variables.',
       message: '{{error}}',
       severity: 'error',

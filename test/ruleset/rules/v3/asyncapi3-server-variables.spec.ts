@@ -1,6 +1,6 @@
 import { testRule, DiagnosticSeverity } from '../../tester';
 
-testRule('asyncapi2-server-variables', [
+testRule('asyncapi3-server-variables', [
   {
     name: 'valid case',
     document: {

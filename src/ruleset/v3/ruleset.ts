@@ -2,6 +2,7 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
+import { serverVariables3 } from './functions/serverVariables3';
 import { pattern } from '@stoplight/spectral-functions';
 
 export const v3CoreRuleset = {
@@ -56,6 +57,20 @@ export const v3CoreRuleset = {
           match: '#\\/servers\\/', // If doesn't match, rule fails.
         },
       },
-    }
+    },
+
+    /**
+     * Server Object rules
+     */
+    'asyncapi2-server-variables': {
+      description: 'Server variables must be defined and there must be no redundant variables.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      given: ['$.servers.*', '$.components.servers.*'],
+      then: {
+        function: serverVariables3,
+      },
+    },
   },
 };

@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": [
-    "@changesets/changelog-git",
-    { "repo": "@ayushnautiyal706020/parser" }
-  ],
+  "changelog": ["@changesets/changelog-git", { "repo": "@asyncapi/parser" }],
   "commit": false,
   "fixed": [],
   "linked": [],

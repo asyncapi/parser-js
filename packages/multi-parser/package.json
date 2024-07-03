@@ -1,5 +1,5 @@
 {
-  "name": "@smoya/multi-parser",
+  "name": "@asyncapi/multi-parser",
   "version": "2.0.0",
   "description": "This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version",
   "bugs": {

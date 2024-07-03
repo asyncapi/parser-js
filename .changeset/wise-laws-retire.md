@@ -1,5 +1,5 @@
 ---
-"@asyncapi/parser": minor
+"@asyncapi/multi-parser": minor
 ---
 
-Turning Parser-JS into monorepo by integrating Turborepo. No new features or bugfixes were introduced.
+Adding the Multiparser into monorepo (Turborepo). No new features or bugfixes were introduced.

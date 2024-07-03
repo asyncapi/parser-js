@@ -44,7 +44,14 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
 
   try {
     options = mergePatch<ParseOptions>(defaultOptions, options);
-
+    
+    // `./src/validate.ts` enforces 'string' type on both YAML and JSON later in
+    // code, and parses them both using the same `@stoplight/yaml`, so forceful
+    // normalization of YAML to JSON here has no practical application. It only
+    // causes `range` to be reported incorrectly in `diagnostics` by misleading
+    // `Parser` into thinking it's dealing with JSON instead of YAML, creating
+    // the bug described in https://github.com/asyncapi/parser-js/issues/936
+    
     const { validated, diagnostics, extras } = await validate(parser, spectral, asyncapi, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
     if (validated === undefined) {
       return {

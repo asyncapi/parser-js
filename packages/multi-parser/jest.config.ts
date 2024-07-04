@@ -20,6 +20,9 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: [
     'src/**'
   ],
+  moduleNameMapper: {
+    '^@asyncapi/parser$': '<rootDir>/../parser'
+  }
 };
 
 export default config;

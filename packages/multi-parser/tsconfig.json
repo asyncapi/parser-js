@@ -20,6 +20,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
   },
+  "paths": {
+    "@asyncapi/parser": ["../parser"]
+  },
   "include": [
     "src"
   ]

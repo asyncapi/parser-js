@@ -12,6 +12,7 @@ on:
       - beta
       - alpha
       - next
+      - feat-master-multiparser-testing
 
 jobs:
   test-nodejs:
@@ -19,11 +20,7 @@ jobs:
     # "commits" contains an array of objects where one of the properties is the commit "message"
     # Release workflow will be skipped if release conventional commits are not used
     if: |
-      startsWith( github.repository, 'asyncapi/' ) && 
-      (startsWith( github.event.commits[0].message , 'fix:' ) ||
-      startsWith( github.event.commits[0].message, 'fix!:' ) ||
-      startsWith( github.event.commits[0].message, 'feat:' ) ||
-      startsWith( github.event.commits[0].message, 'feat!:' ))
+      true
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -61,6 +58,10 @@ jobs:
         name: Install dependencies
         shell: bash
         run: npm ci
+      - if: steps.packagejson.outputs.exists == 'true'
+        name: Install dependencies
+        shell: bash
+        run: ls -la packages && pwd && ls -la packages/parser
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
         run: npm test --if-present

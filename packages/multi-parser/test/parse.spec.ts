@@ -1,7 +1,7 @@
 
 import { Parser as ParserV1 } from 'parserapiv1';
 import { Parser as ParserV2 } from 'parserapiv2';
-import { Parser as ParserV3 } from '@asyncapi/parser';
+import { Parser as ParserV3 } from '@asyncapi/parser/esm/index';
 
 import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
 import { OpenAPISchemaParser } from '@asyncapi/openapi-schema-parser';

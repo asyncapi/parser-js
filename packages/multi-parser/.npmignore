@@ -1,9 +1,0 @@
-.DS_Store
-*.swp
-.github
-.all-contributorsrc
-.editorconfig
-assets/logo.png
-vscode
-coverage
-node_modules

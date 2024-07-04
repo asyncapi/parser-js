@@ -1,6 +1,9 @@
 [![AsyncAPI JavaScript Parser](./assets/logo.png)](https://www.asyncapi.com)
 
-Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.  
+This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
+
+1. [Parser-js](packages/parser): Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
+
 Validation is powered by [Spectral](https://github.com/stoplightio/spectral).  
 Updated bundle for the browser is always attached to the GitHub Release.
 
@@ -15,7 +18,6 @@ Updated bundle for the browser is always attached to the GitHub Release.
 > **Note**
 > Read the [migration guide from v2 to v3](./docs/migrations/v2-to-v3.md).
 
-
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 
 <!-- toc -->
@@ -23,26 +25,26 @@ Updated bundle for the browser is always attached to the GitHub Release.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
-  * [Example with parsing](#example-with-parsing)
-  * [Example with validation](#example-with-validation)
-  * [Example using Avro schemas](#example-using-avro-schemas)
-  * [Example using OpenAPI schemas](#example-using-openapi-schemas)
-  * [Example using RAML data types](#example-using-raml-data-types)
-  * [Example with performing actions on HTTP source](#example-with-performing-actions-on-http-source)
-  * [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
-  * [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
+  - [Example with parsing](#example-with-parsing)
+  - [Example with validation](#example-with-validation)
+  - [Example using Avro schemas](#example-using-avro-schemas)
+  - [Example using OpenAPI schemas](#example-using-openapi-schemas)
+  - [Example using RAML data types](#example-using-raml-data-types)
+  - [Example with performing actions on HTTP source](#example-with-performing-actions-on-http-source)
+  - [Example with performing actions on file source](#example-with-performing-actions-on-file-source)
+  - [Example with stringify and unstringify parsed document](#example-with-stringify-and-unstringify-parsed-document)
 - [API documentation](#api-documentation)
 - [Spectral rulesets](#spectral-rulesets)
 - [Using in the browser/SPA applications](#using-in-the-browserspa-applications)
 - [Custom schema parsers](#custom-schema-parsers)
-  * [Official supported custom schema parsers](#official-supported-custom-schema-parsers)
+  - [Official supported custom schema parsers](#official-supported-custom-schema-parsers)
 - [Custom extensions](#custom-extensions)
 - [Circular references](#circular-references)
 - [Stringify](#stringify)
 - [Convert to the old API](#convert-to-the-old-api)
 - [Notes](#notes)
-  * [Using with Webpack](#using-with-webpack)
-  * [Testing with [Jest](https://jestjs.io/)](#testing-with-jesthttpsjestjsio)
+  - [Using with Webpack](#using-with-webpack)
+  - [Testing with [Jest](https://jestjs.io/)](#testing-with-jesthttpsjestjsio)
 - [Develop](#develop)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
@@ -71,17 +73,17 @@ The package exposes the main class `Parser`, which has two main functions:
 Natively `Parser` class does not contain methods that operate on the source (AsyncAPI document) from a file or URL. However, the package exposes utils that make this possible:
 
 ```ts
-import { fromURL, fromFile } from '@asyncapi/parser';
+import { fromURL, fromFile } from "@asyncapi/parser";
 ```
 
 Check out the [examples](#examples) of using the above mentioned functionalities.
 
-## Examples 
+## Examples
 
 ### Example with parsing
 
 ```ts
-import { Parser } from '@asyncapi/parser';
+import { Parser } from "@asyncapi/parser";
 const parser = new Parser();
 const { document } = await parser.parse(`
   asyncapi: '2.4.0'
@@ -113,7 +115,7 @@ if (document) {
 ### Example with validation
 
 ```ts
-import { Parser } from '@asyncapi/parser';
+import { Parser } from "@asyncapi/parser";
 
 const parser = new Parser();
 
@@ -155,27 +157,33 @@ Head over to [asyncapi/raml-dt-schema-parser](https://www.github.com/asyncapi/ra
 ### Example with performing actions on HTTP source
 
 ```ts
-import { Parser, fromURL } from '@asyncapi/parser';
+import { Parser, fromURL } from "@asyncapi/parser";
 
 const parser = new Parser();
 
-const { document, diagnostics } = await fromURL(parser, 'https://example.com/').parse();
+const { document, diagnostics } = await fromURL(
+  parser,
+  "https://example.com/",
+).parse();
 ```
 
 ### Example with performing actions on file source
 
 ```ts
-import { Parser, fromFile } from '@asyncapi/parser';
+import { Parser, fromFile } from "@asyncapi/parser";
 
 const parser = new Parser();
 
-const { document, diagnostics } = await fromFile(parser, './asyncapi.yaml').parse();
+const { document, diagnostics } = await fromFile(
+  parser,
+  "./asyncapi.yaml",
+).parse();
 ```
 
 ### [Example with stringify and unstringify parsed document](#stringify)
 
 ```ts
-import { Parser, stringify, unstringify } from '@asyncapi/parser';
+import { Parser, stringify, unstringify } from "@asyncapi/parser";
 
 const parser = new Parser();
 
@@ -215,7 +223,7 @@ Parser-JS API implements a global API definition for all AsyncAPI parser impleme
 The following table shows a compatibility matrix between this parser, and the [Parser-API](https://github.com/asyncapi/parser-api), as well as the AsyncAPI spec version supported by each release of this parser.
 
 | Parser-JS | Parser-API                                                            | Spec 2.x | Spec 3.x |
-|-----------|-----------------------------------------------------------------------|----------|----------|
+| --------- | --------------------------------------------------------------------- | -------- | -------- |
 | 2.x       | [1.x](https://github.com/asyncapi/parser-api/blob/v1.0.0/docs/v1.md)  | ✓        |          |
 | 3.x       | [3.x](https://github.com/asyncapi/parser-api/blob/v3.0.0/docs/api.md) | ✓        | ✓        |
 
@@ -231,7 +239,7 @@ Additionally to all the methods declared in the [Parser-API](https://github.com/
 
 ## Spectral rulesets
 
-[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS. 
+[Spectral](https://github.com/stoplightio/spectral) powers the validation of AsyncAPI documents within ParserJS.
 The default [built-in rulesets](src/ruleset) are:
 
 - Core ruleset:
@@ -243,26 +251,27 @@ The default [built-in rulesets](src/ruleset) are:
     - Core rulesets: Rules that generate validation errors if not fulfilled by a particular Spec version.
     - Recommended rulesets: Best practices for a particular Spec version
 
-It is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance: 
+It is possible to use your rulesets/rules or overwrite existing ones, passing the `ruleset` option to the Parser instance:
 
 ```ts
-import { Parser, stringify, unstringify } from '@asyncapi/parser';
+import { Parser, stringify, unstringify } from "@asyncapi/parser";
 const parser = new Parser({
   ruleset: {
     extends: [],
     rules: {
-      'asyncapi-defaultContentType': 'off',
-      'asyncapi-termsOfService': {
-        description: 'Info "termsOfService" should be present and non-empty string.',
+      "asyncapi-defaultContentType": "off",
+      "asyncapi-termsOfService": {
+        description:
+          'Info "termsOfService" should be present and non-empty string.',
         recommended: true,
-        given: '$',
+        given: "$",
         then: {
-          field: 'info.termsOfService',
-          function: 'truthy',
+          field: "info.termsOfService",
+          function: "truthy",
         },
       },
-    }
-  }
+    },
+  },
 });
 // The returned diagnostics object will include `asyncapi-termsOfService` diagnostic with `warning` (`recommended: true`) severity because `$.info.termsOfService` is not defined in the following AsyncAPI document.
 // On the other hand, since we turned it off, we won't see the diagnostics related to the `defaultContentType` field.
@@ -275,8 +284,7 @@ const diagnostics = await parser.validate(`
 `);
 ```
 
-[ParserJS has some built-in Spectral rulesets](./docs/ruleset) that validate AsyncAPI documents and inform on good practices. 
-
+[ParserJS has some built-in Spectral rulesets](./docs/ruleset) that validate AsyncAPI documents and inform on good practices.
 
 ## Using in the browser/SPA applications
 
@@ -323,34 +331,34 @@ AsyncAPI doesn't enforce one schema format. The payload of the messages can be d
 
 1. Create custom parser module that exports three functions:
 
-    - `validate` - function that validates (its syntax) used schema.
-    - `parse` - function that parses the given schema to the [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject).
-    - `getMimeTypes` - function that returns the list of mime types that will be used as the `schemaFormat` property to determine the mime type of a given schema.
+   - `validate` - function that validates (its syntax) used schema.
+   - `parse` - function that parses the given schema to the [AsyncAPI Schema Format](https://github.com/asyncapi/spec/blob/master/spec/asyncapi.md#schemaObject).
+   - `getMimeTypes` - function that returns the list of mime types that will be used as the `schemaFormat` property to determine the mime type of a given schema.
 
-    Example:
-    
-    ```ts
-    export default {
-      validate(input) { ... },
-      parse(input) { ... },
-      getMimeTypes() {
-        return [
-          'application/vnd.custom.type;version=1.0.0',
-          'application/vnd.custom.type+json;version=1.0.0',
-        ]
-      }
-    }
-    ```
+   Example:
+
+   ```ts
+   export default {
+     validate(input) { ... },
+     parse(input) { ... },
+     getMimeTypes() {
+       return [
+         'application/vnd.custom.type;version=1.0.0',
+         'application/vnd.custom.type+json;version=1.0.0',
+       ]
+     }
+   }
+   ```
 
 2. Before parsing/validating an AsyncAPI document with a parser, register the additional custom schema parser:
 
-    ```ts
-    import { Parser } from '@asyncapi/parser';
-    import myCustomSchemaParser from './my-custom-schema-parser';
+   ```ts
+   import { Parser } from "@asyncapi/parser";
+   import myCustomSchemaParser from "./my-custom-schema-parser";
 
-    const parser = new Parser();
-    parser.registerSchemaParser(myCustomSchemaParser);
-    ```
+   const parser = new Parser();
+   parser.registerSchemaParser(myCustomSchemaParser);
+   ```
 
 ### Official supported custom schema parsers
 
@@ -418,7 +426,7 @@ For that, the Parser supports the ability to stringify a parsed AsyncAPI documen
   "foo": "$ref:$.some.path.to.the.bar"
 }
 ```
-		
+
 To parse a stringified document into an AsyncAPIDocument instance, you must use the `unstringify` function (also exposed by package). It isn't compatible with the native `JSON.parse()` method. It replaces the given references pointed by the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) path, with an `$ref:` prefix to the original objects.
 
 A few advantages of this solution:
@@ -446,6 +454,7 @@ const oldAsyncAPIDocument = convertToOldAPI(document);
 ## Notes
 
 ### Using with Webpack
+
 Versions `<5` of Webpack should handle bundling without problems. Due to the fact that Webpack 5 no longer does fallbacks to native NodeJS modules by default we need to install `buffer` package and add fallbacks:
 
 ```js
@@ -463,7 +472,7 @@ Versions `<5` of Webpack should handle bundling without problems. Due to the fac
 
 ### Testing with [Jest](https://jestjs.io/)
 
-Using a Parser in an application that is tested using [Jest](https://jestjs.io/), there will probably an error like: 
+Using a Parser in an application that is tested using [Jest](https://jestjs.io/), there will probably an error like:
 
 ```bash
 Cannot find module 'nimma/legacy' from 'node_modules/@stoplight/spectral-core/dist/runner/runner.js
@@ -485,13 +494,13 @@ moduleNameMapper: {
 3. Make sure all tests pass `npm test`
 
 For Windows environments, some tests might still fail randomly during local development even when you made no changes to the tests. The reason for this from file endings are different than expected and this comes from Git defaulting to an unexpected file ending. If you encounter this issue you can run the following commands to set Git to use the expected one:
+
 ```
 git config --global core.autocrlf false
 git config --global core.eol lf
 ```
 
 4. Make sure code is well formatted and secure `npm run lint`
-
 
 ## Contributing
 

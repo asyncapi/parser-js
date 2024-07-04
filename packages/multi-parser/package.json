@@ -2,18 +2,18 @@
   "name": "@asyncapi/multi-parser",
   "version": "2.0.0",
   "description": "This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version",
-  "bugs": {
-    "url": "https://github.com/smoya/multi-parser-js/issues"
+"bugs": {
+    "url": "https://github.com/asyncapi/parser-js/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/smoya/multi-parser-js.git"
+    "url": "git://github.com/asyncapi/parser-js.git"
   },
   "publishConfig": {
     "access": "public"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/smoya/multi-parser-js",
+  "homepage": "https://github.com/asyncapi/parser-js",
   "sideEffects": false,
   "main": "cjs/index.js",
   "module": "esm/index.js",

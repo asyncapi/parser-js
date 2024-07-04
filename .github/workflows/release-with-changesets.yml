@@ -61,7 +61,7 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Install dependencies
         shell: bash
-        run: ls -la && ls -la ../parser
+        run: ls -la packages && pwd && ls -la packages/parser
       - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
         run: npm test --if-present

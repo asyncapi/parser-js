@@ -1,4 +1,5 @@
 import type { Config } from '@jest/types';
+import path from 'path';
 
 const config: Config.InitialOptions = {
   coverageReporters: [
@@ -21,7 +22,7 @@ const config: Config.InitialOptions = {
     'src/**'
   ],
   moduleNameMapper: {
-    '^@asyncapi/parser$': '<rootDir>/../parser'
+    '^@asyncapi/parser$': path.resolve(__dirname, 'packages/parser')
   }
 };
 

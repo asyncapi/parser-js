@@ -20,11 +20,7 @@ jobs:
     # "commits" contains an array of objects where one of the properties is the commit "message"
     # Release workflow will be skipped if release conventional commits are not used
     if: |
-      startsWith( github.repository, 'asyncapi/' ) && 
-      (startsWith( github.event.commits[0].message , 'fix:' ) ||
-      startsWith( github.event.commits[0].message, 'fix!:' ) ||
-      startsWith( github.event.commits[0].message, 'feat:' ) ||
-      startsWith( github.event.commits[0].message, 'feat!:' ))
+      true
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:

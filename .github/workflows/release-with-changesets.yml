@@ -59,10 +59,6 @@ jobs:
         shell: bash
         run: npm ci
       - if: steps.packagejson.outputs.exists == 'true'
-        name: Install dependencies
-        shell: bash
-        run: npm dedupe
-      - if: steps.packagejson.outputs.exists == 'true'
         name: Run test
         run: npm test --if-present
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel

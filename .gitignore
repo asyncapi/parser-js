@@ -9,3 +9,5 @@ node_modules
 /browser
 *.tgz
 .turbo
+cjs
+esm

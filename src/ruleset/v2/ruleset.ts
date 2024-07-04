@@ -192,6 +192,7 @@ export const v2CoreRuleset = {
 export const v2SchemasRuleset = (parser: Parser) => {
   return {
     description: 'Schemas AsyncAPI 2.x.x ruleset.',
+    formats: AsyncAPIFormats.filterByMajorVersions(['2']).formats(),
     rules: {
       'asyncapi2-schemas': asyncApi2SchemaParserRule(parser),
       'asyncapi2-schema-default': {

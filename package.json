@@ -12,7 +12,8 @@
     "parser:build": "turbo run build --filter=@asyncapi/parser",
     "multi-parser:build": "turbo run build --filter=@asyncapi/multi-parser",
     "multi-parser:test:unit": "turbo run test:unit --filter=@asyncapi/multi-parser",
-    "multi-parser:test": "turbo run test --filter=@asyncapi/multi-parser"
+    "multi-parser:test": "turbo run test --filter=@asyncapi/multi-parser",
+    "prepublishOnly": "turbo run prepublishOnly"
   },
   "devDependencies": {
     "turbo": "1.13.3"

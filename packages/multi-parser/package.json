@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version",
   "private":false,
-"bugs": {
+  "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
   },
   "repository": {

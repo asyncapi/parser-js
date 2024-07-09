@@ -31,7 +31,7 @@ export const operationMessagesUnambiguity = createRulesetFunction<{ channel?: {'
     const channelPointer = targetVal.channel?.$ref as string; // required
 
     targetVal.messages?.forEach((message, index) => {      
-      if (!message.$ref.startsWith(`${channelPointer}/messages`)) {
+      if (message.$ref && !message.$ref.startsWith(`${channelPointer}/messages`)) {
         results.push({
           message: 'Operation message does not belong to the specified channel.',
           path: [...ctx.path, 'messages', index],

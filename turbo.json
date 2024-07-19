@@ -3,14 +3,14 @@
   "pipeline": {
    "test": {"cache": false},
    "prepublishOnly": {"cache": false},
-    "test:unit": {"cache": false},
-    "test:integration": {"cache": false},
-    "test:browser": {"cache": false},
-    "lint": {"cache": false},
-    "lint:fix": {"cache": false},
-    "build": {"cache": false , "dependsOn": ["@asyncapi/parser#build"]},
-    "@asyncapi/parser#build":{"cache": false},  
-    "multi-parser:build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]}
+   "test:unit": {"cache": false},
+   "test:integration": {"cache": false},
+   "test:browser": {"cache": false},
+   "lint": {"cache": false},
+   "lint:fix": {"cache": false},
+   "build": {"cache": false , "dependsOn": ["@asyncapi/parser#build"]},
+   "@asyncapi/parser#build":{"cache": false},  
+   "multi-parser:build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]}
     
   }
 }

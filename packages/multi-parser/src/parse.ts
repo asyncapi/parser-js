@@ -1,6 +1,6 @@
 import { Parser as ParserV1 } from 'parserapiv1';
 import { Parser as ParserV2 } from 'parserapiv2';
-import { Parser as ParserV3 } from '@asyncapi/parser/esm/index';
+import { Parser as ParserV3 } from 'parserapiv3/esm/index';
 
 import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
 import { OpenAPISchemaParser } from '@asyncapi/openapi-schema-parser';
@@ -9,7 +9,7 @@ import { ProtoBuffSchemaParser } from '@asyncapi/protobuf-schema-parser';
 
 import type { ParserOptions as ParserOptionsParserV1 } from 'parserapiv1/esm/parser';
 import type { ParserOptions as ParserOptionsParserV2 } from 'parserapiv2/esm/parser';
-import type { ParserOptions as ParserOptionsParserV3 } from '@asyncapi/parser/esm/parser';
+import type { ParserOptions as ParserOptionsParserV3 } from 'parserapiv3/esm/parser';
 
 export type ParserOptions = ParserOptionsParserV1 | ParserOptionsParserV2 | ParserOptionsParserV3;
 export type Options = {

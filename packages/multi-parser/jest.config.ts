@@ -22,7 +22,7 @@ const config: Config.InitialOptions = {
     'src/**'
   ],
   moduleNameMapper: {
-    '^@asyncapi/parser$': path.resolve(__dirname, '../parser')
+    '^parserapiv3$': path.resolve(__dirname, '../parser')
   }
 };
 

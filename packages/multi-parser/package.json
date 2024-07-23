@@ -1,8 +1,8 @@
 {
   "name": "@asyncapi/multi-parser",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version",
-  "private":false,
+  "private": false,
   "bugs": {
     "url": "https://github.com/asyncapi/parser-js/issues"
   },
@@ -46,7 +46,6 @@
     "parserapiv1": "npm:@asyncapi/parser@^2.1.0",
     "parserapiv2": "npm:@asyncapi/parser@3.0.0-next-major-spec.8",
     "parserapiv3": "file:../parser"
-
   },
   "devDependencies": {
     "@jest/types": "^29.0.2",
@@ -64,5 +63,6 @@
     "markdown-toc": "^1.2.0",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.2"  }
+    "typescript": "^4.8.2"
+  }
 }

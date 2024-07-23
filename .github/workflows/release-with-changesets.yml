@@ -19,11 +19,7 @@ jobs:
     # "commits" contains an array of objects where one of the properties is the commit "message"
     # Release workflow will be skipped if release conventional commits are not used
     if: |
-      startsWith( github.repository, 'asyncapi/' ) && 
-      (startsWith( github.event.commits[0].message , 'fix:' ) ||
-      startsWith( github.event.commits[0].message, 'fix!:' ) ||
-      startsWith( github.event.commits[0].message, 'feat:' ) ||
-      startsWith( github.event.commits[0].message, 'feat!:' ))
+      startsWith( github.repository, 'asyncapi/' )
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -103,6 +99,10 @@ jobs:
         shell: bash
         run: npm ci
       - if: steps.packagejson.outputs.exists == 'true'
+        name: Build dependency
+        shell: bash
+        run: npm run build
+      - if: steps.packagejson.outputs.exists == 'true'
         name: Install changelog
         shell: bash
         run: npm install @changesets/changelog-git@0.2.0
@@ -113,7 +113,7 @@ jobs:
         with:
           version: npx -p @changesets/cli changeset version
           commit: version packages
-          title: "chore: version packages"
+          title: "chore(release): version packages"
           publish: npx -p @changesets/cli changeset publish
           setupGitUser: false
         env:

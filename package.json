@@ -2,14 +2,18 @@
   "name": "parser-js",
   "private": true,
   "scripts": {
-    "test": "turbo run test",
+    "test": "turbo run build && turbo run test",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "build": "turbo run build",
     "parser:test:unit": "turbo run test:unit --filter=@asyncapi/parser",
     "parser:test": "turbo run test --filter=@asyncapi/parser",
     "parser:test:browser": "turbo run test:browser --filter=@asyncapi/parser",
-    "parser:build": "turbo run build --filter=@asyncapi/parser"
+    "parser:build": "turbo run build --filter=@asyncapi/parser",
+    "multi-parser:build": "turbo run build --filter=@asyncapi/multi-parser",
+    "multi-parser:test:unit": "turbo run test:unit --filter=@asyncapi/multi-parser",
+    "multi-parser:test": "turbo run test --filter=@asyncapi/multi-parser",
+    "prepublishOnly": "turbo run prepublishOnly"
   },
   "devDependencies": {
     "turbo": "1.13.3"

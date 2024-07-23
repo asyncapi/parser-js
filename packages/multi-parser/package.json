@@ -1,0 +1,68 @@
+{
+  "name": "@asyncapi/multi-parser",
+  "version": "2.0.0",
+  "description": "This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version",
+  "private":false,
+  "bugs": {
+    "url": "https://github.com/asyncapi/parser-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asyncapi/parser-js.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/asyncapi/parser-js",
+  "sideEffects": false,
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "/esm",
+    "/cjs",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --project ./tsconfig.cjs.json",
+    "test": "npm run test:unit",
+    "test:unit": "cross-env CI=true jest --coverage",
+    "lint": "eslint --max-warnings 0 --config ../../.eslintrc  --ignore-path ../../.eslintignore .",
+    "lint:fix": "eslint --max-warnings 0 --config .../../eslintrc  --ignore-path ../../.eslintignore . --fix",
+    "generate:readme:toc": "markdown-toc -i \"../../README.md\"",
+    "generate:assets": "npm run generate:readme:toc",
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
+    "prepublishOnly": "npm run generate:assets"
+  },
+  "dependencies": {
+    "@asyncapi/avro-schema-parser": "^3.0.3",
+    "@asyncapi/openapi-schema-parser": "^3.0.4",
+    "@asyncapi/protobuf-schema-parser": "^3.0.0",
+    "@asyncapi/raml-dt-schema-parser": "^4.0.4",
+    "parserapiv1": "npm:@asyncapi/parser@^2.1.0",
+    "parserapiv2": "npm:@asyncapi/parser@3.0.0-next-major-spec.8",
+    "parserapiv3": "file:../parser"
+
+  },
+  "devDependencies": {
+    "@jest/types": "^29.0.2",
+    "@swc/core": "^1.2.248",
+    "@swc/jest": "^0.2.22",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.23.0",
+    "eslint-plugin-github": "^4.3.7",
+    "eslint-plugin-security": "^1.5.0",
+    "eslint-plugin-sonarjs": "^0.15.0",
+    "jest": "^29.0.2",
+    "markdown-toc": "^1.2.0",
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"  }
+}

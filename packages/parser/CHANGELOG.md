@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.2.1
+
+### Patch Changes
+
+- b032f3a: fix: upgrade `ajv` to version `8.17.1` to lay the foundation for fixing https://github.com/asyncapi/parser-js/issues/980 in `Studio`
+
 ## 3.2.0
 
 ### Minor Changes

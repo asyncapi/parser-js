@@ -2,7 +2,7 @@
   "name": "parser-js",
   "private": true,
   "scripts": {
-    "test": "turbo run build && turbo run test",
+    "test": "turbo run test",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "build": "turbo run build",

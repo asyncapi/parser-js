@@ -2,4 +2,4 @@
 "@asyncapi/multi-parser": patch
 ---
 
-Adding the Way the generator is imported in Nunjucks filter.
+Updated the method of importing the generator in the Nunjucks filter. Standardized the import of different parser functions.

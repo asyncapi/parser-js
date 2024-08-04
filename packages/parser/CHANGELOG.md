@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.2.2
+
+### Patch Changes
+
+- b700a65: fix: remove forceful normalization of YAML to JSON
+
 ## 3.2.1
 
 ### Patch Changes

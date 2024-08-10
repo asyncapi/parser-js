@@ -49,19 +49,6 @@ export const v2CoreRuleset = {
         function: serverVariables,
       },
     },
-    'asyncapi2-channel-no-query-nor-fragment': {
-      description: 'Channel address should not include query ("?") or fragment ("#") delimiter.',
-      severity: 'error',
-      recommended: true,
-      given: '$.channels',
-      then: {
-        field: '@key',
-        function: pattern,
-        functionOptions: {
-          notMatch: '[\\?#]',
-        },
-      },
-    },
     
     /**
      * Channel Object rules
@@ -84,6 +71,19 @@ export const v2CoreRuleset = {
       given: '$',
       then: {
         function: channelServers,
+      },
+    },
+    'asyncapi2-channel-no-query-nor-fragment': {
+      description: 'Channel address should not include query ("?") or fragment ("#") delimiter.',
+      severity: 'error',
+      recommended: true,
+      given: '$.channels',
+      then: {
+        field: '@key',
+        function: pattern,
+        functionOptions: {
+          notMatch: '[\\?#]',
+        },
       },
     },
 

@@ -38,24 +38,21 @@ const defaultOptions: ParseOptions = {
   validateOptions: {},
   __unstable: {},
 };
-import yaml from 'js-yaml';
+
 export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input, options: ParseOptions = {}): Promise<ParseOutput> {
   let spectralDocument: Document | undefined;
 
   try {
     options = mergePatch<ParseOptions>(defaultOptions, options);
-    // Normalize input to always be JSON 
-    let loadedObj;
-    if (typeof asyncapi === 'string') {
-      try {
-        loadedObj = yaml.load(asyncapi);
-      } catch (e) {
-        loadedObj = JSON.parse(asyncapi);
-      }
-    } else {
-      loadedObj = asyncapi;
-    }
-    const { validated, diagnostics, extras } = await validate(parser, spectral, loadedObj, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
+    
+    // `./src/validate.ts` enforces 'string' type on both YAML and JSON later in
+    // code, and parses them both using the same `@stoplight/yaml`, so forceful
+    // normalization of YAML to JSON here has no practical application. It only
+    // causes `range` to be reported incorrectly in `diagnostics` by misleading
+    // `Parser` into thinking it's dealing with JSON instead of YAML, creating
+    // the bug described in https://github.com/asyncapi/parser-js/issues/936
+    
+    const { validated, diagnostics, extras } = await validate(parser, spectral, asyncapi, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
     if (validated === undefined) {
       return {
         document: undefined,
@@ -72,7 +69,7 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
 
     // Apply unique ids which are used as part of iterating between channels <-> operations <-> messages
     applyUniqueIds(validatedDoc);
-    const detailed = createDetailedAsyncAPI(validatedDoc, loadedObj as DetailedAsyncAPI['input'], options.source);
+    const detailed = createDetailedAsyncAPI(validatedDoc, asyncapi as DetailedAsyncAPI['input'], options.source);
     const document = createAsyncAPIDocument(detailed);
     setExtension(xParserSpecParsed, true, document);
     setExtension(xParserApiVersion, ParserAPIVersion, document);

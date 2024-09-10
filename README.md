@@ -435,7 +435,7 @@ A few advantages of this solution:
 - The string remains as small as possible due to the use of [JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901).
 - All references (also circular) are preserved.
 
-Check [example](#example-with-stringify-and-unstringify-parsed-documentstringify).
+Check [example](#example-with-stringify-and-unstringify-parsed-document).
 
 ## Convert to the old API
 

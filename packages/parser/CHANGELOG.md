@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.3.0
+
+### Minor Changes
+
+- bebbd39: feat: create rule `asyncapi3-channel-no-query-nor-fragment` for v3 core ruleset
+
 ## 3.2.2
 
 ### Patch Changes

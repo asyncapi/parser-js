@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.4.0
+
+### Minor Changes
+
+- e18f865: Updating jsonpath-plus dependency to mitigate CVE-2024-21534
+
 ## 3.3.0
 
 ### Minor Changes

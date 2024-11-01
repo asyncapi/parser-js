@@ -43,7 +43,7 @@ testRule('asyncapi2-schema-examples', [
           parameters: {
             userId: {
               schema: {
-                examples: [17, 'one', 13],
+                examples: [17, {}, 13, 'string-is-always-accepted'],
               },
             },
           },
@@ -53,26 +53,26 @@ testRule('asyncapi2-schema-examples', [
         parameters: {
           orphanParameter: {
             schema: {
-              examples: [17, 'one', 13],
+              examples: [17, {}, 13, 'string-is-always-accepted'],
             },
           },
         },
         schemas: {
           aSchema: {
-            type: 'string',
-            examples: [17, 'one', 13],
+            type: 'object',
+            examples: [17, {}, 13, 'string-is-always-accepted'],
           },
         },
       },
     },
     errors: [
       {
-        message: '"0" property type must be string',
+        message: '"0" property type must be object',
         path: ['components', 'schemas', 'aSchema', 'examples', '0'],
         severity: DiagnosticSeverity.Error,
       },
       {
-        message: '"2" property type must be string',
+        message: '"2" property type must be object',
         path: ['components', 'schemas', 'aSchema', 'examples', '2'],
         severity: DiagnosticSeverity.Error,
       },
@@ -88,7 +88,7 @@ testRule('asyncapi2-schema-examples', [
           parameters: {
             userId: {
               schema: {
-                examples: [17, 'one', 13],
+                examples: [17, {}, 13, 'string-is-always-accepted'],
               },
             },
           },
@@ -98,26 +98,26 @@ testRule('asyncapi2-schema-examples', [
         parameters: {
           orphanParameter: {
             schema: {
-              type: 'string',
-              examples: [17, 'one', 13],
+              type: 'object',
+              examples: [17, {}, 13, 'string-is-always-accepted'],
             },
           },
         },
         schemas: {
           aSchema: {
-            examples: [17, 'one', 13],
+            examples: [17, {}, 13, 'string-is-always-accepted'],
           },
         },
       },
     },
     errors: [
       {
-        message: '"0" property type must be string',
+        message: '"0" property type must be object',
         path: ['components', 'parameters', 'orphanParameter', 'schema', 'examples', '0'],
         severity: DiagnosticSeverity.Error,
       },
       {
-        message: '"2" property type must be string',
+        message: '"2" property type must be object',
         path: ['components', 'parameters', 'orphanParameter', 'schema', 'examples', '2'],
         severity: DiagnosticSeverity.Error,
       },
@@ -133,8 +133,8 @@ testRule('asyncapi2-schema-examples', [
           parameters: {
             userId: {
               schema: {
-                type: 'string',
-                examples: [17, 'one', 13],
+                type: 'object',
+                examples: [17, {}, 13, 'string-is-always-accepted'],
               },
             },
           },
@@ -144,25 +144,25 @@ testRule('asyncapi2-schema-examples', [
         parameters: {
           orphanParameter: {
             schema: {
-              examples: [17, 'one', 13],
+              examples: [17, {}, 13, 'string-is-always-accepted'],
             },
           },
         },
         schemas: {
           aSchema: {
-            examples: [17, 'one', 13],
+            examples: [17, {}, 13, 'string-is-always-accepted'],
           },
         },
       },
     },
     errors: [
       {
-        message: '"0" property type must be string',
+        message: '"0" property type must be object',
         path: ['channels', 'users/{userId}/signedUp', 'parameters', 'userId', 'schema', 'examples', '0'],
         severity: DiagnosticSeverity.Error,
       },
       {
-        message: '"2" property type must be string',
+        message: '"2" property type must be object',
         path: ['channels', 'users/{userId}/signedUp', 'parameters', 'userId', 'schema', 'examples', '2'],
         severity: DiagnosticSeverity.Error,
       },

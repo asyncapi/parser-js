@@ -1,0 +1,42 @@
+asyncapi: '3.0.0'
+info:
+  title: User API
+  version: '1.0.0'
+
+servers:
+  local:
+    host: localhost:3000
+    protocol: ws
+
+channels:
+  onUserRegistered:
+    messages:
+      UserRegistered:
+        name: UserRegistered
+        title: UserRegistered
+        payload:
+          $ref: 'UserRegistered.yml#/components/schemas/UserRegistered'
+  onUserLogged:
+    messages:
+      UserLogged:
+        name: UserLogged
+        title: UserLogged
+        payload:
+          $ref: '#/components/schemas/UserLogged'
+
+components:
+  schemas:
+    UserLoggedType:
+      type: string
+      enum: [UserLogged]
+    UserLogged:
+      type: object
+      additionalProperties: false
+      required:
+        - type
+        - name
+      properties:
+        type:
+          $ref: '#/components/schemas/UserLoggedType'
+        name:
+          type: string

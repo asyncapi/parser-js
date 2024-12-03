@@ -9,7 +9,7 @@ import { assertExtensions } from './utils';
 describe('OperationReply model', function() {
   describe('.id()', function() {
     it('should return id', function() {
-      const d = new OperationReply({}, { asyncapi: {} as any, pointer: '', id: 'reply' });
+      const d = new OperationReply({id: 'reply'}, { asyncapi: {} as any, pointer: '' });
       expect(d.id()).toEqual('reply');
     });
   });

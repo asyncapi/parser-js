@@ -14,7 +14,7 @@ import type { v3 } from '../../spec-types';
 
 export class OperationReply extends BaseModel<v3.OperationReplyObject, { id?: string }> implements OperationReplyInterface {
   id(): string | undefined {
-    return this._meta.id;
+    return this._json.id;
   }
 
   hasAddress(): boolean {

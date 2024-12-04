@@ -56,6 +56,19 @@ export const v3CoreRuleset = {
           match: '#\\/servers\\/', // If doesn't match, rule fails.
         },
       },
-    }
+    },
+    'asyncapi3-channel-no-query-nor-fragment': {
+      description: 'Channel address should not include query ("?") or fragment ("#") delimiter.',
+      severity: 'error',
+      recommended: true,
+      given: '$.channels',
+      then: {
+        field: '@key',
+        function: pattern,
+        functionOptions: {
+          notMatch: '[\\?#]',
+        },
+      },
+    },
   },
 };

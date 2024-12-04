@@ -67,7 +67,7 @@ The package exposes the main class `Parser`, which has two main functions:
 
 - `validate()` - function that validates the passed AsyncAPI document. Returns array of all possible errors against the validation conditions.
 - `parse()` - function that validates the passed AsyncAPI document, and then if it's valid, parses the input. It returns an object that contains:
-  - `document` object, which is an parsed AsyncAPI document with [`AsyncAPIDocumentInterface`](./src/models/asyncapi.ts) API. If the schema is invalid against the validation conditions, the field has `undefined` value.
+  - `document` object, which is an parsed AsyncAPI document with [`AsyncAPIDocumentInterface`](./packages/parser/src/models/asyncapi.ts) API. If the schema is invalid against the validation conditions, the field has `undefined` value.
   - `diagnostics` array that contains all possible errors against the validation conditions.
 - `registerSchemaParser()` - function that registers custom schema parsers. For more info, please check [Custom schema parsers](#custom-schema-parsers) section.
 
@@ -414,7 +414,7 @@ In addition, the [`convertToOldAPI()` function](#convert-to-the-old-api) which c
 Parser dereferences all circular references by default. In addition, to simplify interactions with the parser, the following is added:
 
 - `x-parser-circular` property is added to the root of the AsyncAPI document to indicate that the document contains circular references. In old API the Parser exposes `hasCircular()` function to check if given AsyncAPI document has circular references.
-- `isCircular()` function is added to the [Schema Model](./src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the JSON tree.
+- `isCircular()` function is added to the [Schema Model](./packages/parser/src/models/schema.ts) to determine if a given schema is circular with respect to previously occurring schemas in the JSON tree.
 
 ## Stringify
 

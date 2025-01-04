@@ -3,6 +3,7 @@
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
 import { pattern } from '@stoplight/spectral-functions';
+import { channelServers } from './functions/channelServers';
 
 export const v3CoreRuleset = {
   description: 'Core AsyncAPI 3.x.x ruleset.',
@@ -55,6 +56,16 @@ export const v3CoreRuleset = {
         functionOptions: {
           match: '#\\/servers\\/', // If doesn't match, rule fails.
         },
+      },
+    },
+    'asyncapi3-channel-servers': {
+      description: 'Channel servers must be defined in the "servers" object.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      given: '$',
+      then: {
+        function: channelServers,
       },
     },
     'asyncapi3-channel-no-query-nor-fragment': {

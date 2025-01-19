@@ -3,7 +3,7 @@
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
 import { pattern } from '@stoplight/spectral-functions';
-import { channelServers } from './functions/channelServers';
+import { channelServers } from '../functions/channelServers';
 
 export const v3CoreRuleset = {
   description: 'Core AsyncAPI 3.x.x ruleset.',

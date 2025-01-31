@@ -17,6 +17,7 @@ import { SecurityRequirement } from '../../../src/models/v2/security-requirement
 const doc = {
   development: {
     protocol: 'mqtt',
+    summary: 'mqtt development server is summary',
     protocolVersion: '1.0.0',
     url: 'development.gigantic-server.com',
     variables: {
@@ -40,6 +41,21 @@ describe('Server Model', function () {
   describe('protocol()', function () {
     it('should return protocol ', function () {
       expect(docItem.protocol()).toMatch(doc.development.protocol);
+    });
+  });
+
+  describe('.summary()', function () {
+    it('should return value', function () {
+      expect(docItem.summary()).toEqual(doc.development.summary);
+    });
+  });
+
+  describe('.hasSummary()', function () {
+    it('should return true if summary is present', function () {
+      expect(docItem.hasSummary()).toEqual(true);
+    });
+    it('should return false if summary is missing', function () {
+      expect(emptyItem.hasSummary()).toEqual(false);
     });
   });
 

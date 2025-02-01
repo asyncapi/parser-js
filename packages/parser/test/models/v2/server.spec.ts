@@ -16,6 +16,7 @@ import { SecurityRequirement } from '../../../src/models/v2/security-requirement
 
 const doc = {
   development: {
+    title: 'mqtt development server',
     protocol: 'mqtt',
     protocolVersion: '1.0.0',
     url: 'development.gigantic-server.com',
@@ -34,6 +35,22 @@ describe('Server Model', function () {
   describe('.id()', function () {
     it('should return name if present', function () {
       expect(docItem.id()).toMatch('development');
+    });
+  });
+
+  describe('.title()', function () {
+    it('should return title', function () {
+      expect(docItem.title()).toMatch(doc.development.title);
+    });
+  });
+
+  describe('.hasTitle()', function () {
+    it('should return true if title is present', function () {
+      expect(docItem.hasTitle()).toBeTruthy();
+    });
+
+    it('should return false if title is missing', function () {
+      expect(emptyItem.hasTitle()).toBeFalsy();
     });
   });
 

@@ -49,6 +49,14 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
     return url.pathname;
   }
 
+  title(): string | undefined {
+    return this._json.title;
+  }
+  
+  hasTitle(): boolean {
+    return !!this._json.title;
+  }
+
   protocol(): string {
     return this._json.protocol;
   }

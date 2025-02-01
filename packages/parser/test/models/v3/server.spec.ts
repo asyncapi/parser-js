@@ -18,6 +18,7 @@ import { xParserObjectUniqueId } from '../../../src/constants';
 const doc = {
   production: {
     host: 'rabbitmq.in.mycompany.com:5672',
+    title: 'rabbitmq production server',
     pathname: '/production',
     protocol: 'amqp',
     protocolVersion: '1.0.0',
@@ -48,6 +49,22 @@ describe('Server Model', function () {
   describe('.host()', function () {
     it('should return value', function () {
       expect(docItem.host()).toEqual(doc.production.host);
+    });
+  });
+
+  describe('.title()', function () {
+    it('should return title', function () {
+      expect(docItem.title()).toEqual(doc.production.title);
+    });
+  });
+
+  describe('.hasTitle()', function () {
+    it('should return true if title is present', function () {
+      expect(docItem.hasTitle()).toBeTruthy();
+    });
+
+    it('should return false if title is missing', function () {
+      expect(emptyItem.hasTitle()).toBeFalsy();
     });
   });
 

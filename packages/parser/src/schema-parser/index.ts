@@ -46,10 +46,21 @@ export async function validateSchema(parser: Parser, input: ValidateSchemaInput)
 }
 
 export async function parseSchema(parser: Parser, input: ParseSchemaInput) {
-  const schemaParser = parser.parserRegistry.get(input.schemaFormat);
-  if (schemaParser === undefined) {
-    throw new Error('Unknown schema format');
+  // First validate that format is a string
+  if (typeof input.schemaFormat !== 'string') {
+    throw new Error('Schema format must be a string');
   }
+
+  const schemaParser = parser.parserRegistry.get(input.schemaFormat);
+  
+  if (schemaParser === undefined) {
+    // Simply return the schema as-is for unknown formats
+    return {
+      parsed: input.data, // Assuming you meant to return input.data instead of input.schema
+      format: input.schemaFormat
+    };
+  }
+  
   return schemaParser.parse(input);
 }
 

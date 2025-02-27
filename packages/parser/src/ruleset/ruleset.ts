@@ -6,6 +6,7 @@ import { isAsyncAPIDocument } from './functions/isAsyncAPIDocument';
 import { unusedComponent } from './functions/unusedComponent';
 import { AsyncAPIFormats } from './formats';
 import { lastVersion } from '../constants';
+import { channelParametersV3 } from './v3/functions/channelParameters'
 
 export const coreRuleset = {
   description: 'Core AsyncAPI x.x.x ruleset.',
@@ -162,7 +163,15 @@ export const recommendedRuleset = {
         function: truthy,
       },
     },
-
+    // new rule for v3
+    'asyncapi3-channel-parameters': {
+      description: "Ensures that the channel parameters are defined in the address",
+      given: "$.channels[*]",
+      severity: "error",
+      then: {
+       function : channelParametersV3,
+      },
+    },
     /**
      * Server Object rules
      */

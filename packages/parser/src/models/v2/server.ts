@@ -34,6 +34,14 @@ export class Server extends BaseModel<v2.ServerObject, { id: string }> implement
   url(): string {
     return this._json.url;
   }
+  
+  summary(): string | undefined {
+    return this._json.summary;
+  }
+
+  hasSummary(): boolean {
+    return !!this._json.summary;
+  }
 
   host(): string {
     const url = new URL(this.url());

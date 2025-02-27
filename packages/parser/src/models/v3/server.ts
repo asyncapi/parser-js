@@ -26,7 +26,7 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   id(): string {
     return this._meta.id;
   }
-
+  
   url(): string {
     let host = this.host();
     if (!host.endsWith('/')) {

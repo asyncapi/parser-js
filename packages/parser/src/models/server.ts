@@ -12,6 +12,8 @@ export interface ServerInterface extends BaseModel, DescriptionMixinInterface, B
   host(): string;
   hasPathname(): boolean;
   pathname(): string | undefined;
+  title(): string | undefined;
+  hasTitle(): boolean;
   protocol(): string;
   protocolVersion(): string | undefined;
   hasProtocolVersion(): boolean;

@@ -26,6 +26,13 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
   id(): string {
     return this._meta.id;
   }
+    summary(): string | undefined {
+    return this._json.summary;
+  }
+    hasSummary(): boolean {
+    return !!this._json.summary;
+  }
+
 
   url(): string {
     let host = this.host();

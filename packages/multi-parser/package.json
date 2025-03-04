@@ -42,7 +42,7 @@
     "@asyncapi/avro-schema-parser": "^3.0.3",
     "@asyncapi/openapi-schema-parser": "^3.0.4",
     "@asyncapi/parser": "*",
-    "@asyncapi/protobuf-schema-parser": "^3.5.0",
+    "@asyncapi/protobuf-schema-parser": "^3.5.1",
     "@asyncapi/raml-dt-schema-parser": "^4.0.4",
     "parserapiv1": "npm:@asyncapi/parser@^2.1.0",
     "parserapiv2": "npm:@asyncapi/parser@3.0.0-next-major-spec.8"

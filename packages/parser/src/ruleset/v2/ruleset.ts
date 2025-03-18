@@ -4,7 +4,7 @@ import { AsyncAPIFormats } from '../formats';
 import { truthy, pattern } from '@stoplight/spectral-functions';
 
 import { channelParameters } from './functions/channelParameters';
-import { channelServers } from './functions/channelServers';
+import { channelServers } from '../functions/channelServers';
 import { checkId } from './functions/checkId';
 import { messageExamples } from './functions/messageExamples';
 import { asyncApi2MessageExamplesParserRule } from './functions/messageExamples-spectral-rule-v2';

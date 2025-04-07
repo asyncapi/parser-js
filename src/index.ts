@@ -6,7 +6,7 @@ export * from './models';
 
 export { Parser };
 export { stringify, unstringify } from './stringify';
-export { fromURL, fromFile } from './from';
+export { fromURL } from './from';
 export { createAsyncAPIDocument, toAsyncAPIDocument, isAsyncAPIDocument, isOldAsyncAPIDocument } from './document';
 export { DiagnosticSeverity };
 

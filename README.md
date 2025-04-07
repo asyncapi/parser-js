@@ -68,10 +68,11 @@ The package exposes the main class `Parser`, which has two main functions:
   - `diagnostics` array that contains all possible errors against the validation conditions.
 - `registerSchemaParser()` - function that registers custom schema parsers. For more info, please check [Custom schema parsers](#custom-schema-parsers) section.
 
-Natively `Parser` class does not contain methods that operate on the source (AsyncAPI document) from a file or URL. However, the package exposes utils that make this possible:
+Natively `Parser` class does not contain methods that operate on the source (AsyncAPI document) from a file or URL. However, the package exposes utils that make this possible. Note that `fromFile` requires `fs`, and is not available in the browser. The following imports are available:
 
 ```ts
-import { fromURL, fromFile } from '@asyncapi/parser';
+import { fromURL } from '@asyncapi/parser';
+import { fromFile } from '@asyncapi/parser/from-file';
 ```
 
 Check out the [examples](#examples) of using the above mentioned functionalities.
@@ -166,6 +167,7 @@ const { document, diagnostics } = await fromURL(parser, 'https://example.com/').
 
 ```ts
 import { Parser, fromFile } from '@asyncapi/parser';
+import { fromFile } from '@asyncapi/parser/from-file';
 
 const parser = new Parser();
 

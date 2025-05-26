@@ -41,6 +41,7 @@ export type ServersObject = Record<string, ServerObject>;
 export interface ServerObject extends SpecificationExtensions {
   url: string;
   protocol: string;
+  title?: string;
   protocolVersion?: string;
   description?: string;
   variables?: Record<string, ServerVariableObject>;

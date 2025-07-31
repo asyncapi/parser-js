@@ -1,7 +1,6 @@
 import { readFile } from 'fs';
 import { promisify } from 'util';
 
-import type { RequestInit } from 'node-fetch';
 import type { Parser } from './parser';
 import type { ParseOptions, ParseOutput } from './parse';
 import type { ValidateOptions } from './validate';
@@ -12,10 +11,9 @@ interface FromResult {
   validate: (options?: ValidateOptions) => Promise<Diagnostic[]>;
 }
 
-export function fromURL(parser: Parser, source: string, options?: RequestInit): FromResult {
+export function fromURL(parser: Parser, source: string, options?: Parameters<typeof fetch>[1]): FromResult {
   async function fetchUrl(): Promise<Input> {
-    const fetchFn = await getFetch();
-    return (await fetchFn(source, options as any)).text();
+    return (await fetch(source, options)).text();
   }
 
   return {
@@ -45,16 +43,4 @@ export function fromFile(parser: Parser, source: string, options?: Parameters<ty
       return parser.validate(schema, { ...options, source });
     }
   };
-}
-
-let __fetchFn: typeof fetch | undefined;
-async function getFetch(): Promise<typeof fetch> {
-  if (__fetchFn) {
-    return __fetchFn;
-  }
-
-  if (typeof fetch === 'undefined') {
-    return __fetchFn = (await import('node-fetch')).default as unknown as typeof fetch;
-  }
-  return (__fetchFn = fetch);
 }

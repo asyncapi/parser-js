@@ -27,7 +27,11 @@ describe('Test browser Parser in the node env', function() {
 
     //use this in case you want to troubleshoot in a real chrome window => browser = await puppeteer.launch({headless: false});
     console.info('starting browser');
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch(
+      {
+        headless: true
+      }
+    );
 
     console.info('opening new page');
     page = await browser.newPage();

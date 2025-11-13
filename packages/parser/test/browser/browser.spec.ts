@@ -27,11 +27,19 @@ describe('Test browser Parser in the node env', function() {
 
     //use this in case you want to troubleshoot in a real chrome window => browser = await puppeteer.launch({headless: false});
     console.info('starting browser');
-    browser = await puppeteer.launch(
-      {
-        headless: true
-      }
-    );
+    browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        `--no-sandbox`
+        `--disable-setuid-sandbox`
+        `--disable-extensions-except=${extensionPath}`,
+        `--load-extension=${extensionPath}`
+      ],
+      slowMo: 50
+    });
+    page = await browser.newPage();
+    await page.goto('https://www.google.com');
+  });
 
     console.info('opening new page');
     page = await browser.newPage();

@@ -16,7 +16,7 @@ jobs:
       matrix:
         # Using macos-13 instead of latest (macos-14) due to an issue with Puppeteer and such runner. 
         # See: https://github.com/puppeteer/puppeteer/issues/12327 and https://github.com/asyncapi/parser-js/issues/1001
-        os: [ubuntu-latest, macos-13, windows-latest]
+        os: [ubuntu-22.04, macos-13, windows-latest]
     steps:
       - if: >
           !github.event.pull_request.draft && !(

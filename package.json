@@ -16,7 +16,6 @@
     "prepublishOnly": "turbo run prepublishOnly"
   },
   "devDependencies": {
-    "playwright": "^1.56.1",
     "turbo": "1.13.3"
   },
   "engines": {

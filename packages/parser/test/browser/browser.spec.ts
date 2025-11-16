@@ -2,12 +2,12 @@ import fs from 'fs';
 import http from 'http';
 import path from 'path';
 import url from 'url';
-import puppeteer from 'puppeteer';
+import { chromium, Browser, Page, ConsoleMessage } from 'playwright';
 
-describe('Test browser Parser in the node env', function() {
+describe('Test browser Parser in the node env', function () {
   let server: http.Server;
-  let browser: puppeteer.Browser;
-  let page: puppeteer.Page;
+  let browser: Browser;
+  let page: Page;
 
   beforeAll(async function() {
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -25,35 +25,38 @@ describe('Test browser Parser in the node env', function() {
     });
     server.listen(8080);
 
-    //use this in case you want to troubleshoot in a real chrome window => browser = await puppeteer.launch({headless: false});
     console.info('starting browser');
-    browser = await puppeteer.launch();
+    // Use { headless: false } for debugging if needed
+    browser = await chromium.launch();
 
     console.info('opening new page');
     page = await browser.newPage();
 
-    page.on('console', msg => {
-      msg.args().forEach((arg, index) => {
-        console.error(`Browser console content ${index}: ${JSON.stringify(arg.remoteObject().value, null, 2)}`);
-      });
+    page.on('console', (msg: ConsoleMessage) => {
+      console.error(`Browser console [${msg.type()}]: ${msg.text()}`);
     });
 
     console.info('navigating to localhost');
-    await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
+    await page.goto('http://localhost:8080');
+    await page.waitForLoadState('networkidle');
   });
 
   afterAll(async function() {
     await browser.close();
-    await server.close();
+    await new Promise<void>((resolve, reject) => {
+      server.close(err => (err ? reject(err) : resolve()));
+    });
   });
 
   it('should parse spec in the browser', async function() {
     console.info('getting content element');
+    await page.waitForSelector('#content');
     const contentDiv = await page.$('#content');
     const content = await page.evaluate(element => element && element.textContent, contentDiv);
     expect(content).toEqual('2.0.0');
 
     console.info('getting number of warnings');
+    await page.waitForSelector('#diagnostics');
     const diagnosticsDiv = await page.$('#diagnostics');
     const diagnostics = await page.evaluate(element => element && element.textContent, diagnosticsDiv);
     expect(Number(diagnostics)).toBeGreaterThanOrEqual(0);

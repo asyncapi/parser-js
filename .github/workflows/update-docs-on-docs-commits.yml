@@ -12,10 +12,11 @@ on:
     branches:
       - master
 
+
 jobs:
   docs-gen:
     name: 'Generate docs and create PR'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     # PR should be created within this GH action only if it is a docs: commit
     # Otherwise it will conflict with release workflow
     if: startsWith(github.event.commits[0].message, 'docs:')

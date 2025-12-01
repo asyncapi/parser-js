@@ -1,3 +1,4 @@
+
 /* eslint-disable sonarjs/no-duplicate-string */
 
 import { AsyncAPIFormats } from '../formats';
@@ -64,7 +65,7 @@ export const v3CoreRuleset = {
       severity: 'error',
       recommended: true,
       given: '$',
-      then: {
+      then: { // NOSONAR
         function: channelServers,
       },
     },

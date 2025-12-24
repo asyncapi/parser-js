@@ -14,11 +14,16 @@ export interface Resolver {
 export interface ResolverOptions {
   cache?: boolean;
   resolvers?: Array<Resolver>;
+  resolveExternal?: boolean;
 }
 
 export function createResolver(options: ResolverOptions = {}): SpectralResolver {
+  // Default to true for backward compatibility
+  const resolveExternal = options.resolveExternal !== false;
+  const defaultResolvers = resolveExternal ? createDefaultResolvers() : [];
+  
   const availableResolvers: Array<Resolver> = [
-    ...createDefaultResolvers(),
+    ...defaultResolvers,
     ...(options.resolvers || [])
   ].map(r => ({ 
     ...r,

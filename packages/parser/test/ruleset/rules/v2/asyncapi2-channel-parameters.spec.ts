@@ -86,4 +86,26 @@ testRule('asyncapi2-channel-parameters', [
       },
     ],
   },
+
+  // NEW: address is empty but parameters exist
+  {
+    name: 'invalid when channel address is empty but parameters exist',
+    document: {
+      asyncapi: '2.0.0',
+      channels: {
+        '': {
+          parameters: {
+            userId: {},
+          },
+        },
+      },
+    },
+    errors: [
+      {
+        message: 'Channel address must be a non-empty string when "parameters" are provided.',
+        path: ['channels', ''],
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
+  },
 ]);

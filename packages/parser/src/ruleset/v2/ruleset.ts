@@ -12,7 +12,7 @@ import { messageIdUniqueness } from './functions/messageIdUniqueness';
 import { operationIdUniqueness } from './functions/operationIdUniqueness';
 import { schemaValidation } from './functions/schemaValidation';
 import { security } from './functions/security';
-import { serverVariables } from './functions/serverVariables';
+import { serverVariables } from '../functions/serverVariables';
 import { unusedSecuritySchemes } from './functions/unusedSecuritySchemes';
 import { uniquenessTags } from '../functions/uniquenessTags';
 import { asyncApi2SchemaParserRule } from '../../schema-parser/spectral-rule-v2';

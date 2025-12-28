@@ -4,4 +4,5 @@ import type { ChannelInterface } from './channel';
 export interface ChannelsInterface extends Collection<ChannelInterface> {
   filterBySend(): ChannelInterface[];
   filterByReceive(): ChannelInterface[];
+    filterByAddress(address: string): ChannelsInterface;
 }

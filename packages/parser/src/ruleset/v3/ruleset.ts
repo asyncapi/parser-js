@@ -20,7 +20,7 @@ export const v3CoreRuleset = {
       severity: 'error',
       recommended: true,
       given: ['$.servers.*', '$.components.servers.*'],
-      then: {
+      then: { //NOSONAR
         function: serverVariables,
       },
     },

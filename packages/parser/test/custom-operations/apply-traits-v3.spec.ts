@@ -9,7 +9,7 @@ describe('custom operations - apply traits v3', function() {
 
   it('should apply traits to operations', async function() {
     const documentRaw = {
-      asyncapi: '3.0.0',
+      asyncapi: '3.1.0',
       info: {
         title: 'Valid AsyncApi document',
         version: '1.0',

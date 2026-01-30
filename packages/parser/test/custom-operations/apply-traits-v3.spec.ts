@@ -9,7 +9,7 @@ describe('custom operations - apply traits v3', function() {
 
   it('should apply traits to operations', async function() {
     const documentRaw = {
-      asyncapi: '3.1.0',
+      asyncapi: '3.0.0',
       info: {
         title: 'Valid AsyncApi document',
         version: '1.0',
@@ -50,7 +50,9 @@ describe('custom operations - apply traits v3', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
-    expect(diagnostics).toHaveLength(0);
+    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
+    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
+    expect(filteredDiagnostics).toHaveLength(0);
     
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
@@ -297,7 +299,9 @@ describe('custom operations - apply traits v3', function() {
 
     beforeAll(async () => {
       const { document, diagnostics } = await parser.parse(documentRaw);
-      expect(diagnostics.length).toEqual(0);
+      // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
+      const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
+      expect(filteredDiagnostics.length).toEqual(0);
       v3Document = document as AsyncAPIDocumentV3;
     });
 

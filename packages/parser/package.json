@@ -43,7 +43,7 @@
     "prepublishOnly": "npm run generate:assets"
   },
   "dependencies": {
-    "@asyncapi/specs": "^6.11.0",
+    "@asyncapi/specs": "https://github.com/derberg/asyncapi-node.git#9ed4cfeddea95ad19b8fbafcfb36cf2e17dfda78",
     "@openapi-contrib/openapi-schema-to-json-schema": "~3.2.0",
     "@stoplight/json": "3.21.0",
     "@stoplight/json-ref-readers": "^1.2.2",

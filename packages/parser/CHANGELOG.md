@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.6.0
+
+### Minor Changes
+
+- d90ab14: Release AsyncAPI 3.1 support that adds ROS 2 binding.
+
 ## 3.5.0
 
 ### Minor Changes

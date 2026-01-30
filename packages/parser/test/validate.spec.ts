@@ -55,7 +55,7 @@ describe('validate()', function() {
   });
 
   // See https://github.com/asyncapi/parser-js/issues/996
-  it.only('user case - null channel address should not make operation traits appliance fail', async function() {
+  it('user case - null channel address should not make operation traits appliance fail', async function() {
     const documentRaw = {
       asyncapi: '3.0.0',
       info: {

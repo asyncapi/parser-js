@@ -3,7 +3,7 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
-import { pattern } from '@stoplight/spectral-functions';
+import { pattern, truthy } from '@stoplight/spectral-functions';
 import { channelServers } from '../functions/channelServers';
 
 export const v3CoreRuleset = {
@@ -13,18 +13,18 @@ export const v3CoreRuleset = {
     /**
      * Operation Object rules
      */
-    'asyncapi3-operation-messages-from-referred-channel': {
-      description: 'Operation "messages" must be a subset of the messages defined in the channel referenced in this operation.',
-      message: '{{error}}',
+    'channel-parameters-require-address': {
+      description: 'Channel address must not be null when parameters are defined.',
+      message: 'Channel address must not be null when parameters are defined.',
       severity: 'error',
       recommended: true,
-      resolved: false, // We use the JSON pointer to match the channel.
       given: [
-        '$.operations.*',
-        '$.components.operations.*',
+        '$.channels[?(@.parameters)]',
+        '$.components.channels[?(@.parameters)]'
       ],
       then: {
-        function: operationMessagesUnambiguity,
+        field: 'address',
+        function: truthy,
       },
     },
     'asyncapi3-required-operation-channel-unambiguity': {

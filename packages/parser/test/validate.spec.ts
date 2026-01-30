@@ -1,6 +1,7 @@
 import { AsyncAPIDocument } from '../src/models/v3/asyncapi';
 import { Parser } from '../src/parser';
 import { hasErrorDiagnostic, hasWarningDiagnostic } from '../src/utils';
+import { filterLastVersionDiagnostics } from './utils';
 
 describe('validate()', function() {
   const parser = new Parser();
@@ -92,9 +93,8 @@ describe('validate()', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw, { validateOptions: { allowedSeverity: { warning: false } } });
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
-    expect(filteredDiagnostics).toHaveLength(0);
+
     expect(document).toBeInstanceOf(AsyncAPIDocument);
+    expect(filterLastVersionDiagnostics(diagnostics)).toHaveLength(0);
   });
 });

@@ -7,6 +7,7 @@ import {
 } from '../src/models';
 import { Parser } from '../src/parser';
 import { xParserApiVersion } from '../src/constants';
+import { filterLastVersionDiagnostics } from './utils';
 
 describe('parse()', function () {
   const parser = new Parser();
@@ -36,10 +37,9 @@ describe('parse()', function () {
       channels: {},
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
+
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(filteredDiagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should parse invalid document', async function () {
@@ -363,11 +363,9 @@ describe('parse()', function () {
                   description: Email of the user`;
 
     const { document, diagnostics } = await parser.parse(documentRaw);
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(filteredDiagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should parse valid v3 JSON document in JSON format', async function () {
@@ -424,11 +422,9 @@ describe('parse()', function () {
     };
 
     const { document, diagnostics } = await parser.parse(documentRaw);
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(filteredDiagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should parse valid v3 JSON document after JSON.stringify()', async function () {
@@ -436,11 +432,9 @@ describe('parse()', function () {
       '{\n  "asyncapi": "3.0.0",\n  "info": {\n    "title": "Account Service",\n    "version": "1.0.0",\n    "description": "This service is in charge of processing user signups"\n  },\n  "channels": {\n    "userSignedup": {\n      "address": "user/signedup",\n      "messages": {\n        "UserSignedUp": {\n          "$ref": "#/components/messages/UserSignedUp"\n        }\n      }\n    }\n  },\n  "operations": {\n    "sendUserSignedup": {\n      "action": "send",\n      "channel": {\n        "$ref": "#/channels/userSignedup"\n      },\n      "messages": [\n        {\n          "$ref": "#/channels/userSignedup/messages/UserSignedUp"\n        }\n      ]\n    }\n  },\n  "components": {\n    "messages": {\n      "UserSignedUp": {\n        "payload": {\n          "type": "object",\n          "properties": {\n            "displayName": {\n              "type": "string",\n              "description": "Name of the user"\n            },\n            "email": {\n              "type": "string",\n              "format": "email",\n              "description": "Email of the user"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n';
 
     const { document, diagnostics } = await parser.parse(documentRaw);
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(filteredDiagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should not parse invalid v3 YAML document and give error in line 153 (#936)', async function () {
@@ -775,11 +769,9 @@ components:
         bindingVersion: '0.3.0'`;
 
     const { document, diagnostics } = await parser.parse(documentRaw);
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
 
     expect(document).not.toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(filteredDiagnostics[0].range.start.line === 153).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics)[0].range.start.line === 153).toEqual(true);
   });
 
   it('should not parse invalid v3 JSON document and give error in line 236 (#936)', async function () {
@@ -1279,10 +1271,8 @@ components:
     };
 
     const { document, diagnostics } = await parser.parse(documentRaw);
-    // Ignore asyncapi-latest-version diagnostic - not relevant to this test and would require updating version each release
-    const filteredDiagnostics = diagnostics.filter(d => d.code !== 'asyncapi-latest-version');
 
     expect(document).not.toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(filteredDiagnostics[0].range.start.line === 236).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics)[0].range.start.line === 236).toEqual(true);
   });
 });

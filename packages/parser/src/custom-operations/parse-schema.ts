@@ -31,6 +31,7 @@ const customSchemasPathsV3 = [
   // operations
   '$.operations.*.messages.*.payload',
   '$.operations.*.messages.*.headers',
+  '$.operations.*.channel.messages.*.payload',
   '$.components.operations.*.messages.*.payload',
   '$.components.operations.*.messages.*.headers',
   // messages

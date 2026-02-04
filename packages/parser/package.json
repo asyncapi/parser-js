@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "3.4.0",
+  "version": "3.6.0",
   "description": "JavaScript AsyncAPI parser.",
   "private": false,
   "bugs": {
@@ -43,7 +43,7 @@
     "prepublishOnly": "npm run generate:assets"
   },
   "dependencies": {
-    "@asyncapi/specs": "^6.8.0",
+    "@asyncapi/specs": "^6.11.1",
     "@openapi-contrib/openapi-schema-to-json-schema": "~3.2.0",
     "@stoplight/json": "3.21.0",
     "@stoplight/json-ref-readers": "^1.2.2",

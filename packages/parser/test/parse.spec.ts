@@ -7,6 +7,7 @@ import {
 } from '../src/models';
 import { Parser } from '../src/parser';
 import { xParserApiVersion } from '../src/constants';
+import { filterLastVersionDiagnostics } from './utils';
 
 describe('parse()', function () {
   const parser = new Parser();
@@ -36,8 +37,9 @@ describe('parse()', function () {
       channels: {},
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
+
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should parse invalid document', async function () {
@@ -363,7 +365,7 @@ describe('parse()', function () {
     const { document, diagnostics } = await parser.parse(documentRaw);
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should parse valid v3 JSON document in JSON format', async function () {
@@ -422,7 +424,7 @@ describe('parse()', function () {
     const { document, diagnostics } = await parser.parse(documentRaw);
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should parse valid v3 JSON document after JSON.stringify()', async function () {
@@ -432,7 +434,7 @@ describe('parse()', function () {
     const { document, diagnostics } = await parser.parse(documentRaw);
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
   it('should not parse invalid v3 YAML document and give error in line 153 (#936)', async function () {
@@ -769,7 +771,7 @@ components:
     const { document, diagnostics } = await parser.parse(documentRaw);
 
     expect(document).not.toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics[0].range.start.line === 153).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics)[0].range.start.line === 153).toEqual(true);
   });
 
   it('should not parse invalid v3 JSON document and give error in line 236 (#936)', async function () {
@@ -1271,6 +1273,6 @@ components:
     const { document, diagnostics } = await parser.parse(documentRaw);
 
     expect(document).not.toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics[0].range.start.line === 236).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics)[0].range.start.line === 236).toEqual(true);
   });
 });

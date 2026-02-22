@@ -55,7 +55,7 @@
     "@stoplight/types": "^13.12.0",
     "@types/json-schema": "^7.0.11",
     "@types/urijs": "^1.19.19",
-    "ajv": "^8.17.1",
+    "ajv": "^8.18.0",
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^2.1.1",
     "avsc": "^5.7.5",

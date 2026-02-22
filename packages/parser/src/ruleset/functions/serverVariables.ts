@@ -1,6 +1,6 @@
 import { createRulesetFunction } from '@stoplight/spectral-core';
 
-import { getMissingProps, getRedundantProps, parseUrlVariables } from '../../utils';
+import { getMissingProps, getRedundantProps, parseUrlVariables } from '../utils';
 
 import type { IFunctionResult } from '@stoplight/spectral-core';
 

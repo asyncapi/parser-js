@@ -85,6 +85,46 @@ testRule('asyncapi-document-unresolved', [
   },
 
   {
+    name: 'valid case for 3.X.X with square brackets in channel key and $ref path',
+    document: {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        'test-queue:_:[Handle,DefaultHandler]': {
+          address: 'test-queue',
+          messages: {
+            SubscribeMessage: {
+              $ref: '#/components/messages/test-queue:_:[Handle,DefaultHandler]:SubscribeMessage',
+            },
+          },
+        },
+      },
+      operations: {
+        'test-queue:_:[Handle,DefaultHandler]Subscribe': {
+          action: 'receive',
+          channel: {
+            $ref: '#/channels/test-queue:_:[Handle,DefaultHandler]',
+          },
+          messages: [
+            {
+              $ref: '#/channels/test-queue:_:[Handle,DefaultHandler]/messages/SubscribeMessage',
+            },
+          ],
+        },
+      },
+      components: {
+        messages: {
+          'test-queue:_:[Handle,DefaultHandler]:SubscribeMessage': {},
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
     name: 'invalid case for 3.X.X (reference for info object is not allowed)',
     document: {
       asyncapi: '3.0.0',

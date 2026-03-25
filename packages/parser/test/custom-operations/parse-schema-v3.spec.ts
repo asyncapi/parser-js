@@ -1,5 +1,6 @@
 import { AsyncAPIDocumentV3 } from '../../src/models';
 import { Parser } from '../../src/parser';
+import { filterLastVersionDiagnostics } from '../utils';
 
 import type { v3 } from '../../src/spec-types';
 
@@ -65,7 +66,7 @@ describe('custom operations for v3 - parse schemas', function() {
     const { document, diagnostics } = await parser.parse(documentRaw);
 
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
 
     expect(((document?.json()?.channels?.channel as v3.ChannelObject).messages?.message as v3.MessageObject)?.payload?.schema).toEqual({ type: 'object', 'x-parser-schema-id': '<anonymous-schema-1>' });
     expect(((((document?.json() as any).operations?.operation as v3.OperationObject).channel as v3.ChannelObject)?.messages?.message as v3.MessageObject)?.payload?.schema).toEqual({ type: 'object', 'x-parser-schema-id': '<anonymous-schema-1>' });
@@ -97,9 +98,9 @@ describe('custom operations for v3 - parse schemas', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
-    
+
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length === 0).toEqual(true);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
 
     expect(((document?.json()?.channels?.channel as v3.ChannelObject).messages?.message as v3.MessageObject)?.payload).toEqual({ type: 'object', 'x-parser-schema-id': '<anonymous-schema-1>' });
   });

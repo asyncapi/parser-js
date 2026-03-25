@@ -19,14 +19,17 @@ jobs:
     # "commits" contains an array of objects where one of the properties is the commit "message"
     # Release workflow will be skipped if release conventional commits are not used
     if: |
-      startsWith( github.repository, 'asyncapi/' )
+      startsWith( github.repository, 'asyncapi/' ) &&
+      (startsWith( github.event.commits[0].message , 'fix:' ) ||
+      startsWith( github.event.commits[0].message, 'fix!:' ) ||
+      startsWith( github.event.commits[0].message, 'feat:' ) ||
+      startsWith( github.event.commits[0].message, 'chore(release):' ) ||
+      startsWith( github.event.commits[0].message, 'feat!:' ))
     name: Test NodeJS release on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # Using macos-13 instead of latest (macos-14) due to an issue with Puppeteer and such runner.
-        # See: https://github.com/puppeteer/puppeteer/issues/12327 and https://github.com/asyncapi/parser-js/issues/1001
-        os: [ubuntu-latest, macos-13, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - name: Set git to use LF # To once and for all finish the never-ending fight between Unix and Windows
         run: |
@@ -42,12 +45,15 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
+          registry-url: "https://registry.npmjs.org"
       - if: steps.lockversion.outputs.version == '18' && matrix.os == 'windows-latest'
         name: Install npm cli 8
         shell: bash
@@ -74,6 +80,10 @@ jobs:
     needs: [test-nodejs]
     name: Publish to any of NPM, GitHub, or Docker Hub
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
     steps:
       - name: Set git to use LF # To once and for all finish the never-ending fight between Unix and Windows
         run: |
@@ -88,6 +98,8 @@ jobs:
       - if: steps.packagejson.outputs.exists == 'true'
         name: Check package-lock version
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
@@ -111,14 +123,13 @@ jobs:
         uses: changesets/action@v1
         id: release
         with:
-          version: npx -p @changesets/cli changeset version
-          commit: version packages
-          title: "chore(release): version packages"
-          publish: npx -p @changesets/cli changeset publish
+          version: npx -p @changesets/cli@2.27.7 changeset version
+          commit: "chore(release): release and bump versions of packages"
+          title: "chore(release): release and bump versions of packages"
+          publish: npx -p @changesets/cli@2.27.7 changeset publish
           setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           GIT_AUTHOR_NAME: asyncapi-bot

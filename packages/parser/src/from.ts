@@ -53,8 +53,18 @@ async function getFetch(): Promise<typeof fetch> {
     return __fetchFn;
   }
 
-  if (typeof fetch === 'undefined') {
-    return __fetchFn = (await import('node-fetch')).default as unknown as typeof fetch;
+  if (typeof fetch !== 'undefined') {
+    return (__fetchFn = fetch);
   }
-  return (__fetchFn = fetch);
+
+  try {
+    // node-fetch is not available in browser / GraalVM environments
+    const nf = await import('node-fetch');
+    return __fetchFn = nf.default as unknown as typeof fetch;
+  } catch {
+    throw new Error(
+      'No fetch implementation available. ' +
+      'In Node.js, install "node-fetch". In browsers or GraalVM, ensure the global fetch API is available.'
+    );
+  }
 }

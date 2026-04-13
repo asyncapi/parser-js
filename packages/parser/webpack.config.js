@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'browser'),
     filename: 'index.js',
-    globalObject: '(typeof self !== \'undefined\' ? self : this)',
+    globalObject: '(typeof self !== \'undefined\' ? self : typeof globalThis !== \'undefined\' ? globalThis : this)',
     library: {
       name: 'AsyncAPIParser',
       type: 'umd',
@@ -44,6 +44,12 @@ module.exports = {
     /**
      * Uncomment plugin when you wanna see dependency map of bundled package
      */
-    // (require('webpack-bundle-analyzer').BundleAnalyzerPlugin()),
+    // (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
   ],
+
+  externals: {
+    // node-fetch is Node.js-only; in browser/GraalVM environments the global
+    // fetch API (or a polyfill) should be used instead.
+    'node-fetch': 'commonjs2 null',
+  },
 };

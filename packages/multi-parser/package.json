@@ -47,6 +47,9 @@
     "parserapiv1": "npm:@asyncapi/parser@^2.1.0",
     "parserapiv2": "npm:@asyncapi/parser@3.0.0-next-major-spec.8"
   },
+  "overrides": {
+    "jsonpath-plus": "^10.0.7"
+  },
   "devDependencies": {
     "@jest/types": "^29.0.2",
     "@swc/core": "^1.2.248",

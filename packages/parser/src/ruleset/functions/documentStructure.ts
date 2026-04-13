@@ -84,6 +84,25 @@ function getCopyOfSchema(version: AsyncAPIVersions): RawSchema {
   return JSON.parse(JSON.stringify(specs.schemas[version])) as RawSchema;
 }
 
+/**
+ * Removes the `format` constraint from ReferenceObject schema definitions.
+ *
+ * The ajv-formats `uri-reference` format validator rejects valid URI references
+ * containing square brackets (`[`, `]`), which are legal per RFC 3986 and RFC 6901.
+ * This causes false validation failures for $refs pointing to components whose keys
+ * contain special characters (e.g. message names from messaging systems like JMS).
+ */
+function relaxRefFormat(schema: { definitions?: RawSchema }): void {
+  for (const key of Object.keys(schema.definitions || {})) {
+    if (key.endsWith('/ReferenceObject.json')) {
+      const refObjDef = (schema.definitions as Record<string, any>)[key];
+      if (refObjDef?.format) {
+        delete refObjDef.format;
+      }
+    }
+  }
+}
+
 const serializedSchemas = new Map<AsyncAPIVersions, RawSchema>();
 function getSerializedSchema(version: AsyncAPIVersions, resolved: boolean): RawSchema {
   const serializedSchemaKey = resolved ? `${version}-resolved` : `${version}-unresolved`;
@@ -103,6 +122,14 @@ function getSerializedSchema(version: AsyncAPIVersions, resolved: boolean): RawS
   const { major } = getSemver(version);
   if (resolved && major === 3) {
     copied = prepareV3ResolvedSchema(copied, version);
+  }
+
+  // For unresolved schemas, relax the uri-reference format on $ref fields.
+  // The ajv-formats uri-reference validator incorrectly rejects valid URI
+  // references containing square brackets (e.g. message names with [, ]).
+  // See https://github.com/asyncapi/parser-js/issues/1132
+  if (!resolved) {
+    relaxRefFormat(copied);
   }
 
   serializedSchemas.set(serializedSchemaKey as AsyncAPIVersions, copied);

@@ -1,4 +1,4 @@
-import { Tag } from '../../src/old-api/tag';
+import * as tag from '../../src/old-api/tag';
 import { assertDescriptionMixin, assertExtensionsMixin, assertExternalDocumentationMixin } from './mixins';
 
 describe('Tag', function() {
@@ -6,12 +6,12 @@ describe('Tag', function() {
 
   describe('name()', function() {
     it('should return a string', function() {
-      const d = new Tag(json);
+      const d = new tag.Tag(json);
       expect(d.name()).toEqual(json.name);
     });
   });
 
-  assertDescriptionMixin(Tag);
-  assertExtensionsMixin(Tag);
-  assertExternalDocumentationMixin(Tag);
+  assertDescriptionMixin(tag.Tag);
+  assertExtensionsMixin(tag.Tag);
+  assertExternalDocumentationMixin(tag.Tag);
 });

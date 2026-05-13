@@ -14,7 +14,7 @@ Updated bundle for the browser is always attached to the GitHub Release.
 > This package doesn't support AsyncAPI 1.x anymore. We recommend to upgrade to the latest AsyncAPI version using the [AsyncAPI converter](https://github.com/asyncapi/converter-js). If you need to convert documents on the fly, you may use the [Node.js](https://github.com/asyncapi/converter-js) or [Go](https://github.com/asyncapi/converter-go) converters.
 
 > **Warning**
-> This package has rewrote the Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
+> This package has rewritten the Model API (old one) to [Intent API](https://github.com/asyncapi/parser-api). If you still need to use the old API, read the [Convert to the old API](#convert-to-the-old-api) section.
 
 > **Note**
 > Read the [migration guide from v2 to v3](./docs/migrations/v2-to-v3.md).
@@ -67,7 +67,7 @@ The package exposes the main class `Parser`, which has two main functions:
 
 - `validate()` - function that validates the passed AsyncAPI document. Returns array of all possible errors against the validation conditions.
 - `parse()` - function that validates the passed AsyncAPI document, and then if it's valid, parses the input. It returns an object that contains:
-  - `document` object, which is an parsed AsyncAPI document with [`AsyncAPIDocumentInterface`](./packages/parser/src/models/asyncapi.ts) API. If the schema is invalid against the validation conditions, the field has `undefined` value.
+  - `document` object, which is a parsed AsyncAPI document with [`AsyncAPIDocumentInterface`](./packages/parser/src/models/asyncapi.ts) API. If the schema is invalid against the validation conditions, the field has `undefined` value.
   - `diagnostics` array that contains all possible errors against the validation conditions.
 - `registerSchemaParser()` - function that registers custom schema parsers. For more info, please check [Custom schema parsers](#custom-schema-parsers) section.
 

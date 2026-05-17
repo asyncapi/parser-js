@@ -82,8 +82,12 @@ export abstract class CoreModel<J extends CoreObject = CoreObject, M extends Rec
 
 export function bindings(model: BaseModel<{ bindings?: BindingsObject }>): BindingsInterface {
   const bindings = model.json('bindings') || {};
+  // Filter out $ref entries (ReferenceObject) - they should not be treated as protocol bindings
+  // When bindings is a ReferenceObject like { $ref: '#/components/messageBindings/myBindings' },
+  // the $ref key should not be processed as a protocol name (fixes #877)
+  const bindingEntries = Object.entries(bindings || {}).filter(([key]) => !key.startsWith('$'));
   return new Bindings(
-    Object.entries(bindings || {}).map(([protocol, binding]) => 
+    bindingEntries.map(([protocol, binding]) => 
       createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
     ),
     { originalData: bindings as Record<string, Binding>, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }

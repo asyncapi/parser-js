@@ -95,20 +95,33 @@ export function toJSONPathArray(jsonPath: string): Array<string | number> {
 }
 
 export function createUncaghtDiagnostic(err: unknown, message: string, document?: Document): Diagnostic[] {
-  if (!(err instanceof Error)) {
-    return [];
+  const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
+  
+  // Handle Error instances (fixes #878 - parser returning undefined for invalid docs)
+  if (err instanceof Error) {
+    return [
+      {
+        code: 'uncaught-error',
+        message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+        path: [],
+        severity: DiagnosticSeverity.Error,
+        range,
+      }
+    ];
   }
   
-  const range: Diagnostic['range'] = document ? document.getRangeForJsonPath([]) as Diagnostic['range'] : Document.DEFAULT_RANGE;
+  // Handle non-Error values (string, object, null, undefined, etc.)
+  // Previously these were silently ignored, causing the parser to return undefined
+  const errString = err === null ? 'null' : err === undefined ? 'undefined' : String(err);
   return [
     {
       code: 'uncaught-error',
-      message: `${message}. Name: ${err.name}, message: ${err.message}, stack: ${err.stack}`,
+      message: `${message}. Non-Error value: ${errString}`,
       path: [],
       severity: DiagnosticSeverity.Error,
       range,
     }
-  ];  
+  ];
 }
 export function tilde(str: string) {
   return str.replace(/[~/]{1}/g, (sub) => {

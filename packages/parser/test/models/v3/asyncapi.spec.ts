@@ -269,6 +269,22 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.allChannels()).toBeInstanceOf(Channels);
     });
+
+    it('should expose channel title and hasTitle (#1067)', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({
+        channels: {
+          'user/signup': {
+            address: 'user/signup',
+            title: 'User signup channel',
+          },
+        },
+      });
+      const d = new AsyncAPIDocument(doc);
+      const channel = d.allChannels().all()[0];
+      expect(channel.id()).toEqual('user/signup');
+      expect(channel.hasTitle()).toEqual(true);
+      expect(channel.title()).toEqual('User signup channel');
+    });
   });
 
   describe('.allOperations()', function() {

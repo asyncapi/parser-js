@@ -39,6 +39,14 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
     return description(this);
   }
 
+  hasTitle(): boolean {
+    return false;
+  }
+
+  title(): string | undefined {
+    return undefined;
+  }
+
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const allowedServers: string[] = this._json.servers || [];

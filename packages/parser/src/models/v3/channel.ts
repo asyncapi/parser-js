@@ -26,6 +26,10 @@ export class Channel extends CoreModel<v3.ChannelObject, { id: string }> impleme
     return this._json.address;
   }
 
+  title(): string | undefined {
+    return this._json.title;
+  }
+
   servers(): ServersInterface {
     const servers: ServerInterface[] = [];
     const allowedServers = this._json.servers ?? [];

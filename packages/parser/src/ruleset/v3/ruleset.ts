@@ -1,8 +1,8 @@
-
 /* eslint-disable sonarjs/no-duplicate-string */
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
+import { v3ChannelParameters } from './functions/channelParameters';
 import { pattern } from '@stoplight/spectral-functions';
 import { channelServers } from '../functions/channelServers';
 
@@ -32,7 +32,7 @@ export const v3CoreRuleset = {
       severity: 'error',
       recommended: true,
       resolved: false, // We use the JSON pointer to match the channel.
-      given: '$.operations.*',      
+      given: '$.operations.*',
       then: {
         field: 'channel.$ref',
         function: pattern,
@@ -41,7 +41,7 @@ export const v3CoreRuleset = {
         },
       },
     },
-    
+
     /**
      * Channel Object rules
      */
@@ -50,7 +50,7 @@ export const v3CoreRuleset = {
       severity: 'error',
       recommended: true,
       resolved: false, // We use the JSON pointer to match the channel.
-      given: '$.channels.*',      
+      given: '$.channels.*',
       then: {
         field: '$.servers.*.$ref',
         function: pattern,
@@ -80,6 +80,19 @@ export const v3CoreRuleset = {
         functionOptions: {
           notMatch: '[\\?#]',
         },
+      },
+    },
+    'asyncapi3-channel-parameters': {
+      description: 'Channel parameters must be defined and there must be no redundant parameters.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      given: [
+        '$.channels.*',
+        '$.components.channels.*',
+      ],
+      then: {
+        function: v3ChannelParameters,
       },
     },
   },

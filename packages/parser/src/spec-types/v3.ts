@@ -45,6 +45,8 @@ export interface ServerObject extends SpecificationExtensions {
   pathname?: string;
   protocolVersion?: string;
   description?: string;
+  title?: string;
+  summary?: string;
   variables?: Record<string, ServerVariableObject | ReferenceObject>;
   security?: Array<SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;

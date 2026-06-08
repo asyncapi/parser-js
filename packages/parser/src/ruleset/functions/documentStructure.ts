@@ -52,20 +52,30 @@ function prepareResults(errors: ErrorObject[]): void {
 
 // this is needed because some v3 object fields are expected to be only `$ref` to other objects. 
 // In order to validate resolved references, we modify those schemas and instead allow the definition of the object
-function prepareV3ResolvedSchema(copied: any): any {
+function prepareV3ResolvedSchema(copied: any, version: string): any {
   // channel object
-  const channelObject = copied.definitions['http://asyncapi.com/definitions/3.0.0/channel.json'];
-  channelObject.properties.servers.items.$ref = 'http://asyncapi.com/definitions/3.0.0/server.json';
+  const channelObject = copied.definitions[`http://asyncapi.com/definitions/${version}/channel.json`];
+  if (channelObject?.properties?.servers?.items) {
+    channelObject.properties.servers.items.$ref = `http://asyncapi.com/definitions/${version}/server.json`;
+  }
 
   // operation object
-  const operationSchema = copied.definitions['http://asyncapi.com/definitions/3.0.0/operation.json'];
-  operationSchema.properties.channel.$ref = 'http://asyncapi.com/definitions/3.0.0/channel.json';
-  operationSchema.properties.messages.items.$ref = 'http://asyncapi.com/definitions/3.0.0/messageObject.json';
+  const operationSchema = copied.definitions[`http://asyncapi.com/definitions/${version}/operation.json`];
+  if (operationSchema?.properties?.channel) {
+    operationSchema.properties.channel.$ref = `http://asyncapi.com/definitions/${version}/channel.json`;
+  }
+  if (operationSchema?.properties?.messages?.items) {
+    operationSchema.properties.messages.items.$ref = `http://asyncapi.com/definitions/${version}/messageObject.json`;
+  }
 
   // operation reply object
-  const operationReplySchema = copied.definitions['http://asyncapi.com/definitions/3.0.0/operationReply.json'];
-  operationReplySchema.properties.channel.$ref = 'http://asyncapi.com/definitions/3.0.0/channel.json';
-  operationReplySchema.properties.messages.items.$ref = 'http://asyncapi.com/definitions/3.0.0/messageObject.json';
+  const operationReplySchema = copied.definitions[`http://asyncapi.com/definitions/${version}/operationReply.json`];
+  if (operationReplySchema?.properties?.channel) {
+    operationReplySchema.properties.channel.$ref = `http://asyncapi.com/definitions/${version}/channel.json`;
+  }
+  if (operationReplySchema?.properties?.messages?.items) {
+    operationReplySchema.properties.messages.items.$ref = `http://asyncapi.com/definitions/${version}/messageObject.json`;
+  }
 
   return copied;
 }
@@ -92,7 +102,7 @@ function getSerializedSchema(version: AsyncAPIVersions, resolved: boolean): RawS
 
   const { major } = getSemver(version);
   if (resolved && major === 3) {
-    copied = prepareV3ResolvedSchema(copied);
+    copied = prepareV3ResolvedSchema(copied, version);
   }
 
   serializedSchemas.set(serializedSchemaKey as AsyncAPIVersions, copied);

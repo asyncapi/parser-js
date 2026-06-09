@@ -394,4 +394,60 @@ testRule('asyncapi-document-resolved', [
     },
     errors: [],
   },
+
+  {
+    name: 'valid case for 3.X.X (reply with address location can reference channel with null address)',
+    document: {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Signup service example (internal)',
+        version: '0.1.0',
+      },
+      channels: {
+        userSignup: {
+          address: 'user/signup',
+          messages: {
+            UserSignup: {
+              payload: {}
+            }
+          }
+        },
+        userSignupReply: {
+          address: null,
+          messages: {
+            UserSignupReply: {
+              payload: {}
+            }
+          }
+        }
+      },
+      operations: {
+        sendUserSignup: {
+          action: 'send',
+          channel: {
+            $ref: '#/channels/userSignup'
+          },
+          messages: [
+            {
+              $ref: '#/channels/userSignup/messages/UserSignup'
+            }
+          ],
+          reply: {
+            address: {
+              location: '$message.header#/replyTo'
+            },
+            channel: {
+              $ref: '#/channels/userSignupReply'
+            },
+            messages: [
+              {
+                $ref: '#/channels/userSignupReply/messages/UserSignupReply'
+              }
+            ]
+          }
+        }
+      },
+    },
+    errors: [],
+  },
 ]);

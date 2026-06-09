@@ -50,7 +50,7 @@ function prepareResults(errors: ErrorObject[]): void {
   }
 }
 
-// this is needed because some v3 object fields are expected to be only `$ref` to other objects. 
+// this is needed because some v3 object fields are expected to be only `$ref` to other objects.
 // In order to validate resolved references, we modify those schemas and instead allow the definition of the object
 function prepareV3ResolvedSchema(copied: any, version: string): any {
   // channel object
@@ -99,6 +99,13 @@ function getSerializedSchema(version: AsyncAPIVersions, resolved: boolean): RawS
   delete copied.definitions['http://json-schema.org/draft-04/schema'];
   // Spectral caches the schemas using '$id' property
   copied['$id'] = copied['$id'].replace('asyncapi.json', `asyncapi-${resolved ? 'resolved' : 'unresolved'}.json`);
+
+  // Remove format: "uri-reference" from ReferenceObject so that $ref values with special chars
+  // like `[`, `]` (valid JSON Pointer segments but not RFC 3986 URIs) pass validation.
+  const referenceObject = copied.definitions[`http://asyncapi.com/definitions/${version}/ReferenceObject.json`] as any;
+  if (referenceObject?.format === 'uri-reference') {
+    delete referenceObject.format;
+  }
 
   const { major } = getSemver(version);
   if (resolved && major === 3) {

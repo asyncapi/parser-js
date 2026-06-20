@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/multi-parser",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "This tool allows to parse AsyncAPI documents and produce a desired interface based on a given Parser-API version",
   "private": false,
   "bugs": {
@@ -43,11 +43,19 @@
     "@asyncapi/openapi-schema-parser": "^3.0.4",
     "@asyncapi/parser": "*",
     "@asyncapi/protobuf-schema-parser": "^3.3.0",
-    "@asyncapi/raml-dt-schema-parser": "^4.0.4",
     "parserapiv1": "npm:@asyncapi/parser@^2.1.0",
     "parserapiv2": "npm:@asyncapi/parser@3.0.0-next-major-spec.8"
   },
+  "peerDependencies": {
+    "@asyncapi/raml-dt-schema-parser": "^4.0.4"
+  },
+  "peerDependenciesMeta": {
+    "@asyncapi/raml-dt-schema-parser": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@asyncapi/raml-dt-schema-parser": "^4.0.4",
     "@jest/types": "^29.0.2",
     "@swc/core": "^1.2.248",
     "@swc/jest": "^0.2.22",

@@ -33,6 +33,36 @@ const docItem = new Server(doc.production, { asyncapi: {} as any, pointer: '', i
 const emptyItem = new Server(serializeInput<v3.ServerObject>({}), { asyncapi: {} as any, pointer: '', id: '' });
 
 describe('Server Model', function () {
+  describe('.title() and .summary()', function () {
+    it('should return title and summary from ServerObject', function () {
+      const doc = serializeInput<v3.ServerObject>({
+        host: 'example.com',
+        protocol: 'https',
+        title: 'Production Server',
+        summary: 'Production environment server',
+      });
+      const d = new Server(doc, { asyncapi: {} as any, pointer: '/servers/production', id: 'production' });
+      expect(d.hasTitle()).toEqual(true);
+      expect(d.title()).toEqual('Production Server');
+      expect(d.hasSummary()).toEqual(true);
+      expect(d.summary()).toEqual('Production environment server');
+      expect(d.json().title).toEqual('Production Server');
+      expect(d.json().summary).toEqual('Production environment server');
+    });
+
+    it('should return false and undefined when title and summary are absent', function () {
+      const doc = serializeInput<v3.ServerObject>({
+        host: 'example.com',
+        protocol: 'https',
+      });
+      const d = new Server(doc, { asyncapi: {} as any, pointer: '/servers/production', id: 'production' });
+      expect(d.hasTitle()).toEqual(false);
+      expect(d.title()).toBeUndefined();
+      expect(d.hasSummary()).toEqual(false);
+      expect(d.summary()).toBeUndefined();
+    });
+  });
+
   describe('.id()', function () {
     it('should return name if present', function () {
       expect(docItem.id()).toEqual('production');

@@ -3,6 +3,8 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
+import { requiredOperationChannelUnambiguity } from './functions/requiredOperationChannelUnambiguity';
+import { requiredChannelServersUnambiguity } from './functions/requiredChannelServersUnambiguity';
 import { pattern } from '@stoplight/spectral-functions';
 import { channelServers } from '../functions/channelServers';
 
@@ -41,6 +43,22 @@ export const v3CoreRuleset = {
         },
       },
     },
+    /**
+     * This rule runs on the RESOLVED document to catch cases where external file
+     * references resolve to channels that are not in the root channels object.
+     * See: https://github.com/asyncapi/parser-js/issues/924
+     */
+    'asyncapi3-required-operation-channel-unambiguity-resolved': {
+      description: 'The "channel" field of an operation under the root "operations" object must resolve to a channel defined in the root "channels" object.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      resolved: true, // Run on resolved document to catch external file references
+      given: '$',
+      then: {
+        function: requiredOperationChannelUnambiguity,
+      },
+    },
     
     /**
      * Channel Object rules
@@ -57,6 +75,22 @@ export const v3CoreRuleset = {
         functionOptions: {
           match: '#\\/servers\\/', // If doesn't match, rule fails.
         },
+      },
+    },
+    /**
+     * This rule runs on the RESOLVED document to catch cases where external file
+     * references resolve to servers that are not in the root servers object.
+     * See: https://github.com/asyncapi/parser-js/issues/924
+     */
+    'asyncapi3-required-channel-servers-unambiguity-resolved': {
+      description: 'The "servers" field of a channel under the root "channels" object must resolve to servers defined in the root "servers" object.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      resolved: true, // Run on resolved document to catch external file references
+      given: '$',
+      then: {
+        function: requiredChannelServersUnambiguity,
       },
     },
     'asyncapi3-channel-servers': {

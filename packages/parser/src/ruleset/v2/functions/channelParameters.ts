@@ -18,10 +18,20 @@ export const channelParameters = createRulesetFunction<{ parameters: Record<stri
     options: null,
   },
   (targetVal, _, ctx) => {
-    const path = ctx.path[ctx.path.length - 1] as string;
     const results: IFunctionResult[] = [];
 
-    const parameters = parseUrlVariables(path);
+    // Channel address is the key under `channels`
+    const channelAddress = ctx.path[ctx.path.length - 1];
+
+    if (typeof channelAddress !== 'string' || channelAddress.trim().length === 0) {
+      results.push({
+        message: 'Channel address must be a non-empty string when "parameters" are provided.',
+        path: [...ctx.path],
+      });
+      return results;
+    }
+
+    const parameters = parseUrlVariables(channelAddress);
     if (parameters.length === 0) return;
 
     const missingParameters = getMissingProps(parameters, targetVal.parameters);

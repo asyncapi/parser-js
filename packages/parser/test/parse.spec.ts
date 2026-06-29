@@ -1301,3 +1301,82 @@ components:
     expect(filterLastVersionDiagnostics(diagnostics)[0].range.start.line === 236).toEqual(true);
   });
 });
+
+describe('parse() - throwOnError (issue #878)', function () {
+  const parser = new Parser();
+
+  const invalidV3Document = {
+    asyncapi: '3.0.0',
+    // `test` is not part of the AsyncAPI 3.0 root schema, so this triggers
+    // a validation error (severity === 0). See https://github.com/asyncapi/parser-js/issues/878
+    test: 'hello',
+    info: {
+      title: 'Invalid AsyncApi document',
+      version: '1.0',
+    },
+    channels: {},
+  };
+
+  it('should return document: undefined with throwOnError: false (default behavior)', async function () {
+    const result = await parser.parse(invalidV3Document);
+    expect(result.document).toBeUndefined();
+    expect(result.diagnostics.some(d => d.severity === 0)).toBe(true);
+  });
+
+  it('should return document: undefined when throwOnError: false is passed explicitly', async function () {
+    const result = await parser.parse(invalidV3Document, { throwOnError: false });
+    expect(result.document).toBeUndefined();
+    expect(result.diagnostics.some(d => d.severity === 0)).toBe(true);
+  });
+
+  it('should throw AsyncAPIParseError when throwOnError: true and there are validation errors', async function () {
+    await expect(parser.parse(invalidV3Document, { throwOnError: true }))
+      .rejects.toMatchObject({
+        name: 'AsyncAPIParseError',
+        message: expect.stringContaining('failed validation'),
+        diagnostics: expect.arrayContaining([
+          expect.objectContaining({ severity: 0 })
+        ])
+      });
+  });
+
+  it('should expose the diagnostics on the thrown error', async function () {
+    let caught: any;
+    try {
+      await parser.parse(invalidV3Document, { throwOnError: true });
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeDefined();
+    expect(caught.name).toBe('AsyncAPIParseError');
+    expect(Array.isArray(caught.diagnostics)).toBe(true);
+    expect(caught.diagnostics.some((d: any) => d.severity === 0)).toBe(true);
+  });
+
+  it('should not throw on a valid document even with throwOnError: true', async function () {
+    const validDoc = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {},
+    };
+    const result = await parser.parse(validDoc, { throwOnError: true });
+    expect(result.document).toBeInstanceOf(AsyncAPIDocumentV3);
+  });
+
+  it('should not throw when diagnostics only contain warnings/infos and throwOnError: true', async function () {
+    // latest-version info + no errors
+    const minorDoc = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid but old version',
+        version: '1.0',
+      },
+      channels: {},
+    };
+    const result = await parser.parse(minorDoc, { throwOnError: true });
+    expect(result.document).toBeDefined();
+  });
+});

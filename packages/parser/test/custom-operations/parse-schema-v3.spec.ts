@@ -1,6 +1,7 @@
 import { AsyncAPIDocumentV3 } from '../../src/models';
 import { Parser } from '../../src/parser';
 import { filterLastVersionDiagnostics } from '../utils';
+import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
 
 import type { v3 } from '../../src/spec-types';
 
@@ -132,5 +133,62 @@ describe('custom operations for v3 - parse schemas', function() {
     
     expect(document).toBeUndefined();
     expect(diagnostics.length > 0).toEqual(true);
+  });
+
+  it('should parse message schemas defined in operation.channel with non-default schema parsers', async function() {
+    const parserWithAvroSchemaParser = new Parser();
+    parserWithAvroSchemaParser.registerSchemaParser(AvroSchemaParser());
+
+    const documentRaw = {
+      asyncapi: '3.1.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0.0'
+      },
+      operations: {
+        operation: {
+          action: 'send',
+          channel: {
+            messages: {
+              message: {
+                payload: {
+                  schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+                  schema: {
+                    type: 'record',
+                    name: 'payload',
+                    fields: [
+                      {
+                        name: 'payloadField',
+                        type: 'string'
+                      }
+                    ]
+                  }
+                },
+                headers: {
+                  schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+                  schema: {
+                    type: 'record',
+                    name: 'header',
+                    fields: [
+                      {
+                        name: 'headerField',
+                        type: 'string'
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parserWithAvroSchemaParser.parse(documentRaw);
+
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(diagnostics.length === 0).toEqual(true);
+
+    expect(((((document?.json() as any).operations?.operation as v3.OperationObject).channel as v3.ChannelObject)?.messages?.message as v3.MessageObject)?.payload?.schema).toEqual({ type: 'object', required: ['payloadField'], properties: { payloadField: { type: 'string' } }, 'x-parser-schema-id': 'payload',  });
+    expect((((((document?.json() as any).operations?.operation as v3.OperationObject).channel as v3.ChannelObject)?.messages?.message as v3.MessageObject)?.headers as v3.MultiFormatObject)?.schema).toEqual({ type: 'object', required: ['headerField'], properties: { headerField: { type: 'string' } }, 'x-parser-schema-id': 'header',  });
   });
 });

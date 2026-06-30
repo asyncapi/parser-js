@@ -457,6 +457,26 @@ channels:
     expect(channel.title()).toEqual('User signup channel');
   });
 
+  it('should return channel title from allChannels()', async function () {
+    const { document, diagnostics } = await parser.parse(`
+asyncapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+channels:
+  user/signup:
+    address: user/signup
+    title: User signup channel
+`);
+
+    expect(document).toBeDefined();
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
+    const channel = document!.allChannels().all()[0];
+    expect(channel.id()).toEqual('user/signup');
+    expect(channel.hasTitle()).toEqual(true);
+    expect(channel.title()).toEqual('User signup channel');
+  });
+
   it('should not parse invalid v3 YAML document and give error in line 153 (#936)', async function () {
     const documentRaw = `asyncapi: 3.0.0
 info:

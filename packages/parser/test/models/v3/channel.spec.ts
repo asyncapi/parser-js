@@ -29,6 +29,15 @@ describe('Channel model', function() {
     });
   });
 
+  describe('.title()', function() {
+    it('should return channel title from spec', function() {
+      const doc = serializeInput<v3.ChannelObject>({ address: 'user/signup', title: 'User signup channel' });
+      const d = new Channel(doc, { asyncapi: {} as any, pointer: '/channels/user~1signup', id: 'user/signup' });
+      expect(d.hasTitle()).toEqual(true);
+      expect(d.title()).toEqual('User signup channel');
+    });
+  });
+
   describe('.servers()', function() {
     it('should return collection of servers - available on all servers', function() {
       const doc = serializeInput<v3.ChannelObject>({});

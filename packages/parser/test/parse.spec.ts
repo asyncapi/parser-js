@@ -437,44 +437,33 @@ describe('parse()', function () {
     expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
+<<<<<<< Updated upstream
   it('should return channel title from allChannels()', async function () {
+=======
+  it('should return server title and summary from allServers()', async function () {
+>>>>>>> Stashed changes
     const { document, diagnostics } = await parser.parse(`
 asyncapi: 3.0.0
 info:
   title: API
   version: 1.0.0
-channels:
-  user/signup:
-    address: user/signup
-    title: User signup channel
+servers:
+  production:
+    host: example.com
+    protocol: https
+    title: Production Server
+    summary: Production environment server
+channels: {}
 `);
 
     expect(document).toBeDefined();
     expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
-    const channel = document!.allChannels().all()[0];
-    expect(channel.id()).toEqual('user/signup');
-    expect(channel.hasTitle()).toEqual(true);
-    expect(channel.title()).toEqual('User signup channel');
-  });
-
-  it('should return channel title from allChannels()', async function () {
-    const { document, diagnostics } = await parser.parse(`
-asyncapi: 3.0.0
-info:
-  title: API
-  version: 1.0.0
-channels:
-  user/signup:
-    address: user/signup
-    title: User signup channel
-`);
-
-    expect(document).toBeDefined();
-    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
-    const channel = document!.allChannels().all()[0];
-    expect(channel.id()).toEqual('user/signup');
-    expect(channel.hasTitle()).toEqual(true);
-    expect(channel.title()).toEqual('User signup channel');
+    const server = document!.allServers().all()[0];
+    expect(server.id()).toEqual('production');
+    expect(server.hasTitle()).toEqual(true);
+    expect(server.title()).toEqual('Production Server');
+    expect(server.hasSummary()).toEqual(true);
+    expect(server.summary()).toEqual('Production environment server');
   });
 
   it('should not parse invalid v3 YAML document and give error in line 153 (#936)', async function () {

@@ -436,12 +436,8 @@ describe('parse()', function () {
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
     expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
-
-<<<<<<< Updated upstream
-  it('should return channel title from allChannels()', async function () {
-=======
+  
   it('should return server title and summary from allServers()', async function () {
->>>>>>> Stashed changes
     const { document, diagnostics } = await parser.parse(`
 asyncapi: 3.0.0
 info:

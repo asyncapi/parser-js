@@ -437,7 +437,7 @@ describe('parse()', function () {
     expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
 
-  it('should return channel title from allChannels() (#1067)', async function () {
+  it('should return channel title from allChannels()', async function () {
     const { document, diagnostics } = await parser.parse(`
 asyncapi: 3.0.0
 info:

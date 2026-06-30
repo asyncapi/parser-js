@@ -290,11 +290,7 @@ describe('AsyncAPIDocument model', function() {
       expect(d.allChannels()).toBeInstanceOf(Channels);
     });
 
-<<<<<<< Updated upstream
-    it('should expose channel title and hasTitle (#1067)', function() {
-=======
     it('should expose channel title and hasTitle', function() {
->>>>>>> Stashed changes
       const doc = serializeInput<v3.AsyncAPIObject>({
         channels: {
           'user/signup': {

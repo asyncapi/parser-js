@@ -148,3 +148,4 @@ export function assertTags(model: Constructor<TagsMixinInterface>) {
     });
   });
 }
+

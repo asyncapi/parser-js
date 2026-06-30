@@ -436,7 +436,7 @@ describe('parse()', function () {
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
     expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
   });
-
+  
   it('should return server title and summary from allServers()', async function () {
     const { document, diagnostics } = await parser.parse(`
 asyncapi: 3.0.0

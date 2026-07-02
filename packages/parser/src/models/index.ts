@@ -9,6 +9,8 @@ export * from './channel-parameter';
 export * from './channel-parameters';
 export * from './channel';
 export * from './channels';
+export * from './channel-trait';
+export * from './channel-traits';
 export * from './collection';
 export * from './components';
 export * from './contact';

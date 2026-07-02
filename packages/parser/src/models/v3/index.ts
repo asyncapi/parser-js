@@ -5,6 +5,8 @@ export { ChannelParameter as ChannelParameterV3 } from './channel-parameter';
 export { ChannelParameters as ChannelParametersV3 } from './channel-parameters';
 export { Channel as ChannelV3 } from './channel';
 export { Channels as ChannelsV3 } from './channels';
+export { ChannelTrait as ChannelTraitV3 } from './channel-trait';
+export { ChannelTraits as ChannelTraitsV3 } from './channel-traits';
 export { Components as ComponentsV3 } from './components';
 export { Contact as ContactV3 } from './contact';
 export { CorrelationId as CorrelationIdV3 } from './correlation-id';

@@ -1,5 +1,7 @@
 import { ChannelParameters } from './channel-parameters';
 import { ChannelParameter } from './channel-parameter';
+import { ChannelTrait } from './channel-trait';
+import { ChannelTraits } from './channel-traits';
 import { Messages } from './messages';
 import { Message } from './message';
 import { Operations } from './operations';
@@ -10,6 +12,7 @@ import { xParserObjectUniqueId } from '../../constants';
 import { CoreModel } from './mixins';
 import type { ChannelInterface } from '../channel';
 import type { ChannelParametersInterface } from '../channel-parameters';
+import type { ChannelTraitsInterface } from '../channel-traits';
 import type { MessagesInterface } from '../messages';
 import type { OperationsInterface } from '../operations';
 import type { OperationInterface } from '../operation';
@@ -65,6 +68,17 @@ export class Channel extends CoreModel<v3.ChannelObject, { id: string }> impleme
         return this.createModel(ChannelParameter, channelParameter as v3.ParameterObject, {
           id: channelParameterName,
           pointer: this.jsonPath(`parameters/${channelParameterName}`),
+        });
+      })
+    );
+  }
+
+  traits(): ChannelTraitsInterface {
+    return new ChannelTraits(
+      (this._json.traits ?? []).map((trait, index) => {
+        return this.createModel(ChannelTrait, trait as v3.ChannelTraitObject, {
+          id: '',
+          pointer: this.jsonPath(`traits/${index}`),
         });
       })
     );

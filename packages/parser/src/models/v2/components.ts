@@ -1,5 +1,6 @@
 import { BaseModel } from '../base';
 import { Collection } from '../collection';
+import { ChannelTraits } from './channel-traits';
 
 import { Bindings } from './bindings';
 import { Binding } from './binding';
@@ -37,6 +38,7 @@ import type { ChannelsInterface } from '../channels';
 import type { MessagesInterface } from '../messages';
 import type { SchemasInterface } from '../schemas';
 import type { ChannelParametersInterface } from '../channel-parameters';
+import type { ChannelTraitsInterface } from '../channel-traits';
 import type { ServerVariablesInterface } from '../server-variables';
 import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
@@ -73,6 +75,10 @@ export class Components extends BaseModel<v2.ComponentsObject> implements Compon
 
   channelParameters(): ChannelParametersInterface {
     return this.createCollection('parameters', ChannelParameters, ChannelParameter);
+  }
+
+  channelTraits(): ChannelTraitsInterface {
+    return new ChannelTraits([]);
   }
 
   serverVariables(): ServerVariablesInterface {

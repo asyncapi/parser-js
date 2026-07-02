@@ -4,6 +4,7 @@ import { Collection } from '../collection';
 import { Bindings } from './bindings';
 import { Binding } from './binding';
 import { Channel } from './channel';
+import { ChannelTrait } from './channel-trait';
 import { ChannelParameter } from './channel-parameter';
 import { CorrelationId } from './correlation-id';
 import { MessageTrait } from './message-trait';
@@ -17,6 +18,7 @@ import { ServerVariable } from './server-variable';
 import { extensions } from './mixins';
 import { Servers } from './servers';
 import { Channels } from './channels';
+import { ChannelTraits } from './channel-traits';
 import { Messages } from './messages';
 import { Schemas } from './schemas';
 import { ChannelParameters } from './channel-parameters';
@@ -46,6 +48,7 @@ import type { ChannelsInterface } from '../channels';
 import type { MessagesInterface } from '../messages';
 import type { SchemasInterface } from '../schemas';
 import type { ChannelParametersInterface } from '../channel-parameters';
+import type { ChannelTraitsInterface } from '../channel-traits';
 import type { ServerVariablesInterface } from '../server-variables';
 import type { OperationTraitsInterface } from '../operation-traits';
 import type { SecuritySchemesInterface } from '../security-schemes';
@@ -81,6 +84,10 @@ export class Components extends BaseModel<v3.ComponentsObject> implements Compon
 
   channelParameters(): ChannelParametersInterface {
     return this.createCollection('parameters', ChannelParameters, ChannelParameter);
+  }
+
+  channelTraits(): ChannelTraitsInterface {
+    return this.createCollection('channelTraits', ChannelTraits, ChannelTrait);
   }
 
   serverVariables(): ServerVariablesInterface {

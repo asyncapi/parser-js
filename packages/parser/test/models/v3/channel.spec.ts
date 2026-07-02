@@ -1,4 +1,6 @@
 import { Channel } from '../../../src/models/v3/channel';
+import { ChannelTrait } from '../../../src/models/v3/channel-trait';
+import { ChannelTraits } from '../../../src/models/v3/channel-traits';
 import { ChannelParameters } from '../../../src/models/v3/channel-parameters';
 import { ChannelParameter } from '../../../src/models/v3/channel-parameter';
 import { Operations } from '../../../src/models/v3/operations';
@@ -131,6 +133,31 @@ describe('Channel model', function() {
       expect(d.parameters().all()[0].id()).toEqual('parameter1');
       expect(d.parameters().all()[1]).toBeInstanceOf(ChannelParameter);
       expect(d.parameters().all()[1].id()).toEqual('parameter2');
+    });
+  });
+
+  describe('.traits()', function() {
+    it('should return collection of channel traits', function() {
+      const doc = serializeInput<v3.ChannelObject>({
+        traits: [
+          { title: 'First trait' },
+          { description: 'Second trait' }
+        ]
+      });
+      const d = new Channel(doc);
+
+      expect(d.traits()).toBeInstanceOf(ChannelTraits);
+      expect(d.traits().all()).toHaveLength(2);
+      expect(d.traits().all()[0]).toBeInstanceOf(ChannelTrait);
+      expect(d.traits().all()[0].title()).toEqual('First trait');
+      expect(d.traits().all()[1].description()).toEqual('Second trait');
+    });
+
+    it('should return an empty collection when traits are not defined', function() {
+      const d = new Channel(serializeInput<v3.ChannelObject>({}));
+
+      expect(d.traits()).toBeInstanceOf(ChannelTraits);
+      expect(d.traits().all()).toHaveLength(0);
     });
   });
 

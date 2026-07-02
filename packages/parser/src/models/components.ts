@@ -6,6 +6,7 @@ import type { ChannelsInterface } from './channels';
 import type { MessagesInterface } from './messages';
 import type { SchemasInterface } from './schemas';
 import type { ChannelParametersInterface } from './channel-parameters';
+import type { ChannelTraitsInterface } from './channel-traits';
 import type { ServerVariablesInterface } from './server-variables';
 import type { OperationTraitsInterface } from './operation-traits';
 import type { MessageTraitsInterface } from './message-traits';
@@ -21,6 +22,7 @@ export interface ComponentsInterface extends BaseModel, ExtensionsMixinInterface
   channelParameters(): ChannelParametersInterface;
   serverVariables(): ServerVariablesInterface;
   operations(): OperationsInterface;
+  channelTraits(): ChannelTraitsInterface;
   operationTraits(): OperationTraitsInterface;
   messageTraits(): MessageTraitsInterface;
   correlationIds(): CorrelationIdsInterface;

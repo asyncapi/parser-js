@@ -63,6 +63,22 @@ export class Server extends CoreModel<v3.ServerObject, { id: string }> implement
     return this._json.protocolVersion;
   }
 
+  hasTitle(): boolean {
+    return !!this._json.title;
+  }
+
+  title(): string | undefined {
+    return this._json.title;
+  }
+
+  hasSummary(): boolean {
+    return !!this._json.summary;
+  }
+
+  summary(): string | undefined {
+    return this._json.summary;
+  }
+
   channels(): ChannelsInterface {
     const channels: ChannelInterface[] = [];
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.channels || {}).forEach(([channelName, channel]) => {

@@ -157,7 +157,9 @@ export class Components extends BaseModel<v3.ComponentsObject> implements Compon
       const asyncapi = this.meta('asyncapi');
       const pointer = `components/${itemsName}/${name}`;
       bindings[name] = new Bindings(
-        Object.entries(bindingsData).map(([protocol, binding]) => 
+        Object.entries(bindingsData)
+          .filter(([key]) => !key.startsWith('$'))
+          .map(([protocol, binding]) => 
           this.createModel(Binding, binding, { protocol, pointer: `${pointer}/${protocol}` })
         ),
         { originalData: bindingsData as any, asyncapi, pointer }

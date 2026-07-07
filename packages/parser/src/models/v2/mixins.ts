@@ -21,7 +21,9 @@ import type { v2 } from '../../spec-types';
 export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): BindingsInterface {
   const bindings = model.json('bindings') || {};
   return new Bindings(
-    Object.entries(bindings || {}).map(([protocol, binding]) => 
+    Object.entries(bindings || {})
+      .filter(([key]) => !key.startsWith('$'))
+      .map(([protocol, binding]) => 
       createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
     ),
     { originalData: bindings, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }

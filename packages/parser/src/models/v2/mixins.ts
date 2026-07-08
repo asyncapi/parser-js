@@ -24,8 +24,8 @@ export function bindings(model: BaseModel<{ bindings?: Record<string, any> }>): 
     Object.entries(bindings || {})
       .filter(([key]) => !key.startsWith('$'))
       .map(([protocol, binding]) => 
-      createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
-    ),
+        createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
+      ),
     { originalData: bindings, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }
   );
 }

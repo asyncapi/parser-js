@@ -86,8 +86,8 @@ export function bindings(model: BaseModel<{ bindings?: BindingsObject }>): Bindi
     Object.entries(bindings || {})
       .filter(([key]) => !key.startsWith('$'))
       .map(([protocol, binding]) => 
-      createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
-    ),
+        createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
+      ),
     { originalData: bindings as Record<string, Binding>, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }
   );
 }

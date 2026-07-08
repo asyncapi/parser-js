@@ -160,8 +160,8 @@ export class Components extends BaseModel<v3.ComponentsObject> implements Compon
         Object.entries(bindingsData)
           .filter(([key]) => !key.startsWith('$'))
           .map(([protocol, binding]) => 
-          this.createModel(Binding, binding, { protocol, pointer: `${pointer}/${protocol}` })
-        ),
+            this.createModel(Binding, binding, { protocol, pointer: `${pointer}/${protocol}` })
+          ),
         { originalData: bindingsData as any, asyncapi, pointer }
       );
       return bindings;

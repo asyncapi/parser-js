@@ -105,7 +105,7 @@ describe('custom operations for v3 - parse schemas', function() {
     expect(((document?.json()?.channels?.channel as v3.ChannelObject).messages?.message as v3.MessageObject)?.payload).toEqual({ type: 'object', 'x-parser-schema-id': '<anonymous-schema-1>' });
   });
 
-  it('should parse invalid schema format', async function() {
+  it('should skip parsing unknown schema format and still return document', async function() {
     const documentRaw = {
       asyncapi: '3.0.0',
       info: {
@@ -130,7 +130,70 @@ describe('custom operations for v3 - parse schemas', function() {
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
     
-    expect(document).toBeUndefined();
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
     expect(diagnostics.length > 0).toEqual(true);
+    expect(((document?.json()?.channels?.channel as v3.ChannelObject).messages?.message as v3.MessageObject)?.payload?.schema).toEqual({
+      type: 'object',
+      'x-parser-schema-id': '<anonymous-schema-1>',
+    });
+  });
+
+  it('should parse avro schema format without registering AvroSchemaParser', async function() {
+    const documentRaw = {
+      asyncapi: '3.1.0',
+      info: {
+        title: 'Adeo AsyncAPI Case Study',
+        version: '1.0.0',
+      },
+      channels: {
+        costingRequestChannel: {
+          address: 'adeo-{env}-case-study-COSTING-REQUEST-{version}',
+          bindings: {
+            kafka: {
+              replicas: 3,
+              partitions: 3,
+            },
+          },
+          messages: {
+            CostingRequest: {
+              payload: {
+                schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+                schema: {
+                  type: 'record',
+                  name: 'CostingRequest',
+                  fields: [],
+                },
+              },
+            },
+          },
+        },
+      },
+      operations: {
+        receiveACostingRequest: {
+          action: 'receive',
+          channel: {
+            $ref: '#/channels/costingRequestChannel',
+          },
+          bindings: {
+            kafka: {
+              groupId: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      },
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
+    expect(document!.allChannels().get('costingRequestChannel')?.bindings().get('kafka')?.json()).toEqual({
+      replicas: 3,
+      partitions: 3,
+    });
+    expect(document!.allOperations().get('receiveACostingRequest')?.bindings().get('kafka')?.json()?.groupId).toEqual({
+      type: 'string',
+    });
   });
 });

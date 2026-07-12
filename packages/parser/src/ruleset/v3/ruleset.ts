@@ -3,6 +3,7 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
+import { v3ChannelParameters } from './functions/channelParameters';
 import { pattern } from '@stoplight/spectral-functions';
 import { channelServers } from '../functions/channelServers';
 
@@ -80,6 +81,19 @@ export const v3CoreRuleset = {
         functionOptions: {
           notMatch: '[\\?#]',
         },
+      },
+    },
+    'asyncapi3-channel-parameters': {
+      description: 'Channel parameters must be defined and there must be no redundant parameters.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      given: [
+        '$.channels.*',
+        '$.components.channels.*',
+      ],
+      then: {
+        function: v3ChannelParameters,
       },
     },
   },

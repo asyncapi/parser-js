@@ -101,7 +101,7 @@ describe('custom operations for v2 - parse schemas', function() {
     expect((document?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload === (document?.json().components?.messages?.message as v2.MessageObject)?.payload).toEqual(true);
   });
 
-  it('should parse invalid schema format', async function() {
+  it('should skip parsing unknown schema format and still return document', async function() {
     const documentRaw = {
       asyncapi: '2.0.0',
       info: {
@@ -122,9 +122,16 @@ describe('custom operations for v2 - parse schemas', function() {
         }
       }
     };
-    const { document, diagnostics } = await parser.parse(documentRaw);
+    const { document, diagnostics } = await parser.parse(documentRaw, {
+      validateOptions: { allowedSeverity: { error: true } },
+    });
     
-    expect(document).toBeUndefined();
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
     expect(diagnostics.length > 0).toEqual(true);
+    expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(true);
+    expect((document?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual({
+      type: 'object',
+      'x-parser-schema-id': '<anonymous-schema-1>',
+    });
   });
 });

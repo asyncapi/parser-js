@@ -1,6 +1,7 @@
 import { xParserObjectUniqueId } from '../../src/constants';
 import { AsyncAPIDocumentV3 } from '../../src/models';
 import { Parser } from '../../src/parser';
+import { filterLastVersionDiagnostics } from '../utils';
 
 import type { v3 } from '../../src/spec-types';
 
@@ -50,7 +51,7 @@ describe('custom operations - apply traits v3', function() {
       }
     };
     const { document, diagnostics } = await parser.parse(documentRaw);
-    expect(diagnostics).toHaveLength(0);
+    expect(filterLastVersionDiagnostics(diagnostics)).toHaveLength(0);
     
     const v3Document = document as AsyncAPIDocumentV3;
     expect(v3Document).toBeInstanceOf(AsyncAPIDocumentV3);
@@ -297,7 +298,8 @@ describe('custom operations - apply traits v3', function() {
 
     beforeAll(async () => {
       const { document, diagnostics } = await parser.parse(documentRaw);
-      expect(diagnostics.length).toEqual(0);
+      
+      expect(filterLastVersionDiagnostics(diagnostics).length).toEqual(0);
       v3Document = document as AsyncAPIDocumentV3;
     });
 

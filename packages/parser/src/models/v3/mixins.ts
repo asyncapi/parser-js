@@ -83,9 +83,11 @@ export abstract class CoreModel<J extends CoreObject = CoreObject, M extends Rec
 export function bindings(model: BaseModel<{ bindings?: BindingsObject }>): BindingsInterface {
   const bindings = model.json('bindings') || {};
   return new Bindings(
-    Object.entries(bindings || {}).map(([protocol, binding]) => 
-      createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
-    ),
+    Object.entries(bindings || {})
+      .filter(([key]) => !key.startsWith('$'))
+      .map(([protocol, binding]) => 
+        createModel(Binding, binding, { protocol, pointer: model.jsonPath(`bindings/${protocol}`) }, model)
+      ),
     { originalData: bindings as Record<string, Binding>, asyncapi: model.meta('asyncapi'), pointer: model.jsonPath('bindings') }
   );
 }

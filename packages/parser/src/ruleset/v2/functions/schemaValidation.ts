@@ -64,7 +64,7 @@ export const schemaValidation = createRulesetFunction<SchemaFragment, { type: 'd
         },
       );
 
-      if (Array.isArray(result)) {
+      if (Array.isArray(result) && typeof relevantItem.value !== 'string') {
         results.push(...result);
       }
     }

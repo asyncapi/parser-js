@@ -245,6 +245,26 @@ describe('AsyncAPIDocument model', function() {
       const d = new AsyncAPIDocument(doc);
       expect(d.allServers()).toBeInstanceOf(Servers);
     });
+
+    it('should expose server title and summary', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({
+        servers: {
+          production: {
+            host: 'example.com',
+            protocol: 'https',
+            title: 'Production Server',
+            summary: 'Production environment server',
+          },
+        },
+      });
+      const d = new AsyncAPIDocument(doc);
+      const server = d.allServers().all()[0];
+      expect(server.id()).toEqual('production');
+      expect(server.hasTitle()).toEqual(true);
+      expect(server.title()).toEqual('Production Server');
+      expect(server.hasSummary()).toEqual(true);
+      expect(server.summary()).toEqual('Production environment server');
+    });
   });
 
   describe('.allChannels()', function() {
@@ -268,6 +288,22 @@ describe('AsyncAPIDocument model', function() {
       const doc = serializeInput<v3.AsyncAPIObject>({});
       const d = new AsyncAPIDocument(doc);
       expect(d.allChannels()).toBeInstanceOf(Channels);
+    });
+
+    it('should expose channel title and hasTitle', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({
+        channels: {
+          'user/signup': {
+            address: 'user/signup',
+            title: 'User signup channel',
+          },
+        },
+      });
+      const d = new AsyncAPIDocument(doc);
+      const channel = d.allChannels().all()[0];
+      expect(channel.id()).toEqual('user/signup');
+      expect(channel.hasTitle()).toEqual(true);
+      expect(channel.title()).toEqual('User signup channel');
     });
   });
 

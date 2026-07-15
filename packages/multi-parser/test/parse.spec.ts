@@ -90,11 +90,34 @@ describe('NewParser()', function() {
     const knownSchemaParser = AvroSchemaParser();
     const options: Options = { parserOptions: { schemaParsers: [knownSchemaParser]}, includeSchemaParsers: true };
     const parser = NewParser(0, options);
-    
+
     expect(parser).toBeInstanceOf(ParserV3);
     expect(parser.parserRegistry.get(knownSchemaParser.getMimeTypes()[0])).toStrictEqual(knownSchemaParser);
     expect(parser.parserRegistry.get(OpenAPISchemaParser().getMimeTypes()[0])).toEqual(OpenAPISchemaParser());
     expect(parser.parserRegistry.get(RamlDTSchemaParser().getMimeTypes()[0])).toEqual(RamlDTSchemaParser());
     expect(parser.parserRegistry.get(ProtoBuffSchemaParser().getMimeTypes()[0])).toEqual(ProtoBuffSchemaParser());
+  });
+
+  describe('without the optional @asyncapi/raml-dt-schema-parser peer dependency', () => {
+    afterEach(() => {
+      jest.dontMock('../src/raml-dt-schema-parser-loader');
+      jest.resetModules();
+    });
+
+    it('Registers the remaining default schema parsers but skips RAML', async function() {
+      jest.isolateModules(() => {
+        jest.doMock('../src/raml-dt-schema-parser-loader', () => ({
+          loadRamlDTSchemaParser: () => null,
+        }));
+        // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports, global-require
+        const { NewParser: NewParserWithoutRaml } = require('../src/index');
+        const parser = NewParserWithoutRaml(3, { includeSchemaParsers: true });
+
+        expect(parser.parserRegistry.get(AvroSchemaParser().getMimeTypes()[0])).not.toBeUndefined();
+        expect(parser.parserRegistry.get(OpenAPISchemaParser().getMimeTypes()[0])).not.toBeUndefined();
+        expect(parser.parserRegistry.get(ProtoBuffSchemaParser().getMimeTypes()[0])).not.toBeUndefined();
+        expect(parser.parserRegistry.get(RamlDTSchemaParser().getMimeTypes()[0])).toBeUndefined();
+      });
+    });
   });
 });

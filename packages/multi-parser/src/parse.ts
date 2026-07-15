@@ -4,8 +4,9 @@ import { Parser as ParserV3 } from '@asyncapi/parser';
 
 import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
 import { OpenAPISchemaParser } from '@asyncapi/openapi-schema-parser';
-import { RamlDTSchemaParser } from '@asyncapi/raml-dt-schema-parser';
 import { ProtoBuffSchemaParser } from '@asyncapi/protobuf-schema-parser';
+
+import { loadRamlDTSchemaParser } from './raml-dt-schema-parser-loader';
 
 import type { ParserOptions as ParserOptionsParserV1 } from 'parserapiv1/esm/parser';
 import type { ParserOptions as ParserOptionsParserV2 } from 'parserapiv2/esm/parser';
@@ -25,10 +26,11 @@ export function NewParser(parserAPIMajorVersion?: number, options?: Options): Pa
   // This is done globally instead of per version because latest versions of those schema parsers are still compatible with newer versions of the Parser-JS.
   // If a breaking change is introduced in the future, then we would need to register the schema parsers compatible with each version of the Parser-JS.
   if (options?.includeSchemaParsers) {
+    const RamlDTSchemaParser = loadRamlDTSchemaParser();
     const defaultSchemaParsers = [
       AvroSchemaParser(),
       OpenAPISchemaParser(),
-      RamlDTSchemaParser(),
+      ...(RamlDTSchemaParser ? [RamlDTSchemaParser()] : []),
       ProtoBuffSchemaParser(),
     ];
 

@@ -266,7 +266,7 @@ describe('AsyncAPIDocument model', function() {
       expect(server.summary()).toEqual('Production environment server');
     });
 
-    it('should expose server title and hasTitle (#1075)', function() {
+    it('should expose server title and hasTitle', function() {
       const doc = serializeInput<v3.AsyncAPIObject>({
         servers: {
           production: {

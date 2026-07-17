@@ -64,7 +64,7 @@ describe('Server Model', function () {
   });
 
   describe('.title()', function () {
-    it('should return server title from spec (#1075)', function () {
+    it('should return server title from spec', function () {
       const doc = serializeInput<v3.ServerObject>({
         host: 'example.com',
         protocol: 'https',

@@ -462,7 +462,7 @@ channels: {}
     expect(server.summary()).toEqual('Production environment server');
   });
 
-  it('should return server title from allServers() (#1075)', async function () {
+  it('should return server title from allServers()', async function () {
     const { document, diagnostics } = await parser.parse(`
 asyncapi: 3.0.0
 info:

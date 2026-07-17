@@ -63,6 +63,19 @@ describe('Server Model', function () {
     });
   });
 
+  describe('.summary()', function () {
+    it('should return server summary from spec', function () {
+      const doc = serializeInput<v3.ServerObject>({
+        host: 'example.com',
+        protocol: 'https',
+        summary: 'Production environment server',
+      });
+      const d = new Server(doc, { asyncapi: {} as any, pointer: '/servers/production', id: 'production' });
+      expect(d.hasSummary()).toEqual(true);
+      expect(d.summary()).toEqual('Production environment server');
+    });
+  });
+
   describe('.id()', function () {
     it('should return name if present', function () {
       expect(docItem.id()).toEqual('production');

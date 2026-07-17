@@ -462,6 +462,28 @@ channels: {}
     expect(server.summary()).toEqual('Production environment server');
   });
 
+  it('should return server title from allServers() (#1075)', async function () {
+    const { document, diagnostics } = await parser.parse(`
+asyncapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+servers:
+  production:
+    host: example.com
+    protocol: https
+    title: Production Server
+channels: {}
+`);
+
+    expect(document).toBeDefined();
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
+    const server = document!.allServers().all()[0];
+    expect(server.id()).toEqual('production');
+    expect(server.hasTitle()).toEqual(true);
+    expect(server.title()).toEqual('Production Server');
+  });
+
   it('should not parse invalid v3 YAML document and give error in line 153 (#936)', async function () {
     const documentRaw = `asyncapi: 3.0.0
 info:

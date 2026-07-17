@@ -63,6 +63,19 @@ describe('Server Model', function () {
     });
   });
 
+  describe('.title()', function () {
+    it('should return server title from spec (#1075)', function () {
+      const doc = serializeInput<v3.ServerObject>({
+        host: 'example.com',
+        protocol: 'https',
+        title: 'Production Server',
+      });
+      const d = new Server(doc, { asyncapi: {} as any, pointer: '/servers/production', id: 'production' });
+      expect(d.hasTitle()).toEqual(true);
+      expect(d.title()).toEqual('Production Server');
+    });
+  });
+
   describe('.id()', function () {
     it('should return name if present', function () {
       expect(docItem.id()).toEqual('production');

@@ -24,6 +24,13 @@ describe('mixins', function() {
       expect(bindings(d3)).toBeInstanceOf(BindingsV2);
       expect(bindings(d3).length).toEqual(0);
     });
+
+    it('should ignore JSON reference keys in bindings', function() {
+      const doc = { bindings: { $ref: '#/components/messageBindings/myBindings', amqp: { test: 'test1' } } };
+      const model = new Model(doc);
+      expect(bindings(model).length).toEqual(1);
+      expect(bindings(model).all()[0].protocol()).toEqual('amqp');
+    });
   });
 
   describe('hasDescription', function() {

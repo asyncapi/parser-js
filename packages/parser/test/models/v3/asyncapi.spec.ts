@@ -266,6 +266,23 @@ describe('AsyncAPIDocument model', function() {
       expect(server.summary()).toEqual('Production environment server');
     });
 
+    it('should expose server summary and hasSummary', function() {
+      const doc = serializeInput<v3.AsyncAPIObject>({
+        servers: {
+          production: {
+            host: 'example.com',
+            protocol: 'https',
+            summary: 'Production environment server',
+          },
+        },
+      });
+      const d = new AsyncAPIDocument(doc);
+      const server = d.allServers().all()[0];
+      expect(server.id()).toEqual('production');
+      expect(server.hasSummary()).toEqual(true);
+      expect(server.summary()).toEqual('Production environment server');
+    });
+
     it('should expose server title and hasTitle', function() {
       const doc = serializeInput<v3.AsyncAPIObject>({
         servers: {

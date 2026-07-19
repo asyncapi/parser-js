@@ -462,6 +462,28 @@ channels: {}
     expect(server.summary()).toEqual('Production environment server');
   });
 
+  it('should return server summary from allServers()', async function () {
+    const { document, diagnostics } = await parser.parse(`
+asyncapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+servers:
+  production:
+    host: example.com
+    protocol: https
+    summary: Production environment server
+channels: {}
+`);
+
+    expect(document).toBeDefined();
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
+    const server = document!.allServers().all()[0];
+    expect(server.id()).toEqual('production');
+    expect(server.hasSummary()).toEqual(true);
+    expect(server.summary()).toEqual('Production environment server');
+  });
+
   it('should return server title from allServers()', async function () {
     const { document, diagnostics } = await parser.parse(`
 asyncapi: 3.0.0

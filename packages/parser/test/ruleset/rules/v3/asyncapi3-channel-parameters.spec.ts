@@ -31,7 +31,7 @@ testRule('asyncapi3-channel-parameters', [
   },
 
   {
-    name: 'valid case - empty parameters object',
+    name: 'invalid case - empty parameters object with address placeholders',
     document: {
       asyncapi: '3.0.0',
       channels: {
@@ -41,7 +41,13 @@ testRule('asyncapi3-channel-parameters', [
         },
       },
     },
-    errors: [],
+    errors: [
+      {
+        message: 'Not all channel\'s parameters are described with "parameters" object. Missed: userId.',
+        path: ['channels', 'userChannel', 'parameters'],
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
   },
 
   {

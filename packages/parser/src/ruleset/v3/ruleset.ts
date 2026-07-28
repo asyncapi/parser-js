@@ -92,7 +92,7 @@ export const v3CoreRuleset = {
         '$.channels.*',
         '$.components.channels.*',
       ],
-      then: { // NOSONAR
+      then: { 
         function: v3ChannelParameters,
       },
     },

@@ -25,7 +25,7 @@ export const v3ChannelParameters = createRulesetFunction<
   },
   (targetVal, _, ctx) => {
     const { address, parameters } = targetVal;
-    if (!parameters || Object.keys(parameters).length === 0) return;
+    if (!parameters) return;
 
     const variables = parseUrlVariables(address ?? '');
     const results: IFunctionResult[] = [];

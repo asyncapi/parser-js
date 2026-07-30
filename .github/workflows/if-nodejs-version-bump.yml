@@ -9,29 +9,37 @@ on:
     types: 
       - published
 
+permissions: {}
+
 jobs:
   version_bump:
     name: Generate assets and bump NodeJS
     runs-on: ubuntu-latest
+    permissions:
+      contents: write                 # required to create PR with bumped version in package.json   
+      pull-requests: write            # required to create PR with bumped version in package.json
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # target branch of release. More info https://docs.github.com/en/rest/reference/repos#releases
           # in case release is created from release branch then we need to checkout from given branch
           # if @semantic-release/github is used to publish, the minimum version is 7.2.0 for proper working
           ref: ${{ github.event.release.target_commitish }}
+          persist-credentials: false
       - name: Check if Node.js project and has package.json
         id: packagejson
-        run: test -e ./package.json && echo "exists=true" >> $GITHUB_OUTPUT || echo "exists=false" >> $GITHUB_OUTPUT
+        run: test -e ./package.json && echo "exists=true" >> "$GITHUB_OUTPUT" || echo "exists=false" >> "$GITHUB_OUTPUT"
       - if: steps.packagejson.outputs.exists == 'true'
-        name: Check package-lock version
+        name: Determine what node version to use
         # This workflow is from our own org repo and safe to reference by 'master'.
         uses: asyncapi/.github/.github/actions/get-node-version-from-package-lock@master # //NOSONAR
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
         id: lockversion
       - if: steps.packagejson.outputs.exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "${{ steps.lockversion.outputs.version }}"
           cache: 'npm'
@@ -52,12 +60,12 @@ jobs:
         run: npm run bump:version
       - if: steps.packagejson.outputs.exists == 'true'
         name: Create Pull Request with updated asset files including package.json
-        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # use 4.2.4 https://github.com/peter-evans/create-pull-request/releases/tag/v4.2.4
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         env:
           RELEASE_TAG: ${{github.event.release.tag_name}}
           RELEASE_URL: ${{github.event.release.html_url}}
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ github.token }}
           commit-message: 'chore(release): ${{ env.RELEASE_TAG }}'
           committer: asyncapi-bot <info@asyncapi.io>
           author: asyncapi-bot <info@asyncapi.io>
@@ -66,7 +74,7 @@ jobs:
           branch: version-bump/${{ env.RELEASE_TAG }}
       - if: failure() # Only, on failure, send a message on the 94_bot-failing-ci slack channel
         name: Report workflow run status to Slack
-        uses: 8398a7/action-slack@28ba43ae48961b90635b50953d216767a6bea486 #using https://github.com/8398a7/action-slack/releases/tag/v3.16.2
+        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
         with:
           status: ${{ job.status }}
           fields: repo,action,workflow

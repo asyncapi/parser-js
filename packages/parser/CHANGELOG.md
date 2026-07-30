@@ -1,5 +1,13 @@
 # @asyncapi/parser
 
+## 3.6.1
+
+### Patch Changes
+
+- 47adf7f: fix: filter out $ref keys in bindings() to prevent undefined parser output
+- 03462ae: fix: validate v3 channel parameters against address placeholders
+- 45859d6: feat: add support for title and summary for the v3 spec
+
 ## 3.6.0
 
 ### Minor Changes

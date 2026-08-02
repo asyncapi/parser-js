@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable sonarjs/no-duplicate-string */
 // From https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json
 export const jsonSchemaV3 ={
   type: 'object',

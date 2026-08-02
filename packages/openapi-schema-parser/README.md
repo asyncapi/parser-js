@@ -7,6 +7,8 @@ An AsyncAPI schema parser for OpenAPI 3.0.x and Swagger 2.x schemas.
 
 > **Note**
 > This package is maintained inside the [`asyncapi/parser-js`](https://github.com/asyncapi/parser-js) monorepo, under `packages/openapi-schema-parser`. It is still published to npm as `@asyncapi/openapi-schema-parser` with the same public API. Please open issues and pull requests in the `parser-js` repository.
+>
+> Package spec: [`docs/openapi-schema-parser/spec.md`](../../docs/openapi-schema-parser/spec.md).
 
 <!-- toc is generated with GitHub Actions do not remove toc markers -->
 

@@ -10,7 +10,8 @@
    "lint:fix": {"cache": false},
    "build": {"cache": false , "dependsOn": ["@asyncapi/parser#build"]},
    "@asyncapi/parser#build":{"cache": false},  
-   "multi-parser:build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]}
+   "multi-parser:build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]},
+   "openapi-schema-parser:build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]}
     
   }
 }

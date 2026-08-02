@@ -96,4 +96,46 @@ describe('Collection model', function() {
       expect(d.filterBy(filter)).toEqual([]);
     });
   });
+
+  describe('native array methods', function() {
+    const createCollection = () => {
+      const item1 = new ItemModel({ name: 'name1' });
+      const item2 = new ItemModel({ name: 'name2' });
+      return { collection: new Model([item1, item2]), item1, item2 };
+    };
+
+    it('should map collection items into a plain array', function() {
+      const { collection } = createCollection();
+
+      const names = collection.map(item => item.name());
+
+      expect(names).toEqual(['name1', 'name2']);
+      expect(names).toBeInstanceOf(Array);
+      expect(names).not.toBeInstanceOf(Model);
+    });
+
+    it('should return plain arrays from filter and slice', function() {
+      const { collection, item1, item2 } = createCollection();
+
+      const filtered = collection.filter(item => item.name() === 'name2');
+      const sliced = collection.slice(0, 1);
+
+      expect(filtered).toEqual([item2]);
+      expect(sliced).toEqual([item1]);
+      expect(filtered).not.toBeInstanceOf(Model);
+      expect(sliced).not.toBeInstanceOf(Model);
+    });
+
+    it('should leave the source collection unchanged', function() {
+      const { collection, item1, item2 } = createCollection();
+
+      collection.map(item => item.name());
+      collection.filter(item => item.name() === 'name1');
+      collection.slice(1);
+
+      expect(collection).toBeInstanceOf(Model);
+      expect(collection.all()).toEqual([item1, item2]);
+      expect(collection.meta()).toEqual({});
+    });
+  });
 });

@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.6.2
+
+### Patch Changes
+
+- 03d869c: fix: support native array methods on collections
+
 ## 3.6.1
 
 ### Patch Changes

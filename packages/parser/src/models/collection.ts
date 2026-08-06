@@ -8,6 +8,10 @@ export interface CollectionMetadata<T = any> {
 }
 
 export abstract class Collection<T extends BaseModel = BaseModel, M extends Record<string, any> = {}> extends Array<T> {
+  static get [Symbol.species](): ArrayConstructor {
+    return Array;
+  }
+
   constructor(
     protected readonly collections: T[],
     protected readonly _meta: CollectionMetadata<T> & M = {} as CollectionMetadata<T> & M,

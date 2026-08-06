@@ -39,4 +39,15 @@ describe('SecurityRequirements model', function () {
       expect(requirements.has('anotherId')).toEqual(false);
     });
   });
+
+  describe('native Array transforms', function () {
+    it('should support .map() without throwing', function () {
+      const requirements = new SecurityRequirements([requirementItem]);
+      const mapped = requirements.map(requirement => requirement.meta('id' as any));
+
+      expect(mapped).toEqual(['test']);
+      expect(Array.isArray(mapped)).toEqual(true);
+      expect(mapped).not.toBeInstanceOf(SecurityRequirements);
+    });
+  });
 });

@@ -15,6 +15,12 @@ export abstract class Collection<T extends BaseModel = BaseModel, M extends Reco
     super(...collections);
   }
 
+  // Native Array transforms (map/filter/slice) construct results via species.
+  // Return Array so those methods do not call Collection with a length number.
+  static get [Symbol.species]() {
+    return Array;
+  }
+
   abstract get(id: string): T | undefined;
 
   has(id: string): boolean {

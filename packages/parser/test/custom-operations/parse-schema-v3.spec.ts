@@ -131,11 +131,39 @@ describe('custom operations for v3 - parse schemas', function() {
     const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
-    expect(diagnostics.length > 0).toEqual(true);
+    expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(false);
     expect(((document?.json()?.channels?.channel as v3.ChannelObject).messages?.message as v3.MessageObject)?.payload?.schema).toEqual({
       type: 'object',
       'x-parser-schema-id': '<anonymous-schema-1>',
     });
+  });
+
+  it('should allow custom schemaFormat application/octet-stream without invalidating the document', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Test custom schema format',
+        version: '0.1.0',
+      },
+      channels: {
+        channel: {
+          address: 'channel',
+          messages: {
+            message: {
+              payload: {
+                schemaFormat: 'application/octet-stream',
+                schema: true,
+              },
+            },
+          },
+        },
+      },
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(document?.info().title()).toEqual('Test custom schema format');
+    expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(false);
   });
 
   it('should parse avro schema format without registering AvroSchemaParser', async function() {

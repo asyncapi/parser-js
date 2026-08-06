@@ -221,11 +221,11 @@ testRule('asyncapi2-schemas', [
   },
 
   {
-    name: 'invalid case with non supported schema format',
+    name: 'valid case with non supported schema format',
     document: {
       asyncapi: '2.0.0',
       info: {
-        title: 'Invalid AsyncApi document',
+        title: 'Valid AsyncApi document',
         version: '1.0',
       },
       channels: {
@@ -241,17 +241,6 @@ testRule('asyncapi2-schemas', [
         }
       }
     },
-    errors: [
-      {
-        message: 'Unknown schema format: "not existing"',
-        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat'],
-        severity: DiagnosticSeverity.Error,
-      },
-      {
-        message: 'Cannot validate and parse given schema due to unknown schema format: "not existing"',
-        path: ['channels', 'channel', 'publish', 'message', 'payload'],
-        severity: DiagnosticSeverity.Error,
-      },
-    ],
+    errors: [],
   },
 ]);

@@ -13,6 +13,9 @@
     "multi-parser:build": "turbo run build --filter=@asyncapi/multi-parser",
     "multi-parser:test:unit": "turbo run test:unit --filter=@asyncapi/multi-parser",
     "multi-parser:test": "turbo run test --filter=@asyncapi/multi-parser",
+    "openapi-parser:build": "turbo run build --filter=@asyncapi/openapi-schema-parser",
+    "openapi-parser:test:unit": "turbo run test:unit --filter=@asyncapi/openapi-schema-parser",
+    "openapi-parser:test": "turbo run test --filter=@asyncapi/openapi-schema-parser",
     "prepublishOnly": "turbo run prepublishOnly"
   },
   "devDependencies": {

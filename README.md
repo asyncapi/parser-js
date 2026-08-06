@@ -1,9 +1,10 @@
 [![AsyncAPI JavaScript Parser](./assets/logo.png)](https://www.asyncapi.com)
 
-This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following package:
+This is a Monorepo managed using [Turborepo](https://turbo.build/) and contains the following packages:
 
 1. [Parser-js](packages/parser): Use this package to validate and parse AsyncAPI documents —either YAML or JSON— in your Node.js or browser application.
 2. [Multi-Parser](packages/multi-parser): This tool allows the parsing of AsyncAPI documents producing a desired interface based on a given Parser-API version. Useful if your tool needs to support several AsyncAPI Spec versions.
+3. [OpenAPI Schema Parser](packages/openapi-schema-parser): An AsyncAPI schema parser for OpenAPI 3.0.x schemas. Published as `@asyncapi/openapi-schema-parser` and registered via `registerSchemaParser()` (see [Custom schema parsers](#custom-schema-parsers)). Package details: [`docs/openapi-schema-parser/spec.md`](./docs/openapi-schema-parser/spec.md).
 
 Validation is powered by [Spectral](https://github.com/stoplightio/spectral).  
 Updated bundle for the browser is always attached to the GitHub Release.
@@ -149,7 +150,7 @@ Head over to [asyncapi/avro-schema-parser](https://www.github.com/asyncapi/avro-
 
 ### [Example using OpenAPI schemas](#custom-schema-parsers)
 
-Head over to [asyncapi/openapi-schema-parser](https://www.github.com/asyncapi/openapi-schema-parser) for more information.
+Head over to [`packages/openapi-schema-parser`](./packages/openapi-schema-parser) for more information.
 
 ### [Example using RAML data types](#custom-schema-parsers)
 
@@ -372,7 +373,7 @@ In AsyncAPI Initiative we support below custom schema parsers. To install them, 
   yarn add @asyncapi/avro-schema-parser
   ```
 
-- [OpenAPI (3.0.0) Schema Object](https://www.github.com/asyncapi/openapi-schema-parser):
+- [OpenAPI (3.0.0) Schema Object](./packages/openapi-schema-parser):
 
   ```bash
   npm install @asyncapi/openapi-schema-parser

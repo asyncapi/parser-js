@@ -1,11 +1,8 @@
 node_modules
-.npm-cache
+*.tgz
 .vscode
 .DS_Store
 /coverage
 /lib
 /esm
 /cjs
-/browser
-*.tgz
-.turbo

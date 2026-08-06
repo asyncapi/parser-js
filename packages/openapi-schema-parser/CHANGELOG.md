@@ -1,5 +1,11 @@
 # @asyncapi/openapi-schema-parser
 
+## 3.1.0
+
+### Minor Changes
+
+- 02f2228: Publish a new release from the `parser-js` monorepo. Version `3.0.25` / `3.0.26` cannot be republished on npm (previously used), so this bumps to the next minor (`3.1.0`).
+
 ## 3.0.25
 
 ### Patch Changes

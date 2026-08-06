@@ -47,7 +47,7 @@ export async function validateSchema(parser: Parser, input: ValidateSchemaInput)
 
 export async function parseSchema(parser: Parser, input: ParseSchemaInput): Promise<AsyncAPISchema> {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
-  // Instead of throwing "Unknown schema format", return the schema as-is when no parser is registered.
+  // No registered parser for this format — return the schema unchanged (validation is skipped separately).
   if (schemaParser === undefined) {
     if (typeof input.schemaFormat !== 'string') {
       throw new Error('Schema format must be a string');

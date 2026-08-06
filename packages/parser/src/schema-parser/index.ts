@@ -28,8 +28,18 @@ export interface SchemaParser<D = unknown, M = unknown> {
 export async function validateSchema(parser: Parser, input: ValidateSchemaInput) {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
   // Custom schema formats are allowed by the AsyncAPI spec; implementation is OPTIONAL.
-  // Skip validation when no registered parser handles the format (#1066).
+  // Instead of reporting "Unknown schema format", skip validation when no parser is registered (#1066).
   if (schemaParser === undefined) {
+    if (typeof input.schemaFormat !== 'string') {
+      const path = [...input.path];
+      path.pop(); // remove last element (e.g. 'payload' / 'schema')
+      return [
+        {
+          message: 'Schema format must be a string',
+          path: [...path, 'schemaFormat'],
+        },
+      ] as SchemaValidateResult[];
+    }
     return [];
   }
   return schemaParser.validate(input);
@@ -37,7 +47,11 @@ export async function validateSchema(parser: Parser, input: ValidateSchemaInput)
 
 export async function parseSchema(parser: Parser, input: ParseSchemaInput): Promise<AsyncAPISchema> {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
+  // Instead of throwing "Unknown schema format", return the schema as-is when no parser is registered.
   if (schemaParser === undefined) {
+    if (typeof input.schemaFormat !== 'string') {
+      throw new Error('Schema format must be a string');
+    }
     return input.data as AsyncAPISchema;
   }
   return schemaParser.parse(input);

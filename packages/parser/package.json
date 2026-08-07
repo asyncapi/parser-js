@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/parser",
-  "version": "3.6.0",
+  "version": "3.6.2",
   "description": "JavaScript AsyncAPI parser.",
   "private": false,
   "bugs": {
@@ -59,7 +59,7 @@
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^2.1.1",
     "avsc": "^5.7.5",
-    "js-yaml": "^4.2.0",
+    "js-yaml": "^4.3.0",
     "jsonpath-plus": "^10.0.7",
     "node-fetch": "2.6.7"
   },

@@ -45,10 +45,10 @@ export async function validateSchema(parser: Parser, input: ValidateSchemaInput)
   return schemaParser.validate(input);
 }
 
-export async function parseSchema(parser: Parser, input: ParseSchemaInput) {
+export async function parseSchema(parser: Parser, input: ParseSchemaInput): Promise<AsyncAPISchema> {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
   if (schemaParser === undefined) {
-    throw new Error('Unknown schema format');
+    return input.data as AsyncAPISchema;
   }
   return schemaParser.parse(input);
 }

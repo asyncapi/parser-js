@@ -9,8 +9,9 @@
    "lint": {"cache": false},
    "lint:fix": {"cache": false},
    "build": {"cache": false , "dependsOn": ["@asyncapi/parser#build"]},
-   "@asyncapi/parser#build":{"cache": false},  
-   "multi-parser:build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]}
-    
+   "@asyncapi/parser#build":{"cache": false},
+   "@asyncapi/openapi-schema-parser#build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]},
+   "@asyncapi/multi-parser#build":{"cache":false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/openapi-schema-parser#build"]},
+   "@asyncapi/multi-parser#test":{"cache":false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/openapi-schema-parser#build"]}
   }
 }

@@ -96,4 +96,49 @@ describe('Collection model', function() {
       expect(d.filterBy(filter)).toEqual([]);
     });
   });
+
+  describe('native Array transforms', function() {
+    it('should return a plain array from .map()', function() {
+      const item1 = new ItemModel({ name: 'name1' });
+      const item2 = new ItemModel({ name: 'name2' });
+      const d = new Model([item1, item2], { pointer: '/items' });
+
+      const mapped = d.map(item => item.name());
+
+      expect(mapped).toEqual(['name1', 'name2']);
+      expect(Array.isArray(mapped)).toEqual(true);
+      expect(mapped).not.toBeInstanceOf(Collection);
+      expect(mapped).not.toBeInstanceOf(Model);
+      expect(d.meta('pointer')).toEqual('/items');
+      expect(d.all()).toEqual([item1, item2]);
+    });
+
+    it('should return a plain array from .filter()', function() {
+      const item1 = new ItemModel({ name: 'keep' });
+      const item2 = new ItemModel({ name: 'drop' });
+      const d = new Model([item1, item2]);
+
+      const filtered = d.filter(item => item.name() === 'keep');
+
+      expect(filtered).toEqual([item1]);
+      expect(Array.isArray(filtered)).toEqual(true);
+      expect(filtered).not.toBeInstanceOf(Collection);
+      expect(filtered).not.toBeInstanceOf(Model);
+    });
+
+    it('should return a plain array from .slice() without mutating the source', function() {
+      const item1 = new ItemModel({ name: 'name1' });
+      const item2 = new ItemModel({ name: 'name2' });
+      const d = new Model([item1, item2], { pointer: '/items' });
+
+      const sliced = d.slice(0, 1);
+
+      expect(sliced).toEqual([item1]);
+      expect(Array.isArray(sliced)).toEqual(true);
+      expect(sliced).not.toBeInstanceOf(Collection);
+      expect(sliced).not.toBeInstanceOf(Model);
+      expect(d.length).toEqual(2);
+      expect(d.meta('pointer')).toEqual('/items');
+    });
+  });
 });

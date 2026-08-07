@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/openapi-schema-parser",
-  "version": "3.0.24",
+  "version": "3.1.0",
   "description": "An AsyncAPI schema parser for OpenAPI 3.0.x and Swagger 2.x schemas.",
   "private": false,
   "bugs": {
@@ -56,7 +56,7 @@
     "ajv-formats": "^2.1.1"
   },
   "peerDependencies": {
-    "@asyncapi/parser": "^3.0.0"
+    "@asyncapi/parser": "^3.6.2"
   },
   "devDependencies": {
     "@jest/types": "^29.2.1",

@@ -241,6 +241,12 @@ testRule('asyncapi2-schemas', [
         }
       }
     },
-    errors: [],
+    errors: [
+      {
+        message: 'No schema parser registered for "not existing"',
+        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat'],
+        severity: DiagnosticSeverity.Warning,
+      },
+    ],
   },
 ]);

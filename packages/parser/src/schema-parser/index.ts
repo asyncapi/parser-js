@@ -27,20 +27,18 @@ export interface SchemaParser<D = unknown, M = unknown> {
 
 export async function validateSchema(parser: Parser, input: ValidateSchemaInput) {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
-  // Custom schema formats are allowed by the AsyncAPI spec; implementation is OPTIONAL.
-  // Instead of reporting "Unknown schema format", skip validation when no parser is registered (#1066).
+  // Custom schema formats are allowed by the AsyncAPI spec; implementation is OPTIONAL (#1066).
+  // Emit a warning diagnostic instead of an error when no parser is registered.
+  // Callers normalize schemaFormat via getSchemaFormat() first, so it is always a string here.
   if (schemaParser === undefined) {
-    if (typeof input.schemaFormat !== 'string') {
-      const path = [...input.path];
-      path.pop(); // remove last element (e.g. 'payload' / 'schema')
-      return [
-        {
-          message: 'Schema format must be a string',
-          path: [...path, 'schemaFormat'],
-        },
-      ] as SchemaValidateResult[];
-    }
-    return [];
+    const path = [...input.path];
+    path.pop(); // remove last element (e.g. 'payload' / 'schema')
+    return [
+      {
+        message: `No schema parser registered for "${input.schemaFormat}"`,
+        path: [...path, 'schemaFormat'],
+      },
+    ] as SchemaValidateResult[];
   }
   return schemaParser.validate(input);
 }
@@ -48,10 +46,8 @@ export async function validateSchema(parser: Parser, input: ValidateSchemaInput)
 export async function parseSchema(parser: Parser, input: ParseSchemaInput): Promise<AsyncAPISchema> {
   const schemaParser = parser.parserRegistry.get(input.schemaFormat);
   // No registered parser for this format — return the schema unchanged (validation is skipped separately).
+  // Callers normalize schemaFormat via getSchemaFormat() first, so it is always a string here.
   if (schemaParser === undefined) {
-    if (typeof input.schemaFormat !== 'string') {
-      throw new Error('Schema format must be a string');
-    }
     return input.data as AsyncAPISchema;
   }
   return schemaParser.parse(input);

@@ -243,7 +243,12 @@ describe('aas2schemaParserRule', function() {
     };
 
     const diagnostics = await parser.validate(document);
-    expectDiagnostics(diagnostics, 'asyncapi2-schemas', []);
+    expectDiagnostics(diagnostics, 'asyncapi2-schemas', [
+      {
+        message: 'No schema parser registered for "not existing"',
+        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat'],
+      },
+    ]);
   });
 
   it('should not contain errors from asyncapi-payload-unsupported-schemaFormat and asyncapi-payload rules', async function() {

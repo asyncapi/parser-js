@@ -1,5 +1,6 @@
 import { Document } from '@stoplight/spectral-core';
 import { Yaml } from '@stoplight/spectral-parsers';
+import { DiagnosticSeverity } from '@stoplight/types';
 import { createSpectral } from './spectral';
 import { normalizeInput, mergePatch, hasErrorDiagnostic, hasWarningDiagnostic, hasInfoDiagnostic, hasHintDiagnostic, createUncaghtDiagnostic } from './utils';
 
@@ -8,6 +9,8 @@ import type { Parser } from './parser';
 import type { ResolverOptions } from './resolver';
 import type { AsyncAPIDocumentInterface } from './models';
 import type { Input, Diagnostic } from './types';
+
+const NO_SCHEMA_PARSER_PREFIX = 'No schema parser registered for';
 
 export interface ValidateOptions extends IRunOpts {
   source?: string;
@@ -53,6 +56,14 @@ export async function validate(parser: Parser, parserSpectral: Spectral, asyncap
     const spectral = options.__unstable?.resolver ? createSpectral(parser, options) : parserSpectral;
     // eslint-disable-next-line prefer-const
     let { resolved: validated, results } = await spectral.runWithResolved(document, {  });
+
+    // Spectral applies the rule severity to every function result. Downgrade
+    // unregistered-schema-format diagnostics to warnings so the document stays valid (#1066).
+    results = results.map(diagnostic =>
+      typeof diagnostic.message === 'string' && diagnostic.message.startsWith(NO_SCHEMA_PARSER_PREFIX)
+        ? { ...diagnostic, severity: DiagnosticSeverity.Warning }
+        : diagnostic
+    );
   
     if (
       (!allowedSeverity?.error && hasErrorDiagnostic(results)) ||

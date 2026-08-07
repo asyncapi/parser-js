@@ -166,6 +166,35 @@ describe('custom operations for v3 - parse schemas', function() {
     expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(false);
   });
 
+  // Reproduction from https://github.com/asyncapi/parser-js/issues/1066
+  it('should allow MultiFormatSchema under components.schemas with unknown schemaFormat', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Test custom schema format',
+        version: '0.1.0',
+      },
+      components: {
+        schemas: {
+          theSchema: {
+            schemaFormat: 'application/octet-stream',
+            schema: true,
+          },
+        },
+      },
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(document?.info().title()).toEqual('Test custom schema format');
+    expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(false);
+    expect(document?.components().schemas().get('theSchema')?.json()).toEqual({
+      schemaFormat: 'application/octet-stream',
+      schema: true,
+      'x-parser-schema-id': 'theSchema',
+    });
+  });
+
   it('should parse avro schema format without registering AvroSchemaParser', async function() {
     const documentRaw = {
       asyncapi: '3.1.0',

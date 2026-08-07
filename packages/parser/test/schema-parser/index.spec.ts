@@ -11,7 +11,7 @@ describe('schema-parser index', function() {
     semver: { version: '3.0.0', major: 3, minor: 0, patch: 0 },
   } as DetailedAsyncAPI;
 
-  it('should skip validation for unknown custom schema formats', async function() {
+  it('should warn for unknown custom schema formats during validation', async function() {
     const input = {
       asyncapi,
       data: true,
@@ -21,22 +21,9 @@ describe('schema-parser index', function() {
       defaultSchemaFormat: 'application/vnd.aai.asyncapi;version=3.0.0',
     } as ValidateSchemaInput;
 
-    await expect(validateSchema(parser, input)).resolves.toEqual([]);
-  });
-
-  it('should reject non-string schemaFormat during validation', async function() {
-    const input = {
-      asyncapi,
-      data: true,
-      meta: {},
-      path: ['channels', 'channel', 'messages', 'message', 'payload', 'schema'],
-      schemaFormat: 123 as unknown as string,
-      defaultSchemaFormat: 'application/vnd.aai.asyncapi;version=3.0.0',
-    } as ValidateSchemaInput;
-
     await expect(validateSchema(parser, input)).resolves.toEqual([
       {
-        message: 'Schema format must be a string',
+        message: 'No schema parser registered for "application/octet-stream"',
         path: ['channels', 'channel', 'messages', 'message', 'payload', 'schemaFormat'],
       },
     ]);
@@ -54,18 +41,5 @@ describe('schema-parser index', function() {
     } as ParseSchemaInput;
 
     await expect(parseSchema(parser, input)).resolves.toEqual(schema);
-  });
-
-  it('should throw when parsing with non-string schemaFormat', async function() {
-    const input = {
-      asyncapi,
-      data: true,
-      meta: {},
-      path: ['channels', 'channel', 'messages', 'message', 'payload', 'schema'],
-      schemaFormat: 123 as unknown as string,
-      defaultSchemaFormat: 'application/vnd.aai.asyncapi;version=3.0.0',
-    } as ParseSchemaInput;
-
-    await expect(parseSchema(parser, input)).rejects.toThrow('Schema format must be a string');
   });
 });

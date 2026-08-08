@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.6.3
+
+### Patch Changes
+
+- 76eaf49: fix: allow unknown custom schema formats with a warning instead of an error
+
 ## 3.6.2
 
 ### Patch Changes

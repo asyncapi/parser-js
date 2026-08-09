@@ -1,4 +1,5 @@
 import { BaseModel } from '../base';
+import { ChannelTraits } from './channel-traits';
 import { ChannelParameters } from './channel-parameters';
 import { ChannelParameter } from './channel-parameter';
 import { Messages } from './messages';
@@ -12,6 +13,7 @@ import { bindings, hasDescription, description, extensions } from './mixins';
 import type { BindingsInterface } from '../bindings';
 import type { ChannelInterface } from '../channel';
 import type { ChannelParametersInterface } from '../channel-parameters';
+import type { ChannelTraitsInterface } from '../channel-traits';
 import type { ExtensionsInterface } from '../extensions';
 import type { MessagesInterface } from '../messages';
 import type { MessageInterface } from '../message';
@@ -79,6 +81,10 @@ export class Channel extends BaseModel<v2.ChannelObject, { id: string, address: 
         });
       })
     );
+  }
+
+  traits(): ChannelTraitsInterface {
+    return new ChannelTraits([]);
   }
 
   bindings(): BindingsInterface {

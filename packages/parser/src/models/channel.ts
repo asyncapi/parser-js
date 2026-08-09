@@ -1,5 +1,6 @@
 import type { BaseModel } from './base';
 import type { ChannelParametersInterface } from './channel-parameters';
+import type { ChannelTraitsInterface } from './channel-traits';
 import type { MessagesInterface } from './messages';
 import type { BindingsMixinInterface, DescriptionMixinInterface, ExtensionsMixinInterface } from './mixins';
 import type { OperationsInterface } from './operations';
@@ -12,4 +13,5 @@ export interface ChannelInterface extends BaseModel, BindingsMixinInterface, Des
   operations(): OperationsInterface;
   messages(): MessagesInterface;
   parameters(): ChannelParametersInterface;
+  traits(): ChannelTraitsInterface;
 }

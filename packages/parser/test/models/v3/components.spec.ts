@@ -1,6 +1,7 @@
 import { Components } from '../../../src/models/v3/components';
 import { Bindings } from '../../../src/models/v3/bindings';
 import { Channel } from '../../../src/models/v3/channel';
+import { ChannelTrait } from '../../../src/models/v3/channel-trait';
 import { ChannelParameter } from '../../../src/models/v3/channel-parameter';
 import { CorrelationId } from '../../../src/models/v3/correlation-id';
 import { OperationTrait } from '../../../src/models/v3/operation-trait';
@@ -15,6 +16,7 @@ import { SecurityScheme } from '../../../src/models/v3/security-scheme';
 import { BaseModel, ModelMetadata } from '../../../src/models';
 import { Servers } from '../../../src/models/v3/servers';
 import { Channels } from '../../../src/models/v3/channels';
+import { ChannelTraits } from '../../../src/models/v3/channel-traits';
 import { Messages } from '../../../src/models/v3/messages';
 import { Collection } from '../../../src/models/collection';
 import { Constructor } from '../../../src/models/utils';
@@ -167,6 +169,22 @@ describe('Components model', function() {
       const d = new Components(doc);
       const items = d.operationTraits();
       expect(items).toBeInstanceOf(OperationTraits);
+      expect(items.all()).toHaveLength(0);
+    });
+  });
+
+  describe('.channelTraits()', function() {
+    it('should return ChannelTraits with ChannelTrait Object', function() {
+      const doc = serializeInput<v3.ComponentsObject>({ channelTraits: { trait: {} } });
+      const d = new Components(doc);
+      testCollection(doc, d.channelTraits(), 'channelTraits', ChannelTraits, ChannelTrait);
+    });
+
+    it('should return ChannelTraits with empty channel trait objects when channelTraits are not defined', function() {
+      const doc = serializeInput<v3.ComponentsObject>({});
+      const d = new Components(doc);
+      const items = d.channelTraits();
+      expect(items).toBeInstanceOf(ChannelTraits);
       expect(items.all()).toHaveLength(0);
     });
   });

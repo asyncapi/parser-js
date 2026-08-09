@@ -1,4 +1,5 @@
 import { xParserObjectUniqueId } from '../../src/constants';
+import { applyTraitsV3 } from '../../src/custom-operations/apply-traits';
 import { AsyncAPIDocumentV3 } from '../../src/models';
 import { Parser } from '../../src/parser';
 import { filterLastVersionDiagnostics } from '../utils';
@@ -169,6 +170,100 @@ describe('custom operations - apply traits v3', function() {
     const message2 = v3Document?.json()?.components?.messages?.someMessage2;
     delete (message2 as v3.MessageObject)?.traits;
     expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage2', 'x-parser-unique-object-id': 'someMessage2' });
+  });
+
+  it('should apply traits to channels', function() {
+    const documentRaw: v3.AsyncAPIObject = {
+      asyncapi: '3.2.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        someChannel1: {
+          traits: [
+            {
+              description: 'some description',
+              bindings: { kafka: { partitions: 5 } }
+            },
+            {
+              description: 'another description',
+              bindings: { kafka: { replicas: 3 } }
+            }
+          ]
+        },
+        someChannel2: {
+          description: 'root description',
+          bindings: { kafka: { partitions: 10 } },
+          traits: [
+            {
+              description: 'some description',
+              bindings: { kafka: { partitions: 5, replicas: 3 } }
+            }
+          ]
+        }
+      }
+    };
+    applyTraitsV3(documentRaw);
+
+    const channel1 = documentRaw.channels?.someChannel1 as v3.ChannelObject;
+    delete (channel1 as any)?.traits;
+    expect(channel1.description).toEqual('another description');
+    expect((channel1 as any).bindings).toEqual({ kafka: { partitions: 5, replicas: 3 } });
+
+    const channel2 = documentRaw.channels?.someChannel2 as v3.ChannelObject;
+    delete (channel2 as any)?.traits;
+    // root object wins over traits
+    expect(channel2.description).toEqual('root description');
+    expect((channel2 as any).bindings).toEqual({ kafka: { partitions: 10, replicas: 3 } });
+  });
+
+  it('should apply traits to channels (components)', function() {
+    const documentRaw: v3.AsyncAPIObject = {
+      asyncapi: '3.2.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      components: {
+        channels: {
+          someChannel1: {
+            traits: [
+              {
+                description: 'some description',
+                bindings: { kafka: { partitions: 5 } }
+              },
+              {
+                description: 'another description',
+                bindings: { kafka: { replicas: 3 } }
+              }
+            ]
+          },
+          someChannel2: {
+            description: 'root description',
+            bindings: { kafka: { partitions: 10 } },
+            traits: [
+              {
+                description: 'some description',
+                bindings: { kafka: { partitions: 5, replicas: 3 } }
+              }
+            ]
+          }
+        }
+      }
+    };
+    applyTraitsV3(documentRaw);
+
+    const channel1 = documentRaw.components?.channels?.someChannel1 as v3.ChannelObject;
+    delete (channel1 as any)?.traits;
+    expect(channel1.description).toEqual('another description');
+    expect((channel1 as any).bindings).toEqual({ kafka: { partitions: 5, replicas: 3 } });
+
+    const channel2 = documentRaw.components?.channels?.someChannel2 as v3.ChannelObject;
+    delete (channel2 as any)?.traits;
+    // root object wins over traits
+    expect(channel2.description).toEqual('root description');
+    expect((channel2 as any).bindings).toEqual({ kafka: { partitions: 10, replicas: 3 } });
   });
 
   describe('iterative functions should still work after traits have been applied', function() {

@@ -83,9 +83,13 @@ export interface ServerBindingsObject extends SpecificationExtensions {
 
 export type ChannelsObject = Record<string, ChannelObject | ReferenceObject>;
 
-export interface ChannelObject extends SpecificationExtensions {
+export interface ChannelObject extends ChannelTraitObject, SpecificationExtensions {
   address?: string | null;
   messages?: MessagesObject;
+  traits?: Array<ChannelTraitObject | ReferenceObject>;
+}
+
+export interface ChannelTraitObject extends SpecificationExtensions {
   title?: string;
   summary?: string;
   description?: string;
@@ -257,6 +261,7 @@ export interface ComponentsObject extends SpecificationExtensions {
   replies?: Record<string, OperationReplyObject | ReferenceObject>;
   replyAddresses?: Record<string, OperationReplyAddressObject | ReferenceObject>;
   correlationIds?: Record<string, CorrelationIDObject | ReferenceObject>;
+  channelTraits?: Record<string, ChannelTraitObject | ReferenceObject>;
   operationTraits?: Record<string, OperationTraitObject | ReferenceObject>;
   messageTraits?: Record<string, MessageTraitObject | ReferenceObject>;
   tags?: Record<string, TagObject | ReferenceObject>;

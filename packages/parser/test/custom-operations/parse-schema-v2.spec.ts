@@ -122,13 +122,11 @@ describe('custom operations for v2 - parse schemas', function() {
         }
       }
     };
-    const { document, diagnostics } = await parser.parse(documentRaw, {
-      validateOptions: { allowedSeverity: { error: true } },
-    });
+    const { document, diagnostics } = await parser.parse(documentRaw);
     
     expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
-    expect(diagnostics.length > 0).toEqual(true);
-    expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(true);
+    expect(diagnostics.some(d => d.message?.includes('Unknown schema format'))).toEqual(false);
+    expect(diagnostics.some(d => d.message?.includes('No schema parser registered for "not existing"'))).toEqual(true);
     expect((document?.json()?.channels?.channel?.publish?.message as v2.MessageObject)?.payload).toEqual({
       type: 'object',
       'x-parser-schema-id': '<anonymous-schema-1>',

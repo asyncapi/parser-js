@@ -221,11 +221,11 @@ describe('aas2schemaParserRule', function() {
     expectDiagnostics(diagnostics, 'asyncapi2-schemas', []);
   });
 
-  it('should validate AsyncAPI Schema with non supported schema format', async function() {
+  it('should allow AsyncAPI Schema with non supported schema format', async function() {
     const document = {
       asyncapi: '2.0.0',
       info: {
-        title: 'Invalid AsyncApi document',
+        title: 'Valid AsyncApi document',
         version: '1.0',
       },
       channels: {
@@ -245,12 +245,8 @@ describe('aas2schemaParserRule', function() {
     const diagnostics = await parser.validate(document);
     expectDiagnostics(diagnostics, 'asyncapi2-schemas', [
       {
-        message: 'Unknown schema format: "not existing"',
-        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat']
-      },
-      {
-        message: 'Cannot validate and parse given schema due to unknown schema format: "not existing"',
-        path: ['channels', 'channel', 'publish', 'message', 'payload']
+        message: 'No schema parser registered for "not existing"',
+        path: ['channels', 'channel', 'publish', 'message', 'schemaFormat'],
       },
     ]);
   });

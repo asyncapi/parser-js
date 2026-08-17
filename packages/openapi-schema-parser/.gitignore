@@ -6,3 +6,8 @@ node_modules
 /lib
 /esm
 /cjs
+
+# copied from the repo root by prepublishOnly (scripts/copy-legal.js)
+LICENSE
+NOTICE
+README.md

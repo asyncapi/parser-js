@@ -8,3 +8,8 @@ node_modules
 /cjs
 /browser
 *.tgz
+
+# copied from the repo root by prepublishOnly (scripts/copy-legal.js)
+LICENSE
+NOTICE
+README.md

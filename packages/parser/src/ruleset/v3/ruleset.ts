@@ -6,11 +6,26 @@ import { operationMessagesUnambiguity } from './functions/operationMessagesUnamb
 import { v3ChannelParameters } from './functions/channelParameters';
 import { pattern } from '@stoplight/spectral-functions';
 import { channelServers } from '../functions/channelServers';
+import { serverVariables } from '../functions/serverVariables';
 
 export const v3CoreRuleset = {
   description: 'Core AsyncAPI 3.x.x ruleset.',
   formats: AsyncAPIFormats.filterByMajorVersions(['3']).formats(),
   rules: {
+    /**
+     * Server Object rules
+     */
+    'asyncapi3-server-variables': {
+      description: 'Server variables must be defined and there must be no redundant variables.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      given: ['$.servers.*', '$.components.servers.*'],
+      then: { //NOSONAR
+        function: serverVariables,
+      },
+    },
+    
     /**
      * Operation Object rules
      */

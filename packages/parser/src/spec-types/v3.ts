@@ -484,6 +484,8 @@ export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
 
 export interface Binding {
   bindingVersion?: string;
+  // protocol-specific binding fields (excess properties)
+  [propName: string]: any;
 }
 
 export interface SpecificationExtensions {

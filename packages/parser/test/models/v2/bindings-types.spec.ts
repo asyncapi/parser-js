@@ -13,7 +13,7 @@ import type { Binding as BindingV3 } from '../../../src/spec-types/v3';
  * Verified by control experiment on the unfixed tree: the assignment below is
  * rejected with
  *
- *   TS2322: Object literal may only specify known properties, and 'groupId'
+ *   TS2353: Object literal may only specify known properties, and 'groupId'
  *           does not exist in type 'Binding'.
  *
  * so if the index signature is ever removed, the build breaks here rather than

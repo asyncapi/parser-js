@@ -1,6 +1,4 @@
 
-import { Parser as ParserV1 } from 'parserapiv1';
-import { Parser as ParserV2 } from 'parserapiv2';
 import { Parser as ParserV3 } from '@asyncapi/parser';
 
 import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
@@ -18,41 +16,12 @@ const fakeSchemaParser = {
 };
 
 describe('NewParser()', function() {
-  it('Creates a Parser without options compatible with Parser-API v1 and caches it', async function() {
-    const parser = NewParser(1);
-    expect(parser).toBeInstanceOf(ParserV1);
+  it('Throws when asked for Parser-API v1, which is no longer supported', function() {
+    expect(() => NewParser(1)).toThrow(/Parser API v1 is no longer supported/);
   });
 
-  it('Creates a Parser with options compatible with Parser-API v1', async function() {
-    const options: Options = { parserOptions: { schemaParsers: [fakeSchemaParser]} };
-    const parser = NewParser(1, options);
-    
-    expect(parser).toBeInstanceOf(ParserV1);
-    expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
-  });
-
-  it('Creates a Parser with options including known Schema Parsers and do not overwrite those with Parser-API v1', async function() {
-    const knownSchemaParser = AvroSchemaParser();
-    const options: Options = { parserOptions: { schemaParsers: [knownSchemaParser]}, includeSchemaParsers: true };
-    const parser = NewParser(1, options);
-    
-    expect(parser).toBeInstanceOf(ParserV1);
-    expect(parser.parserRegistry.get(knownSchemaParser.getMimeTypes()[0])).toStrictEqual(knownSchemaParser);
-    expect(parser.parserRegistry.get(OpenAPISchemaParser().getMimeTypes()[0])).toEqual(OpenAPISchemaParser());
-    expect(parser.parserRegistry.get(RamlDTSchemaParser().getMimeTypes()[0])).toEqual(RamlDTSchemaParser());
-    expect(parser.parserRegistry.get(ProtoBuffSchemaParser().getMimeTypes()[0])).toEqual(ProtoBuffSchemaParser());
-  });
-
-  it('Creates a Parser without options compatible with Parser-API v2', async function() {
-    const parser = NewParser(2);
-    expect(parser).toBeInstanceOf(ParserV2);
-  });
-
-  it('Creates a Parser with options compatible with Parser-API v2', async function() {
-    const options: Options = { parserOptions: { schemaParsers: [fakeSchemaParser]} };
-    const parser = NewParser(2, options);
-    expect(parser).toBeInstanceOf(ParserV2);
-    expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
+  it('Throws when asked for Parser-API v2, which is no longer supported', function() {
+    expect(() => NewParser(2)).toThrow(/Parser API v2 is no longer supported/);
   });
 
   it('Creates a Parser with options compatible with Parser-API v3', async function() {
@@ -60,18 +29,6 @@ describe('NewParser()', function() {
     const parser = NewParser(3, options);
     expect(parser).toBeInstanceOf(ParserV3);
     expect(parser.parserRegistry.get('fake-format')).not.toBeUndefined();
-  });
-
-  it('Creates a Parser 2 with options including known Schema Parsers and do not overwrite those with Parser-API v2', async function() {
-    const knownSchemaParser = AvroSchemaParser();
-    const options: Options = { parserOptions: { schemaParsers: [knownSchemaParser]}, includeSchemaParsers: true };
-    const parser = NewParser(2, options);
-    
-    expect(parser).toBeInstanceOf(ParserV2);
-    expect(parser.parserRegistry.get(knownSchemaParser.getMimeTypes()[0])).toStrictEqual(knownSchemaParser);
-    expect(parser.parserRegistry.get(OpenAPISchemaParser().getMimeTypes()[0])).toEqual(OpenAPISchemaParser());
-    expect(parser.parserRegistry.get(RamlDTSchemaParser().getMimeTypes()[0])).toEqual(RamlDTSchemaParser());
-    expect(parser.parserRegistry.get(ProtoBuffSchemaParser().getMimeTypes()[0])).toEqual(ProtoBuffSchemaParser());
   });
 
   it('Creates a Parser without options compatible with old Parser API (AKA v0)', async function() {

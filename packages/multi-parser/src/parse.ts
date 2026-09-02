@@ -1,5 +1,3 @@
-import { Parser as ParserV1 } from 'parserapiv1';
-import { Parser as ParserV2 } from 'parserapiv2';
 import { Parser as ParserV3 } from '@asyncapi/parser';
 
 import { AvroSchemaParser } from '@asyncapi/avro-schema-parser';
@@ -8,17 +6,15 @@ import { ProtoBuffSchemaParser } from '@asyncapi/protobuf-schema-parser';
 
 import { loadRamlDTSchemaParser } from './raml-dt-schema-parser-loader';
 
-import type { ParserOptions as ParserOptionsParserV1 } from 'parserapiv1/esm/parser';
-import type { ParserOptions as ParserOptionsParserV2 } from 'parserapiv2/esm/parser';
 import type { ParserOptions as ParserOptionsParserV3 } from '@asyncapi/parser/esm/parser';
 
-export type ParserOptions = ParserOptionsParserV1 | ParserOptionsParserV2 | ParserOptionsParserV3;
+export type ParserOptions = ParserOptionsParserV3;
 export type Options = {
   includeSchemaParsers?: boolean;
   parserOptions?: ParserOptions;
 }
 
-type Parser = ParserV1 | ParserV2 | ParserV3;
+type Parser = ParserV3;
 
 export function NewParser(parserAPIMajorVersion?: number, options?: Options): Parser {
   const parserOptions: ParserOptions = options?.parserOptions || {};
@@ -46,11 +42,10 @@ export function NewParser(parserAPIMajorVersion?: number, options?: Options): Pa
  
   switch (parserAPIMajorVersion) {
   case 1:
-    return new ParserV1(parserOptions as ParserOptionsParserV1);
   case 2:
-    return new ParserV2(parserOptions as ParserOptionsParserV2);
+    throw new Error(`Parser API v${parserAPIMajorVersion} is no longer supported because its pinned dependency carries an unpatchable jsonpath-plus vulnerability (see https://github.com/asyncapi/parser-js/issues/1065). Use Parser API v3 instead.`);
   default: // default to latest version
   case 3:
     return new ParserV3(parserOptions as ParserOptionsParserV3);
-  }   
+  }
 }

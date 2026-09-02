@@ -24,6 +24,7 @@
     "/cjs",
     "/browser",
     "LICENSE",
+    "NOTICE",
     "README.md"
   ],
   "scripts": {
@@ -40,7 +41,8 @@
     "generate:readme:toc": "markdown-toc -i \"../../README.md\"",
     "generate:assets": "npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
-    "prepublishOnly": "npm run generate:assets"
+    "copy:legal": "node ../../scripts/copy-legal.js",
+    "prepublishOnly": "npm run copy:legal && npm run generate:assets"
   },
   "dependencies": {
     "@asyncapi/specs": "^6.11.1",

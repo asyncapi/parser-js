@@ -2,6 +2,7 @@
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
+import { operationReplyAddress } from './functions/operationReplyAddress';
 import { pattern } from '@stoplight/spectral-functions';
 
 export const v3CoreRuleset = {
@@ -37,6 +38,20 @@ export const v3CoreRuleset = {
         functionOptions: {
           match: '#\\/channels\\/', // If doesn't match, rule fails.
         },
+      },
+    },
+    'asyncapi3-operation-reply-address': {
+      description: 'A channel referenced by an operation reply with a dynamic address must not define a concrete address.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      resolved: false,
+      given: [
+        '$.operations.*.reply',
+        '$.components.operations.*.reply',
+      ],
+      then: {
+        function: operationReplyAddress,
       },
     },
     

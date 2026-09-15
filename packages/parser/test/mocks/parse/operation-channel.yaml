@@ -1,0 +1,9 @@
+channels:
+  BarChannel:
+    address: test
+    messages:
+      AMessage:
+        payload:
+          schemaFormat: 'application/vnd.aai.asyncapi;version=2.0.0'
+          schema:
+            type: object

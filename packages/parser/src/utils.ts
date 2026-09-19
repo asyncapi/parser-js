@@ -16,7 +16,7 @@ export function createDetailedAsyncAPI(parsed: AsyncAPIObject, input?: string | 
 
 export function getSemver(version: string): AsyncAPISemver {
   const [major, minor, patchWithRc] = version.split('.');
-  const [patch, rc] = patchWithRc.split('-rc');
+  const [patch, rc] = (patchWithRc ?? '').split('-rc');
   return {
     version,
     major: Number(major),

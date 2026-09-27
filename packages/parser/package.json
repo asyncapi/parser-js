@@ -58,13 +58,12 @@
     "ajv": "^8.18.0",
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^2.1.1",
-    "avsc": "^5.7.5",
     "js-yaml": "^4.3.2",
     "jsonpath-plus": "^10.0.7",
     "node-fetch": "2.6.7"
   },
   "devDependencies": {
-    "@asyncapi/avro-schema-parser": "^3.0.22",
+    "@asyncapi/avro-schema-parser": "*",
     "@jest/types": "^29.0.2",
     "@swc/core": "^1.2.248",
     "@swc/jest": "^0.2.22",

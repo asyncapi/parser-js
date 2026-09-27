@@ -142,7 +142,7 @@ function exampleAttributeMapping(type: any, example: any, jsonSchema: SpecTypesV
     jsonSchema.examples = [example === 'true'];
     break;
   case 'int':
-    jsonSchema.examples = [parseInt(example, 10)];
+    jsonSchema.examples = [Number.parseInt(example, 10)];
     break;
   default:
     jsonSchema.examples = [example];
@@ -211,7 +211,7 @@ function cacheAvroRecordDef(cache: { [key:string]: AsyncAPISchema }, key: string
   }
 }
 
-async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: boolean, recordCache: Map<string, SpecTypesV2.AsyncAPISchemaDefinition> | any = {}): Promise<SpecTypesV2.AsyncAPISchemaDefinition> {
+async function convertAvroToJsonSchema(avroDefinition: AvroSchema , isTopLevel: boolean, recordCache: Record<string, SpecTypesV2.AsyncAPISchemaDefinition> = {}): Promise<SpecTypesV2.AsyncAPISchemaDefinition> {
   let jsonSchema: SpecTypesV2.AsyncAPISchemaDefinition = {};
   const isUnion = Array.isArray(avroDefinition);
 

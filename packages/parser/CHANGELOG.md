@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.6.4
+
+### Patch Changes
+
+- Remove the unused `avsc` dependency. Avro support stays in `@asyncapi/avro-schema-parser`.
+
 ## 3.6.3
 
 ### Patch Changes

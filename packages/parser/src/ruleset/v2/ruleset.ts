@@ -123,9 +123,9 @@ export const v2CoreRuleset = {
       recommended: true,
       given: [
         // messages
-        '$.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.channels.*.[publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat === void 0)]',
         '$.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
-        '$.components.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)]',
+        '$.components.channels.*.[publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat === void 0)]',
         '$.components.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat === void 0)]',
         '$.components.messages[?(!@null && @.schemaFormat === void 0)]',
         // message traits
@@ -201,9 +201,9 @@ export const v2SchemasRuleset = (parser: Parser) => {
         severity: 'error',
         recommended: true,
         given: [
-          '$.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.default^',
+          '$.channels[*][publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat === void 0)].payload.default^',
           '$.channels.*.parameters.*.schema.default^',
-          '$.components.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.default^',
+          '$.components.channels[*][publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat === void 0)].payload.default^',
           '$.components.channels.*.parameters.*.schema.default^',
           '$.components.schemas.*.default^',
           '$.components.parameters.*.schema.default^',
@@ -223,9 +223,9 @@ export const v2SchemasRuleset = (parser: Parser) => {
         severity: 'error',
         recommended: true,
         given: [
-          '$.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.examples^',
+          '$.channels[*][publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat === void 0)].payload.examples^',
           '$.channels.*.parameters.*.schema.examples^',
-          '$.components.channels[*][publish,subscribe][?(@property === \'message\' && @.schemaFormat === void 0)].payload.examples^',
+          '$.components.channels[*][publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat === void 0)].payload.examples^',
           '$.components.channels.*.parameters.*.schema.examples^',
           '$.components.schemas.*.examples^',
           '$.components.parameters.*.schema.examples^',
@@ -338,9 +338,9 @@ export const v2RecommendedRuleset = {
       recommended: true,
       formats: AsyncAPIFormats.filterByMajorVersions(['2']).excludeByVersions(['2.0.0', '2.1.0', '2.2.0', '2.3.0']).formats(), // message.messageId is available starting from v2.4.      
       given: [
-        '$.channels.*.[publish,subscribe][?(@property === "message" && @.oneOf == void 0)]',
+        '$.channels.*.[publish,subscribe][?(@property === "message" && !@null && @.oneOf == void 0)]',
         '$.channels.*.[publish,subscribe].message.oneOf.*',
-        '$.components.channels.*.[publish,subscribe][?(@property === "message" && @.oneOf == void 0)]',
+        '$.components.channels.*.[publish,subscribe][?(@property === "message" && !@null && @.oneOf == void 0)]',
         '$.components.channels.*.[publish,subscribe].message.oneOf.*',
         '$.components.messages.*',
       ],

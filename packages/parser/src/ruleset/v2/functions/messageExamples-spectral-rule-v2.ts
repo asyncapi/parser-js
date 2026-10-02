@@ -17,9 +17,9 @@ export function asyncApi2MessageExamplesParserRule(parser: Parser): RuleDefiniti
     recommended: true,
     given: [
       // messages
-      '$.channels.*.[publish,subscribe][?(@property === \'message\' && @.schemaFormat !== void 0)]',
+      '$.channels.*.[publish,subscribe][?(@property === \'message\' && !@null && @.schemaFormat !== void 0)]',
       '$.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat !== void 0)]',
-      '$.components.channels.*.[publish,subscribe].message[?(@property === \'message\' && @.schemaFormat !== void 0)]',
+      '$.components.channels.*.[publish,subscribe].message[?(@property === \'message\' && !@null && @.schemaFormat !== void 0)]',
       '$.components.channels.*.[publish,subscribe].message.oneOf[?(!@null && @.schemaFormat !== void 0)]',
       '$.components.messages[?(!@null && @.schemaFormat !== void 0)]',
       // message traits

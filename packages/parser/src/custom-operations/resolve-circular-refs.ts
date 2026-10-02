@@ -9,39 +9,68 @@ interface Context {
   document: AsyncAPIObject;
   hasCircular: boolean;
   inventory: RulesetFunctionContext['documentInventory'];
-  visited: Set<any>;
+  active: WeakSet<object>;
+  completed: WeakSet<object>;
 }
 
 export function resolveCircularRefs(document: AsyncAPIDocumentInterface, inventory: RulesetFunctionContext['documentInventory']) {
   const documentJson = document.json();
-  const ctx: Context = { document: documentJson, hasCircular: false, inventory, visited: new Set() };
+  const ctx: Context = {
+    document: documentJson,
+    hasCircular: false,
+    inventory,
+    active: new WeakSet(),
+    completed: new WeakSet(),
+  };
   traverse(documentJson, [], null, '', ctx);
   if (ctx.hasCircular) {
     setExtension(xParserCircular, true, document);
   }
 }
 
-function traverse(data: any, path: Array<string | number>, parent: any, property: string | number, ctx: Context) {
-  if (typeof data !== 'object' || !data || ctx.visited.has(data)) {
-    return;
+function traverse(data: any, path: Array<string | number>, parent: any, property: string | number, ctx: Context): boolean {
+  if (typeof data !== 'object' || !data) {
+    return true;
   }
 
-  ctx.visited.add(data);
-  if (Array.isArray(data)) {
-    data.forEach((item, idx) => traverse(item, [...path, idx], data, idx, ctx));
+  if (ctx.completed.has(data)) {
+    return true;
   }
+
+  if (ctx.active.has(data)) {
+    return !('$ref' in data);
+  }
+
   if ('$ref' in data) {
     ctx.hasCircular = true;
+    ctx.active.add(data);
     const resolvedRef = retrieveCircularRef(data, path, ctx);
     if (resolvedRef) {
       parent[property] = resolvedRef;
+      const completed = traverse(resolvedRef, path, parent, property, ctx);
+      ctx.active.delete(data);
+      return completed;
     }
+    ctx.active.delete(data);
+    return false;
+  }
+
+  ctx.active.add(data);
+  let completed = true;
+  if (Array.isArray(data)) {
+    data.forEach((item, idx) => {
+      completed = traverse(item, [...path, idx], data, idx, ctx) && completed;
+    });
   } else {
     for (const p in data) {
-      traverse(data[p], [...path, p], data, p, ctx);
+      completed = traverse(data[p], [...path, p], data, p, ctx) && completed;
     }
   }
-  ctx.visited.delete(data);
+  ctx.active.delete(data);
+  if (completed) {
+    ctx.completed.add(data);
+  }
+  return completed;
 }
 
 function retrieveCircularRef(data: { $ref: string }, path: Array<string | number>, ctx: Context): any {

@@ -31,6 +31,7 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --project ./tsconfig.cjs.json",
     "build:browser": "webpack",
+    "type-check:tests": "tsc --project ./tsconfig.tests.json",
     "test": "npm run test:unit && npm run test:browser",
     "test:unit": "cross-env CI=true jest --coverage --testPathIgnorePatterns=test/browser/*",
     "test:browser": "npm run playwright:install && npm run build:browser && cross-env CI=true jest -- ./test/browser/*",

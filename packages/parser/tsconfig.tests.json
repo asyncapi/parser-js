@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "src",
+    "test/models/v2/bindings-types.spec.ts"
+  ]
+}

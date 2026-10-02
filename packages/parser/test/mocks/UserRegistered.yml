@@ -1,0 +1,16 @@
+components:
+  schemas:
+    UserRegisteredType:
+      type: string
+      enum: [ UserRegistered ]
+    UserRegistered:
+      type: object
+      additionalProperties: false
+      required:
+        - type
+        - name
+      properties:
+        type:
+          $ref: "#/components/schemas/UserRegisteredType"
+        name:
+          type: string

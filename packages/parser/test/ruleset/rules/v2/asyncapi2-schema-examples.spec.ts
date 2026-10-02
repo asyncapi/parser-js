@@ -396,4 +396,52 @@ testRule('asyncapi2-schema-examples', [
       },
     ],
   },
+
+  // See https://github.com/asyncapi/parser-js/issues/863
+  {
+    name: 'valid case with payload property named message and null example value',
+    document: {
+      asyncapi: '2.4.0',
+      info: {
+        title: 'Messages',
+        version: '1.1.0',
+      },
+      defaultContentType: 'application/json',
+      channels: {
+        'test/message': {
+          subscribe: {
+            message: {
+              $ref: '#/components/messages/transferReturned',
+            },
+          },
+        },
+      },
+      components: {
+        messages: {
+          transferReturned: {
+            title: 'Transfer Returned',
+            payload: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: ['string', 'null'],
+                  maxLength: 50,
+                },
+              },
+              required: ['message'],
+            },
+            examples: [
+              {
+                name: 'return',
+                payload: {
+                  message: null,
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+    errors: [],
+  },
 ]);

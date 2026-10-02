@@ -1,3 +1,4 @@
+import { AsyncAPIDocumentV2 } from '../src/models';
 import { AsyncAPIDocument } from '../src/models/v3/asyncapi';
 import { Parser } from '../src/parser';
 import { hasErrorDiagnostic, hasWarningDiagnostic } from '../src/utils';
@@ -96,5 +97,57 @@ describe('validate()', function() {
 
     expect(document).toBeInstanceOf(AsyncAPIDocument);
     expect(filterLastVersionDiagnostics(diagnostics)).toHaveLength(0);
+  });
+
+  // See https://github.com/asyncapi/parser-js/issues/863
+  it('should parse document with payload property named message and null example value', async function() {
+    const documentRaw = {
+      asyncapi: '2.4.0',
+      info: {
+        title: 'Messages',
+        version: '1.1.0',
+      },
+      defaultContentType: 'application/json',
+      channels: {
+        'test/message': {
+          subscribe: {
+            message: {
+              $ref: '#/components/messages/transferReturned',
+            },
+          },
+        },
+      },
+      components: {
+        messages: {
+          transferReturned: {
+            title: 'Transfer Returned',
+            payload: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: ['string', 'null'],
+                  maxLength: 50,
+                },
+              },
+              required: ['message'],
+            },
+            examples: [
+              {
+                name: 'return',
+                payload: {
+                  message: null,
+                },
+              },
+            ],
+          },
+        },
+      },
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV2);
+    expect(diagnostics.some(d => d.message?.includes('Cannot read properties of null'))).toEqual(false);
+    expect(diagnostics.some(d => d.code === 'uncaught-error')).toEqual(false);
+    expect(hasErrorDiagnostic(diagnostics)).toEqual(false);
   });
 });

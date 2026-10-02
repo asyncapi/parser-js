@@ -146,7 +146,7 @@ const diagnostics = await parser.validate(`
 
 ### [Example using Avro schemas](#custom-schema-parsers)
 
-Head over to [asyncapi/avro-schema-parser](https://www.github.com/asyncapi/avro-schema-parser) for more information.
+Head over to [`packages/avro-schema-parser`](./packages/avro-schema-parser) for more information.
 
 ### [Example using OpenAPI schemas](#custom-schema-parsers)
 
@@ -366,7 +366,7 @@ AsyncAPI doesn't enforce one schema format. The payload of the messages can be d
 
 In AsyncAPI Initiative we support below custom schema parsers. To install them, run below comamnds:
 
-- [Avro schema](https://www.github.com/asyncapi/avro-schema-parser):
+- [Avro schema](./packages/avro-schema-parser):
 
   ```bash
   npm install @asyncapi/avro-schema-parser

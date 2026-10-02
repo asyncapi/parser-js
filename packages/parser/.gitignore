@@ -9,3 +9,8 @@ node_modules
 /browser
 *.tgz
 .turbo
+
+# copied from the repo root by prepublishOnly (scripts/copy-legal.js)
+LICENSE
+NOTICE
+README.md

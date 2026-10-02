@@ -34,6 +34,7 @@
     "/esm",
     "/cjs",
     "LICENSE",
+    "NOTICE",
     "README.md"
   ],
   "scripts": {
@@ -47,7 +48,8 @@
     "generate:readme:toc": "markdown-toc -i \"README.md\"",
     "generate:assets": "npm run build && npm run generate:readme:toc",
     "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION",
-    "prepublishOnly": "npm run generate:assets"
+    "copy:legal": "node ../../scripts/copy-legal.js",
+    "prepublishOnly": "npm run copy:legal && npm run generate:assets"
   },
   "dependencies": {
     "@openapi-contrib/openapi-schema-to-json-schema": "~3.2.0",

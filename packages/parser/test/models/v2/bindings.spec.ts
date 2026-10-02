@@ -3,6 +3,8 @@ import { Binding } from '../../../src/models/v2/binding';
 import { Extensions } from '../../../src/models/v2/extensions';
 import { Extension } from '../../../src/models/v2/extension';
 
+import type { v2 } from '../../../src/spec-types';
+
 const binding = {
   http: {}
 };
@@ -42,6 +44,25 @@ describe('Bindings model', function () {
     it('should return false if the Message Trait id is missing', function () {
       const bindings = new Bindings([bindingItem]);
       expect(bindings.has('anotherProtocol')).toEqual(false);
+    });
+  });
+
+  // See https://github.com/asyncapi/parser-js/issues/735
+  describe('Binding with excess protocol-specific properties', function () {
+    it('should allow assigning protocol-specific fields to Binding and read them via value()', function () {
+      const mqttBinding: v2.Binding = {
+        bindingVersion: '0.1.0',
+        clientId: 'my-client',
+        cleanSession: true,
+      };
+      const bindingModel = new Binding(mqttBinding, { asyncapi: {} as any, pointer: '', protocol: 'mqtt' });
+
+      expect(bindingModel.protocol()).toEqual('mqtt');
+      expect(bindingModel.version()).toEqual('0.1.0');
+      expect(bindingModel.value()).toEqual({
+        clientId: 'my-client',
+        cleanSession: true,
+      });
     });
   });
 

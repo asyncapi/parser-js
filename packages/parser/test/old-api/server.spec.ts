@@ -68,6 +68,29 @@ describe('Server', function() {
     });
   });
 
+  // See https://github.com/asyncapi/parser-js/issues/735
+  describe('binding() with protocol-specific fields', function() {
+    it('should expose excess MQTT binding properties such as clientId', function() {
+      const mqttBinding: v2.Binding = {
+        bindingVersion: '0.1.0',
+        clientId: 'my-client',
+        cleanSession: true,
+      };
+      const d = new Server({
+        url: 'mqtt://test.com',
+        protocol: 'mqtt',
+        bindings: {
+          mqtt: mqttBinding,
+        },
+      });
+
+      const binding = d.binding('mqtt');
+      expect(binding).toEqual(mqttBinding);
+      expect(binding?.clientId).toEqual('my-client');
+      expect(binding?.cleanSession).toEqual(true);
+    });
+  });
+
   assertDescriptionMixin(Server);
   assertTagsMixin(Server);
   assertExtensionsMixin(Server);

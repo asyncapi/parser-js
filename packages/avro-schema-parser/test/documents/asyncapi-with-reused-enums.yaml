@@ -1,0 +1,46 @@
+asyncapi: 3.0.0
+info:
+  title: AsyncAPI
+  version: 1.0.0
+  description: AsyncAPI
+channels:
+  example:
+    address: example
+    messages:
+      publish.message:
+        $ref: '#/components/messages/example_message'
+operations:
+  example.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/example'
+    messages:
+      - $ref: '#/channels/example/messages/publish.message'
+components:
+  messages:
+    example_message:
+      name: example_event
+      payload:
+        schemaFormat: application/vnd.apache.avro;version=1.9.0
+        schema:
+          type: record
+          name: ParentRecord
+          fields:
+            - name: r1
+              type:
+                type: enum
+                name: MyEnum
+                symbols:
+                  - A
+                  - B
+                  - C
+            - name: r2
+              type: MyEnum
+            - name: r3
+              type: MyEnum
+            - name: r4
+              type:
+                - 'null'
+                - string
+            - name: r5
+              type: string

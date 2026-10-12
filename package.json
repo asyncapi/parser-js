@@ -16,6 +16,9 @@
     "openapi-parser:build": "turbo run build --filter=@asyncapi/openapi-schema-parser",
     "openapi-parser:test:unit": "turbo run test:unit --filter=@asyncapi/openapi-schema-parser",
     "openapi-parser:test": "turbo run test --filter=@asyncapi/openapi-schema-parser",
+    "avro-parser:build": "turbo run build --filter=@asyncapi/avro-schema-parser",
+    "avro-parser:test:unit": "turbo run test:unit --filter=@asyncapi/avro-schema-parser",
+    "avro-parser:test": "turbo run test --filter=@asyncapi/avro-schema-parser",
     "prepublishOnly": "turbo run prepublishOnly"
   },
   "devDependencies": {

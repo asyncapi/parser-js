@@ -24,6 +24,7 @@ const amqpChannelBinding: v3.Binding = {
   exchange: { name: 'myExchange', type: 'topic' },
 };
 
-void mqttServerBinding.clientId;
-void kafkaBinding.groupId;
-void amqpChannelBinding.is;
+// Read-back checks: index signature must allow accessing protocol-specific fields.
+export const mqttClientId = mqttServerBinding.clientId;
+export const kafkaGroupId = kafkaBinding.groupId;
+export const amqpChannelIs = amqpChannelBinding.is;

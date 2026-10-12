@@ -1,6 +1,6 @@
 {
   "name": "@asyncapi/avro-schema-parser",
-  "version": "3.0.24",
+  "version": "3.1.0",
   "description": "An AsyncAPI schema parser for Avro 1.x schemas.",
   "private": false,
   "bugs": {
@@ -53,7 +53,7 @@
     "avsc": "^5.7.6"
   },
   "peerDependencies": {
-    "@asyncapi/parser": "^3.6.2"
+    "@asyncapi/parser": "^3.6.4"
   },
   "devDependencies": {
     "@jest/types": "^29.2.1",

@@ -477,4 +477,37 @@ testRule('asyncapi2-message-examples', [
       },
     ],
   },
+
+  {
+    name: 'valid case (payload property named "message" with null value in example)',
+    document: {
+      asyncapi: '2.6.0',
+      channels: {
+        someChannel: {
+          publish: {
+            message: {
+              payload: {
+                type: 'object',
+                required: ['message'],
+                properties: {
+                  message: {
+                    type: ['string', 'null'],
+                    maxLength: 50,
+                  },
+                },
+              },
+              examples: [
+                {
+                  payload: {
+                    message: null,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+    errors: [],
+  },
 ]);

@@ -48,7 +48,7 @@ export interface ServerObject extends SpecificationExtensions {
   summary?: string;
   description?: string;
   variables?: Record<string, ServerVariableObject | ReferenceObject>;
-  security?: Array<SecuritySchemeObject | ReferenceObject>;
+  security?: Array<SecurityRequirementObject | SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;
   externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: ServerBindingsObject | ReferenceObject;
@@ -130,7 +130,7 @@ export interface OperationObject extends SpecificationExtensions {
   title?: string;
   summary?: string;
   description?: string;
-  security?: Array<SecuritySchemeObject | ReferenceObject>;
+  security?: Array<SecurityRequirementObject | SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;
   externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: OperationBindingsObject | ReferenceObject;
@@ -141,7 +141,7 @@ export interface OperationTraitObject extends SpecificationExtensions {
   title?: string;
   summary?: string;
   description?: string;
-  security?: Array<SecuritySchemeObject | ReferenceObject>;
+  security?: Array<SecurityRequirementObject | SecuritySchemeObject | ReferenceObject>;
   tags?: TagsObject;
   externalDocs?: ExternalDocumentationObject | ReferenceObject;
   bindings?: OperationBindingsObject | ReferenceObject;
@@ -283,6 +283,8 @@ export interface SecuritySchemeObject extends SpecificationExtensions {
   openIdConnectUrl?: string;
   scopes?: string[];
 }
+
+export type SecurityRequirementObject = Record<string, Array<SecuritySchemeObject | ReferenceObject>>;
 
 export type SecuritySchemeType =
   | 'userPassword'

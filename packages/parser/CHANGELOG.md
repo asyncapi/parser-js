@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.6.6
+
+### Patch Changes
+
+- 6f39532: fix: allow excess protocol-specific properties on Binding interface (#735)
+
 ## 3.6.5
 
 ### Patch Changes

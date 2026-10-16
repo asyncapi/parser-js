@@ -4,6 +4,7 @@
    "test": {"cache": false, "dependsOn": ["@asyncapi/parser#build"]},
    "prepublishOnly": {"cache": false},
    "test:unit": {"cache": false},
+   "test:types": {"cache": false},
    "test:integration": {"cache": false},
    "test:browser": {"cache": false},
    "lint": {"cache": false},

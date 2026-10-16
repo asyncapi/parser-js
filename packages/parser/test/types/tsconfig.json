@@ -1,13 +1,9 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
     "noEmit": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "declaration": false,
+    "outDir": "./.tsbuild"
   },
   "include": [
     "./**/*.ts"

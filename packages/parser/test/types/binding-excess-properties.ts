@@ -2,8 +2,10 @@
  * Compile-time regression checks for https://github.com/asyncapi/parser-js/issues/735
  *
  * These assertions are enforced by `tsc` (jest does not type-check).
- * Run: npx tsc --noEmit -p packages/parser/test/types/tsconfig.json
+ * Run via: npm run test:types
  */
+import { OldServer } from '../../src/old-api';
+
 import type { v2, v3 } from '../../src/spec-types';
 
 // Excess protocol-specific fields must be assignable to Binding.
@@ -24,7 +26,18 @@ const amqpChannelBinding: v3.Binding = {
   exchange: { name: 'myExchange', type: 'topic' },
 };
 
-// Read-back checks: index signature must allow accessing protocol-specific fields.
+const server = new OldServer({
+  url: 'mqtt://test.com',
+  protocol: 'mqtt',
+  bindings: {
+    mqtt: mqttServerBinding,
+  },
+});
+
+// Exact regression from issue #735: Property 'clientId' does not exist on type 'Binding'.
+export const mqttClientIdFromServer = server.binding('mqtt')?.clientId;
+export const mqttCleanSessionFromServer = server.binding('mqtt')?.cleanSession;
+
 export const mqttClientId = mqttServerBinding.clientId;
 export const kafkaGroupId = kafkaBinding.groupId;
 export const amqpChannelIs = amqpChannelBinding.is;

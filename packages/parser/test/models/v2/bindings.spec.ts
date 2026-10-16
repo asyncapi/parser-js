@@ -61,4 +61,13 @@ describe('Bindings model', function () {
       expect(bindings.extensions().get('x-anotherOne')?.value()).toEqual({ someKey: 123 });
     });
   });
+
+  describe('excess properties (issue #735)', function () {
+    it('should preserve protocol-specific excess fields on a binding value', function () {
+      const b = new Binding({ clientId: 'my-client', clean: true } as any, { asyncapi: {} as any, pointer: '', protocol: 'mqtt' });
+      const value = b.value() as Record<string, any>;
+      expect(value).toHaveProperty('clientId', 'my-client');
+      expect(value).toHaveProperty('clean', true);
+    });
+  });
 });

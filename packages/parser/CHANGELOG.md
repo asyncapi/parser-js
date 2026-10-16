@@ -1,5 +1,17 @@
 # @asyncapi/parser
 
+## 3.6.5
+
+### Patch Changes
+
+- ef805c3: fix: allow payload property named message with null value (#863)
+
+## 3.6.4
+
+### Patch Changes
+
+- ca0b0df: Move `@asyncapi/avro-schema-parser` into the `parser-js` monorepo. Same public API (`AvroSchemaParser()` and `registerSchemaParser`). Published as 3.1.0 because 3.0.25 and 3.0.26 were already used on npm and cannot be republished. Remove the unused `avsc` dependency from `@asyncapi/parser`. Avro support stays in `@asyncapi/avro-schema-parser`.
+
 ## 3.6.3
 
 ### Patch Changes

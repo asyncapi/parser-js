@@ -10,8 +10,11 @@
    "lint:fix": {"cache": false},
    "build": {"cache": false , "dependsOn": ["@asyncapi/parser#build"]},
    "@asyncapi/parser#build":{"cache": false},
+   "@asyncapi/parser#test":{"cache": false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/avro-schema-parser#build"]},
+   "@asyncapi/parser#test:unit":{"cache": false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/avro-schema-parser#build"]},
    "@asyncapi/openapi-schema-parser#build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]},
-   "@asyncapi/multi-parser#build":{"cache":false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/openapi-schema-parser#build"]},
-   "@asyncapi/multi-parser#test":{"cache":false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/openapi-schema-parser#build"]}
+   "@asyncapi/avro-schema-parser#build":{"cache":false, "dependsOn": ["@asyncapi/parser#build"]},
+   "@asyncapi/multi-parser#build":{"cache":false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/openapi-schema-parser#build", "@asyncapi/avro-schema-parser#build"]},
+   "@asyncapi/multi-parser#test":{"cache":false, "dependsOn": ["@asyncapi/parser#build", "@asyncapi/openapi-schema-parser#build", "@asyncapi/avro-schema-parser#build"]}
   }
 }

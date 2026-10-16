@@ -1,5 +1,6 @@
 import { Parser } from '../../src/parser';
 import { xParserCircular } from '../../src/constants';
+import { resolveCircularRefs } from '../../src/custom-operations/resolve-circular-refs';
 
 describe('custom operations - check circular references', function() {
   const parser = new Parser();
@@ -33,6 +34,28 @@ describe('custom operations - check circular references', function() {
     });
 
     expect(document?.extensions().get(xParserCircular)?.value()).toEqual(undefined);
+  });
+
+  it('should traverse a shared acyclic object only once', function() {
+    let leafVisits = 0;
+    const leaf = {};
+    Object.defineProperty(leaf, 'value', {
+      enumerable: true,
+      get() {
+        leafVisits += 1;
+        return 'value';
+      },
+    });
+
+    let graph: Record<string, any> = leaf;
+    for (let level = 0; level < 12; level += 1) {
+      graph = { left: graph, right: graph };
+    }
+
+    const document = { json: () => graph } as any;
+    resolveCircularRefs(document, {} as any);
+
+    expect(leafVisits).toEqual(1);
   });
 
   it('should assign x-parser-circular extension when document has circular schemas', async function() {

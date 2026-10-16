@@ -33,6 +33,11 @@ const customSchemasPathsV3 = [
   '$.operations.*.messages.*.headers',
   '$.components.operations.*.messages.*.payload',
   '$.components.operations.*.messages.*.headers',
+  // operations -> channel (which may $ref an external file) -> messages
+  '$.operations.*.channel.messages.*.payload',
+  '$.operations.*.channel.messages.*.headers',
+  '$.components.operations.*.channel.messages.*.payload',
+  '$.components.operations.*.channel.messages.*.headers',
   // messages
   '$.components.messages.*.payload',
   '$.components.messages.*.headers.*',

@@ -484,6 +484,9 @@ export interface AsyncAPISchemaDefinition extends SpecificationExtensions {
 
 export interface Binding {
   bindingVersion?: string;
+  // Protocol-specific binding fields (e.g. MQTT clientId) are allowed.
+  // See https://github.com/asyncapi/parser-js/issues/735
+  [propName: string]: any;
 }
 
 export interface SpecificationExtensions {

@@ -1,5 +1,11 @@
 # @asyncapi/parser
 
+## 3.6.5
+
+### Patch Changes
+
+- ef805c3: fix: allow payload property named message with null value (#863)
+
 ## 3.6.4
 
 ### Patch Changes

@@ -12,6 +12,8 @@ const inputWithInvalidOpenApi3 = toParseInput(fs.readFileSync(path.resolve(__dir
 
 const inputWithValidAsyncAPI = fs.readFileSync(path.resolve(__dirname, './documents/valid-asyncapi.yaml'), 'utf8');
 
+const inputWithValidAsyncAPI3 = fs.readFileSync(path.resolve(__dirname, './documents/asyncapi3.yaml'), 'utf8');
+
 const inputWithInvalidAsyncAPI = fs.readFileSync(path.resolve(__dirname, './documents/invalid-asyncapi.yaml'), 'utf8');
 
 describe('OpenAPISchemaParser', function () {
@@ -61,6 +63,45 @@ describe('OpenAPISchemaParser', function () {
         path: ['channels', 'myChannel', 'publish', 'message', 'payload', 'properties','surname']
       }
     ]);
+  });
+
+  it('should parse valid AsyncAPI 3 document with a schema referenced multiple times', async function() {
+    // https://github.com/asyncapi/parser-js/issues/1249
+    // `AddressEvent` is referenced from two messages through `allOf`; the transformation
+    // used to mutate the shared input, making the second conversion fail with
+    // InvalidTypeError `Type ["string","null"] is not a valid type`.
+    const { document, diagnostics } = await coreParser.parse(inputWithValidAsyncAPI3);
+    expect(diagnostics).toHaveLength(0);
+    const json = (document?.json() as any);
+    const payloads = [
+      json.channels.AddressEventsChannel.messages.addressAdded.payload,
+      json.channels.AddressEventsChannel.messages.addressUpdated.payload,
+    ];
+    // both messages share the `AddressEvent` schema through `allOf`, so each payload
+    // must contain the fully transformed JSON Schema (`nullable: true` -> `type` array)
+    for (const payload of payloads) {
+      expect(payload.schema.allOf[0].allOf[0].properties.time2.type).toEqual(['string', 'null']);
+    }
+  });
+
+  it('should not mutate the input schema during parsing', async function() {
+    // https://github.com/asyncapi/parser-js/issues/1249
+    // the transformation used to leak mutations into the caller's schema object
+    // (allOf entries were shared with the converter), so parsing the same object
+    // twice failed; parsing must be side-effect free.
+    const sharedSchema = {
+      type: 'object',
+      allOf: [{ type: 'object', properties: { time: { type: 'string', nullable: true } } }],
+      properties: { updatedAddress: { type: 'string' } },
+    };
+    const before = JSON.stringify(sharedSchema);
+    const input = { ...inputWithValidOpenApi3, data: sharedSchema };
+
+    const first = await parser.parse(input);
+    expect(JSON.stringify(sharedSchema)).toEqual(before);
+
+    const second = await parser.parse(input);
+    expect(second).toEqual(first);
   });
 
   it('should parse valid AsyncAPI', async function() {

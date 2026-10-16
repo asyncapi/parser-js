@@ -30,7 +30,12 @@ async function validate(input: ValidateSchemaInput<unknown, unknown>): Promise<S
 }
 
 async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<SpecTypesV2.SchemaObject> {
-  const transformed = toJsonSchema(input.data, {
+  // The transformation below mutates its input even though `cloneSchema: true` is passed
+  // (the library only clones shallowly, leaving nested values like `allOf` entries shared),
+  // which breaks parsing when the same schema object is transformed more than once.
+  // Deep-clone the input first to keep parsing pure. See https://github.com/asyncapi/parser-js/issues/1249
+  const inputSchema = structuredClone(input.data);
+  const transformed = toJsonSchema(inputSchema, {
     cloneSchema: true,
     keepNotSupported: [
       'discriminator',

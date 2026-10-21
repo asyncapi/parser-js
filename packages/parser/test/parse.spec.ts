@@ -598,7 +598,7 @@ channels:
       description: 'Find more info here'
       url: 'https://example.com'
   userSignupReply:
-    address: 'users.signup.reply'
+    address: null
     description: Channel for user signup replies
     messages:
       userSignedUpReply:
@@ -986,7 +986,7 @@ components:
           },
         },
         userSignupReply: {
-          address: 'users.signup.reply',
+          address: null,
           description: 'Channel for user signup replies',
           messages: {
             userSignedUpReply: {

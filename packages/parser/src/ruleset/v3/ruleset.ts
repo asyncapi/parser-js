@@ -1,8 +1,8 @@
-
 /* eslint-disable sonarjs/no-duplicate-string */
 
 import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
+import { operationReplyAddress } from './functions/operationReplyAddress';
 import { v3ChannelParameters } from './functions/channelParameters';
 import { pattern } from '@stoplight/spectral-functions';
 import { channelServers } from '../functions/channelServers';
@@ -26,6 +26,20 @@ export const v3CoreRuleset = {
       ],
       then: {
         function: operationMessagesUnambiguity,
+      },
+    },
+    'asyncapi3-operation-reply-address': {
+      description: 'A channel referenced by an operation reply with a dynamic address must not define a concrete address.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      resolved: false, // We use the JSON pointer to match the channel.
+      given: [
+        '$.operations.*.reply',
+        '$.components.operations.*.reply',
+      ],
+      then: {
+        function: operationReplyAddress,
       },
     },
     'asyncapi3-required-operation-channel-unambiguity': {

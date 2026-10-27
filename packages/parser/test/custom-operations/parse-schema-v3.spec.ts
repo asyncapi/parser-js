@@ -1,6 +1,7 @@
 import { AsyncAPIDocumentV3 } from '../../src/models';
 import { Parser } from '../../src/parser';
 import { filterLastVersionDiagnostics } from '../utils';
+import type { SchemaParser } from '../../src/schema-parser';
 
 import type { v3 } from '../../src/spec-types';
 
@@ -251,6 +252,47 @@ describe('custom operations for v3 - parse schemas', function() {
     });
     expect(document!.allOperations().get('receiveACostingRequest')?.bindings().get('kafka')?.json()?.groupId).toEqual({
       type: 'string',
+    });
+  });
+
+  it('should parse schema through an external operation channel reference', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'External operation channel test',
+        version: '1.0.0',
+      },
+      operations: {
+        operation: {
+          action: 'receive',
+          channel: {
+            $ref: '../mocks/parse/operation-channel.yaml#/channels/BarChannel',
+          },
+        },
+      },
+    };
+
+    const customParser: SchemaParser = {
+      validate: () => [],
+      parse: async input => ({
+        ...(input.data as any),
+        'x-custom-parser': true,
+      }),
+      getMimeTypes: () => ['application/vnd.aai.asyncapi;version=2.0.0'],
+    };
+
+    parser.registerSchemaParser(customParser);
+
+    const { document } = await parser.parse(documentRaw, {
+      source: __filename,
+    });
+
+    expect(
+      (document?.json() as any).operations.operation.channel.messages.AMessage
+        .payload.schema,
+    ).toEqual({
+      type: 'object',
+      'x-custom-parser': true,
     });
   });
 });

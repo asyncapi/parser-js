@@ -60,4 +60,11 @@ describe('ConvertDocumentParserAPIVersion()', function() {
     const convertedDoc = ConvertDocumentParserAPIVersion(doc, 1);
     expect(convertedDoc).toEqual(doc);
   });
+
+  it('Returns same document when target version matches document major version', async function() {
+    const doc = { asyncapi: '2.6.0', info: { title: '', description: '', version: ''}, channels: {} };
+    const parsedDocParserV3 = (await new ParserV3().parse(doc)).document as AsyncAPIDocument;
+    const result = ConvertDocumentParserAPIVersion(parsedDocParserV3, 3);
+    expect(result).toBe(parsedDocParserV3);
+  });
 });

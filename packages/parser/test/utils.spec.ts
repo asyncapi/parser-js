@@ -210,6 +210,22 @@ describe('utils', function() {
       expect(semver.patch).toEqual(37);
       expect(semver.rc).toEqual(69);
     });
+
+    it('should not throw for a version without a patch segment', function () {
+      expect(() => getSemver('3.0')).not.toThrow();
+      const semver = getSemver('3.0');
+      expect(semver.major).toEqual(3);
+      expect(semver.minor).toEqual(0);
+    });
+
+    it('should not throw for a version without minor and patch segments', function () {
+      expect(() => getSemver('3')).not.toThrow();
+      expect(getSemver('3').major).toEqual(3);
+    });
+
+    it('should not throw for a non-version string', function () {
+      expect(() => getSemver('notaversion')).not.toThrow();
+    });
   });
 
   describe('normalizeInput()', function() {

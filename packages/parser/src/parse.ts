@@ -4,11 +4,12 @@ import { applyUniqueIds, customOperations } from './custom-operations';
 import { validate } from './validate';
 import { copy } from './stringify';
 import { createAsyncAPIDocument } from './document';
-import { createDetailedAsyncAPI, mergePatch, setExtension, createUncaghtDiagnostic } from './utils';
+import { createDetailedAsyncAPI, mergePatch, setExtension, createUncaghtDiagnostic, hasErrorDiagnostic } from './utils';
 
 import { xParserSpecParsed, xParserApiVersion } from './constants';
 
-import type { Spectral, Document, RulesetFunctionContext } from '@stoplight/spectral-core';
+import type { Spectral, RulesetFunctionContext } from '@stoplight/spectral-core';
+import { Document } from '@stoplight/spectral-core';
 import type { Parser } from './parser';
 import type { ResolverOptions } from './resolver';
 import type { ValidateOptions } from './validate';
@@ -27,6 +28,16 @@ export interface ParseOptions {
   applyTraits?: boolean;
   parseSchemas?: boolean;
   validateOptions?: Omit<ValidateOptions, 'source'>;
+  /**
+   * If `true`, the parser will throw an `AsyncAPIParseError` when the input
+   * document fails validation (i.e. one or more diagnostics with
+   * `severity === DiagnosticSeverity.Error` are produced). The thrown error
+   * carries the diagnostics on its `diagnostics` property.
+   *
+   * Defaults to `false` to preserve the historical "return undefined document
+   * alongside diagnostics" behavior. See https://github.com/asyncapi/parser-js/issues/878
+   */
+  throwOnError?: boolean;
   __unstable?: {
     resolver?: Omit<ResolverOptions, 'cache'>;
   };
@@ -35,6 +46,7 @@ export interface ParseOptions {
 const defaultOptions: ParseOptions = {
   applyTraits: true,
   parseSchemas: true,
+  throwOnError: false,
   validateOptions: {},
   __unstable: {},
 };
@@ -54,6 +66,18 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
     
     const { validated, diagnostics, extras } = await validate(parser, spectral, asyncapi, { ...options.validateOptions, source: options.source, __unstable: options.__unstable });
     if (validated === undefined) {
+      // Issue #878: when validation fails the parser used to silently return
+      // a result with `document: undefined`, which made it easy for callers to
+      // miss the failure (e.g. `result.document()` would throw a confusing
+      // "is not a function" error). With `throwOnError` enabled we surface the
+      // failure with a descriptive error instead.
+      if (options.throwOnError && hasErrorDiagnostic(diagnostics)) {
+        throw new AsyncAPIParseError(
+          'AsyncAPI document failed validation. See the `diagnostics` property for details.',
+          diagnostics,
+          extras?.document
+        );
+      }
       return {
         document: undefined,
         diagnostics,
@@ -81,6 +105,21 @@ export async function parse(parser: Parser, spectral: Spectral, asyncapi: Input,
       extras,
     };
   } catch (err: unknown) {
+    if (err instanceof AsyncAPIParseError) {
+      throw err;
+    }
     return { document: undefined, diagnostics: createUncaghtDiagnostic(err, 'Error thrown during AsyncAPI document parsing', spectralDocument), extras: undefined };
+  }
+}
+
+export class AsyncAPIParseError extends Error {
+  public readonly diagnostics: Diagnostic[];
+  public readonly document?: Document;
+
+  constructor(message: string, diagnostics: Diagnostic[], document?: Document) {
+    super(message);
+    this.name = 'AsyncAPIParseError';
+    this.diagnostics = diagnostics;
+    this.document = document;
   }
 }

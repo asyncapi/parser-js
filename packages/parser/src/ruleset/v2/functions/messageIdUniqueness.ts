@@ -85,7 +85,13 @@ export const messageIdUniqueness = createRulesetFunction<v2.AsyncAPIObject, null
     const messages = getAllMessages(targetVal);
 
     const seenIds: unknown[] = [];
+    const seenMessages = new Set<v2.MessageObject>();
     for (const { path, message } of messages) {
+      if (seenMessages.has(message)) {
+        continue;
+      }
+      seenMessages.add(message);
+
       const maybeMessageId = retrieveMessageId(message);
       if (maybeMessageId === undefined) {
         continue;

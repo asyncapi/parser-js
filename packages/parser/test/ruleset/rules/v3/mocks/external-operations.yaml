@@ -1,0 +1,13 @@
+asyncapi: 3.0.0
+info:
+  title: External operations
+  version: 1.0.0
+operations:
+  operation:
+    action: send
+    channel:
+      $ref: '#/components/channels/componentChannel'
+components:
+  channels:
+    componentChannel:
+      address: component

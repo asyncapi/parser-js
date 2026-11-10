@@ -14,6 +14,10 @@ const inputWithValidAsyncAPI = fs.readFileSync(path.resolve(__dirname, './docume
 
 const inputWithValidAsyncAPI3 = fs.readFileSync(path.resolve(__dirname, './documents/asyncapi3.yaml'), 'utf8');
 
+const inputWithAsyncAPI3SharedSchemaInOneMessage = fs.readFileSync(path.resolve(__dirname, './documents/asyncapi3-shared-schema-single-message.yaml'), 'utf8');
+
+const inputWithRecursiveSchema = fs.readFileSync(path.resolve(__dirname, './documents/asyncapi3-recursive.yaml'), 'utf8');
+
 const inputWithInvalidAsyncAPI = fs.readFileSync(path.resolve(__dirname, './documents/invalid-asyncapi.yaml'), 'utf8');
 
 describe('OpenAPISchemaParser', function () {
@@ -82,6 +86,46 @@ describe('OpenAPISchemaParser', function () {
     for (const payload of payloads) {
       expect(payload.schema.allOf[0].allOf[0].properties.time2.type).toEqual(['string', 'null']);
     }
+  });
+
+  it('should parse a schema referenced twice within the same message', async function() {
+    // https://github.com/asyncapi/parser-js/issues/1249
+    // `referencingSchema` is referenced from `allOf` and from `properties.myProperty`
+    // of the same schema, so both entries point at the same resolved object. A clone
+    // that preserves shared identity (`structuredClone` does) still converts that
+    // object twice and fails with InvalidTypeError `Type ["string","null"] is not a
+    // valid type`.
+    const { document, diagnostics } = await coreParser.parse(inputWithAsyncAPI3SharedSchemaInOneMessage);
+    expect(diagnostics).toHaveLength(0);
+    const json = (document?.json() as any);
+    const schema = json.channels.myChannel.messages.firstMessage.payload.schema;
+    expect(schema.allOf[0].allOf[0].properties.myProperty.type).toEqual(['string', 'null']);
+    expect(schema.properties.myProperty.allOf[0].properties.myProperty.type).toEqual(['string', 'null']);
+  });
+
+  it('should parse a recursive schema', async function() {
+    // a self-referencing schema puts the same schema object in more than one position,
+    // which is the shape the clone has to cope with; the resolved document itself stays
+    // cyclic, so only the levels the parser converts are asserted here
+    const { document, diagnostics } = await coreParser.parse(inputWithRecursiveSchema);
+    expect(diagnostics).toHaveLength(0);
+    const schema = (document?.json() as any).channels.myChannel.messages.nodeMessage.payload.schema;
+    expect(schema.properties.name.type).toEqual(['string', 'null']);
+    expect(schema.properties.children.items.type).toEqual('object');
+  });
+
+  it('should keep non-JSON values of a programmatic schema intact while cloning', async function() {
+    // the clone must not serialise: a `Date` example stays a Date and a key whose value
+    // is `undefined` is not dropped, both of which a JSON round-trip would lose
+    const example = new Date('2026-01-01T00:00:00.000Z');
+    const data = { type: 'string', example, description: undefined };
+    const result = (await parser.parse({ ...inputWithValidOpenApi3, data })) as any;
+
+    expect(result.examples).toHaveLength(1);
+    // equal as a Date; a JSON round-trip would leave an ISO string here instead
+    expect(result.examples[0]).toEqual(example);
+    expect(result.examples[0].getTime()).toEqual(example.getTime());
+    expect(Object.prototype.hasOwnProperty.call(result, 'description')).toBe(true);
   });
 
   it('should not mutate the input schema during parsing', async function() {

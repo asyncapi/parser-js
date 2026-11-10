@@ -34,7 +34,7 @@ async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<SpecTyp
   // (the library only clones shallowly, leaving nested values like `allOf` entries shared),
   // which breaks parsing when the same schema object is transformed more than once.
   // Deep-clone the input first to keep parsing pure. See https://github.com/asyncapi/parser-js/issues/1249
-  const inputSchema = structuredClone(input.data);
+  const inputSchema = deepCloneSchema(input.data);
   const transformed = toJsonSchema(inputSchema, {
     cloneSchema: true,
     keepNotSupported: [
@@ -49,6 +49,32 @@ async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<SpecTyp
     
   iterateSchema(transformed);
   return transformed;
+}
+
+/**
+ * Deep-clone a schema, duplicating any subtree that appears in more than one place.
+ *
+ * Two built-ins look like they would do the job, and neither does:
+ * - `structuredClone` is a *graph* clone: it deliberately preserves shared object identity,
+ *   so a schema referenced twice (e.g. from `allOf` and from `properties` of the same
+ *   schema) stays a single object and is transformed twice.
+ * - `JSON.parse(JSON.stringify(...))` does duplicate shared subtrees, but silently drops
+ *   values that are legal in a programmatically built schema object (`undefined`, `Date`)
+ *   and throws on `BigInt`.
+ *
+ * Schemas are documents, so cyclic object graphs are not supported here; the conversion
+ * below recurses forever on them whatever this function does.
+ */
+function deepCloneSchema<T>(value: T): T {
+  if (value === null || typeof value !== 'object') return value;
+  if (value instanceof Date) return new Date(value.getTime()) as unknown as T;
+  if (Array.isArray(value)) return value.map(entry => deepCloneSchema(entry)) as unknown as T;
+
+  const clone: Record<string, unknown> = {};
+  for (const [key, entry] of Object.entries(value as Record<string, unknown>)) {
+    clone[key] = deepCloneSchema(entry);
+  }
+  return clone as T;
 }
 
 function getMimeTypes() {

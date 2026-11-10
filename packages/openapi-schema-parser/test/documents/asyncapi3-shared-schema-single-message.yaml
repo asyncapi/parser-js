@@ -1,0 +1,39 @@
+asyncapi: 3.1.0
+info:
+  title: Address change events
+  version: 1.0.0
+defaultContentType: application/json
+channels:
+  myChannel:
+    messages:
+      firstMessage:
+        $ref: '#/components/messages/firstMessage'
+operations:
+  receiveMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/myChannel'
+components:
+  messages:
+    firstMessage:
+      payload:
+        schemaFormat: application/vnd.oai.openapi+yaml;version=3.0.0
+        schema:
+          $ref: '#/components/schemas/firstSchema'
+  schemas:
+    firstSchema:
+      allOf:
+        - $ref: "#/components/schemas/referencingSchema"
+      type: object
+      properties:
+        myProperty:
+          $ref: "#/components/schemas/referencingSchema"
+    referencingSchema:
+      allOf:
+        - $ref: "#/components/schemas/commonSchema"
+    commonSchema:
+      type: object
+      properties:
+        myProperty:
+          type: string
+          nullable: true

@@ -172,6 +172,59 @@ describe('custom operations - apply traits v3', function() {
     expect(message2).toEqual({ summary: 'root summary', description: 'root description', 'x-parser-message-name': 'someMessage2', 'x-parser-unique-object-id': 'someMessage2' });
   });
 
+  it('should keep the referenced payload of a message with traits', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0',
+      },
+      channels: {
+        someChannel: {
+          address: 'some/address',
+          messages: {
+            someMessage: {
+              $ref: '#/components/messages/someMessage'
+            }
+          }
+        }
+      },
+      components: {
+        schemas: {
+          somePayload: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string'
+              }
+            }
+          }
+        },
+        messages: {
+          someMessage: {
+            payload: {
+              $ref: '#/components/schemas/somePayload'
+            },
+            traits: [
+              {
+                contentType: 'application/json'
+              }
+            ]
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+    expect(filterLastVersionDiagnostics(diagnostics)).toHaveLength(0);
+
+    const v3Document = document as AsyncAPIDocumentV3;
+    const message = v3Document.components().messages().get('someMessage');
+    expect(message?.contentType()).toEqual('application/json');
+    expect(message?.payload()?.id()).toEqual('somePayload');
+    expect(v3Document.channels().get('someChannel')?.messages().all()[0].payload()?.id()).toEqual('somePayload');
+    expect(v3Document.allSchemas().all().map(schema => schema.id())).toEqual(['somePayload', '<anonymous-schema-1>']);
+  });
+
   it('should apply traits to channels', function() {
     const documentRaw: v3.AsyncAPIObject = {
       asyncapi: '3.2.0',

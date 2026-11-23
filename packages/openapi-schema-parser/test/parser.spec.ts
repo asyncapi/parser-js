@@ -133,6 +133,82 @@ describe('OpenAPISchemaParser', function () {
     ]);
   });
 
+  it('should convert boolean exclusiveMinimum and exclusiveMaximum to numeric draft-07 bounds', async function() {
+    const input = {
+      data: {
+        type: 'object',
+        properties: {
+          exclusiveBoth: {
+            type: 'integer',
+            minimum: 1,
+            exclusiveMinimum: true,
+            maximum: 9,
+            exclusiveMaximum: true,
+          },
+          inclusiveBounds: {
+            type: 'integer',
+            minimum: 1,
+            exclusiveMinimum: false,
+            maximum: 9,
+            exclusiveMaximum: false,
+          },
+        },
+      },
+    } as any;
+
+    const result = await parser.parse(input) as any;
+    expect(result.properties.exclusiveBoth).toEqual({
+      type: 'integer',
+      exclusiveMinimum: 1,
+      exclusiveMaximum: 9,
+    });
+    expect(result.properties.inclusiveBounds).toEqual({
+      type: 'integer',
+      minimum: 1,
+      maximum: 9,
+    });
+  });
+
+  it('should preserve nullability on oneOf, anyOf, and allOf without top-level type', async function() {
+    const input = {
+      data: {
+        type: 'object',
+        properties: {
+          oneOfNullable: {
+            oneOf: [{ type: 'string' }, { type: 'integer' }],
+            nullable: true,
+          },
+          anyOfNullable: {
+            anyOf: [{ type: 'string' }, { type: 'integer' }],
+            nullable: true,
+          },
+          allOfNullable: {
+            allOf: [{ type: 'string' }],
+            nullable: true,
+          },
+          typedNullable: {
+            type: 'string',
+            nullable: true,
+          },
+        },
+      },
+    } as any;
+
+    const result = await parser.parse(input) as any;
+    expect(result.properties.oneOfNullable).toEqual({
+      oneOf: [{ type: 'string' }, { type: 'integer' }, { type: 'null' }],
+    });
+    expect(result.properties.anyOfNullable).toEqual({
+      anyOf: [{ type: 'string' }, { type: 'integer' }, { type: 'null' }],
+    });
+    expect(result.properties.allOfNullable).toEqual({
+      oneOf: [{ allOf: [{ type: 'string' }] }, { type: 'null' }],
+    });
+    expect(result.properties.typedNullable).toEqual({
+      type: ['string', 'null'],
+    });
+  });
+
   async function doParseTest(originalInput: ParseSchemaInput, expectedOutput: string) {
     const input = { ...originalInput };
     const result = await parser.parse(input);

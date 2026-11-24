@@ -316,9 +316,9 @@ testRule('asyncapi2-operation-operationId-uniqueness', [
           subscribe: {
             operationId: 'id2',
           },
-          publish: {
-            operationId: 'id3',
-          },
+        },
+        publish: {
+          operationId: 'id3',
         },
       },
       components: {
@@ -333,6 +333,31 @@ testRule('asyncapi2-operation-operationId-uniqueness', [
               operationId: 'id2',
             },
             publish: {
+              operationId: 'id1',
+            },
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'allow reusing the same channel/operation via $ref across channels',
+    document: {
+      asyncapi: '2.3.0',
+      channels: {
+        someChannel1: {
+          $ref: '#/components/channels/someChannel',
+        },
+        someChannel2: {
+          $ref: '#/components/channels/someChannel',
+        },
+      },
+      components: {
+        channels: {
+          someChannel: {
+            subscribe: {
               operationId: 'id1',
             },
           },

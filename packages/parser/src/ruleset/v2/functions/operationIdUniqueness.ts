@@ -55,7 +55,13 @@ export const operationIdUniqueness = createRulesetFunction<v2.AsyncAPIObject, nu
     const operations = getAllOperations(targetVal);
 
     const seenIds: unknown[] = [];
+    const seenOperations = new Set<v2.OperationObject>();
     for (const { path, operation } of operations) {
+      if (seenOperations.has(operation)) {
+        continue;
+      }
+      seenOperations.add(operation);
+
       const maybeOperationId = retrieveOperationId(operation);
       if (maybeOperationId === undefined) {
         continue;

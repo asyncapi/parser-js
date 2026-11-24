@@ -549,4 +549,82 @@ testRule('asyncapi2-message-messageId-uniqueness', [
     },
     errors: [],
   },
+
+  {
+    name: 'allow reusing the same message component via $ref across operations',
+    document: {
+      asyncapi: '2.4.0',
+      channels: {
+        someChannel: {
+          publish: {
+            message: {
+              $ref: '#/components/messages/someMessage',
+            },
+          },
+          subscribe: {
+            message: {
+              $ref: '#/components/messages/someMessage',
+            },
+          },
+        },
+        anotherChannel: {
+          publish: {
+            message: {
+              oneOf: [
+                {
+                  $ref: '#/components/messages/someMessage',
+                },
+              ],
+            },
+          },
+        },
+      },
+      components: {
+        messages: {
+          someMessage: {
+            messageId: 'id1',
+          },
+        },
+      },
+    },
+    errors: [],
+  },
+
+  {
+    name: 'return errors on different message components with the same messageId referenced via $ref',
+    document: {
+      asyncapi: '2.4.0',
+      channels: {
+        someChannel: {
+          publish: {
+            message: {
+              $ref: '#/components/messages/someMessage1',
+            },
+          },
+          subscribe: {
+            message: {
+              $ref: '#/components/messages/someMessage2',
+            },
+          },
+        },
+      },
+      components: {
+        messages: {
+          someMessage1: {
+            messageId: 'id1',
+          },
+          someMessage2: {
+            messageId: 'id1',
+          },
+        },
+      },
+    },
+    errors: [
+      {
+        message: '"messageId" must be unique across all the messages.',
+        path: ['channels', 'someChannel', 'publish', 'message', 'messageId'],
+        severity: DiagnosticSeverity.Error,
+      },
+    ],
+  },
 ]);

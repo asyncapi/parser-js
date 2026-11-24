@@ -74,7 +74,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.channels || {}).forEach(([channelId, channelData]) => {
       const channelModel = this.createModel(Channel, channelData as v3.ChannelObject, { id: channelId, pointer: `/channels/${channelId}` });
       if (!channelsData.includes(channelData) && channelModel.messages().some(m => {
-        const messageId = (m as any)[xParserObjectUniqueId];
+        const messageId = (m.json() as any)[xParserObjectUniqueId];
         return messageId === thisMessageId;
       })) {
         channelsData.push(channelData);
@@ -91,7 +91,7 @@ export class Message extends MessageTrait<v3.MessageObject> implements MessageIn
     Object.entries((this._meta.asyncapi?.parsed as v3.AsyncAPIObject)?.operations || {}).forEach(([operationId, operation]) => {
       const operationModel = this.createModel(Operation, operation as v3.OperationObject, { id: operationId, pointer: `/operations/${operationId}` });
       const operationHasMessage = operationModel.messages().some(m => {
-        const messageId = (m as any)[xParserObjectUniqueId];
+        const messageId = (m.json() as any)[xParserObjectUniqueId];
         return messageId === thisMessageId;
       });
       if (operationHasMessage) {

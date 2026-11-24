@@ -138,6 +138,16 @@ describe('Message model', function() {
       expect(d.channels().all()[0]).toBeInstanceOf(Channel);
       expect(d.channels().all()[0].address()).toEqual('user/signup');
     });
+
+    it('should return only the channels that contain the message when unique ids are applied', function() {
+      const doc = { 'x-parser-unique-object-id': 'messageOne' };
+      const otherMessage = { 'x-parser-unique-object-id': 'messageTwo' };
+      const channelOne = { address: 'user/signup', messages: { messageOne: doc } };
+      const channelTwo = { address: 'user/logout', messages: { messageTwo: otherMessage } };
+      const d = new Message(doc, { asyncapi: { parsed: { channels: { userSignUp: channelOne, userLogOut: channelTwo } } } as any, pointer: '', id: 'messageOne' });
+      expect(d.channels().all()).toHaveLength(1);
+      expect(d.channels().all()[0].address()).toEqual('user/signup');
+    });
   });
 
   describe('.operations()', function() {
@@ -159,6 +169,14 @@ describe('Message model', function() {
       expect(d.operations().all()[0].id()).toEqual('userSignUp');
       expect(d.operations().all()[1]).toBeInstanceOf(Operation);
       expect(d.operations().all()[1].id()).toEqual('userLogOut');
+    });
+
+    it('should return only the operations that use the message when unique ids are applied', function() {
+      const doc = { 'x-parser-unique-object-id': 'messageOne' };
+      const otherMessage = { 'x-parser-unique-object-id': 'messageTwo' };
+      const d = new Message(doc, { asyncapi: { parsed: { operations: { userSignUp: { action: 'send', messages: [doc] }, userLogOut: { action: 'send', messages: [otherMessage] } } } } as any, pointer: '', id: 'messageOne' });
+      expect(d.operations().all()).toHaveLength(1);
+      expect(d.operations().all()[0].id()).toEqual('userSignUp');
     });
   });
 

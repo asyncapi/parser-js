@@ -1,0 +1,22 @@
+asyncapi: 3.0.0
+info:
+  title: External channels
+  version: 1.0.0
+channels:
+  rootChannel:
+    address: root
+  channelWithComponentServer:
+    servers:
+      - $ref: '#/components/servers/componentServer'
+servers:
+  rootServer:
+    host: localhost
+    protocol: ws
+components:
+  channels:
+    componentChannel:
+      address: component
+  servers:
+    componentServer:
+      host: localhost
+      protocol: ws

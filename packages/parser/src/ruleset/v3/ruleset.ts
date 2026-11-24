@@ -5,7 +5,8 @@ import { AsyncAPIFormats } from '../formats';
 import { operationMessagesUnambiguity } from './functions/operationMessagesUnambiguity';
 import { v3ChannelParameters } from './functions/channelParameters';
 import { pattern } from '@stoplight/spectral-functions';
-import { channelServers } from '../functions/channelServers';
+import { v3ChannelServers } from './functions/channelServers';
+import { v3OperationChannel } from './functions/operationChannel';
 
 export const v3CoreRuleset = {
   description: 'Core AsyncAPI 3.x.x ruleset.',
@@ -42,6 +43,16 @@ export const v3CoreRuleset = {
         },
       },
     },
+    'asyncapi3-operation-channel': {
+      description: 'Operation channel must be defined in the "channels" object.',
+      message: '{{error}}',
+      severity: 'error',
+      recommended: true,
+      given: '$',
+      then: { // NOSONAR
+        function: v3OperationChannel,
+      },
+    },
     
     /**
      * Channel Object rules
@@ -67,7 +78,7 @@ export const v3CoreRuleset = {
       recommended: true,
       given: '$',
       then: { // NOSONAR
-        function: channelServers,
+        function: v3ChannelServers,
       },
     },
     'asyncapi3-channel-no-query-nor-fragment': {

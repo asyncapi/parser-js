@@ -22,6 +22,7 @@ type Scenario = ReadonlyArray<
   Readonly<{
     name: string;
     document: Record<string, unknown>;
+    source?: string;
     errors: ReadonlyArray<Partial<IRuleResult>>;
   }>
 >;
@@ -34,7 +35,7 @@ export function testRule(ruleName: RuleNames, tests: Scenario,): void {
         parser.registerSchemaParser(AvroSchemaParser());
         const doc = JSON.stringify(testCase.document);
 
-        const errors = await parser.validate(doc);
+        const errors = await parser.validate(doc, testCase.source ? { source: testCase.source } : undefined);
         expect(errors.filter(({ code }) => code === 'uncaught-error')).toHaveLength(0);
         expect(errors.filter(({ code }) => code === ruleName)).toEqual(
           testCase.errors.map(error => expect.objectContaining(error) as unknown),

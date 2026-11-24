@@ -1,0 +1,62 @@
+asyncapi: 3.1.0
+info:
+  title: Address change events
+  version: 1.0.0
+defaultContentType: application/json
+channels:
+  AddressEventsChannel:
+    messages:
+      addressAdded:
+        $ref: '#/components/messages/AddressAddedEvent'
+      addressUpdated:
+        $ref: '#/components/messages/AddressUpdatedEvent'
+operations:
+  receiveAddressNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/AddressEventsChannel'
+components:
+  messages:
+    AddressAddedEvent:
+      payload:
+        schemaFormat: application/vnd.oai.openapi+yaml;version=3.0.0
+        schema:
+          $ref: '#/components/schemas/AddressAddedEvent'
+    AddressUpdatedEvent:
+      payload:
+        schemaFormat: application/vnd.oai.openapi+yaml;version=3.0.0
+        schema:
+          $ref: '#/components/schemas/AddressUpdatedEvent'
+  schemas:
+    EventBase:
+      type: object
+      properties:
+        time2:
+          type: string
+          nullable: true
+    AddressEvent:
+      allOf:
+      - $ref: "#/components/schemas/EventBase"
+      type: object
+      properties:
+        type:
+          type: string
+        time:
+          type: string
+          nullable: true
+      required:
+        - type
+    AddressAddedEvent:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AddressEvent"
+      properties:
+        addedAddress:
+          type: string
+    AddressUpdatedEvent:
+      allOf:
+        - $ref: "#/components/schemas/AddressEvent"
+      type: object
+      properties:
+        updatedAddress:
+          type: string

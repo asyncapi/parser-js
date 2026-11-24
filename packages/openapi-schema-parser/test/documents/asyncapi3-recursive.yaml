@@ -1,0 +1,30 @@
+asyncapi: 3.1.0
+info:
+  title: Recursive schema
+  version: 1.0.0
+defaultContentType: application/json
+channels:
+  myChannel:
+    messages:
+      nodeMessage:
+        payload:
+          schemaFormat: application/vnd.oai.openapi+yaml;version=3.0.0
+          schema:
+            $ref: '#/components/schemas/Node'
+operations:
+  receiveNode:
+    action: receive
+    channel:
+      $ref: '#/channels/myChannel'
+components:
+  schemas:
+    Node:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'

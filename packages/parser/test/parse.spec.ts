@@ -56,6 +56,25 @@ describe('parse()', function () {
     expect(diagnostics.length > 0).toEqual(true);
   });
 
+  it('should report an unsupported-version diagnostic (not an uncaught error) for a malformed asyncapi version', async function () {
+    const documentRaw = {
+      asyncapi: '3.0',
+      info: {
+        title: 'Malformed version document',
+        version: '1.0',
+      },
+      channels: {},
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+
+    expect(document).toEqual(undefined);
+    // Before the fix, getSemver() threw a TypeError on a version without a
+    // patch segment, surfacing as an `uncaught-error` diagnostic with a raw
+    // stack trace instead of a helpful validation message.
+    expect(diagnostics.some(d => d.code === 'uncaught-error')).toEqual(false);
+    expect(diagnostics.some(d => d.code === 'asyncapi-is-asyncapi')).toEqual(true);
+  });
+
   it('should parse invalid v3 document', async function () {
     const documentRaw = {
       asyncapi: '3.0.0',

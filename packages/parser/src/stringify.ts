@@ -46,7 +46,7 @@ export function unstringify(document: unknown): AsyncAPIDocumentInterface | unde
   // remove `x-parser-spec-stringified` extension
   delete (<Record<string, any>>parsed)[String(xParserSpecStringified)];
 
-  traverseStringifiedData(document, undefined, document, new Map(), new Map());
+  traverseStringifiedData(parsed, undefined, parsed, new Map(), new Map());
   return createAsyncAPIDocument(createDetailedAsyncAPI(parsed as DetailedAsyncAPI['parsed'], document as DetailedAsyncAPI['input']));
 }
 

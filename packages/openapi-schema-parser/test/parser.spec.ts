@@ -21,6 +21,11 @@ describe('OpenAPISchemaParser', function () {
 
   it('should return Mime Types', async function () {
     expect(parser.getMimeTypes()).not.toEqual([]);
+    expect(parser.getMimeTypes()).toEqual([
+      'application/vnd.oai.openapi;version=3.0.0',
+      'application/vnd.oai.openapi+json;version=3.0.0',
+      'application/vnd.oai.openapi+yaml;version=3.0.0',
+    ]);
   });
 
   it('should parse OpenAPI 3', async function() {

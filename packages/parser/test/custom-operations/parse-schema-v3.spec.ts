@@ -253,4 +253,44 @@ describe('custom operations for v3 - parse schemas', function() {
       type: 'string',
     });
   });
+
+  it('should parse custom schemaFormat on components.messages.*.headers', async function() {
+    const documentRaw = {
+      asyncapi: '3.0.0',
+      info: {
+        title: 'Valid AsyncApi document',
+        version: '1.0'
+      },
+      components: {
+        messages: {
+          testMessage: {
+            headers: {
+              schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+              schema: {
+                type: 'record',
+                name: 'HeaderRecord',
+                fields: []
+              }
+            },
+            payload: {
+              schemaFormat: 'application/vnd.apache.avro;version=1.9.0',
+              schema: {
+                type: 'record',
+                name: 'PayloadRecord',
+                fields: []
+              }
+            }
+          }
+        }
+      }
+    };
+    const { document, diagnostics } = await parser.parse(documentRaw);
+
+    expect(document).toBeInstanceOf(AsyncAPIDocumentV3);
+    expect(filterLastVersionDiagnostics(diagnostics).length === 0).toEqual(true);
+    const message = document!.allMessages().get('testMessage');
+    expect(message?.headers()?.schemaFormat()).toEqual('application/vnd.apache.avro;version=1.9.0');
+    expect(message?.payload()?.schemaFormat()).toEqual('application/vnd.apache.avro;version=1.9.0');
+  });
 });
+

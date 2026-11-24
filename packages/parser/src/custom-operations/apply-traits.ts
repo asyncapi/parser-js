@@ -100,10 +100,14 @@ function applyTraitsToObjectV3(value: Record<string, unknown>) {
     delete value[key];
   }
 
-  // merge root object at the end
-  for (const trait of [...copy.traits as any[], copy]) {
+  for (const trait of copy.traits as any[]) {
     for (const key in trait) {
       value[String(key)] = mergePatch(value[String(key)], trait[String(key)]);
     }
+  }
+
+  // merge root object at the end, keeping the reference of fields that no trait defines (e.g. a referenced payload)
+  for (const key in copy) {
+    value[String(key)] = key in value ? mergePatch(value[String(key)], copy[String(key)]) : copy[String(key)];
   }
 }

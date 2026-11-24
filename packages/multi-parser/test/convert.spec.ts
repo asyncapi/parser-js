@@ -60,4 +60,9 @@ describe('ConvertDocumentParserAPIVersion()', function() {
     const convertedDoc = ConvertDocumentParserAPIVersion(doc, 1);
     expect(convertedDoc).toEqual(doc);
   });
+
+  it('Returns null or undefined if non-document input is passed', async function() {
+    expect(ConvertDocumentParserAPIVersion(undefined as any, 1)).toBeUndefined();
+    expect(ConvertDocumentParserAPIVersion(null as any, 1)).toBeNull();
+  });
 });

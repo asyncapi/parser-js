@@ -39,6 +39,7 @@ async function parse(input: ParseSchemaInput<unknown, unknown>): Promise<SpecTyp
       'deprecated',
       'xml',
       'example',
+      'nullable',
     ],
   });
     
@@ -64,38 +65,125 @@ function ajvToSpectralResult(path: Array<string | number>, errors: ErrorObject[]
 }
 
 function iterateSchema(schema: any) {
+  if (!schema || typeof schema !== 'object') {
+    return;
+  }
+
+  handleExamples(schema);
+
+  if (schema.$schema !== undefined) {
+    delete schema.$schema;
+  }
+
+  handleExclusiveBounds(schema);
+  handleNullable(schema);
+  traverseSchemaChildren(schema);
+}
+
+function handleExamples(schema: any) {
   if (schema.example !== undefined) {
     const examples = schema.examples || [];
     examples.push(schema.example);
     schema.examples = examples;
     delete schema.example;
   }
+}
 
-  if (schema.$schema !== undefined) {
-    delete schema.$schema;
+function handleExclusiveBounds(schema: any) {
+  if (typeof schema.exclusiveMinimum === 'boolean') {
+    if (schema.exclusiveMinimum === true && typeof schema.minimum === 'number') {
+      schema.exclusiveMinimum = schema.minimum;
+      delete schema.minimum;
+    } else {
+      delete schema.exclusiveMinimum;
+    }
   }
 
+  if (typeof schema.exclusiveMaximum === 'boolean') {
+    if (schema.exclusiveMaximum === true && typeof schema.maximum === 'number') {
+      schema.exclusiveMaximum = schema.maximum;
+      delete schema.maximum;
+    } else {
+      delete schema.exclusiveMaximum;
+    }
+  }
+}
+
+function makeTypeNullable(schema: any) {
+  if (Array.isArray(schema.type)) {
+    if (!schema.type.includes('null')) {
+      schema.type.push('null');
+    }
+  } else if (schema.type !== 'null') {
+    schema.type = [schema.type, 'null'];
+  }
+}
+
+function makeCombinatorNullable(schema: any) {
+  if (schema.oneOf !== undefined || schema.anyOf !== undefined) {
+    const branches = schema.oneOf || schema.anyOf;
+    const allowsNull = branches.some((b: any) => b && (b.type === 'null' || (Array.isArray(b.type) && b.type.includes('null'))));
+    if (!allowsNull) {
+      branches.push({ type: 'null' });
+    }
+  } else if (schema.allOf !== undefined) {
+    schema.oneOf = [{ allOf: schema.allOf }, { type: 'null' }];
+    delete schema.allOf;
+  }
+}
+
+function handleNullable(schema: any) {
+  if (schema.nullable !== true) {
+    delete schema.nullable;
+    return;
+  }
+
+  if (schema.type !== undefined) {
+    makeTypeNullable(schema);
+  } else {
+    makeCombinatorNullable(schema);
+  }
+
+  delete schema.nullable;
+}
+
+function traverseSchemaChildren(schema: any) {
   aliasProps(schema.properties);
   aliasProps(schema.patternProperties);
-  aliasProps(schema.additionalProperties);
-  aliasProps(schema.items);
-  aliasProps(schema.additionalItems);
+  aliasSchemaNode(schema.additionalProperties);
+  if (schema.items) {
+    if (Array.isArray(schema.items)) {
+      aliasProps(schema.items);
+    } else {
+      aliasSchemaNode(schema.items);
+    }
+  }
+  aliasSchemaNode(schema.additionalItems);
   aliasProps(schema.oneOf);
   aliasProps(schema.anyOf);
   aliasProps(schema.allOf);
-  aliasProps(schema.not);
+  aliasSchemaNode(schema.not);
+  aliasProps(schema.definitions);
+  aliasProps(schema.$defs);
+}
+
+function aliasSchemaNode(node: any) {
+  if (!node || typeof node !== 'object') {
+    return;
+  }
+  if (node.xml !== undefined) {
+    node['x-xml'] = node.xml;
+    delete node.xml;
+  }
+  iterateSchema(node);
 }
 
 function aliasProps(obj: any) {
+  if (!obj || typeof obj !== 'object') {
+    return;
+  }
   for (const key in obj) {
-    const prop = obj[key];
-
-    if (prop.xml !== undefined) {
-      prop['x-xml'] = prop.xml;
-      delete prop.xml;
-    }
-
-    iterateSchema(obj[key]);
+    aliasSchemaNode(obj[key]);
   }
 }
 
